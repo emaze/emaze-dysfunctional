@@ -18,13 +18,6 @@ public class ChainIterator<E> implements Iterator<E> {
         this.iterators = Arrays.asList(iterators);
     }
 
-    public ChainIterator(Iterable<E>... iterables) {
-        this.iterators = new ArrayList<Iterator<E>>();
-        for (Iterable iterable : iterables) {
-            this.iterators.add(iterable.iterator());
-        }
-    }
-
     public boolean hasNext() {
         if (iterators.isEmpty()) {
             return false;

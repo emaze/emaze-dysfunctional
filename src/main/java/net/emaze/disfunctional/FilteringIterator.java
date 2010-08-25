@@ -17,11 +17,6 @@ public class FilteringIterator<E> implements Iterator<E> {
         this.filter = filter;
     }
 
-    public FilteringIterator(Iterable<E> iterable, Predicate<E> filter) {
-        this.iterator = iterable.iterator();
-        this.filter = filter;
-    }
-
     public boolean hasNext() {
         if (prefetched.hasValue()) {
             return true;

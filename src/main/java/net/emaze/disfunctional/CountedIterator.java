@@ -14,10 +14,6 @@ public class CountedIterator<E> implements Iterator<Pair<Integer, E>> {
         zipped = new ZipShortestIterator<Integer, E>(new CountingIterator(counter), iterator);
     }
 
-    public CountedIterator(Iterable<E> iterable, int counter) {
-        zipped = new ZipShortestIterator<Integer, E>(new CountingIterator(counter), iterable.iterator());
-    }
-
     public boolean hasNext() {
         return zipped.hasNext();
     }
