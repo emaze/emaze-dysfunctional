@@ -1,5 +1,6 @@
 package net.emaze.disfunctional;
 
+import net.emaze.disfunctional.delegates.Predicate;
 import java.util.Iterator;
 
 /**
@@ -26,7 +27,7 @@ public class FilteringIterator<E> implements Iterator<E> {
                 return false;
             }
             final E element = iterator.next();
-            if (!filter.match(element)) {
+            if (!filter.call(element)) {
                 prefetched = Maybe.just(element);
                 return true;
             }
@@ -41,7 +42,7 @@ public class FilteringIterator<E> implements Iterator<E> {
         }
         while (true) {
             final E element = iterator.next();
-            if (!filter.match(element)) {
+            if (!filter.call(element)) {
                 return element;
             }
         }

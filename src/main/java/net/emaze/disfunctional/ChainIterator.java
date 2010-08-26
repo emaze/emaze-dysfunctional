@@ -1,5 +1,6 @@
 package net.emaze.disfunctional;
 
+import net.emaze.disfunctional.delegates.Predicate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -23,7 +24,7 @@ public class ChainIterator<E> implements Iterator<E> {
             return false;
         }
         return Iterations.any(iterators,new Predicate<Iterator<E>>() {
-            public boolean match(Iterator<E> iterator) {
+            public boolean call(Iterator<E> iterator) {
                 return iterator.hasNext();
             }
         });
