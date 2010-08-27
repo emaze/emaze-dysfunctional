@@ -1,4 +1,4 @@
-package net.emaze.disfunctional;
+package net.emaze.disfunctional.tuples;
 
 import net.emaze.disfunctional.concepts.EqualsBuilder;
 import net.emaze.disfunctional.concepts.HashCodeBuilder;
@@ -12,16 +12,16 @@ public class Pair<E1, E2> {
     private final E1 f;
     private final E2 l;
 
-    Pair(E1 f, E2 l) {
+    public Pair(E1 f, E2 l) {
         this.f = f;
         this.l = l;
     }
 
-    public E1 former() {
+    public E1 first() {
         return f;
     }
 
-    public E2 latter() {
+    public E2 second() {
         return l;
     }
 

@@ -1,5 +1,6 @@
-package net.emaze.disfunctional;
+package net.emaze.disfunctional.iterations;
 
+import net.emaze.disfunctional.tuples.Pair;
 import java.util.Iterator;
 
 /**

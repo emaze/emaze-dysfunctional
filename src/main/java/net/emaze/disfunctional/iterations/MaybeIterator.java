@@ -1,6 +1,7 @@
-package net.emaze.disfunctional;
+package net.emaze.disfunctional.iterations;
 
 import java.util.Iterator;
+import net.emaze.disfunctional.Maybe;
 
 /**
  *

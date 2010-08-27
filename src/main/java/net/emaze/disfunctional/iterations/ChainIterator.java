@@ -1,11 +1,12 @@
-package net.emaze.disfunctional;
+package net.emaze.disfunctional.iterations;
 
+import java.util.Arrays;
 import net.emaze.disfunctional.delegates.Predicate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import net.emaze.disfunctional.Maybe;
 
 /**
  *
@@ -16,7 +17,8 @@ public class ChainIterator<E> implements Iterator<E> {
     private final List<Iterator<E>> iterators;
 
     public ChainIterator(Iterator<E>... iterators) {
-        this.iterators = Arrays.asList(iterators);
+        this.iterators = new ArrayList<Iterator<E>>(iterators.length);
+        this.iterators.addAll(Arrays.asList(iterators));
     }
 
     public boolean hasNext() {

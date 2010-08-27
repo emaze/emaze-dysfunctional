@@ -1,5 +1,6 @@
-package net.emaze.disfunctional;
+package net.emaze.disfunctional.iterations;
 
+import net.emaze.disfunctional.tuples.Pair;
 import java.util.Iterator;
 
 /**
@@ -10,8 +11,8 @@ public class CountedIterator<E> implements Iterator<Pair<Integer, E>> {
 
     private final ZipShortestIterator<Integer, E> zipped;
 
-    public CountedIterator(Iterator<E> iterator, int counter) {
-        zipped = new ZipShortestIterator<Integer, E>(new CountingIterator(counter), iterator);
+    public CountedIterator(Iterator<E> iterator, int from, int upTo) {
+        zipped = new ZipShortestIterator<Integer, E>(new CountingIterator(from, upTo), iterator);
     }
 
     public boolean hasNext() {

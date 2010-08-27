@@ -1,4 +1,4 @@
-package net.emaze.disfunctional;
+package net.emaze.disfunctional.iterations;
 
 import java.util.Iterator;
 
@@ -8,17 +8,15 @@ import java.util.Iterator;
  */
 public class CountingIterator implements Iterator<Integer> {
     private int counter;
-
-    public CountingIterator() {
-        this.counter = 0;
-    }
-
-    public CountingIterator(int counter) {
-        this.counter = counter;
+    private int upTo = Integer.MAX_VALUE;
+    
+    public CountingIterator(int from, int upTo) {
+        this.counter = from;
+        this.upTo = upTo;
     }
 
     public boolean hasNext() {
-        return counter != Integer.MAX_VALUE;
+        return counter != upTo;
     }
 
     public Integer next() {

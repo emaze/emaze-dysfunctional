@@ -1,7 +1,8 @@
-package net.emaze.disfunctional;
+package net.emaze.disfunctional.iterations;
 
 import net.emaze.disfunctional.delegates.Predicate;
 import java.util.Iterator;
+import net.emaze.disfunctional.Maybe;
 
 /**
  *
@@ -49,7 +50,7 @@ public class FilteringIterator<E> implements Iterator<E> {
     }
 
     public void remove() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        iterator.remove();
     }
 
 }

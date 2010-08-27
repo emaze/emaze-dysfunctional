@@ -1,4 +1,4 @@
-package net.emaze.disfunctional;
+package net.emaze.disfunctional.iterations;
 
 import net.emaze.disfunctional.delegates.Predicate;
 

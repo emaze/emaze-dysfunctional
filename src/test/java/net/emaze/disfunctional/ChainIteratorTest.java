@@ -1,5 +1,6 @@
 package net.emaze.disfunctional;
 
+import net.emaze.disfunctional.iterations.ChainIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -33,7 +34,7 @@ public class ChainIteratorTest {
     }
     
     @Test(expected=NoSuchElementException.class)
-    public void consumingtwoEmptyIteratorThrowsAnException(){
+    public void consumingtwoEmptyIteratorsThrowsAnException(){
         final List<Integer> input = new ArrayList<Integer>();
         Iterator<Integer> iter = new ChainIterator(input.iterator(),input.iterator());
         iter.next();

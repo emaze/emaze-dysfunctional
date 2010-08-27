@@ -1,5 +1,7 @@
 package net.emaze.disfunctional;
 
+import net.emaze.disfunctional.iterations.ZipShortestIterator;
+import net.emaze.disfunctional.tuples.Pair;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;

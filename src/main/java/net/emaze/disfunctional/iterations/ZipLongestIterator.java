@@ -1,6 +1,8 @@
-package net.emaze.disfunctional;
+package net.emaze.disfunctional.iterations;
 
+import net.emaze.disfunctional.tuples.Pair;
 import java.util.Iterator;
+import net.emaze.disfunctional.Maybe;
 
 /**
  *
@@ -30,7 +32,8 @@ public class ZipLongestIterator<E1,E2> implements Iterator<Pair<Maybe<E1>,Maybe<
     }
 
     public void remove() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        former.remove();
+        latter.remove();
     }
 
 }
