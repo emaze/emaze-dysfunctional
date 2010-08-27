@@ -14,10 +14,9 @@ import net.emaze.disfunctional.Maybe;
  */
 public class ChainIterator<E> implements Iterator<E> {
 
-    private final List<Iterator<E>> iterators;
+    private final List<Iterator<E>> iterators = new ArrayList<Iterator<E>>();
 
     public ChainIterator(Iterator<E>... iterators) {
-        this.iterators = new ArrayList<Iterator<E>>(iterators.length);
         this.iterators.addAll(Arrays.asList(iterators));
     }
 
@@ -26,7 +25,7 @@ public class ChainIterator<E> implements Iterator<E> {
             return false;
         }
         return Iterations.any(iterators,new Predicate<Iterator<E>>() {
-            public boolean call(Iterator<E> iterator) {
+            public boolean test(Iterator<E> iterator) {
                 return iterator.hasNext();
             }
         });
