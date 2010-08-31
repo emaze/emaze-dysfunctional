@@ -32,6 +32,6 @@ public class MaybeIterator<E> implements Iterator<Maybe<E>> {
     }
 
     public void remove() {
-        iterator.remove();
+        // TODO: remove semantic for MaybeIterator
     }
 }

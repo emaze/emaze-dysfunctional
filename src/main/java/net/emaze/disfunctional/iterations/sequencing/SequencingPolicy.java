@@ -1,7 +1,5 @@
 package net.emaze.disfunctional.iterations.sequencing;
 
-import java.math.BigDecimal;
-
 /**
  *
  * @author rferranti
