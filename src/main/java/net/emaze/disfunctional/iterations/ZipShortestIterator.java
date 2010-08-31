@@ -26,7 +26,8 @@ public class ZipShortestIterator<E1,E2> implements Iterator<Pair<E1,E2>>{
     }
 
     public void remove() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        former.remove();
+        latter.remove();
     }
 
 }

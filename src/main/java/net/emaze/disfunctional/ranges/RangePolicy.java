@@ -1,6 +1,6 @@
 package net.emaze.disfunctional.ranges;
 
-import net.emaze.disfunctional.iterations.SequencingPolicy;
+import net.emaze.disfunctional.iterations.sequencing.SequencingPolicy;
 import java.util.Comparator;
 import java.util.List;
 
