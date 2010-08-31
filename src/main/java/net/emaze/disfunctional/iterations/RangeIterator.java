@@ -1,8 +1,8 @@
-package net.emaze.disfunctional.ranges;
+package net.emaze.disfunctional.iterations;
 
 import java.util.Iterator;
 
-class RangeIterator<T> implements Iterator<T> {
+public class RangeIterator<T> implements Iterator<T> {
 
     private final SequencingPolicy<T> policy;
     private T current;

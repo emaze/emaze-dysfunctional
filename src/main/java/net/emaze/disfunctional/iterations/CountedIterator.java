@@ -12,7 +12,7 @@ public class CountedIterator<E> implements Iterator<Pair<Integer, E>> {
     private final ZipShortestIterator<Integer, E> zipped;
 
     public CountedIterator(Iterator<E> iterator, int from, int upTo) {
-        zipped = new ZipShortestIterator<Integer, E>(new CountingIterator(from, upTo), iterator);
+        zipped = new ZipShortestIterator<Integer, E>(new RangeIterator<Integer>(SequencingPolicy.INTEGER_POLICY,from, upTo), iterator);
     }
 
     public boolean hasNext() {

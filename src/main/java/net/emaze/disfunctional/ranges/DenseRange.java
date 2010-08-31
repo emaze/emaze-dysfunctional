@@ -1,5 +1,6 @@
 package net.emaze.disfunctional.ranges;
 
+import net.emaze.disfunctional.iterations.RangeIterator;
 import java.util.Iterator;
 
 /**
