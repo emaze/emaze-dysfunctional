@@ -37,11 +37,10 @@ public class Iterations {
     }
 
     public static <R, E> List<R> map(Iterable<E> iterable, Delegate<R,E> delegate){
-        final List<R> out = new ArrayList<R>();
-        for(E element: iterable){
-            out.add(delegate.perform(element));
-        }
-        return out;
+        return new EagerConsumer().consume(new TransformingIterator(iterable.iterator(), delegate));
     }
-
+    
+    public static <E> List<E> some(Iterable<E> iterable, Predicate<E> predicate){
+        return new EagerConsumer().consume(new FilteringIterator(iterable.iterator(), predicate));
+    }
 }
