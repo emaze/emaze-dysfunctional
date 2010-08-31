@@ -1,9 +1,11 @@
 package net.emaze.disfunctional.ranges;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import net.emaze.disfunctional.delegates.Delegate;
 import net.emaze.disfunctional.delegates.Predicate;
+import net.emaze.disfunctional.iterations.ChainIterator;
 import net.emaze.disfunctional.iterations.Iterations;
 
 /**
@@ -12,20 +14,15 @@ import net.emaze.disfunctional.iterations.Iterations;
  */
 public class SparseRange<T extends Comparable<T>> implements Range<T> {
 
-    private final RangePolicy<T> policy;
     private final List<Range<T>> ranges = new ArrayList<Range<T>>();
-
-    private List<Range<T>> normalizeRanges(List<Range<T>> ranges) {
-        
-        return null;
-    }
-
+    private final RangePolicy<T> policy;
+    
     public SparseRange(RangePolicy<T> policy, Range<T>... ranges) {
         if (ranges.length == 0) {
             throw new IllegalArgumentException("SparseRange<T> must be constructed with at least one argument");
         }
         this.policy = policy;
-        this.ranges.addAll(normalizeRanges(Arrays.asList(ranges)));
+        this.ranges.addAll(policy.normalize(ranges));
     }
 
     public boolean contains(final T element) {
@@ -44,4 +41,16 @@ public class SparseRange<T extends Comparable<T>> implements Range<T> {
     public T upper() {
         return ranges.get(ranges.size() - 1).upper();
     }
+    public int compareTo(Range<T> other) {
+        return policy.compare(this, other);
+    }
+
+    public Iterator<T> iterator() {
+        return new ChainIterator<T>(Iterations.map(ranges , new Delegate< Iterator<T>,Range<T>>(){
+            public Iterator<T> perform(Range<T> iterable) {
+                return iterable.iterator();
+            }
+        }));
+    }
+
 }

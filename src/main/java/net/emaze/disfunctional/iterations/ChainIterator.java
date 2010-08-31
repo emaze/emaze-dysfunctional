@@ -19,6 +19,10 @@ public class ChainIterator<E> implements Iterator<E> {
     public ChainIterator(Iterator<E>... iterators) {
         this.iterators.addAll(Arrays.asList(iterators));
     }
+    
+    public ChainIterator(List<Iterator<E>> iterators) {
+        this.iterators.addAll(iterators);
+    }
 
     public boolean hasNext() {
         if (iterators.isEmpty()) {
