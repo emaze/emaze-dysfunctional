@@ -26,7 +26,7 @@ public class IpRangePolicy implements RangePolicy<Integer> {
 
     @Override
     public Integer next(Integer element) {
-        return ++element;
+        return element+1;
     }
 
     @Override
