@@ -38,12 +38,8 @@ public class MethodReflector {
                 return method.getName().equals(methodName);
             }
         });
-        if (matchingMethods.isEmpty()) {
-            throw new IllegalStateException("method not found");
-        }
-        if (matchingMethods.size() > 1) {
-            throw new IllegalStateException("method is ambigouous (Class<T> params must be specified)");
-        }
+        dbc.invariant(!matchingMethods.isEmpty(),"method %s not found", methodName);
+        dbc.invariant(matchingMethods.size() == 1,"method is ambigouous (Class<T> params must be specified)");
         return matchingMethods.get(0);
     }
 
