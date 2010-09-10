@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional;
 
+import net.emaze.dysfunctional.contracts.dbc;
+
 /**
  *
  * @author rferranti
@@ -21,9 +23,7 @@ public class Memoized<T> {
     }
 
     public T value() {
-        if (!memory.hasValue()) {
-            throw new IllegalStateException("a value should be memoized before being fetched");
-        }
+        dbc.invariant(memory.hasValue(), "a value should be memoized before being fetched");
         return memory.value();
     }
 }
