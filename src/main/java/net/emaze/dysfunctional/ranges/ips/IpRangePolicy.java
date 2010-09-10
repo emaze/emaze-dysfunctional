@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.ranges.ips;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import net.emaze.dysfunctional.concepts.CompareToBuilder;
@@ -11,7 +12,7 @@ import net.emaze.dysfunctional.ranges.RangePolicy;
  *
  * @author rferranti
  */
-public class IpRangePolicy implements RangePolicy<Integer> {
+public class IpRangePolicy implements RangePolicy<Integer>, Serializable {
     @Override
     public List<Range<Integer>> normalize(Range<Integer>... ranges) {
         final List<Range<Integer>> out = new ArrayList<Range<Integer>>();

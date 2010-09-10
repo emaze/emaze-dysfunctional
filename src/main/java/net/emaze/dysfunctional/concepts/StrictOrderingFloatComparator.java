@@ -1,12 +1,13 @@
 package net.emaze.dysfunctional.concepts;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
  *
  * @author rferranti
  */
-public class StrictOrderingFloatComparator implements Comparator<Float> {
+public class StrictOrderingFloatComparator implements Comparator<Float>, Serializable {
 
     @Override
     public int compare(Float lhs, Float rhs) {
