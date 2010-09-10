@@ -3,6 +3,7 @@ package net.emaze.dysfunctional.delegates;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  *
@@ -21,11 +22,13 @@ public class PipelinedAction<E> implements Action<E>, Multicasting<Action<E>> {
 
     @Override
     public void add(Action<E> anAction) {
+        dbc.precondition(anAction != null, "trying to add a null action");
         actions.add(anAction);
     }
 
     @Override
     public void remove(Action<E> anAction) {
+        dbc.precondition(anAction != null, "trying to remove a null action");
         actions.remove(anAction);
     }
 

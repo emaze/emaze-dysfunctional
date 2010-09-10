@@ -3,6 +3,7 @@ package net.emaze.dysfunctional.iterations;
 import net.emaze.dysfunctional.tuples.Pair;
 import java.util.Iterator;
 import net.emaze.dysfunctional.Maybe;
+import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  *
@@ -14,6 +15,8 @@ public class ZipLongestIterator<E1,E2> implements Iterator<Pair<Maybe<E1>,Maybe<
     private final MaybeIterator<E2> latter;
 
     public ZipLongestIterator(Iterator<E1> former, Iterator<E2> latter) {
+        dbc.precondition(former != null, "trying to create a ZipLongestIterator from a null iterator (former)");
+        dbc.precondition(latter != null, "trying to create a ZipLongestIterator from a null iterator (latter)");
         this.former = new MaybeIterator(former);
         this.latter = new MaybeIterator(latter);
     }

@@ -3,6 +3,7 @@ package net.emaze.dysfunctional.delegates;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  *
@@ -24,11 +25,13 @@ public class FirstMatchingPredicate<E> implements Predicate<E>, Multicasting<Pre
     
     @Override
     public void add(Predicate<E> aPredicate) {
+        dbc.precondition(aPredicate != null, "trying to add a null predicate");
         predicates.add(aPredicate);
     }
 
     @Override
     public void remove(Predicate<E> aPredicate) {
+        dbc.precondition(aPredicate != null, "trying to remove a null predicate");
         predicates.remove(aPredicate);
     }
 

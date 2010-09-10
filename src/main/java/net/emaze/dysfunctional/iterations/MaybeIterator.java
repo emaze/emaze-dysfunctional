@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.iterations;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.Maybe;
+import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  *
@@ -12,6 +13,7 @@ public class MaybeIterator<E> implements Iterator<Maybe<E>> {
     private final Iterator<E> iterator;
 
     public MaybeIterator(Iterator<E> iterator) {
+        dbc.precondition(iterator != null, "trying to create a MaybeIterator from a null iterator");
         this.iterator = iterator;
     }
 

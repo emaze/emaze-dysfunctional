@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.ranges;
 
 import net.emaze.dysfunctional.iterations.RangeIterator;
 import java.util.Iterator;
+import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  *
@@ -14,6 +15,9 @@ public class DenseRange <T extends Comparable<T>> implements Range<T> {
     private final RangePolicy<T> policy;
 
     public DenseRange(RangePolicy<T> policy, T lower, T upper){
+        dbc.precondition(policy != null, "trying to create a DenseRange with a null RangePolicy");
+        dbc.precondition(lower != null, "trying to create a DenseRange with null lower bound");
+        dbc.precondition(upper != null, "trying to create a DenseRange with null upper bound");
         this.policy = policy;
         this.lower = lower;
         this.upper = upper;

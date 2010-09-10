@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.iterations;
 
 import net.emaze.dysfunctional.iterations.sequencing.SequencingPolicy;
 import java.util.Iterator;
+import net.emaze.dysfunctional.contracts.dbc;
 
 public class RangeIterator<T> implements Iterator<T> {
 
@@ -10,6 +11,9 @@ public class RangeIterator<T> implements Iterator<T> {
     private final T upTo;
 
     public RangeIterator(SequencingPolicy<T> policy, T start, T upTo) {
+        dbc.precondition(policy != null, "trying to create a RangeIterator from a null policy");
+        dbc.precondition(start != null, "trying to create a RangeIterator from a null start");
+        dbc.precondition(upTo != null, "trying to create a RangeIterator from a null upTo");
         this.policy = policy;
         this.current = start;
         this.upTo = upTo;

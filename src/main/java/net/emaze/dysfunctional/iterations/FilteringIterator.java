@@ -3,6 +3,7 @@ package net.emaze.dysfunctional.iterations;
 import net.emaze.dysfunctional.delegates.Predicate;
 import java.util.Iterator;
 import net.emaze.dysfunctional.Maybe;
+import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  * Iterates on the iterator elements which the predicate matches
@@ -15,6 +16,8 @@ public class FilteringIterator<E> implements Iterator<E> {
     private Maybe<E> prefetched = Maybe.nothing();
 
     public FilteringIterator(Iterator<E> iterator, Predicate<E> filter) {
+        dbc.precondition(iterator != null, "trying to create a FilteringIterator from a null iterator");
+        dbc.precondition(filter != null, "trying to create a FilteringIterator from a null filter");
         this.iterator = iterator;
         this.filter = filter;
     }

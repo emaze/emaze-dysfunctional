@@ -3,6 +3,7 @@ package net.emaze.dysfunctional.ranges;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.delegates.Delegate;
 import net.emaze.dysfunctional.delegates.Predicate;
 import net.emaze.dysfunctional.iterations.ChainIterator;
@@ -18,9 +19,7 @@ public class SparseRange<T extends Comparable<T>> implements Range<T> {
     private final RangePolicy<T> policy;
     
     public SparseRange(RangePolicy<T> policy, Range<T>... ranges) {
-        if (ranges.length == 0) {
-            throw new IllegalArgumentException("SparseRange<T> must be constructed with at least one argument");
-        }
+        dbc.precondition(ranges.length != 0,"SparseRange<T> must be constructed with at least one argument");
         this.policy = policy;
         this.ranges.addAll(policy.normalize(ranges));
     }

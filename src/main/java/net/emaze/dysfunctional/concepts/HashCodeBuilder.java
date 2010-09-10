@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional.concepts;
 
+import net.emaze.dysfunctional.contracts.dbc;
+
 public class HashCodeBuilder {
 
     private final int iConstant;
@@ -11,18 +13,10 @@ public class HashCodeBuilder {
     }
 
     public HashCodeBuilder(int initialNonZeroOddNumber, int multiplierNonZeroOddNumber) {
-        if (initialNonZeroOddNumber == 0) {
-            throw new IllegalArgumentException("HashCodeBuilder requires a non zero initial value");
-        }
-        if (initialNonZeroOddNumber % 2 == 0) {
-            throw new IllegalArgumentException("HashCodeBuilder requires an odd initial value");
-        }
-        if (multiplierNonZeroOddNumber == 0) {
-            throw new IllegalArgumentException("HashCodeBuilder requires a non zero multiplier");
-        }
-        if (multiplierNonZeroOddNumber % 2 == 0) {
-            throw new IllegalArgumentException("HashCodeBuilder requires an odd multiplier");
-        }
+        dbc.precondition(initialNonZeroOddNumber != 0, "HashCodeBuilder requires a non zero initial value");
+        dbc.precondition(initialNonZeroOddNumber % 2 != 0, "HashCodeBuilder requires an odd initial value");
+        dbc.precondition(multiplierNonZeroOddNumber != 0,"HashCodeBuilder requires a non zero multiplier");
+        dbc.precondition(multiplierNonZeroOddNumber % 2 != 0,"HashCodeBuilder requires an odd multiplier");
         iConstant = multiplierNonZeroOddNumber;
         iTotal = initialNonZeroOddNumber;
     }

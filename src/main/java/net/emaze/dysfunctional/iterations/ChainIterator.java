@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.Maybe;
+import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  *
@@ -21,6 +22,7 @@ public class ChainIterator<E> implements Iterator<E> {
     }
 
     public ChainIterator(List<Iterator<E>> iterators) {
+        dbc.precondition(iterators != null, "trying to create a ChainIterator from a null list");
         this.iterators.addAll(iterators);
     }
 
