@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.delegates;
 
 /**
- *
+ * A Binary functor with no return value
  * @author rferranti
  */
 public interface BinaryAction<T1,T2> {

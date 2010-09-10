@@ -6,7 +6,8 @@ import java.util.List;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- *
+ * A composite unary predicate returning true when the first predicate matches
+ * (no further predicate is evaluated beyond the first returning true)
  * @author rferranti
  */
 public class FirstMatchingPredicate<E> implements Predicate<E>, Multicasting<Predicate<E>> {

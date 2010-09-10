@@ -5,7 +5,8 @@ import java.lang.reflect.Method;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- *
+ * Responsibility: invokes a method via reflection transforming checked exceptions involved in the invocation
+ * to IllegalStateStateException s (unchecked)
  * @author rferranti
  */
 public class MethodInvoker {

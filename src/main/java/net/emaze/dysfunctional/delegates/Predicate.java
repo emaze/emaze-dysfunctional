@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.delegates;
 
 /**
- *
+ * A unary functor returning a boolean
  * @author rferranti
  */
 public interface Predicate<E> {

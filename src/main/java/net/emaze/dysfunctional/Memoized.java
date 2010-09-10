@@ -3,7 +3,7 @@ package net.emaze.dysfunctional;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- *
+ * Responsibility: Holds a memoized and invalidable value (i.e: nonexpiring cache)
  * @author rferranti
  */
 public class Memoized<T> {

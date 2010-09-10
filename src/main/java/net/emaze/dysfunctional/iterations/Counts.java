@@ -4,7 +4,7 @@ import java.util.Iterator;
 import net.emaze.dysfunctional.tuples.Pair;
 
 /**
- *
+ * 
  * @author rferranti
  */
 public class Counts {

@@ -6,7 +6,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.iterations.sequencing.IntegerSequencingPolicy;
 
 /**
- *
+ * Decorates an iterator used to count iterated element via yielding a Pair<Integer,E>
  * @author rferranti
  */
 public class CountedIterator<E> implements Iterator<Pair<Integer, E>> {

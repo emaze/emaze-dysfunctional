@@ -5,7 +5,8 @@ import net.emaze.dysfunctional.Maybe;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- *
+ * Adapts an Iterator to the Iterable interface enabling the iterator to be consumed
+ * where an iterable is expected (a OneTimeIterable can be consumed ONLY ONCE )
  * @author rferranti
  */
 public class OneTimeIterable<T> implements Iterable<T> {

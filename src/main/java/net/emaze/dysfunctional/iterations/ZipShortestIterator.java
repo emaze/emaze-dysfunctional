@@ -5,7 +5,7 @@ import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- *
+ * Adapts two iterators yielding their shortest convolution (via a Pair<E1,E2>)
  * @author rferranti
  */
 public class ZipShortestIterator<E1,E2> implements Iterator<Pair<E1,E2>>{

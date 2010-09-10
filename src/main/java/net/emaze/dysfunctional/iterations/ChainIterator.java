@@ -10,7 +10,7 @@ import net.emaze.dysfunctional.Maybe;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- *
+ * A composite iterator (iterators are consumed in order)
  * @author rferranti
  */
 public class ChainIterator<E> implements Iterator<E> {

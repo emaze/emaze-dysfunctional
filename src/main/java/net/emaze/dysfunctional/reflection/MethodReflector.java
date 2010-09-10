@@ -8,13 +8,11 @@ import net.emaze.dysfunctional.delegates.Predicate;
 import net.emaze.dysfunctional.iterations.Iterations;
 
 /**
- *
+ * Resolves via reflection a reference to a Method
  * @author rferranti
  */
 public class MethodReflector {
-
-
-    
+  
     public <T> Method fetch(final Class clazz, final String methodName, Class<T>... params){
         dbc.precondition(clazz != null, "trying to fetch a method from a null class");
         dbc.precondition(methodName != null, "trying to fetch a method with a null methodName");

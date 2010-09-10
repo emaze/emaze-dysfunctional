@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.delegates;
 
 /**
- *
+ * A binary functor returning a boolean
  * @author rferranti
  */
 public interface BinaryPredicate<T1,T2> {

@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.delegates;
 import java.util.Collection;
 
 /**
- *
+ * A multicasting functor contract
  * @author rferranti
  */
 public interface Multicasting<F> {

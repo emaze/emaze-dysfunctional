@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.delegates;
 
 /**
- *
+ * a Null Unary Predicate always returning false ("never" returning true )
  * @author rferranti
  */
 public class Never<E> implements Predicate<E>{

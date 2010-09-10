@@ -4,7 +4,7 @@ import net.emaze.dysfunctional.concepts.EqualsBuilder;
 import net.emaze.dysfunctional.concepts.HashCodeBuilder;
 
 /**
- *
+ * Responsibility: Holds an optional value, sadly not actually a Maybe monad :'(
  * @author rferranti
  */
 public class Maybe<E> {

@@ -6,7 +6,7 @@ import net.emaze.dysfunctional.Maybe;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- *
+ * Adapts two iterators yielding their longest convolution (via a Pair<Maybe<E1>,Maybe<E2>>)
  * @author rferranti
  */
 public class ZipLongestIterator<E1,E2> implements Iterator<Pair<Maybe<E1>,Maybe<E2>>>{

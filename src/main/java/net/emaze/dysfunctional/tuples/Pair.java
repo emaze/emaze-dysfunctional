@@ -4,7 +4,7 @@ import net.emaze.dysfunctional.concepts.EqualsBuilder;
 import net.emaze.dysfunctional.concepts.HashCodeBuilder;
 
 /**
- *
+ * Two things
  * @author rferranti
  */
 public class Pair<E1, E2> {

@@ -7,7 +7,8 @@ import net.emaze.dysfunctional.reflection.MethodInvoker;
 import net.emaze.dysfunctional.reflection.MethodReflector;
 
 /**
- *
+ * A unary functor with no return value decorator calling the nested action via
+ * reflection (used for decoupling via loose typing)
  * @author rferranti
  */
 public class ReflectiveAction<T> implements Action<T> {

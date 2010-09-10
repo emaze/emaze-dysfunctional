@@ -5,7 +5,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.delegates.Delegate;
 
 /**
- *
+ * Decorates an iterator adapting (via a delegate) consumed elements
  * @author rferranti
  */
 public class TransformingIterator<R,T> implements Iterator<R> {

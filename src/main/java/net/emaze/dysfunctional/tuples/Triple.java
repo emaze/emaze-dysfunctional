@@ -4,7 +4,7 @@ import net.emaze.dysfunctional.concepts.EqualsBuilder;
 import net.emaze.dysfunctional.concepts.HashCodeBuilder;
 
 /**
- *
+ * a Pair + 1 at the same price
  * @author rferranti
  */
 public class Triple<E1, E2, E3> {

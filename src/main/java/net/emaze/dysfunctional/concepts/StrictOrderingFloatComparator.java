@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.concepts;
 
 import java.io.Serializable;
 import java.util.Comparator;
+import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  *
@@ -11,6 +12,9 @@ public class StrictOrderingFloatComparator implements Comparator<Float>, Seriali
 
     @Override
     public int compare(Float lhs, Float rhs) {
+        dbc.precondition(lhs != null, "null double (lhs) on StrictOrderingFloatComparator");
+        dbc.precondition(rhs != null, "null double (rhs) on StrictOrderingFloatComparator");
+
         if (lhs < rhs) {
             return -1;
         }
