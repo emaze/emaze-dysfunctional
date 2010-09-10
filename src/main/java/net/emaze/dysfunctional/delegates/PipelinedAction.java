@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.delegates;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -29,7 +30,7 @@ public class PipelinedAction<E> implements Action<E>, Multicasting<Action<E>> {
     }
 
     @Override
-    public void setFunctors(List<Action<E>> functors){
+    public void setFunctors(Collection<Action<E>> functors){
         this.actions.clear();
         this.actions.addAll(functors);
     }

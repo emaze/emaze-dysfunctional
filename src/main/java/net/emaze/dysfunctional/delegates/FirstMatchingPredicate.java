@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.delegates;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public class FirstMatchingPredicate<E> implements Predicate<E>, Multicasting<Pre
     }
 
     @Override
-    public void setFunctors(List<Predicate<E>> functors) {
+    public void setFunctors(Collection<Predicate<E>> functors) {
         this.predicates.clear();
         this.predicates.addAll(functors);
     }
