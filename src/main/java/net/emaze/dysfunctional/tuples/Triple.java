@@ -33,7 +33,7 @@ public class Triple<E1, E2, E3> {
 
     @Override
     public boolean equals(Object rhs) {
-        if (rhs instanceof Pair == false) {
+        if (rhs instanceof Triple == false) {
             return false;
         }
         final Triple<E1, E2, E3> other = (Triple<E1, E2, E3>) rhs;
