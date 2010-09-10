@@ -20,7 +20,7 @@ public abstract class dbc {
         }
     }
     
-    public static void invariatn(Statement statement){
+    public static void invariant(Statement statement){
         invariant(statement.evaluate(), "invariant failed: %s", statement);
     }
 
