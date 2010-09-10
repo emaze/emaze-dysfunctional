@@ -7,7 +7,7 @@ package net.emaze.dysfunctional.contracts;
 public abstract class dbc {
 
     public static interface Statement{
-        public boolean evaluate();
+        public boolean evaluate(); //TODO: hamcrest? if so we should write an adapter to throw the right exception
     }
 
     public static void precondition(Statement statement){
