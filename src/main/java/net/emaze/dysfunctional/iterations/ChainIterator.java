@@ -22,7 +22,7 @@ public class ChainIterator<E> implements Iterator<E> {
     }
 
     public ChainIterator(List<Iterator<E>> iterators) {
-        dbc.precondition(iterators != null, "trying to create a ChainIterator from a null list");
+        dbc.precondition(iterators != null, "trying to create a ChainIterator from a null list of iterators");
         this.iterators.addAll(iterators);
     }
 
