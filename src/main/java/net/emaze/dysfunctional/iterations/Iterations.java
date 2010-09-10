@@ -3,6 +3,7 @@ package net.emaze.dysfunctional.iterations;
 import net.emaze.dysfunctional.consumers.EagerConsumer;
 import java.util.List;
 import net.emaze.dysfunctional.consumers.GiveUpConsumer;
+import net.emaze.dysfunctional.consumers.StubbornConsumer;
 import net.emaze.dysfunctional.delegates.Action;
 import net.emaze.dysfunctional.delegates.Delegate;
 import net.emaze.dysfunctional.delegates.Predicate;
@@ -47,5 +48,16 @@ public class Iterations {
 
     public static <E> E first(Iterable<E> iterable, Predicate<E> predicate){
         return new GiveUpConsumer<E>().consume(new FilteringIterator(iterable.iterator(), predicate));
+    }
+    public static <E> E first(Iterable<E> iterable){
+        return new GiveUpConsumer<E>().consume(iterable.iterator());
+    }
+    
+    public static <E> E last(Iterable<E> iterable, Predicate<E> predicate){
+        return new StubbornConsumer<E>().consume(new FilteringIterator(iterable.iterator(), predicate));
+    }
+    
+    public static <E> E last(Iterable<E> iterable){
+        return new StubbornConsumer<E>().consume(iterable.iterator());
     }
 }
