@@ -8,6 +8,7 @@ import java.util.Iterator;
  */
 public class GiveUpConsumer<E> implements Consumer<E,Iterator<E>>{
 
+    @Override
     public E consume(Iterator<E> consumable) {
         if(consumable.hasNext()){
             return consumable.next();

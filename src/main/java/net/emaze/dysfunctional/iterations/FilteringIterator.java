@@ -19,6 +19,7 @@ public class FilteringIterator<E> implements Iterator<E> {
         this.filter = filter;
     }
 
+    @Override
     public boolean hasNext() {
         if (prefetched.hasValue()) {
             return true;
@@ -35,6 +36,7 @@ public class FilteringIterator<E> implements Iterator<E> {
         }
     }
 
+    @Override
     public E next() {
         if (prefetched.hasValue()) {
             final E element = prefetched.value();
@@ -49,6 +51,7 @@ public class FilteringIterator<E> implements Iterator<E> {
         }
     }
 
+    @Override
     public void remove() {
         iterator.remove();
     }

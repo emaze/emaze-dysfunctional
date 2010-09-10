@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class EagerConsumer<E> implements Consumer<List<E>,Iterator<E>>{
     
+    @Override
     public List<E> consume(Iterator<E> consumable){
         final List<E> out = new ArrayList<E>();
         while(consumable.hasNext()){

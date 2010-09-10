@@ -8,6 +8,7 @@ import java.util.Iterator;
  */
 public class StubbornConsumer<E> implements Consumer<E,Iterator<E>>{
 
+    @Override
     public E consume(Iterator<E> consumable) {
         if(!consumable.hasNext()){
             throw new IllegalStateException("no element to consume");

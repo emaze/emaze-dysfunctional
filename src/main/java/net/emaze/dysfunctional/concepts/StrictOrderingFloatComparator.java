@@ -8,6 +8,7 @@ import java.util.Comparator;
  */
 public class StrictOrderingFloatComparator implements Comparator<Float> {
 
+    @Override
     public int compare(Float lhs, Float rhs) {
         if (lhs < rhs) {
             return -1;

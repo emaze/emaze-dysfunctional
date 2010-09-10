@@ -24,12 +24,14 @@ public class ChainIterator<E> implements Iterator<E> {
         this.iterators.addAll(iterators);
     }
 
+    @Override
     public boolean hasNext() {
         if (iterators.isEmpty()) {
             return false;
         }
         return Iterations.any(iterators, new Predicate<Iterator<E>>() {
 
+            @Override
             public boolean test(Iterator<E> iterator) {
                 return iterator.hasNext();
             }
@@ -49,6 +51,7 @@ public class ChainIterator<E> implements Iterator<E> {
         return Maybe.nothing();
     }
 
+    @Override
     public E next() {
         final Maybe<Iterator<E>> maybeElement = currentElement();
         if (maybeElement.hasValue()) {
@@ -57,6 +60,7 @@ public class ChainIterator<E> implements Iterator<E> {
         throw new NoSuchElementException();
     }
 
+    @Override
     public void remove() {
         final Maybe<Iterator<E>> maybeElement = currentElement();
         if (maybeElement.hasValue()) {

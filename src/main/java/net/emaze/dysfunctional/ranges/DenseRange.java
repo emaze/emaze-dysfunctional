@@ -20,22 +20,27 @@ public class DenseRange <T extends Comparable<T>> implements Range<T> {
     }
 
 
+    @Override
     public boolean contains(T element) {
         return policy.contains(this,element);
     }
 
+    @Override
     public T lower() {
         return lower;
     }
 
+    @Override
     public T upper() {
         return upper;
     }
 
+    @Override
     public int compareTo(Range<T> other) {
         return policy.compare(this, other);
     }
 
+    @Override
     public Iterator<T> iterator() {
         return new RangeIterator(policy, lower, upper);
     }

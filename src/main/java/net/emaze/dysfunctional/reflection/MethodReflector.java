@@ -28,6 +28,7 @@ public class MethodReflector {
         final List<Method> methods = Arrays.asList(clazz.getMethods());
         final List<Method> matchingMethods = Iterations.some(methods, new Predicate<Method>() {
 
+            @Override
             public boolean test(Method method) {
                 return method.getName().equals(methodName);
             }

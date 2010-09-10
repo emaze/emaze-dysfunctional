@@ -16,14 +16,17 @@ public class CountedIterator<E> implements Iterator<Pair<Integer, E>> {
         zipped = new ZipShortestIterator<Integer, E>(new RangeIterator<Integer>(new IntegerSequencingPolicy(),from, upTo), iterator);
     }
 
+    @Override
     public boolean hasNext() {
         return zipped.hasNext();
     }
 
+    @Override
     public Pair<Integer, E> next() {
         return zipped.next();
     }
 
+    @Override
     public void remove() {
         zipped.remove();
     }

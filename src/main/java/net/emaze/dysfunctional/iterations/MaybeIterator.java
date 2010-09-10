@@ -15,6 +15,7 @@ public class MaybeIterator<E> implements Iterator<Maybe<E>> {
         this.iterator = iterator;
     }
 
+    @Override
     public boolean hasNext() {
         return iterator.hasNext(); // TODO: semantic: always return true?
     }
@@ -24,6 +25,7 @@ public class MaybeIterator<E> implements Iterator<Maybe<E>> {
      * "no matter how many times you try, you can't shoot the dog"
      * @return
      */
+    @Override
     public Maybe<E> next() {
         if(iterator.hasNext()){
             return Maybe.just(iterator.next());
@@ -31,6 +33,7 @@ public class MaybeIterator<E> implements Iterator<Maybe<E>> {
         return Maybe.nothing();
     }
 
+    @Override
     public void remove() {
         // TODO: remove semantic for MaybeIterator
     }

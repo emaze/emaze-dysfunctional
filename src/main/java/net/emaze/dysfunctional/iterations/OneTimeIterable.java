@@ -14,6 +14,7 @@ public class OneTimeIterable<T> implements Iterable<T> {
         this.maybeIterator = Maybe.just(iterator);
     }
 
+    @Override
     public Iterator<T> iterator() {
         if (!maybeIterator.hasValue()) {
             throw new IllegalStateException("consuming an iterator two times");

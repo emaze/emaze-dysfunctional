@@ -18,6 +18,7 @@ public class ZipLongestIterator<E1,E2> implements Iterator<Pair<Maybe<E1>,Maybe<
         this.latter = new MaybeIterator(latter);
     }
 
+    @Override
     public boolean hasNext() {
         return former.hasNext() || latter.hasNext();
     }
@@ -27,10 +28,12 @@ public class ZipLongestIterator<E1,E2> implements Iterator<Pair<Maybe<E1>,Maybe<
      * "no matter how many times you try, you can't shoot the dog"
      * @return
      */
+    @Override
     public Pair<Maybe<E1>,Maybe<E2>> next() {
         return new Pair(former.next(), latter.next());
     }
 
+    @Override
     public void remove() {
         former.remove();
         latter.remove();

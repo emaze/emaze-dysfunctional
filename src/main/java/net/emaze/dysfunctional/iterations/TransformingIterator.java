@@ -17,14 +17,17 @@ public class TransformingIterator<R,T> implements Iterator<R> {
         this.transformer = filter;
     }
 
+    @Override
     public boolean hasNext() {
         return iterator.hasNext();
     }
 
+    @Override
     public R next() {
         return transformer.perform(iterator.next());
     }
 
+    @Override
     public void remove() {
         iterator.remove();
     }

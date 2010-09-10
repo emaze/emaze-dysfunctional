@@ -8,6 +8,7 @@ import java.util.Comparator;
  */
 public class StrictOrderingDoubleComparator implements Comparator<Double> {
 
+    @Override
     public int compare(Double lhs, Double rhs) {
         if (lhs < rhs) {
             return -1;

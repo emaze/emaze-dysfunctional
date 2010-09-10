@@ -15,15 +15,18 @@ public class RangeIterator<T> implements Iterator<T> {
         this.upTo = upTo;
     }
 
+    @Override
     public boolean hasNext() {
         return !current.equals(upTo);
     }
 
+    @Override
     public T next() {
         current = policy.next(current);
         return current;
     }
 
+    @Override
     public void remove() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
