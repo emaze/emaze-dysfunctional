@@ -7,6 +7,6 @@ public class LongSequencingPolicy implements SequencingPolicy<Long> {
     @Override
     public Long next(Long element) {
         dbc.precondition(element != null, "cannot get next of null from a LongSequencingPolicy");
-        return ++element;
+        return element+1;
     }
 }
