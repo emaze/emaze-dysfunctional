@@ -46,7 +46,7 @@ public class MethodReflector {
         final List<Method> methods = Arrays.asList(clazz.getMethods());
         final List<Method> matchingMethods = Iterations.some(methods, new SameMethodName(methodName));
         dbc.invariant(!matchingMethods.isEmpty(),"method %s not found", methodName);
-        dbc.invariant(matchingMethods.size() == 1,"method is ambigouous (Class<T> params must be specified)");
+        dbc.invariant(matchingMethods.size() == 1,"method is ambigouous (method params must be specified)");
         return matchingMethods.get(0);
     }
 
