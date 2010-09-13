@@ -12,7 +12,22 @@ import net.emaze.dysfunctional.iterations.Iterations;
  * @author rferranti
  */
 public class MethodReflector {
-  
+
+    private static class SameMethodName implements Predicate<Method> {
+        private final String methodName;
+
+        public SameMethodName(String methodName) {
+            this.methodName = methodName;
+        }
+        
+        @Override
+        public boolean test(Method method) {
+            return method.getName().equals(methodName);
+        }
+
+    }
+
+
     public <T> Method fetch(final Class clazz, final String methodName, Class<T>... params){
         dbc.precondition(clazz != null, "trying to fetch a method from a null class");
         dbc.precondition(methodName != null, "trying to fetch a method with a null methodName");
@@ -29,13 +44,7 @@ public class MethodReflector {
         dbc.precondition(clazz != null, "trying to fetch a method from a null class");
         dbc.precondition(methodName != null, "trying to fetch a method with a null methodName");
         final List<Method> methods = Arrays.asList(clazz.getMethods());
-        final List<Method> matchingMethods = Iterations.some(methods, new Predicate<Method>() {
-
-            @Override
-            public boolean test(Method method) {
-                return method.getName().equals(methodName);
-            }
-        });
+        final List<Method> matchingMethods = Iterations.some(methods, new SameMethodName(methodName));
         dbc.invariant(!matchingMethods.isEmpty(),"method %s not found", methodName);
         dbc.invariant(matchingMethods.size() == 1,"method is ambigouous (Class<T> params must be specified)");
         return matchingMethods.get(0);
