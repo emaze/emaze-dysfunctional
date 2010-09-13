@@ -20,7 +20,7 @@ public class MaybeIterator<E> implements Iterator<Maybe<E>> {
 
     @Override
     public boolean hasNext() {
-        return iterator.hasNext(); // TODO: semantic: always return true?
+        return iterator.hasNext();
     }
 
     /**
@@ -38,6 +38,8 @@ public class MaybeIterator<E> implements Iterator<Maybe<E>> {
 
     @Override
     public void remove() {
-        // TODO: remove semantic for MaybeIterator
+        throw new UnsupportedOperationException("cannot remove from a MaybeIterator");
+        // TODO: a remove semantic can be implemented by prefetching the next() element
+        //       the point is "do we really want it to?"
     }
 }

@@ -6,8 +6,12 @@ package net.emaze.dysfunctional.delegates;
  */
 public class Noop<E> implements Action<E> {
 
+    /**
+     * Does nothing 
+     * @param element 
+     */
     @Override
-    public void perform(E t) {
+    public void perform(E element) {
 
     }
 

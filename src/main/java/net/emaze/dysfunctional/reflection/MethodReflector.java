@@ -24,7 +24,7 @@ public class MethodReflector {
             throw new IllegalStateException("security exception while fetching method", ex);
         }
     }
-    
+
     public Method fetchAmbiguous(final Class clazz, final String methodName){
         dbc.precondition(clazz != null, "trying to fetch a method from a null class");
         dbc.precondition(methodName != null, "trying to fetch a method with a null methodName");

@@ -5,7 +5,8 @@ import java.util.Comparator;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- *
+ * semantic:
+ * MIN_FLOAT < negative floats < -0 < +0 < positive floats < MAX_FLOAT < every(NAN)
  * @author rferranti
  */
 public class StrictOrderingFloatComparator implements Comparator<Float>, Serializable {
