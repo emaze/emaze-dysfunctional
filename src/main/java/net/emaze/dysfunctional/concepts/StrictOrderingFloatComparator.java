@@ -11,6 +11,8 @@ import net.emaze.dysfunctional.contracts.dbc;
  */
 public class StrictOrderingFloatComparator implements Comparator<Float>, Serializable {
 
+    private static final long serialVersionUID = 1l;
+
     @Override
     public int compare(Float lhs, Float rhs) {
         dbc.precondition(lhs != null, "null double (lhs) on StrictOrderingFloatComparator");

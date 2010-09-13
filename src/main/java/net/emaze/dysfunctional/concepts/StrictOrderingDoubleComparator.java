@@ -10,6 +10,8 @@ import net.emaze.dysfunctional.contracts.dbc;
  */
 public class StrictOrderingDoubleComparator implements Comparator<Double>, Serializable {
 
+    private static final long serialVersionUID = 1l;
+
     @Override
     public int compare(Double lhs, Double rhs) {
         dbc.precondition(lhs != null, "null double (lhs) on StrictOrderingDoubleComparator");

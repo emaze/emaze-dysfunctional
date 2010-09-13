@@ -13,6 +13,9 @@ import net.emaze.dysfunctional.ranges.RangePolicy;
  * @author rferranti
  */
 public class IpRangePolicy implements RangePolicy<Integer>, Serializable {
+
+    private static final long serialVersionUID = 1l;
+
     @Override
     public List<Range<Integer>> normalize(Range<Integer>... ranges) {
         final List<Range<Integer>> out = new ArrayList<Range<Integer>>();
