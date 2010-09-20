@@ -1,11 +1,13 @@
 package net.emaze.dysfunctional.ranges;
 
+import java.util.Comparator;
 import net.emaze.dysfunctional.iterations.RangeIterator;
 import java.util.Iterator;
 import net.emaze.dysfunctional.concepts.Comparing;
 import net.emaze.dysfunctional.concepts.EqualsBuilder;
 import net.emaze.dysfunctional.concepts.HashCodeBuilder;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.iterations.sequencing.SequencingPolicy;
 
 /**
  *
@@ -13,23 +15,27 @@ import net.emaze.dysfunctional.contracts.dbc;
  */
 public class DenseRange<T> implements Range<T> {
 
+    private final SequencingPolicy<T> sequencer;
+    private final Comparator<T> comparator;
     private final T lower;
     private final T upper;
-    private final RangePolicy<T> policy;
 
-    public DenseRange(RangePolicy<T> policy, T lower, T upper) {
-        dbc.precondition(policy != null, "trying to create a DenseRange<T> with a null RangePolicy");
+    public DenseRange(SequencingPolicy<T> sequencer, Comparator<T> comparator, T lower, T upper) {
+        dbc.precondition(sequencer != null, "trying to create a DenseRange<T> with a null SequencingPolicy<T>");
+        dbc.precondition(comparator != null, "trying to create a DenseRange<T> with a null Comparator<T>");
         dbc.precondition(lower != null, "trying to create a DenseRange<T> with null lower bound");
         dbc.precondition(upper != null, "trying to create a DenseRange<T> with null upper bound");
-        this.policy = policy;
+        dbc.precondition(!Comparing.lhsIsGreater(lower, upper, comparator), "trying to create a DenseRange<T> a lower bound greater than upper bound");
+        this.sequencer = sequencer;
+        this.comparator = comparator;
         this.lower = lower;
         this.upper = upper;
     }
 
     @Override
     public boolean contains(T element) {
-        dbc.precondition(element != null, "checking if null is contained in DenseRange<T>(%s)", policy.toString(this));
-        return Comparing.lhsIsLesser(lower, element, policy) && Comparing.lhsIsLesser(element, upper, policy);
+        dbc.precondition(element != null, "checking if null is contained in DenseRange<T>");
+        return Comparing.lhsIsLesser(lower, element, comparator) && Comparing.lhsIsLesser(element, upper, comparator);
     }
 
     @Override
@@ -44,13 +50,13 @@ public class DenseRange<T> implements Range<T> {
 
     @Override
     public int compareTo(Range<T> other) {
-        dbc.precondition(other != null, "Comparing (compareTo) a DenseRange<T>(%s) with null", policy.toString(this));
+        dbc.precondition(other != null, "comparing (compareTo) a DenseRange<T> with null");
         return new RangeComparator().compare(this, other);
     }
 
     @Override
     public Iterator<T> iterator() {
-        return new RangeIterator(policy, lower, upper);
+        return new RangeIterator(sequencer, lower, upper);
     }
 
     @Override
@@ -59,7 +65,8 @@ public class DenseRange<T> implements Range<T> {
             return false;
         }
         final DenseRange<T> other = (DenseRange<T>) rhs;
-        return new EqualsBuilder().append(this.policy, other.policy).
+        return new EqualsBuilder().append(this.sequencer, other.sequencer).
+                append(this.comparator, other.comparator).
                 append(this.lower, other.lower).
                 append(this.upper, other.upper).
                 isEquals();
@@ -67,7 +74,8 @@ public class DenseRange<T> implements Range<T> {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(policy).
+        return new HashCodeBuilder().append(sequencer).
+                append(comparator).
                 append(lower).
                 append(upper).
                 toHashCode();
@@ -87,11 +95,11 @@ public class DenseRange<T> implements Range<T> {
      */
     @Override
     public boolean overlaps(Range<T> other) {
-        dbc.precondition(other != null, "checking for overlaps between a DenseRange<T>(%s) and null", policy.toString(this));
+        dbc.precondition(other != null, "checking for overlaps between a DenseRange<T> and null");
         if (other instanceof DenseRange == false) {
             return other.overlaps(this);
         }
-        if (Comparing.lhsIsGreater(upper, other.lower(), policy) || Comparing.lhsIsGreater(lower, other.upper(), policy)) {
+        if (Comparing.lhsIsGreater(upper, other.lower(), comparator) || Comparing.lhsIsGreater(lower, other.upper(), comparator)) {
             return false;
         }
         return true;

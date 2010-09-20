@@ -7,7 +7,7 @@ import net.emaze.dysfunctional.concepts.CompareToBuilder;
  *
  * @author rferranti
  */
-public class RangeComparator<T extends Comparable<T>> implements Comparator<Range<T>>{
+public class RangeComparator<T> implements Comparator<Range<T>>{
 
     @Override
     public int compare(Range<T> lhs, Range<T> rhs) {
