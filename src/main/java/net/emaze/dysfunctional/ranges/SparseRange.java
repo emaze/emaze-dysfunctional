@@ -15,23 +15,25 @@ import net.emaze.dysfunctional.iterations.Iterations;
  *
  * @author rferranti
  */
-public class SparseRange<T extends Comparable<T>> implements Range<T> {
+public class SparseRange<T> implements Range<T> {
 
-    private final List<Range<T>> ranges = new ArrayList<Range<T>>();
+    private final List<DenseRange<T>> ranges = new ArrayList<DenseRange<T>>();
     private final RangePolicy<T> policy;
 
-    public SparseRange(RangePolicy<T> policy, Range<T>... ranges) {
-        dbc.precondition(ranges.length != 0, "SparseRange<T> must be constructed with at least one argument");
+    public SparseRange(RangePolicy<T> policy, DenseRange<T>... ranges) {
+        dbc.precondition(policy != null, "trying to create a SparseRange<T> with a null RangePolicy");
+        dbc.precondition(ranges.length != 0, "trying to create a SparseRange<T> from zero ranges");
         this.policy = policy;
-        this.ranges.addAll(policy.normalize(ranges));
+        this.ranges.addAll(policy.asNonOverlapping(ranges));
     }
 
     @Override
     public boolean contains(final T element) {
-        return Iterations.any(ranges, new Predicate<Range<T>>() {
+        dbc.precondition(element != null, "checking if null is contained in SparseRange<T>(%s)", policy.toString(ranges));
+        return Iterations.any(ranges, new Predicate<DenseRange<T>>() {
 
             @Override
-            public boolean test(Range<T> range) {
+            public boolean test(DenseRange<T> range) {
                 return range.contains(element);
             }
         });
@@ -49,15 +51,16 @@ public class SparseRange<T extends Comparable<T>> implements Range<T> {
 
     @Override
     public int compareTo(Range<T> other) {
-        return policy.compare(this, other);
+        dbc.precondition(other != null, "Comparing (compareTo) a SparseRange<T>(%s) with null", policy.toString(ranges));
+        return new RangeComparator().compare(this, other);
     }
 
     @Override
     public Iterator<T> iterator() {
-        return new ChainIterator<T>(Iterations.map(ranges, new Delegate<Iterator<T>, Range<T>>() {
+        return new ChainIterator<T>(Iterations.map(ranges, new Delegate<Iterator<T>, DenseRange<T>>() {
 
             @Override
-            public Iterator<T> perform(Range<T> iterable) {
+            public Iterator<T> perform(DenseRange<T> iterable) {
                 return iterable.iterator();
             }
         }));
@@ -79,5 +82,17 @@ public class SparseRange<T extends Comparable<T>> implements Range<T> {
         return new HashCodeBuilder().append(policy).
                 append(this.ranges).
                 toHashCode();
+    }
+
+    @Override
+    public boolean overlaps(final Range<T> other) {
+        dbc.precondition(other != null, "checking for overlaps between a SparseRange<T>(%s) and null", policy.toString(ranges));
+        return Iterations.any(ranges, new Predicate<DenseRange<T>>() {
+
+            @Override
+            public boolean test(DenseRange<T> range) {
+                return range.overlaps(other);
+            }
+        });
     }
 }
