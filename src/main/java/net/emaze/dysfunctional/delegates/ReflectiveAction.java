@@ -23,7 +23,7 @@ public class ReflectiveAction<T> implements Action<T> {
         if (!methodCache.isMemoized()) {
             final Method m = clazz.hasValue()
                     ? new MethodReflector().fetch(callee.getClass(), methodName, clazz.value())
-                    : new MethodReflector().fetchAmbiguous(callee.getClass(), methodName);
+                    : new MethodReflector().fetchByName(callee.getClass(), methodName);
             methodCache.memoize(m);
         }
         new MethodInvoker(methodCache.value()).invoke(callee, message);
