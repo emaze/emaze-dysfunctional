@@ -6,7 +6,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 /**
  * A composite iterator interleaving value yielded by the values iterator
  * with value from the separators iterator.
- * separators iterator length must be >= values iterator length
+ * (separators iterator length) must be >= (values iterator length - 1)
  * @author rferranti
  */
 public class InterleavingIterator<T> implements Iterator<T> {
