@@ -9,12 +9,12 @@ import net.emaze.dysfunctional.tuples.Pair;
  */
 public class Counts {
 
-    public static <T> Iterable<Pair<Integer,T>> counted(Iterable<T> iter) {
-        return counted(iter,0,Integer.MAX_VALUE);
+    public static <T> Iterable<Pair<Integer, T>> counted(Iterable<T> iterable) {
+        return counted(iterable, 0, Integer.MAX_VALUE);
     }
-    
-    public static <T> Iterable<Pair<Integer,T>> counted(Iterable<T> iter, int from , int upTo) {
-        final Iterator<Pair<Integer,T>> iterator = new CountedIterator(iter.iterator(), from, upTo);
-        return new OneTimeIterable(iterator);
+
+    public static <T> Iterable<Pair<Integer, T>> counted(Iterable<T> iterable, int from, int upTo) {
+        final Iterator<T> iterator = iterable.iterator();
+        return new OneTimeIterable(new CountedIterator(iterator, from, upTo));
     }
 }
