@@ -12,7 +12,7 @@ public class RangeComparator<T> implements Comparator<Range<T>>{
     @Override
     public int compare(Range<T> lhs, Range<T> rhs) {
         return new CompareToBuilder().append(lhs.lower(), rhs.lower()).
-                append(lhs.upper(), lhs.upper()).
+                append(rhs.upper(), lhs.upper()).
                 toComparison();
     }
 
