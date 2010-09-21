@@ -40,7 +40,7 @@ public class ChainIterator<E> implements Iterator<E> {
         });
     }
 
-    private Maybe<Iterator<E>> currentElement() {
+    private static <E> Maybe<Iterator<E>> currentElement(List<Iterator<E>> iterators) {
         final Iterator<Iterator<E>> iteratorOfIterators = iterators.iterator();
         while (iteratorOfIterators.hasNext()) {
             final Iterator<E> iterator = iteratorOfIterators.next();
@@ -55,7 +55,7 @@ public class ChainIterator<E> implements Iterator<E> {
 
     @Override
     public E next() {
-        final Maybe<Iterator<E>> maybeElement = currentElement();
+        final Maybe<Iterator<E>> maybeElement = currentElement(iterators);
         if (maybeElement.hasValue()) {
             return maybeElement.value().next();
         }
@@ -64,7 +64,7 @@ public class ChainIterator<E> implements Iterator<E> {
 
     @Override
     public void remove() {
-        final Maybe<Iterator<E>> maybeElement = currentElement();
+        final Maybe<Iterator<E>> maybeElement = currentElement(iterators);
         if (maybeElement.hasValue()) {
             maybeElement.value().remove();
         }
