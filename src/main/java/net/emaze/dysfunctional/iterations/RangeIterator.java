@@ -4,7 +4,7 @@ import net.emaze.dysfunctional.iterations.sequencing.SequencingPolicy;
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 /**
- * Decorates an iterator enabling to consume only a range of its elements
+ * Yields values generated from a Sequencing<T> policy in a given range([start:upto])
  * @author rferranti
  */
 public class RangeIterator<T> implements Iterator<T> {
