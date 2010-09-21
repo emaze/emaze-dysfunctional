@@ -4,7 +4,7 @@ import java.util.Comparator;
 import net.emaze.dysfunctional.concepts.CompareToBuilder;
 
 /**
- *
+ * smallest lower bounds and greatest upper bounds ranges come first
  * @author rferranti
  */
 public class RangeComparator<T> implements Comparator<Range<T>>{
