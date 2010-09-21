@@ -21,7 +21,7 @@ public class InterleavingIteratorTest {
         while(iter.hasNext()){
             got.add(iter.next());
         }
-        final List<String> expected = Arrays.asList("1", "a", "2", "b", "3", "c");
+        final List<String> expected = Arrays.asList("1", "a", "2", "b", "3");
         Assert.assertEquals(expected, got);
     }
 
