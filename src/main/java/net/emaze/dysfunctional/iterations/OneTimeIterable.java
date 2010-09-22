@@ -18,7 +18,7 @@ public class OneTimeIterable<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        dbc.invariant(maybeIterator.hasValue(), "consuming an iterator two times");
+        dbc.stateprecondition(maybeIterator.hasValue(), "consuming an iterator two times");
         final Iterator<T> iterator = maybeIterator.value();
         maybeIterator = Maybe.nothing();
         return iterator;

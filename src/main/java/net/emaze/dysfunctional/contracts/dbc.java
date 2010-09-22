@@ -20,11 +20,11 @@ public abstract class dbc {
         }
     }
     
-    public static void invariant(Statement statement){
-        invariant(statement.evaluate(), "invariant failed: %s", statement);
+    public static void stateprecondition(Statement statement){
+        stateprecondition(statement.evaluate(), "precondition (state) failed: %s", statement);
     }
 
-    public static void invariant(boolean assertion, String format, Object... params) {
+    public static void stateprecondition(boolean assertion, String format, Object... params) {
         if (!assertion) {
             throw new IllegalStateException(String.format(format, params));
         }

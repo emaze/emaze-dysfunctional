@@ -23,7 +23,7 @@ public class Memoized<T> {
     }
 
     public T value() {
-        dbc.invariant(memory.hasValue(), "a value should be memoized before being fetched");
+        dbc.stateprecondition(memory.hasValue(), "a value should be memoized before being fetched");
         return memory.value();
     }
 }

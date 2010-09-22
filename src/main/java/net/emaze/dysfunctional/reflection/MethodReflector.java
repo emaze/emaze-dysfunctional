@@ -34,8 +34,8 @@ public class MethodReflector {
                 matchingMethods.add(m);
             }
         }
-        dbc.invariant(!matchingMethods.isEmpty(), "method %s not found", methodName);
-        dbc.invariant(matchingMethods.size() == 1, "method is ambigouous (method params must be specified)");
+        dbc.stateprecondition(!matchingMethods.isEmpty(), "method %s not found", methodName);
+        dbc.stateprecondition(matchingMethods.size() == 1, "method is ambigouous (method params must be specified)");
         return matchingMethods.get(0);
     }
 }
