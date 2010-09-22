@@ -1,11 +1,10 @@
 package net.emaze.dysfunctional.reflection;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.delegates.Predicate;
-import net.emaze.dysfunctional.iterations.Iterations;
 
 /**
  * Resolves via reflection a reference to a Method
@@ -13,22 +12,7 @@ import net.emaze.dysfunctional.iterations.Iterations;
  */
 public class MethodReflector {
 
-    private static class SameMethodName implements Predicate<Method> {
-        private final String methodName;
-
-        public SameMethodName(String methodName) {
-            this.methodName = methodName;
-        }
-        
-        @Override
-        public boolean test(Method method) {
-            return method.getName().equals(methodName);
-        }
-
-    }
-
-
-    public <T> Method fetch(final Class clazz, final String methodName, Class<T>... params){
+    public <T> Method fetch(final Class clazz, final String methodName, Class<T>... params) {
         dbc.precondition(clazz != null, "trying to fetch a method from a null class");
         dbc.precondition(methodName != null, "trying to fetch a method with a null methodName");
         try {
@@ -40,14 +24,18 @@ public class MethodReflector {
         }
     }
 
-    public Method fetchByName(final Class clazz, final String methodName){
+    public Method fetchByName(final Class clazz, final String methodName) {
         dbc.precondition(clazz != null, "trying to fetch a method from a null class");
         dbc.precondition(methodName != null, "trying to fetch a method with a null methodName");
         final List<Method> methods = Arrays.asList(clazz.getMethods());
-        final List<Method> matchingMethods = Iterations.some(methods, new SameMethodName(methodName));
-        dbc.invariant(!matchingMethods.isEmpty(),"method %s not found", methodName);
-        dbc.invariant(matchingMethods.size() == 1,"method is ambigouous (method params must be specified)");
+        final List<Method> matchingMethods = new ArrayList<Method>();
+        for(Method m : methods){
+            if(m.getName().equals(methodName)){
+                matchingMethods.add(m);
+            }
+        }
+        dbc.invariant(!matchingMethods.isEmpty(), "method %s not found", methodName);
+        dbc.invariant(matchingMethods.size() == 1, "method is ambigouous (method params must be specified)");
         return matchingMethods.get(0);
     }
-
 }

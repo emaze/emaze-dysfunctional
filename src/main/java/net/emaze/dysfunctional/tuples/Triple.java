@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
-import net.emaze.dysfunctional.concepts.EqualsBuilder;
-import net.emaze.dysfunctional.concepts.HashCodeBuilder;
+import net.emaze.dysfunctional.equality.EqualsBuilder;
+import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
 /**
  * a Pair + 1 at the same price

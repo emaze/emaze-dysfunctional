@@ -6,15 +6,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.concepts.Comparing;
-import net.emaze.dysfunctional.concepts.EqualsBuilder;
-import net.emaze.dysfunctional.concepts.HashCodeBuilder;
+import net.emaze.dysfunctional.order.Comparing;
+import net.emaze.dysfunctional.equality.EqualsBuilder;
+import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.delegates.Delegate;
-import net.emaze.dysfunctional.delegates.Predicate;
-import net.emaze.dysfunctional.iterations.ChainIterator;
+import net.emaze.dysfunctional.multiplexing.ChainIterator;
+import net.emaze.dysfunctional.iterations.IterableToIteratorTransformer;
 import net.emaze.dysfunctional.iterations.Iterations;
-import net.emaze.dysfunctional.iterations.sequencing.SequencingPolicy;
+import net.emaze.dysfunctional.order.SequencingPolicy;
 
 /**
  *
@@ -42,7 +41,7 @@ public class SparseRange<T> implements Range<T> {
         final Iterator<DenseRange<T>> iter = sortedRanges.iterator();
         DenseRange<T> current = iter.next();
         while (iter.hasNext()) {
-            DenseRange<T> next = iter.next();
+            final DenseRange<T> next = iter.next();
             if (Comparing.sameOrder(sequencer.next(current.upper()), next.upper(), comparator)
                     || (current.overlaps(next) && Comparing.lhsIsGreater(next.upper(), current.upper(), comparator))) {
                 // |-----------|
@@ -65,13 +64,7 @@ public class SparseRange<T> implements Range<T> {
     @Override
     public boolean contains(final T element) {
         dbc.precondition(element != null, "checking if null is contained in SparseRange<T>");
-        return Iterations.any(ranges, new Predicate<DenseRange<T>>() {
-
-            @Override
-            public boolean test(DenseRange<T> range) {
-                return range.contains(element);
-            }
-        });
+        return Iterations.any(ranges, new RangeNotContaining<T>(element));
     }
 
     @Override
@@ -92,13 +85,7 @@ public class SparseRange<T> implements Range<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new ChainIterator<T>(Iterations.map(ranges, new Delegate<Iterator<T>, DenseRange<T>>() {
-
-            @Override
-            public Iterator<T> perform(DenseRange<T> iterable) {
-                return iterable.iterator();
-            }
-        }));
+        return new ChainIterator<T>(Iterations.map(ranges, new IterableToIteratorTransformer<T,DenseRange<T>>()));
     }
 
     @Override
@@ -124,12 +111,6 @@ public class SparseRange<T> implements Range<T> {
     @Override
     public boolean overlaps(final Range<T> other) {
         dbc.precondition(other != null, "checking for overlaps between a SparseRange<T> and null");
-        return Iterations.any(ranges, new Predicate<DenseRange<T>>() {
-
-            @Override
-            public boolean test(DenseRange<T> range) {
-                return range.overlaps(other);
-            }
-        });
+        return Iterations.any(ranges, new RangeNotOverlappingWith<T>(other));
     }
 }

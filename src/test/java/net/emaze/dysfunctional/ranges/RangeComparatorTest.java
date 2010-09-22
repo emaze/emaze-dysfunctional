@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.ranges;
 
 import java.util.Iterator;
 import junit.framework.Assert;
-import net.emaze.dysfunctional.concepts.Comparing;
+import net.emaze.dysfunctional.order.Comparing;
 import org.junit.Test;
 
 /**

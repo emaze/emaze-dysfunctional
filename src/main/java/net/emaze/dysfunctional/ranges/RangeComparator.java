@@ -1,10 +1,10 @@
 package net.emaze.dysfunctional.ranges;
 
 import java.util.Comparator;
-import net.emaze.dysfunctional.concepts.CompareToBuilder;
+import net.emaze.dysfunctional.order.CompareToBuilder;
 
 /**
- * smallest lower bounds and greatest upper bounds ranges come first
+ * smallest lower bounds with greatest upper bounds ranges come first
  * @author rferranti
  */
 public class RangeComparator<T> implements Comparator<Range<T>>{

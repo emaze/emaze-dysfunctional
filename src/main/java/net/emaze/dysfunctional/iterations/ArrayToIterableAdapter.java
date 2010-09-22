@@ -18,6 +18,6 @@ public class ArrayToIterableAdapter<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new ArrayIterator(values);
+        return new ArrayIterator<T>(values);
     }
 }

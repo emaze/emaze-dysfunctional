@@ -1,8 +1,8 @@
 package net.emaze.dysfunctional.delegates;
 
 import java.lang.reflect.Method;
-import net.emaze.dysfunctional.Maybe;
-import net.emaze.dysfunctional.Memoized;
+import net.emaze.dysfunctional.options.Maybe;
+import net.emaze.dysfunctional.options.Memoized;
 import net.emaze.dysfunctional.reflection.MethodInvoker;
 import net.emaze.dysfunctional.reflection.MethodReflector;
 

@@ -1,13 +1,12 @@
 package net.emaze.dysfunctional.ranges;
 
 import java.util.Comparator;
-import net.emaze.dysfunctional.iterations.RangeIterator;
 import java.util.Iterator;
-import net.emaze.dysfunctional.concepts.Comparing;
-import net.emaze.dysfunctional.concepts.EqualsBuilder;
-import net.emaze.dysfunctional.concepts.HashCodeBuilder;
+import net.emaze.dysfunctional.order.Comparing;
+import net.emaze.dysfunctional.equality.EqualsBuilder;
+import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.iterations.sequencing.SequencingPolicy;
+import net.emaze.dysfunctional.order.SequencingPolicy;
 
 /**
  *

@@ -1,8 +1,9 @@
 package net.emaze.dysfunctional.iterations;
 
+import net.emaze.dysfunctional.options.MaybeIterator;
 import net.emaze.dysfunctional.tuples.Pair;
 import java.util.Iterator;
-import net.emaze.dysfunctional.Maybe;
+import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
