@@ -3,22 +3,19 @@ package net.emaze.dysfunctional.iterations;
 import net.emaze.dysfunctional.tuples.Pair;
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.iterations.sequencing.IntegerSequencingPolicy;
-import net.emaze.dysfunctional.iterations.sequencing.SequencingPolicy;
+import net.emaze.dysfunctional.ranges.Range;
 
 /**
  * Decorates an iterator used to count iterated element via yielding a Pair<Integer,E>
  * @author rferranti
  */
-public class CountedIterator<E> implements Iterator<Pair<Integer, E>> {
+public class CountedIterator<T,E> implements Iterator<Pair<T, E>> {
 
-    private final ZipShortestIterator<Integer, E> zipped;
+    private final ZipShortestIterator<T, E> zipped;
 
-    public CountedIterator(Iterator<E> iterator, int from, int upTo) {
+    public CountedIterator(Iterator<E> iterator, Range<T> range ) {
         dbc.precondition(iterator != null, "trying to create a CountedIterator from a null iterator");
-        final SequencingPolicy<Integer> sequencer = new IntegerSequencingPolicy();
-        final Iterator<Integer> counter = new RangeIterator<Integer>(sequencer, from, upTo);
-        zipped = new ZipShortestIterator<Integer, E>(counter, iterator);
+        zipped = new ZipShortestIterator<T, E>( range.iterator() , iterator);
     }
 
     @Override
@@ -27,7 +24,7 @@ public class CountedIterator<E> implements Iterator<Pair<Integer, E>> {
     }
 
     @Override
-    public Pair<Integer, E> next() {
+    public Pair<T, E> next() {
         return zipped.next();
     }
 
