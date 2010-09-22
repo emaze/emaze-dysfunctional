@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.iterations;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.Maybe;
