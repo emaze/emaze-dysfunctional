@@ -1,7 +1,6 @@
 package net.emaze.dysfunctional.iterations;
 
 import java.util.Arrays;
-import net.emaze.dysfunctional.delegates.Predicate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -28,16 +27,7 @@ public class ChainIterator<E> implements Iterator<E> {
 
     @Override
     public boolean hasNext() {
-        if (iterators.isEmpty()) {
-            return false;
-        }
-        return Iterations.any(iterators, new Predicate<Iterator<E>>() {
-
-            @Override
-            public boolean test(Iterator<E> iterator) {
-                return iterator.hasNext();
-            }
-        });
+        return iterators.isEmpty() ? false : Iterations.any(iterators, new HasNext());
     }
 
     private static <E> Maybe<Iterator<E>> currentElement(List<Iterator<E>> iterators) {
