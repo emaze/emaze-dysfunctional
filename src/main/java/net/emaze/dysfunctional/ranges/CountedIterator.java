@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.ranges;
 import net.emaze.dysfunctional.tuples.Pair;
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.iterations.convolutions.ZipShortestIterator;
+import net.emaze.dysfunctional.convolutions.ZipShortestIterator;
 import net.emaze.dysfunctional.ranges.Range;
 
 /**

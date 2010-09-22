@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.iterations.convolutions;
+package net.emaze.dysfunctional.convolutions;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.iterations.OneTimeIterable;

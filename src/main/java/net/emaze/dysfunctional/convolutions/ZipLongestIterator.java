@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.iterations.convolutions;
+package net.emaze.dysfunctional.convolutions;
 
 import net.emaze.dysfunctional.options.MaybeIterator;
 import net.emaze.dysfunctional.tuples.Pair;

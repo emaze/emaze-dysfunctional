@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.iterations;
 
-import net.emaze.dysfunctional.iterations.convolutions.ZipShortestIterator;
+import net.emaze.dysfunctional.convolutions.ZipShortestIterator;
 import net.emaze.dysfunctional.tuples.Pair;
 import java.util.ArrayList;
 import java.util.Arrays;
