@@ -1,6 +1,7 @@
-package net.emaze.dysfunctional.iterations;
+package net.emaze.dysfunctional.iterations.convolutions;
 
 import java.util.Iterator;
+import net.emaze.dysfunctional.iterations.OneTimeIterable;
 import net.emaze.dysfunctional.tuples.Pair;
 
 /**
