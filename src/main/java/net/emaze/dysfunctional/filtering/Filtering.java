@@ -9,10 +9,11 @@ import net.emaze.dysfunctional.delegates.Predicate;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 
 /**
- *
+ * TODO: FIXME: decouple consumption strategy from filtering. We should be much more lazy
  * @author rferranti
  */
 public class Filtering {
+
     /**
      * filters an iterable returning matching elements
      * @param iterable the iterable where elements are fetched from
@@ -175,4 +176,19 @@ public class Filtering {
         return last(new ArrayIterator<E>(array));
     }
 
+    public static <E> Iterator<E> takeWhile(Iterator<E> iterator, Predicate<E> predicate) {
+        return new TakeWhileIterator<E>(iterator, predicate);
+    }
+
+    public static <E> Iterator<E> dropWhile(Iterator<E> iterator, Predicate<E> predicate) {
+        return new DropWhileIterator<E>(iterator, predicate);
+    }
+    
+    public static <E> Iterator<E> take(Iterator<E> iterator, long howMany) {
+        return new TakeWhileIterator<E>(iterator, new UntilCount<E>(howMany));
+    }
+
+    public static <E> Iterator<E> drop(Iterator<E> iterator, long howMany) {
+        return new DropWhileIterator<E>(iterator, new UntilCount<E>(howMany));
+    }
 }
