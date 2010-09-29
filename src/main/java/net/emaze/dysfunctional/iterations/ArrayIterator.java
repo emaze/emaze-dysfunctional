@@ -39,7 +39,7 @@ public class ArrayIterator<T> implements Iterator<T> {
 
     @Override
     public void remove() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Cannot remove from an ArrayIterator");
     }
 
 }
