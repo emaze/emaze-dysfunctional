@@ -7,6 +7,11 @@ package net.emaze.dysfunctional.delegates;
  */
 public class Identity<T> implements Delegate<T,T>{
 
+    /**
+     * yields the given element
+     * @param element the given element
+     * @return the given element
+     */
     @Override
     public T perform(T element) {
         return element;
