@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.iterations;
 
-import net.emaze.dysfunctional.multiplexing.InterleavingIterator;
+import net.emaze.dysfunctional.multiplexing.InterposingIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +17,7 @@ public class InterleavingIteratorTest {
     public void canInterleaveStrings() {
         final List<String> values = Arrays.asList("1", "2", "3");
         final List<String> separators = Arrays.asList("a", "b");
-        final InterleavingIterator<String> iter = new InterleavingIterator<String>(values.iterator(), separators.iterator());
+        final InterposingIterator<String> iter = new InterposingIterator<String>(values.iterator(), separators.iterator());
         final List<String> got = new ArrayList<String>();
         while(iter.hasNext()){
             got.add(iter.next());

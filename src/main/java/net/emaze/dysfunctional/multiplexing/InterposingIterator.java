@@ -4,18 +4,18 @@ import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- * A composite iterator interleaving value yielded by the values iterator
+ * A composite iterator interposing value yielded by the values iterator
  * with value from the separators iterator.
  * (separators iterator length) must be >= (values iterator length - 1)
  * @author rferranti
  */
-public class InterleavingIterator<T> implements Iterator<T> {
+public class InterposingIterator<T> implements Iterator<T> {
 
     private final Iterator<T> values;
     private final Iterator<T> separators;
     private boolean consumingSeparator = false;
 
-    public InterleavingIterator(Iterator<T> values, Iterator<T> separators) {
+    public InterposingIterator(Iterator<T> values, Iterator<T> separators) {
         this.values = values;
         this.separators = separators;
     }
