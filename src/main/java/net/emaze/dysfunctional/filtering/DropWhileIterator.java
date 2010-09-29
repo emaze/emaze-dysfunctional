@@ -12,7 +12,7 @@ public class DropWhileIterator<T> implements Iterator<T> {
     private final Iterator<T> iterator;
 
     public DropWhileIterator(Iterator<T> iterator, final Predicate<T> dropWhile) {
-        this.iterator = new FilteringIterator<T>(iterator, new DropWhileFilter(dropWhile));
+        this.iterator = new FilteringIterator<T>(iterator, new DropWhile(dropWhile));
     }
 
     @Override

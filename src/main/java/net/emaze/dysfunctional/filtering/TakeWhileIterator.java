@@ -12,7 +12,7 @@ public class TakeWhileIterator<T> implements Iterator<T> {
     private final Iterator<T> iterator;
 
     public TakeWhileIterator(Iterator<T> iterator, final Predicate<T> takeWhile) {
-        this.iterator = new FilteringIterator<T>(iterator, new TakeWhileFilter(takeWhile));
+        this.iterator = new FilteringIterator<T>(iterator, new TakeWhile(takeWhile));
     }
 
     @Override

@@ -6,12 +6,12 @@ import net.emaze.dysfunctional.delegates.Predicate;
  *
  * @author rferranti
  */
-public class TakeWhileFilter<T> implements Predicate<T> {
+public class TakeWhile<T> implements Predicate<T> {
 
     private boolean dropElement;
     private final Predicate<T> takeWhile;
 
-    public TakeWhileFilter(Predicate<T> dropWhile) {
+    public TakeWhile(Predicate<T> dropWhile) {
         this.takeWhile = dropWhile;
     }
       
