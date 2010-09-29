@@ -1,12 +1,13 @@
 package net.emaze.dysfunctional.order;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
  * Redispatching comparator for Comparables
  * @author rferranti
  */
-public class ComparableComparator<T extends Comparable> implements Comparator<T>{
+public class ComparableComparator<T extends Comparable> implements Comparator<T>, Serializable{
 
     @Override
     public int compare(T lhs, T rhs) {

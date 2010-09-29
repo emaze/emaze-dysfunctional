@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.order;
 
+import java.io.Serializable;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.util.Comparator;
@@ -8,7 +9,7 @@ import java.util.Comparator;
  *
  * @author rferranti
  */
-public class InetAddressPolicy implements SequencingPolicy<Inet4Address>, Comparator<Inet4Address> {
+public class InetAddressPolicy implements SequencingPolicy<Inet4Address>, Comparator<Inet4Address>, Serializable {
 
 
     private static long asLong(Inet4Address address) {
