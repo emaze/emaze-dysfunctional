@@ -5,8 +5,6 @@ import net.emaze.dysfunctional.iterations.OneTimeIterable;
 import net.emaze.dysfunctional.order.ComparableComparator;
 import net.emaze.dysfunctional.order.IntegerSequencingPolicy;
 import net.emaze.dysfunctional.order.SequencingPolicy;
-import net.emaze.dysfunctional.ranges.DenseRange;
-import net.emaze.dysfunctional.ranges.Range;
 import net.emaze.dysfunctional.tuples.Pair;
 
 /**
