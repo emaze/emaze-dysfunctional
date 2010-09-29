@@ -4,6 +4,7 @@ import net.emaze.dysfunctional.delegates.Predicate;
 
 /**
  *
+ * @param <T>
  * @author rferranti
  */
 public class TakeWhile<T> implements Predicate<T> {

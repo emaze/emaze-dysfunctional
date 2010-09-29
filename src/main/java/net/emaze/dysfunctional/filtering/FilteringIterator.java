@@ -7,6 +7,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  * Iterates on the iterator elements which the predicate matches
+ * @param <E> 
  * @author rferranti
  */
 public class FilteringIterator<E> implements Iterator<E> {

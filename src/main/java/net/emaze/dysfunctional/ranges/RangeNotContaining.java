@@ -4,6 +4,7 @@ import net.emaze.dysfunctional.delegates.Predicate;
 
 /**
  *
+ * @param <T> 
  * @author rferranti
  */
 public class RangeNotContaining<T> implements Predicate<DenseRange<T>>{

@@ -8,9 +8,11 @@ import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  * Adapts two iterators yielding their longest convolution (via a Pair<Maybe<E1>,Maybe<E2>>)
+ * @param <E1>
+ * @param <E2>
  * @author rferranti
  */
-public class ZipLongestIterator<E1,E2> implements Iterator<Pair<Maybe<E1>,Maybe<E2>>>{
+public class ZipLongestIterator<E1, E2> implements Iterator<Pair<Maybe<E1>, Maybe<E2>>> {
 
     private final MaybeIterator<E1> former;
     private final MaybeIterator<E2> latter;
@@ -18,8 +20,8 @@ public class ZipLongestIterator<E1,E2> implements Iterator<Pair<Maybe<E1>,Maybe<
     public ZipLongestIterator(Iterator<E1> former, Iterator<E2> latter) {
         dbc.precondition(former != null, "trying to create a ZipLongestIterator from a null iterator (former)");
         dbc.precondition(latter != null, "trying to create a ZipLongestIterator from a null iterator (latter)");
-        this.former = new MaybeIterator(former);
-        this.latter = new MaybeIterator(latter);
+        this.former = new MaybeIterator<E1>(former);
+        this.latter = new MaybeIterator<E2>(latter);
     }
 
     @Override
@@ -33,8 +35,8 @@ public class ZipLongestIterator<E1,E2> implements Iterator<Pair<Maybe<E1>,Maybe<
      * @return
      */
     @Override
-    public Pair<Maybe<E1>,Maybe<E2>> next() {
-        return new Pair(former.next(), latter.next());
+    public Pair<Maybe<E1>, Maybe<E2>> next() {
+        return new Pair<Maybe<E1>, Maybe<E2>>(former.next(), latter.next());
     }
 
     @Override
@@ -42,5 +44,4 @@ public class ZipLongestIterator<E1,E2> implements Iterator<Pair<Maybe<E1>,Maybe<
         former.remove();
         latter.remove();
     }
-
 }

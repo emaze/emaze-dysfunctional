@@ -4,6 +4,7 @@ import java.util.Collection;
 
 /**
  * A multicasting functor contract
+ * @param <F> 
  * @author rferranti
  */
 public interface Multicasting<F> {

@@ -5,9 +5,12 @@ import java.util.Comparator;
 
 /**
  * Redispatching comparator for Comparables
+ * @param <T>
  * @author rferranti
  */
-public class ComparableComparator<T extends Comparable> implements Comparator<T>, Serializable{
+public class ComparableComparator<T extends Comparable<T>> implements Comparator<T>, Serializable{
+
+    private static final long serialVersionUID = 1l;
 
     @Override
     public int compare(T lhs, T rhs) {

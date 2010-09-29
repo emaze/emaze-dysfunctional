@@ -7,6 +7,8 @@ import net.emaze.dysfunctional.convolutions.ZipShortestIterator;
 
 /**
  * Decorates an iterator used to count iterated element via yielding a Pair<Integer,E>
+ * @param <T>
+ * @param <E> 
  * @author rferranti
  */
 public class CountedIterator<T,E> implements Iterator<Pair<T, E>> {

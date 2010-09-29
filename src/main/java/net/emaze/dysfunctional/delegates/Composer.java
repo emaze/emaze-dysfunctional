@@ -2,6 +2,9 @@ package net.emaze.dysfunctional.delegates;
 
 /**
  * given f, g yields f ° g (f of g, f following g)
+ * @param <R>
+ * @param <T>
+ * @param <U> 
  * @author rferranti
  */
 public class Composer<R,T,U> implements Delegate<R,T>{

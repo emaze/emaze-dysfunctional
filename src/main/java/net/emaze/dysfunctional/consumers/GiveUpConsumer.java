@@ -5,6 +5,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  * gives up after consuming the first element
+ * @param <E>
  * @author rferranti
  */
 public class GiveUpConsumer<E> implements Consumer<E,Iterator<E>>{

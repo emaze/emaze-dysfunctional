@@ -5,6 +5,7 @@ import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 /**
  * Yields values generated from a Sequencing<T> policy in a given range([start:upto])
+ * @param <T> 
  * @author rferranti
  */
 public class RangeIterator<T> implements Iterator<T> {

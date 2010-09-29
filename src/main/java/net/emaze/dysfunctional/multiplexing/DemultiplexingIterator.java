@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * shortest
+ * @param <T> 
  * @author rferranti
  */
 public class DemultiplexingIterator<T> implements Iterator<List<T>> {

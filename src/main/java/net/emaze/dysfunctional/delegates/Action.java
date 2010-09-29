@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.delegates;
 
 /**
  * A unary functor with no return value
+ * @param <E>
  * @author rferranti
  */
 public interface Action<E> {

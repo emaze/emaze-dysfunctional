@@ -5,9 +5,11 @@ import net.emaze.dysfunctional.delegates.Delegate;
 
 /**
  *
+ * @param <T>
+ * @param <V> 
  * @author rferranti
  */
-public class IterableToIteratorTransformer<T,V extends Iterable> implements Delegate<Iterator<T>,V> {
+public class IterableToIteratorTransformer<T,V extends Iterable<T>> implements Delegate<Iterator<T>,V> {
 
     @Override
     public Iterator<T> perform(V iterable) {

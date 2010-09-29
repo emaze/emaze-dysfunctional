@@ -7,6 +7,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  * consumes every element from the consumable
+ * @param <E>
  * @author rferranti
  */
 public class EagerConsumer<E> implements Consumer<List<E>,Iterator<E>>{

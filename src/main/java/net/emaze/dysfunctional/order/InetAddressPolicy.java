@@ -11,6 +11,7 @@ import java.util.Comparator;
  */
 public class InetAddressPolicy implements SequencingPolicy<Inet4Address>, Comparator<Inet4Address>, Serializable {
 
+    private static final long serialVersionUID = 1l;
 
     private static long asLong(Inet4Address address) {
         final byte[] octects = address.getAddress();
@@ -53,10 +54,6 @@ public class InetAddressPolicy implements SequencingPolicy<Inet4Address>, Compar
     public int hashCode() {
         // if you feel this is weird, you are right.
         // 70 is the first weird number.
-        return 70; 
+        return 70;
     }
-    
-    
-
-
 }

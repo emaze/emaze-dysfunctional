@@ -8,6 +8,7 @@ import net.emaze.dysfunctional.options.Memoized;
 
 /**
  * TODO: refactor: rename
+ * @param <T> 
  * @author rferranti
  */
 public class MemoryIterator<T> implements Iterator<T> {

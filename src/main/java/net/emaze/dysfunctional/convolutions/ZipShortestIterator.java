@@ -6,9 +6,11 @@ import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  * Adapts two iterators yielding their shortest convolution (via a Pair<E1,E2>)
+ * @param <E1>
+ * @param <E2>
  * @author rferranti
  */
-public class ZipShortestIterator<E1,E2> implements Iterator<Pair<E1,E2>>{
+public class ZipShortestIterator<E1, E2> implements Iterator<Pair<E1, E2>> {
 
     private final Iterator<E1> former;
     private final Iterator<E2> latter;
@@ -26,8 +28,8 @@ public class ZipShortestIterator<E1,E2> implements Iterator<Pair<E1,E2>>{
     }
 
     @Override
-    public Pair<E1,E2> next() {
-        return new Pair(former.next(), latter.next());
+    public Pair<E1, E2> next() {
+        return new Pair<E1, E2>(former.next(), latter.next());
     }
 
     @Override
@@ -35,5 +37,4 @@ public class ZipShortestIterator<E1,E2> implements Iterator<Pair<E1,E2>>{
         former.remove();
         latter.remove();
     }
-
 }

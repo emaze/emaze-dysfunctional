@@ -21,6 +21,6 @@ public class Counts {
     }
 
     public static <T1, T2> Iterable<Pair<T1, T2>> counted(Iterable<T2> iterable, Range<T1> range) {
-        return new OneTimeIterable(new CountedIterator(iterable.iterator(), range));
+        return new OneTimeIterable<Pair<T1, T2>>(new CountedIterator<T1, T2>(iterable.iterator(), range));
     }
 }

@@ -2,6 +2,9 @@ package net.emaze.dysfunctional.delegates;
 
 /**
  * Binary to unary delegate adapter (lcurry)
+ * @param <R>
+ * @param <T>
+ * @param <U>
  * @author rferranti
  */
 public class BinderFirst<R, T, U> implements Delegate<R, U> {

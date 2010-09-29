@@ -11,6 +11,7 @@ import net.emaze.dysfunctional.numbers.CircularCounter;
 /**
  * longest multiplexing
  * [1,2] [a,b,c] -> [1,a,2,b,c]
+ * @param <T> 
  * @author rferranti
  */
 public class RoundRobinIterator<T> implements Iterator<T> {
@@ -25,7 +26,7 @@ public class RoundRobinIterator<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        return Iterations.any(iterators, new HasNext());
+        return Iterations.any(iterators, new HasNext<Iterator<T>>());
     }
 
     @Override

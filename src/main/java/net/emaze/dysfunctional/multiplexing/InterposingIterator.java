@@ -7,6 +7,7 @@ import net.emaze.dysfunctional.contracts.dbc;
  * A composite iterator interposing value yielded by the values iterator
  * with value from the separators iterator.
  * (separators iterator length) must be >= (values iterator length - 1)
+ * @param <T>
  * @author rferranti
  */
 public class InterposingIterator<T> implements Iterator<T> {

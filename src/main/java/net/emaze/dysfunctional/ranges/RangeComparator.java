@@ -6,9 +6,12 @@ import net.emaze.dysfunctional.order.CompareToBuilder;
 
 /**
  * smallest lower bounds with greatest upper bounds ranges come first
+ * @param <T>
  * @author rferranti
  */
-public class RangeComparator<T> implements Comparator<Range<T>>, Serializable{
+public class RangeComparator<T> implements Comparator<Range<T>>, Serializable {
+
+    private static final long serialVersionUID = 1l;
 
     @Override
     public int compare(Range<T> lhs, Range<T> rhs) {
@@ -16,5 +19,4 @@ public class RangeComparator<T> implements Comparator<Range<T>>, Serializable{
                 append(rhs.upper(), lhs.upper()).
                 toComparison();
     }
-
 }

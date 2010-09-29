@@ -12,7 +12,7 @@ public class Comparing {
     public static final int LHS_IS_GREATER = 1;
     public static final int SAME_ORDER = 0;
 
-    public static boolean lhsIsLesser(Comparable lhs, Comparable rhs) {
+    public static <T extends Comparable<T>> boolean lhsIsLesser(T lhs, T rhs) {
         return lhs.compareTo(rhs) == LHS_IS_LESSER;
     }
 
@@ -20,7 +20,7 @@ public class Comparing {
         return comparator.compare(lhs, rhs) == LHS_IS_LESSER;
     }
 
-    public static boolean lhsIsGreater(Comparable lhs, Comparable rhs) {
+    public static <T extends Comparable<T>> boolean lhsIsGreater(T lhs, T rhs) {
         return lhs.compareTo(rhs) == LHS_IS_GREATER;
     }
 

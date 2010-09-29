@@ -17,6 +17,7 @@ import net.emaze.dysfunctional.order.SequencingPolicy;
 
 /**
  *
+ * @param <T>
  * @author rferranti
  */
 public class SparseRange<T> implements Range<T> {
@@ -37,7 +38,7 @@ public class SparseRange<T> implements Range<T> {
     private List<DenseRange<T>> asNonOverlapping(DenseRange<T>... ranges) {
         final List<DenseRange<T>> sortedRanges = Arrays.asList(ranges);
         final List<DenseRange<T>> out = new ArrayList<DenseRange<T>>();
-        Collections.sort(sortedRanges, new RangeComparator());
+        Collections.sort(sortedRanges, new RangeComparator<T>());
         final Iterator<DenseRange<T>> iter = sortedRanges.iterator();
         DenseRange<T> current = iter.next();
         while (iter.hasNext()) {
@@ -80,7 +81,7 @@ public class SparseRange<T> implements Range<T> {
     @Override
     public int compareTo(Range<T> other) {
         dbc.precondition(other != null, "Comparing (compareTo) a SparseRange<T>(%s) with null");
-        return new RangeComparator().compare(this, other);
+        return new RangeComparator<T>().compare(this, other);
     }
 
     @Override

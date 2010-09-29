@@ -5,6 +5,9 @@ import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
 /**
  * a Pair + 1 at the same price
+ * @param <E1>
+ * @param <E2>
+ * @param <E3> 
  * @author rferranti
  */
 public class Triple<E1, E2, E3> {

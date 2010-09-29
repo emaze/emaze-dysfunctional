@@ -6,6 +6,8 @@ import net.emaze.dysfunctional.delegates.Delegate;
 
 /**
  * Decorates an iterator adapting (via a delegate) consumed elements
+ * @param <R>
+ * @param <T> 
  * @author rferranti
  */
 public class TransformingIterator<R,T> implements Iterator<R> {

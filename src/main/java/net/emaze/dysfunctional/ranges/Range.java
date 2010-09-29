@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.ranges;
 
 /**
  *
+ * @param <T> 
  * @author rferranti
  */
 public interface Range<T> extends Iterable<T>, Comparable<Range<T>> {

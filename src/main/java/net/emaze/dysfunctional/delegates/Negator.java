@@ -3,6 +3,7 @@ package net.emaze.dysfunctional.delegates;
 /**
  * negates a predicate
  *  x => !predicate(x)
+ * @param <T> 
  * @author rferranti
  */
 public class Negator<T> implements Predicate<T> {

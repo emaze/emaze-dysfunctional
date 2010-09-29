@@ -5,6 +5,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  * gives up only after consuming the last element (and returns it)
+ * @param <E> 
  * @author rferranti
  */
 public class StubbornConsumer<E> implements Consumer<E,Iterator<E>>{

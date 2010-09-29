@@ -9,6 +9,7 @@ import net.emaze.dysfunctional.numbers.CircularCounter;
 
 /**
  * shortest 
+ * @param <T> 
  * @author rferranti
  */
 public class MultiplexingIterator<T> implements Iterator<T> {

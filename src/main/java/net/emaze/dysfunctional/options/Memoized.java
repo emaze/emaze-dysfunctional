@@ -4,6 +4,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  * Responsibility: Holds a memoized and invalidable value (i.e: nonexpiring cache)
+ * @param <T> 
  * @author rferranti
  */
 public class Memoized<T> {

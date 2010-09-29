@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 /**
  * An infinite Iterator always yields the same value
+ * @param <T> 
  * @author rferranti
  */
 public class ConstantIterator<T> implements Iterator<T> {

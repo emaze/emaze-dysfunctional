@@ -2,6 +2,8 @@ package net.emaze.dysfunctional.delegates;
 
 /**
  * A Binary functor with no return value
+ * @param <E1>
+ * @param <E2>
  * @author rferranti
  */
 public interface BinaryAction<E1,E2> {

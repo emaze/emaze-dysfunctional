@@ -14,6 +14,7 @@ import net.emaze.dysfunctional.delegates.Predicate;
 public abstract class Iterations {
 
     /**
+     * @param <E> 
      * @param iterable the iterable where elements are fetched from
      * @param predicate the predicate applied to every element until a match is found
      * @return true if ANY predicate application yields true (gives up on the first positive match)
@@ -28,6 +29,7 @@ public abstract class Iterations {
     }
 
     /**
+     * @param <E> 
      * @param iterator the iterator where elements are fetched from
      * @param predicate the predicate applied to every element until a match is found
      * @return true if ANY predicate application yields true (gives up on the first positive match)
@@ -37,6 +39,7 @@ public abstract class Iterations {
     }
 
     /**
+     * @param <E> 
      * @param array the array where elements are fetched from
      * @param predicate the predicate applied to every element until a match is found
      * @return true if ANY predicate application yields true (gives up on the first positive match)
@@ -46,6 +49,7 @@ public abstract class Iterations {
     }
 
     /**
+     * @param <E> 
      * @param iterable the iterable where elements are fetched from
      * @param predicate the predicate applied to every element fetched from the iterable
      * @return true if EVERY predicate application yields true
@@ -60,6 +64,7 @@ public abstract class Iterations {
     }
 
     /**
+     * @param <E> 
      * @param iterator the iterator where elements are fetched from
      * @param predicate the predicate applied to every element fetched from the iterator
      * @return true if EVERY predicate application yields true
@@ -69,6 +74,7 @@ public abstract class Iterations {
     }
 
     /**
+     * @param <E> 
      * @param array the array where elements are fetched from
      * @param predicate the predicate applied to every element fetched from the array
      * @return true if EVERY predicate application yields true
@@ -78,6 +84,7 @@ public abstract class Iterations {
     }
 
     /**
+     * @param <E> 
      * @param iterable the iterable where elements are fetched from
      * @param action the action applied to every element fetched from the iterable
      */
@@ -88,6 +95,7 @@ public abstract class Iterations {
     }
 
     /**
+     * @param <E> 
      * @param iterator the iterator where elements are fetched from
      * @param action the action applied to every element fetched from the iterator
      */
@@ -96,6 +104,7 @@ public abstract class Iterations {
     }
 
     /**
+     * @param <E> 
      * @param array the array where elements are fetched from
      * @param action the action applied to every element fetched from the array
      */
@@ -105,6 +114,8 @@ public abstract class Iterations {
 
     /**
      * 
+     * @param <R>
+     * @param <E> 
      * @param iterable the iterable where elements are fetched from
      * @param delegate a delegate used to transform each element
      * @return a List<R> containing the transformed elements
@@ -115,16 +126,20 @@ public abstract class Iterations {
 
     /**
      *
+     * @param <R>
+     * @param <E> 
      * @param iterator the iterator where elements are fetched from
      * @param delegate a delegate used to transform each element
      * @return a List<R> containing the transformed elements
      */
     public static <R, E> List<R> map(Iterator<E> iterator, Delegate<R, E> delegate) {
-        return new EagerConsumer().consume(new TransformingIterator(iterator, delegate));
+        return new EagerConsumer<R>().consume(new TransformingIterator<R,E>(iterator, delegate));
     }
 
     /**
      *
+     * @param <R>
+     * @param <E> 
      * @param array the array where elements are fetched from
      * @param delegate a delegate used to transform each element
      * @return a List<R> containing the transformed elements

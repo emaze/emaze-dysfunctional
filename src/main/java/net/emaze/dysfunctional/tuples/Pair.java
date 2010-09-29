@@ -5,6 +5,8 @@ import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
 /**
  * Two things
+ * @param <E1>
+ * @param <E2> 
  * @author rferranti
  */
 public class Pair<E1, E2> {

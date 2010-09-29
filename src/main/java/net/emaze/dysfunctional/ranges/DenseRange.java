@@ -10,6 +10,7 @@ import net.emaze.dysfunctional.order.SequencingPolicy;
 
 /**
  *
+ * @param <T> 
  * @author rferranti
  */
 public class DenseRange<T> implements Range<T> {
@@ -50,12 +51,12 @@ public class DenseRange<T> implements Range<T> {
     @Override
     public int compareTo(Range<T> other) {
         dbc.precondition(other != null, "comparing (compareTo) a DenseRange<T> with null");
-        return new RangeComparator().compare(this, other);
+        return new RangeComparator<T>().compare(this, other);
     }
 
     @Override
     public Iterator<T> iterator() {
-        return new RangeIterator(sequencer, lower, upper);
+        return new RangeIterator<T>(sequencer, lower, upper);
     }
 
     @Override

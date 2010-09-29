@@ -7,6 +7,7 @@ import net.emaze.dysfunctional.options.Maybe;
 
 /**
  * squared
+ * @param <T> 
  * @author rferranti
  */
 public class PreciseDemultiplexingIterator<T> implements Iterator<List<Maybe<T>>> {

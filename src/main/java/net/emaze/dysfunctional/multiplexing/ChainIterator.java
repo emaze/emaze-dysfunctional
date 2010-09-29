@@ -12,6 +12,7 @@ import net.emaze.dysfunctional.iterations.Iterations;
 
 /**
  * A composite iterator (iterators are consumed in order)
+ * @param <E>
  * @author rferranti
  */
 public class ChainIterator<E> implements Iterator<E> {
@@ -29,7 +30,7 @@ public class ChainIterator<E> implements Iterator<E> {
 
     @Override
     public boolean hasNext() {
-        return iterators.isEmpty() ? false : Iterations.any(iterators, new HasNext());
+        return iterators.isEmpty() ? false : Iterations.any(iterators, new HasNext<Iterator<E>>());
     }
 
     private static <E> Maybe<Iterator<E>> currentElement(List<Iterator<E>> iterators) {

@@ -6,6 +6,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 /**
  * Decorates an Iterator yielding Maybe.just(element) for every element in the
  * contained iterator and Maybe.nothing() beyond the nested iterator bounds
+ * @param <E>
  * @author rferranti
  */
 public class MaybeIterator<E> implements Iterator<Maybe<E>> {

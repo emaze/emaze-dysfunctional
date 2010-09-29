@@ -4,6 +4,7 @@ import net.emaze.dysfunctional.delegates.Predicate;
 
 /**
  *
+ * @param <T>
  * @author rferranti
  */
 public class UntilCount<T> implements Predicate<T>{

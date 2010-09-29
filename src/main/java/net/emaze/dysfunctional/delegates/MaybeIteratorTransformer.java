@@ -4,6 +4,11 @@ import java.util.Iterator;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.options.MaybeIterator;
 
+/**
+ * 
+ * @author rferranti
+ * @param <T>
+ */
 public class MaybeIteratorTransformer<T> implements Delegate<Iterator<Maybe<T>>, Iterator<T>> {
 
     @Override

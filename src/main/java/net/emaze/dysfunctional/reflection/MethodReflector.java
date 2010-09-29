@@ -12,7 +12,7 @@ import net.emaze.dysfunctional.contracts.dbc;
  */
 public class MethodReflector {
 
-    public <T> Method fetch(final Class clazz, final String methodName, Class<T>... params) {
+    public <T> Method fetch(final Class<?> clazz, final String methodName, Class<T>... params) {
         dbc.precondition(clazz != null, "trying to fetch a method from a null class");
         dbc.precondition(methodName != null, "trying to fetch a method with a null methodName");
         try {
@@ -24,7 +24,7 @@ public class MethodReflector {
         }
     }
 
-    public Method fetchByName(final Class clazz, final String methodName) {
+    public Method fetchByName(final Class<?> clazz, final String methodName) {
         dbc.precondition(clazz != null, "trying to fetch a method from a null class");
         dbc.precondition(methodName != null, "trying to fetch a method with a null methodName");
         final List<Method> methods = Arrays.asList(clazz.getMethods());

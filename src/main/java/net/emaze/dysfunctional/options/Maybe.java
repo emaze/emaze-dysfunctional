@@ -5,6 +5,7 @@ import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
 /**
  * Responsibility: Holds an optional value, sadly not actually a Maybe monad :'(
+ * @param <E> 
  * @author rferranti
  */
 public class Maybe<E> {
@@ -26,11 +27,11 @@ public class Maybe<E> {
     }
 
     public static <E> Maybe<E> nothing() {
-        return new Maybe(null, false);
+        return new Maybe<E>(null, false);
     }
 
     public static <E> Maybe<E> just(E element) {
-        return new Maybe(element, true);
+        return new Maybe<E>(element, true);
     }
 
     @Override

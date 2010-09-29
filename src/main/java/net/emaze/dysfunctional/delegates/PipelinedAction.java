@@ -8,6 +8,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 /**
  * A composite unary functor with no return value. On call every composed action
  * is called in registration order (where an order exists)
+ * @param <E> 
  * @author rferranti
  */
 public class PipelinedAction<E> implements Action<E>, Multicasting<Action<E>> {
@@ -20,7 +21,7 @@ public class PipelinedAction<E> implements Action<E>, Multicasting<Action<E>> {
      */
     @Override
     public void perform(E value) {
-        for (Action action : actions) {
+        for (Action<E> action : actions) {
             action.perform(value);
         }
     }

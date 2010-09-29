@@ -6,6 +6,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  *
+ * @param <T>
  * @author rferranti
  */
 public class ArrayIterator<T> implements Iterator<T> {
