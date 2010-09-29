@@ -24,7 +24,7 @@ public class MultiplexingIterator<T> implements Iterator<T> {
     @Override
     public boolean hasNext() {
         //FIXME: Just wrong
-        return iterators.isEmpty() ? false : Filtering.last(iterators).hasNext();
+        return iterators.isEmpty() ? false : Filtering.last(1, iterators).hasNext();
     }
 
     @Override
