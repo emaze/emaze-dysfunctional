@@ -1,7 +1,6 @@
 package net.emaze.dysfunctional.options;
 
 import java.util.Iterator;
-import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
