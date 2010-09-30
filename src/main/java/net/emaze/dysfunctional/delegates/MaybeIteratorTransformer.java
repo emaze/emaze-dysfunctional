@@ -5,7 +5,7 @@ import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.options.MaybeIterator;
 
 /**
- * 
+ * transforms an Iterator<T> in a MaybeIterator<T>
  * @author rferranti
  * @param <T>
  */

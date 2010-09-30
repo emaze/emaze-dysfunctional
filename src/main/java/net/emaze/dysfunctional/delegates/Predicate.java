@@ -7,8 +7,8 @@ package net.emaze.dysfunctional.delegates;
  */
 public interface Predicate<E> {
     /**
-     *
-     * @param element
+     * tests the predicate against the element
+     * @param element the element used to evaluate the predicate
      * @return true if the element fulfills the predicate
      */
     public boolean test(E element);

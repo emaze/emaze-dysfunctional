@@ -8,6 +8,7 @@ package net.emaze.dysfunctional.delegates;
 public class Always<E> implements Predicate<E>{
 
     /**
+     * yields true.
      * @param element the ignored element
      * @return true. always.
      */

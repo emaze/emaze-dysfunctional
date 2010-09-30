@@ -5,7 +5,7 @@ import net.emaze.dysfunctional.delegates.Predicate;
 
 /**
  *
- * @param <T> 
+ * @param <T> the iterator element Type
  * @author rferranti
  */
 public class TakeWhileIterator<T> implements Iterator<T> {

@@ -1,8 +1,8 @@
 package net.emaze.dysfunctional.delegates;
 
 /**
- *
- * @param <T> 
+ * A Predicate matching nonnull elements
+ * @param <T> the element type
  * @author dangelocola
  */
 public class NotNull<T> implements Predicate<T> {

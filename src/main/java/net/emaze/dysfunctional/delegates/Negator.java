@@ -14,6 +14,11 @@ public class Negator<T> implements Predicate<T> {
         this.predicate = predicate;
     }
 
+    /**
+     * tests the nested predicate and negates it
+     * @param element the element used to test the predicate
+     * @return
+     */
     @Override
     public boolean test(T element) {
         return !predicate.test(element);

@@ -7,6 +7,11 @@ package net.emaze.dysfunctional.delegates;
  */
 public class Never<E> implements Predicate<E>{
 
+    /**
+     * yields false
+     * @param element the ignored element
+     * @return false
+     */
     @Override
     public boolean test(E element) {
         return false;
