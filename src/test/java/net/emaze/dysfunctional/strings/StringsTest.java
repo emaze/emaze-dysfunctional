@@ -17,4 +17,12 @@ public class StringsTest {
         String output = Strings.interpose(values, 0);
         Assert.assertEquals("102030405", output);
     }
+
+
+    @Test
+    public void testThatCanJoinIntegers(){
+        Iterator<Integer> values = Arrays.asList(1,2,3,4).iterator();
+        String output = Strings.join(values);
+        Assert.assertEquals("1234", output);
+    }
 }
