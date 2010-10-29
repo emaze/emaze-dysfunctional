@@ -20,4 +20,13 @@ public class PipingConsumerTest {
         pipe.consume(input.iterator());
         Assert.assertEquals("12345", output.toString());
     }
+
+    @Test
+    public void testThatCanConsumeEmptyList() {
+        final List<String> input = Arrays.asList();
+        final StringOutputIterator output = new StringOutputIterator();
+        final PipingConsumer<String> pipe = new PipingConsumer<String>(output);
+        pipe.consume(input.iterator());
+        Assert.assertEquals("", output.toString());
+    }
 }
