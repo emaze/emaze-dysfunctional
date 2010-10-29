@@ -19,11 +19,35 @@ public class InterleavingIteratorTest {
         final List<String> separators = Arrays.asList("a", "b");
         final InterposingIterator<String> iter = new InterposingIterator<String>(values.iterator(), separators.iterator());
         final List<String> got = new ArrayList<String>();
-        while(iter.hasNext()){
+        while (iter.hasNext()) {
             got.add(iter.next());
         }
         final List<String> expected = Arrays.asList("1", "a", "2", "b", "3");
         Assert.assertEquals(expected, got);
     }
 
+    @Test
+    public void canInterleaveSingleElements() {
+        final List<String> values = Arrays.asList("1");
+        final List<String> separators = Arrays.asList();
+        final InterposingIterator<String> iter = new InterposingIterator<String>(values.iterator(), separators.iterator());
+        final List<String> got = new ArrayList<String>();
+        while (iter.hasNext()) {
+            got.add(iter.next());
+        }
+        final List<String> expected = Arrays.asList("1");
+        Assert.assertEquals(expected, got);
+    }
+
+    @Test
+    public void canInterleaveSingleElementsWithList() {
+        final List<String> values = Arrays.asList("1", "2", "3");
+        final InterposingIterator<String> iter = new InterposingIterator<String>(values.iterator(), new ConstantIterator<String>(""));
+        final List<String> got = new ArrayList<String>();
+        while (iter.hasNext()) {
+            got.add(iter.next());
+        }
+        final List<String> expected = Arrays.asList("1", "", "2", "", "3");
+        Assert.assertEquals(expected, got);
+    }
 }
