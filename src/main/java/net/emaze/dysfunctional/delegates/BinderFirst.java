@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional.delegates;
 
+import net.emaze.dysfunctional.contracts.dbc;
+
 /**
  * Binary to unary delegate adapter (lcurry)
  * @param <R> the return Type
@@ -13,6 +15,7 @@ public class BinderFirst<R, T, U> implements Delegate<R, U> {
     private final T first;
 
     public BinderFirst(BinaryDelegate<R, T, U> delegate, T first) {
+        dbc.precondition(delegate != null, "cannot bind the first parameter of a null binary predicate");
         this.delegate = delegate;
         this.first = first;
     }

@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional.delegates;
 
+import net.emaze.dysfunctional.contracts.dbc;
+
 /**
  * BinaryDelegate<R,U,T> to BinaryDelegate<R,T,U> adapter
  * (just swaps formal params)
@@ -14,6 +16,7 @@ public class Flipper<R, T, U> implements BinaryDelegate<R, T, U> {
     private final BinaryDelegate<R, U, T> delegate;
 
     public Flipper(BinaryDelegate<R, U, T> delegate) {
+        dbc.precondition(delegate != null, "canno flip a null binary delegate");
         this.delegate = delegate;
     }
 
