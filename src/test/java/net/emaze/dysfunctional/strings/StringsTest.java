@@ -10,19 +10,25 @@ import org.junit.Test;
  * @author rferranti
  */
 public class StringsTest {
-    
+
     @Test
-    public void testThatCanInterposeIntegers(){
-        Iterator<Integer> values = Arrays.asList(1,2,3,4,5).iterator();
+    public void testThatCanInterposeIntegers() {
+        Iterator<Integer> values = Arrays.asList(1, 2, 3, 4, 5).iterator();
         String output = Strings.interpose(values, 0);
         Assert.assertEquals("102030405", output);
     }
 
-
     @Test
-    public void testThatCanJoinIntegers(){
-        Iterator<Integer> values = Arrays.asList(1,2,3,4).iterator();
+    public void testThatCanJoinIntegers() {
+        Iterator<Integer> values = Arrays.asList(1, 2, 3, 4).iterator();
         String output = Strings.join(values);
         Assert.assertEquals("1234", output);
+    }
+
+    @Test
+    public void testThatCanJoinEmptyIterator() {
+        Iterator<Object> values = Arrays.asList().iterator();
+        String output = Strings.join(values);
+        Assert.assertEquals("", output);
     }
 }
