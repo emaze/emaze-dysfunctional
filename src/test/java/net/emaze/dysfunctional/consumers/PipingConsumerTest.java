@@ -13,12 +13,11 @@ import org.junit.Test;
 public class PipingConsumerTest {
 
     @Test
-    public void testThatCanCosume() {
+    public void testThatCanConsume() {
         final List<String> input = Arrays.asList("1","2","3","4","5");
         final StringOutputIterator output = new StringOutputIterator();
         final PipingConsumer<String> pipe = new PipingConsumer<String>(output);
         pipe.consume(input.iterator());
         Assert.assertEquals("12345", output.toString());
     }
-
 }
