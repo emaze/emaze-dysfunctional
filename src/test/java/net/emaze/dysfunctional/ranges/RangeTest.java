@@ -13,61 +13,67 @@ public class RangeTest {
 
     @Test
     public void canDetectNonOverlappingRanges() {
-        Range lhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 0, 10);
-        Range rhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 13, 15);
+        Range<Integer> lhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 0, 10);
+        Range<Integer> rhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 13, 15);
         Assert.assertFalse(lhs.overlaps(rhs));
     }
 
     @Test
     public void canDetectNonOverlappingRangesInverted() {
-        Range rhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 0, 10);
-        Range lhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 13, 15);
+        Range<Integer> rhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 0, 10);
+        Range<Integer> lhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 13, 15);
         Assert.assertFalse(lhs.overlaps(rhs));
     }
 
     @Test
     public void canDetectOverlappingRanges() {
-        Range lhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 0, 10);
-        Range rhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 5, 15);
+        Range<Integer> lhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 0, 10);
+        Range<Integer> rhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 5, 15);
         Assert.assertTrue(lhs.overlaps(rhs));
     }
 
     @Test
     public void canDetectOverlappingRangesInverted() {
-        Range rhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 0, 10);
-        Range lhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 5, 15);
+        Range<Integer> rhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 0, 10);
+        Range<Integer> lhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 5, 15);
         Assert.assertTrue(lhs.overlaps(rhs));
     }
 
     @Test
     public void canDetectOverlapping() {
-        Range rhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 0, 11);
-        Range lhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 10, 15);
+        Range<Integer> rhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 0, 11);
+        Range<Integer> lhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 10, 15);
         Assert.assertTrue(lhs.overlaps(rhs));
     }
 
     @Test
     public void canDetectOverlappingInverted() {
-        Range lhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 0, 10);
-        Range rhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 10, 15);
+        Range<Integer> lhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 0, 10);
+        Range<Integer> rhs = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 10, 15);
         Assert.assertTrue(lhs.overlaps(rhs));
     }
 
     @Test
     public void sameRangeOverlaps() {
-        Range me = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 0, 10);
-        Assert.assertTrue(me.overlaps(me));
+        Range<Integer> range = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 0, 10);
+        Assert.assertTrue(range.overlaps(range));
     }
 
     @Test
     public void lowerBoundIsIncludedInRange() {
-        Range me = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 0, 10);
-         Assert.assertTrue(me.contains(0));
+        Range<Integer> range = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 0, 10);
+        Assert.assertTrue(range.contains(0));
     }
-    
+
     @Test
-    public void upperBoundIsExcludedFromRange() {
-        Range me = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 0, 10);
-         Assert.assertFalse(me.contains(10));
+    public void upperBoundIsIncludedInRange() {
+        Range<Integer> range = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 0, 10);
+        Assert.assertTrue(range.contains(10));
     }
+
+    @Test
+    public void canIterateDegenerateRange(){
+        Range<Integer> range = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 0, 0);
+        Assert.assertEquals( new Integer(0), range.iterator().next());
+    }    
 }

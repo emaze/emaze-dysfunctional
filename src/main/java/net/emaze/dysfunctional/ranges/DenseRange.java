@@ -35,7 +35,7 @@ public class DenseRange<T> implements Range<T> {
     @Override
     public boolean contains(T element) {
         dbc.precondition(element != null, "checking if null is contained in DenseRange<T>");
-        return Comparing.lhsIsLesserThanEquals(lower, element, comparator) && Comparing.lhsIsLesser(element, upper, comparator);
+        return Comparing.lhsIsGreaterThanEquals(element, lower, comparator) && Comparing.lhsIsLesserThanEquals(element, upper, comparator);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class DenseRange<T> implements Range<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new RangeIterator<T>(sequencer, lower, upper);
+        return new RangeIterator<T>(sequencer, comparator, lower, upper);
     }
 
     @Override
