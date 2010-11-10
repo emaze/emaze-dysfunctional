@@ -83,13 +83,6 @@ public class DenseRange<T> implements Range<T> {
 
     /**
      * Apples to apples (dense to dense) :
-     * * this.upper > other.lower yields false
-     *   lhs       |--------|
-     *   rhs |----|
-     * * this.lower > other.upper yields false
-     *   lhs |--------|
-     *   rhs           |----|
-     * else: yields true
      * Apples to oranges: (dense to nonDense)
      *   yields nonDense.overlaps(dense)
      */
@@ -99,7 +92,7 @@ public class DenseRange<T> implements Range<T> {
         if (other instanceof DenseRange == false) {
             return other.overlaps(this);
         }
-        if (Comparing.lhsIsGreater(upper, other.lower(), comparator) || Comparing.lhsIsGreater(lower, other.upper(), comparator)) {
+        if (Comparing.lhsIsGreater(this.lower, other.upper(), comparator) || Comparing.lhsIsGreater(other.lower(), this.upper(), comparator)) {
             return false;
         }
         return true;
