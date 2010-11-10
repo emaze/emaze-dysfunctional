@@ -58,4 +58,16 @@ public class RangeTest {
         Range me = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 0, 10);
         Assert.assertTrue(me.overlaps(me));
     }
+
+    @Test
+    public void lowerBoundIsIncludedInRange() {
+        Range me = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 0, 10);
+         Assert.assertTrue(me.contains(0));
+    }
+    
+    @Test
+    public void upperBoundIsExcludedFromRange() {
+        Range me = new DenseRange(new IntegerSequencingPolicy(), new ComparableComparator(), 0, 10);
+         Assert.assertFalse(me.contains(10));
+    }
 }

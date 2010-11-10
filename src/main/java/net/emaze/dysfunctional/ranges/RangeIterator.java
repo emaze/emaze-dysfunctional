@@ -30,8 +30,9 @@ public class RangeIterator<T> implements Iterator<T> {
 
     @Override
     public T next() {
+        T oldCurrent = current;
         current = policy.next(current);
-        return current;
+        return oldCurrent;
     }
 
     @Override
