@@ -1,13 +1,9 @@
 package net.emaze.dysfunctional.ranges;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import net.emaze.dysfunctional.order.Comparing;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.multiplexing.ChainIterator;
 import net.emaze.dysfunctional.iterations.IterableToIteratorTransformer;
@@ -27,7 +23,7 @@ public class SparseRange<T> implements Range<T> {
         dbc.precondition(sequencer != null, "trying to create a SparseRange<T> with a null SequencingPolicy<T>");
         dbc.precondition(comparator != null, "trying to create a SparseRange<T> with a null Comparator<T>");
         dbc.precondition(ranges.length != 0, "trying to create a SparseRange<T> from zero ranges");
-        this.ranges = asNonOverlapping(sequencer, comparator, Arrays.asList(ranges));
+        this.ranges = new SortedNonOverlappingRangesTransformer<T>(sequencer,comparator).perform(Arrays.asList(ranges));
     }
 
     public SparseRange(SequencingPolicy<T> sequencer, Comparator<T> comparator, List<DenseRange<T>> ranges) {
@@ -35,34 +31,7 @@ public class SparseRange<T> implements Range<T> {
         dbc.precondition(comparator != null, "trying to create a SparseRange<T> with a null Comparator<T>");
         dbc.precondition(ranges != null, "trying to create a SparseRange<T> from a null ranges");
         dbc.precondition(!ranges.isEmpty(), "trying to create a SparseRange<T> from zero ranges");
-        this.ranges = asNonOverlapping(sequencer, comparator, ranges);
-    }
-
-    private List<DenseRange<T>> asNonOverlapping(SequencingPolicy<T> sequencer, Comparator<T> comparator, List<DenseRange<T>> ranges) {
-        final SortedSet<DenseRange<T>> sortedRanges = new TreeSet<DenseRange<T>>(new RangeComparator<T>());
-        sortedRanges.addAll(ranges);
-        final List<DenseRange<T>> sortedNonOverlappingRanges = new ArrayList<DenseRange<T>>();
-        final Iterator<DenseRange<T>> iter = sortedRanges.iterator();
-        DenseRange<T> current = iter.next();
-        while (iter.hasNext()) {
-            final DenseRange<T> next = iter.next();
-            if (Comparing.sameOrder(sequencer.next(current.upper()), next.upper(), comparator)
-                    || (current.overlaps(next) && Comparing.lhsIsGreater(next.upper(), current.upper(), comparator))) {
-                // |-----------|
-                //          |--------|
-                // or
-                // |-----------|
-                //              |-----|
-                current = new DenseRange<T>(sequencer, comparator, current.lower(), next.upper());
-            } else {
-                // |--|
-                //       |---|
-                sortedNonOverlappingRanges.add(current);
-                current = next;
-            }
-        }
-        sortedNonOverlappingRanges.add(current);
-        return sortedNonOverlappingRanges;
+        this.ranges = new SortedNonOverlappingRangesTransformer<T>(sequencer,comparator).perform(ranges);
     }
 
     @Override
