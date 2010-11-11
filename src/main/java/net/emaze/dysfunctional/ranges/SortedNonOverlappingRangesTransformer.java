@@ -12,6 +12,7 @@ import net.emaze.dysfunctional.order.SequencingPolicy;
 
 /**
  * transforms a list of DenseRange to an equivalent list of sorted ranges with no overlapping ranges
+ * @param <T>
  * @author rferranti
  */
 public class SortedNonOverlappingRangesTransformer<T> implements Delegate<List<DenseRange<T>>, List<DenseRange<T>>> {
@@ -33,22 +34,31 @@ public class SortedNonOverlappingRangesTransformer<T> implements Delegate<List<D
         DenseRange<T> current = iter.next();
         while (iter.hasNext()) {
             final DenseRange<T> next = iter.next();
-            if (Comparing.sameOrder(sequencer.next(current.upper()), next.upper(), comparator)
-                    || (current.overlaps(next) && Comparing.lhsIsGreater(next.upper(), current.upper(), comparator))) {
-                // |-----------|
-                //          |--------|
-                // or
-                // |-----------|
-                //              |-----|
+            if (canBeMerged(current, next)) {
                 current = new DenseRange<T>(sequencer, comparator, current.lower(), next.upper());
             } else {
-                // |--|
-                //       |---|
                 sortedNonOverlappingRanges.add(current);
                 current = next;
             }
         }
         sortedNonOverlappingRanges.add(current);
         return sortedNonOverlappingRanges;
+    }
+
+    /**
+     * |-----------|
+     *              |-----|
+     * or
+     * |-----------|
+     *           |--------|
+     * @param current the current range
+     * @param next the next range
+     * @return true if the two ranges can be merged
+     */
+    private boolean canBeMerged(DenseRange<T> current, DenseRange<T> next) {
+        if(Comparing.sameOrder(sequencer.next(current.upper()), next.upper(), comparator)){
+            return true;
+        }
+        return current.overlaps(next) && Comparing.lhsIsGreater(next.upper(), current.upper(), comparator);
     }
 }
