@@ -2,13 +2,12 @@ package net.emaze.dysfunctional.ranges;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import net.emaze.dysfunctional.order.Comparing;
-import net.emaze.dysfunctional.equality.EqualsBuilder;
-import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.multiplexing.ChainIterator;
 import net.emaze.dysfunctional.iterations.IterableToIteratorTransformer;
@@ -22,23 +21,27 @@ import net.emaze.dysfunctional.order.SequencingPolicy;
  */
 public class SparseRange<T> implements Range<T> {
 
-    private final SequencingPolicy<T> sequencer;
-    private final Comparator<T> comparator;
-    private final List<DenseRange<T>> ranges = new ArrayList<DenseRange<T>>();
+    private final List<DenseRange<T>> ranges;
 
     public SparseRange(SequencingPolicy<T> sequencer, Comparator<T> comparator, DenseRange<T>... ranges) {
         dbc.precondition(sequencer != null, "trying to create a SparseRange<T> with a null SequencingPolicy<T>");
         dbc.precondition(comparator != null, "trying to create a SparseRange<T> with a null Comparator<T>");
         dbc.precondition(ranges.length != 0, "trying to create a SparseRange<T> from zero ranges");
-        this.sequencer = sequencer;
-        this.comparator = comparator;
-        this.ranges.addAll(asNonOverlapping(ranges));
+        this.ranges = asNonOverlapping(sequencer, comparator, Arrays.asList(ranges));
     }
 
-    private List<DenseRange<T>> asNonOverlapping(DenseRange<T>... ranges) {
-        final List<DenseRange<T>> sortedRanges = Arrays.asList(ranges);
-        final List<DenseRange<T>> out = new ArrayList<DenseRange<T>>();
-        Collections.sort(sortedRanges, new RangeComparator<T>());
+    public SparseRange(SequencingPolicy<T> sequencer, Comparator<T> comparator, List<DenseRange<T>> ranges) {
+        dbc.precondition(sequencer != null, "trying to create a SparseRange<T> with a null SequencingPolicy<T>");
+        dbc.precondition(comparator != null, "trying to create a SparseRange<T> with a null Comparator<T>");
+        dbc.precondition(ranges != null, "trying to create a SparseRange<T> from a null ranges");
+        dbc.precondition(!ranges.isEmpty(), "trying to create a SparseRange<T> from zero ranges");
+        this.ranges = asNonOverlapping(sequencer, comparator, ranges);
+    }
+
+    private List<DenseRange<T>> asNonOverlapping(SequencingPolicy<T> sequencer, Comparator<T> comparator, List<DenseRange<T>> ranges) {
+        final SortedSet<DenseRange<T>> sortedRanges = new TreeSet<DenseRange<T>>(new RangeComparator<T>());
+        sortedRanges.addAll(ranges);
+        final List<DenseRange<T>> sortedNonOverlappingRanges = new ArrayList<DenseRange<T>>();
         final Iterator<DenseRange<T>> iter = sortedRanges.iterator();
         DenseRange<T> current = iter.next();
         while (iter.hasNext()) {
@@ -54,12 +57,12 @@ public class SparseRange<T> implements Range<T> {
             } else {
                 // |--|
                 //       |---|
-                out.add(current);
+                sortedNonOverlappingRanges.add(current);
                 current = next;
             }
         }
-        out.add(current);
-        return out;
+        sortedNonOverlappingRanges.add(current);
+        return sortedNonOverlappingRanges;
     }
 
     @Override
@@ -86,7 +89,7 @@ public class SparseRange<T> implements Range<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new ChainIterator<T>(Iterations.map(ranges, new IterableToIteratorTransformer<T,DenseRange<T>>()));
+        return new ChainIterator<T>(Iterations.map(ranges, new IterableToIteratorTransformer<T, DenseRange<T>>()));
     }
 
     @Override
@@ -95,18 +98,12 @@ public class SparseRange<T> implements Range<T> {
             return false;
         }
         final SparseRange<T> other = (SparseRange<T>) rhs;
-        return new EqualsBuilder().append(this.sequencer, other.sequencer).
-                append(this.comparator, other.comparator).
-                append(this.ranges, other.ranges).
-                isEquals();
+        return this.ranges.equals(other.ranges);
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(sequencer).
-                append(comparator).
-                append(ranges).
-                toHashCode();
+        return ranges.hashCode();
     }
 
     @Override
