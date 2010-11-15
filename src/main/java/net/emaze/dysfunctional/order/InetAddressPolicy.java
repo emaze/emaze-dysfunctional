@@ -41,6 +41,11 @@ public class InetAddressPolicy implements SequencingPolicy<Inet4Address>, Compar
     }
 
     @Override
+    public Inet4Address prev(Inet4Address element) {
+        return fromLong(asLong(element) - 1);
+    }
+
+    @Override
     public int compare(Inet4Address lhs, Inet4Address rhs) {
         return Long.valueOf(asLong(lhs)).compareTo(asLong(rhs));
     }
@@ -52,8 +57,6 @@ public class InetAddressPolicy implements SequencingPolicy<Inet4Address>, Compar
 
     @Override
     public int hashCode() {
-        // if you feel this is weird, you are right.
-        // 70 is the first weird number.
-        return 70;
+        return InetAddressPolicy.class.hashCode();
     }
 }

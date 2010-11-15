@@ -17,4 +17,15 @@ public class ComparableComparator<T extends Comparable<T>> implements Comparator
         return lhs.compareTo(rhs);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof ComparableComparator;
+    }
+
+    @Override
+    public int hashCode() {
+        return ComparableComparator.class.hashCode();
+    }
+
+    
 }

@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.ranges;
 
 import java.util.Iterator;
+import java.util.List;
 import junit.framework.Assert;
 import net.emaze.dysfunctional.order.Comparing;
 import org.junit.Test;
@@ -47,6 +48,11 @@ public class RangeComparatorTest {
 
         @Override
         public int compareTo(Range<Integer> o) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public List<DenseRange<Integer>> densified() {
             throw new UnsupportedOperationException("Not supported yet.");
         }
     }

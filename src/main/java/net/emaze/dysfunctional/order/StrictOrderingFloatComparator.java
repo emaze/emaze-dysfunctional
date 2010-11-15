@@ -47,4 +47,16 @@ public class StrictOrderingFloatComparator implements Comparator<Float>, Seriali
         }
         return lhsBits < rhsBits ? -1 : +1;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof StrictOrderingFloatComparator;
+    }
+
+    @Override
+    public int hashCode() {
+        return StrictOrderingFloatComparator.class.hashCode();
+    }
+
+    
 }

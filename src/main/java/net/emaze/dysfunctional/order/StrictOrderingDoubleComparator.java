@@ -45,4 +45,16 @@ public class StrictOrderingDoubleComparator implements Comparator<Double>, Seria
         }
         return lhsBits < rhsBits ? -1 : +1;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof StrictOrderingDoubleComparator;
+    }
+
+    @Override
+    public int hashCode() {
+        return StrictOrderingDoubleComparator.class.hashCode();
+    }
+
+    
 }

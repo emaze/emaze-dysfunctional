@@ -7,5 +7,5 @@ package net.emaze.dysfunctional.order;
  */
 public interface SequencingPolicy<T> {
     T next(T element);
-
+    T prev(T prev);
 }

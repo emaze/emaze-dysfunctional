@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.order;
 
 import java.util.Comparator;
+import net.emaze.dysfunctional.tuples.Pair;
 
 /**
  *
@@ -50,5 +51,28 @@ public class Comparing {
 
     public static <T> boolean sameOrder(T lhs, T rhs, Comparator<T> comparator) {
         return comparator.compare(lhs, rhs) == SAME_ORDER;
+    }
+
+    public static <T> T max(T lhs, T rhs, Comparator<T> comparator) {
+        final int result = comparator.compare(lhs, rhs);
+        if (result == LHS_IS_GREATER || result == SAME_ORDER) {
+            return lhs;
+        }
+        return rhs;
+    }
+
+    public static <T> T min(T lhs, T rhs, Comparator<T> comparator) {
+        final int result = comparator.compare(lhs, rhs);
+        if (result == LHS_IS_LESSER || result == SAME_ORDER) {
+            return lhs;
+        }
+        return rhs;
+    }
+
+    public static <T> Pair<T, T> ordered(T lhs, T rhs, Comparator<T> comparator) {
+        final int result = comparator.compare(lhs, rhs);
+        final T lower = LHS_IS_GREATER == result ? rhs : lhs;
+        final T higher = LHS_IS_GREATER == result ? lhs : rhs;
+        return new Pair<T, T>(lower, higher);
     }
 }

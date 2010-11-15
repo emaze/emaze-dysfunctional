@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional.ranges;
 
+import java.util.List;
+
 /**
  *
  * @param <T> 
@@ -10,4 +12,5 @@ public interface Range<T> extends Iterable<T>, Comparable<Range<T>> {
     boolean overlaps(Range<T> rhs);
     public T lower();
     public T upper();
+    public List<DenseRange<T>> densified();
 }

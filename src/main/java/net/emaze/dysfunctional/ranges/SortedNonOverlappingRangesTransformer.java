@@ -56,7 +56,7 @@ public class SortedNonOverlappingRangesTransformer<T> implements Delegate<List<D
      * @return true if the two ranges can be merged
      */
     private boolean canBeMerged(DenseRange<T> current, DenseRange<T> next) {
-        if(Comparing.sameOrder(sequencer.next(current.upper()), next.upper(), comparator)){
+        if(Comparing.sameOrder(sequencer.next(current.upper()), next.lower(), comparator)){
             return true;
         }
         return current.overlaps(next) && Comparing.lhsIsGreater(next.upper(), current.upper(), comparator);

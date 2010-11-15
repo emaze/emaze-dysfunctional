@@ -1,7 +1,9 @@
 package net.emaze.dysfunctional.ranges;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import net.emaze.dysfunctional.order.Comparing;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
@@ -81,10 +83,18 @@ public class DenseRange<T> implements Range<T> {
                 toHashCode();
     }
 
+    @Override
+    public String toString() {
+        return String.format("%s-%s", lower, upper);
+    }
+
     /**
      * Apples to apples (dense to dense) :
+     *   yields false if this.lower > other.upper or other.lower > this.upper
      * Apples to oranges: (dense to nonDense)
      *   yields nonDense.overlaps(dense)
+     * @param other
+     * @return
      */
     @Override
     public boolean overlaps(Range<T> other) {
@@ -96,5 +106,12 @@ public class DenseRange<T> implements Range<T> {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public List<DenseRange<T>> densified() {
+        final List<DenseRange<T>> out = new ArrayList<DenseRange<T>>();
+        out.add(this);
+        return out;
     }
 }
