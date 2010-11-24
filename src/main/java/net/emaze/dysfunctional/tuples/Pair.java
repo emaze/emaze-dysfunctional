@@ -44,4 +44,12 @@ public class Pair<E1, E2> {
                 append(this.l).
                 toHashCode();
     }
+
+    @Override
+    public String toString() {
+        return String.format("(%s,%s)", f, l);
+    }
+
+
+
 }
