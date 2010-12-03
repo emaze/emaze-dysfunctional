@@ -7,7 +7,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.delegates.ToStringTransformer;
 import net.emaze.dysfunctional.iterations.ConstantIterator;
 import net.emaze.dysfunctional.iterations.Iterations;
-import net.emaze.dysfunctional.iterations.StringOutputIterator;
+import net.emaze.dysfunctional.consumers.StringOutputIterator;
 import net.emaze.dysfunctional.multiplexing.InterposingIterator;
 
 /**

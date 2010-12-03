@@ -1,5 +1,6 @@
-package net.emaze.dysfunctional.iterations;
+package net.emaze.dysfunctional.consumers;
 
+import net.emaze.dysfunctional.consumers.StringOutputIterator;
 import junit.framework.Assert;
 import org.junit.Test;
 

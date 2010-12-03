@@ -2,7 +2,6 @@ package net.emaze.dysfunctional.consumers;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.iterations.OutputIterator;
 
 /**
  *
