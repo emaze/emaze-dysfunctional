@@ -5,7 +5,6 @@ import net.emaze.dysfunctional.consumers.EagerConsumer;
 import java.util.List;
 import net.emaze.dysfunctional.delegates.Action;
 import net.emaze.dysfunctional.delegates.Delegate;
-import net.emaze.dysfunctional.delegates.Plucker;
 import net.emaze.dysfunctional.delegates.Predicate;
 
 /**
@@ -147,18 +146,5 @@ public abstract class Iterations {
      */
     public static <R, E> List<R> map(E[] array, Delegate<R, E> delegate) {
         return map(new ArrayIterator<E>(array), delegate);
-    }
-
-    public static <R, E> List<R> pluck(E[] array, String property, Class<R> returnClass) {
-        return pluck(new ArrayIterator<E>(array), property, returnClass);
-    }
-
-    public static <R, E> List<R> pluck(Iterable<E> iterable, String property, Class<R> returnClass) {
-        return pluck(iterable.iterator(), property, returnClass);
-    }
-
-    public static <R, E> List<R> pluck(Iterator<E> iterator, String property, Class<R> returnClass) {
-        final Plucker<R, E> plucker = new Plucker<R, E>(property);
-        return new EagerConsumer<R>().consume(new TransformingIterator<R, E>(iterator, plucker));
     }
 }

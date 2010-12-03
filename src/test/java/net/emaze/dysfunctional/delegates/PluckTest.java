@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.delegates;
 
-import net.emaze.dysfunctional.iterations.Iterations;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -8,7 +7,7 @@ import org.junit.Test;
  *
  * @author rferranti
  */
-public class PluckerTest {
+public class PluckTest {
 
     public static class DumbBean {
 
@@ -24,7 +23,7 @@ public class PluckerTest {
     @Test
     public void canPluckStringFromBean() {
         DumbBean db = new DumbBean();
-        final Plucker<String, DumbBean> p = new Plucker<String, DumbBean>("something");
+        final Pluck<String, DumbBean> p = new Pluck<String, DumbBean>(DumbBean.class, "something");
         String got = p.perform(db);
         Assert.assertEquals(db.getSomething(), got);
     }
@@ -32,7 +31,7 @@ public class PluckerTest {
     @Test
     public void canPluckIntFromBean() {
         DumbBean db = new DumbBean();
-        final Plucker<Integer, DumbBean> p = new Plucker<Integer, DumbBean>("one");
+        final Pluck<Integer, DumbBean> p = new Pluck<Integer, DumbBean>(DumbBean.class, "one");
         int got = p.perform(db);
         Assert.assertEquals(db.getOne(), got);
     }
