@@ -3,6 +3,8 @@ package net.emaze.dysfunctional.consumers;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.adapting.ArrayToIterableAdapter;
+import net.emaze.dysfunctional.delegates.AtIndex;
+import net.emaze.dysfunctional.delegates.Nth;
 
 /**
  *
@@ -44,6 +46,30 @@ public abstract class Consumers {
 
     public static <E> E last(E[] array) {
         return last(new ArrayToIterableAdapter<E>(array));
+    }
+    
+    public static <E> E nth(long count, Iterator<E> iterator) {
+        return new PreciseConsumer<E>(new Nth<E>(count)).consume(iterator);
+    }
+
+    public static <E> E nth(long count, Iterable<E> iterable) {
+        return nth(count, iterable.iterator());
+    }
+
+    public static <E> E nth(long count, E[] array) {
+        return nth(count, new ArrayToIterableAdapter<E>(array));
+    }
+    
+    public static <E> E at(long index, Iterator<E> iterator) {
+        return new PreciseConsumer<E>(new AtIndex<E>(index)).consume(iterator);
+    }
+
+    public static <E> E at(long index, Iterable<E> iterable) {
+        return at(index, iterable.iterator());
+    }
+
+    public static <E> E at(long index, E[] array) {
+        return at(index, new ArrayToIterableAdapter<E>(array));
     }
 
     public static <E> void pipe(Iterator<E> iterator, OutputIterator<E> outputIterator) {
