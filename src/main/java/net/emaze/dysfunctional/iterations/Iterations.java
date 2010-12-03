@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional.iterations;
 
+import net.emaze.dysfunctional.adapting.ArrayToIterableAdapter;
+import net.emaze.dysfunctional.adapting.ArrayIterator;
 import java.util.Iterator;
 import net.emaze.dysfunctional.consumers.EagerConsumer;
 import java.util.List;

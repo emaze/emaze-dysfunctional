@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.filtering;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.delegates.Predicate;
-import net.emaze.dysfunctional.iterations.ArrayIterator;
+import net.emaze.dysfunctional.adapting.ArrayIterator;
 
 /**
  * @author rferranti
