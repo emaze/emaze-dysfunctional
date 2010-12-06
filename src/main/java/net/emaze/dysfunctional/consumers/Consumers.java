@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.consumers;
 
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.adapting.ArrayToIterableAdapter;
+import net.emaze.dysfunctional.adapting.ArrayIterator;
 import net.emaze.dysfunctional.delegates.AtIndex;
 import net.emaze.dysfunctional.delegates.Nth;
 
@@ -39,7 +39,7 @@ public abstract class Consumers {
      * @return
      */
     public static <E> E first(E[] array) {
-        return first(new ArrayToIterableAdapter<E>(array));
+        return first(new ArrayIterator<E>(array));
     }
 
     /**
@@ -69,7 +69,7 @@ public abstract class Consumers {
      * @return
      */
     public static <E> List<E> all(E[] array) {
-        return all(new ArrayToIterableAdapter<E>(array));
+        return all(new ArrayIterator<E>(array));
     }
 
     /**
@@ -99,7 +99,7 @@ public abstract class Consumers {
      * @return
      */
     public static <E> E last(E[] array) {
-        return last(new ArrayToIterableAdapter<E>(array));
+        return last(new ArrayIterator<E>(array));
     }
 
     /**
@@ -132,7 +132,7 @@ public abstract class Consumers {
      * @return
      */
     public static <E> E nth(long count, E[] array) {
-        return nth(count, new ArrayToIterableAdapter<E>(array));
+        return nth(count, new ArrayIterator<E>(array));
     }
 
     /**
@@ -165,7 +165,7 @@ public abstract class Consumers {
      * @return
      */
     public static <E> E at(long index, E[] array) {
-        return at(index, new ArrayToIterableAdapter<E>(array));
+        return at(index, new ArrayIterator<E>(array));
     }
 
     /**
@@ -195,7 +195,7 @@ public abstract class Consumers {
      * @param outputIterator 
      */
     public static <E> void pipe(E[] array, OutputIterator<E> outputIterator) {
-        pipe(new ArrayToIterableAdapter<E>(array), outputIterator);
+        pipe(new ArrayIterator<E>(array), outputIterator);
     }
 
     /**
@@ -226,6 +226,6 @@ public abstract class Consumers {
      * @return
      */
     public static <E> long count(E[] array, OutputIterator<E> outputIterator) {
-        return count(new ArrayToIterableAdapter<E>(array));
+        return count(new ArrayIterator<E>(array));
     }
 }

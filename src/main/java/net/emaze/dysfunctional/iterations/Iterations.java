@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.iterations;
 
-import net.emaze.dysfunctional.adapting.ArrayToIterableAdapter;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
 import java.util.Iterator;
 import net.emaze.dysfunctional.consumers.EagerConsumer;
@@ -47,7 +46,7 @@ public abstract class Iterations {
      * @return true if ANY predicate application yields true (gives up on the first positive match)
      */
     public static <E> boolean any(E[] array, Predicate<E> predicate) {
-        return any(new ArrayToIterableAdapter<E>(array), predicate);
+        return any(new ArrayIterator<E>(array), predicate);
     }
 
     /**
@@ -82,7 +81,7 @@ public abstract class Iterations {
      * @return true if EVERY predicate application yields true
      */
     public static <E> boolean every(E[] array, Predicate<E> predicate) {
-        return every(new ArrayToIterableAdapter<E>(array), predicate);
+        return every(new ArrayIterator<E>(array), predicate);
     }
 
     /**
@@ -111,7 +110,7 @@ public abstract class Iterations {
      * @param action the action applied to every element fetched from the array
      */
     public static <E> void each(E[] array, Action<E> action) {
-        each(new ArrayToIterableAdapter<E>(array), action);
+        each(new ArrayIterator<E>(array), action);
     }
 
     /**

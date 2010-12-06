@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.convolutions;
 
 import java.util.Iterator;
+import net.emaze.dysfunctional.adapting.ArrayIterator;
 import net.emaze.dysfunctional.adapting.ArrayToIterableAdapter;
 import net.emaze.dysfunctional.iterations.OneTimeIterable;
 import net.emaze.dysfunctional.options.Maybe;
@@ -20,8 +21,16 @@ public abstract class Zips {
      * @return the resulting shorted convolved iterator wrapped in a OneTimeIterable
      */
     public static <T1, T2> Iterable<Pair<T1, T2>> shortest(Iterable<T1> former, Iterable<T2> latter) {
-        Iterator<Pair<T1, T2>> iterator = new ZipShortestIterator<T1, T2>(former.iterator(), latter.iterator());
+        return shortest(former.iterator(), latter.iterator());
+    }
+
+    public static <T1, T2> Iterable<Pair<T1, T2>> shortest(Iterator<T1> former, Iterator<T2> latter) {
+        final Iterator<Pair<T1, T2>> iterator = new ZipShortestIterator<T1, T2>(former, latter);
         return new OneTimeIterable<Pair<T1, T2>>(iterator);
+    }
+
+    public static <T1, T2> Iterable<Pair<T1, T2>> shortest(T1[] former, T2[] latter) {
+        return shortest(new ArrayIterator<T1>(former), new ArrayIterator<T2>(latter));
     }
 
     /**
@@ -36,12 +45,28 @@ public abstract class Zips {
         return longest(former.iterator(), latter.iterator());
     }
 
+    /**
+     * 
+     * @param <T1>
+     * @param <T2>
+     * @param former
+     * @param latter
+     * @return
+     */
     public static <T1, T2> Iterable<Pair<Maybe<T1>, Maybe<T2>>> longest(Iterator<T1> former, Iterator<T2> latter) {
-        Iterator<Pair<Maybe<T1>, Maybe<T2>>> iterator = new ZipLongestIterator<T1, T2>(former, latter);
+        final Iterator<Pair<Maybe<T1>, Maybe<T2>>> iterator = new ZipLongestIterator<T1, T2>(former, latter);
         return new OneTimeIterable<Pair<Maybe<T1>, Maybe<T2>>>(iterator);
     }
 
+    /**
+     * 
+     * @param <T1>
+     * @param <T2>
+     * @param former
+     * @param latter
+     * @return
+     */
     public static <T1, T2> Iterable<Pair<Maybe<T1>, Maybe<T2>>> longest(T1[] former, T2[] latter) {
-        return longest(new ArrayToIterableAdapter<T1>(former), new ArrayToIterableAdapter<T2>(latter));
+        return longest(new ArrayIterator<T1>(former), new ArrayIterator<T2>(latter));
     }
 }
