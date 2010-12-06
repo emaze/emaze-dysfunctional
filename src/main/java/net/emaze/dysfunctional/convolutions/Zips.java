@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.convolutions;
 
 import java.util.Iterator;
-import net.emaze.dysfunctional.iterations.ArrayToIterableAdapter;
+import net.emaze.dysfunctional.adapting.ArrayToIterableAdapter;
 import net.emaze.dysfunctional.iterations.OneTimeIterable;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.tuples.Pair;
