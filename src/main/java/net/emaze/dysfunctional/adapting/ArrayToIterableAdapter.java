@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.iterations;
+package net.emaze.dysfunctional.adapting;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;

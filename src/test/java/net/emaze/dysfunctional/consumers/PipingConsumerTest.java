@@ -3,7 +3,6 @@ package net.emaze.dysfunctional.consumers;
 import java.util.Arrays;
 import java.util.List;
 import junit.framework.Assert;
-import net.emaze.dysfunctional.iterations.StringOutputIterator;
 import org.junit.Test;
 
 /**
@@ -23,7 +22,7 @@ public class PipingConsumerTest {
 
     @Test
     public void testThatCanConsumeEmptyList() {
-        final List<String> input = Arrays.asList();
+        final List<String> input = Arrays.<String>asList();
         final StringOutputIterator output = new StringOutputIterator();
         final PipingConsumer<String> pipe = new PipingConsumer<String>(output);
         pipe.consume(input.iterator());

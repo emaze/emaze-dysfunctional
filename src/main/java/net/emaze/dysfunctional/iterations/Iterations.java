@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional.iterations;
 
+import net.emaze.dysfunctional.adapting.ArrayToIterableAdapter;
+import net.emaze.dysfunctional.adapting.ArrayIterator;
 import java.util.Iterator;
 import net.emaze.dysfunctional.consumers.EagerConsumer;
 import java.util.List;
@@ -133,7 +135,7 @@ public abstract class Iterations {
      * @return a List<R> containing the transformed elements
      */
     public static <R, E> List<R> map(Iterator<E> iterator, Delegate<R, E> delegate) {
-        return new EagerConsumer<R>().consume(new TransformingIterator<R,E>(iterator, delegate));
+        return new EagerConsumer<R>().consume(new TransformingIterator<R, E>(iterator, delegate));
     }
 
     /**
@@ -147,5 +149,4 @@ public abstract class Iterations {
     public static <R, E> List<R> map(E[] array, Delegate<R, E> delegate) {
         return map(new ArrayIterator<E>(array), delegate);
     }
-
 }
