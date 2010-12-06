@@ -7,9 +7,14 @@ import java.beans.PropertyDescriptor;
 import net.emaze.dysfunctional.reflection.MethodInvoker;
 
 /**
- *
- * @param <R>
- * @param <T> 
+ * plucks a property from a bean
+ * i.e:
+ *  > let Bean bean = { String key : 'value'};
+ *  > new Pluck<String, Bean> pluck = new Pluck<String,Bean>(Bean.class, "key");
+ *  > pluck.perform(bean);
+ * yields "value".
+ * @param <R> the return type parameter
+ * @param <T> the element type parameter
  * @author rferranti
  */
 public class Pluck<R, T> implements Delegate<R, T> {

@@ -1,7 +1,8 @@
 package net.emaze.dysfunctional.delegates;
 
 /**
- *
+ * yields true at index `target` (0-based)
+ * @param <E> the element type parameter
  * @author rferranti
  */
 public class AtIndex<E> implements Predicate<E> {

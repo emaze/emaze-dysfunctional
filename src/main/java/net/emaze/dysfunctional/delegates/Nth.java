@@ -1,7 +1,8 @@
 package net.emaze.dysfunctional.delegates;
 
 /**
- *
+ * yields true at the nth iteration (1-based)
+ * @param <E> the element type parameter
  * @author rferranti
  */
 public class Nth<E> implements Predicate<E> {

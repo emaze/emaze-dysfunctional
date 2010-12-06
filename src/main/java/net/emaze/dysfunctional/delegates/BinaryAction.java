@@ -2,8 +2,8 @@ package net.emaze.dysfunctional.delegates;
 
 /**
  * A Binary functor with no return value
- * @param <E1>
- * @param <E2>
+ * @param <E1> the former element type parameter
+ * @param <E2> the latter element type parameter
  * @author rferranti
  */
 public interface BinaryAction<E1,E2> {
