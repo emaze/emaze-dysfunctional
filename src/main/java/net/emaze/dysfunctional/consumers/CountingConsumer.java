@@ -3,21 +3,19 @@ package net.emaze.dysfunctional.consumers;
 import java.util.Iterator;
 
 /**
- *
- * @param <T>
+ * Counts the consumed elements 
  * @param <E> 
  * @author rferranti
  */
-public class CountingConsumer<T extends Number, E> implements Consumer<T,Iterator<E>>{
+public class CountingConsumer<E> implements Consumer<Long, Iterator<E>> {
 
     @Override
-    public T consume(Iterator<E> iterator) {
-        Long count = 0l;
-        while(iterator.hasNext()){
+    public Long consume(Iterator<E> iterator) {
+        long count = 0;
+        while (iterator.hasNext()) {
             ++count;
+            iterator.next();
         }
-        return (T) count;
+        return count;
     }
-
-    
 }
