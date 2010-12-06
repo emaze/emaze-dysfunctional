@@ -12,8 +12,7 @@ public class CountingConsumer<E> implements Consumer<Long, Iterator<E>> {
     @Override
     public Long consume(Iterator<E> iterator) {
         long count = 0;
-        while (iterator.hasNext()) {
-            ++count;
+        for (; iterator.hasNext(); ++count) {
             iterator.next();
         }
         return count;
