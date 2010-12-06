@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.convolutions;
 
 import java.util.Iterator;
+import net.emaze.dysfunctional.iterations.ArrayToIterableAdapter;
 import net.emaze.dysfunctional.iterations.OneTimeIterable;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.tuples.Pair;
@@ -32,7 +33,15 @@ public abstract class Zips {
      * @return the resulting longest convolved iterator wrapped in a OneTimeIterable
      */
     public static <T1, T2> Iterable<Pair<Maybe<T1>, Maybe<T2>>> longest(Iterable<T1> former, Iterable<T2> latter) {
-        Iterator<Pair<Maybe<T1>, Maybe<T2>>> iterator = new ZipLongestIterator<T1, T2>(former.iterator(), latter.iterator());
+        return longest(former.iterator(), latter.iterator());
+    }
+
+    public static <T1, T2> Iterable<Pair<Maybe<T1>, Maybe<T2>>> longest(Iterator<T1> former, Iterator<T2> latter) {
+        Iterator<Pair<Maybe<T1>, Maybe<T2>>> iterator = new ZipLongestIterator<T1, T2>(former, latter);
         return new OneTimeIterable<Pair<Maybe<T1>, Maybe<T2>>>(iterator);
+    }
+
+    public static <T1, T2> Iterable<Pair<Maybe<T1>, Maybe<T2>>> longest(T1[] former, T2[] latter) {
+        return longest(new ArrayToIterableAdapter<T1>(former), new ArrayToIterableAdapter<T2>(latter));
     }
 }
