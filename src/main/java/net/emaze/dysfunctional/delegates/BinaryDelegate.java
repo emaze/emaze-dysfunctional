@@ -12,6 +12,7 @@ public interface BinaryDelegate<R,T1,T2> {
      * Executes the delegate for the given elements yielding a result of type R
      * @param former the former element
      * @param latter the latter element
+     * @return
      */
     public R perform(T1 former,T2 latter);
 }
