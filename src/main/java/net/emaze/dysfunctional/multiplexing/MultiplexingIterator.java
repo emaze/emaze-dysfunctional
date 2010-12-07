@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.filtering.Filtering;
+import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.numbers.CircularCounter;
 
 /**
@@ -25,7 +25,7 @@ public class MultiplexingIterator<T> implements Iterator<T> {
     @Override
     public boolean hasNext() {
         //FIXME: Just wrong
-        return iterators.isEmpty() ? false : Filtering.last(1, iterators).hasNext();
+        return iterators.isEmpty() ? false : Consumers.last(iterators).hasNext();
     }
 
     @Override

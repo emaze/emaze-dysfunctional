@@ -17,6 +17,8 @@ public class InterposingIterator<T> implements Iterator<T> {
     private boolean consumingSeparator = false;
 
     public InterposingIterator(Iterator<T> values, Iterator<T> separators) {
+        dbc.precondition(values != null, "cannot create an InterposingIterator with a null values iterator");
+        dbc.precondition(separators != null, "cannot create an InterposingIterator with a null separators iterator");
         this.values = values;
         this.separators = separators;
     }
