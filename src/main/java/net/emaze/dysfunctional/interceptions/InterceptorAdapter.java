@@ -2,8 +2,6 @@ package net.emaze.dysfunctional.interceptions;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.delegates.Delegate;
-import net.emaze.dysfunctional.equality.EqualsBuilder;
-import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
 /**
  *
