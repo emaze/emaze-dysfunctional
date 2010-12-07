@@ -32,22 +32,4 @@ public class InterceptorAdapter<R, T> implements Delegate<R, T> {
             interceptor.after(value);
         }
     }
-
-    @Override
-    public boolean equals(Object rhs) {
-        if (rhs instanceof InterceptorAdapter == false) {
-            return false;
-        }
-        final InterceptorAdapter<R, T> other = (InterceptorAdapter<R, T>) rhs;
-        return new EqualsBuilder().append(this.interceptor, other.interceptor).
-                append(this.inner, other.inner).
-                isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append(interceptor).
-                append(inner).
-                toHashCode();
-    }
 }
