@@ -39,6 +39,7 @@ public class FirstMatchingPredicate<E> implements Predicate<E>, Multicasting<Pre
 
     @Override
     public void setFunctors(Collection<Predicate<E>> functors) {
+        dbc.precondition(functors != null, "functors cannot be null");
         this.predicates.clear();
         this.predicates.addAll(functors);
     }
