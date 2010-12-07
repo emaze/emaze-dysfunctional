@@ -19,16 +19,12 @@ import net.emaze.dysfunctional.strings.Strings;
 public class SparseRange<T> implements Range<T> {
 
     private final List<DenseRange<T>> ranges;
-    private final SequencingPolicy<T> sequencer;
-    private final Comparator<T> comparator;
 
     public SparseRange(SequencingPolicy<T> sequencer, Comparator<T> comparator, DenseRange<T>... ranges) {
         dbc.precondition(sequencer != null, "trying to create a SparseRange<T> with a null SequencingPolicy<T>");
         dbc.precondition(comparator != null, "trying to create a SparseRange<T> with a null Comparator<T>");
         dbc.precondition(ranges.length != 0, "trying to create a SparseRange<T> from zero ranges");
         this.ranges = new SortedNonOverlappingRangesTransformer<T>(sequencer, comparator).perform(Arrays.asList(ranges));
-        this.sequencer = sequencer;
-        this.comparator = comparator;
     }
 
     public SparseRange(SequencingPolicy<T> sequencer, Comparator<T> comparator, List<DenseRange<T>> ranges) {
@@ -37,8 +33,6 @@ public class SparseRange<T> implements Range<T> {
         dbc.precondition(ranges != null, "trying to create a SparseRange<T> from a null ranges");
         dbc.precondition(!ranges.isEmpty(), "trying to create a SparseRange<T> from zero ranges");
         this.ranges = new SortedNonOverlappingRangesTransformer<T>(sequencer, comparator).perform(ranges);
-        this.sequencer = sequencer;
-        this.comparator = comparator;
     }
 
     @Override
