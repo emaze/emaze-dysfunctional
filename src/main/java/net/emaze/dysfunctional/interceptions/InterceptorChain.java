@@ -1,8 +1,8 @@
 package net.emaze.dysfunctional.interceptions;
 
+import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Deque;
-import java.util.LinkedList;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.delegates.Delegate;
 import net.emaze.dysfunctional.delegates.Multicasting;
@@ -16,7 +16,7 @@ import net.emaze.dysfunctional.iterations.OneTimeIterable;
  */
 public class InterceptorChain<R, T> implements Delegate<R, T>, Multicasting<Interceptor<T>> {
 
-    private final Deque<Interceptor<T>> chain = new LinkedList<Interceptor<T>>();
+    private final Deque<Interceptor<T>> chain = new ArrayDeque<Interceptor<T>>();
     private final Delegate<R, T> innermost;
 
     public InterceptorChain(Delegate<R, T> innermost) {
