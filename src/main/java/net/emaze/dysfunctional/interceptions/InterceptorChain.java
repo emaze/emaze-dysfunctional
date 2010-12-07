@@ -35,16 +35,19 @@ public class InterceptorChain<R, T> implements Delegate<R, T>, Multicasting<Inte
 
     @Override
     public void add(Interceptor<T> functor) {
+        dbc.precondition(functor != null, "cannot add a null functor to an InterceptorChain");
         chain.add(functor);
     }
 
     @Override
     public void remove(Interceptor<T> functor) {
+        dbc.precondition(functor != null, "cannot remove null functor from an InterceptorChain");
         chain.remove(functor);
     }
 
     @Override
     public void setFunctors(Collection<Interceptor<T>> functors) {
+        dbc.precondition(functors != null, "functors cannot be null");
         chain.clear();
         chain.addAll(functors);
     }
