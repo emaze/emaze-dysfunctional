@@ -33,17 +33,17 @@ public class StrictOrderingDoubleComparator implements Comparator<Double>, Seria
         dbc.precondition(lhs != null, "null double (lhs) on StrictOrderingDoubleComparator");
         dbc.precondition(rhs != null, "null double (rhs) on StrictOrderingDoubleComparator");
         if (lhs < rhs) {
-            return -1;
+            return Comparing.LHS_IS_LESSER;
         }
         if (lhs > rhs) {
-            return +1;
+            return Comparing.LHS_IS_GREATER;
         }
         final long lhsBits = Double.doubleToLongBits(lhs);
         final long rhsBits = Double.doubleToLongBits(rhs);
         if (lhsBits == rhsBits) {
             return 0;
         }
-        return lhsBits < rhsBits ? -1 : +1;
+        return lhsBits < rhsBits ? Comparing.LHS_IS_LESSER : Comparing.LHS_IS_GREATER;
     }
 
     @Override
