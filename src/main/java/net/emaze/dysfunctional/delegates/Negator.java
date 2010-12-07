@@ -5,7 +5,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 /**
  * negates a predicate
  *  x => !predicate(x)
- * @param <T> 
+ * @param <T> the element type parameter
  * @author rferranti
  */
 public class Negator<T> implements Predicate<T> {
@@ -20,7 +20,7 @@ public class Negator<T> implements Predicate<T> {
     /**
      * tests the nested predicate and negates it
      * @param element the element used to test the predicate
-     * @return
+     * @return true if the inner predicate returns false, false otherwhise
      */
     @Override
     public boolean test(T element) {
