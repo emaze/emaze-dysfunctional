@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.interceptions;
 
+import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.delegates.Delegate;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
@@ -16,6 +17,8 @@ public class InterceptorAdapter<R, T> implements Delegate<R, T> {
     private final Delegate<R, T> inner;
 
     public InterceptorAdapter(Interceptor<T> interceptor, Delegate<R, T> inner) {
+        dbc.precondition(interceptor != null, "cannot adapt a null interceptor");
+        dbc.precondition(inner != null, "cannot adato with a null inner delegate");
         this.interceptor = interceptor;
         this.inner = inner;
     }

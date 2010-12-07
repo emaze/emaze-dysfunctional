@@ -3,6 +3,7 @@ package net.emaze.dysfunctional.interceptions;
 import java.util.Collection;
 import java.util.Deque;
 import java.util.LinkedList;
+import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.delegates.Delegate;
 import net.emaze.dysfunctional.delegates.Multicasting;
 import net.emaze.dysfunctional.iterations.OneTimeIterable;
@@ -19,6 +20,7 @@ public class InterceptorChain<R, T> implements Delegate<R, T>, Multicasting<Inte
     private final Delegate<R, T> innermost;
 
     public InterceptorChain(Delegate<R, T> innermost) {
+        dbc.precondition(innermost != null, "innermost delegate cannot be null");
         this.innermost = innermost;
     }
 
