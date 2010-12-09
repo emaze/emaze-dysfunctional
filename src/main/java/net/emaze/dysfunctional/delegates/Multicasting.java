@@ -19,7 +19,7 @@ public interface Multicasting<F> {
      * removes a functor from the multicasting functor chain
      * @param functor
      */
-    public void remove(F functor);
+    public boolean remove(F functor);
 
     /**
      * sets every functor from a collections (shallow copy)

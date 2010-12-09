@@ -32,9 +32,9 @@ public class FirstMatchingPredicate<E> implements Predicate<E>, Multicasting<Pre
     }
 
     @Override
-    public void remove(Predicate<E> aPredicate) {
+    public boolean remove(Predicate<E> aPredicate) {
         dbc.precondition(aPredicate != null, "trying to remove a null predicate");
-        predicates.remove(aPredicate);
+        return predicates.remove(aPredicate);
     }
 
     @Override

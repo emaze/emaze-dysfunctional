@@ -33,9 +33,9 @@ public class PipelinedAction<E> implements Action<E>, Multicasting<Action<E>> {
     }
 
     @Override
-    public void remove(Action<E> anAction) {
+    public boolean remove(Action<E> anAction) {
         dbc.precondition(anAction != null, "trying to remove a null action");
-        actions.remove(anAction);
+        return actions.remove(anAction);
     }
 
     @Override

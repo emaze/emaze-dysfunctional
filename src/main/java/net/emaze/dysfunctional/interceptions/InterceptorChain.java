@@ -40,9 +40,9 @@ public class InterceptorChain<R, T> implements Delegate<R, T>, Multicasting<Inte
     }
 
     @Override
-    public void remove(Interceptor<T> functor) {
+    public boolean remove(Interceptor<T> functor) {
         dbc.precondition(functor != null, "cannot remove null functor from an InterceptorChain");
-        chain.remove(functor);
+        return chain.remove(functor);
     }
 
     @Override
