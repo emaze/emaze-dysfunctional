@@ -39,6 +39,9 @@ public class ZipLongestIterator<E1, E2> implements Iterator<Pair<Maybe<E1>, Mayb
         return new Pair<Maybe<E1>, Maybe<E2>>(former.next(), latter.next());
     }
 
+    /**
+     * removing from a ZipLongestIterator throws an UnsupportedOperationException (at the moment)
+     */
     @Override
     public void remove() {
         former.remove();
