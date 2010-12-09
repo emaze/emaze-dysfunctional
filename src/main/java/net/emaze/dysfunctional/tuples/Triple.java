@@ -53,4 +53,11 @@ public class Triple<E1, E2, E3> {
                 append(this.t).
                 toHashCode();
     }
+
+
+    @Override
+    public String toString() {
+        return String.format("(%s,%s,%s)", f, s, t);
+    }
+
 }
