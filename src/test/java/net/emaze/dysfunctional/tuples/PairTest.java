@@ -40,4 +40,9 @@ public class PairTest {
         Assert.assertTrue(p.contains("1") && p.contains("2"));
     }
 
+    @Test
+    public void pairAndObjectAreNotEquals() {
+        Pair<Integer, Integer> p = new Pair<Integer, Integer>(1, 2);
+        Assert.assertFalse(p.equals(new Object()));
+    }
 }

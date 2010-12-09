@@ -46,4 +46,10 @@ public class TripleTest {
         String p = new Triple<Integer, Integer, Integer>(1, 2, 3).toString();
         Assert.assertTrue(p.contains("1") && p.contains("2") && p.contains("3"));
     }
+
+    @Test
+    public void tripleAndObjectAreNotEquals() {
+        Triple<Integer, Integer, Integer> t = new Triple<Integer, Integer, Integer>(1, 2, 3);
+        Assert.assertFalse(t.equals(new Object()));
+    }
 }
