@@ -28,4 +28,15 @@ public class PipingConsumerTest {
         pipe.consume(input.iterator());
         Assert.assertEquals("", output.toString());
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void consumingNullIteratorYieldException() {
+        final StringOutputIterator output = new StringOutputIterator();
+        new PipingConsumer<String>(output).consume(null);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void nullOutputIteratorYieldException() {
+        new PipingConsumer<String>(null);
+    }
 }

@@ -18,5 +18,8 @@ public class CountingConsumerTest {
         Assert.assertEquals(4, count);
     }
 
-
+    @Test(expected=IllegalArgumentException.class)
+    public void consumingNullIteratorYieldException() {
+        new CountingConsumer<Integer>().consume(null);
+    }
 }

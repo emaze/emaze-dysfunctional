@@ -13,6 +13,7 @@ public class PreciseConsumer<E> implements Consumer<E,Iterator<E>>{
     private final Predicate<E> predicate;
 
     public PreciseConsumer(Predicate<E> predicate) {
+        dbc.precondition(predicate != null, "predicate cannot be null");
         this.predicate = predicate;
     }
 
@@ -20,7 +21,6 @@ public class PreciseConsumer<E> implements Consumer<E,Iterator<E>>{
     @Override
     public E consume(Iterator<E> consumable) {
         dbc.precondition(consumable != null, "consuming a null iterator");
-        dbc.precondition(consumable.hasNext(), "no element to consume");
         while(consumable.hasNext()){
             final E elem = consumable.next();
             if(predicate.test(elem)){
