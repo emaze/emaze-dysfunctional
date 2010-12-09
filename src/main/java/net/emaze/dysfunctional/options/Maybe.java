@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.options;
 
+import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
@@ -23,6 +24,7 @@ public class Maybe<E> {
     }
 
     public E value() {
+        dbc.stateprecondition(hasValue, "fetching value from nothing");
         return element;
     }
 
