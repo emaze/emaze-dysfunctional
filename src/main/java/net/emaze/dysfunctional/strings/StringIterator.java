@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.strings;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  *
@@ -13,6 +14,7 @@ public class StringIterator implements Iterator<Character> {
 
 
     public StringIterator(String value) {
+        dbc.precondition(value != null, "cannot create StringIterator with a null String");
         this.value = value;
         this.currentPosition = 0;
     }
