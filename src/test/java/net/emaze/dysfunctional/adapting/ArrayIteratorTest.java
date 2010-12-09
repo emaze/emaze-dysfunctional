@@ -42,4 +42,10 @@ public class ArrayIteratorTest {
         new ArrayIterator<Integer>(null);
         Assert.assertTrue(true);
     }
+
+    @Test(expected=UnsupportedOperationException.class)
+    public void removingFromArrayIteratorYieldsUnsupportedException(){
+        new ArrayIterator<Integer>(new Integer[]{1}).remove();
+
+    }
 }
