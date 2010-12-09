@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.delegates;
 
 import java.util.Iterator;
+import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.options.MaybeIterator;
 
@@ -12,7 +13,8 @@ import net.emaze.dysfunctional.options.MaybeIterator;
 public class MaybeIteratorTransformer<T> implements Delegate<Iterator<Maybe<T>>, Iterator<T>> {
 
     @Override
-    public Iterator<Maybe<T>> perform(Iterator<T> iterator) {
+    public MaybeIterator<T> perform(Iterator<T> iterator) {
+        dbc.precondition(iterator != null, "cannot transform a null iterator to a MaybeIterator");
         return new MaybeIterator<T>(iterator);
     }
 }
