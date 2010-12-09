@@ -27,12 +27,18 @@ public class PluckTest {
         String got = p.perform(db);
         Assert.assertEquals(db.getSomething(), got);
     }
-    
+
     @Test
     public void canPluckIntFromBean() {
         DumbBean db = new DumbBean();
         final Pluck<Integer, DumbBean> p = new Pluck<Integer, DumbBean>(DumbBean.class, "one");
         int got = p.perform(db);
         Assert.assertEquals(db.getOne(), got);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void pluckingNonExistentPropertyYieldsException() {
+        final Pluck<Integer, DumbBean> p = new Pluck<Integer, DumbBean>(DumbBean.class, "nonExistentProperty");
+        p.perform(new DumbBean());
     }
 }
