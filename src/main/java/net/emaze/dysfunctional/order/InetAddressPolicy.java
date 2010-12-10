@@ -17,7 +17,7 @@ public class InetAddressPolicy implements SequencingPolicy<Inet4Address>, Compar
         final byte[] octects = address.getAddress();
         long longAddress = 0;
         for (int i = 0; i != octects.length; ++i) {
-            longAddress = (longAddress << Byte.SIZE) & octects[3 - i];
+            longAddress = longAddress << Byte.SIZE | ( octects[i] & 0xff);
         }
         return longAddress;
     }
