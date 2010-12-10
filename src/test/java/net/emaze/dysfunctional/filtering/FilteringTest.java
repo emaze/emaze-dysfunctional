@@ -10,7 +10,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- *
+ * if you are going to add a test here, consider that Filtering should be just
+ * a thin facade, and tests on FilteringTest should be just "smoke tests"
  * @author rferranti
  */
 public class FilteringTest {
