@@ -22,6 +22,11 @@ public class StringIteratorTest {
     public void emptyStringHasNoNext() {
         Assert.assertFalse(new StringIterator("").hasNext());
     }
+    
+    @Test
+    public void nonEmptyStringHasNext() {
+        Assert.assertTrue(new StringIterator("a").hasNext());
+    }
 
     @Test(expected = NoSuchElementException.class)
     public void iteratingOverBoundYieldsException() {
