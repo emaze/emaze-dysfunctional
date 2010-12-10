@@ -59,4 +59,19 @@ public class FilteringIteratorTest {
         got.add(iter.next());
         Assert.assertEquals(bucket, got);
     }
+    
+    @Test
+    public void canRemoveFromFilteringIterator() {
+        List<Integer> bucket = new ArrayList<Integer>();
+        bucket.add(1);
+        bucket.add(2);
+        
+        Iterator<Integer> iter = new FilteringIterator<Integer>(bucket.iterator(), new Always<Integer>());
+        iter.next();
+        iter.remove();
+        
+        Assert.assertEquals(Arrays.asList(2), bucket);
+    }
+
+
 }
