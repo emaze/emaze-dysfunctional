@@ -1,7 +1,11 @@
 package net.emaze.dysfunctional.filtering;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import net.emaze.dysfunctional.delegates.Always;
 import net.emaze.dysfunctional.delegates.Never;
+import net.emaze.dysfunctional.delegates.NotNull;
 import net.emaze.dysfunctional.delegates.Predicate;
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,4 +27,15 @@ public class TakeWhileTest {
         Predicate<Object> pred = new TakeWhile<Object>(new Never<Object>());
         Assert.assertFalse(pred.test(null));
     }
+
+    @Test
+    public void takesWhileConditionMetThenNeverTakes() {
+        Predicate<Object> pred = new TakeWhile<Object>(new NotNull<Object>());
+        List<Boolean> results = new ArrayList<Boolean>();
+        results.add(pred.test(new Object()));
+        results.add(pred.test(null));
+        results.add(pred.test(new Object()));
+        Assert.assertEquals(Arrays.asList(true, false, false), results);
+    }
+
 }
