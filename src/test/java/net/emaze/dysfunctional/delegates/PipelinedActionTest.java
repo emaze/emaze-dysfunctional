@@ -45,6 +45,13 @@ public class PipelinedActionTest {
         PipelinedAction<String> pipeline = new PipelinedAction<String>();
         pipeline.setFunctors(null);
     }
+    
+    @Test
+    public void canSetFunctors() {
+        PipelinedAction<String> pipeline = new PipelinedAction<String>();
+        pipeline.setFunctors(Arrays.<Action<String>>asList(new Noop<String>() , new Noop<String>()));
+        pipeline.perform("ignored_value");
+    }
 
     @Test
     public void actionsAreCalledInOrder(){
