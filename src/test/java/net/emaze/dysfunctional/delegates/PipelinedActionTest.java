@@ -45,33 +45,37 @@ public class PipelinedActionTest {
         PipelinedAction<String> pipeline = new PipelinedAction<String>();
         pipeline.setFunctors(null);
     }
-    
+
     @Test
     public void canSetFunctors() {
         PipelinedAction<String> pipeline = new PipelinedAction<String>();
-        pipeline.setFunctors(Arrays.<Action<String>>asList(new Noop<String>() , new Noop<String>()));
+        pipeline.setFunctors(Arrays.<Action<String>>asList(new Noop<String>(), new Noop<String>()));
         pipeline.perform("ignored_value");
     }
 
     @Test
-    public void actionsAreCalledInOrder(){
+    public void actionsAreCalledInOrder() {
         final List<String> bucket = new ArrayList<String>();
         PipelinedAction<String> pipeline = new PipelinedAction<String>();
-        pipeline.add(new Action<String>(){
-
-            @Override
-            public void perform(String element) {
-                bucket.add("former");
-            }
-        });
-        pipeline.add(new Action<String>(){
-
-            @Override
-            public void perform(String element) {
-                bucket.add("latter");
-            }
-        });
+        pipeline.add(new BucketFillingAction<String>(bucket, "former"));
+        pipeline.add(new BucketFillingAction<String>(bucket, "latter"));
         pipeline.perform("ignored_value");
         Assert.assertEquals(Arrays.asList("former", "latter"), bucket);
+    }
+
+    public static class BucketFillingAction<T> implements Action<T> {
+
+        private final List<T> bucket;
+        private final T elementToAdd;
+
+        public BucketFillingAction(List<T> bucket, T elementToAdd) {
+            this.bucket = bucket;
+            this.elementToAdd = elementToAdd;
+        }
+
+        @Override
+        public void perform(T element) {
+            bucket.add(elementToAdd);
+        }
     }
 }
