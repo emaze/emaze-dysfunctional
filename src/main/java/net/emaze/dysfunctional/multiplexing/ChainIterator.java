@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.iterations.HasNext;
+import net.emaze.dysfunctional.delegates.HasNext;
 import net.emaze.dysfunctional.iterations.Iterations;
 
 /**

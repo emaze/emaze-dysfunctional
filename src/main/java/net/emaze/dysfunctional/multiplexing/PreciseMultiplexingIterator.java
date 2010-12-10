@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.multiplexing;
 
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.iterations.HasNext;
+import net.emaze.dysfunctional.delegates.HasNext;
 import net.emaze.dysfunctional.iterations.Iterations;
 import net.emaze.dysfunctional.delegates.MaybeIteratorTransformer;
 import net.emaze.dysfunctional.options.Maybe;

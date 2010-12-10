@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.iterations;
+package net.emaze.dysfunctional.delegates;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.delegates.Predicate;
