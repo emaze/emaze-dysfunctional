@@ -40,6 +40,7 @@ public class PipelinedAction<E> implements Action<E>, Multicasting<Action<E>> {
 
     @Override
     public void setFunctors(Collection<Action<E>> functors){
+        dbc.precondition(functors != null, "cannot set a null functor collection");
         this.actions.clear();
         this.actions.addAll(functors);
     }
