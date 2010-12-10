@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional.numbers;
 
+import net.emaze.dysfunctional.contracts.dbc;
+
 /**
  *
  * @author rferranti
@@ -10,6 +12,7 @@ public class CircularCounter {
     private int limit;
 
     public CircularCounter(int limit) {
+        dbc.precondition(limit > 0, "cannot build a CircularCount with nonpositive or zero limit");
         this.limit = limit;
     }
 
