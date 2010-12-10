@@ -16,7 +16,7 @@ public class ReflectiveAction<T> implements Action<T> {
 
     private String methodName;
     private Object callee;
-    private Maybe<Class<T>> clazz = Maybe.nothing();
+    private Maybe<Class<?>> clazz = Maybe.nothing();
     private Memoized<Method> methodCache = new Memoized<Method>();
 
     @Override
@@ -30,9 +30,9 @@ public class ReflectiveAction<T> implements Action<T> {
         new MethodInvoker(methodCache.value()).invoke(callee, message);
     }
 
-    public void setMessageClass(Class<T> clazz) {
+    public void setMessageClass(Class<?> clazz) {
         methodCache.invalidate();
-        this.clazz = Maybe.just(clazz);
+        this.clazz = Maybe.<Class<?>>just(clazz);
     }
 
     public void setMethodName(String methodName) {
