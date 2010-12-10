@@ -17,6 +17,7 @@ public class NthTest {
         Nth<Void> nth = new Nth<Void>(1);
         Assert.assertTrue(nth.test(null));
     }
+
     @Test
     public void nthReturnsTrueOnlyAtTheNthCall() {
         Nth<Void> nth = new Nth<Void>(2);
