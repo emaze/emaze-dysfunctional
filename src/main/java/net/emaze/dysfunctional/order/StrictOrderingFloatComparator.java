@@ -35,17 +35,17 @@ public class StrictOrderingFloatComparator implements Comparator<Float>, Seriali
         dbc.precondition(lhs != null, "null double (lhs) on StrictOrderingFloatComparator");
         dbc.precondition(rhs != null, "null double (rhs) on StrictOrderingFloatComparator");
         if (lhs < rhs) {
-            return Comparing.LHS_IS_LESSER;
+            return Order.LHS_IS_LESSER;
         }
         if (lhs > rhs) {
-            return Comparing.LHS_IS_GREATER;
+            return Order.LHS_IS_GREATER;
         }
         final int lhsBits = Float.floatToIntBits(lhs);
         final int rhsBits = Float.floatToIntBits(rhs);
         if (lhsBits == rhsBits) {
             return 0;
         }
-        return lhsBits < rhsBits ? Comparing.LHS_IS_LESSER : Comparing.LHS_IS_GREATER;
+        return lhsBits < rhsBits ? Order.LHS_IS_LESSER : Order.LHS_IS_GREATER;
     }
 
     @Override

@@ -13,32 +13,32 @@ public class StrictOrderingFloatComparatorTest {
 
     @Test
     public void positiveZeroIsGreaterThanNegativeZero() {
-        Assert.assertEquals(Comparing.LHS_IS_LESSER,comparator.compare(-0.0f, +0.0f));
+        Assert.assertEquals(Order.LHS_IS_LESSER,comparator.compare(-0.0f, +0.0f));
     }
     
     @Test
     public void oneIsGreaterThanPositiveZero() {
-        Assert.assertEquals(Comparing.LHS_IS_GREATER,comparator.compare(1f, +0.0f));
+        Assert.assertEquals(Order.LHS_IS_GREATER,comparator.compare(1f, +0.0f));
     }
     @Test
     public void oneIsGreaterThanNegativeZero() {
-        Assert.assertEquals(Comparing.LHS_IS_GREATER,comparator.compare(1f, -0.0f));
+        Assert.assertEquals(Order.LHS_IS_GREATER,comparator.compare(1f, -0.0f));
     }
     
     @Test
     public void negativeOneIsLesserThanPositiveZero() {
-        Assert.assertEquals(Comparing.LHS_IS_LESSER,comparator.compare(-1f, +0.0f));
+        Assert.assertEquals(Order.LHS_IS_LESSER,comparator.compare(-1f, +0.0f));
     }
     
     @Test
     public void positiveOneIsLesserThanPositiveZero() {
-        Assert.assertEquals(Comparing.LHS_IS_GREATER,comparator.compare(+1f, -0.0f));
+        Assert.assertEquals(Order.LHS_IS_GREATER,comparator.compare(+1f, -0.0f));
     }
     
     @Test
     public void notANumberIsEqualsToHimself() {
         Assert.assertFalse(Float.NaN == Float.NaN);
-        Assert.assertEquals(Comparing.SAME_ORDER,comparator.compare(Float.NaN, Float.NaN));
+        Assert.assertEquals(Order.SAME_ORDER,comparator.compare(Float.NaN, Float.NaN));
     }
 
     @Test(expected=IllegalArgumentException.class)
