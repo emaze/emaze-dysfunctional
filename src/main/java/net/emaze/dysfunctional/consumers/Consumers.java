@@ -225,7 +225,7 @@ public abstract class Consumers {
      * @param outputIterator
      * @return
      */
-    public static <E> long count(E[] array, OutputIterator<E> outputIterator) {
+    public static <E> long count(E[] array) {
         return count(new ArrayIterator<E>(array));
     }
 }
