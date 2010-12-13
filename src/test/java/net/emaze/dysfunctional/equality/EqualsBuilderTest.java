@@ -1,8 +1,10 @@
 package net.emaze.dysfunctional.equality;
 
+import java.math.BigDecimal;
 import net.emaze.dysfunctional.equality.EqualsBuilderTest.TestArrays;
 import net.emaze.dysfunctional.equality.EqualsBuilderTest.TestIgnoreArrayParamsWhenAlreadyDifferent;
 import net.emaze.dysfunctional.equality.EqualsBuilderTest.TestIgnoreParamsWhenAlreadyDifferent;
+import net.emaze.dysfunctional.equality.EqualsBuilderTest.TestIntrospection;
 import net.emaze.dysfunctional.equality.EqualsBuilderTest.TestIntrospectsArrays;
 import net.emaze.dysfunctional.equality.EqualsBuilderTest.TestPrimitive;
 import org.junit.Assert;
@@ -21,7 +23,8 @@ import org.junit.runners.Suite.SuiteClasses;
     TestArrays.class,
     TestIgnoreParamsWhenAlreadyDifferent.class,
     TestIgnoreArrayParamsWhenAlreadyDifferent.class,
-    TestIntrospectsArrays.class
+    TestIntrospectsArrays.class,
+    TestIntrospection.class
 })
 public class EqualsBuilderTest {
 
@@ -107,6 +110,7 @@ public class EqualsBuilderTest {
             builder.append(former, latter);
             Assert.assertTrue(builder.isEquals());
         }
+
         @Test
         public void forTwoDifferentBooleans() {
             boolean former = true;
@@ -281,7 +285,7 @@ public class EqualsBuilderTest {
             builder.appendSuper(true);
             Assert.assertFalse(builder.isEquals());
         }
-        
+
         @Test
         public void forBooleans() {
             boolean former = true;
@@ -448,8 +452,8 @@ public class EqualsBuilderTest {
         }
     }
 
+    public static class TestIntrospectsArrays {
 
-    public static class TestIntrospectsArrays{
         @Test
         public void canCompareTwoArraysOfBooleans() {
             Object former = new boolean[]{true};
@@ -526,6 +530,36 @@ public class EqualsBuilderTest {
         public void canCompareTwoArraysOfObject() {
             Object former = new Object[]{1};
             Object latter = new Object[]{1};
+            EqualsBuilder builder = new EqualsBuilder();
+            builder.append(former, latter);
+            Assert.assertTrue(builder.isEquals());
+        }
+    }
+
+    public static class TestIntrospection {
+
+        @Test
+        public void somethingAndNullAreNotEqual() {
+            Object former = 1;
+            Object latter = null;
+            EqualsBuilder builder = new EqualsBuilder();
+            builder.append(former, latter);
+            Assert.assertFalse(builder.isEquals());
+        }
+
+        @Test
+        public void differnetDimensionsAreNotEqual() {
+            Object former = new int[0];
+            Object latter = new int[0][0];
+            EqualsBuilder builder = new EqualsBuilder();
+            builder.append(former, latter);
+            Assert.assertFalse(builder.isEquals());
+        }
+
+        @Test
+        public void canCompareTwoBigDecimals() {
+            Object former = new BigDecimal("2");
+            Object latter = new BigDecimal("2");
             EqualsBuilder builder = new EqualsBuilder();
             builder.append(former, latter);
             Assert.assertTrue(builder.isEquals());
