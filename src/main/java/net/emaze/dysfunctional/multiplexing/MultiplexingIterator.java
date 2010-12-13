@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.consumers.Consumers;
+import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.numbers.CircularCounter;
 
 /**
@@ -18,6 +19,7 @@ public class MultiplexingIterator<T> implements Iterator<T> {
     private CircularCounter currentIndex;
 
     public MultiplexingIterator(Iterator<T>... iterators) {
+        dbc.precondition(iterators != null, "trying to create a ChainIterator from a null array of iterators");
         this.iterators.addAll(Arrays.asList(iterators));
         this.currentIndex = new CircularCounter(iterators.length);
     }
