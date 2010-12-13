@@ -2,7 +2,9 @@ package net.emaze.dysfunctional.hashing;
 
 import net.emaze.dysfunctional.hashing.HashCodeBuilderTest.TestIntrospectsArrays;
 import net.emaze.dysfunctional.hashing.HashCodeBuilderTest.TestArrays;
+import net.emaze.dysfunctional.hashing.HashCodeBuilderTest.TestNulls;
 import net.emaze.dysfunctional.hashing.HashCodeBuilderTest.TestPrimitive;
+import net.emaze.dysfunctional.hashing.HashCodeBuilderTest.TestSuperAndCtors;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,11 +18,39 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
     TestPrimitive.class,
-            TestArrays.class,
-    TestIntrospectsArrays.class
-
+    TestArrays.class,
+    TestIntrospectsArrays.class,
+    TestNulls.class,
+    TestSuperAndCtors.class
 })
 public class HashCodeBuilderTest {
+
+    public static class TestSuperAndCtors {
+        @Test(expected=IllegalArgumentException.class)
+        public void creatingWithZeroInitialValueLeadsToException() {
+            new HashCodeBuilder(0, 17);
+        }
+        
+        @Test(expected=IllegalArgumentException.class)
+        public void creatingWithEvenInitialValueLeadsToException() {
+            new HashCodeBuilder(2, 17);
+        }
+        
+        @Test(expected=IllegalArgumentException.class)
+        public void creatingWithZeroMultiplierLeadsToException() {
+            new HashCodeBuilder(13, 0);
+        }
+        
+        @Test(expected=IllegalArgumentException.class)
+        public void creatingWithEvenMultiplierLeadsToException() {
+            new HashCodeBuilder(13, 2);
+        }
+
+        @Test
+        public void canAppendSuper() {
+            Assert.assertEquals(new HashCodeBuilder().appendSuper(13).toHashCode(), new HashCodeBuilder().appendSuper(13).toHashCode());
+        }
+    }
 
     public static class TestPrimitive {
 
@@ -189,6 +219,7 @@ public class HashCodeBuilderTest {
             Assert.assertEquals(formerBuilder.toHashCode(), latterBuilder.toHashCode());
         }
     }
+
     public static class TestIntrospectsArrays {
 
         @Test
@@ -270,6 +301,80 @@ public class HashCodeBuilderTest {
             HashCodeBuilder formerBuilder = new HashCodeBuilder().append(former);
             HashCodeBuilder latterBuilder = new HashCodeBuilder().append(latter);
             Assert.assertEquals(formerBuilder.toHashCode(), latterBuilder.toHashCode());
+        }
+    }
+
+    public static class TestNulls {
+
+        public static int NULL_HASH = new HashCodeBuilder().append((Object) null).toHashCode();
+
+        @Test
+        public void forArrayOfBooleans() {
+            boolean[] latter = null;
+            HashCodeBuilder latterBuilder = new HashCodeBuilder().append(latter);
+            Assert.assertEquals(NULL_HASH, latterBuilder.toHashCode());
+        }
+
+        @Test
+        public void forArrayOfOfBytes() {
+            byte[] latter = null;
+            HashCodeBuilder latterBuilder = new HashCodeBuilder().append(latter);
+            Assert.assertEquals(NULL_HASH, latterBuilder.toHashCode());
+        }
+
+        @Test
+        public void forArrayOfOfChars() {
+            char[] latter = null;
+            HashCodeBuilder latterBuilder = new HashCodeBuilder().append(latter);
+            Assert.assertEquals(NULL_HASH, latterBuilder.toHashCode());
+        }
+
+        @Test
+        public void forArrayOfOfShorts() {
+            short[] latter = null;
+            HashCodeBuilder latterBuilder = new HashCodeBuilder().append(latter);
+            Assert.assertEquals(NULL_HASH, latterBuilder.toHashCode());
+        }
+
+        @Test
+        public void forArrayOfOfInts() {
+            int[] latter = null;
+            HashCodeBuilder latterBuilder = new HashCodeBuilder().append(latter);
+            Assert.assertEquals(NULL_HASH, latterBuilder.toHashCode());
+        }
+
+        @Test
+        public void forArrayOfOfLongs() {
+            long[] latter = null;
+            HashCodeBuilder latterBuilder = new HashCodeBuilder().append(latter);
+            Assert.assertEquals(NULL_HASH, latterBuilder.toHashCode());
+        }
+
+        @Test
+        public void forArrayOfOfFloats() {
+            float[] latter = null;
+            HashCodeBuilder latterBuilder = new HashCodeBuilder().append(latter);
+            Assert.assertEquals(NULL_HASH, latterBuilder.toHashCode());
+        }
+
+        @Test
+        public void forArrayOfOfDoubles() {
+            double[] latter = null;
+            HashCodeBuilder latterBuilder = new HashCodeBuilder().append(latter);
+            Assert.assertEquals(NULL_HASH, latterBuilder.toHashCode());
+        }
+
+        @Test
+        public void forArrayOfOfObjects() {
+            Object[] latter = null;
+            HashCodeBuilder latterBuilder = new HashCodeBuilder().append(latter);
+            Assert.assertEquals(NULL_HASH, latterBuilder.toHashCode());
+        }
+        @Test
+        public void forObjects() {
+            Object latter = null;
+            HashCodeBuilder latterBuilder = new HashCodeBuilder().append(latter);
+            Assert.assertEquals(NULL_HASH, latterBuilder.toHashCode());
         }
     }
 }
