@@ -148,4 +148,9 @@ public abstract class Iterations {
     public static <R, E> List<R> map(E[] array, Delegate<R, E> delegate) {
         return map(new ArrayIterator<E>(array), delegate);
     }
+
+
+    public static <T> Iterable<T> oneTime(Iterator<T> iterator){
+        return new OneTimeIterable<T>(iterator);
+    }
 }
