@@ -21,7 +21,7 @@ import org.junit.runners.Suite.SuiteClasses;
     TestArrays.class,
     TestIgnoreParamsWhenAlreadyDifferent.class,
     TestIgnoreArrayParamsWhenAlreadyDifferent.class,
-    TestIntrospectsArrays.class,
+    TestIntrospectsArrays.class
 })
 public class EqualsBuilderTest {
 
