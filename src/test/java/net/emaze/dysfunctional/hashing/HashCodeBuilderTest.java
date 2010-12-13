@@ -26,24 +26,29 @@ import org.junit.runners.Suite.SuiteClasses;
 public class HashCodeBuilderTest {
 
     public static class TestSuperAndCtors {
-        @Test(expected=IllegalArgumentException.class)
+
+        @Test(expected = IllegalArgumentException.class)
         public void creatingWithZeroInitialValueLeadsToException() {
             new HashCodeBuilder(0, 17);
         }
-        
-        @Test(expected=IllegalArgumentException.class)
+
+        @Test(expected = IllegalArgumentException.class)
         public void creatingWithEvenInitialValueLeadsToException() {
             new HashCodeBuilder(2, 17);
         }
-        
-        @Test(expected=IllegalArgumentException.class)
+
+        @Test(expected = IllegalArgumentException.class)
         public void creatingWithZeroMultiplierLeadsToException() {
             new HashCodeBuilder(13, 0);
         }
-        
-        @Test(expected=IllegalArgumentException.class)
+
+        @Test(expected = IllegalArgumentException.class)
         public void creatingWithEvenMultiplierLeadsToException() {
             new HashCodeBuilder(13, 2);
+        }
+        @Test
+        public void canCreateWithOddNonZeroNumbers() {
+            new HashCodeBuilder(13, 17);
         }
 
         @Test
@@ -55,9 +60,18 @@ public class HashCodeBuilderTest {
     public static class TestPrimitive {
 
         @Test
-        public void forBoolean() {
+        public void forTrue() {
             boolean former = true;
             boolean latter = true;
+            HashCodeBuilder formerBuilder = new HashCodeBuilder().append(former);
+            HashCodeBuilder latterBuilder = new HashCodeBuilder().append(latter);
+            Assert.assertEquals(formerBuilder.toHashCode(), latterBuilder.toHashCode());
+        }
+
+        @Test
+        public void forFalse() {
+            boolean former = false;
+            boolean latter = false;
             HashCodeBuilder formerBuilder = new HashCodeBuilder().append(former);
             HashCodeBuilder latterBuilder = new HashCodeBuilder().append(latter);
             Assert.assertEquals(formerBuilder.toHashCode(), latterBuilder.toHashCode());
@@ -370,6 +384,7 @@ public class HashCodeBuilderTest {
             HashCodeBuilder latterBuilder = new HashCodeBuilder().append(latter);
             Assert.assertEquals(NULL_HASH, latterBuilder.toHashCode());
         }
+
         @Test
         public void forObjects() {
             Object latter = null;
