@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -25,6 +26,18 @@ public class RoundRobinIteratorTest {
     public void hasNextWhenNonEmptyInnerIterators() {
         Iterator<Integer> iter = new RoundRobinIterator<Integer>(Collections.<Integer>emptyList().iterator(), Arrays.asList(1).iterator());
         Assert.assertTrue(iter.hasNext());
+    }
+
+    @Test
+    public void hasNoNextWhenAllEmptyInnerIterators() {
+        Iterator<Integer> iter = new RoundRobinIterator<Integer>(Collections.<Integer>emptyList().iterator());
+        Assert.assertFalse(iter.hasNext());
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void consumingEmptyIteratorYieldsException() {
+        Iterator<Integer> iter = new RoundRobinIterator<Integer>(Collections.<Integer>emptyList().iterator());
+        iter.next();
     }
 
     @Test

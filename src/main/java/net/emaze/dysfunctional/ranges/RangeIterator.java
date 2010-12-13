@@ -41,8 +41,11 @@ public class RangeIterator<T> implements Iterator<T> {
         return oldCurrent;
     }
 
+    /**
+     * ignore semantics
+     */
     @Override
     public void remove() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
     }
 }

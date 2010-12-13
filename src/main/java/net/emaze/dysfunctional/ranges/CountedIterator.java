@@ -11,13 +11,14 @@ import net.emaze.dysfunctional.convolutions.ZipShortestIterator;
  * @param <E> 
  * @author rferranti
  */
-public class CountedIterator<T,E> implements Iterator<Pair<T, E>> {
+public class CountedIterator<T, E> implements Iterator<Pair<T, E>> {
 
     private final ZipShortestIterator<T, E> zipped;
 
-    public CountedIterator(Iterator<E> iterator, Range<T> range ) {
+    public CountedIterator(Iterator<E> iterator, Range<T> range) {
         dbc.precondition(iterator != null, "trying to create a CountedIterator from a null iterator");
-        zipped = new ZipShortestIterator<T, E>( range.iterator() , iterator);
+        dbc.precondition(range != null, "trying to create a CountedIterator from a null range");
+        zipped = new ZipShortestIterator<T, E>(range.iterator(), iterator);
     }
 
     @Override
