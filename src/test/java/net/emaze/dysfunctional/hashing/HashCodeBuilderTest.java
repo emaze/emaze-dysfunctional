@@ -17,7 +17,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
     TestPrimitive.class,
             TestArrays.class,
-    TestIntrospectsArrays.class,
+    TestIntrospectsArrays.class
 
 })
 public class HashCodeBuilderTest {
