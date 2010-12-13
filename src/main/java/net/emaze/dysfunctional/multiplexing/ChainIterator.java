@@ -20,6 +20,7 @@ public class ChainIterator<E> implements Iterator<E> {
     private final List<Iterator<E>> iterators = new ArrayList<Iterator<E>>();
 
     public ChainIterator(Iterator<E>... iterators) {
+        dbc.precondition(iterators != null, "trying to create a ChainIterator from a null array of iterators");
         this.iterators.addAll(Arrays.asList(iterators));
     }
 
@@ -57,6 +58,7 @@ public class ChainIterator<E> implements Iterator<E> {
 
     @Override
     public void remove() {
+        //FIXME: see ignored test
         final Maybe<Iterator<E>> maybeElement = currentElement(iterators);
         if (maybeElement.hasValue()) {
             maybeElement.value().remove();
