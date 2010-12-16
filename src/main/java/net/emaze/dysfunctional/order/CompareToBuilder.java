@@ -7,11 +7,11 @@ public class CompareToBuilder {
     private int comparison;
 
     public CompareToBuilder() {
-        comparison = 0;
+        comparison = Order.SAME_ORDER;
     }
 
     public CompareToBuilder appendSuper(int superCompareTo) {
-        if (comparison != 0) {
+        if (comparison != Order.SAME_ORDER) {
             return this;
         }
         comparison = superCompareTo;
@@ -23,18 +23,18 @@ public class CompareToBuilder {
     }
 
     public CompareToBuilder append(Object lhs, Object rhs, Comparator comparator) {
-        if (comparison != 0) {
+        if (comparison != Order.SAME_ORDER) {
             return this;
         }
         if (lhs == rhs) {
             return this;
         }
         if (lhs == null) {
-            comparison = -1;
+            comparison = Order.LHS_IS_LESSER;
             return this;
         }
         if (rhs == null) {
-            comparison = +1;
+            comparison = Order.LHS_IS_GREATER;
             return this;
         }
         if (lhs.getClass().isArray()) {
@@ -74,47 +74,47 @@ public class CompareToBuilder {
     }
 
     public CompareToBuilder append(long lhs, long rhs) {
-        if (comparison != 0) {
+        if (comparison != Order.SAME_ORDER) {
             return this;
         }
-        comparison = ((lhs < rhs) ? -1 : ((lhs > rhs) ? 1 : 0));
+        comparison = ((lhs < rhs) ? Order.LHS_IS_LESSER : ((lhs > rhs) ? Order.LHS_IS_GREATER : Order.SAME_ORDER));
         return this;
     }
 
     public CompareToBuilder append(int lhs, int rhs) {
-        if (comparison != 0) {
+        if (comparison != Order.SAME_ORDER) {
             return this;
         }
-        comparison = ((lhs < rhs) ? -1 : ((lhs > rhs) ? 1 : 0));
+        comparison = ((lhs < rhs) ? Order.LHS_IS_LESSER : ((lhs > rhs) ? Order.LHS_IS_GREATER : Order.SAME_ORDER));
         return this;
     }
 
     public CompareToBuilder append(short lhs, short rhs) {
-        if (comparison != 0) {
+        if (comparison != Order.SAME_ORDER) {
             return this;
         }
-        comparison = ((lhs < rhs) ? -1 : ((lhs > rhs) ? 1 : 0));
+        comparison = ((lhs < rhs) ? Order.LHS_IS_LESSER : ((lhs > rhs) ? Order.LHS_IS_GREATER : Order.SAME_ORDER));
         return this;
     }
 
     public CompareToBuilder append(char lhs, char rhs) {
-        if (comparison != 0) {
+        if (comparison != Order.SAME_ORDER) {
             return this;
         }
-        comparison = ((lhs < rhs) ? -1 : ((lhs > rhs) ? 1 : 0));
+        comparison = ((lhs < rhs) ? Order.LHS_IS_LESSER : ((lhs > rhs) ? Order.LHS_IS_GREATER : Order.SAME_ORDER));
         return this;
     }
 
     public CompareToBuilder append(byte lhs, byte rhs) {
-        if (comparison != 0) {
+        if (comparison != Order.SAME_ORDER) {
             return this;
         }
-        comparison = ((lhs < rhs) ? -1 : ((lhs > rhs) ? 1 : 0));
+        comparison = ((lhs < rhs) ? Order.LHS_IS_LESSER : ((lhs > rhs) ? Order.LHS_IS_GREATER : Order.SAME_ORDER));
         return this;
     }
 
     public CompareToBuilder append(double lhs, double rhs) {
-        if (comparison != 0) {
+        if (comparison != Order.SAME_ORDER) {
             return this;
         }
         comparison = new StrictOrderingDoubleComparator().compare(lhs, rhs);
@@ -122,7 +122,7 @@ public class CompareToBuilder {
     }
 
     public CompareToBuilder append(float lhs, float rhs) {
-        if (comparison != 0) {
+        if (comparison != Order.SAME_ORDER) {
             return this;
         }
         comparison = new StrictOrderingFloatComparator().compare(lhs, rhs);
@@ -130,17 +130,13 @@ public class CompareToBuilder {
     }
 
     public CompareToBuilder append(boolean lhs, boolean rhs) {
-        if (comparison != 0) {
+        if (comparison != Order.SAME_ORDER) {
             return this;
         }
         if (lhs == rhs) {
             return this;
         }
-        if (lhs == false) {
-            comparison = -1;
-        } else {
-            comparison = +1;
-        }
+        comparison = lhs ? Order.LHS_IS_GREATER : Order.LHS_IS_LESSER;
         return this;
     }
 
@@ -149,225 +145,225 @@ public class CompareToBuilder {
     }
 
     public CompareToBuilder append(Object[] lhs, Object[] rhs, Comparator comparator) {
-        if (comparison != 0) {
+        if (comparison != Order.SAME_ORDER) {
             return this;
         }
         if (lhs == rhs) {
             return this;
         }
         if (lhs == null) {
-            comparison = -1;
+            comparison = Order.LHS_IS_LESSER;
             return this;
         }
         if (rhs == null) {
-            comparison = +1;
+            comparison = Order.LHS_IS_GREATER;
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = (lhs.length < rhs.length) ? -1 : +1;
+            comparison = (lhs.length < rhs.length) ? Order.LHS_IS_LESSER : Order.LHS_IS_GREATER;
             return this;
         }
-        for (int i = 0; i < lhs.length && comparison == 0; i++) {
+        for (int i = 0; i < lhs.length && comparison == Order.SAME_ORDER; i++) {
             append(lhs[i], rhs[i], comparator);
         }
         return this;
     }
 
     public CompareToBuilder append(long[] lhs, long[] rhs) {
-        if (comparison != 0) {
+        if (comparison != Order.SAME_ORDER) {
             return this;
         }
         if (lhs == rhs) {
             return this;
         }
         if (lhs == null) {
-            comparison = -1;
+            comparison = Order.LHS_IS_LESSER;
             return this;
         }
         if (rhs == null) {
-            comparison = +1;
+            comparison = Order.LHS_IS_GREATER;
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = (lhs.length < rhs.length) ? -1 : +1;
+            comparison = (lhs.length < rhs.length) ? Order.LHS_IS_LESSER : Order.LHS_IS_GREATER;
             return this;
         }
-        for (int i = 0; i < lhs.length && comparison == 0; i++) {
+        for (int i = 0; i < lhs.length && comparison == Order.SAME_ORDER; i++) {
             append(lhs[i], rhs[i]);
         }
         return this;
     }
 
     public CompareToBuilder append(int[] lhs, int[] rhs) {
-        if (comparison != 0) {
+        if (comparison != Order.SAME_ORDER) {
             return this;
         }
         if (lhs == rhs) {
             return this;
         }
         if (lhs == null) {
-            comparison = -1;
+            comparison = Order.LHS_IS_LESSER;
             return this;
         }
         if (rhs == null) {
-            comparison = +1;
+            comparison = Order.LHS_IS_GREATER;
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = (lhs.length < rhs.length) ? -1 : +1;
+            comparison = (lhs.length < rhs.length) ? Order.LHS_IS_LESSER : Order.LHS_IS_GREATER;
             return this;
         }
-        for (int i = 0; i < lhs.length && comparison == 0; i++) {
+        for (int i = 0; i < lhs.length && comparison == Order.SAME_ORDER; i++) {
             append(lhs[i], rhs[i]);
         }
         return this;
     }
 
     public CompareToBuilder append(short[] lhs, short[] rhs) {
-        if (comparison != 0) {
+        if (comparison != Order.SAME_ORDER) {
             return this;
         }
         if (lhs == rhs) {
             return this;
         }
         if (lhs == null) {
-            comparison = -1;
+            comparison = Order.LHS_IS_LESSER;
             return this;
         }
         if (rhs == null) {
-            comparison = +1;
+            comparison = Order.LHS_IS_GREATER;
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = (lhs.length < rhs.length) ? -1 : +1;
+            comparison = (lhs.length < rhs.length) ? Order.LHS_IS_LESSER : Order.LHS_IS_GREATER;
             return this;
         }
-        for (int i = 0; i < lhs.length && comparison == 0; i++) {
+        for (int i = 0; i < lhs.length && comparison == Order.SAME_ORDER; i++) {
             append(lhs[i], rhs[i]);
         }
         return this;
     }
 
     public CompareToBuilder append(char[] lhs, char[] rhs) {
-        if (comparison != 0) {
+        if (comparison != Order.SAME_ORDER) {
             return this;
         }
         if (lhs == rhs) {
             return this;
         }
         if (lhs == null) {
-            comparison = -1;
+            comparison = Order.LHS_IS_LESSER;
             return this;
         }
         if (rhs == null) {
-            comparison = +1;
+            comparison = Order.LHS_IS_GREATER;
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = (lhs.length < rhs.length) ? -1 : +1;
+            comparison = (lhs.length < rhs.length) ? Order.LHS_IS_LESSER : Order.LHS_IS_GREATER;
             return this;
         }
-        for (int i = 0; i < lhs.length && comparison == 0; i++) {
+        for (int i = 0; i < lhs.length && comparison == Order.SAME_ORDER; i++) {
             append(lhs[i], rhs[i]);
         }
         return this;
     }
 
     public CompareToBuilder append(byte[] lhs, byte[] rhs) {
-        if (comparison != 0) {
+        if (comparison != Order.SAME_ORDER) {
             return this;
         }
         if (lhs == rhs) {
             return this;
         }
         if (lhs == null) {
-            comparison = -1;
+            comparison = Order.LHS_IS_LESSER;
             return this;
         }
         if (rhs == null) {
-            comparison = +1;
+            comparison = Order.LHS_IS_GREATER;
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = (lhs.length < rhs.length) ? -1 : +1;
+            comparison = (lhs.length < rhs.length) ? Order.LHS_IS_LESSER : Order.LHS_IS_GREATER;
             return this;
         }
-        for (int i = 0; i < lhs.length && comparison == 0; i++) {
+        for (int i = 0; i < lhs.length && comparison == Order.SAME_ORDER; i++) {
             append(lhs[i], rhs[i]);
         }
         return this;
     }
 
     public CompareToBuilder append(double[] lhs, double[] rhs) {
-        if (comparison != 0) {
+        if (comparison != Order.SAME_ORDER) {
             return this;
         }
         if (lhs == rhs) {
             return this;
         }
         if (lhs == null) {
-            comparison = -1;
+            comparison = Order.LHS_IS_LESSER;
             return this;
         }
         if (rhs == null) {
-            comparison = +1;
+            comparison = Order.LHS_IS_GREATER;
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = (lhs.length < rhs.length) ? -1 : +1;
+            comparison = (lhs.length < rhs.length) ? Order.LHS_IS_LESSER : Order.LHS_IS_GREATER;
             return this;
         }
-        for (int i = 0; i < lhs.length && comparison == 0; i++) {
+        for (int i = 0; i < lhs.length && comparison == Order.SAME_ORDER; i++) {
             append(lhs[i], rhs[i]);
         }
         return this;
     }
 
     public CompareToBuilder append(float[] lhs, float[] rhs) {
-        if (comparison != 0) {
+        if (comparison != Order.SAME_ORDER) {
             return this;
         }
         if (lhs == rhs) {
             return this;
         }
         if (lhs == null) {
-            comparison = -1;
+            comparison = Order.LHS_IS_LESSER;
             return this;
         }
         if (rhs == null) {
-            comparison = +1;
+            comparison = Order.LHS_IS_GREATER;
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = (lhs.length < rhs.length) ? -1 : +1;
+            comparison = (lhs.length < rhs.length) ? Order.LHS_IS_LESSER : Order.LHS_IS_GREATER;
             return this;
         }
-        for (int i = 0; i < lhs.length && comparison == 0; i++) {
+        for (int i = 0; i < lhs.length && comparison == Order.SAME_ORDER; i++) {
             append(lhs[i], rhs[i]);
         }
         return this;
     }
 
     public CompareToBuilder append(boolean[] lhs, boolean[] rhs) {
-        if (comparison != 0) {
+        if (comparison != Order.SAME_ORDER) {
             return this;
         }
         if (lhs == rhs) {
             return this;
         }
         if (lhs == null) {
-            comparison = -1;
+            comparison = Order.LHS_IS_LESSER;
             return this;
         }
         if (rhs == null) {
-            comparison = +1;
+            comparison = Order.LHS_IS_GREATER;
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = (lhs.length < rhs.length) ? -1 : +1;
+            comparison = (lhs.length < rhs.length) ? Order.LHS_IS_LESSER : Order.LHS_IS_GREATER;
             return this;
         }
-        for (int i = 0; i < lhs.length && comparison == 0; i++) {
+        for (int i = 0; i < lhs.length && comparison == Order.SAME_ORDER; i++) {
             append(lhs[i], rhs[i]);
         }
         return this;
