@@ -250,8 +250,6 @@ public class CompareToBuilderTest {
         }
 
     }
-
-
     public static class TestSameOrderForArrays {
 
         @Test

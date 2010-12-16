@@ -77,7 +77,7 @@ public class CompareToBuilder {
         if (comparison != Order.SAME_ORDER) {
             return this;
         }
-        comparison = ((lhs < rhs) ? Order.LHS_IS_LESSER : ((lhs > rhs) ? Order.LHS_IS_GREATER : Order.SAME_ORDER));
+        comparison = Long.valueOf(lhs).compareTo(rhs);
         return this;
     }
 
@@ -85,7 +85,7 @@ public class CompareToBuilder {
         if (comparison != Order.SAME_ORDER) {
             return this;
         }
-        comparison = ((lhs < rhs) ? Order.LHS_IS_LESSER : ((lhs > rhs) ? Order.LHS_IS_GREATER : Order.SAME_ORDER));
+        comparison = Integer.valueOf(lhs).compareTo(rhs);
         return this;
     }
 
@@ -93,7 +93,7 @@ public class CompareToBuilder {
         if (comparison != Order.SAME_ORDER) {
             return this;
         }
-        comparison = ((lhs < rhs) ? Order.LHS_IS_LESSER : ((lhs > rhs) ? Order.LHS_IS_GREATER : Order.SAME_ORDER));
+        comparison = Short.valueOf(lhs).compareTo(rhs);
         return this;
     }
 
@@ -101,7 +101,7 @@ public class CompareToBuilder {
         if (comparison != Order.SAME_ORDER) {
             return this;
         }
-        comparison = ((lhs < rhs) ? Order.LHS_IS_LESSER : ((lhs > rhs) ? Order.LHS_IS_GREATER : Order.SAME_ORDER));
+        comparison = Character.valueOf(lhs).compareTo(rhs);
         return this;
     }
 
@@ -109,7 +109,7 @@ public class CompareToBuilder {
         if (comparison != Order.SAME_ORDER) {
             return this;
         }
-        comparison = ((lhs < rhs) ? Order.LHS_IS_LESSER : ((lhs > rhs) ? Order.LHS_IS_GREATER : Order.SAME_ORDER));
+        comparison = Byte.valueOf(lhs).compareTo(rhs);
         return this;
     }
 
@@ -136,7 +136,7 @@ public class CompareToBuilder {
         if (lhs == rhs) {
             return this;
         }
-        comparison = lhs ? Order.LHS_IS_GREATER : Order.LHS_IS_LESSER;
+        comparison = Boolean.valueOf(lhs).compareTo(rhs);
         return this;
     }
 
