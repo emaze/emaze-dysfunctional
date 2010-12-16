@@ -160,7 +160,7 @@ public class CompareToBuilder {
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = (lhs.length < rhs.length) ? Order.LHS_IS_LESSER : Order.LHS_IS_GREATER;
+            comparison = Integer.valueOf(lhs.length).compareTo(rhs.length);
             return this;
         }
         for (int i = 0; i < lhs.length && comparison == Order.SAME_ORDER; i++) {
@@ -185,7 +185,7 @@ public class CompareToBuilder {
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = (lhs.length < rhs.length) ? Order.LHS_IS_LESSER : Order.LHS_IS_GREATER;
+            comparison = Integer.valueOf(lhs.length).compareTo(rhs.length);
             return this;
         }
         for (int i = 0; i < lhs.length && comparison == Order.SAME_ORDER; i++) {
@@ -210,7 +210,7 @@ public class CompareToBuilder {
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = (lhs.length < rhs.length) ? Order.LHS_IS_LESSER : Order.LHS_IS_GREATER;
+            comparison = Integer.valueOf(lhs.length).compareTo(rhs.length);
             return this;
         }
         for (int i = 0; i < lhs.length && comparison == Order.SAME_ORDER; i++) {
@@ -235,7 +235,7 @@ public class CompareToBuilder {
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = (lhs.length < rhs.length) ? Order.LHS_IS_LESSER : Order.LHS_IS_GREATER;
+            comparison = Integer.valueOf(lhs.length).compareTo(rhs.length);
             return this;
         }
         for (int i = 0; i < lhs.length && comparison == Order.SAME_ORDER; i++) {
@@ -260,7 +260,7 @@ public class CompareToBuilder {
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = (lhs.length < rhs.length) ? Order.LHS_IS_LESSER : Order.LHS_IS_GREATER;
+            comparison = Integer.valueOf(lhs.length).compareTo(rhs.length);
             return this;
         }
         for (int i = 0; i < lhs.length && comparison == Order.SAME_ORDER; i++) {
@@ -285,7 +285,7 @@ public class CompareToBuilder {
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = (lhs.length < rhs.length) ? Order.LHS_IS_LESSER : Order.LHS_IS_GREATER;
+            comparison = Integer.valueOf(lhs.length).compareTo(rhs.length);
             return this;
         }
         for (int i = 0; i < lhs.length && comparison == Order.SAME_ORDER; i++) {
@@ -310,7 +310,7 @@ public class CompareToBuilder {
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = (lhs.length < rhs.length) ? Order.LHS_IS_LESSER : Order.LHS_IS_GREATER;
+            comparison = Integer.valueOf(lhs.length).compareTo(rhs.length);
             return this;
         }
         for (int i = 0; i < lhs.length && comparison == Order.SAME_ORDER; i++) {
@@ -335,7 +335,7 @@ public class CompareToBuilder {
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = (lhs.length < rhs.length) ? Order.LHS_IS_LESSER : Order.LHS_IS_GREATER;
+            comparison = Integer.valueOf(lhs.length).compareTo(rhs.length);
             return this;
         }
         for (int i = 0; i < lhs.length && comparison == Order.SAME_ORDER; i++) {
@@ -360,7 +360,7 @@ public class CompareToBuilder {
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = (lhs.length < rhs.length) ? Order.LHS_IS_LESSER : Order.LHS_IS_GREATER;
+            comparison = Integer.valueOf(lhs.length).compareTo(rhs.length);
             return this;
         }
         for (int i = 0; i < lhs.length && comparison == Order.SAME_ORDER; i++) {
