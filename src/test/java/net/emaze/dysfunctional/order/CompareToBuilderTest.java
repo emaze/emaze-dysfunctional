@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.order;
 
+import net.emaze.dysfunctional.order.CompareToBuilderTest.TestIgnoreAppendWhenNotSameOrderForArrays;
 import net.emaze.dysfunctional.order.CompareToBuilderTest.TestIgnoreAppendWhenNotSameOrderForPrimitives;
 import net.emaze.dysfunctional.order.CompareToBuilderTest.TestNullsForArrays;
 import net.emaze.dysfunctional.order.CompareToBuilderTest.TestSameOrderForPrimitives;
@@ -19,7 +20,6 @@ import org.junit.runners.Suite.SuiteClasses;
     TestSameOrderForPrimitives.class,
     TestIgnoreAppendWhenNotSameOrderForPrimitives.class,
     TestIgnoreAppendWhenNotSameOrderForArrays.class,
-
     TestSameOrderForArrays.class,
     TestNullsForArrays.class
 })
