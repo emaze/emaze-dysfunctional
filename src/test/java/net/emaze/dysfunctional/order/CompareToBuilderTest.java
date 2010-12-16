@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.order;
 
 import net.emaze.dysfunctional.order.CompareToBuilderTest.TestIgnoreAppendWhenNotSameOrderForPrimitives;
+import net.emaze.dysfunctional.order.CompareToBuilderTest.TestNullsForArrays;
 import net.emaze.dysfunctional.order.CompareToBuilderTest.TestSameOrderForPrimitives;
 import net.emaze.dysfunctional.order.CompareToBuilderTest.TestSameOrderForArrays;
 import org.junit.Assert;
@@ -17,10 +18,12 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
     TestSameOrderForPrimitives.class,
     TestIgnoreAppendWhenNotSameOrderForPrimitives.class,
-    TestSameOrderForArrays.class
-})
+    TestSameOrderForArrays.class,
+    TestNullsForArrays.class,})
 public class CompareToBuilderTest {
-    public static class TestSameOrderForPrimitives{
+
+    public static class TestSameOrderForPrimitives {
+
         @Test
         public void sameOrderForTrue() {
             boolean former = true;
@@ -100,10 +103,10 @@ public class CompareToBuilderTest {
             CompareToBuilder builder = new CompareToBuilder().append(former, latter);
             Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
         }
-    
     }
 
-    public static class TestIgnoreAppendWhenNotSameOrderForPrimitives{
+    public static class TestIgnoreAppendWhenNotSameOrderForPrimitives {
+
         @Test
         public void ignoreAppendWhenNotSameOrderForSuper() {
             CompareToBuilder builder = new CompareToBuilder().appendSuper(Order.LHS_IS_LESSER);
@@ -265,6 +268,149 @@ public class CompareToBuilderTest {
             Object[] latter = new Object[]{1};
             CompareToBuilder builder = new CompareToBuilder().append(former, latter);
             Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
+        }
+    }
+
+    public static class TestNullsForArrays {
+
+        @Test
+        public void lhsIsLesserWhenNullForArrayOfBooleans() {
+            boolean[] former = null;
+            boolean[] latter = new boolean[]{true};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void rhsIsLesserWhenNullForArrayOfBooleans() {
+            boolean[] former = new boolean[]{true};
+            boolean[] latter = null;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void lhsIsLesserWhenNullForArrayOfBytes() {
+            byte[] former = null;
+            byte[] latter = new byte[]{0};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void rhsIsLesserWhenNullForArrayOfBytes() {
+            byte[] former = new byte[]{0};
+            byte[] latter = null;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void lhsIsLesserWhenNullForArrayOfChars() {
+            char[] former = null;
+            char[] latter = new char[]{0};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void rhsIsLesserWhenNullForArrayOfChars() {
+            char[] former = new char[]{0};
+            char[] latter = null;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+        @Test
+        public void lhsIsLesserWhenNullForArrayOfShorts() {
+            short[] former = null;
+            short[] latter = new short[]{0};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void rhsIsLesserWhenNullForArrayOfShorts() {
+            short[] former = new short[]{0};
+            short[] latter = null;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+        @Test
+        public void lhsIsLesserWhenNullForArrayOfInts() {
+            int[] former = null;
+            int[] latter = new int[]{0};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void rhsIsLesserWhenNullForArrayOfInts() {
+            int[] former = new int[]{0};
+            int[] latter = null;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void lhsIsLesserWhenNullForArrayOfLongs() {
+            long[] former = null;
+            long[] latter = new long[]{0};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void rhsIsLesserWhenNullForArrayOfLongs() {
+            long[] former = new long[]{0};
+            long[] latter = null;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void lhsIsLesserWhenNullForArrayOfFloats() {
+            float[] former = null;
+            float[] latter = new float[]{0};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void rhsIsLesserWhenNullForArrayOfFloats() {
+            float[] former = new float[]{0};
+            float[] latter = null;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+        @Test
+        public void lhsIsLesserWhenNullForArrayOfDoubles() {
+            double[] former = null;
+            double[] latter = new double[]{0};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void rhsIsLesserWhenNullForArrayOfDoubles() {
+            double[] former = new double[]{0};
+            double[] latter = null;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+        @Test
+        public void lhsIsLesserWhenNullForArrayOfObjects() {
+            Object[] former = null;
+            Object[] latter = new Object[]{0};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void rhsIsLesserWhenNullForArrayOfObjects() {
+            Object[] former = new Object[]{0};
+            Object[] latter = null;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
         }
     }
 }
