@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.order;
 
+import net.emaze.dysfunctional.order.CompareToBuilderTest.TestIgnoreAppendWhenNotSameOrderForPrimitives;
 import net.emaze.dysfunctional.order.CompareToBuilderTest.TestLhsIsGreaterForPrimitives;
 import net.emaze.dysfunctional.order.CompareToBuilderTest.TestSameOrderForPrimitives;
 import net.emaze.dysfunctional.order.CompareToBuilderTest.TestSameOrderForArrays;
@@ -16,6 +17,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
     TestSameOrderForPrimitives.class,
+    TestIgnoreAppendWhenNotSameOrderForPrimitives.class,
     TestLhsIsGreaterForPrimitives.class,
     TestSameOrderForArrays.class
 })
@@ -250,6 +252,90 @@ public class CompareToBuilderTest {
         }
 
     }
+
+    public static class TestIgnoreAppendWhenNotSameOrderForPrimitives{
+        @Test
+        public void ignoreAppendWhenNotSameOrderForBoolean() {
+            boolean former = true;
+            boolean latter = true;
+            CompareToBuilder builder = new CompareToBuilder().appendSuper(Order.LHS_IS_LESSER);
+            builder.append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void ignoreAppendWhenNotSameOrderForByte() {
+            byte former = 1;
+            byte latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().appendSuper(Order.LHS_IS_LESSER);
+            builder.append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void ignoreAppendWhenNotSameOrderForChar() {
+            char former = 1;
+            char latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().appendSuper(Order.LHS_IS_LESSER);
+            builder.append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void ignoreAppendWhenNotSameOrderForShort() {
+            short former = 1;
+            short latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().appendSuper(Order.LHS_IS_LESSER);
+            builder.append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void ignoreAppendWhenNotSameOrderForInt() {
+            int former = 1;
+            int latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().appendSuper(Order.LHS_IS_LESSER);
+            builder.append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void ignoreAppendWhenNotSameOrderForLong() {
+            long former = 1;
+            long latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().appendSuper(Order.LHS_IS_LESSER);
+            builder.append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void ignoreAppendWhenNotSameOrderForFloat() {
+            float former = 1;
+            float latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().appendSuper(Order.LHS_IS_LESSER);
+            builder.append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void ignoreAppendWhenNotSameOrderForDouble() {
+            double former = 1;
+            double latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().appendSuper(Order.LHS_IS_LESSER);
+            builder.append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void ignoreAppendWhenNotSameOrderForObject() {
+            Object former = 1;
+            Object latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().appendSuper(Order.LHS_IS_LESSER);
+            builder.append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+    }
+
     public static class TestSameOrderForArrays {
 
         @Test
