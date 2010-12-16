@@ -19,7 +19,8 @@ import org.junit.runners.Suite.SuiteClasses;
     TestSameOrderForPrimitives.class,
     TestIgnoreAppendWhenNotSameOrderForPrimitives.class,
     TestSameOrderForArrays.class,
-    TestNullsForArrays.class,})
+    TestNullsForArrays.class
+})
 public class CompareToBuilderTest {
 
     public static class TestSameOrderForPrimitives {
