@@ -15,7 +15,7 @@ public class BinderFirst<R, T, U> implements Delegate<R, U> {
     private final T first;
 
     public BinderFirst(BinaryDelegate<R, T, U> delegate, T first) {
-        dbc.precondition(delegate != null, "cannot bind the first parameter of a null binary predicate");
+        dbc.precondition(delegate != null, "cannot bind the first parameter of a null binary delegate");
         this.delegate = delegate;
         this.first = first;
     }

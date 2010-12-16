@@ -15,7 +15,7 @@ public class BinderSecond<R, T, U> implements Delegate<R, T> {
     private final U second;
 
     public BinderSecond(BinaryDelegate<R, T, U> delegate, U second) {
-        dbc.precondition(delegate != null, "cannot bind the second parameter of a null binary predicate");
+        dbc.precondition(delegate != null, "cannot bind the second parameter of a null binary delegate");
         this.delegate = delegate;
         this.second = second;
     }
