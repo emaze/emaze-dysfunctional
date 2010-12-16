@@ -1,23 +1,23 @@
-package net.emaze.dysfunctional.delegates;
+package net.emaze.dysfunctional.options;
 
-import net.emaze.dysfunctional.options.Maybe;
+import net.emaze.dysfunctional.delegates.Predicate;
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
  *
- * @author dangelocola
+ * @author dangelocola, rferranti
  */
 public class IsJustTest {
 
     @Test
-    public void justHasValue() {
+    public void justMatches() {
         Predicate<Maybe<Integer>> p = new IsJust<Integer>();
         Assert.assertTrue(p.test(Maybe.just(1)));
     }
 
     @Test
-    public void nothingHasNoValue() {
+    public void nothingIsNotJust() {
         Predicate<Maybe<Integer>> p = new IsJust<Integer>();
         Assert.assertFalse(p.test(Maybe.<Integer>nothing()));
     }
