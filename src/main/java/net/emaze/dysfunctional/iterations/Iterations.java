@@ -149,8 +149,43 @@ public abstract class Iterations {
         return map(new ArrayIterator<E>(array), delegate);
     }
 
+    /**
+     *
+     * @param <R>
+     * @param <E>
+     * @param iterable the iterable where elements are fetched from
+     * @param delegate a delegate used to transform each element
+     * @return an Iterator<R> 
+     */
+    public static <R, E> Iterator<R> transform(Iterable<E> iterable, Delegate<R, E> delegate) {
+        return transform(iterable.iterator(), delegate);
+    }
 
-    public static <T> Iterable<T> oneTime(Iterator<T> iterator){
+    /**
+     *
+     * @param <R>
+     * @param <E>
+     * @param iterator the iterator where elements are fetched from
+     * @param delegate a delegate used to transform each element
+     * @return an Iterator<R> 
+     */
+    public static <R, E> Iterator<R> transform(Iterator<E> iterator, Delegate<R, E> delegate) {
+        return new TransformingIterator<R, E>(iterator, delegate);
+    }
+
+    /**
+     *
+     * @param <R>
+     * @param <E>
+     * @param array the array where elements are fetched from
+     * @param delegate a delegate used to transform each element
+     * @return an Iterator<R> 
+     */
+    public static <R, E> Iterator<R> transform(E[] array, Delegate<R, E> delegate) {
+        return transform(new ArrayIterator<E>(array), delegate);
+    }
+
+    public static <T> Iterable<T> oneTime(Iterator<T> iterator) {
         return new OneTimeIterable<T>(iterator);
     }
 }
