@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.order;
 
-import net.emaze.dysfunctional.order.CompareToBuilderTest.TestPrimitive;
+import net.emaze.dysfunctional.order.CompareToBuilderTest.TestLhsIsGreaterForPrimitives;
+import net.emaze.dysfunctional.order.CompareToBuilderTest.TestSameOrderForPrimitives;
 import net.emaze.dysfunctional.order.CompareToBuilderTest.TestSameOrderForArrays;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,11 +15,12 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-    TestPrimitive.class,
+    TestSameOrderForPrimitives.class,
+    TestLhsIsGreaterForPrimitives.class,
     TestSameOrderForArrays.class
 })
 public class CompareToBuilderTest {
-    public static class TestPrimitive{
+    public static class TestSameOrderForPrimitives{
         @Test
         public void sameOrderForTrue() {
             boolean former = true;
@@ -99,6 +101,154 @@ public class CompareToBuilderTest {
             Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
         }
     
+    }
+    public static class TestLhsIsGreaterForPrimitives{
+        @Test
+        public void lhsIsGreaterForBoolean() {
+            boolean former = true;
+            boolean latter = false;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void lhsIsGreaterForByte() {
+            byte former = 2;
+            byte latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void lhsIsGreaterForChar() {
+            char former = 2;
+            char latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void lhsIsGreaterForShort() {
+            short former = 2;
+            short latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void lhsIsGreaterForInt() {
+            int former = 2;
+            int latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void lhsIsGreaterForLong() {
+            long former = 2;
+            long latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void lhsIsGreaterForFloat() {
+            float former = 2;
+            float latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void lhsIsGreaterForDouble() {
+            double former = 2;
+            double latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void lhsIsGreaterForObject() {
+            Object former = 2;
+            Object latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+    }
+    public static class TestLhsIsLesserForPrimitives{
+        @Test
+        public void lhsIsLesserForBoolean() {
+            boolean former = false;
+            boolean latter = true;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void lhsIsLesserForByte() {
+            byte former = 1;
+            byte latter = 2;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void lhsIsLesserForChar() {
+            char former = 1;
+            char latter = 2;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void lhsIsLesserForShort() {
+            short former = 1;
+            short latter = 2;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void lhsIsLesserForInt() {
+            int former = 1;
+            int latter = 2;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void lhsIsLesserForLong() {
+            long former = 1;
+            long latter = 2;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void lhsIsLesserForFloat() {
+            float former = 1;
+            float latter = 2;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void lhsIsLesserForDouble() {
+            double former = 1;
+            double latter = 2;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void lhsIsLesserForObject() {
+            Object former = 1;
+            Object latter = 2;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
     }
 
 
