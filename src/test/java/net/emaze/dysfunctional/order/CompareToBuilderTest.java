@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.order;
 
-import net.emaze.dysfunctional.order.CompareToBuilderTest.TestArrays;
+import net.emaze.dysfunctional.order.CompareToBuilderTest.TestPrimitive;
+import net.emaze.dysfunctional.order.CompareToBuilderTest.TestSameOrderForArrays;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,11 +14,95 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-    TestArrays.class
+    TestPrimitive.class,
+    TestSameOrderForArrays.class
 })
 public class CompareToBuilderTest {
+    public static class TestPrimitive{
+        @Test
+        public void sameOrderForTrue() {
+            boolean former = true;
+            boolean latter = true;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
+        }
 
-    public static class TestArrays {
+        @Test
+        public void sameOrderForFalse() {
+            boolean former = false;
+            boolean latter = false;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
+        }
+
+        @Test
+        public void sameOrderForByte() {
+            byte former = 1;
+            byte latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
+        }
+
+        @Test
+        public void sameOrderForChar() {
+            char former = 1;
+            char latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
+        }
+
+        @Test
+        public void sameOrderForShort() {
+            short former = 1;
+            short latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
+        }
+
+        @Test
+        public void sameOrderForInt() {
+            int former = 1;
+            int latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
+        }
+
+        @Test
+        public void sameOrderForLong() {
+            long former = 1;
+            long latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
+        }
+
+        @Test
+        public void sameOrderForFloat() {
+            float former = 1;
+            float latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
+        }
+
+        @Test
+        public void sameOrderForDouble() {
+            double former = 1;
+            double latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
+        }
+
+        @Test
+        public void sameOrderForObject() {
+            Object former = 1;
+            Object latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
+        }
+    
+    }
+
+
+    public static class TestSameOrderForArrays {
 
         @Test
         public void canEvaluateSameOrderForArrayOfBooleans() {
