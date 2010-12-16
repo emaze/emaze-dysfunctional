@@ -208,10 +208,24 @@ public class CompareToBuilderTest {
         }
 
         @Test
+        public void sameArrayLeadsToSameOrderForArrayOfBooleans() {
+            boolean[] array = new boolean[]{true};
+            CompareToBuilder builder = new CompareToBuilder().append(array, array);
+            Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
+        }
+
+        @Test
         public void canEvaluateSameOrderForArrayOfBytes() {
             byte[] former = new byte[]{1};
             byte[] latter = new byte[]{1};
             CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
+        }
+
+        @Test
+        public void sameArrayLeadsToSameOrderForArrayOfBytes() {
+            byte[] array = new byte[]{0};
+            CompareToBuilder builder = new CompareToBuilder().append(array, array);
             Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
         }
 
@@ -224,10 +238,24 @@ public class CompareToBuilderTest {
         }
 
         @Test
+        public void sameArrayLeadsToSameOrderForArrayOfChars() {
+            char[] array = new char[]{0};
+            CompareToBuilder builder = new CompareToBuilder().append(array, array);
+            Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
+        }
+
+        @Test
         public void canEvaluateSameOrderForArrayOfShorts() {
             short[] former = new short[]{1};
             short[] latter = new short[]{1};
             CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
+        }
+
+        @Test
+        public void sameArrayLeadsToSameOrderForArrayOfShorts() {
+            short[] array = new short[]{0};
+            CompareToBuilder builder = new CompareToBuilder().append(array, array);
             Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
         }
 
@@ -240,10 +268,24 @@ public class CompareToBuilderTest {
         }
 
         @Test
+        public void sameArrayLeadsToSameOrderForArrayOfInts() {
+            int[] array = new int[]{0};
+            CompareToBuilder builder = new CompareToBuilder().append(array, array);
+            Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
+        }
+
+        @Test
         public void canEvaluateSameOrderForArrayOfLongs() {
             long[] former = new long[]{1};
             long[] latter = new long[]{1};
             CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
+        }
+
+        @Test
+        public void sameArrayLeadsToSameOrderForArrayOfLongs() {
+            long[] array = new long[]{0};
+            CompareToBuilder builder = new CompareToBuilder().append(array, array);
             Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
         }
 
@@ -256,6 +298,13 @@ public class CompareToBuilderTest {
         }
 
         @Test
+        public void sameArrayLeadsToSameOrderForArrayOfFloats() {
+            float[] array = new float[]{0};
+            CompareToBuilder builder = new CompareToBuilder().append(array, array);
+            Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
+        }
+
+        @Test
         public void canEvaluateSameOrderForArrayOfDoubles() {
             double[] former = new double[]{1};
             double[] latter = new double[]{1};
@@ -264,10 +313,24 @@ public class CompareToBuilderTest {
         }
 
         @Test
+        public void sameArrayLeadsToSameOrderForArrayOfDoubles() {
+            double[] array = new double[]{0};
+            CompareToBuilder builder = new CompareToBuilder().append(array, array);
+            Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
+        }
+
+        @Test
         public void canEvaluateSameOrderForArrayOfObjects() {
             Object[] former = new Object[]{1};
             Object[] latter = new Object[]{1};
             CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
+        }
+
+        @Test
+        public void sameArrayLeadsToSameOrderForArrayOfObjects() {
+            Object[] array = new Object[]{0};
+            CompareToBuilder builder = new CompareToBuilder().append(array, array);
             Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
         }
     }
@@ -321,6 +384,7 @@ public class CompareToBuilderTest {
             CompareToBuilder builder = new CompareToBuilder().append(former, latter);
             Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
         }
+
         @Test
         public void lhsIsLesserWhenNullForArrayOfShorts() {
             short[] former = null;
@@ -336,6 +400,7 @@ public class CompareToBuilderTest {
             CompareToBuilder builder = new CompareToBuilder().append(former, latter);
             Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
         }
+
         @Test
         public void lhsIsLesserWhenNullForArrayOfInts() {
             int[] former = null;
@@ -383,6 +448,7 @@ public class CompareToBuilderTest {
             CompareToBuilder builder = new CompareToBuilder().append(former, latter);
             Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
         }
+
         @Test
         public void lhsIsLesserWhenNullForArrayOfDoubles() {
             double[] former = null;
@@ -398,6 +464,7 @@ public class CompareToBuilderTest {
             CompareToBuilder builder = new CompareToBuilder().append(former, latter);
             Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
         }
+
         @Test
         public void lhsIsLesserWhenNullForArrayOfObjects() {
             Object[] former = null;
