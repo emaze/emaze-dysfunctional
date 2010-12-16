@@ -133,9 +133,6 @@ public class CompareToBuilder {
         if (comparison != Order.SAME_ORDER) {
             return this;
         }
-        if (lhs == rhs) {
-            return this;
-        }
         comparison = Boolean.valueOf(lhs).compareTo(rhs);
         return this;
     }
