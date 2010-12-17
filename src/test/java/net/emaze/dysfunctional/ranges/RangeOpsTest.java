@@ -37,5 +37,19 @@ public class RangeOpsTest {
         Range<Integer> rhs = r(4, 10);
         Assert.assertEquals(r(p(0, 3), p(11, 20)), RangeOps.difference(sequencer, comparator, lhs, rhs));
     }
+    
+    @Test
+    public void canPerformIntersectOnTwoOverlappingRanges() {
+        Range<Integer> lhs = r(0, 20);
+        Range<Integer> rhs = r(4, 10);
+        Assert.assertEquals(r(4, 10), RangeOps.intersect(sequencer, comparator, lhs, rhs));
+    }
+    
+    @Test
+    public void canPerformsymmetriDifferenceOnTwoRanges() {
+        Range<Integer> lhs = r(0, 15);
+        Range<Integer> rhs = r(10, 20);
+        Assert.assertEquals(r(p(0, 9) , p(16, 20)), RangeOps.symmetricDifference(sequencer, comparator, lhs, rhs));
+    }
 
 }
