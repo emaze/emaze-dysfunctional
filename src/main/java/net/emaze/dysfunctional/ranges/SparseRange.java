@@ -23,6 +23,7 @@ public class SparseRange<T> implements Range<T> {
     public SparseRange(SequencingPolicy<T> sequencer, Comparator<T> comparator, DenseRange<T>... ranges) {
         dbc.precondition(sequencer != null, "trying to create a SparseRange<T> with a null SequencingPolicy<T>");
         dbc.precondition(comparator != null, "trying to create a SparseRange<T> with a null Comparator<T>");
+        dbc.precondition(ranges != null, "trying to create a SparseRange<T> from null ranges");
         dbc.precondition(ranges.length != 0, "trying to create a SparseRange<T> from zero ranges");
         this.ranges = new SortedNonOverlappingRangesTransformer<T>(sequencer, comparator).perform(Arrays.asList(ranges));
     }
