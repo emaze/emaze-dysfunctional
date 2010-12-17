@@ -20,7 +20,7 @@ public class RangeIterator<T> implements Iterator<T> {
 
     public RangeIterator(SequencingPolicy<T> policy, Comparator<T> comparator, T start, T upTo) {
         dbc.precondition(policy != null, "trying to create a RangeIterator from a null policy");
-        dbc.precondition(policy != null, "trying to create a RangeIterator from a null comparator");
+        dbc.precondition(comparator != null, "trying to create a RangeIterator from a null comparator");
         dbc.precondition(start != null, "trying to create a RangeIterator from a null start");
         dbc.precondition(upTo != null, "trying to create a RangeIterator from a null upTo");
         this.policy = policy;
