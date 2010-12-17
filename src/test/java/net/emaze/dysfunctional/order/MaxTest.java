@@ -16,9 +16,15 @@ public class MaxTest {
     }
 
     @Test
-    public void canEvaluateMaxForComparables() {
+    public void canEvaluateMaxForComparablesWhenLhsIsLesser() {
         Comparator<Integer> comp = new ComparableComparator<Integer>();
         int got = new Max<Integer>(comp).perform(1, 2);
+        Assert.assertEquals(2, got);
+    }
+    @Test
+    public void canEvaluateMaxForComparablesWhenLhsIsGreater() {
+        Comparator<Integer> comp = new ComparableComparator<Integer>();
+        int got = new Max<Integer>(comp).perform(2, 2);
         Assert.assertEquals(2, got);
     }
     
