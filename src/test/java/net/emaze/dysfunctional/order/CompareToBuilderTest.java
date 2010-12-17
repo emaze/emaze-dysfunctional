@@ -1,10 +1,5 @@
 package net.emaze.dysfunctional.order;
 
-import net.emaze.dysfunctional.order.CompareToBuilderTest.TestIgnoreAppendWhenNotSameOrderForArrays;
-import net.emaze.dysfunctional.order.CompareToBuilderTest.TestIgnoreAppendWhenNotSameOrderForPrimitives;
-import net.emaze.dysfunctional.order.CompareToBuilderTest.TestNullsForArrays;
-import net.emaze.dysfunctional.order.CompareToBuilderTest.TestSameOrderForPrimitives;
-import net.emaze.dysfunctional.order.CompareToBuilderTest.TestSameOrderForArrays;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,11 +12,13 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-    TestSameOrderForPrimitives.class,
-    TestIgnoreAppendWhenNotSameOrderForPrimitives.class,
-    TestIgnoreAppendWhenNotSameOrderForArrays.class,
-    TestSameOrderForArrays.class,
-    TestNullsForArrays.class
+    CompareToBuilderTest.TestSameOrderForPrimitives.class,
+    CompareToBuilderTest.TestIgnoreAppendWhenNotSameOrderForPrimitives.class,
+    CompareToBuilderTest.TestIgnoreAppendWhenNotSameOrderForArrays.class,
+    CompareToBuilderTest.TestSameOrderForArrays.class,
+    CompareToBuilderTest.TestLhsIsGreaterForArrays.class,
+    CompareToBuilderTest.TestArrayLengthForArrays.class,
+    CompareToBuilderTest.TestNullsForArrays.class
 })
 public class CompareToBuilderTest {
 
@@ -198,6 +195,7 @@ public class CompareToBuilderTest {
             Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
         }
     }
+
     public static class TestIgnoreAppendWhenNotSameOrderForArrays {
 
         @Test
@@ -408,6 +406,156 @@ public class CompareToBuilderTest {
             Object[] array = new Object[]{0};
             CompareToBuilder builder = new CompareToBuilder().append(array, array);
             Assert.assertEquals(Order.SAME_ORDER, builder.toComparison());
+        }
+    }
+
+    public static class TestLhsIsGreaterForArrays {
+
+        @Test
+        public void canEvaluateLhsIsGreaterForArrayOfBooleans() {
+            boolean[] former = new boolean[]{true};
+            boolean[] latter = new boolean[]{false};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void canEvaluateLhsIsGreaterForArrayOfBytes() {
+            byte[] former = new byte[]{2};
+            byte[] latter = new byte[]{1};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void canEvaluateLhsIsGreaterForArrayOfChars() {
+            char[] former = new char[]{2};
+            char[] latter = new char[]{1};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void canEvaluateLhsIsGreaterForArrayOfShorts() {
+            short[] former = new short[]{2};
+            short[] latter = new short[]{1};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void canEvaluateLhsIsGreaterForArrayOfInts() {
+            int[] former = new int[]{2};
+            int[] latter = new int[]{1};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void canEvaluateLhsIsGreaterForArrayOfLongs() {
+            long[] former = new long[]{2};
+            long[] latter = new long[]{1};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void canEvaluateLhsIsGreaterForArrayOfFloats() {
+            float[] former = new float[]{2};
+            float[] latter = new float[]{1};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void canEvaluateLhsIsGreaterForArrayOfDoubles() {
+            double[] former = new double[]{2};
+            double[] latter = new double[]{1};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void canEvaluateLhsIsGreaterForArrayOfObjects() {
+            Object[] former = new Object[]{2};
+            Object[] latter = new Object[]{1};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+    }
+
+    public static class TestArrayLengthForArrays {
+
+        @Test
+        public void longestArrayIsGreaterForArrayOfBooleans() {
+            boolean[] former = new boolean[]{true, true};
+            boolean[] latter = new boolean[]{true};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void longestArrayIsGreaterForArrayOfBytes() {
+            byte[] former = new byte[]{1, 2};
+            byte[] latter = new byte[]{1};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void longestArrayIsGreaterForArrayOfChars() {
+            char[] former = new char[]{1, 2};
+            char[] latter = new char[]{1};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void longestArrayIsGreaterForArrayOfShorts() {
+            short[] former = new short[]{1, 2};
+            short[] latter = new short[]{1};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void longestArrayIsGreaterForArrayOfInts() {
+            int[] former = new int[]{1, 2};
+            int[] latter = new int[]{1};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void longestArrayIsGreaterForArrayOfLongs() {
+            long[] former = new long[]{1, 2};
+            long[] latter = new long[]{1};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void longestArrayIsGreaterForArrayOfFloats() {
+            float[] former = new float[]{1, 2};
+            float[] latter = new float[]{1};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void longestArrayIsGreaterForArrayOfDoubles() {
+            double[] former = new double[]{1, 2};
+            double[] latter = new double[]{1};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void longestArrayIsGreaterForArrayOfObjects() {
+            Object[] former = new Object[]{1, 2};
+            Object[] latter = new Object[]{1};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
         }
     }
 
