@@ -18,7 +18,7 @@ public class RangeMother {
     public static final Comparator<Integer> comparator = new ComparableComparator<Integer>();
 
 
-    public static Range<Integer> r(int lower, int upper) {
+    public static DenseRange<Integer> r(int lower, int upper) {
         return new DenseRange<Integer>(sequencer, comparator, lower, upper);
     }
 
@@ -26,7 +26,7 @@ public class RangeMother {
         return new Pair<Integer, Integer>(lower, upper);
     }
 
-    public static Range<Integer> r(Pair<Integer, Integer>... pairs) {
+    public static SparseRange<Integer> r(Pair<Integer, Integer>... pairs) {
         final List<DenseRange<Integer>> ranges = Iterations.map(pairs, new Delegate<DenseRange<Integer>, Pair<Integer, Integer>>() {
 
             @Override
