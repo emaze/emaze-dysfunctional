@@ -3,6 +3,7 @@ package net.emaze.dysfunctional.ranges;
 import java.lang.Integer;
 import java.util.Collections;
 import java.util.List;
+import net.emaze.dysfunctional.order.Order;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,44 +24,63 @@ public class SparseRangeTest {
 
         @Test
         public void rangeIsNotEqualsToNull() {
-            SparseRange<Integer> sr = RangeMother.r(RangeMother.p(0,2), RangeMother.p(3, 5));
+            SparseRange<Integer> sr = RangeMother.r(RangeMother.p(0, 2), RangeMother.p(3, 5));
             Assert.assertFalse(sr.equals(null));
         }
+
         @Test
         public void rangeIsEqualsToItSelf() {
-            SparseRange<Integer> sr = RangeMother.r(RangeMother.p(0,2), RangeMother.p(3, 5));
+            SparseRange<Integer> sr = RangeMother.r(RangeMother.p(0, 2), RangeMother.p(3, 5));
             Assert.assertTrue(sr.equals(sr));
         }
-        
+
         @Test
         public void sameRangesLeadsToSameHashCode() {
-            SparseRange<Integer> former = RangeMother.r(RangeMother.p(0,2), RangeMother.p(2, 3));
-            SparseRange<Integer> latter = RangeMother.r(RangeMother.p(0,3));
+            SparseRange<Integer> former = RangeMother.r(RangeMother.p(0, 2), RangeMother.p(2, 3));
+            SparseRange<Integer> latter = RangeMother.r(RangeMother.p(0, 3));
             Assert.assertEquals(former.hashCode(), latter.hashCode());
         }
 
         @Test
         public void containsElementIfAnyRangeContainsIt() {
-            SparseRange<Integer> sr = RangeMother.r(RangeMother.p(0,2), RangeMother.p(3, 5));
+            SparseRange<Integer> sr = RangeMother.r(RangeMother.p(0, 2), RangeMother.p(3, 5));
             Assert.assertTrue(sr.contains(4));
         }
-        
+
         @Test
         public void canIterateSparseRange() {
-            SparseRange<Integer> sr = RangeMother.r(RangeMother.p(0,2));
+            SparseRange<Integer> sr = RangeMother.r(RangeMother.p(0, 2));
             Assert.assertNotNull(sr.iterator());
         }
-        
+
         @Test
         public void canCreateSparseRangeWithUnsortedDenseRanges() {
-            SparseRange<Integer> sr = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(2,3), RangeMother.r(0, 1));
+            SparseRange<Integer> sr = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(2, 3), RangeMother.r(0, 1));
+        }
+
+        @Test
+        public void sameDensifiedRangeHaveSameOrder() {
+            SparseRange<Integer> former = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(0, 1), RangeMother.r(1, 2), RangeMother.r(4, 5));
+            SparseRange<Integer> latter = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(0, 2), RangeMother.r(4, 5));
+            Assert.assertEquals(Order.SAME_ORDER, former.compareTo(latter));
+        }
+
+        @Test
+        public void lowestRangeLowerBoundIsLowerBound() {
+            SparseRange<Integer> range = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(2, 3), RangeMother.r(0, 1));
+            Assert.assertEquals(Integer.valueOf(0), range.lower());
         }
         @Test
+        public void upperRangeUpperBoundIsUpperBound() {
+            SparseRange<Integer> range = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(2, 3), RangeMother.r(0, 1));
+            Assert.assertEquals(Integer.valueOf(3), range.upper());
+        }
+
+        @Test
         public void toStringShowsDensifiedRanges() {
-            SparseRange<Integer> sr = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(0,1), RangeMother.r(1, 2), RangeMother.r(4,5));
+            SparseRange<Integer> sr = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(0, 1), RangeMother.r(1, 2), RangeMother.r(4, 5));
             Assert.assertEquals("[0-2,4-5]", sr.toString());
         }
-        
     }
 
     public static class Degenerations {
