@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.ranges;
 
 import java.lang.Integer;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import net.emaze.dysfunctional.order.Order;
@@ -70,10 +71,16 @@ public class SparseRangeTest {
             SparseRange<Integer> range = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(2, 3), RangeMother.r(0, 1));
             Assert.assertEquals(Integer.valueOf(0), range.lower());
         }
+
         @Test
         public void upperRangeUpperBoundIsUpperBound() {
             SparseRange<Integer> range = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(2, 3), RangeMother.r(0, 1));
             Assert.assertEquals(Integer.valueOf(3), range.upper());
+        }
+        @Test
+        public void canDensifySparseRange() {
+            SparseRange<Integer> range = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(0, 1), RangeMother.r(1, 2), RangeMother.r(4, 5));
+            Assert.assertEquals(Arrays.asList(RangeMother.r(0,2), RangeMother.r(4,5)), range.densified());
         }
 
         @Test
