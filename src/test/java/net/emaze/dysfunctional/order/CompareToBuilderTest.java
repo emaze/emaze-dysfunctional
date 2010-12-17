@@ -17,6 +17,7 @@ import org.junit.runners.Suite.SuiteClasses;
     CompareToBuilderTest.TestIgnoreAppendWhenNotSameOrderForArrays.class,
     CompareToBuilderTest.TestSameOrderForArrays.class,
     CompareToBuilderTest.TestLhsIsGreaterForArrays.class,
+    CompareToBuilderTest.TestIntrospectionForArrays.class,
     CompareToBuilderTest.TestArrayLengthForArrays.class,
     CompareToBuilderTest.TestNullsForArrays.class
 })
@@ -480,6 +481,105 @@ public class CompareToBuilderTest {
             Object[] former = new Object[]{2, 2};
             Object[] latter = new Object[]{1, 2};
             CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+    }
+
+    public static class TestIntrospectionForArrays {
+
+        @Test
+        public void canEvaluateLhsIsGreaterForArrayOfBooleans() {
+            Object former = new boolean[]{true, true};
+            Object latter = new boolean[]{false, true};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void canEvaluateLhsIsGreaterForArrayOfBytes() {
+            Object former = new byte[]{2, 2};
+            Object latter = new byte[]{1, 2};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void canEvaluateLhsIsGreaterForArrayOfChars() {
+            Object former = new char[]{2, 2};
+            Object latter = new char[]{1, 2};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void canEvaluateLhsIsGreaterForArrayOfShorts() {
+            Object former = new short[]{2, 2};
+            Object latter = new short[]{1, 2};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void canEvaluateLhsIsGreaterForArrayOfInts() {
+            Object former = new int[]{2, 2};
+            Object latter = new int[]{1, 2};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void canEvaluateLhsIsGreaterForArrayOfLongs() {
+            Object former = new long[]{2, 2};
+            Object latter = new long[]{1, 2};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void canEvaluateLhsIsGreaterForArrayOfFloats() {
+            Object former = new float[]{2, 2};
+            Object latter = new float[]{1, 2};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void canEvaluateLhsIsGreaterForArrayOfDoubles() {
+            Object former = new double[]{2, 2};
+            Object latter = new double[]{1, 2};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void canEvaluateLhsIsGreaterForArrayOfObjects() {
+            Object former = new Object[]{2, 2};
+            Object latter = new Object[]{1, 2};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void lhsIsLesserWhenLhsIsNull() {
+            Object former = null;
+            Object latter = new Object[]{1, 2};
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_LESSER, builder.toComparison());
+        }
+
+        @Test
+        public void lhsIsGreaterWhenRhsIsNull() {
+            Object former = new Object[]{1, 2};
+            Object latter = null;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter);
+            Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
+        }
+
+        @Test
+        public void canIntrospectWithComparator() {
+            Object former = 2;
+            Object latter = 1;
+            CompareToBuilder builder = new CompareToBuilder().append(former, latter, new ComparableComparator<Integer>());
             Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
         }
     }
