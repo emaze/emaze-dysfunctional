@@ -40,7 +40,7 @@ public class DenseRangeTest {
             DenseRange<Integer> range = RangeMother.r(0, 1);
             Assert.assertTrue(range.equals(range));
         }
-        
+
         @Test
         public void rangeIsEqualToRangeWithDifferentBounds() {
             DenseRange<Integer> former = RangeMother.r(0, 1);
@@ -54,10 +54,29 @@ public class DenseRangeTest {
             DenseRange<Integer> latter = RangeMother.r(0, 10);
             Assert.assertEquals(Order.SAME_ORDER, former.compareTo(latter));
         }
+
         @Test
         public void densifiedDenseRangeIsEqualsToItselfInList() {
             DenseRange<Integer> range = RangeMother.r(0, 10);
             Assert.assertEquals(Arrays.asList(range), range.densified());
+        }
+
+        @Test
+        public void elementInRangeIsContained() {
+            DenseRange<Integer> range = RangeMother.r(0, 2);
+            Assert.assertTrue(range.contains(1));
+        }
+
+        @Test
+        public void elementPriorToLowerBoundIsNotContained() {
+            DenseRange<Integer> range = RangeMother.r(1, 2);
+            Assert.assertFalse(range.contains(0));
+        }
+
+        @Test
+        public void elementAfterUpperBoundIsNotContained() {
+            DenseRange<Integer> range = RangeMother.r(1, 2);
+            Assert.assertFalse(range.contains(3));
         }
     }
 
@@ -81,6 +100,11 @@ public class DenseRangeTest {
         @Test(expected = IllegalArgumentException.class)
         public void creatingDenseRangeWithNullUpperBoundYieldsException() {
             new DenseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, 0, null);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void creatingDenseRangeWithUpperBoundLesserThenLowerBoundYieldsException() {
+            new DenseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, 10, 0);
         }
 
         @Test(expected = IllegalArgumentException.class)
