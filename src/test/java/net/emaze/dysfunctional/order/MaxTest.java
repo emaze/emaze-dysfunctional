@@ -24,7 +24,7 @@ public class MaxTest {
     @Test
     public void canEvaluateMaxForComparablesWhenLhsIsGreater() {
         Comparator<Integer> comp = new ComparableComparator<Integer>();
-        int got = new Max<Integer>(comp).perform(2, 2);
+        int got = new Max<Integer>(comp).perform(2, 1);
         Assert.assertEquals(2, got);
     }
     
