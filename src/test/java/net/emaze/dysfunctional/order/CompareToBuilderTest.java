@@ -413,72 +413,72 @@ public class CompareToBuilderTest {
 
         @Test
         public void canEvaluateLhsIsGreaterForArrayOfBooleans() {
-            boolean[] former = new boolean[]{true};
-            boolean[] latter = new boolean[]{false};
+            boolean[] former = new boolean[]{true, true};
+            boolean[] latter = new boolean[]{false, true};
             CompareToBuilder builder = new CompareToBuilder().append(former, latter);
             Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
         }
 
         @Test
         public void canEvaluateLhsIsGreaterForArrayOfBytes() {
-            byte[] former = new byte[]{2};
-            byte[] latter = new byte[]{1};
+            byte[] former = new byte[]{2, 2};
+            byte[] latter = new byte[]{1, 2};
             CompareToBuilder builder = new CompareToBuilder().append(former, latter);
             Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
         }
 
         @Test
         public void canEvaluateLhsIsGreaterForArrayOfChars() {
-            char[] former = new char[]{2};
-            char[] latter = new char[]{1};
+            char[] former = new char[]{2, 2};
+            char[] latter = new char[]{1, 2};
             CompareToBuilder builder = new CompareToBuilder().append(former, latter);
             Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
         }
 
         @Test
         public void canEvaluateLhsIsGreaterForArrayOfShorts() {
-            short[] former = new short[]{2};
-            short[] latter = new short[]{1};
+            short[] former = new short[]{2, 2};
+            short[] latter = new short[]{1, 2};
             CompareToBuilder builder = new CompareToBuilder().append(former, latter);
             Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
         }
 
         @Test
         public void canEvaluateLhsIsGreaterForArrayOfInts() {
-            int[] former = new int[]{2};
-            int[] latter = new int[]{1};
+            int[] former = new int[]{2, 2};
+            int[] latter = new int[]{1, 2};
             CompareToBuilder builder = new CompareToBuilder().append(former, latter);
             Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
         }
 
         @Test
         public void canEvaluateLhsIsGreaterForArrayOfLongs() {
-            long[] former = new long[]{2};
-            long[] latter = new long[]{1};
+            long[] former = new long[]{2, 2};
+            long[] latter = new long[]{1, 2};
             CompareToBuilder builder = new CompareToBuilder().append(former, latter);
             Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
         }
 
         @Test
         public void canEvaluateLhsIsGreaterForArrayOfFloats() {
-            float[] former = new float[]{2};
-            float[] latter = new float[]{1};
+            float[] former = new float[]{2, 2};
+            float[] latter = new float[]{1, 2};
             CompareToBuilder builder = new CompareToBuilder().append(former, latter);
             Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
         }
 
         @Test
         public void canEvaluateLhsIsGreaterForArrayOfDoubles() {
-            double[] former = new double[]{2};
-            double[] latter = new double[]{1};
+            double[] former = new double[]{2, 2};
+            double[] latter = new double[]{1, 2};
             CompareToBuilder builder = new CompareToBuilder().append(former, latter);
             Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
         }
 
         @Test
         public void canEvaluateLhsIsGreaterForArrayOfObjects() {
-            Object[] former = new Object[]{2};
-            Object[] latter = new Object[]{1};
+            Object[] former = new Object[]{2, 2};
+            Object[] latter = new Object[]{1, 2};
             CompareToBuilder builder = new CompareToBuilder().append(former, latter);
             Assert.assertEquals(Order.LHS_IS_GREATER, builder.toComparison());
         }
