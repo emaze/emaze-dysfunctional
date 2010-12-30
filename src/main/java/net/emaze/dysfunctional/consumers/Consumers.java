@@ -5,6 +5,7 @@ import java.util.List;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
 import net.emaze.dysfunctional.delegates.AtIndex;
 import net.emaze.dysfunctional.delegates.Nth;
+import net.emaze.dysfunctional.delegates.Predicate;
 
 /**
  *
@@ -228,4 +229,65 @@ public abstract class Consumers {
     public static <E> long count(E[] array) {
         return count(new ArrayIterator<E>(array));
     }
+
+    /**
+     *
+     * @param <E>
+     * @return the only element that matches
+     * @throws IllegalArgumentException if no element matches or more than one matches
+     */
+    public static <E> E findOne(Iterator<E> iterator, Predicate<E> predicate) {
+        return new SingleMatchConsumer<E>(predicate).consume(iterator);
+    }
+
+    /**
+     *
+     * @param <E>
+     * @return the first element that matches
+     * @throws IllegalArgumentException if no element matches
+     */
+    public static <E> E findFirst(Iterator<E> iterator, Predicate<E> predicate) {
+        return new PreciseConsumer<E>(predicate).consume(iterator);
+    }
+
+    /**
+     *
+     * @param <E>
+     * @return the first element that matches, null if no one matches
+     */
+    public static <E> E searchFirst(Iterator<E> iterator, Predicate<E> predicate) {
+        return new NullableConsumer<E>(predicate).consume(iterator);
+    }
+
+    /**
+     *
+     * @param <E>
+     * @return the only element that matches
+     * @throws IllegalArgumentException if no element matches or more than one matches
+     */
+    public static <E> E findOne(Iterable<E> iterable, Predicate<E> predicate) {
+        return findOne(iterable.iterator(), predicate);
+    }
+
+    /**
+     *
+     * @param <E>
+     * @return the first element that matches
+     * @throws IllegalArgumentException if no element matches
+     */
+    public static <E> E findFirst(Iterable<E> iterable, Predicate<E> predicate) {
+        return findFirst(iterable.iterator(), predicate);
+    }
+
+    /**
+     *
+     * @param <E>
+     * @return the first element that matches, null if no one matches
+     */
+    public static <E> E searchFirst(Iterable<E> iterable, Predicate<E> predicate) {
+        return searchFirst(iterable.iterator(), predicate);
+    }
+
+
+
 }

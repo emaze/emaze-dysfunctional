@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional.delegates;
 
+import net.emaze.dysfunctional.contracts.dbc;
+
 /**
  * yields true at the nth iteration (1-based)
  * @param <E> the element type parameter
@@ -11,6 +13,7 @@ public class Nth<E> implements Predicate<E> {
     private long current = 0;
 
     public Nth(long target) {
+        dbc.precondition(target >= 1, "target is 1-based, must be >= 1");
         this.target = target;
     }
 

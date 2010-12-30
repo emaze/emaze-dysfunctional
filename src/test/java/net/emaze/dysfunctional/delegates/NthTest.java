@@ -18,6 +18,11 @@ public class NthTest {
         Assert.assertTrue(nth.test(null));
     }
 
+    @Test(expected=IllegalArgumentException.class)
+    public void nthThrowsIfInitializedWithZero() {
+        Nth<Void> nth = new Nth<Void>(0);
+    }
+
     @Test
     public void nthReturnsTrueOnlyAtTheNthCall() {
         Nth<Void> nth = new Nth<Void>(2);
