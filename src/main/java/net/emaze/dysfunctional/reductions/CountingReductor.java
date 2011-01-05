@@ -1,6 +1,7 @@
-package net.emaze.dysfunctional.consumers;
+package net.emaze.dysfunctional.reductions;
 
 import java.util.Iterator;
+import net.emaze.dysfunctional.consumers.Consumer;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
@@ -8,7 +9,7 @@ import net.emaze.dysfunctional.contracts.dbc;
  * @param <E> 
  * @author rferranti
  */
-public class CountingConsumer<E> implements Consumer<Long, Iterator<E>> {
+public class CountingReductor<E> implements Consumer<Long, Iterator<E>> {
 
     @Override
     public Long consume(Iterator<E> iterator) {

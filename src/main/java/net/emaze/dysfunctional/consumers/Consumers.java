@@ -3,9 +3,6 @@ package net.emaze.dysfunctional.consumers;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
-import net.emaze.dysfunctional.delegates.AtIndex;
-import net.emaze.dysfunctional.delegates.Nth;
-import net.emaze.dysfunctional.delegates.Predicate;
 
 /**
  *
@@ -104,72 +101,6 @@ public abstract class Consumers {
     }
 
     /**
-     * yields nth (1-based) element of the iterator
-     * @param <E>
-     * @param count
-     * @param iterator
-     * @return
-     */
-    public static <E> E nth(long count, Iterator<E> iterator) {
-        return new PreciseConsumer<E>(new Nth<E>(count)).consume(iterator);
-    }
-
-    /**
-     * yields nth (1-based) element of the iterable's iterator
-     * @param <E>
-     * @param count
-     * @param iterable
-     * @return
-     */
-    public static <E> E nth(long count, Iterable<E> iterable) {
-        return nth(count, iterable.iterator());
-    }
-
-    /**
-     * yields nth (1-based) element of the array
-     * @param <E>
-     * @param count
-     * @param array
-     * @return
-     */
-    public static <E> E nth(long count, E[] array) {
-        return nth(count, new ArrayIterator<E>(array));
-    }
-
-    /**
-     * yields element at (0-based) position of the iterator
-     * @param <E>
-     * @param index
-     * @param iterator
-     * @return
-     */
-    public static <E> E at(long index, Iterator<E> iterator) {
-        return new PreciseConsumer<E>(new AtIndex<E>(index)).consume(iterator);
-    }
-
-    /**
-     * yields element at (0-based) position of the iterable's iterator
-     * @param <E>
-     * @param index
-     * @param iterable
-     * @return
-     */
-    public static <E> E at(long index, Iterable<E> iterable) {
-        return at(index, iterable.iterator());
-    }
-
-    /**
-     * yields element at (0-based) position of the array
-     * @param <E>
-     * @param index
-     * @param array
-     * @return
-     */
-    public static <E> E at(long index, E[] array) {
-        return at(index, new ArrayIterator<E>(array));
-    }
-
-    /**
      * consumes the input iterator to the output iterator
      * @param <E>
      * @param iterator
@@ -198,96 +129,4 @@ public abstract class Consumers {
     public static <E> void pipe(E[] array, OutputIterator<E> outputIterator) {
         pipe(new ArrayIterator<E>(array), outputIterator);
     }
-
-    /**
-     * 
-     * @param <E>
-     * @param iterator
-     * @return
-     */
-    public static <E> long count(Iterator<E> iterator) {
-        return new CountingConsumer<E>().consume(iterator);
-    }
-
-    /**
-     * 
-     * @param <E>
-     * @param iterable
-     * @return
-     */
-    public static <E> long count(Iterable<E> iterable) {
-        return count(iterable.iterator());
-    }
-
-    /**
-     * 
-     * @param <E>
-     * @param array
-     * @param outputIterator
-     * @return
-     */
-    public static <E> long count(E[] array) {
-        return count(new ArrayIterator<E>(array));
-    }
-
-    /**
-     *
-     * @param <E>
-     * @return the only element that matches
-     * @throws IllegalArgumentException if no element matches or more than one matches
-     */
-    public static <E> E findOne(Iterator<E> iterator, Predicate<E> predicate) {
-        return new SingleMatchConsumer<E>(predicate).consume(iterator);
-    }
-
-    /**
-     *
-     * @param <E>
-     * @return the first element that matches
-     * @throws IllegalArgumentException if no element matches
-     */
-    public static <E> E findFirst(Iterator<E> iterator, Predicate<E> predicate) {
-        return new PreciseConsumer<E>(predicate).consume(iterator);
-    }
-
-    /**
-     *
-     * @param <E>
-     * @return the first element that matches, null if no one matches
-     */
-    public static <E> E searchFirst(Iterator<E> iterator, Predicate<E> predicate) {
-        return new NullableConsumer<E>(predicate).consume(iterator);
-    }
-
-    /**
-     *
-     * @param <E>
-     * @return the only element that matches
-     * @throws IllegalArgumentException if no element matches or more than one matches
-     */
-    public static <E> E findOne(Iterable<E> iterable, Predicate<E> predicate) {
-        return findOne(iterable.iterator(), predicate);
-    }
-
-    /**
-     *
-     * @param <E>
-     * @return the first element that matches
-     * @throws IllegalArgumentException if no element matches
-     */
-    public static <E> E findFirst(Iterable<E> iterable, Predicate<E> predicate) {
-        return findFirst(iterable.iterator(), predicate);
-    }
-
-    /**
-     *
-     * @param <E>
-     * @return the first element that matches, null if no one matches
-     */
-    public static <E> E searchFirst(Iterable<E> iterable, Predicate<E> predicate) {
-        return searchFirst(iterable.iterator(), predicate);
-    }
-
-
-
 }
