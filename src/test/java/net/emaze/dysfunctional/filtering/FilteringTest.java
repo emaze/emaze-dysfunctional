@@ -97,4 +97,34 @@ public class FilteringTest {
         Iterator<Integer> got = Filtering.drop(1, sampleList.iterator());
         Assert.assertEquals(Arrays.asList(2), consumer.consume(got));
     }
+
+    @Test
+    public void canFetchNthFromIterator() {
+        Assert.assertEquals(Integer.valueOf(1), Filtering.nth(1, sampleList.iterator()).next() );
+    }
+
+    @Test
+    public void canFetchNthFromIterable() {
+        Assert.assertEquals(Integer.valueOf(1), Filtering.nth(1, sampleList).next());
+    }
+
+    @Test
+    public void canFetchNthFromArray() {
+        Assert.assertEquals(Integer.valueOf(1), Filtering.nth(1, sampleArray).next());
+    }
+
+    @Test
+    public void canFetchAtFromIterator() {
+        Assert.assertEquals(Integer.valueOf(1), Filtering.at(0, sampleList.iterator()).next() );
+    }
+
+    @Test
+    public void canFetchAtFromIterable() {
+        Assert.assertEquals(Integer.valueOf(1), Filtering.at(0, sampleList).next() );
+    }
+
+    @Test
+    public void canFetchAtFromArray() {
+        Assert.assertEquals(Integer.valueOf(1), Filtering.at(0, sampleArray).next() );
+    }
 }

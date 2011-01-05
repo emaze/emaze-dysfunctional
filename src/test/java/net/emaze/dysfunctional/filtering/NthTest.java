@@ -1,5 +1,6 @@
-package net.emaze.dysfunctional.delegates;
+package net.emaze.dysfunctional.filtering;
 
+import net.emaze.dysfunctional.filtering.Nth;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

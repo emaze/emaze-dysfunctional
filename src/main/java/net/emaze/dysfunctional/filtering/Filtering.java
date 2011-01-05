@@ -157,4 +157,71 @@ public abstract class Filtering {
     public static <E> Iterator<E> drop(long howMany, Iterator<E> iterator) {
         return new DropWhileIterator<E>(iterator, new UntilCount<E>(howMany));
     }
+
+    /**
+     * yields nth (1-based) element of the iterator
+     * @param <E>
+     * @param count
+     * @param iterator
+     * @return
+     */
+    public static <E> Iterator<E> nth(long count, Iterator<E> iterator) {
+        return filter(iterator, new Nth<E>(count));
+    }
+
+    /**
+     * yields nth (1-based) element of the iterable's iterator
+     * @param <E>
+     * @param count
+     * @param iterable
+     * @return
+     */
+    public static <E> Iterator<E> nth(long count, Iterable<E> iterable) {
+        return nth(count, iterable.iterator());
+    }
+
+    /**
+     * yields nth (1-based) element of the array
+     * @param <E>
+     * @param count
+     * @param array
+     * @return
+     */
+    public static <E> Iterator<E> nth(long count, E[] array) {
+        return nth(count, new ArrayIterator<E>(array));
+    }
+
+    /**
+     * yields element at (0-based) position of the iterator
+     * @param <E>
+     * @param index
+     * @param iterator
+     * @return
+     */
+    public static <E> Iterator<E> at(long index, Iterator<E> iterator) {
+        return filter(iterator, new AtIndex<E>(index));
+    }
+
+    /**
+     * yields element at (0-based) position of the iterable's iterator
+     * @param <E>
+     * @param index
+     * @param iterable
+     * @return
+     */
+    public static <E> Iterator<E> at(long index, Iterable<E> iterable) {
+        return at(index, iterable.iterator());
+    }
+
+    /**
+     * yields element at (0-based) position of the array
+     * @param <E>
+     * @param index
+     * @param array
+     * @return
+     */
+    public static <E> Iterator<E> at(long index, E[] array) {
+        return at(index, new ArrayIterator<E>(array));
+    }
+
 }

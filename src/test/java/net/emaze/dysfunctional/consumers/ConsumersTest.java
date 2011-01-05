@@ -63,36 +63,6 @@ public class ConsumersTest {
     }
 
     @Test
-    public void canFetchNthFromIterator() {
-        Assert.assertEquals(Integer.valueOf(1), Consumers.nth(1, list.iterator()));
-    }
-
-    @Test
-    public void canFetchNthFromIterable() {
-        Assert.assertEquals(Integer.valueOf(1), Consumers.nth(1, list));
-    }
-
-    @Test
-    public void canFetchNthFromArray() {
-        Assert.assertEquals(Integer.valueOf(1), Consumers.nth(1, array));
-    }
-
-    @Test
-    public void canFetchAtFromIterator() {
-        Assert.assertEquals(Integer.valueOf(1), Consumers.at(0, list.iterator()));
-    }
-
-    @Test
-    public void canFetchAtFromIterable() {
-        Assert.assertEquals(Integer.valueOf(1), Consumers.at(0, list));
-    }
-
-    @Test
-    public void canFetchAtFromArray() {
-        Assert.assertEquals(Integer.valueOf(1), Consumers.at(0, array));
-    }
-
-    @Test
     public void canPipeFromIterator() {
         List<String> in = Arrays.asList("1", "2", "3");
         StringOutputIterator output = new StringOutputIterator();
@@ -114,20 +84,5 @@ public class ConsumersTest {
         StringOutputIterator output = new StringOutputIterator();
         Consumers.pipe(in, output);
         Assert.assertEquals("123", output.toString());
-    }
-
-    @Test
-    public void canCountFromIterator() {
-        Assert.assertEquals(2l, Consumers.count(list.iterator()));
-    }
-
-    @Test
-    public void testCount_Iterable() {
-        Assert.assertEquals(2l, Consumers.count(list));
-    }
-
-    @Test
-    public void canCountFromArray() {
-        Assert.assertEquals(2l, Consumers.count(array));
     }
 }
