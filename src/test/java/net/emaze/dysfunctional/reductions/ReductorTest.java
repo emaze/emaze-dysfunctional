@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.reductions;
 
-import net.emaze.dysfunctional.reductions.CountingReductor;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,18 +8,18 @@ import org.junit.Test;
  *
  * @author rferranti
  */
-public class CountingReductorTest {
+public class ReductorTest {
 
     @Test
-    public void canCountAnIterator() {
+    public void canReduceAnIterator() {
         Integer[] arr = new Integer[]{1, 2, 3, 4};
-        CountingReductor<Integer> cc = new CountingReductor<Integer>();
+        Reductor<Long, Integer> cc = new Reductor<Long, Integer>(new Count<Integer>(), 0l);
         long count = cc.consume(new ArrayIterator<Integer>(arr));
-        Assert.assertEquals(4, count);
+        Assert.assertEquals(4l, count);
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void consumingNullIteratorYieldException() {
-        new CountingReductor<Integer>().consume(null);
+        new Reductor<Long, Integer>(null, 0l);
     }
 }
