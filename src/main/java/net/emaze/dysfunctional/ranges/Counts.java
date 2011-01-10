@@ -11,7 +11,7 @@ import net.emaze.dysfunctional.tuples.Pair;
  * 
  * @author rferranti
  */
-public class Counts {
+public abstract class Counts {
 
     public static <T> Iterable<Pair<Integer, T>> counted(Iterable<T> iterable) {
         final SequencingPolicy<Integer> sequencer = new IntegerSequencingPolicy();

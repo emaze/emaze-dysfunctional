@@ -7,7 +7,7 @@ import net.emaze.dysfunctional.tuples.Pair;
  *
  * @author rferranti
  */
-public class Comparing {
+public abstract class Comparing {
 
     public static <T extends Comparable<T>> boolean lhsIsLesser(T lhs, T rhs) {
         return lhs.compareTo(rhs) == Order.LHS_IS_LESSER;
