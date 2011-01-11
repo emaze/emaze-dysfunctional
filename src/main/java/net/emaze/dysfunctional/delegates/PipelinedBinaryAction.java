@@ -8,7 +8,8 @@ import net.emaze.dysfunctional.contracts.dbc;
 /**
  * A composite binary functor with no return value. On call every composed action
  * is called in registration order (where an order exists)
-
+ * @param <E1> the former type parameter
+ * @param <E2> the latter type parameter
  * @author dangelocola
  */
 public class PipelinedBinaryAction<E1, E2> implements BinaryAction<E1, E2>, Multicasting<BinaryAction<E1, E2>> {
@@ -17,11 +18,13 @@ public class PipelinedBinaryAction<E1, E2> implements BinaryAction<E1, E2>, Mult
 
     /**
      * Performs every composed action.
+     * @param former the former value
+     * @param latter the latter value
      */
     @Override
-    public void perform(E1 value1, E2 value2) {
+    public void perform(E1 former, E2 latter) {
         for (BinaryAction<E1, E2> action : actions) {
-            action.perform(value1, value2);
+            action.perform(former, latter);
         }
     }
 

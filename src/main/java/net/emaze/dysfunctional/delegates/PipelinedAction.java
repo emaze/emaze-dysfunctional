@@ -8,7 +8,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 /**
  * A composite unary functor with no return value. On call every composed action
  * is called in registration order (where an order exists)
- * @param <E> 
+ * @param <E> the type parameter
  * @author rferranti
  */
 public class PipelinedAction<E> implements Action<E>, Multicasting<Action<E>> {
