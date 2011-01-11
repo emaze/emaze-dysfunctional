@@ -8,5 +8,5 @@ package net.emaze.dysfunctional.delegates;
  * @author rferranti
  */
 public interface TernaryPredicate<T1,T2, T3> {
-    boolean call(T1 first, T2 second, T3 third);
+    boolean test(T1 first, T2 second, T3 third);
 }
