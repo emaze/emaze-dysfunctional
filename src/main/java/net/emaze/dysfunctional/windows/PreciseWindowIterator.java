@@ -6,7 +6,7 @@ import java.util.Queue;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- *
+ * [1,2,3,4,5], 3 -> (1,2,3), (2,3,4), (3,4,5)
  * @param <T>
  * @author rferranti
  */
