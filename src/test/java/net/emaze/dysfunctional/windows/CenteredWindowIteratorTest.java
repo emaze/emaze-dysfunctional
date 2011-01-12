@@ -27,4 +27,15 @@ public class CenteredWindowIteratorTest {
         expected.add(Arrays.asList(Maybe.just(2), Maybe.just(3), Maybe.<Integer>nothing()));
         Assert.assertEquals(expected, got);
     }
+
+    @Test
+    public void singletonIteratorYieldOneElementInWindow(){
+        Iterator<Integer> iter = Arrays.<Integer>asList(1).iterator();
+        CenteredWindowIterator<Integer> win = new CenteredWindowIterator<Integer>(iter, 3);
+        List<Queue<Maybe<Integer>>> got = Consumers.all(win);
+        List<List<Maybe<Integer>>> expected = new ArrayList<List<Maybe<Integer>>>();
+        expected.add(Arrays.asList(Maybe.<Integer>nothing(), Maybe.just(1), Maybe.<Integer>nothing()));
+        Assert.assertEquals(expected, got);
+
+    }
 }

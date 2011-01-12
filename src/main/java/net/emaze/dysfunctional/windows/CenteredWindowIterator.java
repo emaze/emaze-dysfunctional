@@ -17,7 +17,8 @@ public class CenteredWindowIterator<T> implements Iterator<Queue<Maybe<T>>> {
     private final Iterator<T> iter;
     private final int windowSize;
     private final LinkedList<Maybe<T>> window = new LinkedList<Maybe<T>>();
-    private boolean shouldRemove;
+    private boolean freshIterator = true;
+
     public CenteredWindowIterator(Iterator<T> iter, int windowSize) {
         dbc.precondition(iter != null, "cannot create a CenteredWindowIterator with a null iterator");
         dbc.precondition(windowSize > 2, "cannot create a CenteredWindowIterator with a non positive or 1 window size");
@@ -32,21 +33,28 @@ public class CenteredWindowIterator<T> implements Iterator<Queue<Maybe<T>>> {
     @Override
     public boolean hasNext() {
         fillWindow();
-        return nextOfCenter().hasValue();
+        return !isConsumed();
     }
 
     @Override
     public Queue<Maybe<T>> next() {
-        if (!nextOfCenter().hasValue()) {
+        if (isConsumed()) {
             throw new NoSuchElementException("iterator is consumed");
         }
-        if(shouldRemove){
+        if (!freshIterator) {
             window.remove();
-        }else{
-            shouldRemove = true;
-        }
+        } 
+        freshIterator = false;
         fillWindow();
         return new LinkedList<Maybe<T>>(window);
+    }
+    
+    
+    private boolean isConsumed(){
+        if (freshIterator) {
+            return !center().hasValue();
+        }
+        return !nextOfCenter().hasValue();
     }
 
     @Override
@@ -56,6 +64,10 @@ public class CenteredWindowIterator<T> implements Iterator<Queue<Maybe<T>>> {
 
     private Maybe<T> nextOfCenter() {
         return window.get(windowSize / 2 + 1);
+    }
+
+    private Maybe<T> center() {
+        return window.get(windowSize / 2);
     }
 
     private void fillWindow() {
