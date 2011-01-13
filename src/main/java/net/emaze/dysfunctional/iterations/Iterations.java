@@ -116,42 +116,6 @@ public abstract class Iterations {
     }
 
     /**
-     * 
-     * @param <R>
-     * @param <E> 
-     * @param iterable the iterable where elements are fetched from
-     * @param delegate a delegate used to transform each element
-     * @return a List<R> containing the transformed elements
-     */
-    public static <R, E> List<R> map(Iterable<E> iterable, Delegate<R, E> delegate) {
-        return map(iterable.iterator(), delegate);
-    }
-
-    /**
-     *
-     * @param <R>
-     * @param <E> 
-     * @param iterator the iterator where elements are fetched from
-     * @param delegate a delegate used to transform each element
-     * @return a List<R> containing the transformed elements
-     */
-    public static <R, E> List<R> map(Iterator<E> iterator, Delegate<R, E> delegate) {
-        return new EagerConsumer<ArrayList<R>, R>(new ArrayListFactory<R>()).consume(new TransformingIterator<R, E>(iterator, delegate));
-    }
-
-    /**
-     *
-     * @param <R>
-     * @param <E> 
-     * @param array the array where elements are fetched from
-     * @param delegate a delegate used to transform each element
-     * @return a List<R> containing the transformed elements
-     */
-    public static <R, E> List<R> map(E[] array, Delegate<R, E> delegate) {
-        return map(new ArrayIterator<E>(array), delegate);
-    }
-
-    /**
      *
      * @param <R>
      * @param <E>

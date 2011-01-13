@@ -18,37 +18,12 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    IterationsTest.Map.class,
     IterationsTest.Transform.class,
     IterationsTest.Any.class,
     IterationsTest.Every.class,
     IterationsTest.Each.class,
     IterationsTest.OneTime.class})
 public class IterationsTest {
-
-    public static class Map {
-
-        @Test
-        public void canMapAnIterable() {
-            List<Integer> source = Arrays.asList(1, 2, 3);
-            List<Integer> got = Iterations.map(source, new Identity<Integer>());
-            Assert.assertEquals(source, got);
-        }
-
-        @Test
-        public void canMapAnIterator() {
-            List<Integer> source = Arrays.asList(1, 2, 3);
-            List<Integer> got = Iterations.map(source.iterator(), new Identity<Integer>());
-            Assert.assertEquals(source, got);
-        }
-
-        @Test
-        public void canMapAnArray() {
-            Integer[] source = new Integer[]{1, 2, 3};
-            List<Integer> got = Iterations.map(source, new Identity<Integer>());
-            Assert.assertEquals(Arrays.asList(source), got);
-        }
-    }
 
     public static class Transform {
 

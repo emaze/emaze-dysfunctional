@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.multiplexing.ChainIterator;
 import net.emaze.dysfunctional.delegates.IteratorPlucker;
@@ -60,7 +61,7 @@ public class SparseRange<T> implements Range<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new ChainIterator<T>(Iterations.map(ranges, new IteratorPlucker<T, DenseRange<T>>()));
+        return new ChainIterator<T>(Consumers.all(Iterations.transform(ranges, new IteratorPlucker<T, DenseRange<T>>())));
     }
 
     @Override

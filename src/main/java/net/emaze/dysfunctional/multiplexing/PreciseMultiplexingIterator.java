@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.multiplexing;
 
 import java.util.Iterator;
 import java.util.List;
+import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.delegates.HasNext;
 import net.emaze.dysfunctional.iterations.Iterations;
@@ -21,7 +22,7 @@ public class PreciseMultiplexingIterator<T> implements Iterator<Maybe<T>> {
 
     public PreciseMultiplexingIterator(Iterator<T>... iterators) {
         dbc.precondition(iterators != null, "trying to create a ChainIterator from a null array of iterators");
-        this.iterators = Iterations.map(iterators, new MaybeIteratorTransformer<T>());
+        this.iterators = Consumers.all(Iterations.transform(iterators, new MaybeIteratorTransformer<T>()));
         this.currentIndex = new CircularCounter(this.iterators.size());
     }
 

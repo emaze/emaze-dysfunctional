@@ -1,7 +1,8 @@
 package net.emaze.dysfunctional.ranges;
 
 import java.util.Comparator;
-import java.util.List;
+import java.util.Iterator;
+import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.delegates.Delegate;
 import net.emaze.dysfunctional.iterations.Iterations;
 import net.emaze.dysfunctional.order.ComparableComparator;
@@ -27,13 +28,13 @@ public class RangeMother {
     }
 
     public static SparseRange<Integer> r(Pair<Integer, Integer>... pairs) {
-        final List<DenseRange<Integer>> ranges = Iterations.map(pairs, new Delegate<DenseRange<Integer>, Pair<Integer, Integer>>() {
+        final Iterator<DenseRange<Integer>> ranges = Iterations.transform(pairs, new Delegate<DenseRange<Integer>, Pair<Integer, Integer>>() {
 
             @Override
             public DenseRange<Integer> perform(Pair<Integer, Integer> pair) {
                 return new DenseRange<Integer>(sequencer, comparator, pair.first(), pair.second());
             }
         });
-        return new SparseRange<Integer>(sequencer, comparator, ranges);
+        return new SparseRange<Integer>(sequencer, comparator, Consumers.all(ranges));
     }
 }
