@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.windows;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 import java.util.Queue;
 import net.emaze.dysfunctional.contracts.dbc;
 
@@ -39,6 +40,9 @@ public class PreciseWindowIterator<T> implements Iterator<Queue<T>> {
             window.remove();
         }
         tryFillWindow();
+        if( window.size() != windowSize){
+            throw new NoSuchElementException("iterator is consumed");
+        }
         return window;
     }
 
