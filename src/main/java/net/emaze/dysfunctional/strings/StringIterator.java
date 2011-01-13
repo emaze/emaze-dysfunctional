@@ -31,7 +31,7 @@ public class StringIterator implements Iterator<Character> {
     @Override
     public Character next() {
         if(limitReached()){
-            throw new NoSuchElementException();
+            throw new NoSuchElementException("iterator is consumed");
         }
         return value.charAt(currentPosition++);
     }

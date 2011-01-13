@@ -31,7 +31,7 @@ public class ArrayIterator<T> implements Iterator<T> {
     @Override
     public T next() {
         if(isOutOfBounds()){
-            throw new NoSuchElementException();
+            throw new NoSuchElementException("iterator is consumed");
         }
         final T element = values[currentIndex];
         ++currentIndex;

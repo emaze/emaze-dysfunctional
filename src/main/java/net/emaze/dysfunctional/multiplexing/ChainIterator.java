@@ -53,7 +53,7 @@ public class ChainIterator<E> implements Iterator<E> {
         if (maybeElement.hasValue()) {
             return maybeElement.value().next();
         }
-        throw new NoSuchElementException();
+        throw new NoSuchElementException("iterator is consumed");
     }
 
     @Override
