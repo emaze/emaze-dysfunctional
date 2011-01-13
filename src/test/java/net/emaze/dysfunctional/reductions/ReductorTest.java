@@ -19,7 +19,12 @@ public class ReductorTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void consumingNullIteratorYieldException() {
+    public void creatingWithNullDelegateYieldsException() {
         new Reductor<Long, Integer>(null, 0l);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void consumingNullIteratorYieldException() {
+        new Reductor<Long, Integer>(new Count<Integer>(), 0l).consume(null);
     }
 }
