@@ -1,8 +1,12 @@
 package net.emaze.dysfunctional.consumers;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
+import net.emaze.dysfunctional.collections.ArrayListFactory;
+import net.emaze.dysfunctional.collections.CollectionFactory;
 
 /**
  *
@@ -41,13 +45,26 @@ public abstract class Consumers {
     }
 
     /**
+     * yields all elements of the iterator (in a collection created by the factory)
+     * @param <R>
+     * @param <E>
+     * @param <CF>
+     * @param iterator
+     * @param factory
+     * @return
+     */
+    public static <R extends Collection<E>, E, CF extends CollectionFactory<R, E>> R all(Iterator<E> iterator, CF factory) {
+        return new EagerConsumer<R, E>(factory).consume(iterator);
+    }
+
+    /**
      * yields all elements of the iterator (in a list)
      * @param <E>
      * @param iterator
      * @return
      */
     public static <E> List<E> all(Iterator<E> iterator) {
-        return new EagerConsumer<E>().consume(iterator);
+        return new EagerConsumer<ArrayList<E>, E>(new ArrayListFactory<E>()).consume(iterator);
     }
 
     /**

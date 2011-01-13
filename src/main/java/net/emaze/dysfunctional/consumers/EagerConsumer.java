@@ -1,25 +1,32 @@
 package net.emaze.dysfunctional.consumers;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
+import net.emaze.dysfunctional.collections.CollectionFactory;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  * consumes every element from the consumable
+ * @param <R>
  * @param <E>
  * @author rferranti
  */
-public class EagerConsumer<E> implements Consumer<List<E>,Iterator<E>>{
-    
+public class EagerConsumer<R extends Collection<E>, E> implements Consumer<R, Iterator<E>> {
+
+    private final CollectionFactory<R, E> factory;
+
+    public EagerConsumer(CollectionFactory<R, E> factory) {
+        dbc.precondition(factory != null, "collection factory cannot be null");
+        this.factory = factory;
+    }
+
     @Override
-    public List<E> consume(Iterator<E> consumable){
+    public R consume(Iterator<E> consumable) {
         dbc.precondition(consumable != null, "consuming a null iterator");
-        final List<E> out = new ArrayList<E>();
-        while(consumable.hasNext()){
+        final R out = factory.create();
+        while (consumable.hasNext()) {
             out.add(consumable.next());
         }
         return out;
     }
-
 }
