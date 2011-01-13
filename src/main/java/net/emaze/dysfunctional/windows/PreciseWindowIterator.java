@@ -43,7 +43,7 @@ public class PreciseWindowIterator<T> implements Iterator<Queue<T>> {
         if( window.size() != windowSize){
             throw new NoSuchElementException("iterator is consumed");
         }
-        return window;
+        return new LinkedList<T>(window);
     }
 
     @Override
