@@ -41,6 +41,6 @@ public class InterposingIterator<T> implements Iterator<T> {
 
     @Override
     public void remove() {
-        throw new UnsupportedOperationException("trying to remove a value from an interleavingIterator");
+        throw new UnsupportedOperationException("trying to remove a value from an InterleavingIterator");
     }
 }
