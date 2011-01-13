@@ -38,6 +38,7 @@ public class CenteredWindowIterator<T> implements Iterator<Queue<Maybe<T>>> {
 
     @Override
     public Queue<Maybe<T>> next() {
+        fillWindow();
         if (isConsumed()) {
             throw new NoSuchElementException("iterator is consumed");
         }
@@ -59,7 +60,7 @@ public class CenteredWindowIterator<T> implements Iterator<Queue<Maybe<T>>> {
 
     @Override
     public void remove() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new IllegalStateException("Cannot remove from a CenteredWindowIterator.");
     }
 
     private Maybe<T> nextOfCenter() {
