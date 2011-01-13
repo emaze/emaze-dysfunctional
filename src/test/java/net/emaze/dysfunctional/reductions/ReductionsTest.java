@@ -20,12 +20,27 @@ public class ReductionsTest {
     }
 
     @Test
-    public void testCount_Iterable() {
+    public void canCountFromIterable() {
         Assert.assertEquals(2l, Reductions.count(list));
     }
 
     @Test
     public void canCountFromArray() {
         Assert.assertEquals(2l, Reductions.count(array));
+    }
+
+    @Test
+    public void canReduceFromIterator() {
+        Assert.assertEquals(Long.valueOf(2l), Reductions.reduce(list.iterator(), new Count<Integer>(), 0l));
+    }
+
+    @Test
+    public void canReduceFromIterable() {
+        Assert.assertEquals(Long.valueOf(2l), Reductions.reduce(list, new Count<Integer>(), 0l));
+    }
+
+    @Test
+    public void canReduceFromArray() {
+        Assert.assertEquals(Long.valueOf(2l), Reductions.reduce(array, new Count<Integer>(), 0l));
     }
 }
