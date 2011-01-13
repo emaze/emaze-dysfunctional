@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import net.emaze.dysfunctional.delegates.Delegate;
+import net.emaze.dysfunctional.delegates.BinaryDelegate;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,24 +12,24 @@ import org.junit.Test;
  *
  * @author rferranti
  */
-public class InterceptorChainTest {
+public class BinaryInterceptorChainTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingChainWithNullInnermostDelegateYieldsException() {
-        new InterceptorChain<Object, Object>(null);
+        new BinaryInterceptorChain<Object, Object, Object>(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void addingNullFunctorToChainYieldsException() {
         BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
-        InterceptorChain<String, String> chain = new InterceptorChain<String, String>(delegate);
+        BinaryInterceptorChain<String, String, String> chain = new BinaryInterceptorChain<String, String, String>(delegate);
         chain.add(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void removingNullFunctorToChainYieldsException() {
         BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
-        InterceptorChain<String, String> chain = new InterceptorChain<String, String>(delegate);
+        BinaryInterceptorChain<String, String, String> chain = new BinaryInterceptorChain<String, String, String>(delegate);
         chain.remove(null);
     }
 
@@ -37,7 +37,7 @@ public class InterceptorChainTest {
     public void removingNonPresentInterceptorYieldsFalse() {
         final List<Integer> bucket = new ArrayList<Integer>();
         BucketFillingDelegate delegate = new BucketFillingDelegate(1, bucket);
-        InterceptorChain<String, String> chain = new InterceptorChain<String, String>(delegate);
+        BinaryInterceptorChain<String, String, String> chain = new BinaryInterceptorChain<String, String, String>(delegate);
         boolean got = chain.remove(new BucketFillingInterceptor(2, bucket));
         Assert.assertFalse(got);
     }
@@ -46,8 +46,8 @@ public class InterceptorChainTest {
     public void removingPresentInterceptorYieldsTrue() {
         final List<Integer> bucket = new ArrayList<Integer>();
         BucketFillingDelegate delegate = new BucketFillingDelegate(1, bucket);
-        InterceptorChain<String, String> chain = new InterceptorChain<String, String>(delegate);
-        Interceptor<String> interceptor = new BucketFillingInterceptor(2, bucket);
+        BinaryInterceptorChain<String, String, String> chain = new BinaryInterceptorChain<String, String, String>(delegate);
+        BinaryInterceptor<String, String> interceptor = new BucketFillingInterceptor(2, bucket);
         chain.add(interceptor);
         boolean got = chain.remove(interceptor);
         Assert.assertTrue(got);
@@ -57,7 +57,7 @@ public class InterceptorChainTest {
     public void settingNullFunctorsCollectionYieldsException() {
         final List<Integer> bucket = new ArrayList<Integer>();
         BucketFillingDelegate delegate = new BucketFillingDelegate(1, bucket);
-        InterceptorChain<String, String> chain = new InterceptorChain<String, String>(delegate);
+        BinaryInterceptorChain<String, String, String> chain = new BinaryInterceptorChain<String, String, String>(delegate);
         chain.setFunctors(null);
     }
 
@@ -65,40 +65,40 @@ public class InterceptorChainTest {
     public void settingFunctorsRemovesOldFunctors() {
         final List<Integer> bucket = new ArrayList<Integer>();
         BucketFillingDelegate delegate = new BucketFillingDelegate(1, bucket);
-        InterceptorChain<String, String> chain = new InterceptorChain<String, String>(delegate);
-        Interceptor<String> interceptor = new BucketFillingInterceptor(2, bucket);
+        BinaryInterceptorChain<String, String, String> chain = new BinaryInterceptorChain<String, String, String>(delegate);
+        BinaryInterceptor<String, String> interceptor = new BucketFillingInterceptor(2, bucket);
         chain.add(interceptor);
-        chain.setFunctors(Collections.<Interceptor<String>>emptyList());
-        chain.perform("test");
+        chain.setFunctors(Collections.<BinaryInterceptor<String, String>>emptyList());
+        chain.perform("ignored", "ignored");
         Assert.assertEquals(1, bucket.size());
     }
 
     @Test
     public void chainingIsDoneInCorrectOrder() {
         final List<Integer> bucket = new ArrayList<Integer>();
-        final InterceptorChain<String, String> chain = new InterceptorChain<String, String>(new BucketFillingDelegate(4, bucket));
+        final BinaryInterceptorChain<String, String, String> chain = new BinaryInterceptorChain<String, String, String>(new BucketFillingDelegate(4, bucket));
         chain.add(new BucketFillingInterceptor(1, bucket));
         chain.add(new BucketFillingInterceptor(2, bucket));
         chain.add(new BucketFillingInterceptor(3, bucket));
-        chain.perform("useless_value");
+        chain.perform("useless_value", "useless_value");
         Assert.assertEquals(Arrays.asList(1, 2, 3, 4, 3, 2, 1), bucket);
     }
 
     @Test
     public void whenAnInterceptorThrowsInBeforeCorrectAfterAreCalled() {
         final List<Integer> bucket = new ArrayList<Integer>();
-        final InterceptorChain<String, String> chain = new InterceptorChain<String, String>(new BucketFillingDelegate(4, bucket));
+        final BinaryInterceptorChain<String, String, String> chain = new BinaryInterceptorChain<String, String, String>(new BucketFillingDelegate(4, bucket));
         chain.add(new BucketFillingInterceptor(1, bucket));
         chain.add(new ThrowingInterceptor());
         chain.add(new BucketFillingInterceptor(3, bucket));
         try {
-            chain.perform("useless_value");
+            chain.perform("useless_value", "useless_value");
         } catch (Exception ex) {
         }
         Assert.assertEquals(Arrays.asList(1, 1), bucket);
     }
 
-    public static class BucketFillingDelegate implements Delegate<String, String> {
+    public static class BucketFillingDelegate implements BinaryDelegate<String, String, String> {
 
         private final int id;
         private final List<Integer> bucket;
@@ -109,13 +109,13 @@ public class InterceptorChainTest {
         }
 
         @Override
-        public String perform(String value) {
+        public String perform(String first, String second) {
             bucket.add(id);
-            return value;
+            return null;
         }
     }
 
-    public static class BucketFillingInterceptor implements Interceptor<String> {
+    public static class BucketFillingInterceptor implements BinaryInterceptor<String, String> {
 
         private final int id;
         private final List<Integer> bucket;
@@ -126,26 +126,26 @@ public class InterceptorChainTest {
         }
 
         @Override
-        public void before(String value) {
+        public void before(String first, String second) {
             bucket.add(id);
         }
 
         @Override
-        public void after(String value) {
+        public void after(String first, String second) {
             bucket.add(id);
         }
     }
 
-public static class ThrowingInterceptor implements Interceptor<String> {
+    public class ThrowingInterceptor implements BinaryInterceptor<String, String> {
 
-    @Override
-    public void before(String value) {
-        throw new IllegalStateException();
-    }
+        @Override
+        public void before(String first, String second) {
+            throw new IllegalStateException();
+        }
 
-    @Override
-    public void after(String value) {
-        throw new IllegalStateException();
+        @Override
+        public void after(String first, String second) {
+            throw new IllegalStateException();
+        }
     }
-}
 }
