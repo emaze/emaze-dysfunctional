@@ -1,7 +1,9 @@
 package net.emaze.dysfunctional.consumers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import net.emaze.dysfunctional.collections.ArrayListFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -44,6 +46,23 @@ public class ConsumersTest {
     @Test
     public void canFetchAllFromArray() {
         List<Integer> got = Consumers.all(array);
+        Assert.assertEquals(list, got);
+    }
+    @Test
+    public void canFetchAllFromIteratorWithFactory() {
+        List<Integer> got = Consumers.<ArrayList<Integer>, Integer, ArrayListFactory<Integer>>all(list.iterator(), new ArrayListFactory<Integer>());
+        Assert.assertEquals(list, got);
+    }
+
+    @Test
+    public void canFetchAllFromIterableWithFactory() {
+        List<Integer> got = Consumers.<ArrayList<Integer>, Integer, ArrayListFactory<Integer>>all(list, new ArrayListFactory<Integer>());
+        Assert.assertEquals(list, got);
+    }
+
+    @Test
+    public void canFetchAllFromArrayWithFactory() {
+        List<Integer> got = Consumers.<ArrayList<Integer>, Integer, ArrayListFactory<Integer>>all(array, new ArrayListFactory<Integer>());
         Assert.assertEquals(list, got);
     }
 

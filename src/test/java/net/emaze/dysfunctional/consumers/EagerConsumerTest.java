@@ -18,7 +18,7 @@ public class EagerConsumerTest {
     public void consumingEmptyIteratorYieldsEmptyList() {
         List<Integer> consumable = Collections.emptyList();
         final EagerConsumer<ArrayList<Integer>, Integer> cons = new EagerConsumer<ArrayList<Integer>, Integer>(new ArrayListFactory<Integer>());
-        List<Integer> got = cons.consume(consumable.iterator());
+        ArrayList<Integer> got = cons.consume(consumable.iterator());
         Assert.assertEquals(consumable, got);
     }
 
@@ -26,7 +26,7 @@ public class EagerConsumerTest {
     public void consumingListYieldsSameValuesAsInList() {
         List<Integer> consumable = Arrays.asList(1, 2, 3);
         final EagerConsumer<ArrayList<Integer>, Integer> cons = new EagerConsumer<ArrayList<Integer>, Integer>(new ArrayListFactory<Integer>());
-        List<Integer> got = cons.consume(consumable.iterator());
+        ArrayList<Integer> got = cons.consume(consumable.iterator());
         Assert.assertEquals(consumable, got);
     }
 
