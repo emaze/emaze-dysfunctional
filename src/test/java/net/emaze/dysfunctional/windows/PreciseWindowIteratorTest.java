@@ -30,7 +30,7 @@ public class PreciseWindowIteratorTest {
         new PreciseWindowIterator<Object>(Collections.emptyList().iterator(), 3).next();
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = UnsupportedOperationException.class)
     public void removingFromPreciseWindowIteratorYieldsException() {
         new PreciseWindowIterator<Integer>(Arrays.asList(1).iterator(), 3).remove();
     }

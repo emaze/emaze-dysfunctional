@@ -52,7 +52,7 @@ public class DemultiplexingIterator<T> implements Iterator<List<T>> {
 
     @Override
     public void remove() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Cannot remove from a DemultiplexingIterator.");
     }
 
     private static <T> List<T> prefetch(Iterator<T> iter, int size){

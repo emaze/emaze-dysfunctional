@@ -38,7 +38,7 @@ public class StringIterator implements Iterator<Character> {
 
     @Override
     public void remove() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Cannot remove from a StringIterator.");
     }
 
 }

@@ -39,6 +39,6 @@ public class PreciseDemultiplexingIterator<T> implements Iterator<List<Maybe<T>>
 
     @Override
     public void remove() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Cannot remove from a PreciseDemultiplexingIterator.");
     }
 }

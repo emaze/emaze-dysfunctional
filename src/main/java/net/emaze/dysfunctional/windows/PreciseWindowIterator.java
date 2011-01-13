@@ -48,7 +48,7 @@ public class PreciseWindowIterator<T> implements Iterator<Queue<T>> {
 
     @Override
     public void remove() {
-        throw new IllegalStateException("Cannot remove from a PreciseWindowIterator");
+        throw new UnsupportedOperationException("Cannot remove from a PreciseWindowIterator");
     }
 
     private void tryFillWindow() {

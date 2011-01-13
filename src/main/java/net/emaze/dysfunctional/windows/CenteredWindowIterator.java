@@ -60,7 +60,7 @@ public class CenteredWindowIterator<T> implements Iterator<Queue<Maybe<T>>> {
 
     @Override
     public void remove() {
-        throw new IllegalStateException("Cannot remove from a CenteredWindowIterator.");
+        throw new UnsupportedOperationException("Cannot remove from a CenteredWindowIterator.");
     }
 
     private Maybe<T> nextOfCenter() {
