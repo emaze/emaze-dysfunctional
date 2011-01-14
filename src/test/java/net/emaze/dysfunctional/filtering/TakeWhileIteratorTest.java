@@ -74,7 +74,7 @@ public class TakeWhileIteratorTest {
         new TakeWhileIterator<Integer>(iter, null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void canCallHasNextTwoTimesWithoutDiscardingElement() {
         final Iterator<Integer> iter = Arrays.<Integer>asList(1).iterator();
         final Iterator<Integer> twi = new TakeWhileIterator<Integer>(iter, new Always<Integer>());
