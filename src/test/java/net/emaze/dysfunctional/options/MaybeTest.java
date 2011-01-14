@@ -40,5 +40,14 @@ public class MaybeTest {
     public void maybeWithSameValuesHaveSameHashcode() {
         Assert.assertEquals(Maybe.just(1).hashCode(), Maybe.just(1).hashCode());
     }
+
+    @Test
+    public void toStringOfNothingIsNothing(){
+        Assert.assertEquals("Nothing", Maybe.nothing().toString());
+    }
     
+    @Test
+    public void toStringOfJustReflectsValue(){
+        Assert.assertEquals("Just 1", Maybe.just(1).toString());
+    }
 }

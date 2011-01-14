@@ -53,4 +53,14 @@ public class Maybe<E> {
                 append(this.element, other.element).
                 isEquals();
     }
+
+    @Override
+    public String toString() {
+        if(!hasValue){
+            return "Nothing";
+        }
+        return String.format("Just %s", element);
+    }
+
+    
 }
