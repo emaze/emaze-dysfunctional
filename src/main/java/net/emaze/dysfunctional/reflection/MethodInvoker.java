@@ -8,7 +8,9 @@ import net.emaze.dysfunctional.contracts.dbc;
  * Responsibility: invokes a method via reflection transforming checked exceptions involved in the invocation
  * to IllegalStateStateException s (unchecked)
  * @author rferranti
+ * @deprecated use TypeMethod instead
  */
+@Deprecated
 public class MethodInvoker {
     private Method method;
 

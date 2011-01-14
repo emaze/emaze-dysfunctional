@@ -1,10 +1,9 @@
 package net.emaze.dysfunctional.delegates;
 
-import java.lang.reflect.Method;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.options.Memoized;
-import net.emaze.dysfunctional.reflection.MethodInvoker;
-import net.emaze.dysfunctional.reflection.MethodReflector;
+import net.emaze.dysfunctional.reflection.ClassType;
+import net.emaze.dysfunctional.reflection.MethodType;
 
 /**
  * A unary functor with no return value decorator calling the nested action via
@@ -17,17 +16,18 @@ public class ReflectiveAction<T> implements Action<T> {
     private String methodName;
     private Object callee;
     private Maybe<Class<?>> clazz = Maybe.nothing();
-    private Memoized<Method> methodCache = new Memoized<Method>();
+    private Memoized<MethodType> methodCache = new Memoized<MethodType>();
 
     @Override
     public void perform(T message) {
         if (!methodCache.isMemoized()) {
-            final Method m = clazz.hasValue()
-                    ? new MethodReflector().fetch(callee.getClass(), methodName, clazz.value())
-                    : new MethodReflector().fetchByName(callee.getClass(), methodName);
+            final ClassType calleeType = new ClassType(callee.getClass());
+            final MethodType m = clazz.hasValue()
+                    ? calleeType.getMethod(methodName, clazz.value())
+                    : calleeType.getMethodByName(methodName);
             methodCache.memoize(m);
         }
-        new MethodInvoker(methodCache.value()).invoke(callee, message);
+        methodCache.value().invoke(callee, message);
     }
 
     public void setMessageClass(Class<?> clazz) {

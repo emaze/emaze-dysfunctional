@@ -9,7 +9,9 @@ import net.emaze.dysfunctional.contracts.dbc;
 /**
  * Resolves via reflection a reference to a Method
  * @author rferranti
+ * @deprecated use TypeMethod instead
  */
+@Deprecated
 public class MethodReflector {
 
     public <T> Method fetch(final Class<?> clazz, final String methodName, Class<T>... params) {

@@ -4,6 +4,7 @@ import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import net.emaze.dysfunctional.reflection.MethodType;
 import net.emaze.dysfunctional.reflection.MethodInvoker;
 
 /**
@@ -19,7 +20,7 @@ import net.emaze.dysfunctional.reflection.MethodInvoker;
  */
 public class Pluck<R, T> implements Delegate<R, T> {
 
-    private final MethodInvoker method;
+    private final MethodType method;
 
     public Pluck(Class<T> klass, String property) {
         this.method = propertyNameToMethodInvoker(klass, property);
@@ -38,10 +39,10 @@ public class Pluck<R, T> implements Delegate<R, T> {
         }
     }
 
-    private static MethodInvoker propertyNameToMethodInvoker(Class<?> klass, String property) {
+    private static MethodType propertyNameToMethodInvoker(Class<?> klass, String property) {
         for (PropertyDescriptor pd : beanInfoFor(klass).getPropertyDescriptors()) {
             if (property.equals(pd.getName())) {
-                return new MethodInvoker(pd.getReadMethod());
+                return new MethodType(pd.getReadMethod());
             }
         }
         throw new IllegalStateException(String.format("property %s is not defined in class %s", property, klass.getSimpleName()));
