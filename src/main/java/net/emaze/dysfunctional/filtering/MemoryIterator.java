@@ -7,7 +7,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.options.Memoized;
 
 /**
- * TODO: refactor: rename
+ * 
  * @param <T> 
  * @author rferranti
  */
@@ -18,37 +18,36 @@ public class MemoryIterator<T> implements Iterator<T> {
     private final int memorySize;
 
     public MemoryIterator(Iterator<T> iterator, int memorySize) {
+        dbc.precondition(iterator != null, "creating a MemoryIterator with a null iterator");
+        dbc.precondition(memorySize > 0, "creating a MemoryIterator with a non positive memorySize");
         this.iterator = iterator;
         this.memorySize = memorySize;
     }
 
     @Override
     public boolean hasNext() {
-        if(!memory.isMemoized()){
-            memory.memoize(fetch(iterator,memorySize));
+        if (!memory.isMemoized()) {
+            memory.memoize(fetch(iterator, memorySize));
         }
         return !memory.value().isEmpty();
     }
 
-
-    private static <T> Queue<T> fetch(Iterator<T> iterator, int size){
+    private static <T> Queue<T> fetch(Iterator<T> iterator, int size) {
         final Queue<T> mem = new LinkedList<T>();
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
             final T element = iterator.next();
             mem.add(element);
-            if(mem.size() > size){
+            if (mem.size() > size) {
                 mem.remove();
             }
         }
-        dbc.stateprecondition(mem.size() == size, "iterator too short");
+        dbc.stateprecondition(mem.size() == size, "iterator used by MemoryIterator is too short to memorize last %s elements", size);
         return mem;
     }
 
-
-
     @Override
     public T next() {
-        if(!memory.isMemoized()){
+        if (!memory.isMemoized()) {
             memory.memoize(fetch(iterator, memorySize));
         }
         return memory.value().remove();
