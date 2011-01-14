@@ -3,7 +3,9 @@ package net.emaze.dysfunctional.filtering;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import net.emaze.dysfunctional.Dys.Consumers;
 import net.emaze.dysfunctional.delegates.Always;
 import net.emaze.dysfunctional.delegates.Never;
 import org.junit.Assert;
@@ -29,13 +31,20 @@ public class TakeWhileIteratorTest {
         Assert.assertFalse(twi.hasNext());
     }
 
-    @Test
-    public void canRemoveFromIterator(){
+    @Test(expected=UnsupportedOperationException.class)
+    public void cannotRemoveFromIterator(){
         List<Integer> ints = new ArrayList<Integer>();
         ints.add(1);
         TakeWhileIterator<Integer> twi = new TakeWhileIterator<Integer>(ints.iterator(), new Always<Integer>());
         twi.next();
         twi.remove();
-        Assert.assertEquals(Collections.<Integer>emptyList(), ints);
+    }
+
+    @Test
+    public void afterTakingAllNeededStops(){
+        Iterator srcIter = Arrays.asList(1,2,3,4,5).iterator();
+        TakeWhileIterator<Integer> twi = new TakeWhileIterator<Integer>(srcIter, new UntilCount<Integer>(1));
+        Consumers.all(twi);
+        Assert.assertTrue(srcIter.hasNext());
     }
 }
