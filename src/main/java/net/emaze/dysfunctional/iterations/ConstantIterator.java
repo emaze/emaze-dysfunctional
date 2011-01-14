@@ -25,13 +25,8 @@ public class ConstantIterator<T> implements Iterator<T> {
         return value;
     }
 
-    /**
-     * Ignore semantic (vs fail).
-     * Removing from a infinite constant iterator just `removes` one element
-     * and leaves everything exactly as it was.
-     */
     @Override
     public void remove() {
-        
+        throw new UnsupportedOperationException("cannot remove from a ConstantIterator");
     }
 }
