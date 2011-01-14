@@ -90,6 +90,11 @@ public class ClassTypeTest {
         Assert.assertFalse(a);
     }
 
+    @Test
+    public void canCreateNewInstance(){
+        Assert.assertNotNull(new ClassType(ClassTypeTest.class).newInstance());
+    }
+
     @Retention(RetentionPolicy.RUNTIME)
     public static @interface AnAnnotation {
 
