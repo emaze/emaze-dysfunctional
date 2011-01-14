@@ -12,5 +12,11 @@ public class ConstructorTypeTest {
     public void creatingConstructorTypeWithNullCtorYieldsExcpetion() {
         new ConstructorType(null);
     }
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void creatingNewInstanceWithNullInitArgsYieldsExcpetion() throws NoSuchMethodException {
+        ConstructorType ct = new ConstructorType(ConstructorTypeTest.class.getConstructor());
+        ct.newInstance((Object[])null);
+    }
 
 }

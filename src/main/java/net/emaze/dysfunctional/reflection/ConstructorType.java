@@ -18,6 +18,7 @@ public class ConstructorType {
     }
 
     public Object newInstance(Object... initargs){
+        dbc.precondition(initargs != null, "cannot call a new instance with null initargs array");
         try {
             return ctor.newInstance(initargs);
         } catch (InstantiationException ex) {
