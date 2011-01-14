@@ -6,6 +6,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +35,7 @@ public class DysTest {
     }
 
     private Set<String> enumerateFacades() {
-        final List<String> classNames = Iterations.map(new JavaFilesIn("src/main/java").enumerate(), new Delegate<String, String>() {
+        final Iterator<String> classNames = Iterations.transform(new JavaFilesIn("src/main/java").enumerate(), new Delegate<String, String>() {
 
             @Override
             public String perform(String file) {
@@ -42,7 +43,7 @@ public class DysTest {
             }
         });
         final List<String> result = new ArrayList<String>();
-        for (String className : classNames) {
+        for (String className : Iterations.oneTime(classNames)) {
             try {
                 final Class<?> k = Class.forName(className);
                 if (Modifier.isAbstract(k.getModifiers()) && !k.isInterface() && Iterations.every(k.getDeclaredMethods(), new MethodIsStatic())) {

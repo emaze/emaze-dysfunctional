@@ -20,8 +20,8 @@ public abstract class Strings {
     public static <T> String join(Iterator<T> iterator) {
         final StringOutputIterator output = new StringOutputIterator();
         final PipingConsumer<String> pipe = new PipingConsumer<String>(output);
-        final List<String> elements = Iterations.map(iterator, new ToStringTransformer<T>());
-        return pipe.consume(elements.iterator()).toString();
+        final Iterator<String> elements = Iterations.transform(iterator, new ToStringTransformer<T>());
+        return pipe.consume(elements).toString();
     }
 
     public static <T, V> String interpose(Iterator<T> values, Iterator<V> separators) {
