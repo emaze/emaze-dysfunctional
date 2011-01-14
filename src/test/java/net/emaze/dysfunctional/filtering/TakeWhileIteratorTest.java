@@ -47,30 +47,38 @@ public class TakeWhileIteratorTest {
         Consumers.all(twi);
         Assert.assertTrue(srcIter.hasNext());
     }
-    
-    @Test(expected=NoSuchElementException.class)
+
+    @Test(expected = NoSuchElementException.class)
     public void consumingEmptyIteratorYieldsException() {
         Iterator<Integer> srcIter = Arrays.<Integer>asList().iterator();
         TakeWhileIterator<Integer> twi = new TakeWhileIterator<Integer>(srcIter, new Always<Integer>());
         twi.next();
     }
-    
-    @Test(expected=NoSuchElementException.class)
+
+    @Test(expected = NoSuchElementException.class)
     public void consumingIteratorAfterPredicateYieldsException() {
-        Iterator<Integer> srcIter = Arrays.<Integer>asList(1,2).iterator();
+        Iterator<Integer> srcIter = Arrays.<Integer>asList(1, 2).iterator();
         TakeWhileIterator<Integer> twi = new TakeWhileIterator<Integer>(srcIter, new UntilCount<Integer>(1));
         twi.next();
         twi.next();
     }
 
-    @Test(expected=IllegalArgumentException.class)
-    public void creatingWithNullIteratorYieldsException(){
+    @Test(expected = IllegalArgumentException.class)
+    public void creatingWithNullIteratorYieldsException() {
         new TakeWhileIterator<Integer>(null, new UntilCount<Integer>(1));
     }
-    @Test(expected=IllegalArgumentException.class)
-    public void creatingWithNullPredicateYieldsException(){
-        final Iterator<Integer> iter = Arrays.<Integer>asList(1,2).iterator();
+
+    @Test(expected = IllegalArgumentException.class)
+    public void creatingWithNullPredicateYieldsException() {
+        final Iterator<Integer> iter = Arrays.<Integer>asList(1, 2).iterator();
         new TakeWhileIterator<Integer>(iter, null);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void canCallHasNextTwoTimesWithoutDiscardingElement() {
+        final Iterator<Integer> iter = Arrays.<Integer>asList(1).iterator();
+        final Iterator<Integer> twi = new TakeWhileIterator<Integer>(iter, new Always<Integer>());
+        twi.hasNext();
+        Assert.assertTrue(twi.hasNext());
+    }
 }
