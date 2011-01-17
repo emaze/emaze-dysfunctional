@@ -91,8 +91,33 @@ public class ClassTypeTest {
     }
 
     @Test
-    public void canCreateNewInstance(){
+    public void canCreateNewInstance() {
         Assert.assertNotNull(new ClassType(ClassTypeTest.class).newInstance());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void fetchingAnAnnotationWithoutRententionPolicyRuntimeLeadsToIllegalArgumentException() {
+        new ClassType(ClassTypeTest.class).getAnnotationValue(AnAnnotationWithoutRuntimeRetention.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void gettingMethodByNameWithNullNameYieldsException() {
+        new ClassType(ClassTypeTest.class).getMethodByName(null);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void gettingMethodByNameWithUnexistentNameYieldsException() {
+        new ClassType(ClassTypeTest.class).getMethodByName("nonExistentMethod");
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void gettingMethodByNameYieldsExceptionWhenAnAmbiguityIsFound() {
+        new ClassType(BeanWithAmbiguousMethodNames.class).getMethodByName("a");
+    }
+    
+    @Test
+    public void canGetMethodByName() {
+        new ClassType(ClassTypeTest.class).getMethodByName("canGetMethodByName");
     }
 
     @Retention(RetentionPolicy.RUNTIME)
@@ -118,8 +143,12 @@ public class ClassTypeTest {
         String value();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void fetchingAnAnnotationWithoutRententionPolicyRuntimeLeadsToIllegalArgumentException() {
-        new ClassType(ClassTypeTest.class).getAnnotationValue(AnAnnotationWithoutRuntimeRetention.class);
+    public static class BeanWithAmbiguousMethodNames {
+
+        public void a() {
+        }
+
+        public void a(String c) {
+        }
     }
 }
