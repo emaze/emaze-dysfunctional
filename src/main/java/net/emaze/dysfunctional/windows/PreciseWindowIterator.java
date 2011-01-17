@@ -27,7 +27,7 @@ public class PreciseWindowIterator<T> implements Iterator<Queue<T>> {
     @Override
     public boolean hasNext() {
         if (window.size() == windowSize) {
-            return iter.hasNext();
+            return true;
         }
         tryFillWindow();
         return window.size() == windowSize;
