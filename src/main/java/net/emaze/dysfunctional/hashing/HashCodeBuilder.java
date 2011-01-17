@@ -205,4 +205,21 @@ public class HashCodeBuilder {
         return iTotal;
     }
 
+    @Override
+    public int hashCode() {
+        return iTotal;
+    }
+
+    @Override
+    public boolean equals(Object rhs) {
+        if(rhs instanceof HashCodeBuilder == false){
+            return false;
+        }
+        final HashCodeBuilder other = (HashCodeBuilder) rhs;
+        return this.iTotal == other.iTotal &&
+                this.iConstant == other.iConstant;
+    }
+
+    
+
 }

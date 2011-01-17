@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.hashing;
 
 import net.emaze.dysfunctional.hashing.HashCodeBuilderTest.TestIntrospectsArrays;
 import net.emaze.dysfunctional.hashing.HashCodeBuilderTest.TestArrays;
+import net.emaze.dysfunctional.hashing.HashCodeBuilderTest.TestEqualsAndHashcode;
 import net.emaze.dysfunctional.hashing.HashCodeBuilderTest.TestNulls;
 import net.emaze.dysfunctional.hashing.HashCodeBuilderTest.TestPrimitive;
 import net.emaze.dysfunctional.hashing.HashCodeBuilderTest.TestSuperAndCtors;
@@ -21,7 +22,8 @@ import org.junit.runners.Suite.SuiteClasses;
     TestArrays.class,
     TestIntrospectsArrays.class,
     TestNulls.class,
-    TestSuperAndCtors.class
+    TestSuperAndCtors.class,
+    TestEqualsAndHashcode.class
 })
 public class HashCodeBuilderTest {
 
@@ -46,6 +48,7 @@ public class HashCodeBuilderTest {
         public void creatingWithEvenMultiplierLeadsToException() {
             new HashCodeBuilder(13, 2);
         }
+
         @Test
         public void canCreateWithOddNonZeroNumbers() {
             new HashCodeBuilder(13, 17);
@@ -390,6 +393,28 @@ public class HashCodeBuilderTest {
             Object latter = null;
             HashCodeBuilder latterBuilder = new HashCodeBuilder().append(latter);
             Assert.assertEquals(NULL_HASH, latterBuilder.toHashCode());
+        }
+    }
+
+    public static class TestEqualsAndHashcode {
+
+        @Test
+        public void hashCodeAndToHashcodeYieldsSameResult() {
+            HashCodeBuilder builder = new HashCodeBuilder();
+            Assert.assertEquals(builder.hashCode(), builder.toHashCode());
+        }
+
+        @Test
+        public void builderIsNotEqualToUnknownObject() {
+            HashCodeBuilder builder = new HashCodeBuilder();
+            Assert.assertFalse(builder.equals(null));
+        }
+
+        @Test
+        public void builderisEqualToAnotherBuilderWithSameConfigurationAndState() {
+            HashCodeBuilder former = new HashCodeBuilder();
+            HashCodeBuilder latter = new HashCodeBuilder();
+            Assert.assertEquals(former, latter);
         }
     }
 }
