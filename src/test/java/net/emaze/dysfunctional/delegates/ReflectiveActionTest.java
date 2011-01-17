@@ -22,6 +22,16 @@ public class ReflectiveActionTest {
         action.perform(bucket);
         Assert.assertEquals(1, bucket.size());
     }
+    
+    @Test
+    public void canPerformReflectiveActionByName() {
+        final List<Integer> bucket = new ArrayList<Integer>();
+        final ReflectiveAction<List<Integer>> action = new ReflectiveAction<List<Integer>>();
+        action.setCallee(this);
+        action.setMethodName("mockMethod");
+        action.perform(bucket);
+        Assert.assertEquals(1, bucket.size());
+    }
 
     @Test
     public void canPerformReflectiveActionMultipleTimes() {
