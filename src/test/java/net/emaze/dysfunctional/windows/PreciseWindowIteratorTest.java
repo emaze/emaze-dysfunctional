@@ -41,6 +41,14 @@ public class PreciseWindowIteratorTest {
         PreciseWindowIterator<Integer> win = new PreciseWindowIterator<Integer>(iter, 1);
         Assert.assertTrue(win.hasNext());
     }
+    
+    @Test
+    public void canCallHasNextTwoTimes() {
+        Iterator<Integer> iter = Arrays.asList(1).iterator();
+        PreciseWindowIterator<Integer> win = new PreciseWindowIterator<Integer>(iter, 1);
+        win.hasNext();
+        Assert.assertTrue(win.hasNext());
+    }
 
     @Test
     public void emptyIterHasNoNext() {
