@@ -58,10 +58,6 @@ public class ChainIterator<E> implements Iterator<E> {
 
     @Override
     public void remove() {
-        //FIXME: see ignored test
-        final Maybe<Iterator<E>> maybeElement = currentElement(iterators);
-        if (maybeElement.hasValue()) {
-            maybeElement.value().remove();
-        }
+        throw new UnsupportedOperationException("cannot remove from a ChainIterator");
     }
 }
