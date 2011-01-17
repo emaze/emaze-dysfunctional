@@ -30,6 +30,12 @@ public class ConstructorTypeTest {
         final ConstructorType ct = new ConstructorType(ClassWithThrowingConstructor.class.getConstructor());
         ct.newInstance();
     }
+    
+    @Test(expected = ReflectionException.class)
+    public void instantiatingAnAbstractClassYieldsReflectionException() throws NoSuchMethodException {
+        final ConstructorType ct = new ConstructorType(AnAbstractClass.class.getConstructor());
+        ct.newInstance();
+    }
 
     public static class ClassWithThrowingConstructor {
 
@@ -38,4 +44,8 @@ public class ConstructorTypeTest {
         }
     }
 
+
+    public static abstract class AnAbstractClass{
+    }
 }
+
