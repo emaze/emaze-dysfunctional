@@ -46,7 +46,7 @@ public class PreciseDemultiplexingIteratorTest {
         @Test(expected = IllegalArgumentException.class)
         public void creatingPreciseDemultiplexingIteratorWithNonPositiveChannelsCountYieldsException() {
             Iterator<Maybe<Integer>> iter = Arrays.asList(Maybe.just(1)).iterator();
-            new PreciseDemultiplexingIterator<Object>(null, 0);
+            new PreciseDemultiplexingIterator<Integer>(iter, 0);
         }
 
         @Test(expected = UnsupportedOperationException.class)

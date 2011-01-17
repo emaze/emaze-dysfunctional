@@ -76,6 +76,7 @@ public class DemultiplexingIteratorTest {
         public void consumingNonSquaredIteratoryYieldsException() {
             Iterator<List<Integer>> iter = new DemultiplexingIterator<Integer>(Arrays.asList(1, 2, 2).iterator(), 2);
             iter.next();
+            iter.hasNext();
             iter.next();
         }
 
