@@ -548,7 +548,16 @@ public class EqualsBuilderTest {
         }
 
         @Test
-        public void differnetDimensionsAreNotEqual() {
+        public void nullAndSomethingAreNotEqual() {
+            Object former = null;
+            Object latter = 1;
+            EqualsBuilder builder = new EqualsBuilder();
+            builder.append(former, latter);
+            Assert.assertFalse(builder.isEquals());
+        }
+
+        @Test
+        public void differentDimensionsAreNotEqual() {
             Object former = new int[0];
             Object latter = new int[0][0];
             EqualsBuilder builder = new EqualsBuilder();
@@ -563,6 +572,15 @@ public class EqualsBuilderTest {
             EqualsBuilder builder = new EqualsBuilder();
             builder.append(former, latter);
             Assert.assertTrue(builder.isEquals());
+        }
+
+        @Test
+        public void differentBigDecimalsAreNotEquals() {
+            Object former = new BigDecimal("2");
+            Object latter = new BigDecimal("3");
+            EqualsBuilder builder = new EqualsBuilder();
+            builder.append(former, latter);
+            Assert.assertFalse(builder.isEquals());
         }
     }
 }
