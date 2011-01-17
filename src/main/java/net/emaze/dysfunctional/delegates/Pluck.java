@@ -5,7 +5,6 @@ import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import net.emaze.dysfunctional.reflection.MethodType;
-import net.emaze.dysfunctional.reflection.MethodInvoker;
 
 /**
  * plucks a property from a bean
