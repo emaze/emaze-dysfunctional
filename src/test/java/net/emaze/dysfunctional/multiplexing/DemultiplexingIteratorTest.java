@@ -3,6 +3,7 @@ package net.emaze.dysfunctional.multiplexing;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,6 +51,7 @@ public class DemultiplexingIteratorTest {
             iter.hasNext();
             Assert.assertEquals(backingList, iter.next());
         }
+
         @Test
         public void canConsumeElementsWithoutCallingHasNext() {
             List<Integer> backingList = Arrays.asList(1, 2);
@@ -68,6 +70,20 @@ public class DemultiplexingIteratorTest {
         @Test(expected = IllegalArgumentException.class)
         public void creatingWithZeroChannelsYieldsException() {
             new DemultiplexingIterator<Object>(Arrays.asList().iterator(), 0);
+        }
+
+        @Test(expected = NoSuchElementException.class)
+        public void consumingNonSquaredIteratoryYieldsException() {
+            Iterator<List<Integer>> iter = new DemultiplexingIterator<Integer>(Arrays.asList(1, 2, 2).iterator(), 2);
+            iter.next();
+            iter.next();
+        }
+
+        @Test(expected = UnsupportedOperationException.class)
+        public void removingFromDemultiplexingIteratorYieldsException() {
+            Iterator<List<Integer>> iter = new DemultiplexingIterator<Integer>(Arrays.asList(1, 2).iterator(), 2);
+            iter.next();
+            iter.remove();
         }
     }
 }
