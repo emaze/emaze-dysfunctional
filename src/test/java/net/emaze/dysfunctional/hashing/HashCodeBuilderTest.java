@@ -1,11 +1,5 @@
 package net.emaze.dysfunctional.hashing;
 
-import net.emaze.dysfunctional.hashing.HashCodeBuilderTest.TestIntrospectsArrays;
-import net.emaze.dysfunctional.hashing.HashCodeBuilderTest.TestArrays;
-import net.emaze.dysfunctional.hashing.HashCodeBuilderTest.TestEqualsAndHashcode;
-import net.emaze.dysfunctional.hashing.HashCodeBuilderTest.TestNulls;
-import net.emaze.dysfunctional.hashing.HashCodeBuilderTest.TestPrimitive;
-import net.emaze.dysfunctional.hashing.HashCodeBuilderTest.TestSuperAndCtors;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,12 +12,12 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-    TestPrimitive.class,
-    TestArrays.class,
-    TestIntrospectsArrays.class,
-    TestNulls.class,
-    TestSuperAndCtors.class,
-    TestEqualsAndHashcode.class
+    HashCodeBuilderTest.TestPrimitive.class,
+    HashCodeBuilderTest.TestArrays.class,
+    HashCodeBuilderTest.TestIntrospectsArrays.class,
+    HashCodeBuilderTest.TestNulls.class,
+    HashCodeBuilderTest.TestSuperAndCtors.class,
+    HashCodeBuilderTest.TestEqualsAndHashcode.class
 })
 public class HashCodeBuilderTest {
 
@@ -415,6 +409,19 @@ public class HashCodeBuilderTest {
             HashCodeBuilder former = new HashCodeBuilder();
             HashCodeBuilder latter = new HashCodeBuilder();
             Assert.assertEquals(former, latter);
+        }
+
+        @Test
+        public void buildersWithDifferentConfigurationsAreNotEqual() {
+            HashCodeBuilder former = new HashCodeBuilder(3, 13);
+            HashCodeBuilder latter = new HashCodeBuilder(3, 17);
+            Assert.assertFalse(former.equals(latter));
+        }
+        @Test
+        public void buildersWithDifferentStatesAreNotEqual() {
+            HashCodeBuilder former = new HashCodeBuilder(3, 13);
+            HashCodeBuilder latter = new HashCodeBuilder(5, 13);
+            Assert.assertFalse(former.equals(latter));
         }
     }
 }
