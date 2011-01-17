@@ -38,6 +38,6 @@ public class PreciseMultiplexingIterator<T> implements Iterator<Maybe<T>> {
 
     @Override
     public void remove() {
-        iterators.get(currentIndex.get()).remove();
+        throw new UnsupportedOperationException("Cannot remove from a PreciseMultiplexingIterator");
     }
 }
