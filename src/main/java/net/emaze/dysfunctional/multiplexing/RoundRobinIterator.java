@@ -1,10 +1,9 @@
 package net.emaze.dysfunctional.multiplexing;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.delegates.HasNext;
 import net.emaze.dysfunctional.iterations.Iterations;
@@ -18,12 +17,12 @@ import net.emaze.dysfunctional.numbers.CircularCounter;
  */
 public class RoundRobinIterator<T> implements Iterator<T> {
 
-    private final List<Iterator<T>> iterators = new ArrayList<Iterator<T>>();
+    private final List<Iterator<T>> iterators;
     private final CircularCounter currentIndex;
 
-    public RoundRobinIterator(Iterator<T>... iterators) {
+    public RoundRobinIterator(Iterator<Iterator<T>> iterators) {
         dbc.precondition(iterators != null, "trying to create a ChainIterator from a null array of iterators");
-        this.iterators.addAll(Arrays.asList(iterators));
+        this.iterators = Consumers.all(iterators);
         this.currentIndex = new CircularCounter(this.iterators.size());
     }
 
@@ -42,7 +41,7 @@ public class RoundRobinIterator<T> implements Iterator<T> {
 
     @Override
     public void remove() {
-        iterators.get(currentIndex.get()).remove();
+        throw new UnsupportedOperationException("cannot remove from a RoundRobinIterator");
     }
 
     private boolean empty() {

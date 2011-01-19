@@ -26,13 +26,14 @@ public class PreciseMultiplexingIteratorTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCreateMultiplexingIteratorWithNullIterators() {
-            new PreciseMultiplexingIterator<Object>((Iterator<Object>[]) null);
+            new PreciseMultiplexingIterator<Object>(null);
         }
 
         @Test(expected = UnsupportedOperationException.class)
         public void cannotRemoveFromMultiplexingIterator() {
             Iterator<Integer> first = Arrays.asList(1, 2).iterator();
-            PreciseMultiplexingIterator<Integer> i = new PreciseMultiplexingIterator<Integer>(first);
+            Iterator<Iterator<Integer>> justFirst = Arrays.asList(first).iterator();
+            PreciseMultiplexingIterator<Integer> i = new PreciseMultiplexingIterator<Integer>(justFirst);
             i.next();
             i.remove();
         }
@@ -44,14 +45,16 @@ public class PreciseMultiplexingIteratorTest {
         public void hasNoNextWhenEveryIteratorIsEmpty() {
             Iterator<Integer> first = Arrays.<Integer>asList().iterator();
             Iterator<Integer> second = Arrays.<Integer>asList().iterator();
-            Assert.assertFalse(new PreciseMultiplexingIterator<Integer>(first, second).hasNext());
+            Iterator<Iterator<Integer>> firstAndSecond = Arrays.asList(first, second).iterator();
+            Assert.assertFalse(new PreciseMultiplexingIterator<Integer>(firstAndSecond).hasNext());
         }
 
         @Test
         public void canConsumeMultiplexingIterator(){
             Iterator<Integer> odds = Arrays.asList(1,3).iterator();
             Iterator<Integer> evens = Arrays.asList(2,4).iterator();
-            PreciseMultiplexingIterator<Integer> iter = new PreciseMultiplexingIterator<Integer>(odds, evens);
+            Iterator<Iterator<Integer>> oddsAndEvens = Arrays.asList(odds, evens).iterator();
+            PreciseMultiplexingIterator<Integer> iter = new PreciseMultiplexingIterator<Integer>(oddsAndEvens);
             List<Maybe<Integer>> got = Consumers.all(iter);
             List<Maybe<Integer>> expected = Arrays.asList(Maybe.just(1),Maybe.just(2),Maybe.just(3),Maybe.just(4));
             Assert.assertEquals(expected, got);

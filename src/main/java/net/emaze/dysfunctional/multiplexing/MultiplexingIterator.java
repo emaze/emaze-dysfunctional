@@ -19,13 +19,13 @@ import net.emaze.dysfunctional.iterations.Iterations;
  */
 public class MultiplexingIterator<T> implements Iterator<T> {
 
-    private final List<Iterator<T>> iterators = new ArrayList<Iterator<T>>();
+    private final Iterable<Iterator<T>> iterators;
     private final Queue<T> prefetched = new LinkedList<T>();
 
-    public MultiplexingIterator(Iterator<T>... iterators) {
+    public MultiplexingIterator(Iterator<Iterator<T>> iterators) {
         dbc.precondition(iterators != null, "trying to create a ChainIterator from a null array of iterators");
-        dbc.precondition(iterators.length > 0, "trying to create a ChainIterator from an empty array of iterators");
-        this.iterators.addAll(Arrays.asList(iterators));
+        this.iterators = Consumers.all(iterators);
+        dbc.precondition(this.iterators.iterator().hasNext(), "trying to create a ChainIterator from an empty iterable");
     }
 
     @Override

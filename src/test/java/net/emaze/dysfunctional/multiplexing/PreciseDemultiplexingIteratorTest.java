@@ -24,14 +24,14 @@ public class PreciseDemultiplexingIteratorTest {
         @Test
         public void consumePreciseDemultiplexingIteratorWithTwoChannelsYieldsTwoChannels() {
             Iterator<Maybe<Integer>> iter = Arrays.asList(Maybe.just(1), Maybe.just(1)).iterator();
-            PreciseDemultiplexingIterator<Integer> demu = new PreciseDemultiplexingIterator<Integer>(iter, 2);
+            PreciseDemultiplexingIterator<Integer> demu = new PreciseDemultiplexingIterator<Integer>(2, iter);
             Assert.assertEquals(Arrays.asList(Maybe.just(1), Maybe.just(1)), demu.next());
         }
 
         @Test
         public void emptyIteratorHasNoNext() {
             Iterator<Maybe<Integer>> iter = Arrays.<Maybe<Integer>>asList().iterator();
-            PreciseDemultiplexingIterator<Integer> demu = new PreciseDemultiplexingIterator<Integer>(iter, 2);
+            PreciseDemultiplexingIterator<Integer> demu = new PreciseDemultiplexingIterator<Integer>(2, iter);
             Assert.assertFalse(demu.hasNext());
         }
     }
@@ -40,19 +40,19 @@ public class PreciseDemultiplexingIteratorTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingPreciseDemultiplexingIteratorWithNullIteratorYieldsException() {
-            new PreciseDemultiplexingIterator<Object>(null, 2);
+            new PreciseDemultiplexingIterator<Object>(2, null);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingPreciseDemultiplexingIteratorWithNonPositiveChannelsCountYieldsException() {
             Iterator<Maybe<Integer>> iter = Arrays.asList(Maybe.just(1)).iterator();
-            new PreciseDemultiplexingIterator<Integer>(iter, 0);
+            new PreciseDemultiplexingIterator<Integer>(0, iter);
         }
 
         @Test(expected = UnsupportedOperationException.class)
         public void removingFromIteratorYieldsException() {
             Iterator<Maybe<Integer>> iter = Arrays.asList(Maybe.just(1)).iterator();
-            PreciseDemultiplexingIterator<Integer> demu = new PreciseDemultiplexingIterator<Integer>(iter, 1);
+            PreciseDemultiplexingIterator<Integer> demu = new PreciseDemultiplexingIterator<Integer>(1, iter);
             demu.next();
             demu.remove();
         }

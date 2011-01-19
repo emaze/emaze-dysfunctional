@@ -18,9 +18,9 @@ public class DemultiplexingIterator<T> implements Iterator<List<T>> {
     private final int channelsCount;
     private Maybe<List<T>> prefetched = Maybe.nothing();
 
-    public DemultiplexingIterator(Iterator<T> iterator, int channelsCount) {
-        dbc.precondition(iterator != null, "iterator cannot be null");
+    public DemultiplexingIterator(int channelsCount, Iterator<T> iterator) {
         dbc.precondition(channelsCount > 0, "channels count must be > 0");
+        dbc.precondition(iterator != null, "iterator cannot be null");
         this.iterator = iterator;
         this.channelsCount = channelsCount;
     }

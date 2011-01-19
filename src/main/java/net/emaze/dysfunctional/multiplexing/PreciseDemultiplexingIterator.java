@@ -16,9 +16,9 @@ public class PreciseDemultiplexingIterator<T> implements Iterator<List<Maybe<T>>
     private final Iterator<Maybe<T>> iterator;
     private final int channelsCount;
 
-    public PreciseDemultiplexingIterator(Iterator<Maybe<T>> iterator, int channelsCount) {
-        dbc.precondition(iterator != null, "cannot build a PreciseDemultiplexingIterator with a null iterator");
+    public PreciseDemultiplexingIterator(int channelsCount, Iterator<Maybe<T>> iterator) {
         dbc.precondition(channelsCount > 0, "cannot build a PreciseDemultiplexingIterator with channelsCount < 1");
+        dbc.precondition(iterator != null, "cannot build a PreciseDemultiplexingIterator with a null iterator");
         this.iterator = iterator;
         this.channelsCount = channelsCount;
     }

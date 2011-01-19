@@ -18,43 +18,50 @@ public class RoundRobinIteratorTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingWithNullArrayYieldsException() {
-        Iterator<Object>[] iterators = null;
-        new RoundRobinIterator<Object>(iterators);
+        new RoundRobinIterator<Object>(null);
     }
 
     @Test
     public void hasNextWhenNonEmptyInnerIterators() {
-        Iterator<Integer> iter = new RoundRobinIterator<Integer>(Collections.<Integer>emptyList().iterator(), Arrays.asList(1).iterator());
+        Iterator<Integer> empty = Collections.<Integer>emptyList().iterator();
+        Iterator<Integer> nonEmpty = Arrays.asList(1).iterator();
+        Iterator<Iterator<Integer>> emptyAndNonEmpty = Arrays.asList(empty, nonEmpty).iterator();
+        Iterator<Integer> iter = new RoundRobinIterator<Integer>(emptyAndNonEmpty);
         Assert.assertTrue(iter.hasNext());
     }
 
     @Test
     public void hasNoNextWhenAllEmptyInnerIterators() {
-        Iterator<Integer> iter = new RoundRobinIterator<Integer>(Collections.<Integer>emptyList().iterator());
+        Iterator<Integer> empty = Collections.<Integer>emptyList().iterator();
+        Iterator<Iterator<Integer>> justEmpty = Collections.singletonList(empty).iterator();
+        Iterator<Integer> iter = new RoundRobinIterator<Integer>(justEmpty);
         Assert.assertFalse(iter.hasNext());
     }
 
     @Test(expected = NoSuchElementException.class)
     public void consumingEmptyIteratorYieldsException() {
-        Iterator<Integer> iter = new RoundRobinIterator<Integer>(Collections.<Integer>emptyList().iterator());
+        Iterator<Integer> empty = Collections.<Integer>emptyList().iterator();
+        Iterator<Iterator<Integer>> justEmpty = Collections.singletonList(empty).iterator();
+        Iterator<Integer> iter = new RoundRobinIterator<Integer>(justEmpty);
         iter.next();
     }
 
     @Test
     public void canGetNextWhenAnIteratorIsEmpty() {
-        List<Integer> bucket = new ArrayList<Integer>();
-        bucket.add(1);
-        Iterator<Integer> iter = new RoundRobinIterator<Integer>(Collections.<Integer>emptyList().iterator(), bucket.iterator());
+        Iterator<Integer> empty = Collections.<Integer>emptyList().iterator();
+        Iterator<Integer> nonEmpty = Arrays.asList(1).iterator();
+        Iterator<Iterator<Integer>> emptyAndNonEmpty = Arrays.asList(empty, nonEmpty).iterator();
+        Iterator<Integer> iter = new RoundRobinIterator<Integer>(emptyAndNonEmpty);
         Assert.assertEquals(Integer.valueOf(1), iter.next());
     }
 
-    @Test
-    public void canRemoveFromInnerIterators() {
+    @Test(expected=UnsupportedOperationException.class)
+    public void removingYieldsException() {
         List<Integer> bucket = new ArrayList<Integer>();
         bucket.add(1);
-        Iterator<Integer> iter = new RoundRobinIterator<Integer>(Collections.<Integer>emptyList().iterator(), bucket.iterator());
+        Iterator<Iterator<Integer>> justBucket = Collections.singletonList(bucket.iterator()).iterator();
+        Iterator<Integer> iter = new RoundRobinIterator<Integer>(justBucket);
         iter.next();
         iter.remove();
-        Assert.assertTrue(bucket.isEmpty());
     }
 }
