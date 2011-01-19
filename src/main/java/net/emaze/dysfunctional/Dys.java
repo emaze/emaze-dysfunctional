@@ -13,4 +13,5 @@ public interface Dys {
     public abstract static class Iterations extends net.emaze.dysfunctional.iterations.Iterations { }
     public abstract static class Comparing extends net.emaze.dysfunctional.order.Comparing { }
     public abstract static class Strings extends net.emaze.dysfunctional.strings.Strings { }
+    public abstract static class Searches extends net.emaze.dysfunctional.searches.Searches { }
 }

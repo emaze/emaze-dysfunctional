@@ -2,8 +2,10 @@ package net.emaze.dysfunctional.consumers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
+import net.emaze.dysfunctional.options.Maybe;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -103,5 +105,45 @@ public class ConsumersTest {
         StringOutputIterator output = new StringOutputIterator();
         Consumers.pipe(in, output);
         Assert.assertEquals("123", output.toString());
+    }
+
+    @Test
+    public void maybeFirstWithEmptyIteratorYieldsNothing() {
+        Assert.assertEquals(Maybe.nothing(), Consumers.maybeFirst(Collections.EMPTY_LIST.iterator()));
+    }
+
+    @Test
+    public void maybeFirstWithNonEmptyIteratorYieldsJustTheFirst() {
+        Assert.assertEquals(Maybe.just(1), Consumers.maybeFirst(Arrays.asList(1,2).iterator()));
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void oneWithEmptyIteratorThrows() {
+        Consumers.one(Collections.EMPTY_LIST.iterator());
+    }
+
+    @Test
+    public void oneWithSingleValueIteratorYieldsValue() {
+        Assert.assertEquals("mario", Consumers.one(Arrays.asList("mario").iterator()));
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void oneWithMultipleValuesIteratorThrows() {
+        Assert.assertEquals("mario", Consumers.one(Arrays.asList("mario", "luigi").iterator()));
+    }
+
+    @Test
+    public void maybeOneWithEmptyIteratorYieldsNothing() {
+        Assert.assertEquals(Maybe.nothing(), Consumers.maybeOne(Collections.EMPTY_LIST.iterator()));
+    }
+
+    @Test
+    public void maybeOneWithSingleValueIteratorYieldsJustValue() {
+        Assert.assertEquals(Maybe.just("mario"), Consumers.maybeOne(Arrays.asList("mario").iterator()));
+    }
+
+    @Test(expected=IllegalStateException.class)
+    public void maybeOneWithMultipleValuesIteratorThrows() {
+        Consumers.maybeOne(Arrays.asList("mario", "luigi").iterator());
     }
 }

@@ -7,6 +7,9 @@ import java.util.List;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.collections.CollectionFactory;
+import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.options.Maybe;
+import net.emaze.dysfunctional.options.MaybeIterator;
 
 /**
  *
@@ -172,4 +175,46 @@ public abstract class Consumers {
     public static <E> void pipe(E[] array, OutputIterator<E> outputIterator) {
         pipe(new ArrayIterator<E>(array), outputIterator);
     }
+
+    public static <E> Maybe<E> maybeFirst(Iterator<E> iterator) {
+        return new MaybeIterator<E>(iterator).next();
+    }
+    
+    public static <E> E one(Iterator<E> iterator) {
+        final E element = first(iterator);
+        dbc.stateprecondition(!iterator.hasNext(), "Expected only one value in iterator");
+        return element;
+    }
+    
+    public static <E> Maybe<E> maybeOne(Iterator<E> iterator) {
+        Iterator<Maybe<E>> maybeIter = new MaybeIterator<E>(iterator);
+        final Maybe<E> element = maybeIter.next();
+        dbc.stateprecondition(!maybeIter.hasNext(), "Expected only one value in iterator");
+        return element;
+    }
+
+    public static <E> Maybe<E> maybeFirst(Iterable<E> iterable) {
+        return maybeFirst(iterable.iterator());
+    }
+
+    public static <E> E one(Iterable<E> iterable) {
+        return one(iterable.iterator());
+    }
+
+    public static <E> Maybe<E> maybeOne(Iterable<E> iterable) {
+        return maybeOne(iterable.iterator());
+    }
+
+    public static <E> Maybe<E> maybeFirst(E[] array) {
+        return maybeFirst(new ArrayIterator<E>(array));
+    }
+
+    public static <E> E one(E[] array) {
+        return one(new ArrayIterator<E>(array));
+    }
+
+    public static <E> Maybe<E> maybeOne(E[] array) {
+        return maybeOne(new ArrayIterator<E>(array));
+    }
+
 }
