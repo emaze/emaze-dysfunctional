@@ -1,8 +1,10 @@
 package net.emaze.dysfunctional.filtering;
 
 import java.util.Iterator;
+import java.util.List;
 import net.emaze.dysfunctional.delegates.Predicate;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
+import net.emaze.dysfunctional.consumers.Consumers;
 
 /**
  * @author rferranti
@@ -19,6 +21,32 @@ public abstract class Filtering {
     public static <E> Iterator<E> filter(Iterator<E> iterator, Predicate<E> predicate) {
         return new FilteringIterator<E>(iterator, predicate);
     }
+
+    /**
+     * Returns the first matching value, or null if none is found
+     * @param <E>
+     * @param iterator
+     * @param predicate
+     */
+    public static <E> E findFirst(Iterator<E> iterator, Predicate<E> predicate) {
+        Iterator<E> iter = new FilteringIterator<E>(iterator, predicate);
+        E element = null;
+        try{
+            element = Consumers.first(iter);
+        }
+        catch (IllegalArgumentException ex){
+            //manage empty element iterator
+        }
+        return element;
+    }
+
+    public static <E> int  count(Iterator<E> iterator, Predicate<E> predicate) {
+        Iterator<E> iter = new FilteringIterator<E>(iterator, predicate);
+        List<E> elements = Consumers.all(iter);
+        return elements.size();
+    }
+
+    /* TODO: same as above for iterable */
 
     /**
      * filters an iterable returning matching elements

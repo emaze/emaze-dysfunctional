@@ -1,12 +1,13 @@
 package net.emaze.dysfunctional.filtering;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.consumers.Consumers;
-import net.emaze.dysfunctional.consumers.EagerConsumer;
 import net.emaze.dysfunctional.delegates.Always;
 import net.emaze.dysfunctional.delegates.Never;
+import net.emaze.dysfunctional.delegates.Predicate;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -126,5 +127,83 @@ public class FilteringTest {
     @Test
     public void canFetchAtFromArray() {
         Assert.assertEquals(Integer.valueOf(1), Filtering.at(0, sampleArray).next() );
+    }
+
+
+    @Test
+    public void canFindFirstElementMatchingPredicate(){
+        List<Integer> bucket = new ArrayList<Integer>();
+        bucket.add(1);
+        bucket.add(2);
+
+        Integer found = Filtering.findFirst(bucket.iterator(), new Predicate<Integer>(){
+            @Override
+            public boolean test(Integer element) {
+                return Integer.valueOf(2).equals(element);
+            }
+        });
+
+        Assert.assertEquals(Integer.valueOf(2), found);
+    }
+
+    @Test
+    public void cannotFindFirstElementMatchingPredicate(){
+        List<Integer> bucket = new ArrayList<Integer>();
+        bucket.add(1);
+        bucket.add(2);
+
+        Integer found = Filtering.findFirst(bucket.iterator(), new Predicate<Integer>(){
+            @Override
+            public boolean test(Integer element) {
+                return Integer.valueOf(3).equals(element);
+            }
+        });
+
+        Assert.assertNull(found);
+    }
+
+    @Test
+    public void canCountElementsMatchingPredicate(){
+        List<Integer> bucket = new ArrayList<Integer>();
+        bucket.add(1);
+        bucket.add(2);
+        bucket.add(2);
+
+        Integer counter = Filtering.count(bucket.iterator(), new Predicate<Integer>(){
+            @Override
+            public boolean test(Integer element) {
+                return Integer.valueOf(1).equals(element);
+            }
+        });
+
+        Assert.assertEquals(Integer.valueOf(1), counter);
+    }
+
+    @Test
+    public void canFindElementsInEmptyList(){
+        List<Integer> bucket = new ArrayList<Integer>();
+
+        Integer found = Filtering.findFirst(bucket.iterator(), new Predicate<Integer>(){
+            @Override
+            public boolean test(Integer element) {
+                return Integer.valueOf(1).equals(element);
+            }
+        });
+
+        Assert.assertNull(found);
+    }
+
+    @Test
+    public void canCountElementsMatchingPredicateOnEmptyIterator(){
+        List<Integer> bucket = new ArrayList<Integer>();
+
+        Integer counter = Filtering.count(bucket.iterator(), new Predicate<Integer>(){
+            @Override
+            public boolean test(Integer element) {
+                return Integer.valueOf(1).equals(element);
+            }
+        });
+
+        Assert.assertEquals(Integer.valueOf(0), counter);
     }
 }
