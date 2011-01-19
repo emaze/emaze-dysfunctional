@@ -21,7 +21,8 @@ public abstract class Consumers {
      * yields the first element in the iterator
      * @param <E>
      * @param iterator
-     * @return
+     * @throws IllegalArgumentException if the iterator is empty
+     * @return the first element
      */
     public static <E> E first(Iterator<E> iterator) {
         return new GiveUpConsumer<E>().consume(iterator);
@@ -31,7 +32,8 @@ public abstract class Consumers {
      * yields the first element of the iterable's iterator
      * @param <E>
      * @param iterable
-     * @return
+     * @throws IllegalArgumentException if the iterator is empty
+     * @return the first element
      */
     public static <E> E first(Iterable<E> iterable) {
         return first(iterable.iterator());
@@ -41,10 +43,49 @@ public abstract class Consumers {
      * yields the first element of the array
      * @param <E>
      * @param array
-     * @return
+     * @throws IllegalArgumentException if the iterator is empty
+     * @return the first element
      */
     public static <E> E first(E[] array) {
         return first(new ArrayIterator<E>(array));
+    }
+
+    /**
+     * yields the only element
+     * @param <E> the element type
+     * @param iterator
+     * @throws IllegalArgumentException if the iterator is empty
+     * @throws IllegalStateException if the iterator contains more than one element
+     * @return the only element
+     */
+    public static <E> E one(Iterator<E> iterator) {
+        final E element = first(iterator);
+        dbc.stateprecondition(!iterator.hasNext(), "Expected only one value in iterator");
+        return element;
+    }
+
+    /**
+     * yields the only element
+     * @param <E> the element type
+     * @param iterable
+     * @throws IllegalArgumentException if the iterator is empty
+     * @throws IllegalStateException if the iterator contains more than one element
+     * @return the only element
+     */
+    public static <E> E one(Iterable<E> iterable) {
+        return one(iterable.iterator());
+    }
+
+    /**
+     * yields the only element
+     * @param <E> the element type
+     * @param array
+     * @throws IllegalArgumentException if the iterator is empty
+     * @throws IllegalStateException if the iterator contains more than one element
+     * @return the only element
+     */
+    public static <E> E one(E[] array) {
+        return one(new ArrayIterator<E>(array));
     }
 
     /**
@@ -176,16 +217,43 @@ public abstract class Consumers {
         pipe(new ArrayIterator<E>(array), outputIterator);
     }
 
+    /**
+     * yields the first element if found, nothing otherwise.
+     * @param <E>
+     * @param iterator
+     * @return just the first element or nothing
+     */
     public static <E> Maybe<E> maybeFirst(Iterator<E> iterator) {
         return new MaybeIterator<E>(iterator).next();
     }
-    
-    public static <E> E one(Iterator<E> iterator) {
-        final E element = first(iterator);
-        dbc.stateprecondition(!iterator.hasNext(), "Expected only one value in iterator");
-        return element;
+
+    /**
+     * yields the first element if found, nothing otherwise.
+     * @param <E>
+     * @param iterable
+     * @return
+     */
+    public static <E> Maybe<E> maybeFirst(Iterable<E> iterable) {
+        return maybeFirst(iterable.iterator());
     }
-    
+
+    /**
+     * yields the first element if found, nothing otherwise.
+     * @param <E>
+     * @param array
+     * @return
+     */
+    public static <E> Maybe<E> maybeFirst(E[] array) {
+        return maybeFirst(new ArrayIterator<E>(array));
+    }
+
+    /**
+     * yields the only element if found, nothing otherwise.
+     * @param <E>
+     * @param iterator
+     * @throws IllegalStateException if the iterator contains more than one element
+     * @return
+     */
     public static <E> Maybe<E> maybeOne(Iterator<E> iterator) {
         Iterator<Maybe<E>> maybeIter = new MaybeIterator<E>(iterator);
         final Maybe<E> element = maybeIter.next();
@@ -193,28 +261,25 @@ public abstract class Consumers {
         return element;
     }
 
-    public static <E> Maybe<E> maybeFirst(Iterable<E> iterable) {
-        return maybeFirst(iterable.iterator());
-    }
-
-    public static <E> E one(Iterable<E> iterable) {
-        return one(iterable.iterator());
-    }
-
+    /**
+     * yields the only element if found, nothing otherwise.
+     * @param <E>
+     * @param iterable
+     * @throws IllegalStateException if the iterator contains more than one element
+     * @return
+     */
     public static <E> Maybe<E> maybeOne(Iterable<E> iterable) {
         return maybeOne(iterable.iterator());
     }
 
-    public static <E> Maybe<E> maybeFirst(E[] array) {
-        return maybeFirst(new ArrayIterator<E>(array));
-    }
-
-    public static <E> E one(E[] array) {
-        return one(new ArrayIterator<E>(array));
-    }
-
+    /**
+     * yields the only element if found, nothing otherwise.
+     * @param <E>
+     * @param array
+     * @throws IllegalStateException if the iterator contains more than one element
+     * @return
+     */
     public static <E> Maybe<E> maybeOne(E[] array) {
         return maybeOne(new ArrayIterator<E>(array));
     }
-
 }
