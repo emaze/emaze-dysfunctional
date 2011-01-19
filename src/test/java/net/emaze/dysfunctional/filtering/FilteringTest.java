@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.filtering;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.consumers.Consumers;
@@ -205,5 +206,27 @@ public class FilteringTest {
         });
 
         Assert.assertEquals(Integer.valueOf(0), counter);
+    }
+
+    @Test
+    public void canSliceEmptyIterator(){
+        List<Object> source = Collections.emptyList();
+        Assert.assertEquals(source, Consumers.all(Filtering.slice(0, 10 , source.iterator())));
+    }
+    
+    @Test
+    public void canSliceNonEmptyIterator(){
+        List<Integer> source = Arrays.asList(1,2,3,4);
+        List<Integer> expected = Arrays.asList(1,2,3);
+        List<Integer> got = Consumers.all(Filtering.slice(0, 3 , source.iterator()));
+        Assert.assertEquals(expected, got);
+    }
+    
+    @Test
+    public void canSliceNonEmptyIteratorWithOffset(){
+        List<Integer> source = Arrays.asList(0,1);
+        List<Integer> expected = Arrays.asList(1);
+        List<Integer> got = Consumers.all(Filtering.slice(1, 1, source.iterator()));
+        Assert.assertEquals(expected, got);
     }
 }

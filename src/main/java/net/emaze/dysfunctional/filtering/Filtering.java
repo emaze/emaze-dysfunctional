@@ -31,23 +31,21 @@ public abstract class Filtering {
     public static <E> E findFirst(Iterator<E> iterator, Predicate<E> predicate) {
         Iterator<E> iter = new FilteringIterator<E>(iterator, predicate);
         E element = null;
-        try{
+        try {
             element = Consumers.first(iter);
-        }
-        catch (IllegalArgumentException ex){
+        } catch (IllegalArgumentException ex) {
             //manage empty element iterator
         }
         return element;
     }
 
-    public static <E> int  count(Iterator<E> iterator, Predicate<E> predicate) {
+    public static <E> int count(Iterator<E> iterator, Predicate<E> predicate) {
         Iterator<E> iter = new FilteringIterator<E>(iterator, predicate);
         List<E> elements = Consumers.all(iter);
         return elements.size();
     }
 
     /* TODO: same as above for iterable */
-
     /**
      * filters an iterable returning matching elements
      * @param <E> 
@@ -79,7 +77,7 @@ public abstract class Filtering {
      * @return first element from the iterator (throws IllegalArgumentException if the iterator is empty)
      */
     public static <E> Iterator<E> first(long howMany, Iterator<E> from) {
-        return take(howMany,from);
+        return take(howMany, from);
     }
 
     /**
@@ -252,4 +250,39 @@ public abstract class Filtering {
         return at(index, new ArrayIterator<E>(array));
     }
 
+    /**
+     *
+     * @param <E>
+     * @param from
+     * @param howMany
+     * @param iterator
+     * @return
+     */
+    public static <E> Iterator<E> slice(long from, long howMany, Iterator<E> iterator) {
+        return take(howMany, drop(from, iterator));
+    }
+
+    /**
+     * 
+     * @param <E>
+     * @param from
+     * @param howMany
+     * @param iterable
+     * @return
+     */
+    public static <E> Iterator<E> slice(long from, long howMany, Iterable<E> iterable) {
+        return take(howMany, drop(from, iterable.iterator()));
+    }
+
+    /**
+     * 
+     * @param <E>
+     * @param from
+     * @param howMany
+     * @param array
+     * @return
+     */
+    public static <E> Iterator<E> slice(long from, long howMany, E[] array) {
+        return take(howMany, drop(from, new ArrayIterator<E>(array)));
+    }
 }
