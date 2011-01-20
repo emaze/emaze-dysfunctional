@@ -11,24 +11,25 @@ import net.emaze.dysfunctional.contracts.dbc;
  * @param <E> the element Type
  * @author rferranti
  */
-public class FirstMatchingPredicate<E> implements Predicate<E>, Multicasting<Predicate<E>> {
+public class AllMatchingPredicate<E> implements Predicate<E>, Multicasting<Predicate<E>> {
 
     private final List<Predicate<E>> predicates = new ArrayList<Predicate<E>>();
 
-    public FirstMatchingPredicate(){}
+    public AllMatchingPredicate(){}
 
-    public FirstMatchingPredicate(Collection<Predicate<E>> predicates){
+    public AllMatchingPredicate(Collection<Predicate<E>> predicates){
         this.predicates.addAll(predicates);
     }
 
     @Override
     public boolean test(E element) {
+        dbc.precondition(!predicates.isEmpty(), "try to evaluate an element without any predicate");
         for(Predicate<E> predicate : predicates){
-            if(predicate.test(element)){
-                return true;
+            if(!predicate.test(element)){
+                return false;
             }
         }
-        return false;
+        return true;
     }
     
     @Override
