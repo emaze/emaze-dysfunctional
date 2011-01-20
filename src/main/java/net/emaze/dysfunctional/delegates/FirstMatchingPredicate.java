@@ -15,12 +15,6 @@ public class FirstMatchingPredicate<E> implements Predicate<E>, Multicasting<Pre
 
     private final List<Predicate<E>> predicates = new ArrayList<Predicate<E>>();
 
-    public FirstMatchingPredicate(){}
-
-    public FirstMatchingPredicate(Collection<Predicate<E>> predicates){
-        this.predicates.addAll(predicates);
-    }
-
     @Override
     public boolean test(E element) {
         for(Predicate<E> predicate : predicates){

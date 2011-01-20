@@ -1,36 +1,32 @@
 
 package net.emaze.dysfunctional.delegates;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import java.lang.String;
+import org.junit.Assert;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class AllMatchingPredicateTest {
 
     public AllMatchingPredicateTest() {
     }
 
-    @Test(expected=IllegalArgumentException.class)
-    public void cannotEvaluateEmptyPredicateList() {
-        AllMatchingPredicate<String> test = new AllMatchingPredicate<String>();
-        test.test("A");
+    @Test
+    public void canEvaluateEmptyPredicateList() {
+        Assert.assertTrue(new AllMatchingPredicate<String>().test(null));
     }
 
     @Test
-    public void canEvaluateAllTruePredicate() {
+    public void yieldsTrueWhenEveryPredicateReturnsTrue() {
         AllMatchingPredicate<String> test = new AllMatchingPredicate<String>();
         test.add(new Always<String>());
-        test.add(new Always<String>());
-        assertTrue(test.test("aaa"));
+        Assert.assertTrue(test.test("aaa"));
     }
 
     @Test
-    public void canEvaluateNotAllTruePredicate() {
+    public void yieldsFalseOnFirstPredicateReturningFalse() {
         AllMatchingPredicate<String> test = new AllMatchingPredicate<String>();
         test.add(new Never<String>());
-        test.add(new Always<String>());
-        assertFalse(test.test("aaa"));
+        Assert.assertFalse(test.test("aaa"));
     }
 
 }

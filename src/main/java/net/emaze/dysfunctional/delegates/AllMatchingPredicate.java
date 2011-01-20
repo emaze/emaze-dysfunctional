@@ -6,24 +6,17 @@ import java.util.List;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- * A composite unary predicate yielding true when the first predicate matches
- * (no further predicate is evaluated beyond the first returning true)
+ * A composite unary predicate yielding true when every predicate match
+ * (no further predicate is evaluated beyond the first returning false)
  * @param <E> the element Type
- * @author rferranti
+ * @author asturman, ralcini
  */
 public class AllMatchingPredicate<E> implements Predicate<E>, Multicasting<Predicate<E>> {
 
     private final List<Predicate<E>> predicates = new ArrayList<Predicate<E>>();
 
-    public AllMatchingPredicate(){}
-
-    public AllMatchingPredicate(Collection<Predicate<E>> predicates){
-        this.predicates.addAll(predicates);
-    }
-
     @Override
     public boolean test(E element) {
-        dbc.precondition(!predicates.isEmpty(), "try to evaluate an element without any predicate");
         for(Predicate<E> predicate : predicates){
             if(!predicate.test(element)){
                 return false;
