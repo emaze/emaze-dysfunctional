@@ -15,4 +15,5 @@ public interface Dys {
     public abstract static class Strings extends net.emaze.dysfunctional.strings.Strings { }
     public abstract static class Searches extends net.emaze.dysfunctional.searches.Searches { }
     public abstract static class Multiplexing extends net.emaze.dysfunctional.multiplexing.Multiplexing { }
+    public abstract static class Pagination extends net.emaze.dysfunctional.pagination.Pagination { }
 }

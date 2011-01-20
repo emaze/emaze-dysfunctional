@@ -67,7 +67,7 @@ public abstract class Multiplexing {
         return new PreciseDemultiplexingIterator<E>(channels, iterator);
     }
 
-    public static <E> Iterator<List<Maybe<E>>> demuxli(int channels, Iterable<Maybe<E>> iterable) {
+    public static <E> Iterator<List<Maybe<E>>> demuxl(int channels, Iterable<Maybe<E>> iterable) {
         return new PreciseDemultiplexingIterator<E>(channels, iterable.iterator());
     }
 
