@@ -282,4 +282,39 @@ public abstract class Consumers {
     public static <E> Maybe<E> maybeOne(E[] array) {
         return maybeOne(new ArrayIterator<E>(array));
     }
+
+    /**
+     * 
+     * @param <T>
+     * @param iterator
+     * @return
+     */
+    public static <T> Maybe<T> maybeLast(Iterator<T> iterator) {
+        dbc.precondition(iterator != null, "cannot call maybeLast with a null iterator");
+        if (iterator.hasNext()) {
+            return Maybe.just(Consumers.last(iterator));
+        }
+        return Maybe.nothing();
+    }
+
+    /**
+     *
+     * @param <T>
+     * @param iterable
+     * @return
+     */
+    public static <T> Maybe<T> maybeLast(Iterable<T> iterable) {
+        dbc.precondition(iterable != null, "cannot call maybeLast with a null iterable");
+        return maybeLast(iterable.iterator());
+    }
+
+    /**
+     *
+     * @param <T>
+     * @param array
+     * @return
+     */
+    public static <T> Maybe<T> maybeLast(T[] array) {
+        return maybeLast(new ArrayIterator<T>(array));
+    }
 }
