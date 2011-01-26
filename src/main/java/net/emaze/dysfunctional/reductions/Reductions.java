@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.reductions;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
+import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.delegates.BinaryDelegate;
 
 /**
@@ -77,5 +78,36 @@ public abstract class Reductions {
      */
     public static <E> long count(E[] array) {
         return count(new ArrayIterator<E>(array));
+    }
+    /**
+     *
+     * @param <E>
+     * @param iterator
+     * @return
+     */
+    public static <E> int counti(Iterator<E> iterator) {
+        final long value = reduce(iterator, new Count<E>(), 0l);
+        dbc.stateprecondition(value > Integer.MAX_VALUE, "iterator size overflows an integer");
+        return (int) value;
+    }
+
+    /**
+     *
+     * @param <E>
+     * @param iterable
+     * @return
+     */
+    public static <E> int counti(Iterable<E> iterable) {
+        return counti(iterable.iterator());
+    }
+
+    /**
+     *
+     * @param <E>
+     * @param array
+     * @return
+     */
+    public static <E> int counti(E[] array) {
+        return counti(new ArrayIterator<E>(array));
     }
 }
