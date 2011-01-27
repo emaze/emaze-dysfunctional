@@ -11,7 +11,7 @@ import net.emaze.dysfunctional.contracts.dbc;
  * @param <E> the element Type
  * @author asturman, ralcini
  */
-public class AllMatchingPredicate<E> implements Predicate<E>, Multicasting<Predicate<E>> {
+public class AllMatchingPredicate<E> implements CompositePredicate<E> {
 
     private final List<Predicate<E>> predicates = new ArrayList<Predicate<E>>();
 
