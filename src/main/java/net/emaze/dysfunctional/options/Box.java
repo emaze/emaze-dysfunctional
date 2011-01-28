@@ -37,6 +37,6 @@ public class Box<T> {
 
     @Override
     public String toString() {
-        return String.format("(Box %s)", content);
+        return String.format("Box %s", content);
     }
 }
