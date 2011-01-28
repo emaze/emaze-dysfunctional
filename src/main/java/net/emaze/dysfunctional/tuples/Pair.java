@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.tuples;
 
+import net.emaze.dysfunctional.casts.Casts;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
@@ -32,7 +33,7 @@ public class Pair<E1, E2> {
         if (rhs instanceof Pair == false) {
             return false;
         }
-        final Pair<E1, E2> other = (Pair<E1, E2>) rhs;
+        final Pair<E1, E2> other = Casts.widen(rhs);
         return new EqualsBuilder().append(this.f, other.f).
                 append(this.l, other.l).
                 isEquals();

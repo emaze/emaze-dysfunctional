@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import net.emaze.dysfunctional.casts.Casts;
 import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.multiplexing.ChainIterator;
@@ -69,7 +70,7 @@ public class SparseRange<T> implements Range<T> {
         if (rhs instanceof SparseRange == false) {
             return false;
         }
-        final SparseRange<T> other = (SparseRange<T>) rhs;
+        final SparseRange<T> other = Casts.widen(rhs);
         return this.ranges.equals(other.ranges);
     }
 
