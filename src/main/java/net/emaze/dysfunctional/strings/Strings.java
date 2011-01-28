@@ -39,4 +39,8 @@ public abstract class Strings {
     public static <T, V> String interpose(Iterator<T> values, V separator) {
         return interpose(values, new ConstantIterator<V>(separator));
     }
+
+    public static boolean isEmpty(String value){
+        return value == null || value.isEmpty();
+    }
 }
