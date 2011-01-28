@@ -10,7 +10,7 @@ import net.emaze.dysfunctional.hashing.HashCodeBuilder;
  */
 public class Box<T> {
 
-    private Maybe<T> content;
+    private Maybe<T> content = Maybe.nothing();
 
     public T getContent() {
         return content.value();
