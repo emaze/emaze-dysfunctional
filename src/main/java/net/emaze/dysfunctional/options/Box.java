@@ -10,14 +10,14 @@ import net.emaze.dysfunctional.hashing.HashCodeBuilder;
  */
 public class Box<T> {
 
-    private T content;
+    private Maybe<T> content;
 
     public T getContent() {
-        return content;
+        return content.value();
     }
 
     public void setContent(T content) {
-        this.content = content;
+        this.content = Maybe.just(content);
     }
 
     @Override
