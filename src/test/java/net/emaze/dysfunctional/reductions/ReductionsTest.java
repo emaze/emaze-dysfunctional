@@ -30,6 +30,11 @@ public class ReductionsTest {
     }
 
     @Test
+    public void canCountAsIntegerFromIterator() {
+        Assert.assertEquals(2l, Reductions.counti(list.iterator()));
+    }
+    
+    @Test
     public void canReduceFromIterator() {
         Assert.assertEquals(Long.valueOf(2l), Reductions.reduce(list.iterator(), new Count<Integer>(), 0l));
     }
@@ -43,4 +48,6 @@ public class ReductionsTest {
     public void canReduceFromArray() {
         Assert.assertEquals(Long.valueOf(2l), Reductions.reduce(array, new Count<Integer>(), 0l));
     }
+
+
 }

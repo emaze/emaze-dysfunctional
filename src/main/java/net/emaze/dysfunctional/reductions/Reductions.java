@@ -87,7 +87,7 @@ public abstract class Reductions {
      */
     public static <E> int counti(Iterator<E> iterator) {
         final long value = reduce(iterator, new Count<E>(), 0l);
-        dbc.stateprecondition(value > Integer.MAX_VALUE, "iterator size overflows an integer");
+        dbc.stateprecondition(value <= Integer.MAX_VALUE, "iterator size overflows an integer");
         return (int) value;
     }
 
