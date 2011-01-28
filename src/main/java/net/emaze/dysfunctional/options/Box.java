@@ -25,7 +25,7 @@ public class Box<T> {
         if (rhs instanceof Box == false) {
             return false;
         }
-        final Box<T> other = Casts.widen(content);
+        final Box<T> other = Casts.widen(rhs);
         return new EqualsBuilder().append(this.content, other.content).
                 isEquals();
     }
