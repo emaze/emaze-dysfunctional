@@ -44,6 +44,13 @@ public class BoxTest {
         Assert.assertEquals(yourBento, myBento);
     }
 
+    @Test
+    public void boxesWithEqualContentHaveSameHashcode(){
+        Box<Banana> former = new Box<Banana>();
+        Box<Banana> latter = new Box<Banana>();
+        Assert.assertEquals(former.hashCode(), latter.hashCode());
+    }
+
     public static class Dick {
     }
 
