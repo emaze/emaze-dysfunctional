@@ -21,4 +21,9 @@ public class IsJustTest {
         Predicate<Maybe<Integer>> p = new IsJust<Integer>();
         Assert.assertFalse(p.test(Maybe.<Integer>nothing()));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testingAgainstNullYieldsException() {
+        new IsJust<Object>().test(null);
+    }
 }

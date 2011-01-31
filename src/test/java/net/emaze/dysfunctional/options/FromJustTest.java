@@ -21,4 +21,8 @@ public class FromJustTest {
         Assert.assertEquals(1, got);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void fetchingFromNullYieldsException() {
+        new FromJust<Object>().perform(null);
+    }
 }
