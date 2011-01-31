@@ -1,7 +1,6 @@
 package net.emaze.dysfunctional.strings;
 
 import java.util.Iterator;
-import java.util.List;
 import net.emaze.dysfunctional.consumers.PipingConsumer;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.delegates.ToStringTransformer;
