@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.delegates;
+package net.emaze.dysfunctional.logic;
 
 import java.util.Arrays;
 import org.junit.Assert;

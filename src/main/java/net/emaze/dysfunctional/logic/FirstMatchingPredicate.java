@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.delegates;
+package net.emaze.dysfunctional.logic;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,23 +6,23 @@ import java.util.List;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- * A composite unary predicate yielding true when every predicate match
- * (no further predicate is evaluated beyond the first returning false)
+ * A composite unary predicate yielding true when the first predicate matches
+ * (no further predicate is evaluated beyond the first returning true)
  * @param <E> the element Type
- * @author asturman, ralcini
+ * @author rferranti
  */
-public class AllMatchingPredicate<E> implements CompositePredicate<E> {
+public class FirstMatchingPredicate<E> implements CompositePredicate<E> {
 
     private final List<Predicate<E>> predicates = new ArrayList<Predicate<E>>();
 
     @Override
     public boolean test(E element) {
         for(Predicate<E> predicate : predicates){
-            if(!predicate.test(element)){
-                return false;
+            if(predicate.test(element)){
+                return true;
             }
         }
-        return true;
+        return false;
     }
     
     @Override

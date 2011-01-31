@@ -1,5 +1,8 @@
-package net.emaze.dysfunctional.delegates;
+package net.emaze.dysfunctional.logic;
 
+import net.emaze.dysfunctional.logic.Negator;
+import net.emaze.dysfunctional.logic.Never;
+import net.emaze.dysfunctional.logic.Always;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -6,7 +6,7 @@ import java.util.List;
 import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.delegates.Action;
 import net.emaze.dysfunctional.delegates.Identity;
-import net.emaze.dysfunctional.delegates.IsTrue;
+import net.emaze.dysfunctional.logic.IsTrue;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

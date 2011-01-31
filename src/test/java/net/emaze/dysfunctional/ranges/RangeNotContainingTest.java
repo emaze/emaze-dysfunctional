@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.ranges;
 
-import net.emaze.dysfunctional.delegates.Predicate;
+import net.emaze.dysfunctional.logic.Predicate;
 import org.junit.Assert;
 import org.junit.Test;
 import static net.emaze.dysfunctional.ranges.RangeMother.*;

@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.delegates;
+package net.emaze.dysfunctional.logic;
 
 /**
  * A ternary functor returning a boolean

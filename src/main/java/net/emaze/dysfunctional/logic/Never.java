@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.delegates;
+package net.emaze.dysfunctional.logic;
 
 /**
  * a Null Unary Predicate always returning false ("never" returning true ).

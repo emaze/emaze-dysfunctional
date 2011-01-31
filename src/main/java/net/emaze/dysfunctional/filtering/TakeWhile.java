@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.filtering;
 
-import net.emaze.dysfunctional.delegates.Predicate;
+import net.emaze.dysfunctional.logic.Predicate;
 
 /**
  * A predicate adapter, giving the nested predicate a "take while nested predicate matches" semantics

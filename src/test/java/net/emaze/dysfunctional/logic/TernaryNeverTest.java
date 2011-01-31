@@ -1,5 +1,6 @@
-package net.emaze.dysfunctional.delegates;
+package net.emaze.dysfunctional.logic;
 
+import net.emaze.dysfunctional.logic.TernaryNever;
 import org.junit.Test;
 import org.junit.Assert;
 

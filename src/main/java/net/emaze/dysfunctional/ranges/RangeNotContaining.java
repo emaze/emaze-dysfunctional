@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.ranges;
 
-import net.emaze.dysfunctional.delegates.Predicate;
+import net.emaze.dysfunctional.logic.Predicate;
 
 /**
  *
