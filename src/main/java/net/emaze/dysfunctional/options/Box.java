@@ -6,6 +6,7 @@ import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
 /**
  *
+ * @param <T>
  * @author rferranti
  */
 public class Box<T> {
