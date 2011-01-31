@@ -1,6 +1,7 @@
-package net.emaze.dysfunctional.delegates;
+package net.emaze.dysfunctional.strings;
 
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.delegates.Delegate;
 
 /**
  * A delegate transforming
