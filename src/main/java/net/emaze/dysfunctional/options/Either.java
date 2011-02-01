@@ -15,9 +15,9 @@ public class Either<T1, T2> {
     private final Maybe<T2> right;
 
     public Either(Maybe<T1> left, Maybe<T2> right) {
-        dbc.precondition(left != null, "blahblah");
-        dbc.precondition(right != null, "blahblah");
-        dbc.precondition(left.hasValue() != right.hasValue(), "blahblah");
+        dbc.precondition(left != null, "cannot create Either with null left");
+        dbc.precondition(right != null, "cannot create Either with null right");
+        dbc.precondition(left.hasValue() != right.hasValue(), "Either left or right must have a value");
         this.left = left;
         this.right = right;
     }
