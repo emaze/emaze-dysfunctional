@@ -17,4 +17,5 @@ public interface Dys {
     public abstract static class Multiplexing extends net.emaze.dysfunctional.multiplexing.Multiplexing { }
     public abstract static class Pagination extends net.emaze.dysfunctional.pagination.Pagination { }
     public abstract static class Casts extends net.emaze.dysfunctional.casts.Casts { }
+    public abstract static class Adapters extends net.emaze.dysfunctional.delegates.Adapters { }
 }
