@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional.delegates;
 
+import net.emaze.dysfunctional.contracts.dbc;
+
 /**
  *
  * @param <T1>
@@ -11,6 +13,7 @@ public class BinaryActionToBinaryDelegate<T1, T2> implements BinaryDelegate<Void
     private final BinaryAction<T1, T2> adapted;
 
     public BinaryActionToBinaryDelegate(BinaryAction<T1, T2> adapted) {
+        dbc.precondition(adapted != null, "cannot adapt a null action");
         this.adapted = adapted;
     }
 

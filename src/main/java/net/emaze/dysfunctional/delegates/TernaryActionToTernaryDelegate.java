@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional.delegates;
 
+import net.emaze.dysfunctional.contracts.dbc;
+
 /**
  *
  * @param <T1>
@@ -12,6 +14,7 @@ public class TernaryActionToTernaryDelegate<T1, T2, T3> implements TernaryDelega
     private final TernaryAction<T1, T2, T3> adapted;
 
     public TernaryActionToTernaryDelegate(TernaryAction<T1, T2, T3> adapted) {
+        dbc.precondition(adapted != null, "cannot adapt a null action");
         this.adapted = adapted;
     }
 

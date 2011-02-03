@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.delegates;
 
+import net.emaze.dysfunctional.testing.O;
 import org.junit.Test;
 
 /**
@@ -10,6 +11,6 @@ public class TernaryNoopTest {
 
     @Test
     public void canDoNothingWithNulls() {
-        new TernaryNoop<Object, Object,Object>().perform(null,null, null);
+        new TernaryNoop<O, O, O>().perform(null, null, null);
     }
 }
