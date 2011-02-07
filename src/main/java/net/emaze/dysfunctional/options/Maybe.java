@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.options;
 
 import net.emaze.dysfunctional.casts.Casts;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.delegates.Delegate;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
@@ -27,6 +28,13 @@ public class Maybe<E> {
     public E value() {
         dbc.stateprecondition(hasValue, "fetching value from nothing");
         return element;
+    }
+
+    public <T> Maybe<T> withValue(Delegate<T, Maybe<E>> delegate){
+        if(hasValue){
+            return Maybe.just(delegate.perform(this));
+        }
+        return Maybe.nothing();
     }
 
     public static <E> Maybe<E> nothing() {
