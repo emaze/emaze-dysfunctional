@@ -18,7 +18,7 @@ public abstract class Pagination {
         final List<T> sliced = Consumers.all(Filtering.slice(start, howMany, iterator));
         final long prefetchingCompensation = sliced.size() == howMany ? 1 : 0;
         final long fullSize = Reductions.reduce(iterator, new Count<T>(), start + sliced.size() + prefetchingCompensation);
-        return new Pair<Integer, List<T>>((int)fullSize, sliced);
+        return Pair.of((int)fullSize, sliced);
     }
 
 }

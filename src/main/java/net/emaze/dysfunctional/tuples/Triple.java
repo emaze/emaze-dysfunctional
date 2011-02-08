@@ -55,10 +55,12 @@ public class Triple<E1, E2, E3> {
                 toHashCode();
     }
 
-
     @Override
     public String toString() {
         return String.format("(%s,%s,%s)", f, s, t);
     }
 
+    public static <E1, E2, E3> Triple<E1, E2, E3> of(E1 first, E2 second, E3 third) {
+        return new Triple<E1, E2, E3>(first, second, third);
+    }
 }

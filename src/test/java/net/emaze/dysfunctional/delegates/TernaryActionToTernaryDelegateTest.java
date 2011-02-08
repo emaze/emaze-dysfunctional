@@ -28,7 +28,7 @@ public class TernaryActionToTernaryDelegateTest {
 
         del.perform(first, second, third);
 
-        Assert.assertEquals(new Triple<O, O, O>(first, second, third), box.getContent());
+        Assert.assertEquals(Triple.of(first, second, third), box.getContent());
     }
 
     public class TernaryBoxingAction<T1, T2, T3> implements TernaryAction<T1, T2, T3> {
@@ -41,7 +41,7 @@ public class TernaryActionToTernaryDelegateTest {
 
         @Override
         public void perform(T1 first, T2 second, T3 third) {
-            box.setContent(new Triple<T1, T2, T3>(first, second, third));
+            box.setContent(Triple.of(first, second, third));
         }
     }
 

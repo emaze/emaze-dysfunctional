@@ -76,12 +76,12 @@ public class BinaryInterceptorAdapterTest {
 
         @Override
         public void before(T1 first, T2 second) {
-            beforeBucket.add(new Pair(first, second));
+            beforeBucket.add(Pair.of(first, second));
         }
 
         @Override
         public void after(T1 first, T2 second) {
-            afterBucket.add(new Pair(first, second));
+            afterBucket.add(Pair.of(first, second));
         }
 
         public List<Pair<T1, T2>> getAfterBucket() {

@@ -27,7 +27,7 @@ public class BinaryActionToBinaryDelegateTest {
 
         del.perform(former, latter);
 
-        Assert.assertEquals(new Pair<Object, Object>(former, latter), box.getContent());
+        Assert.assertEquals(Pair.of(former, latter), box.getContent());
     }
 
     public class BinaryBoxingAction<T1, T2> implements BinaryAction<T1, T2> {
@@ -40,7 +40,7 @@ public class BinaryActionToBinaryDelegateTest {
 
         @Override
         public void perform(T1 former, T2 latter) {
-            box.setContent(new Pair<T1, T2>(former, latter));
+            box.setContent(Pair.of(former, latter));
         }
     }
 }
