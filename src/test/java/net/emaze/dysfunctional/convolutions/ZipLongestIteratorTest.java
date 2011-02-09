@@ -39,7 +39,7 @@ public class ZipLongestIteratorTest {
         Iterator<Integer> latter = new ArrayIterator<Integer>(new Integer[]{2});
         ZipLongestIterator<Integer, Integer> zipli = new ZipLongestIterator<Integer, Integer>(former, latter);
         Pair<Maybe<Integer>, Maybe<Integer>> got = zipli.next();
-        Assert.assertEquals(new Pair<Maybe<Integer>, Maybe<Integer>>(Maybe.just(1), Maybe.just(2)), got);
+        Assert.assertEquals(Pair.of(Maybe.just(1), Maybe.just(2)), got);
     }
 
     @Test

@@ -30,9 +30,9 @@ public class Maybe<E> {
         return element;
     }
 
-    public <T> Maybe<T> withValue(Delegate<T, Maybe<E>> delegate){
+    public <T> Maybe<T> withValue(Delegate<T, E> delegate){
         if(hasValue){
-            return Maybe.just(delegate.perform(this));
+            return Maybe.just(delegate.perform(element));
         }
         return Maybe.nothing();
     }
