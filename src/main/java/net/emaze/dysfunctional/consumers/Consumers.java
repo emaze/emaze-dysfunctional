@@ -5,9 +5,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
-import net.emaze.dysfunctional.collections.ArrayListFactory;
-import net.emaze.dysfunctional.collections.CollectionFactory;
+import net.emaze.dysfunctional.collections.CollectionProvider;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.delegates.Provider;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.options.MaybeIterator;
 
@@ -89,42 +89,75 @@ public abstract class Consumers {
     }
 
     /**
-     * yields all elements of the iterator (in a collection created by the factory).
+     * yields all elements of the iterator (in the provided collection).
      * @param <R> the returned collection type
      * @param <E> the collection element type
-     * @param <CF> the collection factory type
      * @param iterator the iterator that will be consumed
-     * @param factory the factory used to create the returned collection
-     * @return a collection filled with iterator values
+     * @param collection the collection where the iterator is consumed
+     * @return the collection filled with iterator values
      */
-    public static <R extends Collection<E>, E, CF extends CollectionFactory<R, E>> R all(Iterator<E> iterator, CF factory) {
-        return new EagerConsumer<R, E>(factory).consume(iterator);
+    public static <R extends Collection<E>, E> R all(Iterator<E> iterator, R collection) {
+        return new EagerConsumer<R, E>(new CollectionProvider<R, E>(collection)).consume(iterator);
     }
 
     /**
-     * yields all elements of the iterator (in a collection created by the factory).
+     * yields all elements of the iterator (in the provided collection).
      * @param <R> the returned collection type
      * @param <E> the collection element type
-     * @param <CF> the collection factory type
      * @param iterable the iterable that will be consumed
-     * @param factory the factory used to create the returned collection
-     * @return a collection filled with iterator values
+     * @param collection the collection where the iterator is consumed
+     * @return the collection filled with iterator values
      */
-    public static <R extends Collection<E>, E, CF extends CollectionFactory<R, E>> R all(Iterable<E> iterable, CF factory) {
-        return Consumers.<R, E, CF>all(iterable.iterator(), factory);
+    public static <R extends Collection<E>, E> R all(Iterable<E> iterable, R collection) {
+        return Consumers.all(iterable.iterator(), collection);
+    }
+
+    /**
+     * yields all elements of the array (in the provided collection).
+     * @param <R> the returned collection type
+     * @param <E> the collection element type
+     * @param array the array that will be consumed
+     * @param collection the collection where the iterator is consumed
+     * @return the collection filled with iterator values
+     */
+    public static <R extends Collection<E>, E> R all(E[] array, R collection) {
+        return Consumers.all(new ArrayIterator<E>(array), collection);
     }
 
     /**
      * yields all elements of the iterator (in a collection created by the factory).
      * @param <R> the returned collection type
      * @param <E> the collection element type
-     * @param <CF> the collection factory type
-     * @param array the array that will be consumed
-     * @param factory the factory used to create the returned collection
+     * @param iterator the iterator that will be consumed
+     * @param provider the factory used to provide the returned collection
      * @return a collection filled with iterator values
      */
-    public static <R extends Collection<E>, E, CF extends CollectionFactory<R, E>> R all(E[] array, CF factory) {
-        return Consumers.<R, E, CF>all(new ArrayIterator<E>(array), factory);
+    public static <E, R extends Collection<E>> R all(Iterator<E> iterator, Provider<R> provider) {
+        return new EagerConsumer<R, E>(provider).consume(iterator);
+    }
+
+    /**
+     * yields all elements of the iterator (in a collection created by the factory).
+     * @param <R> the returned collection type
+     * @param <E> the collection element type
+     * @param iterable the iterable that will be consumed
+     * @param provider the factory used to provide the returned collection
+     * @return a collection filled with iterator values
+     */
+    public static <E, R extends Collection<E>> R all(Iterable<E> iterable, Provider<R> provider) {
+        return Consumers.all(iterable.iterator(), provider);
+    }
+
+    /**
+     * yields all elements of the iterator (in a collection created by the factory).
+     * @param <R> the returned collection type
+     * @param <E> the collection element type
+     * @param array the array that will be consumed
+     * @param provider the factory used to provide the returned collection
+     * @return a collection filled with iterator values
+     */
+    public static <R extends Collection<E>, E> R all(E[] array, Provider<R> provider) {
+        return Consumers.all(new ArrayIterator<E>(array), provider);
     }
 
     /**
@@ -134,7 +167,7 @@ public abstract class Consumers {
      * @return a list filled with iterator values
      */
     public static <E> List<E> all(Iterator<E> iterator) {
-        return Consumers.<ArrayList<E>, E, ArrayListFactory<E>>all(iterator, new ArrayListFactory<E>());
+        return Consumers.all(iterator, new ArrayList<E>());
     }
 
     /**
@@ -144,7 +177,7 @@ public abstract class Consumers {
      * @return
      */
     public static <E> List<E> all(Iterable<E> iterable) {
-        return Consumers.<ArrayList<E>, E, ArrayListFactory<E>>all(iterable, new ArrayListFactory<E>());
+        return Consumers.all(iterable, new ArrayList<E>());
     }
 
     /**
@@ -154,7 +187,7 @@ public abstract class Consumers {
      * @return
      */
     public static <E> List<E> all(E[] array) {
-        return Consumers.<ArrayList<E>, E, ArrayListFactory<E>>all(array, new ArrayListFactory<E>());
+        return Consumers.all(array, new ArrayList<E>());
     }
 
     /**

@@ -16,31 +16,31 @@ public class CollectionFactoryTest {
 
     @Test
     public void canCreateAnArrayList() {
-        ArrayList<Integer> got = new ArrayListFactory<Integer>().create();
+        ArrayList<Integer> got = new ArrayListFactory<Integer>().provide();
         Assert.assertNotNull(got);
     }
 
     @Test
     public void canCreateAnHashSet() {
-        HashSet<Integer> got = new HashSetFactory<Integer>().create();
+        HashSet<Integer> got = new HashSetFactory<Integer>().provide();
         Assert.assertNotNull(got);
     }
 
     @Test
     public void canCreateLinkedHashSet() {
-        LinkedHashSet<Integer> got = new LinkedHashSetFactory<Integer>().create();
+        LinkedHashSet<Integer> got = new LinkedHashSetFactory<Integer>().provide();
         Assert.assertNotNull(got);
     }
 
     @Test
     public void canCreateLinkedList() {
-        LinkedList<Integer> got = new LinkedListFactory<Integer>().create();
+        LinkedList<Integer> got = new LinkedListFactory<Integer>().provide();
         Assert.assertNotNull(got);
     }
 
     @Test
     public void canCreateTreeSet() {
-        TreeSet<Integer> got = new TreeSetFactory<Integer>().create();
+        TreeSet<Integer> got = new TreeSetFactory<Integer>().provide();
         Assert.assertNotNull(got);
     }
 }

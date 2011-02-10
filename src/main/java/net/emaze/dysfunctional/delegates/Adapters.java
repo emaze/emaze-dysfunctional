@@ -42,6 +42,17 @@ public abstract class Adapters {
     /**
      * 
      * @param <R>
+     * @param <T>
+     * @param delegate
+     * @param only
+     * @return
+     */
+    public static <R, T> Provider<R> bind(Delegate<R, T> delegate, T only) {
+        return new Binder<R, T>(delegate, only);
+    }
+    /**
+     *
+     * @param <R>
      * @param <T1>
      * @param <T2>
      * @param delegate
