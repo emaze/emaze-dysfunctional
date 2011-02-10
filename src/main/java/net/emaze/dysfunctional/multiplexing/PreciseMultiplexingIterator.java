@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.delegates.HasNext;
+import net.emaze.dysfunctional.logic.HasNext;
 import net.emaze.dysfunctional.iterations.Iterations;
 import net.emaze.dysfunctional.delegates.MaybeIteratorTransformer;
 import net.emaze.dysfunctional.options.Maybe;

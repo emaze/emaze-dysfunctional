@@ -8,7 +8,7 @@ import java.util.List;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.delegates.Action;
 import net.emaze.dysfunctional.delegates.Delegate;
-import net.emaze.dysfunctional.delegates.Predicate;
+import net.emaze.dysfunctional.logic.Predicate;
 
 /**
  * iterating shortcuts (usage shouldn't be abused)

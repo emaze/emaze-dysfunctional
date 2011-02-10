@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.filtering;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.delegates.Predicate;
+import net.emaze.dysfunctional.logic.Predicate;
 import net.emaze.dysfunctional.options.Maybe;
 
 /**

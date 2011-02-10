@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.filtering;
 
 import java.util.Iterator;
-import net.emaze.dysfunctional.delegates.Predicate;
+import net.emaze.dysfunctional.logic.Predicate;
 
 /**
  *

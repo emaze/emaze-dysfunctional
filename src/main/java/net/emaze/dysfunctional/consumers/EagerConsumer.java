@@ -2,28 +2,29 @@ package net.emaze.dysfunctional.consumers;
 
 import java.util.Collection;
 import java.util.Iterator;
-import net.emaze.dysfunctional.collections.CollectionFactory;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.delegates.Provider;
 
 /**
- * consumes every element from the consumable
- * @param <R>
- * @param <E>
+ * Consumes every element from the consumable into the collection provided by
+ * the provider
+ * @param <R> the collection type parameter
+ * @param <E> the collection element type parameter
  * @author rferranti
  */
 public class EagerConsumer<R extends Collection<E>, E> implements Consumer<R, Iterator<E>> {
 
-    private final CollectionFactory<R, E> factory;
+    private final Provider<R> provider;
 
-    public EagerConsumer(CollectionFactory<R, E> factory) {
-        dbc.precondition(factory != null, "collection factory cannot be null");
-        this.factory = factory;
+    public EagerConsumer(Provider<R> provider) {
+        dbc.precondition(provider != null, "collection factory cannot be null");
+        this.provider = provider;
     }
 
     @Override
     public R consume(Iterator<E> consumable) {
         dbc.precondition(consumable != null, "consuming a null iterator");
-        final R out = factory.create();
+        final R out = provider.provide();
         while (consumable.hasNext()) {
             out.add(consumable.next());
         }

@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.filtering;
 
-import net.emaze.dysfunctional.delegates.Predicate;
+import net.emaze.dysfunctional.logic.Predicate;
 import java.util.Iterator;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.contracts.dbc;

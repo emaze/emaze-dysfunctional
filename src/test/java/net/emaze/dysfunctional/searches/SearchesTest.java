@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.searches;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
-import net.emaze.dysfunctional.delegates.Always;
+import net.emaze.dysfunctional.logic.Always;
 import net.emaze.dysfunctional.options.Maybe;
 import org.junit.Assert;
 import org.junit.Test;

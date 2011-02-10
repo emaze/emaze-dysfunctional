@@ -99,20 +99,39 @@ public class ConsumersTest {
         }
 
         @Test
+        public void canFetchAllFromIteratorWithCollection() {
+            List<Integer> got = Consumers.all(list.iterator(), new ArrayList<Integer>());
+            Assert.assertEquals(list, got);
+        }
+
+        @Test
+        public void canFetchAllFromIterableWithCollection() {
+            List<Integer> got = Consumers.all(list, new ArrayList<Integer>());
+            Assert.assertEquals(list, got);
+        }
+
+        @Test
+        public void canFetchAllFromArrayWithCollection() {
+            List<Integer> got = Consumers.all(array, new ArrayList<Integer>());
+            Assert.assertEquals(list, got);
+        }
+
+        @Test
         public void canFetchAllFromIteratorWithFactory() {
-            List<Integer> got = Consumers.<ArrayList<Integer>, Integer, ArrayListFactory<Integer>>all(list.iterator(), new ArrayListFactory<Integer>());
+//            List<Integer> got = Consumers.<ArrayList<Integer>, Integer, ArrayListFactory<Integer>>all(list.iterator(), new ArrayListFactory<Integer>());
+            List<Integer> got = Consumers.all(list.iterator(), new ArrayListFactory<Integer>());
             Assert.assertEquals(list, got);
         }
 
         @Test
         public void canFetchAllFromIterableWithFactory() {
-            List<Integer> got = Consumers.<ArrayList<Integer>, Integer, ArrayListFactory<Integer>>all(list, new ArrayListFactory<Integer>());
+            List<Integer> got = Consumers.all(list, new ArrayListFactory<Integer>());
             Assert.assertEquals(list, got);
         }
 
         @Test
         public void canFetchAllFromArrayWithFactory() {
-            List<Integer> got = Consumers.<ArrayList<Integer>, Integer, ArrayListFactory<Integer>>all(array, new ArrayListFactory<Integer>());
+            List<Integer> got = Consumers.all(array, new ArrayListFactory<Integer>());
             Assert.assertEquals(list, got);
         }
     }

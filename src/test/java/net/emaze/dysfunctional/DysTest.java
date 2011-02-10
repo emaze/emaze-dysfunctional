@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import net.emaze.dysfunctional.delegates.Delegate;
-import net.emaze.dysfunctional.delegates.Predicate;
+import net.emaze.dysfunctional.logic.Predicate;
 import net.emaze.dysfunctional.iterations.Iterations;
 import org.junit.Assert;
 import org.junit.Test;

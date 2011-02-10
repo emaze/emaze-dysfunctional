@@ -6,9 +6,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.consumers.Consumers;
-import net.emaze.dysfunctional.delegates.Always;
-import net.emaze.dysfunctional.delegates.Never;
-import net.emaze.dysfunctional.delegates.Predicate;
+import net.emaze.dysfunctional.logic.Always;
+import net.emaze.dysfunctional.logic.Never;
+import net.emaze.dysfunctional.logic.Predicate;
 import org.junit.Assert;
 import org.junit.Test;
 

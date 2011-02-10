@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.searches;
 import java.util.Iterator;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
 import net.emaze.dysfunctional.consumers.Consumers;
-import net.emaze.dysfunctional.delegates.Predicate;
+import net.emaze.dysfunctional.logic.Predicate;
 import net.emaze.dysfunctional.filtering.Filtering;
 import net.emaze.dysfunctional.options.Maybe;
 

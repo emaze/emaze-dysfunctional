@@ -9,7 +9,7 @@ import java.util.Queue;
 import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.delegates.Delegate;
-import net.emaze.dysfunctional.delegates.HasNext;
+import net.emaze.dysfunctional.logic.HasNext;
 import net.emaze.dysfunctional.iterations.Iterations;
 
 /**
