@@ -9,7 +9,7 @@ public class AllMatchingBinaryPredicateTest {
 
     @Test
     public void canEvaluateEmptyPredicateList() {
-        Assert.assertTrue(new AllMatchingBinaryPredicate<O,O>().test(null, null));
+        Assert.assertTrue(new AllMatchingBinaryPredicate<O, O>().test(null, null));
     }
 
     @Test
