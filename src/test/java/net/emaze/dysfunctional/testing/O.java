@@ -8,6 +8,7 @@ public class O {
 
     public static O ONE = new O();
     public static O ANOTHER = new O();
+    public static O IGNORED = new O();
 
     public static O create() {
         return new O();
