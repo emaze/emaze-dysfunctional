@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.logic;
 
-import net.emaze.dysfunctional.logic.TernaryAlways;
+import net.emaze.dysfunctional.testing.O;
 import org.junit.Test;
 import org.junit.Assert;
 
@@ -12,6 +12,6 @@ public class TernaryAlwaysTest {
 
     @Test
     public void yieldTrueWithNull() {
-        Assert.assertTrue(new TernaryAlways<Object, Object, Object>().test(null, null, null));
+        Assert.assertTrue(new TernaryAlways<O, O, O>().test(null, null, null));
     }
 }

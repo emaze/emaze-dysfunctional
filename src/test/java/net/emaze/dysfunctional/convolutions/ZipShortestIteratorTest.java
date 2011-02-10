@@ -38,7 +38,7 @@ public class ZipShortestIteratorTest {
         Iterator<Integer> latter = new ArrayIterator<Integer>(new Integer[]{2});
         ZipShortestIterator<Integer, Integer> zipsi = new ZipShortestIterator<Integer, Integer>(former, latter);
         Pair<Integer,Integer> got = zipsi.next();
-        Assert.assertEquals(new Pair<Integer,Integer>(1,2), got);
+        Assert.assertEquals(Pair.of(1,2), got);
     }
 
     @Test

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import net.emaze.dysfunctional.delegates.PipelinedTernaryActionTest.BucketFillingTernaryAction;
+import net.emaze.dysfunctional.testing.O;
 import org.junit.Test;
 import org.junit.Assert;
 
@@ -15,27 +16,27 @@ public class PipelinedTernaryActionTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void addingNullFunctorToPipelineYieldsException() {
-        PipelinedTernaryAction<String, String, String> pipeline = new PipelinedTernaryAction<String, String, String>();
+        PipelinedTernaryAction<O, O, O> pipeline = new PipelinedTernaryAction<O, O, O>();
         pipeline.add(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void removingNullFunctorToPipelineYieldsException() {
-        PipelinedTernaryAction<String, String, String> pipeline = new PipelinedTernaryAction<String, String, String>();
+        PipelinedTernaryAction<O, O, O> pipeline = new PipelinedTernaryAction<O, O, O>();
         pipeline.remove(null);
     }
 
     @Test
     public void removingNonPresentPipelineYieldsFalse() {
-        PipelinedTernaryAction<String, String, String> pipeline = new PipelinedTernaryAction<String, String, String>();
-        boolean got = pipeline.remove(new TernaryNoop<String, String, String>());
+        PipelinedTernaryAction<O, O, O> pipeline = new PipelinedTernaryAction<O, O, O>();
+        boolean got = pipeline.remove(new TernaryNoop<O, O, O>());
         Assert.assertFalse(got);
     }
 
     @Test
     public void removingPresentPipelineYieldsTrue() {
-        PipelinedTernaryAction<String, String, String> pipeline = new PipelinedTernaryAction<String, String, String>();
-        TernaryNoop<String, String, String> noop = new TernaryNoop<String, String, String>();
+        PipelinedTernaryAction<O, O, O> pipeline = new PipelinedTernaryAction<O, O, O>();
+        TernaryNoop<O, O, O> noop = new TernaryNoop<O, O, O>();
         pipeline.add(noop);
         boolean got = pipeline.remove(noop);
         Assert.assertTrue(got);
@@ -43,14 +44,14 @@ public class PipelinedTernaryActionTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void settingNullFunctorsCollectionYieldsException() {
-        PipelinedTernaryAction<String, String, String> pipeline = new PipelinedTernaryAction<String, String, String>();
+        PipelinedTernaryAction<O, O, O> pipeline = new PipelinedTernaryAction<O, O, O>();
         pipeline.setFunctors(null);
     }
 
     @Test
     public void canSetFunctors() {
-        PipelinedTernaryAction<String, String, String> pipeline = new PipelinedTernaryAction<String, String, String>();
-        pipeline.setFunctors(Arrays.<TernaryAction<String, String, String>>asList(new TernaryNoop<String, String, String>(), new TernaryNoop<String, String, String>()));
+        PipelinedTernaryAction<O, O, O> pipeline = new PipelinedTernaryAction<O, O, O>();
+        pipeline.setFunctors(Arrays.<TernaryAction<O, O, O>>asList(new TernaryNoop<O, O, O>(), new TernaryNoop<O, O, O>()));
     }
 
     @Test
@@ -78,5 +79,4 @@ public class PipelinedTernaryActionTest {
             bucket.add(elementToAdd);
         }
     }
-
 }

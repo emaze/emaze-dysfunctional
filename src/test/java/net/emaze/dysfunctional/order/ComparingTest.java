@@ -143,6 +143,6 @@ public class ComparingTest {
 
     @Test
     public void canEvaluateOrdered() {
-        Assert.assertEquals(new Pair<Integer, Integer>(1, 2), Comparing.ordered(1, 2, new ComparableComparator<Integer>()));
+        Assert.assertEquals(Pair.of(1, 2), Comparing.ordered(1, 2, new ComparableComparator<Integer>()));
     }
 }

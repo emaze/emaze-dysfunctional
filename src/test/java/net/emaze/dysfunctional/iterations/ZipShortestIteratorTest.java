@@ -37,8 +37,8 @@ public class ZipShortestIteratorTest {
         List<Integer> ints = Arrays.asList(1,2);
         List<Long> longs = Arrays.asList(11l,12l);
         Iterator<Pair<Integer,Long>> iter = new ZipShortestIterator(ints.iterator(), longs.iterator());
-        Assert.assertEquals(new Pair<Integer,Long>(1,11l), iter.next());
-        Assert.assertEquals(new Pair<Integer,Long>(2,12l), iter.next());
+        Assert.assertEquals(Pair.of(1,11l), iter.next());
+        Assert.assertEquals(Pair.of(2,12l), iter.next());
     }
 
 }

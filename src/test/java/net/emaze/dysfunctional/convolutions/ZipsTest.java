@@ -16,11 +16,11 @@ import org.junit.Test;
  */
 public class ZipsTest {
     public static Pair<Integer, Integer> p(int f, int l) {
-        return new Pair<Integer, Integer>(f, l);
+        return Pair.of(f, l);
     }
 
     public static Pair<Maybe<Integer>, Maybe<Integer>> p(Maybe<Integer> f, Maybe<Integer> l) {
-        return new Pair<Maybe<Integer>, Maybe<Integer>>(f, l);
+        return Pair.of(f, l);
     }
 
     @Test

@@ -19,7 +19,7 @@ public class CountsTest {
     public void canGetCountedIterator() {
         List<String> bucket = Arrays.asList("a","b");
         Iterable<Pair<Integer,String>> iterable = Counts.counted(bucket);
-        Assert.assertEquals(Arrays.asList(new Pair<Integer, String>(0,"a"), new Pair<Integer, String>(1,"b")), Consumers.all(iterable));
+        Assert.assertEquals(Arrays.asList(Pair.of(0,"a"), Pair.of(1,"b")), Consumers.all(iterable));
     }
 
     @Test
@@ -27,7 +27,7 @@ public class CountsTest {
         Range<Integer> range = new DenseRange<Integer>(new IntegerSequencingPolicy(), new ComparableComparator<Integer>(), 1, 10);
         List<String> bucket = Arrays.asList("a","b");
         Iterable<Pair<Integer,String>> iterable = Counts.counted(bucket, range);
-        Assert.assertEquals(Arrays.asList(new Pair<Integer, String>(1,"a"), new Pair<Integer, String>(2,"b")), Consumers.all(iterable));
+        Assert.assertEquals(Arrays.asList(Pair.of(1,"a"), Pair.of(2,"b")), Consumers.all(iterable));
     }
 
 

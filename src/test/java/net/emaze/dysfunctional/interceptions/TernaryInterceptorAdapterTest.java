@@ -76,12 +76,12 @@ public class TernaryInterceptorAdapterTest {
 
         @Override
         public void before(T1 first, T2 second, T3 third) {
-            beforeBucket.add(new Triple<T1, T2, T3>(first, second, third));
+            beforeBucket.add(Triple.of(first, second, third));
         }
 
         @Override
         public void after(T1 first, T2 second, T3 third) {
-            afterBucket.add(new Triple<T1, T2, T3>(first, second, third));
+            afterBucket.add(Triple.of(first, second, third));
         }
 
         public List<Triple<T1, T2, T3>> getAfterBucket() {

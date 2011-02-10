@@ -20,20 +20,20 @@ public class MakeOrderTest {
     public void canOrderComparablesWhenLhsIsLesser() {
         Comparator<Integer> comp = new ComparableComparator<Integer>();
         Pair<Integer, Integer> got = new MakeOrder<Integer>(comp).perform(1, 2);
-        Assert.assertEquals(new Pair<Integer, Integer>(1, 2), got);
+        Assert.assertEquals(Pair.of(1, 2), got);
     }
 
     @Test
     public void canOrderComparablesWhenLhsIsGreater() {
         Comparator<Integer> comp = new ComparableComparator<Integer>();
         Pair<Integer, Integer> got = new MakeOrder<Integer>(comp).perform(2, 1);
-        Assert.assertEquals(new Pair<Integer, Integer>(1, 2), got);
+        Assert.assertEquals(Pair.of(1, 2), got);
     }
 
     @Test
     public void canOrderComparablesWhenLhsIsSameOrderAsRhs() {
         Comparator<Integer> comp = new ComparableComparator<Integer>();
         Pair<Integer, Integer> got = new MakeOrder<Integer>(comp).perform(1, 1);
-        Assert.assertEquals(new Pair<Integer, Integer>(1, 1), got);
+        Assert.assertEquals(Pair.of(1, 1), got);
     }
 }

@@ -1,5 +1,6 @@
-package net.emaze.dysfunctional.delegates;
+package net.emaze.dysfunctional.strings;
 
+import net.emaze.dysfunctional.strings.ToStringTransformer;
 import org.junit.Assert;
 import org.junit.Test;
 

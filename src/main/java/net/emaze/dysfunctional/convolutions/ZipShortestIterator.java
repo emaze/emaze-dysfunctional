@@ -29,7 +29,7 @@ public class ZipShortestIterator<E1, E2> implements Iterator<Pair<E1, E2>> {
 
     @Override
     public Pair<E1, E2> next() {
-        return new Pair<E1, E2>(former.next(), latter.next());
+        return Pair.of(former.next(), latter.next());
     }
 
     @Override

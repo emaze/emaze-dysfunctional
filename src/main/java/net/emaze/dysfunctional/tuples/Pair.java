@@ -12,20 +12,20 @@ import net.emaze.dysfunctional.hashing.HashCodeBuilder;
  */
 public class Pair<E1, E2> {
 
-    private final E1 f;
-    private final E2 l;
+    private final E1 first;
+    private final E2 second;
 
     public Pair(E1 f, E2 l) {
-        this.f = f;
-        this.l = l;
+        this.first = f;
+        this.second = l;
     }
 
     public E1 first() {
-        return f;
+        return first;
     }
 
     public E2 second() {
-        return l;
+        return second;
     }
 
     @Override
@@ -34,23 +34,24 @@ public class Pair<E1, E2> {
             return false;
         }
         final Pair<E1, E2> other = Casts.widen(rhs);
-        return new EqualsBuilder().append(this.f, other.f).
-                append(this.l, other.l).
+        return new EqualsBuilder().append(this.first, other.first).
+                append(this.second, other.second).
                 isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(this.f).
-                append(this.l).
+        return new HashCodeBuilder().append(this.first).
+                append(this.second).
                 toHashCode();
     }
 
     @Override
     public String toString() {
-        return String.format("(%s,%s)", f, l);
+        return String.format("(%s,%s)", first, second);
     }
 
-
-
+    public static <E1, E2> Pair<E1, E2> of(E1 first, E2 second) {
+        return new Pair<E1, E2>(first, second);
+    }
 }

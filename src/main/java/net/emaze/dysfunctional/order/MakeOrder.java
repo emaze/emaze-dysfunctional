@@ -23,6 +23,6 @@ public class MakeOrder<T> implements BinaryDelegate<Pair<T,T>, T, T> {
         final int result = comparator.compare(lhs, rhs);
         final T lower = Order.LHS_IS_GREATER == result ? rhs : lhs;
         final T higher = Order.LHS_IS_GREATER == result ? lhs : rhs;
-        return new Pair<T, T>(lower, higher);
+        return Pair.of(lower, higher);
     }
 }

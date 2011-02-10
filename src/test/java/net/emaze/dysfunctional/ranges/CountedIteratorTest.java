@@ -43,7 +43,7 @@ public class CountedIteratorTest {
         Range<Integer> range = r(0, 10);
         CountedIterator<Integer, Integer> iter = new CountedIterator<Integer, Integer>(Arrays.asList(111).iterator(), range);
         Pair<Integer,Integer > got = iter.next();
-        Assert.assertEquals(new Pair<Integer,Integer>(0, 111), got);
+        Assert.assertEquals(Pair.of(0, 111), got);
     }
     
     @Test

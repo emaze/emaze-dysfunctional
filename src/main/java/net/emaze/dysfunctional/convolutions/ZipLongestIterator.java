@@ -36,7 +36,7 @@ public class ZipLongestIterator<E1, E2> implements Iterator<Pair<Maybe<E1>, Mayb
      */
     @Override
     public Pair<Maybe<E1>, Maybe<E2>> next() {
-        return new Pair<Maybe<E1>, Maybe<E2>>(former.next(), latter.next());
+        return Pair.of(former.next(), latter.next());
     }
 
     /**

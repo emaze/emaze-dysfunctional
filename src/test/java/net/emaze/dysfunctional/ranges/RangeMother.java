@@ -24,7 +24,7 @@ public class RangeMother {
     }
 
     public static Pair<Integer, Integer> p(int lower, int upper) {
-        return new Pair<Integer, Integer>(lower, upper);
+        return Pair.of(lower, upper);
     }
 
     public static SparseRange<Integer> r(Pair<Integer, Integer>... pairs) {

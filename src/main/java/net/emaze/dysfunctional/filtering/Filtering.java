@@ -5,6 +5,8 @@ import java.util.List;
 import net.emaze.dysfunctional.logic.Predicate;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
 import net.emaze.dysfunctional.consumers.Consumers;
+import net.emaze.dysfunctional.options.Maybe;
+import net.emaze.dysfunctional.options.MaybeIterator;
 
 /**
  * @author rferranti
@@ -138,6 +140,18 @@ public abstract class Filtering {
      */
     public static <E> Iterator<E> last(int howMany, E[] from) {
         return last(howMany, new ArrayIterator<E>(from));
+    }
+
+    public static <E> Iterator<E> atMostlast(int howMany, Iterable<E> from) {
+        return atMostlast(howMany, from.iterator());
+    }
+
+    public static <E> Iterator<E> atMostlast(int howMany, Iterator<E> from) {
+        return new AtMostMemoryIterator<E>(from, howMany);
+    }
+
+    public static <E> Iterator<E> atMostlast(int howMany, E[] from) {
+        return atMostlast(howMany, new ArrayIterator<E>(from));
     }
 
     /**
