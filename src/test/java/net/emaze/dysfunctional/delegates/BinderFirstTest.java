@@ -10,7 +10,7 @@ import org.junit.Test;
 public class BinderFirstTest {
 
     @Test(expected=IllegalArgumentException.class)
-    public void creatingBinderFirstWithNullPredicateYieldsException() {
+    public void creatingBinderFirstWithNullDelegateYieldsException() {
         new BinderFirst<String, String, String>(null, "useless");
     }
 

@@ -6,7 +6,11 @@ package net.emaze.dysfunctional.testing;
  */
 public class O {
 
-    public static O useless() {
+    public static O ONE = new O();
+    public static O ANOTHER = new O();
+
+    public static O create() {
         return new O();
     }
+
 }

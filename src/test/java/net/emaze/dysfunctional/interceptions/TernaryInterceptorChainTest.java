@@ -70,7 +70,7 @@ public class TernaryInterceptorChainTest {
         TernaryInterceptor<O, O, O> interceptor = new BucketFillingInterceptor(2, bucket);
         chain.add(interceptor);
         chain.setFunctors(Collections.<TernaryInterceptor<O, O, O>>emptyList());
-        chain.perform(O.useless(), O.useless(), O.useless());
+        chain.perform(O.create(), O.create(), O.create());
         Assert.assertEquals(1, bucket.size());
     }
 
@@ -81,7 +81,7 @@ public class TernaryInterceptorChainTest {
         chain.add(new BucketFillingInterceptor(1, bucket));
         chain.add(new BucketFillingInterceptor(2, bucket));
         chain.add(new BucketFillingInterceptor(3, bucket));
-        chain.perform(O.useless(), O.useless(), O.useless());
+        chain.perform(O.create(), O.create(), O.create());
         Assert.assertEquals(Arrays.asList(1, 2, 3, 4, 3, 2, 1), bucket);
     }
 
@@ -93,7 +93,7 @@ public class TernaryInterceptorChainTest {
         chain.add(new ThrowingInterceptor());
         chain.add(new BucketFillingInterceptor(3, bucket));
         try {
-            chain.perform(O.useless(), O.useless(), O.useless());
+            chain.perform(O.create(), O.create(), O.create());
         } catch (Exception ex) {
         }
         Assert.assertEquals(Arrays.asList(1, 1), bucket);
