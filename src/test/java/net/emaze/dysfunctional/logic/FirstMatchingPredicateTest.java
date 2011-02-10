@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.logic;
 
 import java.util.Arrays;
+import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,27 +13,27 @@ public class FirstMatchingPredicateTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void addingNullFunctorToPredicateYieldsException() {
-        FirstMatchingPredicate<String> pred = new FirstMatchingPredicate<String>();
+        FirstMatchingPredicate<O> pred = new FirstMatchingPredicate<O>();
         pred.add(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void removingNullFunctorToPredicateYieldsException() {
-        FirstMatchingPredicate<String> pred = new FirstMatchingPredicate<String>();
+        FirstMatchingPredicate<O> pred = new FirstMatchingPredicate<O>();
         pred.remove(null);
     }
 
     @Test
     public void removingNonPresentPredicateYieldsFalse() {
-        FirstMatchingPredicate<String> pred = new FirstMatchingPredicate<String>();
-        boolean got = pred.remove(new Always<String>());
+        FirstMatchingPredicate<O> pred = new FirstMatchingPredicate<O>();
+        boolean got = pred.remove(new Always<O>());
         Assert.assertFalse(got);
     }
 
     @Test
     public void removingPresentPredicateYieldsTrue() {
-        FirstMatchingPredicate<String> pred = new FirstMatchingPredicate<String>();
-        Always<String> always = new Always<String>();
+        FirstMatchingPredicate<O> pred = new FirstMatchingPredicate<O>();
+        Always<O> always = new Always<O>();
         pred.add(always);
         boolean got = pred.remove(always);
         Assert.assertTrue(got);
@@ -40,28 +41,29 @@ public class FirstMatchingPredicateTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void settingNullFunctorsCollectionYieldsException() {
-        FirstMatchingPredicate<String> pred = new FirstMatchingPredicate<String>();
+        FirstMatchingPredicate<O> pred = new FirstMatchingPredicate<O>();
         pred.setFunctors(null);
     }
 
     @Test
     public void canSetFunctors() {
-        FirstMatchingPredicate<String> pred = new FirstMatchingPredicate<String>();
-        pred.setFunctors(Arrays.<Predicate<String>>asList(new Always<String>(), new Always<String>()));
-        pred.test("ignored_value");
+        FirstMatchingPredicate<O> pred = new FirstMatchingPredicate<O>();
+        Predicate<O> always = new Always<O>();
+        pred.setFunctors(Arrays.asList(always, always));
+        pred.test(O.IGNORED);
     }
 
     @Test
     public void usingAlwaysReturnsTrue(){
-        FirstMatchingPredicate<String> pred = new FirstMatchingPredicate<String>();
-        pred.add(new Always<String>());
-        Assert.assertTrue(pred.test("unused"));
+        FirstMatchingPredicate<O> pred = new FirstMatchingPredicate<O>();
+        pred.add(new Always<O>());
+        Assert.assertTrue(pred.test(O.IGNORED));
     }
     
     @Test
     public void usingNeverReturnsFalse(){
-        FirstMatchingPredicate<String> pred = new FirstMatchingPredicate<String>();
-        pred.add(new Never<String>());
-        Assert.assertFalse(pred.test("unused"));
+        FirstMatchingPredicate<O> pred = new FirstMatchingPredicate<O>();
+        pred.add(new Never<O>());
+        Assert.assertFalse(pred.test(O.IGNORED));
     }
 }
