@@ -14,7 +14,7 @@ public class Binder<R, T> implements Provider<R> {
     private final T only;
 
     public Binder(Delegate<R, T> delegate, T only) {
-        dbc.precondition(delegate != null, "cannot bind the first parameter of a null binary delegate");
+        dbc.precondition(delegate != null, "cannot bind the parameter of a null delegate");
         this.delegate = delegate;
         this.only = only;
     }
