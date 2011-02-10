@@ -6,42 +6,43 @@ import java.util.List;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- * A composite unary predicate yielding true when every predicate match
+ * A composite ternary predicate yielding true when every predicate match
  * (no further predicate is evaluated beyond the first returning false)
- * @param <E> the element Type
+ * @param <E1>
+ * @param <E2>
+ * @param <E3>
  * @author rferranti
  */
-public class AllMatchingPredicate<E> implements CompositePredicate<E> {
+public class AllMatchingTernaryPredicate<E1, E2, E3> implements CompositeTernaryPredicate<E1, E2, E3> {
 
-    private final List<Predicate<E>> predicates = new ArrayList<Predicate<E>>();
+    private final List<TernaryPredicate<E1, E2, E3>> predicates = new ArrayList<TernaryPredicate<E1, E2, E3>>();
 
     @Override
-    public boolean test(E element) {
-        for(Predicate<E> predicate : predicates){
-            if(!predicate.test(element)){
+    public boolean test(E1 first, E2 second, E3 third) {
+        for (TernaryPredicate<E1, E2, E3> predicate : predicates) {
+            if (!predicate.test(first, second, third)) {
                 return false;
             }
         }
         return true;
     }
-    
+
     @Override
-    public void add(Predicate<E> aPredicate) {
+    public void add(TernaryPredicate<E1, E2, E3> aPredicate) {
         dbc.precondition(aPredicate != null, "trying to add a null predicate");
         predicates.add(aPredicate);
     }
 
     @Override
-    public boolean remove(Predicate<E> aPredicate) {
+    public boolean remove(TernaryPredicate<E1, E2, E3> aPredicate) {
         dbc.precondition(aPredicate != null, "trying to remove a null predicate");
         return predicates.remove(aPredicate);
     }
 
     @Override
-    public void setFunctors(Collection<Predicate<E>> functors) {
+    public void setFunctors(Collection<TernaryPredicate<E1, E2, E3>> functors) {
         dbc.precondition(functors != null, "functors cannot be null");
         this.predicates.clear();
         this.predicates.addAll(functors);
     }
-
 }
