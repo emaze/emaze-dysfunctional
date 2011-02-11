@@ -9,7 +9,7 @@
     <parent>
         <groupId>net.emaze</groupId>
         <artifactId>emaze-super-pom</artifactId>
-        <version>1.3</version>
+        <version>1.4</version>
     </parent>
     <build>
         <plugins>
