@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.logic.HasNext;
@@ -24,9 +25,9 @@ public class ChainIterator<E> implements Iterator<E> {
         this.iterators.addAll(Arrays.asList(iterators));
     }
 
-    public ChainIterator(List<Iterator<E>> iterators) {
+    public ChainIterator(Iterator<Iterator<E>> iterators) {
         dbc.precondition(iterators != null, "trying to create a ChainIterator from a null list of iterators");
-        this.iterators.addAll(iterators);
+        this.iterators.addAll(Consumers.all(iterators));
     }
 
     @Override

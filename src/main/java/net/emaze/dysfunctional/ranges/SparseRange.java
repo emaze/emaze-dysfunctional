@@ -62,7 +62,7 @@ public class SparseRange<T> implements Range<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new ChainIterator<T>(Consumers.all(Iterations.transform(ranges, new IteratorPlucker<T, DenseRange<T>>())));
+        return new ChainIterator<T>(Iterations.transform(ranges, new IteratorPlucker<T, DenseRange<T>>()));
     }
 
     @Override

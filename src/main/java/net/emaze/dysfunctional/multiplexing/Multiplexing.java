@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
-import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.delegates.IteratorPlucker;
 import net.emaze.dysfunctional.iterations.Iterations;
 import net.emaze.dysfunctional.options.Maybe;
@@ -23,7 +22,7 @@ public abstract class Multiplexing {
      * @return
      */
     public static <E, T extends Collection<E>> Iterator<E> flatten(Iterator<T> iterators) {
-        return new ChainIterator<E>(Consumers.all(Iterations.transform(iterators, new IteratorPlucker<E, T>())));
+        return new ChainIterator<E>(Iterations.transform(iterators, new IteratorPlucker<E, T>()));
     }
 
     /**
@@ -202,5 +201,35 @@ public abstract class Multiplexing {
      */
     public static <E> Iterator<E> roundrobin(Iterator<E>[] iterators) {
         return new RoundRobinIterator<E>(new ArrayIterator<Iterator<E>>(iterators));
+    }
+
+    /**
+     * 
+     * @param <E>
+     * @param iterators
+     * @return
+     */
+    public static <E> Iterator<E> chain(Iterator<E>... iterators) {
+        return new ChainIterator<E>(iterators);
+    }
+
+    /**
+     * 
+     * @param <E>
+     * @param iterators
+     * @return
+     */
+    public static <E> Iterator<E> chain(Iterator<Iterator<E>> iterators) {
+        return new ChainIterator<E>(iterators);
+    }
+
+    /**
+     * 
+     * @param <E>
+     * @param iterables
+     * @return
+     */
+    public static <E> Iterator<E> chain(Iterable<Iterator<E>> iterables) {
+        return new ChainIterator<E>(iterables.iterator());
     }
 }
