@@ -25,7 +25,7 @@ public class ChainIterator<E> implements Iterator<E> {
         this.iterators.addAll(Arrays.asList(iterators));
     }
 
-    public ChainIterator(Iterator<Iterator<E>> iterators) {
+    public <T extends Iterator<E>> ChainIterator(Iterator<T> iterators) {
         dbc.precondition(iterators != null, "trying to create a ChainIterator from a null list of iterators");
         this.iterators.addAll(Consumers.all(iterators));
     }

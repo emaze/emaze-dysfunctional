@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.multiplexing;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
@@ -21,7 +20,7 @@ public abstract class Multiplexing {
      * @param iterators
      * @return
      */
-    public static <E, T extends Collection<E>> Iterator<E> flatten(Iterator<T> iterators) {
+    public static <E, T extends Iterable<E>> Iterator<E> flatten(Iterator<T> iterators) {
         return new ChainIterator<E>(Iterations.transform(iterators, new IteratorPlucker<E, T>()));
     }
 
@@ -32,7 +31,7 @@ public abstract class Multiplexing {
      * @param iterators
      * @return
      */
-    public static <E, T extends Collection<E>> Iterator<E> flatten(Iterable<T> iterators) {
+    public static <E, T extends Iterable<E>> Iterator<E> flatten(Iterable<T> iterators) {
         return flatten(iterators.iterator());
     }
 
@@ -43,8 +42,41 @@ public abstract class Multiplexing {
      * @param array
      * @return
      */
-    public static <E, T extends Collection<E>> Iterator<E> flatten(T[] array) {
+    public static <E, T extends Iterable<E>> Iterator<E> flatten(T[] array) {
         return flatten(new ArrayIterator<T>(array));
+    }
+
+    /**
+     * 
+     * @param <E>
+     * @param <T>
+     * @param iterators
+     * @return
+     */
+    public static <E, T extends Iterator<E>> Iterator<E> flatteni(Iterator<T> iterators) {
+        return new ChainIterator<E>(iterators);
+    }
+
+    /**
+     * 
+     * @param <E>
+     * @param <T>
+     * @param iterators
+     * @return
+     */
+    public static <E, T extends Iterator<E>> Iterator<E> flatteni(Iterable<T> iterators) {
+        return flatteni(iterators.iterator());
+    }
+
+    /**
+     * 
+     * @param <E>
+     * @param <T>
+     * @param iterators
+     * @return
+     */
+    public static <E, T extends Iterator<E>> Iterator<E> flatteni(T[] iterators) {
+        return flatteni(new ArrayIterator<T>(iterators));
     }
 
     /**
