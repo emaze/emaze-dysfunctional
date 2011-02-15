@@ -32,13 +32,13 @@ public abstract class Pagination {
         return Pair.of(page.first().intValue(), page.second());
     }
     /**
-     * Creates a page view of an iterator.
+     * Creates a page view of an iterator adding elements to the collection.
      * @param <T> the element type parameter
-     * @param <C>
+     * @param <C> the collection type parameter
      * @param start the index where the page starts
      * @param howMany the page size
      * @param iterator the iterator to be sliced
-     * @param collection 
+     * @param collection the output collection
      * @return a pair containing the iterator size and the requested page
      */
     public static <T, C extends Collection<T>> Pair<Integer, C> page(long start, long howMany, Iterator<T> iterator, C collection) {
@@ -59,13 +59,13 @@ public abstract class Pagination {
         return Pagination.page(start, howMany, iterable.iterator());
     }
     /**
-     * Creates a page view of an iterable.
+     * Creates a page view of an iterable adding elements to the collection.
      * @param <T> the element type parameter
-     * @param <C>
+     * @param <C> the collection type parameter
      * @param start the index where the page starts
      * @param howMany the page size
      * @param iterable the iterable to be sliced
-     * @param collection
+     * @param collection the output collection
      * @return a pair containing the iterator size and the requested page
      */
     public static <T, C extends Collection<T>> Pair<Integer, C> page(long start, long howMany, Iterable<T> iterable, C collection) {
@@ -84,13 +84,13 @@ public abstract class Pagination {
         return Pagination.page(start, howMany, new ArrayIterator<T>(array));
     }
     /**
-     * Creates a page view of an array.
+     * Creates a page view of an array adding elements to the collection.
      * @param <T> the element type parameter
-     * @param <C>
+     * @param <C> the collection type parameter
      * @param start the index where the page starts
      * @param howMany the page size
      * @param array the array to be sliced
-     * @param collection
+     * @param collection the output collection
      * @return a pair containing the iterator size and the requested page
      */
     public static <T, C extends Collection<T>> Pair<Integer, C>  page(long start, long howMany, T[] array, C collection) {
@@ -109,13 +109,13 @@ public abstract class Pagination {
         return Pair.of(collection.size(), Consumers.all(Filtering.slice(start, howMany, collection)));
     }
     /**
-     * Creates a page view of a collection.
+     * Creates a page view of a collection adding elements to the out collection.
      * @param <T> the element type parameter
-     * @param <C>
+     * @param <C> the collection type parameter
      * @param start the index where the page starts
      * @param howMany the page size
      * @param in the iterable to be sliced
-     * @param out 
+     * @param out the output collection
      * @return a pair containing the iterator size and the requested page
      */
     public static <T, C extends Collection<T>> Pair<Integer, C> page(long start, long howMany, Collection<T> in, C out) {
@@ -136,13 +136,13 @@ public abstract class Pagination {
     }
 
     /**
-     * Creates a page view of an iterator.
+     * Creates a page view of an iterator adding elements to the collection.
      * @param <T> the element type parameter
-     * @param <C>
+     * @param <C> the collection type parameter
      * @param start the index where the page starts
      * @param howMany the page size
      * @param iterator the iterator to be sliced
-     * @param collection
+     * @param collection the output collection
      * @return a pair containing the iterator size and the requested page
      */
     public static <T, C extends Collection<T>> Pair<Long, C> pagel(long start, long howMany, Iterator<T> iterator, C collection) {
@@ -165,13 +165,13 @@ public abstract class Pagination {
     }
 
     /**
-     * Creates a page view of an iterable.
+     * Creates a page view of an iterable adding elements to the collection.
      * @param <T> the element type parameter
-     * @param <C>
+     * @param <C> the collection type parameter
      * @param start the index where the page starts
      * @param howMany the page size
      * @param iterable the iterable to be sliced
-     * @param collection
+     * @param collection the output collection
      * @return a pair containing the iterator size and the requested page
      */
     public static <T, C extends Collection<T>> Pair<Long, C> pagel(long start, long howMany, Iterable<T> iterable, C collection) {
@@ -191,13 +191,13 @@ public abstract class Pagination {
     }
 
     /**
-     * Creates a page view of an array.
+     * Creates a page view of an array adding elements to the collection.
      * @param <T> the element type parameter
-     * @param <C>
+     * @param <C> the collection type parameter
      * @param start the index where the page starts
      * @param howMany the page size
      * @param array the array to be sliced
-     * @param collection
+     * @param collection the output collection
      * @return a pair containing the iterator size and the requested page
      */
     public static <T, C extends Collection<T>> Pair<Long, C> pagel(long start, long howMany, T[] array, C collection) {
@@ -217,13 +217,13 @@ public abstract class Pagination {
     }
 
     /**
-     * Creates a page view of a collection.
+     * Creates a page view of a collection adding elements to the out collection.
      * @param <T> the element type parameter
-     * @param <C>
+     * @param <C> the collection type parameter
      * @param start the index where the page starts
      * @param howMany the page size
      * @param in the array to be sliced
-     * @param out
+     * @param out the output collection
      * @return a pair containing the iterator size and the requested page
      */
     public static <T, C extends Collection<T>> Pair<Long, C> pagel(long start, long howMany, Collection<T> in, C out) {
