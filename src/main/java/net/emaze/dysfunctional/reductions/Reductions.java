@@ -1,9 +1,13 @@
 package net.emaze.dysfunctional.reductions;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.delegates.BinaryDelegate;
+import net.emaze.dysfunctional.order.ComparableComparator;
+import net.emaze.dysfunctional.order.Max;
+import net.emaze.dysfunctional.order.Min;
 
 /**
  *
@@ -79,6 +83,7 @@ public abstract class Reductions {
     public static <E> long count(E[] array) {
         return count(new ArrayIterator<E>(array));
     }
+
     /**
      *
      * @param <E>
@@ -109,5 +114,21 @@ public abstract class Reductions {
      */
     public static <E> int counti(E[] array) {
         return counti(new ArrayIterator<E>(array));
+    }
+
+    public static <E, C extends Comparator<E>> E max(Iterator<E> iterator, C comparator, E init) {
+        return Reductions.reduce(iterator, new Max<E>(comparator), init);
+    }
+
+    public static <E extends Comparable<E>> E max(Iterator<E> iterator, E init) {
+        return Reductions.reduce(iterator, new Max<E>(new ComparableComparator<E>()), init);
+    }
+
+    public static <E, C extends Comparator<E>> E min(Iterator<E> iterator, C comparator, E init) {
+        return Reductions.reduce(iterator, new Min<E>(comparator), init);
+    }
+
+    public static <E extends Comparable<E>> E min(Iterator<E> iterator, E init) {
+        return Reductions.reduce(iterator, new Min<E>(new ComparableComparator<E>()), init);
     }
 }
