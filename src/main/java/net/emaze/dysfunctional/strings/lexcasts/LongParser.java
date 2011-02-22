@@ -12,6 +12,8 @@ public class LongParser implements Delegate<Long, String> {
     private final int radix;
 
     public LongParser(int radix) {
+        dbc.precondition(radix >= Character.MIN_RADIX, "radix should be in range [MIN_RADIX, MAX_RADIX]");
+        dbc.precondition(radix <= Character.MAX_RADIX, "radix should be in range [MIN_RADIX, MAX_RADIX]");        
         this.radix = radix;
     }
 

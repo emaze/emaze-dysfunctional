@@ -11,6 +11,9 @@ public class FloatTryParser implements Delegate<Maybe<Float>, String> {
 
     @Override
     public Maybe<Float> perform(String parsee) {
+        if (parsee == null) {
+            return Maybe.nothing();
+        }
         try {
             return Maybe.just(Float.parseFloat(parsee));
         } catch (NumberFormatException ex) {

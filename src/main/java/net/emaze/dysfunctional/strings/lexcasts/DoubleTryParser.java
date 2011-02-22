@@ -11,6 +11,9 @@ public class DoubleTryParser implements Delegate<Maybe<Double>, String> {
 
     @Override
     public Maybe<Double> perform(String parsee) {
+        if (parsee == null) {
+            return Maybe.nothing();
+        }
         try {
             return Maybe.just(Double.parseDouble(parsee));
         } catch (NumberFormatException ex) {
