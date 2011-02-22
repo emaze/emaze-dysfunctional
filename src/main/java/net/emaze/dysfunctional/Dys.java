@@ -15,6 +15,7 @@ public interface Dys {
     public abstract static class Iterations extends net.emaze.dysfunctional.iterations.Iterations {}
     public abstract static class Logic extends net.emaze.dysfunctional.logic.Logic {}
     public abstract static class Multiplexing extends net.emaze.dysfunctional.multiplexing.Multiplexing {}
+    public abstract static class Options extends net.emaze.dysfunctional.options.Options {}
     public abstract static class Pagination extends net.emaze.dysfunctional.pagination.Pagination {}
     public abstract static class Reductions extends net.emaze.dysfunctional.reductions.Reductions {}
     public abstract static class Searches extends net.emaze.dysfunctional.searches.Searches {}

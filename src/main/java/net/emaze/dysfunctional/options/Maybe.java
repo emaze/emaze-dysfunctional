@@ -31,6 +31,7 @@ public class Maybe<E> {
     }
 
     public <T> Maybe<T> withValue(Delegate<T, E> delegate){
+        dbc.precondition(delegate != null, "cannot perform withValue with a null delegate");
         if(hasValue){
             return Maybe.just(delegate.perform(element));
         }
