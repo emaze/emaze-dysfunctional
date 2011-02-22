@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.options;
 
+import net.emaze.dysfunctional.delegates.Identity;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -27,6 +28,25 @@ public class MaybeTest {
     }
 
     @Test
+    public void withValueWithJustYieldsJustDelegateResult() {
+        final Maybe<Integer> expected = Maybe.just(1);
+        final Maybe<Integer> got = expected.withValue(new Identity<Integer>());
+        Assert.assertEquals(expected, got);
+    }
+
+    @Test
+    public void withValueWithJustNothingYieldsNothing() {
+        final Maybe<Integer> source = Maybe.nothing();
+        final Maybe<Integer> got = source.withValue(new Identity<Integer>());
+        Assert.assertFalse(got.hasValue());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void withValueWithNullDelegateYieldsException() {
+        Maybe.just(1).withValue(null);
+    }
+
+    @Test
     public void maybeAndUnidentifiedObjectAreNotEquals() {
         Assert.assertFalse(Maybe.just(1).equals(new Object()));
     }
@@ -42,12 +62,12 @@ public class MaybeTest {
     }
 
     @Test
-    public void toStringOfNothingIsNothing(){
+    public void toStringOfNothingIsNothing() {
         Assert.assertEquals("Nothing", Maybe.nothing().toString());
     }
-    
+
     @Test
-    public void toStringOfJustReflectsValue(){
+    public void toStringOfJustReflectsValue() {
         Assert.assertEquals("Just 1", Maybe.just(1).toString());
     }
 }

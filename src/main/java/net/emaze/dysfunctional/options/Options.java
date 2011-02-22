@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.options;
+    package net.emaze.dysfunctional.options;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.adapting.ArrayIterator;

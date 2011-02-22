@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.options;
 
+import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.delegates.Delegate;
 
 /**
@@ -11,6 +12,7 @@ public class WithJust<R, T> implements Delegate<Maybe<R>, Maybe<T>> {
     public final Delegate<R, T> delegate;
 
     public WithJust(Delegate<R, T> delegate) {
+        dbc.precondition(delegate != null, "cannot create WithJust with a null delegate");
         this.delegate = delegate;
     }
 
