@@ -9,9 +9,15 @@ import net.emaze.dysfunctional.delegates.Delegate;
  */
 public class ByteParser implements Delegate<Byte, String> {
 
+    private final int radix;
+
+    public ByteParser(int radix) {
+        this.radix = radix;
+    }
+
     @Override
     public Byte perform(String parsee) {
         dbc.precondition(parsee != null, "cannot parse a null string");
-        return Byte.parseByte(parsee);
+        return Byte.parseByte(parsee, radix);
     }
 }
