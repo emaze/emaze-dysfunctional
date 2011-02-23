@@ -2,7 +2,6 @@ package net.emaze.dysfunctional.searches;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import net.emaze.dysfunctional.logic.Always;
 import net.emaze.dysfunctional.options.Maybe;
 import org.junit.Assert;
@@ -30,6 +29,12 @@ public class SearchesTest {
     private static Iterable<Object> emptyIterable = Collections.emptyList();
 
     public static class Search {
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallFindWithANullIterable() {
+            final Iterable<Object> iterable = null;
+            Searches.search(iterable, new Always<Object>());
+        }
 
         @Test
         public void searchInEmptyIteratorYieldsNothing() {
@@ -59,6 +64,12 @@ public class SearchesTest {
     public static class Find {
 
         @Test(expected = IllegalArgumentException.class)
+        public void cannotCallFindWithANullIterable() {
+            final Iterable<Object> iterable = null;
+            Searches.find(iterable, new Always<Object>());
+        }
+
+        @Test(expected = IllegalArgumentException.class)
         public void findInEmptyIteratorYieldsException() {
             Searches.find(emptyIterable.iterator(), new Always<Object>());
         }
@@ -83,6 +94,12 @@ public class SearchesTest {
     }
 
     public static class SearchOne {
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallSearchOneWithANullIterable() {
+            final Iterable<Object> iterable = null;
+            Searches.searchOne(iterable, new Always<Object>());
+        }
 
         @Test
         public void searchOneInEmptyIteratorYieldsNothing() {
@@ -115,6 +132,12 @@ public class SearchesTest {
     }
 
     public static class FindOne {
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallFindOneWithANullIterable() {
+            final Iterable<Object> iterable = null;
+            Searches.findOne(iterable, new Always<Object>());
+        }
 
         @Test(expected = IllegalArgumentException.class)
         public void findOneInEmptyIteratorYieldsException() {

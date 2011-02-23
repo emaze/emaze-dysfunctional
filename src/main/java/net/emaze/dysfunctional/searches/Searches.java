@@ -3,6 +3,7 @@ package net.emaze.dysfunctional.searches;
 import java.util.Iterator;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
 import net.emaze.dysfunctional.consumers.Consumers;
+import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.logic.Predicate;
 import net.emaze.dysfunctional.filtering.Filtering;
 import net.emaze.dysfunctional.options.Maybe;
@@ -34,6 +35,7 @@ public abstract class Searches {
      * @return just the element found or nothing
      */
     public static <E> Maybe<E> search(Iterable<E> iterable, Predicate<E> predicate) {
+        dbc.precondition(iterable != null, "cannot call search with a null iterable");
         return search(iterable.iterator(), predicate);
     }
 
@@ -48,7 +50,6 @@ public abstract class Searches {
     public static <E> Maybe<E> search(E[] array, Predicate<E> predicate) {
         return search(new ArrayIterator<E>(array), predicate);
     }
-
 
     /**
      * Lookups the first matching element returning it.
@@ -71,6 +72,7 @@ public abstract class Searches {
      * @return the found element
      */
     public static <E> E find(Iterable<E> iterable, Predicate<E> predicate) {
+        dbc.precondition(iterable != null, "cannot call find with a null iterable");
         return find(iterable.iterator(), predicate);
     }
 
@@ -85,8 +87,6 @@ public abstract class Searches {
     public static <E> E find(E[] array, Predicate<E> predicate) {
         return find(new ArrayIterator<E>(array), predicate);
     }
-
-
 
     /**
      * Lookups the only matching element returning just element if found,
@@ -111,6 +111,7 @@ public abstract class Searches {
      * @return just the element found or nothing
      */
     public static <E> Maybe<E> searchOne(Iterable<E> iterable, Predicate<E> predicate) {
+        dbc.precondition(iterable != null, "cannot call searchOne with a null iterable");
         return searchOne(iterable.iterator(), predicate);
     }
 
@@ -139,6 +140,7 @@ public abstract class Searches {
     public static <E> E findOne(Iterator<E> iterator, Predicate<E> predicate) {
         return Consumers.one(Filtering.filter(iterator, predicate));
     }
+
     /**
      * Lookups the only matching element returning it.
      * @param <E> the element type parameter
@@ -149,6 +151,7 @@ public abstract class Searches {
      * @return the found element
      */
     public static <E> E findOne(Iterable<E> iterable, Predicate<E> predicate) {
+        dbc.precondition(iterable != null, "cannot call findOne with a null iterable");
         return findOne(iterable.iterator(), predicate);
     }
 
