@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.ranges;
 
 import java.util.Comparator;
+import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.iterations.OneTimeIterable;
 import net.emaze.dysfunctional.order.ComparableComparator;
 import net.emaze.dysfunctional.order.IntegerSequencingPolicy;
@@ -21,6 +22,7 @@ public abstract class Counts {
     }
 
     public static <T1, T2> Iterable<Pair<T1, T2>> counted(Iterable<T2> iterable, Range<T1> range) {
+        dbc.precondition(iterable != null, "cannot call counted with a null iterable");
         return new OneTimeIterable<Pair<T1, T2>>(new CountedIterator<T1, T2>(iterable.iterator(), range));
     }
 }
