@@ -3,6 +3,7 @@ package net.emaze.dysfunctional.filtering;
 import java.util.Iterator;
 import net.emaze.dysfunctional.logic.Predicate;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
+import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  * @author rferranti
@@ -28,6 +29,7 @@ public abstract class Filtering {
      * @return an Iterator<E> containing the elements for which the predicate evaluates to true
      */
     public static <E> Iterator<E> filter(Iterable<E> iterable, Predicate<E> predicate) {
+        dbc.precondition(iterable != null, "cannot call filter with a null iterable");
         return filter(iterable.iterator(), predicate);
     }
 
@@ -63,6 +65,7 @@ public abstract class Filtering {
      * @return first element from the iterable (throws IllegalArgumentException if the iterable is empty)
      */
     public static <E> Iterator<E> first(long howMany, Iterable<E> from) {
+        dbc.precondition(from != null, "cannot call first with a null iterable");
         return first(howMany, from.iterator());
     }
 
@@ -87,6 +90,7 @@ public abstract class Filtering {
      * @return last element of the iterable (throws IllegalArgumentException if the iterable is empty)
      */
     public static <E> Iterator<E> last(int howMany, Iterable<E> from) {
+        dbc.precondition(from != null, "cannot call last with a null iterable");
         return last(howMany, from.iterator());
     }
 
@@ -115,6 +119,7 @@ public abstract class Filtering {
     }
 
     public static <E> Iterator<E> atMostlast(int howMany, Iterable<E> from) {
+        dbc.precondition(from != null, "cannot call atMostlast with a null iterable");
         return atMostlast(howMany, from.iterator());
     }
 
@@ -189,6 +194,7 @@ public abstract class Filtering {
      * @return
      */
     public static <E> Iterator<E> nth(long count, Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot call nth with a null iterable");
         return nth(count, iterable.iterator());
     }
 
@@ -222,6 +228,7 @@ public abstract class Filtering {
      * @return
      */
     public static <E> Iterator<E> at(long index, Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot call at with a null iterable");
         return at(index, iterable.iterator());
     }
 
@@ -257,6 +264,7 @@ public abstract class Filtering {
      * @return
      */
     public static <E> Iterator<E> slice(long from, long howMany, Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot call slice with a null iterable");
         return take(howMany, drop(from, iterable.iterator()));
     }
 
