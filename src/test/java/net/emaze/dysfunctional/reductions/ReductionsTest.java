@@ -33,7 +33,7 @@ public class ReductionsTest {
     public void canCountAsIntegerFromIterator() {
         Assert.assertEquals(2l, Reductions.counti(list.iterator()));
     }
-    
+
     @Test
     public void canReduceFromIterator() {
         Assert.assertEquals(Long.valueOf(2l), Reductions.reduce(list.iterator(), new Count<Integer>(), 0l));
@@ -49,5 +49,21 @@ public class ReductionsTest {
         Assert.assertEquals(Long.valueOf(2l), Reductions.reduce(array, new Count<Integer>(), 0l));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void cannotCallReduceWithNullIterable() {
+        final Iterable<Object> iterable = null;
+        Reductions.reduce(iterable, new Count<Object>(), 0L);
+    }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void cannotCallCountWithNullIterable() {
+        final Iterable<Object> iterable = null;
+        Reductions.count(iterable);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void cannotCallCountiWithNullIterable() {
+        final Iterable<Object> iterable = null;
+        Reductions.counti(iterable);
+    }
 }

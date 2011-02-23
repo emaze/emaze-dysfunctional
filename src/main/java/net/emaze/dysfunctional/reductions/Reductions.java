@@ -38,6 +38,7 @@ public abstract class Reductions {
      * @return
      */
     public static <R, E> R reduce(Iterable<E> iterable, BinaryDelegate<R, R, E> delegate, R init) {
+        dbc.precondition(iterable != null, "cannot call reduce with a null iterable");
         return reduce(iterable.iterator(), delegate, init);
     }
 
@@ -71,6 +72,7 @@ public abstract class Reductions {
      * @return
      */
     public static <E> long count(Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot call count with a null iterable");
         return count(iterable.iterator());
     }
 
@@ -103,6 +105,7 @@ public abstract class Reductions {
      * @return
      */
     public static <E> int counti(Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot call counti with a null iterable");
         return counti(iterable.iterator());
     }
 
