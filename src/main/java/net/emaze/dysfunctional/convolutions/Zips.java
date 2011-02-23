@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.convolutions;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
+import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.iterations.OneTimeIterable;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.tuples.Pair;
@@ -20,6 +21,8 @@ public abstract class Zips {
      * @return the resulting shortest convolved iterator wrapped in a OneTimeIterable
      */
     public static <T1, T2> Iterable<Pair<T1, T2>> shortest(Iterable<T1> former, Iterable<T2> latter) {
+        dbc.precondition(former != null, "cannot call shortest with a null former iterable");
+        dbc.precondition(latter != null, "cannot call shortest with a null latter iterable");
         return shortest(former.iterator(), latter.iterator());
     }
 
@@ -57,6 +60,8 @@ public abstract class Zips {
      * @return the resulting longest convolved iterator wrapped in a OneTimeIterable
      */
     public static <T1, T2> Iterable<Pair<Maybe<T1>, Maybe<T2>>> longest(Iterable<T1> former, Iterable<T2> latter) {
+        dbc.precondition(former != null, "cannot call longest with a null former iterable");
+        dbc.precondition(latter != null, "cannot call longest with a null latter iterable");
         return longest(former.iterator(), latter.iterator());
     }
 
