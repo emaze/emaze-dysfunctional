@@ -6,6 +6,7 @@ import java.util.Iterator;
 import net.emaze.dysfunctional.consumers.EagerConsumer;
 import java.util.List;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
+import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.delegates.Action;
 import net.emaze.dysfunctional.delegates.Delegate;
 import net.emaze.dysfunctional.logic.Predicate;
@@ -23,6 +24,9 @@ public abstract class Iterations {
      * @return true if ANY predicate application yields true (gives up on the first positive match)
      */
     public static <E> boolean any(Iterable<E> iterable, Predicate<E> predicate) {
+        dbc.precondition(iterable != null, "cannot call any with a null iterable");
+        dbc.precondition(predicate != null, "cannot call any with a null predicate");
+
         for (E element : iterable) {
             if (predicate.test(element)) {
                 return true;
@@ -58,6 +62,9 @@ public abstract class Iterations {
      * @return true if EVERY predicate application yields true
      */
     public static <E> boolean every(Iterable<E> iterable, Predicate<E> predicate) {
+        dbc.precondition(iterable != null, "cannot call every with a null iterable");
+        dbc.precondition(predicate != null, "cannot call every with a null predicate");
+
         for (E element : iterable) {
             if (!predicate.test(element)) {
                 return false;
@@ -92,6 +99,9 @@ public abstract class Iterations {
      * @param action the action applied to every element fetched from the iterable
      */
     public static <E> void each(Iterable<E> iterable, Action<E> action) {
+        dbc.precondition(iterable != null, "cannot call each with a null iterable");
+        dbc.precondition(action != null, "cannot call each with a null action");
+
         for (E element : iterable) {
             action.perform(element);
         }
@@ -166,6 +176,7 @@ public abstract class Iterations {
      * @return an Iterator<R> 
      */
     public static <R, E> Iterator<R> transform(Iterable<E> iterable, Delegate<R, E> delegate) {
+        dbc.precondition(iterable != null, "cannot call transform with a null iterable");
         return transform(iterable.iterator(), delegate);
     }
 

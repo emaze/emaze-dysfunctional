@@ -1,11 +1,13 @@
 package net.emaze.dysfunctional.iterations;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.delegates.Action;
 import net.emaze.dysfunctional.delegates.Identity;
+import net.emaze.dysfunctional.delegates.Noop;
 import net.emaze.dysfunctional.logic.IsTrue;
 import org.junit.Assert;
 import org.junit.Test;
@@ -72,6 +74,17 @@ public class IterationsTest {
             Iterator<Integer> got = Iterations.transform(source, new Identity<Integer>());
             Assert.assertEquals(Arrays.asList(source), Consumers.all(got));
         }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallTransformWithNullIterable() {
+            final Iterable<Object> iterable = null;
+            Iterations.transform(iterable, new Identity<Object>());
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallTransformWithNullDelegate() {
+            Iterations.transform(new ArrayList(), null);
+        }
     }
 
     public static class OneTime {
@@ -107,6 +120,17 @@ public class IterationsTest {
             boolean got = Iterations.any(new Boolean[]{false}, new IsTrue());
             Assert.assertFalse(got);
         }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallAnyWithNullIterable() {
+            final Iterable iterable = null;
+            Iterations.any(iterable, new IsTrue());
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallAnyWithNullPredicate() {
+            Iterations.any(new ArrayList(), null);
+        }
     }
 
     public static class Every {
@@ -134,11 +158,22 @@ public class IterationsTest {
             boolean got = Iterations.every(new Boolean[]{false}, new IsTrue());
             Assert.assertFalse(got);
         }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallEveryWithNullIterable() {
+            final Iterable iterable = null;
+            Iterations.every(iterable, new IsTrue());
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallEveryWithNullPredicate() {
+            Iterations.every(new ArrayList(), null);
+        }
     }
 
     public static class Each {
 
-        public static class CountingAction<T> implements Action<T>{
+        public static class CountingAction<T> implements Action<T> {
 
             public int count = 0;
 
@@ -146,7 +181,6 @@ public class IterationsTest {
             public void perform(T element) {
                 ++count;
             }
-
         }
 
         @Test
@@ -168,6 +202,18 @@ public class IterationsTest {
             CountingAction<Object> counter = new CountingAction<Object>();
             Iterations.each(new Object[]{new Object(), new Object()}, counter);
             Assert.assertEquals(2, counter.count);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallEachWithNullIterable() {
+            final Iterable<Object> iterable = null;
+            Iterations.each(iterable, new Noop<Object>());
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallEachWithNullAction() {
+            final Iterable<Object> iterable = new ArrayList<Object>();
+            Iterations.each(iterable, null);
         }
     }
 }
