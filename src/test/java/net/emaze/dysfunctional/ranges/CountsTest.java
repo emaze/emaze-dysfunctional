@@ -18,26 +18,26 @@ public class CountsTest {
 
     @Test
     public void canGetCountedIterator() {
-        List<String> bucket = Arrays.asList("a","b");
-        Iterable<Pair<Integer,String>> iterable = Counts.counted(bucket);
-        Assert.assertEquals(Arrays.asList(Pair.of(0,"a"), Pair.of(1,"b")), Consumers.all(iterable));
+        List<String> bucket = Arrays.asList("a", "b");
+        Iterable<Pair<Integer, String>> iterable = Counts.counted(bucket);
+        Assert.assertEquals(Arrays.asList(Pair.of(0, "a"), Pair.of(1, "b")), Consumers.all(iterable));
     }
 
     @Test
     public void canGetCountedIteratorWithRange() {
         Range<Integer> range = new DenseRange<Integer>(new IntegerSequencingPolicy(), new ComparableComparator<Integer>(), 1, 10);
-        List<String> bucket = Arrays.asList("a","b");
-        Iterable<Pair<Integer,String>> iterable = Counts.counted(bucket, range);
-        Assert.assertEquals(Arrays.asList(Pair.of(1,"a"), Pair.of(2,"b")), Consumers.all(iterable));
+        List<String> bucket = Arrays.asList("a", "b");
+        Iterable<Pair<Integer, String>> iterable = Counts.counted(bucket, range);
+        Assert.assertEquals(Arrays.asList(Pair.of(1, "a"), Pair.of(2, "b")), Consumers.all(iterable));
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void cannotCallCountedWithANullIterable() {
         final Iterable<Object> iterable = null;
         Counts.counted(iterable);
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void cannotCallCountedWithANullIterableAndARange() {
         final Iterable<Object> iterable = null;
         final StubRange range = new StubRange();
@@ -78,9 +78,7 @@ public class CountsTest {
 
         @Override
         public int compareTo(Range<Object> o) {
-           return 0;
+            return 0;
         }
-
     }
-
 }
