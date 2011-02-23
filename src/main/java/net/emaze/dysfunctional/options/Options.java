@@ -18,7 +18,7 @@ public abstract class Options {
     }
 
     public static <R, T> Iterator<Maybe<R>> transform(Iterable<Maybe<T>> maybes, Delegate<R, T> delegate) {
-        dbc.precondition(maybes != null, "cannot perform transform on a null iterator of Maybes");
+        dbc.precondition(maybes != null, "cannot perform transform on a null iterable of Maybes");
         return Options.transform(maybes.iterator(), delegate);
     }
 
@@ -32,7 +32,7 @@ public abstract class Options {
     }
 
     public static <T> Iterator<T> justs(Iterable<Maybe<T>> maybes) {
-        dbc.precondition(maybes != null, "cannot perform justs on a null iterator of Maybes");
+        dbc.precondition(maybes != null, "cannot perform justs on a null iterable of Maybes");
         return Options.justs(maybes.iterator());
     }
 
