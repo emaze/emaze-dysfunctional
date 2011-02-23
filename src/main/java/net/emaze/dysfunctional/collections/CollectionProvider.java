@@ -17,6 +17,7 @@ public class CollectionProvider<C extends Collection<E>, E> implements Provider<
         this.collection = collection;
     }
 
+    @Override
     public C provide() {
         return collection;
     }
