@@ -71,7 +71,7 @@ public class FilteringTest {
     @Test(expected = IllegalArgumentException.class)
     public void cannotCallAtMostLastWithANullIterable() {
         final Iterable<Object> iterable = null;
-        Filtering.atMostlast(1, iterable);
+        Filtering.atMostLast(1, iterable);
     }
 
     @Test

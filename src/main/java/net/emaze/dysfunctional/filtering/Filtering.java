@@ -118,17 +118,17 @@ public abstract class Filtering {
         return last(howMany, new ArrayIterator<E>(from));
     }
 
-    public static <E> Iterator<E> atMostlast(int howMany, Iterable<E> from) {
-        dbc.precondition(from != null, "cannot call atMostlast with a null iterable");
-        return atMostlast(howMany, from.iterator());
+    public static <E> Iterator<E> atMostLast(int howMany, Iterable<E> from) {
+        dbc.precondition(from != null, "cannot call atMostLast with a null iterable");
+        return atMostLast(howMany, from.iterator());
     }
 
-    public static <E> Iterator<E> atMostlast(int howMany, Iterator<E> from) {
+    public static <E> Iterator<E> atMostLast(int howMany, Iterator<E> from) {
         return new AtMostMemoryIterator<E>(from, howMany);
     }
 
-    public static <E> Iterator<E> atMostlast(int howMany, E[] from) {
-        return atMostlast(howMany, new ArrayIterator<E>(from));
+    public static <E> Iterator<E> atMostLast(int howMany, E[] from) {
+        return atMostLast(howMany, new ArrayIterator<E>(from));
     }
 
     /**
