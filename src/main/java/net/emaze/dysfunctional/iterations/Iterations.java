@@ -1,11 +1,11 @@
 package net.emaze.dysfunctional.iterations;
 
 import java.util.ArrayList;
-import net.emaze.dysfunctional.adapting.ArrayIterator;
 import java.util.Iterator;
-import net.emaze.dysfunctional.consumers.EagerConsumer;
 import java.util.List;
+import net.emaze.dysfunctional.adapting.ArrayIterator;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
+import net.emaze.dysfunctional.consumers.EagerConsumer;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.delegates.Action;
 import net.emaze.dysfunctional.delegates.Delegate;
