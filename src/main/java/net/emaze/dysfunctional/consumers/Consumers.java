@@ -36,6 +36,7 @@ public abstract class Consumers {
      * @return the first element
      */
     public static <E> E first(Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot call first with a null iterable");
         return first(iterable.iterator());
     }
 
@@ -73,6 +74,7 @@ public abstract class Consumers {
      * @return the only element
      */
     public static <E> E one(Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot call one with a null iterable");
         return one(iterable.iterator());
     }
 
@@ -109,6 +111,7 @@ public abstract class Consumers {
      * @return the collection filled with iterator values
      */
     public static <R extends Collection<E>, E> R all(Iterable<E> iterable, R collection) {
+        dbc.precondition(iterable != null, "cannot call all with a null iterable");
         return Consumers.all(iterable.iterator(), collection);
     }
 
@@ -145,6 +148,7 @@ public abstract class Consumers {
      * @return a collection filled with iterator values
      */
     public static <E, R extends Collection<E>> R all(Iterable<E> iterable, Provider<R> provider) {
+        dbc.precondition(iterable != null, "cannot call first with a null iterable");
         return Consumers.all(iterable.iterator(), provider);
     }
 
@@ -207,6 +211,7 @@ public abstract class Consumers {
      * @return
      */
     public static <E> E last(Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot call last with a null iterable");
         return last(iterable.iterator());
     }
 
@@ -237,6 +242,7 @@ public abstract class Consumers {
      * @param outputIterator
      */
     public static <E> void pipe(Iterable<E> iterable, OutputIterator<E> outputIterator) {
+        dbc.precondition(iterable != null, "cannot call pipe with a null iterable");
         pipe(iterable.iterator(), outputIterator);
     }
 
@@ -267,6 +273,7 @@ public abstract class Consumers {
      * @return
      */
     public static <E> Maybe<E> maybeFirst(Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot call maybeFirst with a null iterable");
         return maybeFirst(iterable.iterator());
     }
 
@@ -302,6 +309,7 @@ public abstract class Consumers {
      * @return
      */
     public static <E> Maybe<E> maybeOne(Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot call maybeOne with a null iterable");
         return maybeOne(iterable.iterator());
     }
 

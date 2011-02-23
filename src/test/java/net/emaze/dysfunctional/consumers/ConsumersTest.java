@@ -2,10 +2,12 @@ package net.emaze.dysfunctional.consumers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
+import net.emaze.dysfunctional.collections.CollectionProvider;
 import net.emaze.dysfunctional.options.Maybe;
 import org.junit.Assert;
 import org.junit.Test;
@@ -48,6 +50,12 @@ public class ConsumersTest {
         public void canFetchFirstFromArray() {
             Assert.assertEquals(Integer.valueOf(1), Consumers.first(array));
         }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallFirstWithNullIterable() {
+            final Iterable<Object> iterable = null;
+            Consumers.first(iterable);
+        }
     }
 
     public static class One {
@@ -75,6 +83,12 @@ public class ConsumersTest {
         @Test
         public void oneWithSingleValueArrayYieldsValue() {
             Assert.assertEquals(Integer.valueOf(1), Consumers.one(new Integer[]{1}));
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallOneWithNullIterable() {
+            final Iterable<Object> iterable = null;
+            Consumers.one(iterable);
         }
     }
 
@@ -134,6 +148,36 @@ public class ConsumersTest {
             List<Integer> got = Consumers.all(array, new ArrayListFactory<Integer>());
             Assert.assertEquals(list, got);
         }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallAllWithNullIterable() {
+            final Iterable<Object> iterable = null;
+            Consumers.all(iterable);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallAllWithNullCollection() {
+            final Collection<Integer> collection = null;
+            Consumers.all(list, collection);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallAllWithANullIterableAndACollection() {
+            final Iterable<Integer> iterable = null;
+            Consumers.all(iterable, list);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallAllWithNullCollectionProvider() {
+            final CollectionProvider collectionProvider = null; // TODO: fix generics
+            Consumers.all(list, collectionProvider);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallAllWithNullIterableAndACollectionProvider() { // TODO: fix generics
+            final Iterable<Integer> iterable = null;
+            Consumers.all(iterable, new CollectionProvider(list));
+        }
     }
 
     public static class Last {
@@ -151,6 +195,12 @@ public class ConsumersTest {
         @Test
         public void canFetchLastFromArray() {
             Assert.assertEquals(Integer.valueOf(2), Consumers.last(array));
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallLastWithNullIterable() {
+            final Iterable<Object> iterable = null;
+            Consumers.last(iterable);
         }
     }
 
@@ -179,6 +229,25 @@ public class ConsumersTest {
             Consumers.pipe(in, output);
             Assert.assertEquals("123", output.toString());
         }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallPipeWithNullIterable() {
+            final Iterable<Object> iterable = null;
+            final OutputIterator<Object> outputIterator = new StubOutputIterator();
+            Consumers.pipe(iterable, outputIterator);
+        }
+
+        private static class StubOutputIterator implements OutputIterator<Object> {
+
+            @Override
+            public boolean hasNext() {
+                return false;
+            }
+
+            @Override
+            public void next(Object element) {
+            }
+        }
     }
 
     public static class MaybeFirst {
@@ -201,6 +270,12 @@ public class ConsumersTest {
         @Test
         public void maybeFirstWithNonEmptyArrayYieldsJustTheFirst() {
             Assert.assertEquals(Maybe.just(1), Consumers.maybeFirst(new Integer[]{1, 2}));
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallMaybeFirstWithNullIterable() {
+            final Iterable<Object> iterable = null;
+            Consumers.maybeFirst(iterable);
         }
     }
 
@@ -229,6 +304,12 @@ public class ConsumersTest {
         @Test
         public void maybeOneWithSingleValueArrayYieldsJustValue() {
             Assert.assertEquals(Maybe.just(1), Consumers.maybeOne(new Integer[]{1}));
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallMaybeOneWithNullIterable() {
+            final Iterable<Object> iterable = null;
+            Consumers.maybeOne(iterable);
         }
     }
 
@@ -275,6 +356,12 @@ public class ConsumersTest {
         public void callingMaybeLastWithNullArrayYieldException() {
             Object[] aNullArray = null;
             Consumers.maybeLast(aNullArray);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallMaybeLastWithNullIterable() {
+            final Iterable<Object> iterable = null;
+            Consumers.maybeLast(iterable);
         }
     }
 }
