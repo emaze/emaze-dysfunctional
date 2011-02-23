@@ -6,7 +6,6 @@ import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  * ripped from jmanner, please keep in sync
- * @param <T> 
  * @author rferranti
  */
 public class ConstructorType {
