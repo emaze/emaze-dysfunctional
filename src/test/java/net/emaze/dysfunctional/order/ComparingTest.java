@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.order;
 
-import java.lang.Integer;
 import net.emaze.dysfunctional.tuples.Pair;
 import org.junit.Assert;
 import org.junit.Test;
@@ -144,5 +143,55 @@ public class ComparingTest {
     @Test
     public void canEvaluateOrdered() {
         Assert.assertEquals(Pair.of(1, 2), Comparing.ordered(1, 2, new ComparableComparator<Integer>()));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void cannotCallLhsIsGreaterWithANullComparator() {
+        Comparing.lhsIsGreater(1, 1, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void cannotCallLhsIsGreaterThanEqualsWithANullComparator() {
+        Comparing.lhsIsGreaterThanEquals(1, 1, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void cannotCallLhsIsLesserWithANullComparator() {
+        Comparing.lhsIsLesser(1, 1, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void cannotCallLhsIsLesserThanEqualsWithANullComparator() {
+        Comparing.lhsIsGreaterThanEquals(1, 1, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void cannotCallSameOrderWithANullComparator() {
+        Comparing.sameOrder(1, 1, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void cannotCallLhsIsGreaterWithANullLhs() {
+        Comparing.lhsIsGreater(null, 1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void cannotCallLhsIsGreaterThanEqualsWithANullLhs() {
+        Comparing.lhsIsGreaterThanEquals(null, 1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void cannotCallLhsIsLesserWithANullLhs() {
+        Comparing.lhsIsLesser(null, 1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void cannotCallLhsIsLesserThanEqualsWithANullLhs() {
+        Comparing.lhsIsGreaterThanEquals(null, 1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void cannotCallSameOrderWithANullLhs() {
+        Comparing.sameOrder(null, 1);
     }
 }
