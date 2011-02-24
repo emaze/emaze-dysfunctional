@@ -31,6 +31,7 @@ public abstract class Pagination {
         dbc.stateprecondition(page.first() <= Integer.MAX_VALUE, "iterator size overflows an integer");
         return Pair.of(page.first().intValue(), page.second());
     }
+
     /**
      * Creates a page view of an iterator adding elements to the collection.
      * @param <T> the element type parameter
@@ -56,8 +57,10 @@ public abstract class Pagination {
      * @return a pair containing the iterator size and the requested page
      */
     public static <T> Pair<Integer, List<T>> page(long start, long howMany, Iterable<T> iterable) {
+        dbc.precondition(iterable != null, "cannot call page with a null iterable");
         return Pagination.page(start, howMany, iterable.iterator());
     }
+
     /**
      * Creates a page view of an iterable adding elements to the collection.
      * @param <T> the element type parameter
@@ -69,6 +72,7 @@ public abstract class Pagination {
      * @return a pair containing the iterator size and the requested page
      */
     public static <T, C extends Collection<T>> Pair<Integer, C> page(long start, long howMany, Iterable<T> iterable, C collection) {
+        dbc.precondition(iterable != null, "cannot call page with a null iterable");
         return Pagination.page(start, howMany, iterable.iterator(), collection);
     }
 
@@ -83,6 +87,7 @@ public abstract class Pagination {
     public static <T> Pair<Integer, List<T>> page(long start, long howMany, T[] array) {
         return Pagination.page(start, howMany, new ArrayIterator<T>(array));
     }
+
     /**
      * Creates a page view of an array adding elements to the collection.
      * @param <T> the element type parameter
@@ -93,7 +98,7 @@ public abstract class Pagination {
      * @param collection the output collection
      * @return a pair containing the iterator size and the requested page
      */
-    public static <T, C extends Collection<T>> Pair<Integer, C>  page(long start, long howMany, T[] array, C collection) {
+    public static <T, C extends Collection<T>> Pair<Integer, C> page(long start, long howMany, T[] array, C collection) {
         return Pagination.page(start, howMany, new ArrayIterator<T>(array), collection);
     }
 
@@ -108,6 +113,7 @@ public abstract class Pagination {
     public static <T> Pair<Integer, List<T>> page(long start, long howMany, Collection<T> collection) {
         return Pair.of(collection.size(), Consumers.all(Filtering.slice(start, howMany, collection)));
     }
+
     /**
      * Creates a page view of a collection adding elements to the out collection.
      * @param <T> the element type parameter
@@ -161,6 +167,7 @@ public abstract class Pagination {
      * @return a pair containing the iterator size and the requested page
      */
     public static <T> Pair<Long, List<T>> pagel(long start, long howMany, Iterable<T> iterable) {
+        dbc.precondition(iterable != null, "cannot call page with a null iterable");
         return Pagination.pagel(start, howMany, iterable.iterator());
     }
 
@@ -175,6 +182,7 @@ public abstract class Pagination {
      * @return a pair containing the iterator size and the requested page
      */
     public static <T, C extends Collection<T>> Pair<Long, C> pagel(long start, long howMany, Iterable<T> iterable, C collection) {
+        dbc.precondition(iterable != null, "cannot call pagel with a null iterable");
         return Pagination.pagel(start, howMany, iterable.iterator(), collection);
     }
 
@@ -213,6 +221,7 @@ public abstract class Pagination {
      * @return a pair containing the iterator size and the requested page
      */
     public static <T> Pair<Long, List<T>> pagel(long start, long howMany, Collection<T> collection) {
+        dbc.precondition(collection != null, "cannot call pagel with a null collection");
         return Pair.of((long) collection.size(), Consumers.all(Filtering.slice(start, howMany, collection)));
     }
 
@@ -227,6 +236,7 @@ public abstract class Pagination {
      * @return a pair containing the iterator size and the requested page
      */
     public static <T, C extends Collection<T>> Pair<Long, C> pagel(long start, long howMany, Collection<T> in, C out) {
+        dbc.precondition(in != null, "cannot call pagel with a null input collection");
         return Pair.of((long) in.size(), Consumers.all(Filtering.slice(start, howMany, in), out));
     }
 }
