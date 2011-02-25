@@ -60,7 +60,9 @@ public abstract class Searches {
      * @return the found element
      */
     public static <E> E find(Iterator<E> iterator, Predicate<E> predicate) {
-        return Consumers.first(Filtering.filter(iterator, predicate));
+        final Iterator<E> filter = Filtering.filter(iterator, predicate);
+        dbc.precondition(filter.hasNext(), "no element matches the given predicate");
+        return Consumers.first(filter);
     }
 
     /**
