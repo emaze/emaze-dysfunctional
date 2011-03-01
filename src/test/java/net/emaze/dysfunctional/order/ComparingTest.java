@@ -162,7 +162,12 @@ public class ComparingTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void cannotCallLhsIsLesserThanEqualsWithANullComparator() {
-        Comparing.lhsIsGreaterThanEquals(1, 1, null);
+        Comparing.lhsIsLesserThanEquals(1, 1, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void cannotCallLhsIsLesserThanEqualsWithANullComparable() {
+        Comparing.lhsIsLesserThanEquals(null, 1);
     }
 
     @Test(expected = IllegalArgumentException.class)
