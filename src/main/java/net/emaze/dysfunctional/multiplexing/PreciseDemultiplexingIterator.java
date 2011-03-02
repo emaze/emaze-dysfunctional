@@ -14,13 +14,13 @@ import net.emaze.dysfunctional.options.Maybe;
 public class PreciseDemultiplexingIterator<T> implements Iterator<List<Maybe<T>>> {
 
     private final Iterator<Maybe<T>> iterator;
-    private final int channelsCount;
+    private final int channelSize;
 
-    public PreciseDemultiplexingIterator(int channelsCount, Iterator<Maybe<T>> iterator) {
-        dbc.precondition(channelsCount > 0, "cannot build a PreciseDemultiplexingIterator with channelsCount < 1");
+    public PreciseDemultiplexingIterator(int channelSize, Iterator<Maybe<T>> iterator) {
+        dbc.precondition(channelSize > 0, "cannot build a PreciseDemultiplexingIterator with channelsCount < 1");
         dbc.precondition(iterator != null, "cannot build a PreciseDemultiplexingIterator with a null iterator");
         this.iterator = iterator;
-        this.channelsCount = channelsCount;
+        this.channelSize = channelSize;
     }
 
     @Override
@@ -30,8 +30,8 @@ public class PreciseDemultiplexingIterator<T> implements Iterator<List<Maybe<T>>
 
     @Override
     public List<Maybe<T>> next() {
-        final List<Maybe<T>> out = new ArrayList<Maybe<T>>(channelsCount);
-        for (int i = 0; i != channelsCount; ++i) {
+        final List<Maybe<T>> out = new ArrayList<Maybe<T>>(channelSize);
+        for (int i = 0; i != channelSize; ++i) {
             out.add(iterator.next());
         }
         return out;

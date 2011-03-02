@@ -15,36 +15,36 @@ import net.emaze.dysfunctional.options.Maybe;
 public class DemultiplexingIterator<T> implements Iterator<List<T>> {
 
     private final Iterator<T> iterator;
-    private final int channelsCount;
+    private final int channelSize;
     private Maybe<List<T>> prefetched = Maybe.nothing();
 
-    public DemultiplexingIterator(int channelsCount, Iterator<T> iterator) {
-        dbc.precondition(channelsCount > 0, "channels count must be > 0");
+    public DemultiplexingIterator(int channelSize, Iterator<T> iterator) {
+        dbc.precondition(channelSize > 0, "channels count must be > 0");
         dbc.precondition(iterator != null, "iterator cannot be null");
         this.iterator = iterator;
-        this.channelsCount = channelsCount;
+        this.channelSize = channelSize;
     }
 
     @Override
     public boolean hasNext() {
         if(!prefetched.hasValue()){
-            prefetched = Maybe.just(prefetch(iterator, channelsCount));
+            prefetched = Maybe.just(prefetch(iterator, channelSize));
         }
-        return prefetched.value().size() == channelsCount;
+        return prefetched.value().size() == channelSize;
     }
 
     @Override
     public List<T> next() {
         if(prefetched.hasValue()){
-            if(prefetched.value().size() != channelsCount){
+            if(prefetched.value().size() != channelSize){
                 throw new NoSuchElementException("iterator is not squared");
             }
             final List<T> value = prefetched.value();
             prefetched = Maybe.nothing();
             return value;
         }
-        final List<T> out = new ArrayList<T>(channelsCount);
-        for (int i = 0; i != channelsCount; ++i) {
+        final List<T> out = new ArrayList<T>(channelSize);
+        for (int i = 0; i != channelSize; ++i) {
             out.add(iterator.next());
         }
         return out;
