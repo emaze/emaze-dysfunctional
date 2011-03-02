@@ -153,56 +153,56 @@ public abstract class Multiplexing {
     /**
      * 
      * @param <E>
-     * @param channels
+     * @param channelSize
      * @param iterable
      * @return
      */
-    public static <E> Iterator<List<E>> demux(int channels, Iterable<E> iterable) {
-        return demux(channels, iterable.iterator());
+    public static <E> Iterator<List<E>> demux(int channelSize, Iterable<E> iterable) {
+        return demux(channelSize, iterable.iterator());
     }
 
     /**
      * 
      * @param <E>
-     * @param channels
+     * @param channelSize
      * @param array
      * @return
      */
-    public static <E> Iterator<List<E>> demux(int channels, E[] array) {
-        return demux(channels, new ArrayIterator<E>(array));
+    public static <E> Iterator<List<E>> demux(int channelSize, E[] array) {
+        return demux(channelSize, new ArrayIterator<E>(array));
     }
 
     /**
      * 
      * @param <E>
-     * @param channels
+     * @param channelSize
      * @param iterator
      * @return
      */
-    public static <E> Iterator<List<Maybe<E>>> demuxl(int channels, Iterator<Maybe<E>> iterator) {
-        return new PreciseDemultiplexingIterator<E>(channels, iterator);
+    public static <E> Iterator<List<Maybe<E>>> demuxl(int channelSize, Iterator<Maybe<E>> iterator) {
+        return new PreciseDemultiplexingIterator<E>(channelSize, iterator);
     }
 
     /**
      * 
      * @param <E>
-     * @param channels
+     * @param channelSize
      * @param iterable
      * @return
      */
-    public static <E> Iterator<List<Maybe<E>>> demuxl(int channels, Iterable<Maybe<E>> iterable) {
-        return new PreciseDemultiplexingIterator<E>(channels, iterable.iterator());
+    public static <E> Iterator<List<Maybe<E>>> demuxl(int channelSize, Iterable<Maybe<E>> iterable) {
+        return new PreciseDemultiplexingIterator<E>(channelSize, iterable.iterator());
     }
 
     /**
      * 
      * @param <E>
-     * @param channels
+     * @param channelSize
      * @param array
      * @return
      */
-    public static <E> Iterator<List<Maybe<E>>> demuxl(int channels, Maybe<E>[] array) {
-        return demuxl(channels, new ArrayIterator<Maybe<E>>(array));
+    public static <E> Iterator<List<Maybe<E>>> demuxl(int channelSize, Maybe<E>[] array) {
+        return demuxl(channelSize, new ArrayIterator<Maybe<E>>(array));
     }
 
     /**
