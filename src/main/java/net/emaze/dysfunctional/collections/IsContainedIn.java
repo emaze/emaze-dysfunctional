@@ -1,7 +1,8 @@
-package net.emaze.dysfunctional.logic;
+package net.emaze.dysfunctional.collections;
 
 import java.util.Collection;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.logic.Predicate;
 
 /**
  *
