@@ -142,12 +142,12 @@ public abstract class Multiplexing {
     /**
      * 
      * @param <E>
-     * @param channels
+     * @param channelSize
      * @param iterator
      * @return
      */
-    public static <E> Iterator<List<E>> demux(int channels, Iterator<E> iterator) {
-        return new DemultiplexingIterator<E>(channels, iterator);
+    public static <E> Iterator<List<E>> demux(int channelSize, Iterator<E> iterator) {
+        return new DemultiplexingIterator<E>(channelSize, iterator);
     }
 
     /**
