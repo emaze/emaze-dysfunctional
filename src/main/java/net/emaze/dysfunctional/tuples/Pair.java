@@ -5,26 +5,26 @@ import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
 /**
- * Two things
- * @param <E1>
- * @param <E2> 
+ * Two things.
+ * @param <T1> the first element type
+ * @param <T2> the second element type
  * @author rferranti
  */
-public class Pair<E1, E2> {
+public class Pair<T1, T2> {
 
-    private final E1 first;
-    private final E2 second;
+    private final T1 first;
+    private final T2 second;
 
-    public Pair(E1 f, E2 l) {
+    public Pair(T1 f, T2 l) {
         this.first = f;
         this.second = l;
     }
 
-    public E1 first() {
+    public T1 first() {
         return first;
     }
 
-    public E2 second() {
+    public T2 second() {
         return second;
     }
 
@@ -33,7 +33,7 @@ public class Pair<E1, E2> {
         if (rhs instanceof Pair == false) {
             return false;
         }
-        final Pair<E1, E2> other = Casts.widen(rhs);
+        final Pair<T1, T2> other = Casts.widen(rhs);
         return new EqualsBuilder().append(this.first, other.first).
                 append(this.second, other.second).
                 isEquals();
@@ -51,7 +51,7 @@ public class Pair<E1, E2> {
         return String.format("(%s,%s)", first, second);
     }
 
-    public static <E1, E2> Pair<E1, E2> of(E1 first, E2 second) {
-        return new Pair<E1, E2>(first, second);
+    public static <T1, T2> Pair<T1, T2> of(T1 first, T2 second) {
+        return new Pair<T1, T2>(first, second);
     }
 }

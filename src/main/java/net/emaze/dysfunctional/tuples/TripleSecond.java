@@ -4,9 +4,10 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.delegates.Delegate;
 
 /**
- *
- * @param <T1>
- * @param <T2> 
+ * Fetches the second element out of a triple.
+ * @param <T1> the first element type
+ * @param <T2> the second element type
+ * @param <T3> the third element type
  * @author rferranti
  */
 public class TripleSecond<T1, T2, T3> implements Delegate<T2, Triple<T1, T2, T3>> {

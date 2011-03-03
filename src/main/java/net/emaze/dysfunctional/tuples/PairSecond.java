@@ -4,9 +4,9 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.delegates.Delegate;
 
 /**
- *
- * @param <T1>
- * @param <T2> 
+ * Fetches the second element out of a pair.
+ * @param <T1> the first element type
+ * @param <T2> the second element type
  * @author rferranti
  */
 public class PairSecond<T1, T2> implements Delegate<T2, Pair<T1, T2>> {

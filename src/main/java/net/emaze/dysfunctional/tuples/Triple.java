@@ -6,32 +6,32 @@ import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
 /**
  * a Pair + 1 at the same price
- * @param <E1>
- * @param <E2>
- * @param <E3> 
+ * @param <T1> the first element type
+ * @param <T2> the second element type
+ * @param <T3> the third element type
  * @author rferranti
  */
-public class Triple<E1, E2, E3> {
+public class Triple<T1, T2, T3> {
 
-    private final E1 f;
-    private final E2 s;
-    private final E3 t;
+    private final T1 f;
+    private final T2 s;
+    private final T3 t;
 
-    public Triple(E1 first, E2 second, E3 third) {
+    public Triple(T1 first, T2 second, T3 third) {
         this.f = first;
         this.s = second;
         this.t = third;
     }
 
-    public E1 first() {
+    public T1 first() {
         return f;
     }
 
-    public E2 second() {
+    public T2 second() {
         return s;
     }
 
-    public E3 third() {
+    public T3 third() {
         return t;
     }
 
@@ -40,7 +40,7 @@ public class Triple<E1, E2, E3> {
         if (rhs instanceof Triple == false) {
             return false;
         }
-        final Triple<E1, E2, E3> other = Casts.widen(rhs);
+        final Triple<T1, T2, T3> other = Casts.widen(rhs);
         return new EqualsBuilder().append(this.f, other.f).
                 append(this.s, other.s).
                 append(this.t, other.t).
@@ -60,7 +60,7 @@ public class Triple<E1, E2, E3> {
         return String.format("(%s,%s,%s)", f, s, t);
     }
 
-    public static <E1, E2, E3> Triple<E1, E2, E3> of(E1 first, E2 second, E3 third) {
-        return new Triple<E1, E2, E3>(first, second, third);
+    public static <T1, T2, T3> Triple<T1, T2, T3> of(T1 first, T2 second, T3 third) {
+        return new Triple<T1, T2, T3>(first, second, third);
     }
 }
