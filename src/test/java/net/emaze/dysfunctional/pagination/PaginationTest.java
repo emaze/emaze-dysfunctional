@@ -67,10 +67,24 @@ public class PaginationTest {
         }
 
         @Test
+        public void canPageIteratorToCollection() {
+            final Iterable<Integer> iterable = Arrays.asList(1);
+            Pair<Integer, ArrayList<Integer>> page = Pagination.page(0, 1, iterable.iterator(), new ArrayList<Integer>());
+            Assert.assertEquals(Integer.valueOf(1), page.first());
+        }
+
+        @Test
         public void canPageLongIterable() {
             final Iterable<Integer> iterable = Arrays.asList(1);
             Pair<Long, List<Integer>> page = Pagination.pagel(0l, 1l, iterable);
             Assert.assertEquals(Long.valueOf(1), page.first());
+        }
+
+        @Test
+        public void canPageIterable() {
+            final Iterable<Integer> iterable = Arrays.asList(1);
+            Pair<Integer, List<Integer>> page = Pagination.page(0, 1, iterable);
+            Assert.assertEquals(Integer.valueOf(1), page.first());
         }
 
         @Test
@@ -81,9 +95,22 @@ public class PaginationTest {
         }
 
         @Test
+        public void canPageIterableToCollection() {
+            final Iterable<Integer> iterable = Arrays.asList(1);
+            Pair<Integer, ArrayList<Integer>> page = Pagination.page(0, 1, iterable, new ArrayList<Integer>());
+            Assert.assertEquals(Integer.valueOf(1), page.first());
+        }
+
+        @Test
         public void canPageLongArray() {
             Pair<Long, List<Integer>> page = Pagination.pagel(0l, 1l, new Integer[]{1});
             Assert.assertEquals(Long.valueOf(1), page.first());
+        }
+
+        @Test
+        public void canPageArray() {
+            Pair<Integer, List<Integer>> page = Pagination.page(0, 1, new Integer[]{1});
+            Assert.assertEquals(Integer.valueOf(1), page.first());
         }
 
         @Test
@@ -91,11 +118,23 @@ public class PaginationTest {
             Pair<Long, ArrayList<Integer>> page = Pagination.pagel(0l, 1l, new Integer[]{1}, new ArrayList<Integer>());
             Assert.assertEquals(Long.valueOf(1), page.first());
         }
-        
+
+        @Test
+        public void canPageArrayToCollection() {
+            Pair<Integer, ArrayList<Integer>> page = Pagination.page(0, 1, new Integer[]{1}, new ArrayList<Integer>());
+            Assert.assertEquals(Integer.valueOf(1), page.first());
+        }
+
         @Test
         public void canPageLongCollection() {
             Pair<Long, List<Integer>> page = Pagination.pagel(0l, 1l, Arrays.asList(1));
             Assert.assertEquals(Long.valueOf(1), page.first());
+        }
+
+        @Test
+        public void canPageCollection() {
+            Pair<Integer, List<Integer>> page = Pagination.page(0, 1, Arrays.asList(1));
+            Assert.assertEquals(Integer.valueOf(1), page.first());
         }
 
         @Test
@@ -104,6 +143,11 @@ public class PaginationTest {
             Assert.assertEquals(Long.valueOf(1), page.first());
         }
 
+        @Test
+        public void canPageCollectionToCollection() {
+            Pair<Integer, ArrayList<Integer>> page = Pagination.page(0, 1, Arrays.asList(1), new ArrayList<Integer>());
+            Assert.assertEquals(Integer.valueOf(1), page.first());
+        }
     }
 
     public static class Degenerations {
