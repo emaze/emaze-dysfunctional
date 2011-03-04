@@ -68,25 +68,25 @@ public class PaginationTest {
 
         @Test
         public void canPageLongIterable() {
-            Pair<Long, List<Integer>> page = Pagination.pagel(0l, 1l, Arrays.asList(1));
+            final Iterable<Integer> iterable = Arrays.asList(1);
+            Pair<Long, List<Integer>> page = Pagination.pagel(0l, 1l, iterable);
             Assert.assertEquals(Long.valueOf(1), page.first());
         }
 
         @Test
         public void canPageLongIterableToCollection() {
-            Pair<Long, ArrayList<Integer>> page = Pagination.pagel(0l, 1l, Arrays.asList(1), new ArrayList<Integer>());
+            final Iterable<Integer> iterable = Arrays.asList(1);
+            Pair<Long, ArrayList<Integer>> page = Pagination.pagel(0l, 1l, iterable, new ArrayList<Integer>());
             Assert.assertEquals(Long.valueOf(1), page.first());
         }
 
         @Test
-        @Ignore //FIXME: bug
         public void canPageLongArray() {
             Pair<Long, List<Integer>> page = Pagination.pagel(0l, 1l, new Integer[]{1});
             Assert.assertEquals(Long.valueOf(1), page.first());
         }
 
         @Test
-        @Ignore //FIXME: bug
         public void canPageLongArrayToCollection() {
             Pair<Long, ArrayList<Integer>> page = Pagination.pagel(0l, 1l, new Integer[]{1}, new ArrayList<Integer>());
             Assert.assertEquals(Long.valueOf(1), page.first());
