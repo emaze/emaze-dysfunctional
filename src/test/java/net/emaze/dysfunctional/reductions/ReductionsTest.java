@@ -25,11 +25,6 @@ public class ReductionsTest {
     }
 
     @Test
-    public void canCountFromArray() {
-        Assert.assertEquals(2l, Reductions.count(array));
-    }
-
-    @Test
     public void canCountAsIntegerFromIterator() {
         Assert.assertEquals(2l, Reductions.counti(list.iterator()));
     }
