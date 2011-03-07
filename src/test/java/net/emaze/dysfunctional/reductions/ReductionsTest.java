@@ -75,6 +75,11 @@ public class ReductionsTest {
             Assert.assertEquals(2l, Reductions.counti(list.iterator()));
         }
 
+        @Test
+        public void canCountAsIntegerFromIterable() {
+            Assert.assertEquals(2l, Reductions.counti(list));
+        }
+
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallCountiWithNullIterable() {
             final Iterable<Object> iterable = null;
@@ -89,6 +94,7 @@ public class ReductionsTest {
             int max = Reductions.max(list.iterator(), new ComparableComparator<Integer>(), 0);
             Assert.assertEquals(2, max);
         }
+
         @Test
         public void canExtractMaximumWithComparable() {
             int max = Reductions.max(list.iterator(), 0);
@@ -97,11 +103,13 @@ public class ReductionsTest {
     }
 
     public static class Minimum {
+
         @Test
         public void canExtractMinimumWithComparator() {
             int min = Reductions.min(list.iterator(), new ComparableComparator<Integer>(), 2);
             Assert.assertEquals(1, min);
         }
+
         @Test
         public void canExtractMinimumWithComparable() {
             int min = Reductions.min(list.iterator(), 2);
