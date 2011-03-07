@@ -1,0 +1,28 @@
+package net.emaze.dysfunctional.collections;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import net.emaze.dysfunctional.testing.O;
+import org.junit.Assert;
+import org.junit.Test;
+
+/**
+ *
+ * @author rferranti
+ */
+public class CollectionAllAdderTest {
+
+    @Test(expected = IllegalArgumentException.class)
+    public void creatingCollecitonAdderWithNullCollectionYieldsException() {
+        new CollectionAllAdder<Collection<O>, O>(null);
+    }
+
+    @Test
+    public void canAddToCollection() {
+        final List<O> bucket = new ArrayList<O>();
+        new CollectionAllAdder<List<O>, O>(bucket).perform(Arrays.asList(O.ONE));
+        Assert.assertEquals(1, bucket.size());
+    }
+}
