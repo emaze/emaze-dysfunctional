@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.multiplexing;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -12,17 +13,17 @@ import net.emaze.dysfunctional.numbers.CircularCounter;
 /**
  * longest multiplexing
  * [1,2] [a,b,c] -> [1,a,2,b,c]
- * @param <T> 
+ * @param <E>
  * @author rferranti
  */
-public class RoundRobinIterator<T> implements Iterator<T> {
+public class RoundRobinIterator<E> implements Iterator<E> {
 
-    private final List<Iterator<T>> iterators;
+    private final List<Iterator<E>> iterators = new ArrayList<Iterator<E>>();
     private final CircularCounter currentIndex;
 
-    public RoundRobinIterator(Iterator<Iterator<T>> iterators) {
+    public <T extends Iterator<E>> RoundRobinIterator(Iterator<T> iterators) {
         dbc.precondition(iterators != null, "trying to create a ChainIterator from a null array of iterators");
-        this.iterators = Consumers.all(iterators);
+        this.iterators.addAll(Consumers.all(iterators));
         this.currentIndex = new CircularCounter(this.iterators.size());
     }
 
@@ -32,7 +33,7 @@ public class RoundRobinIterator<T> implements Iterator<T> {
     }
 
     @Override
-    public T next() {
+    public E next() {
         if (empty()) {
             throw new NoSuchElementException("iterator is consumed");
         }
@@ -45,12 +46,12 @@ public class RoundRobinIterator<T> implements Iterator<T> {
     }
 
     private boolean empty() {
-        return !Iterations.any(iterators, new HasNext<Iterator<T>>());
+        return !Iterations.any(iterators, new HasNext<Iterator<E>>());
     }
 
-    private Iterator<T> firstNonEmpty() {
+    private Iterator<E> firstNonEmpty() {
         for (;; currentIndex.incrementAndGet()) {
-            final Iterator<T> currentIter = iterators.get(currentIndex.get());
+            final Iterator<E> currentIter = iterators.get(currentIndex.get());
             if (currentIter.hasNext()) {
                 return currentIter;
             }

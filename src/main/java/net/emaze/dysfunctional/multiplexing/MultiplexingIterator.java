@@ -1,7 +1,6 @@
 package net.emaze.dysfunctional.multiplexing;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,17 +13,17 @@ import net.emaze.dysfunctional.iterations.Iterations;
 
 /**
  * shortest 
- * @param <T> 
+ * @param <E>
  * @author rferranti
  */
-public class MultiplexingIterator<T> implements Iterator<T> {
+public class MultiplexingIterator<E> implements Iterator<E> {
 
-    private final Iterable<Iterator<T>> iterators;
-    private final Queue<T> prefetched = new LinkedList<T>();
+    private final List<Iterator<E>> iterators = new ArrayList<Iterator<E>>();
+    private final Queue<E> prefetched = new LinkedList<E>();
 
-    public MultiplexingIterator(Iterator<Iterator<T>> iterators) {
+    public <T extends Iterator<E>> MultiplexingIterator(Iterator<T> iterators) {
         dbc.precondition(iterators != null, "trying to create a ChainIterator from a null array of iterators");
-        this.iterators = Consumers.all(iterators);
+        this.iterators.addAll(Consumers.all(iterators));
         dbc.precondition(this.iterators.iterator().hasNext(), "trying to create a ChainIterator from an empty iterable");
     }
 
@@ -37,7 +36,7 @@ public class MultiplexingIterator<T> implements Iterator<T> {
     }
 
     @Override
-    public T next() {
+    public E next() {
         if (prefetched.isEmpty()) {
             tryPrefetch();
         }
@@ -50,13 +49,13 @@ public class MultiplexingIterator<T> implements Iterator<T> {
     }
 
     private void tryPrefetch() {
-        if (!Iterations.every(iterators, new HasNext<Iterator<T>>())) {
+        if (!Iterations.every(iterators, new HasNext<Iterator<E>>())) {
             return;
         }
-        prefetched.addAll(Consumers.all(Iterations.transform(iterators, new Delegate<T, Iterator<T>>() {
+        prefetched.addAll(Consumers.all(Iterations.transform(iterators, new Delegate<E, Iterator<E>>() {
 
             @Override
-            public T perform(Iterator<T> iter) {
+            public E perform(Iterator<E> iter) {
                 return iter.next();
             }
         })));

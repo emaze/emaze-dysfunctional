@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.multiplexing;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.consumers.Consumers;
@@ -12,27 +13,27 @@ import net.emaze.dysfunctional.numbers.CircularCounter;
 
 /**
  * squared: [1,2] [a,b,c] -> just(1),just(a),just(2),just(b),nothing,just(c)
- * @param <T> 
+ * @param <E>
  * @author rferranti
  */
-public class PreciseMultiplexingIterator<T> implements Iterator<Maybe<T>> {
+public class PreciseMultiplexingIterator<E> implements Iterator<Maybe<E>> {
 
-    private final List<Iterator<Maybe<T>>> iterators;
+    private final List<Iterator<Maybe<E>>> iterators = new ArrayList<Iterator<Maybe<E>>>();
     private final CircularCounter currentIndex;
 
-    public PreciseMultiplexingIterator(Iterator<Iterator<T>> iterators) {
+    public <T extends Iterator<E>> PreciseMultiplexingIterator(Iterator<T> iterators) {
         dbc.precondition(iterators != null, "trying to create a ChainIterator from a null array of iterators");
-        this.iterators = Consumers.all(Iterations.transform(iterators, new MaybeIteratorTransformer<T>()));
+        this.iterators.addAll(Consumers.all(Iterations.transform(iterators, new MaybeIteratorTransformer<T, E>())));
         this.currentIndex = new CircularCounter(this.iterators.size());
     }
 
     @Override
     public boolean hasNext() {
-        return Iterations.any(iterators, new HasNext<Iterator<Maybe<T>>>());
+        return Iterations.any(iterators, new HasNext<Iterator<Maybe<E>>>());
     }
 
     @Override
-    public Maybe<T> next() {
+    public Maybe<E> next() {
         return iterators.get(currentIndex.getAndIncrement()).next();
     }
 
