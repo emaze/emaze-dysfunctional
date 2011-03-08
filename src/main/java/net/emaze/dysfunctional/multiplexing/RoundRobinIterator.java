@@ -22,7 +22,7 @@ public class RoundRobinIterator<E> implements Iterator<E> {
     private final CircularCounter currentIndex;
 
     public <T extends Iterator<E>> RoundRobinIterator(Iterator<T> iterators) {
-        dbc.precondition(iterators != null, "trying to create a ChainIterator from a null array of iterators");
+        dbc.precondition(iterators != null, "trying to create a RoundRobinIterator from a null iterator of iterators");
         this.iterators.addAll(Consumers.all(iterators));
         this.currentIndex = new CircularCounter(this.iterators.size());
     }

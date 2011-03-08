@@ -22,7 +22,7 @@ public class PreciseMultiplexingIterator<E> implements Iterator<Maybe<E>> {
     private final CircularCounter currentIndex;
 
     public <T extends Iterator<E>> PreciseMultiplexingIterator(Iterator<T> iterators) {
-        dbc.precondition(iterators != null, "trying to create a ChainIterator from a null array of iterators");
+        dbc.precondition(iterators != null, "trying to create a PreciseMultiplexingIterator from a null iterator of iterators");
         this.iterators.addAll(Consumers.all(Iterations.transform(iterators, new MaybeIteratorTransformer<T, E>())));
         this.currentIndex = new CircularCounter(this.iterators.size());
     }

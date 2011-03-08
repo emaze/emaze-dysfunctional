@@ -22,9 +22,9 @@ public class MultiplexingIterator<E> implements Iterator<E> {
     private final Queue<E> prefetched = new LinkedList<E>();
 
     public <T extends Iterator<E>> MultiplexingIterator(Iterator<T> iterators) {
-        dbc.precondition(iterators != null, "trying to create a ChainIterator from a null array of iterators");
+        dbc.precondition(iterators != null, "trying to create a MultiplexingIterator from a null iterator of iterators");
         this.iterators.addAll(Consumers.all(iterators));
-        dbc.precondition(this.iterators.iterator().hasNext(), "trying to create a ChainIterator from an empty iterable");
+        dbc.precondition(this.iterators.iterator().hasNext(), "trying to create a MultiplexingIterator from an empty iterator");
     }
 
     @Override
@@ -45,7 +45,7 @@ public class MultiplexingIterator<E> implements Iterator<E> {
 
     @Override
     public void remove() {
-        throw new UnsupportedOperationException("Cannot remove from a MultiplexintIterator.");
+        throw new UnsupportedOperationException("Cannot remove from a MultiplexingIterator.");
     }
 
     private void tryPrefetch() {
