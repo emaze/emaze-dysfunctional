@@ -134,6 +134,7 @@ public abstract class Multiplexing {
      * @return
      */
     public static <E, T extends Iterator<E>> Iterator<Maybe<E>> muxl(Iterable<T> iterators) {
+        dbc.precondition(iterators != null, "cannot muxl a null iterable");
         return muxl(iterators.iterator());
     }
 
@@ -166,6 +167,7 @@ public abstract class Multiplexing {
      * @return
      */
     public static <E> Iterator<List<E>> demux(int channelSize, Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot demux a null iterable");
         return demux(channelSize, iterable.iterator());
     }
 
@@ -232,6 +234,7 @@ public abstract class Multiplexing {
      * @return
      */
     public static <E, T extends Iterator<E>> Iterator<E> roundrobin(Iterable<T> iterators) {
+        dbc.precondition(iterators != null, "cannot roundrobin a null iterable");
         return new RoundRobinIterator<E>(iterators.iterator());
     }
 
