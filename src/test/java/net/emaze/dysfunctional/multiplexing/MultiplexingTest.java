@@ -16,7 +16,9 @@ import org.junit.runners.Suite;
     MultiplexingTest.Chain.class,
     MultiplexingTest.Flatten.class,
     MultiplexingTest.Mux.class,
+    MultiplexingTest.Muxl.class,
     MultiplexingTest.Demux.class,
+    MultiplexingTest.Demuxl.class,
     MultiplexingTest.Roundrobin.class
 })
 public class MultiplexingTest {
