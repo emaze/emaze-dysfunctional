@@ -47,36 +47,33 @@ public abstract class Multiplexing {
     }
 
     /**
-     * 
+     *
      * @param <E>
-     * @param <T>
      * @param iterators
      * @return
      */
-    public static <E, T extends Iterator<E>> Iterator<E> flatteni(Iterator<T> iterators) {
+    public static <E> Iterator<E> chain(Iterator<E>... iterators) {
         return new ChainIterator<E>(iterators);
     }
 
     /**
-     * 
+     *
      * @param <E>
-     * @param <T>
      * @param iterators
      * @return
      */
-    public static <E, T extends Iterator<E>> Iterator<E> flatteni(Iterable<T> iterators) {
-        return flatteni(iterators.iterator());
+    public static <E> Iterator<E> chain(Iterator<Iterator<E>> iterators) {
+        return new ChainIterator<E>(iterators);
     }
 
     /**
-     * 
+     *
      * @param <E>
-     * @param <T>
-     * @param iterators
+     * @param iterables
      * @return
      */
-    public static <E, T extends Iterator<E>> Iterator<E> flatteni(T[] iterators) {
-        return flatteni(new ArrayIterator<T>(iterators));
+    public static <E> Iterator<E> chain(Iterable<Iterator<E>> iterables) {
+        return new ChainIterator<E>(iterables.iterator());
     }
 
     /**
@@ -233,35 +230,5 @@ public abstract class Multiplexing {
      */
     public static <E> Iterator<E> roundrobin(Iterator<E>[] iterators) {
         return new RoundRobinIterator<E>(new ArrayIterator<Iterator<E>>(iterators));
-    }
-
-    /**
-     * 
-     * @param <E>
-     * @param iterators
-     * @return
-     */
-    public static <E> Iterator<E> chain(Iterator<E>... iterators) {
-        return new ChainIterator<E>(iterators);
-    }
-
-    /**
-     * 
-     * @param <E>
-     * @param iterators
-     * @return
-     */
-    public static <E> Iterator<E> chain(Iterator<Iterator<E>> iterators) {
-        return new ChainIterator<E>(iterators);
-    }
-
-    /**
-     * 
-     * @param <E>
-     * @param iterables
-     * @return
-     */
-    public static <E> Iterator<E> chain(Iterable<Iterator<E>> iterables) {
-        return new ChainIterator<E>(iterables.iterator());
     }
 }
