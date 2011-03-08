@@ -208,5 +208,26 @@ public class MultiplexingTest {
             final Iterable<Iterator<O>> iterable = null;
             Multiplexing.roundrobin(iterable);
         }
+
+        @Test
+        public void canRoundrobinFromIterable() {
+            final List<Iterator<O>> iterable = Arrays.asList(AN_ITERABLE.iterator());
+            final Iterator<O> rr = Multiplexing.roundrobin(iterable);
+            Assert.assertNotNull(rr);
+        }
+
+        @Test
+        public void canRoundrobinFromIterator() {
+            final List<Iterator<O>> iterable = Arrays.asList(AN_ITERABLE.iterator());
+            final Iterator<O> rr = Multiplexing.roundrobin(iterable.iterator());
+            Assert.assertNotNull(rr);
+        }
+
+        @Test
+        public void canRoundrobinFromArray() {
+            final Iterator<O> rr = Multiplexing.roundrobin(AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
+            Assert.assertNotNull(rr);
+        }
+
     }
 }
