@@ -177,8 +177,8 @@ public class MultiplexingTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotDemuxlANullIterable() {
-            final MaybeIterator<O> iterable = null;
-            Multiplexing.demuxl(1, Iterations.oneTime(iterable));
+            final Iterable<Maybe<O>> iterable = null;
+            Multiplexing.demuxl(1, iterable);
         }
 
         @Test
