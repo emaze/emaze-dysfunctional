@@ -29,12 +29,12 @@ public abstract class Multiplexing {
      * 
      * @param <E>
      * @param <T>
-     * @param iterators
+     * @param iterable
      * @return
      */
-    public static <E, T extends Iterable<E>> Iterator<E> flatten(Iterable<T> iterators) {
-        dbc.precondition(iterators != null, "cannot flatten a null iterable");
-        return flatten(iterators.iterator());
+    public static <E, T extends Iterable<E>> Iterator<E> flatten(Iterable<T> iterable) {
+        dbc.precondition(iterable != null, "cannot flatten a null iterable");
+        return flatten(iterable.iterator());
     }
 
     /**
@@ -63,12 +63,12 @@ public abstract class Multiplexing {
      *
      * @param <E>
      * @param <T>
-     * @param iterables
+     * @param iterable
      * @return
      */
-    public static <E, T extends Iterator<E>> Iterator<E> chain(Iterable<T> iterables) {
-        dbc.precondition(iterables != null, "cannot chain a null iterable");
-        return new ChainIterator<E>(iterables.iterator());
+    public static <E, T extends Iterator<E>> Iterator<E> chain(Iterable<T> iterable) {
+        dbc.precondition(iterable != null, "cannot chain a null iterable");
+        return new ChainIterator<E>(iterable.iterator());
     }
 
     /**
@@ -97,12 +97,12 @@ public abstract class Multiplexing {
      * 
      * @param <E>
      * @param <T> 
-     * @param iterators
+     * @param iterable
      * @return
      */
-    public static <E, T extends Iterator<E>> Iterator<E> mux(Iterable<T> iterators) {
-        dbc.precondition(iterators != null, "cannot chain a null iterable");
-        return mux(iterators.iterator());
+    public static <E, T extends Iterator<E>> Iterator<E> mux(Iterable<T> iterable) {
+        dbc.precondition(iterable != null, "cannot chain a null iterable");
+        return mux(iterable.iterator());
     }
 
     /**
@@ -130,12 +130,12 @@ public abstract class Multiplexing {
      * 
      * @param <E>
      * @param <T> 
-     * @param iterators
+     * @param iterable
      * @return
      */
-    public static <E, T extends Iterator<E>> Iterator<Maybe<E>> muxl(Iterable<T> iterators) {
-        dbc.precondition(iterators != null, "cannot muxl a null iterable");
-        return muxl(iterators.iterator());
+    public static <E, T extends Iterator<E>> Iterator<Maybe<E>> muxl(Iterable<T> iterable) {
+        dbc.precondition(iterable != null, "cannot muxl a null iterable");
+        return muxl(iterable.iterator());
     }
 
     /**
@@ -201,6 +201,7 @@ public abstract class Multiplexing {
      * @return
      */
     public static <E> Iterator<List<Maybe<E>>> demuxl(int channelSize, Iterable<Maybe<E>> iterable) {
+        dbc.precondition(iterable != null, "cannot roundrobin a null iterable");
         return new PreciseDemultiplexingIterator<E>(channelSize, iterable.iterator());
     }
 
@@ -230,12 +231,12 @@ public abstract class Multiplexing {
      * 
      * @param <E>
      * @param <T>
-     * @param iterators
+     * @param iterable
      * @return
      */
-    public static <E, T extends Iterator<E>> Iterator<E> roundrobin(Iterable<T> iterators) {
-        dbc.precondition(iterators != null, "cannot roundrobin a null iterable");
-        return new RoundRobinIterator<E>(iterators.iterator());
+    public static <E, T extends Iterator<E>> Iterator<E> roundrobin(Iterable<T> iterable) {
+        dbc.precondition(iterable != null, "cannot roundrobin a null iterable");
+        return new RoundRobinIterator<E>(iterable.iterator());
     }
 
     /**
