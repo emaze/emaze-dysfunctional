@@ -192,6 +192,12 @@ public class FilteringTest {
         Filtering.slice(1, 2, iterable);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void cannotCallAtOnANullIterable() {
+        final Iterable<Object> iterable = null;
+        Filtering.at(2, iterable);
+    }
+
     @Test
     public void canGetAtMostLastElement() {
         final List<Integer> list = Arrays.asList(1, 2, 3, 4);
