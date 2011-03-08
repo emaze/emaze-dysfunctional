@@ -191,4 +191,28 @@ public class FilteringTest {
         final Iterable<Object> iterable = null;
         Filtering.slice(1, 2, iterable);
     }
+
+    @Test
+    public void canGetAtMostLastElement() {
+        final List<Integer> list = Arrays.asList(1, 2, 3, 4);
+        final Integer expected = list.get(list.size() - 1);
+        final Integer last = Filtering.atMostLast(1, list).next();
+        Assert.assertEquals(expected, last);
+    }
+
+    @Test
+    public void canGetAtMostAllElements() {
+        final List<Integer> list = Arrays.asList(1, 2, 3, 4);
+        final Iterator<Integer> atMostAllElements = Filtering.atMostLast(list.size(), list);
+        final List<Integer> got = Consumers.all(atMostAllElements);
+        Assert.assertEquals(list, got);
+    }
+
+    @Test
+    public void canGetAtMostBeyondInputSize() {
+        final List<Integer> list = Arrays.asList(1, 2, 3, 4);
+        final Iterator<Integer> atMostAllElements = Filtering.atMostLast(list.size() + 2, list);
+        final List<Integer> got = Consumers.all(atMostAllElements);
+        Assert.assertEquals(list, got);
+    }
 }
