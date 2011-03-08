@@ -3,6 +3,7 @@ package net.emaze.dysfunctional.multiplexing;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.options.MaybeIterator;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -91,14 +92,51 @@ public class MultiplexingTest {
             final Iterable<Iterator<O>> iterable = null;
             Multiplexing.mux(iterable);
         }
+
+        @Test
+        public void canMuxFromIterable() {
+            final List<Iterator<O>> iterable = Arrays.asList(AN_ITERABLE.iterator());
+            final Iterator<O> muxed = Multiplexing.mux(iterable);
+            Assert.assertNotNull(muxed);
+        }
+
+        @Test
+        public void canMuxFromIterator() {
+            final List<Iterator<O>> iterable = Arrays.asList(AN_ITERABLE.iterator());
+            final Iterator<O> muxed = Multiplexing.mux(iterable.iterator());
+            Assert.assertNotNull(muxed);
+        }
+        @Test
+        public void canMuxFromArray() {
+            final Iterator<O> muxed = Multiplexing.mux(AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
+            Assert.assertNotNull(muxed);
+        }
     }
 
     public static class Muxl {
 
         @Test(expected = IllegalArgumentException.class)
-        public void cannotMuxlANullIterable() {
+        public void cannotMuxLongestANullIterable() {
             final Iterable<Iterator<O>> iterable = null;
             Multiplexing.muxl(iterable);
+        }
+        @Test
+        public void canMuxLongestFromIterable() {
+            final List<Iterator<O>> iterable = Arrays.asList(AN_ITERABLE.iterator());
+            final Iterator<Maybe<O>> muxed = Multiplexing.muxl(iterable);
+            Assert.assertNotNull(muxed);
+        }
+
+        @Test
+        public void canMuxLongestFromIterator() {
+            final List<Iterator<O>> iterable = Arrays.asList(AN_ITERABLE.iterator());
+            final Iterator<Maybe<O>> muxed = Multiplexing.muxl(iterable.iterator());
+            Assert.assertNotNull(muxed);
+        }
+        @Test
+        public void canMuxLongestFromArray() {
+            final Iterator<Maybe<O>> muxed = Multiplexing.muxl(AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
+            Assert.assertNotNull(muxed);
         }
     }
 
