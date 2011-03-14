@@ -81,4 +81,24 @@ public abstract class Options {
     public static <T> Iterator<T> justs(Maybe<T>[] maybes) {
         return Options.justs(new ArrayIterator<Maybe<T>>(maybes));
     }
+
+    /**
+     * Transforms null values to Maybe.nothing, non-null values to Maybe.just(value)
+     * @param <T> the value type parameter
+     * @param value the value to be lifted
+     * @return a Maybe
+     */
+    public static <T> Maybe<T> lift(T value) {
+        return new LiftMaybe<T>().perform(value);
+    }
+
+    /**
+     * Transforms Maybe.nothing to null, Maybe.just to the wrapped value
+     * @param <T> the value type parameter
+     * @param maybe the maybe to be dropped
+     * @return null or a value
+     */
+    public static <T> T drop(Maybe<T> maybe) {
+        return new DropMaybe<T>().perform(maybe);
+    }
 }

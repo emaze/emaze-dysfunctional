@@ -73,4 +73,15 @@ public class OptionsTest {
         final Iterator<O> got = Options.justs(array);
         Assert.assertEquals(O.ONE, got.next());
     }
+
+    @Test
+    public void canLift(){
+        final Maybe<Object> lifted = Options.lift(null);
+        Assert.assertFalse(lifted.hasValue());
+    }
+    @Test
+    public void canDrop(){
+        Object dropped = Options.drop(Maybe.nothing());
+        Assert.assertNull(dropped);
+    }
 }
