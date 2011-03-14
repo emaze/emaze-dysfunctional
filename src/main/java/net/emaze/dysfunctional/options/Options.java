@@ -92,6 +92,18 @@ public abstract class Options {
         return new LiftMaybe<T>().perform(value);
     }
 
+    public static <T> Iterator<Maybe<T>> lifts(Iterator<T> iterator) {
+        return Iterations.transform(iterator, new LiftMaybe<T>());
+    }
+
+    public static <T> Iterator<Maybe<T>> lifts(Iterable<T> iterable) {
+        return Iterations.transform(iterable, new LiftMaybe<T>());
+    }
+
+    public static <T> Iterator<Maybe<T>> lifts(T... array) {
+        return Iterations.transform(array, new LiftMaybe<T>());
+    }
+
     /**
      * Transforms Maybe.nothing to null, Maybe.just to the wrapped value
      * @param <T> the value type parameter
@@ -100,5 +112,17 @@ public abstract class Options {
      */
     public static <T> T drop(Maybe<T> maybe) {
         return new DropMaybe<T>().perform(maybe);
+    }
+
+    public static <T> Iterator<T> drops(Iterator<Maybe<T>> iterator) {
+        return Iterations.transform(iterator, new DropMaybe<T>());
+    }
+
+    public static <T> Iterator<T> drops(Iterable<Maybe<T>> iterator) {
+        return Iterations.transform(iterator, new DropMaybe<T>());
+    }
+
+    public static <T> Iterator<T> drops(Maybe<T>... array) {
+        return Iterations.transform(array, new DropMaybe<T>());
     }
 }
