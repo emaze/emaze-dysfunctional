@@ -78,7 +78,7 @@ public abstract class Options {
      * @param maybes an array of Maybe<T>
      * @return an iterator of T
      */
-    public static <T> Iterator<T> justs(Maybe<T>[] maybes) {
+    public static <T> Iterator<T> justs(Maybe<T>... maybes) {
         return Options.justs(new ArrayIterator<Maybe<T>>(maybes));
     }
 
