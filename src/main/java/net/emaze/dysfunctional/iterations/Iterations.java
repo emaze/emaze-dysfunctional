@@ -18,7 +18,9 @@ import net.emaze.dysfunctional.logic.Predicate;
 public abstract class Iterations {
 
     /**
-     * @param <E> 
+     * Yields true if ANY predicate application on the given iterable yields
+     * true (giving up on the first positive match).
+     * @param <E> the iterable element type parameter
      * @param iterable the iterable where elements are fetched from
      * @param predicate the predicate applied to every element until a match is found
      * @return true if ANY predicate application yields true (gives up on the first positive match)
@@ -36,7 +38,9 @@ public abstract class Iterations {
     }
 
     /**
-     * @param <E> 
+     * Yields true if ANY predicate application on the given iterator yields
+     * true (giving up on the first positive match).
+     * @param <E> the iterator element type parameter
      * @param iterator the iterator where elements are fetched from
      * @param predicate the predicate applied to every element until a match is found
      * @return true if ANY predicate application yields true (gives up on the first positive match)
@@ -46,7 +50,9 @@ public abstract class Iterations {
     }
 
     /**
-     * @param <E> 
+     * Yields true if ANY predicate application on the given array yields true 
+     * (giving up on the first positive match).
+     * @param <E> the array element type parameter
      * @param array the array where elements are fetched from
      * @param predicate the predicate applied to every element until a match is found
      * @return true if ANY predicate application yields true (gives up on the first positive match)
@@ -56,7 +62,9 @@ public abstract class Iterations {
     }
 
     /**
-     * @param <E> 
+     * Yields true if EVERY predicate application on the given iterable yields
+     * true.
+     * @param <E> the iterable element type parameter
      * @param iterable the iterable where elements are fetched from
      * @param predicate the predicate applied to every element fetched from the iterable
      * @return true if EVERY predicate application yields true
@@ -74,7 +82,9 @@ public abstract class Iterations {
     }
 
     /**
-     * @param <E> 
+     * Yields true if EVERY predicate application on the given iterator yields
+     * true.
+     * @param <E> the iterator element type parameter
      * @param iterator the iterator where elements are fetched from
      * @param predicate the predicate applied to every element fetched from the iterator
      * @return true if EVERY predicate application yields true
@@ -84,7 +94,9 @@ public abstract class Iterations {
     }
 
     /**
-     * @param <E> 
+     * Yields true if EVERY predicate application on the given array yields
+     * true.
+     * @param <E> the array element type parameter
      * @param array the array where elements are fetched from
      * @param predicate the predicate applied to every element fetched from the array
      * @return true if EVERY predicate application yields true
@@ -94,7 +106,8 @@ public abstract class Iterations {
     }
 
     /**
-     * @param <E> 
+     * Applies a side effect on each elements of the passed iterable.
+     * @param <E> the iterable element type parameter
      * @param iterable the iterable where elements are fetched from
      * @param action the action applied to every element fetched from the iterable
      */
@@ -108,7 +121,8 @@ public abstract class Iterations {
     }
 
     /**
-     * @param <E> 
+     * Applies a side effect on each elements of the passed iterator.
+     * @param <E> the iterator element type parameter
      * @param iterator the iterator where elements are fetched from
      * @param action the action applied to every element fetched from the iterator
      */
@@ -117,7 +131,8 @@ public abstract class Iterations {
     }
 
     /**
-     * @param <E> 
+     * Applies a side effect on each elements of the passed array.
+     * @param <E> the array element type parameter
      * @param array the array where elements are fetched from
      * @param action the action applied to every element fetched from the array
      */
@@ -168,12 +183,12 @@ public abstract class Iterations {
     }
 
     /**
-     *
-     * @param <R>
-     * @param <E>
+     * Applies a (lazy) transformation on every element of the iterable.
+     * @param <R> the result iterator element type parameter
+     * @param <E> the input iterable element type parameter
      * @param iterable the iterable where elements are fetched from
      * @param delegate a delegate used to transform each element
-     * @return an Iterator<R> 
+     * @return the transformed iterator
      */
     public static <R, E> Iterator<R> transform(Iterable<E> iterable, Delegate<R, E> delegate) {
         dbc.precondition(iterable != null, "cannot call transform with a null iterable");
@@ -181,24 +196,24 @@ public abstract class Iterations {
     }
 
     /**
-     *
-     * @param <R>
-     * @param <E>
+     * Applies a (lazy) transformation on every element of the iterator.
+     * @param <R> the result iterator element type parameter
+     * @param <E> the input iterator element type parameter
      * @param iterator the iterator where elements are fetched from
      * @param delegate a delegate used to transform each element
-     * @return an Iterator<R> 
+     * @return the transformed iterator
      */
     public static <R, E> Iterator<R> transform(Iterator<E> iterator, Delegate<R, E> delegate) {
         return new TransformingIterator<R, E>(iterator, delegate);
     }
 
     /**
-     *
-     * @param <R>
-     * @param <E>
+     * Applies a (lazy) transformation on every element of the array.
+     * @param <R> the result iterator element type parameter
+     * @param <E> the input array element type parameter
      * @param array the array where elements are fetched from
      * @param delegate a delegate used to transform each element
-     * @return an Iterator<R> 
+     * @return the transformed iterator
      */
     public static <R, E> Iterator<R> transform(E[] array, Delegate<R, E> delegate) {
         return transform(new ArrayIterator<E>(array), delegate);
