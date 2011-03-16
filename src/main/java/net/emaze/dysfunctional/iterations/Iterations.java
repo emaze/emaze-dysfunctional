@@ -204,7 +204,23 @@ public abstract class Iterations {
         return transform(new ArrayIterator<E>(array), delegate);
     }
 
+    /**
+     * 
+     * @param <T>
+     * @param iterator
+     * @return
+     */
     public static <T> Iterable<T> oneTime(Iterator<T> iterator) {
         return new OneTimeIterable<T>(iterator);
+    }
+
+    /**
+     * 
+     * @param <T>
+     * @param values
+     * @return
+     */
+    public static <T> Iterator<T> iterator(T... values) {
+        return new ArrayIterator<T>(values);
     }
 }
