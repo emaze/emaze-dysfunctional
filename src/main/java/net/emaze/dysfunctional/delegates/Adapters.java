@@ -120,7 +120,7 @@ public abstract class Adapters {
     }
 
     /**
-     * 
+     * given f, g yields f ° g (f of g, f following g)
      * @param <R>
      * @param <T>
      * @param <U>
@@ -128,7 +128,7 @@ public abstract class Adapters {
      * @param g
      * @return
      */
-    public static <R, T, U> Composer<R, T, U> compose(Delegate<R, U> f, Delegate<U, T> g) {
+    public static <R, T, U> Delegate<R, T> compose(Delegate<R, U> f, Delegate<U, T> g) {
         return new Composer<R, T, U>(f, g);
     }
 }
