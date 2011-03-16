@@ -50,6 +50,7 @@ public abstract class Adapters {
     public static <R, T> Provider<R> bind(Delegate<R, T> delegate, T only) {
         return new Binder<R, T>(delegate, only);
     }
+
     /**
      *
      * @param <R>
@@ -116,5 +117,18 @@ public abstract class Adapters {
      */
     public static <R, T1, T2, T3> BinaryDelegate<R, T1, T2> bind3rd(TernaryDelegate<R, T1, T2, T3> delegate, T3 first) {
         return new BinderThird<R, T1, T2, T3>(delegate, first);
+    }
+
+    /**
+     * 
+     * @param <R>
+     * @param <T>
+     * @param <U>
+     * @param f
+     * @param g
+     * @return
+     */
+    public static <R, T, U> Composer<R, T, U> compose(Delegate<R, U> f, Delegate<U, T> g) {
+        return new Composer<R, T, U>(f, g);
     }
 }
