@@ -205,20 +205,20 @@ public abstract class Iterations {
     }
 
     /**
-     * 
-     * @param <T>
-     * @param iterator
-     * @return
+     * Creates an iterable usable only ONE TIME from an iterator.
+     * @param <T> the iterator element type parameter
+     * @param iterator the iterator to be yielded by the iterator
+     * @return an iterable consumable only once
      */
     public static <T> Iterable<T> oneTime(Iterator<T> iterator) {
         return new OneTimeIterable<T>(iterator);
     }
 
     /**
-     * 
-     * @param <T>
-     * @param values
-     * @return
+     * Creates an iterator from the passed array.
+     * @param <T> the array element parameter type
+     * @param values the values to be yielded by the iterator
+     * @return an iterator.
      */
     public static <T> Iterator<T> iterator(T... values) {
         return new ArrayIterator<T>(values);
