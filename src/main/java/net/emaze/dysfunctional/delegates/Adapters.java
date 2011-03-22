@@ -1,5 +1,8 @@
 package net.emaze.dysfunctional.delegates;
 
+import net.emaze.dysfunctional.logic.BinaryPredicate;
+import net.emaze.dysfunctional.logic.Predicate;
+
 /**
  *
  * @author rferranti
@@ -87,8 +90,20 @@ public abstract class Adapters {
      * @param first
      * @return
      */
-    public static <R, T1, T2> Delegate<R, T1> bind2nd(BinaryDelegate<R, T1, T2> delegate, T2 first) {
-        return new BinderSecond<R, T1, T2>(delegate, first);
+    public static <R, T1, T2> Delegate<R, T1> bind2nd(BinaryDelegate<R, T1, T2> delegate, T2 second) {
+        return new BinderSecond<R, T1, T2>(delegate, second);
+    }
+
+    public static <T1, T2> Predicate<T1> bind2nd(BinaryPredicate<T1, T2> predicate, T2 second) {
+        return new PredicateBinderSecond<T1, T2>(predicate, second);
+    }
+
+    public static <T1, T2> BinaryPredicate<T1, T2> ignore2nd(Predicate<T1> predicate, Class<T2> ignored) {
+        return new PredicateIgnoreSecond<T1, T2>(predicate);
+    }
+
+    public static <T1, T2> BinaryPredicate<T1, T2> ignore1st(Predicate<T2> predicate, Class<T1> ignored) {
+        return new PredicateIgnoreFirst<T1, T2>(predicate);
     }
 
     /**
