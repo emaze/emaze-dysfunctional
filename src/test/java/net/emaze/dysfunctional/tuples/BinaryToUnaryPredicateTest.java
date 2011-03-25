@@ -20,6 +20,6 @@ public class BinaryToUnaryPredicateTest {
     @Test
     public void canAdapt() {
         final Predicate<Pair<O, O>> predicate = new BinaryToUnaryPredicate<O, O>(new BinaryAlways<O, O>());
-        Assert.assertTrue(predicate.test(Pair.of(O.IGNORED, O.IGNORED)));
+        Assert.assertTrue(predicate.accept(Pair.of(O.IGNORED, O.IGNORED)));
     }
 }

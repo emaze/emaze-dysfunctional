@@ -54,20 +54,20 @@ public class FirstMatchingTernaryPredicateTest {
         FirstMatchingTernaryPredicate<O, O, O> pred = new FirstMatchingTernaryPredicate<O, O, O>();
         TernaryPredicate<O, O, O> always = new TernaryAlways<O, O, O>();
         pred.setFunctors(Arrays.asList(always, always));
-        pred.test(O.IGNORED, O.IGNORED, O.IGNORED);
+        pred.accept(O.IGNORED, O.IGNORED, O.IGNORED);
     }
 
     @Test
     public void usingAlwaysReturnsTrue() {
         FirstMatchingTernaryPredicate<O, O, O> pred = new FirstMatchingTernaryPredicate<O, O, O>();
         pred.add(new TernaryAlways<O, O, O>());
-        Assert.assertTrue(pred.test(O.IGNORED, O.IGNORED, O.IGNORED));
+        Assert.assertTrue(pred.accept(O.IGNORED, O.IGNORED, O.IGNORED));
     }
 
     @Test
     public void usingNeverReturnsFalse() {
         FirstMatchingTernaryPredicate<O, O, O> pred = new FirstMatchingTernaryPredicate<O, O, O>();
         pred.add(new TernaryNever<O, O, O>());
-        Assert.assertFalse(pred.test(O.IGNORED, O.IGNORED, O.IGNORED));
+        Assert.assertFalse(pred.accept(O.IGNORED, O.IGNORED, O.IGNORED));
     }
 }

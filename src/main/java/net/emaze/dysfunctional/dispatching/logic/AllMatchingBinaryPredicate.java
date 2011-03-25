@@ -17,9 +17,9 @@ public class AllMatchingBinaryPredicate<E1, E2> implements CompositeBinaryPredic
     private final List<BinaryPredicate<E1, E2>> predicates = new ArrayList<BinaryPredicate<E1, E2>>();
 
     @Override
-    public boolean test(E1 former, E2 latter) {
+    public boolean accept(E1 former, E2 latter) {
         for (BinaryPredicate<E1, E2> predicate : predicates) {
-            if (!predicate.test(former, latter)) {
+            if (!predicate.accept(former, latter)) {
                 return false;
             }
         }

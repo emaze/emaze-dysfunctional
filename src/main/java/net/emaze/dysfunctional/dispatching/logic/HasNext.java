@@ -10,7 +10,7 @@ import java.util.Iterator;
 public class HasNext<T extends Iterator<?>> implements Predicate<T> {
 
     @Override
-    public boolean test(T iterator) {
+    public boolean accept(T iterator) {
         return iterator.hasNext();
     }
 }

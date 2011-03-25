@@ -19,7 +19,7 @@ public class IsContainedInTest {
     @Test
     public void canCheckIfNullIsContained() {
         final List<Object> container = Arrays.asList((Object)null);
-        boolean test = new IsContainedIn<Object>(container).test(null);
+        boolean test = new IsContainedIn<Object>(container).accept(null);
         Assert.assertTrue(test);
     }
 

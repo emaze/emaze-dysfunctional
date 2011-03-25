@@ -18,11 +18,11 @@ public class EqualsTest {
 
     @Test
     public void nonEqualObjectYieldsFalse() {
-        Assert.assertFalse(new Equals<O>(O.ONE).test(O.ANOTHER));
+        Assert.assertFalse(new Equals<O>(O.ONE).accept(O.ANOTHER));
     }
 
     @Test
     public void equalObjectYieldsTrue() {
-        Assert.assertTrue(new Equals<O>(O.ONE).test(O.ONE));
+        Assert.assertTrue(new Equals<O>(O.ONE).accept(O.ONE));
     }
 }

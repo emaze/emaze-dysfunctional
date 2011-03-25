@@ -13,21 +13,21 @@ public class AllMatchingTernaryPredicateTest {
 
     @Test
     public void canEvaluateEmptyPredicateList() {
-        Assert.assertTrue(new AllMatchingTernaryPredicate<O, O, O>().test(null, null, null));
+        Assert.assertTrue(new AllMatchingTernaryPredicate<O, O, O>().accept(null, null, null));
     }
 
     @Test
     public void yieldsTrueWhenEveryPredicateReturnsTrue() {
         AllMatchingTernaryPredicate<O, O, O> test = new AllMatchingTernaryPredicate<O, O, O>();
         test.add(new TernaryAlways<O, O, O>());
-        Assert.assertTrue(test.test(O.IGNORED, O.IGNORED, O.IGNORED));
+        Assert.assertTrue(test.accept(O.IGNORED, O.IGNORED, O.IGNORED));
     }
 
     @Test
     public void yieldsFalseOnFirstPredicateReturningFalse() {
         AllMatchingTernaryPredicate<O, O, O> test = new AllMatchingTernaryPredicate<O, O, O>();
         test.add(new TernaryNever<O, O, O>());
-        Assert.assertFalse(test.test(O.IGNORED, O.IGNORED, O.IGNORED));
+        Assert.assertFalse(test.accept(O.IGNORED, O.IGNORED, O.IGNORED));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -69,6 +69,6 @@ public class AllMatchingTernaryPredicateTest {
         AllMatchingTernaryPredicate<O, O, O> pred = new AllMatchingTernaryPredicate<O, O, O>();
         TernaryPredicate<O, O, O> always = new TernaryAlways<O, O, O>();
         pred.setFunctors(Arrays.asList(always, always));
-        pred.test(O.IGNORED, O.IGNORED, O.IGNORED);
+        pred.accept(O.IGNORED, O.IGNORED, O.IGNORED);
     }
 }

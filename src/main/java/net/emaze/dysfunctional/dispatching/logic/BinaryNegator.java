@@ -25,7 +25,7 @@ public class BinaryNegator<T1, T2> implements BinaryPredicate<T1, T2> {
      * @return true if the inner predicate returns false, false otherwhise
      */
     @Override
-    public boolean test(T1 former, T2 latter) {
-        return !predicate.test(former, latter);
+    public boolean accept(T1 former, T2 latter) {
+        return !predicate.accept(former, latter);
     }
 }

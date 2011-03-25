@@ -13,7 +13,7 @@ public class StringContainsIgnoreCase implements Predicate<String> {
     }
 
     @Override
-    public boolean test(String haystack) {
+    public boolean accept(String haystack) {
         dbc.precondition(haystack != null, "cannot check if a needle is contained in a null haystack");
         return haystack.toLowerCase().contains(needle);
     }

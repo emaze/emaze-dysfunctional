@@ -13,6 +13,6 @@ public class TernaryAlwaysTest {
 
     @Test
     public void yieldTrueWithNull() {
-        Assert.assertTrue(new TernaryAlways<O, O, O>().test(null, null, null));
+        Assert.assertTrue(new TernaryAlways<O, O, O>().accept(null, null, null));
     }
 }

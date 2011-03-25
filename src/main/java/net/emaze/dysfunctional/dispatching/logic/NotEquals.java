@@ -16,7 +16,7 @@ public class NotEquals<T> implements Predicate<T> {
     }
 
     @Override
-    public boolean test(T rhs) {
+    public boolean accept(T rhs) {
         return !lhs.equals(rhs);
     }
 }

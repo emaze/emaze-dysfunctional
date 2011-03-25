@@ -11,6 +11,6 @@ import org.junit.Assert;
 public class BinaryAlwaysTest {
     @Test
     public void yieldsTrueWithNulls(){
-        Assert.assertTrue(new BinaryAlways<Object,Object>().test(null, null));
+        Assert.assertTrue(new BinaryAlways<Object,Object>().accept(null, null));
     }
 }

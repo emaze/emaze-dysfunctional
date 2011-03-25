@@ -20,6 +20,6 @@ public class PredicateToDelegate<T> implements Delegate<Boolean, T> {
 
     @Override
     public Boolean perform(T value) {
-        return adapted.test(value);
+        return adapted.accept(value);
     }
 }

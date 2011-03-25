@@ -8,7 +8,7 @@ package net.emaze.dysfunctional.dispatching.logic;
 public class NotNull<T> implements Predicate<T> {
 
     @Override
-    public boolean test(T element) {
+    public boolean accept(T element) {
         return element != null;
     }
 

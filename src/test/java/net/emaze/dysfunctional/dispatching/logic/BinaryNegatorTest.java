@@ -17,14 +17,14 @@ public class BinaryNegatorTest {
     @Test
     public void negatingAlwaysYieldsFalse() {
         final BinaryPredicate<O, O> p = new BinaryNegator<O, O>(new BinaryAlways<O, O>());
-        boolean got = p.test(null, null);
+        boolean got = p.accept(null, null);
         Assert.assertEquals(false, got);
     }
 
     @Test
     public void negatingNeverYieldsFalse() {
         final BinaryPredicate<O, O> p = new BinaryNegator<O, O>(new BinaryNever<O, O>());
-        boolean got = p.test(null, null);
+        boolean got = p.accept(null, null);
         Assert.assertEquals(true, got);
     }
 

@@ -23,7 +23,7 @@ public class Negator<T> implements Predicate<T> {
      * @return true if the inner predicate returns false, false otherwhise
      */
     @Override
-    public boolean test(T element) {
-        return !predicate.test(element);
+    public boolean accept(T element) {
+        return !predicate.accept(element);
     }
 }

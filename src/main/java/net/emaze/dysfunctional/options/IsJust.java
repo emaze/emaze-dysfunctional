@@ -10,7 +10,7 @@ import net.emaze.dysfunctional.dispatching.logic.Predicate;
 public class IsJust<T> implements Predicate<Maybe<T>> {
 
     @Override
-    public boolean test(Maybe<T> element) {
+    public boolean accept(Maybe<T> element) {
         dbc.precondition(element != null, "testing IsJust against null");
         return element.hasValue();
     }

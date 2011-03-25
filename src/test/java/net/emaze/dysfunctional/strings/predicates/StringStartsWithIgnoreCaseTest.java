@@ -16,16 +16,16 @@ public class StringStartsWithIgnoreCaseTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testingWithNullHaystackYieldsException() {
-        new StringStartsWithIgnoreCase("a").test(null);
+        new StringStartsWithIgnoreCase("a").accept(null);
     }
 
     @Test
     public void testingContainedNeedleYieldsTrue() {
-        Assert.assertTrue(new StringStartsWithIgnoreCase("a").test("A"));
+        Assert.assertTrue(new StringStartsWithIgnoreCase("a").accept("A"));
     }
 
     @Test
     public void testingNotContainedNeedleYieldsFalse() {
-        Assert.assertFalse(new StringStartsWithIgnoreCase("a").test("b"));
+        Assert.assertFalse(new StringStartsWithIgnoreCase("a").accept("b"));
     }
 }

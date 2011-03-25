@@ -12,6 +12,6 @@ public class AlwaysTest {
 
     @Test
     public void yieldsTrueWithNull(){
-        Assert.assertTrue(new Always<Object>().test(null));
+        Assert.assertTrue(new Always<Object>().accept(null));
     }
 }

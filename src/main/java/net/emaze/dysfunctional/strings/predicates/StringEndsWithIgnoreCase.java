@@ -13,7 +13,7 @@ public class StringEndsWithIgnoreCase implements Predicate<String> {
     }
 
     @Override
-    public boolean test(String haystack) {
+    public boolean accept(String haystack) {
         dbc.precondition(haystack != null, "cannot check 'ends with' with a null haystack");
         return haystack.toLowerCase().endsWith(needle);
     }

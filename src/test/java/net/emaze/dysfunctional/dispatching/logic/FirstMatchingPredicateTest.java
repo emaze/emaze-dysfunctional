@@ -54,20 +54,20 @@ public class FirstMatchingPredicateTest {
         FirstMatchingPredicate<O> pred = new FirstMatchingPredicate<O>();
         Predicate<O> always = new Always<O>();
         pred.setFunctors(Arrays.asList(always, always));
-        pred.test(O.IGNORED);
+        pred.accept(O.IGNORED);
     }
 
     @Test
     public void usingAlwaysReturnsTrue(){
         FirstMatchingPredicate<O> pred = new FirstMatchingPredicate<O>();
         pred.add(new Always<O>());
-        Assert.assertTrue(pred.test(O.IGNORED));
+        Assert.assertTrue(pred.accept(O.IGNORED));
     }
     
     @Test
     public void usingNeverReturnsFalse(){
         FirstMatchingPredicate<O> pred = new FirstMatchingPredicate<O>();
         pred.add(new Never<O>());
-        Assert.assertFalse(pred.test(O.IGNORED));
+        Assert.assertFalse(pred.accept(O.IGNORED));
     }
 }

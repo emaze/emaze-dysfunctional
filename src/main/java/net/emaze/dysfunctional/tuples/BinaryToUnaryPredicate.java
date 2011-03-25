@@ -20,7 +20,7 @@ public class BinaryToUnaryPredicate<T1, T2> implements Predicate<Pair<T1, T2>> {
     }
 
     @Override
-    public boolean test(Pair<T1, T2> pair) {
-        return predicate.test(pair.first(), pair.second());
+    public boolean accept(Pair<T1, T2> pair) {
+        return predicate.accept(pair.first(), pair.second());
     }
 }

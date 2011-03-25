@@ -16,16 +16,16 @@ public class StringEndsWithTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testingWithNullHaystackYieldsException() {
-        new StringEndsWith("a").test(null);
+        new StringEndsWith("a").accept(null);
     }
 
     @Test
     public void testingContainedNeedleYieldsTrue() {
-        Assert.assertTrue(new StringEndsWith("a").test("a"));
+        Assert.assertTrue(new StringEndsWith("a").accept("a"));
     }
 
     @Test
     public void testingNotContainedNeedleYieldsFalse() {
-        Assert.assertFalse(new StringEndsWith("a").test("A"));
+        Assert.assertFalse(new StringEndsWith("a").accept("A"));
     }
 }

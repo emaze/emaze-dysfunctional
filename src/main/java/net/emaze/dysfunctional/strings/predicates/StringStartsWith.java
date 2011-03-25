@@ -13,7 +13,7 @@ public class StringStartsWith implements Predicate<String> {
     }
 
     @Override
-    public boolean test(String haystack) {
+    public boolean accept(String haystack) {
         dbc.precondition(haystack != null, "cannot check 'starts with' with a null haystack");
         return haystack.startsWith(needle);
     }

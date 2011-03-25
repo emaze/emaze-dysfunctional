@@ -54,20 +54,20 @@ public class FirstMatchingBinaryPredicateTest {
         FirstMatchingBinaryPredicate<O, O> pred = new FirstMatchingBinaryPredicate<O, O>();
         BinaryPredicate<O, O> always = new BinaryAlways<O, O>();
         pred.setFunctors(Arrays.asList(always, always));
-        pred.test(O.IGNORED, O.IGNORED);
+        pred.accept(O.IGNORED, O.IGNORED);
     }
 
     @Test
     public void usingAlwaysReturnsTrue() {
         FirstMatchingBinaryPredicate<O, O> pred = new FirstMatchingBinaryPredicate<O, O>();
         pred.add(new BinaryAlways<O, O>());
-        Assert.assertTrue(pred.test(O.IGNORED, O.IGNORED));
+        Assert.assertTrue(pred.accept(O.IGNORED, O.IGNORED));
     }
 
     @Test
     public void usingNeverReturnsFalse() {
         FirstMatchingBinaryPredicate<O, O> pred = new FirstMatchingBinaryPredicate<O, O>();
         pred.add(new BinaryNever<O, O>());
-        Assert.assertFalse(pred.test(O.IGNORED, O.IGNORED));
+        Assert.assertFalse(pred.accept(O.IGNORED, O.IGNORED));
     }
 }

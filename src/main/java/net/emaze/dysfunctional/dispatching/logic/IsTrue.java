@@ -7,7 +7,7 @@ package net.emaze.dysfunctional.dispatching.logic;
 public class IsTrue implements Predicate<Boolean> {
 
     @Override
-    public boolean test(Boolean element) {
+    public boolean accept(Boolean element) {
         return element;
     }
 }

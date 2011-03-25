@@ -22,6 +22,6 @@ public class TernaryPredicateToTernaryDelegate<T1, T2, T3> implements TernaryDel
 
     @Override
     public Boolean perform(T1 first, T2 second, T3 third) {
-        return adapted.test(first, second, third);
+        return adapted.accept(first, second, third);
     }
 }

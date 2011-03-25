@@ -12,11 +12,11 @@ public class NotNullTest {
 
     @Test
     public void nullYieldsFalse() {
-        Assert.assertFalse(new NotNull<Object>().test(null));
+        Assert.assertFalse(new NotNull<Object>().accept(null));
     }
 
     @Test
     public void nonNullYieldsTrue() {
-        Assert.assertTrue(new NotNull<Object>().test(new Object()));
+        Assert.assertTrue(new NotNull<Object>().accept(new Object()));
     }
 }

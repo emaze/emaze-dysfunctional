@@ -33,7 +33,7 @@ public class TakeWhileIterator<E> implements Iterator<E> {
             return false;
         }
         final E element = iterator.next();
-        if (filter.test(element)) {
+        if (filter.accept(element)) {
             prefetched = Maybe.just(element);
             return true;
         }
@@ -48,7 +48,7 @@ public class TakeWhileIterator<E> implements Iterator<E> {
             return element;
         }
         final E element = iterator.next();
-        if (filter.test(element)) {
+        if (filter.accept(element)) {
             return element;
         }
         throw new NoSuchElementException();

@@ -17,7 +17,7 @@ public class UntilCount<T> implements Predicate<T>{
     }
     
     @Override
-    public boolean test(T element) {
+    public boolean accept(T element) {
         return limit > count++;
     }
 

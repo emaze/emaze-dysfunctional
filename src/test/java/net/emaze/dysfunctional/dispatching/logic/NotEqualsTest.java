@@ -18,11 +18,11 @@ public class NotEqualsTest {
 
     @Test
     public void nonEqualObjectYieldsTrue() {
-        Assert.assertTrue(new NotEquals<O>(O.ONE).test(O.ANOTHER));
+        Assert.assertTrue(new NotEquals<O>(O.ONE).accept(O.ANOTHER));
     }
 
     @Test
     public void equalObjectYieldsFalse() {
-        Assert.assertFalse(new NotEquals<O>(O.ONE).test(O.ONE));
+        Assert.assertFalse(new NotEquals<O>(O.ONE).accept(O.ONE));
     }
 }

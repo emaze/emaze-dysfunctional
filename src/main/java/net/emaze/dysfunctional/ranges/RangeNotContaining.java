@@ -16,7 +16,7 @@ public class RangeNotContaining<T> implements Predicate<DenseRange<T>>{
     }
 
     @Override
-    public boolean test(DenseRange<T> range) {
+    public boolean accept(DenseRange<T> range) {
         return range.contains(element);
     }
 

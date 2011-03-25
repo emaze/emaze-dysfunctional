@@ -18,9 +18,9 @@ public class AllMatchingTernaryPredicate<E1, E2, E3> implements CompositeTernary
     private final List<TernaryPredicate<E1, E2, E3>> predicates = new ArrayList<TernaryPredicate<E1, E2, E3>>();
 
     @Override
-    public boolean test(E1 first, E2 second, E3 third) {
+    public boolean accept(E1 first, E2 second, E3 third) {
         for (TernaryPredicate<E1, E2, E3> predicate : predicates) {
-            if (!predicate.test(first, second, third)) {
+            if (!predicate.accept(first, second, third)) {
                 return false;
             }
         }

@@ -30,7 +30,7 @@ public abstract class Iterations {
         dbc.precondition(predicate != null, "cannot call any with a null predicate");
 
         for (E element : iterable) {
-            if (predicate.test(element)) {
+            if (predicate.accept(element)) {
                 return true;
             }
         }
@@ -74,7 +74,7 @@ public abstract class Iterations {
         dbc.precondition(predicate != null, "cannot call every with a null predicate");
 
         for (E element : iterable) {
-            if (!predicate.test(element)) {
+            if (!predicate.accept(element)) {
                 return false;
             }
         }

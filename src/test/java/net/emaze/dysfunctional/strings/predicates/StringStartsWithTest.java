@@ -16,16 +16,16 @@ public class StringStartsWithTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testingWithNullHaystackYieldsException() {
-        new StringStartsWith("a").test(null);
+        new StringStartsWith("a").accept(null);
     }
 
     @Test
     public void testingContainedNeedleYieldsTrue() {
-        Assert.assertTrue(new StringStartsWith("a").test("a"));
+        Assert.assertTrue(new StringStartsWith("a").accept("a"));
     }
 
     @Test
     public void testingNotContainedNeedleYieldsFalse() {
-        Assert.assertFalse(new StringStartsWith("a").test("A"));
+        Assert.assertFalse(new StringStartsWith("a").accept("A"));
     }
 }

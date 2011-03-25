@@ -12,7 +12,7 @@ public class NeverTest {
 
     @Test
     public void neverYieldsFalseWithNull(){
-        Assert.assertFalse(new Never<Object>().test(null));
+        Assert.assertFalse(new Never<Object>().accept(null));
     }
 
 

@@ -17,10 +17,10 @@ public class DropWhile<T> implements Predicate<T> {
     }
       
     @Override
-    public boolean test(T element) {
+    public boolean accept(T element) {
         if (takeElement == false) {
             // first time and until predicate is true
-            takeElement = !dropWhile.test(element);
+            takeElement = !dropWhile.accept(element);
         }
         return takeElement;
     }

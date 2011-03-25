@@ -15,7 +15,7 @@ public class BinaryAlways<E1, E2> implements BinaryPredicate<E1, E2> {
      * @return true. always.
      */
     @Override
-    public boolean test(E1 former, E2 latter) {
+    public boolean accept(E1 former, E2 latter) {
         return true;
     }
 }

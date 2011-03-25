@@ -19,7 +19,7 @@ public class PredicateIgnoreSecond<T1, T2> implements BinaryPredicate<T1, T2> {
     }
 
     @Override
-    public boolean test(T1 first, T2 second) {
-        return predicate.test(first);
+    public boolean accept(T1 first, T2 second) {
+        return predicate.accept(first);
     }
 }

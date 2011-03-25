@@ -21,7 +21,7 @@ public class UnaryToTernaryPredicate<T1, T2, T3> implements TernaryPredicate<T1,
     }
 
     @Override
-    public boolean test(T1 first, T2 second, T3 third) {
-        return predicate.test(Triple.of(first, second, third));
+    public boolean accept(T1 first, T2 second, T3 third) {
+        return predicate.accept(Triple.of(first, second, third));
     }
 }

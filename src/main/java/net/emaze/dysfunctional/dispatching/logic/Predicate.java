@@ -11,5 +11,5 @@ public interface Predicate<E> {
      * @param element the element used to evaluate the predicate
      * @return true if the element fulfills the predicate
      */
-    public boolean test(E element);
+    public boolean accept(E element);
 }

@@ -22,7 +22,7 @@ public class PredicateBinderSecond<T1, T2> implements Predicate<T1> {
     }
 
     @Override
-    public boolean test(T1 first) {
-        return predicate.test(first, second);
+    public boolean accept(T1 first) {
+        return predicate.accept(first, second);
     }
 }

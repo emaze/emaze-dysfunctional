@@ -16,16 +16,16 @@ public class StringContainsTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testingWithNullHaystackYieldsException() {
-        new StringContains("a").test(null);
+        new StringContains("a").accept(null);
     }
 
     @Test
     public void testingContainedNeedleYieldsTrue() {
-        Assert.assertTrue(new StringContains("a").test("a"));
+        Assert.assertTrue(new StringContains("a").accept("a"));
     }
 
     @Test
     public void testingNotContainedNeedleYieldsFalse() {
-        Assert.assertFalse(new StringContains("a").test("A"));
+        Assert.assertFalse(new StringContains("a").accept("A"));
     }
 }

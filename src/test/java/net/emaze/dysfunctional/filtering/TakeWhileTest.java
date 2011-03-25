@@ -19,22 +19,22 @@ public class TakeWhileTest {
     @Test
     public void alwayDroppingAlwaysReturnFalse() {
         Predicate<Object> pred = new TakeWhile<Object>(new Always<Object>());
-        Assert.assertTrue(pred.test(null));
+        Assert.assertTrue(pred.accept(null));
     }
 
     @Test
     public void neverDroppingAlwaysReturnTrue() {
         Predicate<Object> pred = new TakeWhile<Object>(new Never<Object>());
-        Assert.assertFalse(pred.test(null));
+        Assert.assertFalse(pred.accept(null));
     }
 
     @Test
     public void takesWhileConditionMetThenNeverTakes() {
         Predicate<Object> pred = new TakeWhile<Object>(new NotNull<Object>());
         List<Boolean> results = new ArrayList<Boolean>();
-        results.add(pred.test(new Object()));
-        results.add(pred.test(null));
-        results.add(pred.test(new Object()));
+        results.add(pred.accept(new Object()));
+        results.add(pred.accept(null));
+        results.add(pred.accept(new Object()));
         Assert.assertEquals(Arrays.asList(true, false, false), results);
     }
 

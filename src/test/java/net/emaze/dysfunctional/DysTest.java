@@ -85,7 +85,7 @@ public class DysTest {
     public static class MethodIsStatic implements Predicate<Method> {
 
         @Override
-        public boolean test(Method m) {
+        public boolean accept(Method m) {
             return Modifier.isStatic(m.getModifiers());
         }
     }

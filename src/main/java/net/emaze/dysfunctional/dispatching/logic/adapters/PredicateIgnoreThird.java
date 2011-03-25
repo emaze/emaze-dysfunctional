@@ -20,7 +20,7 @@ public class PredicateIgnoreThird<T1, T2, T3> implements TernaryPredicate<T1, T2
     }
 
     @Override
-    public boolean test(T1 first, T2 second, T3 third) {
-        return predicate.test(first, second);
+    public boolean accept(T1 first, T2 second, T3 third) {
+        return predicate.accept(first, second);
     }
 }

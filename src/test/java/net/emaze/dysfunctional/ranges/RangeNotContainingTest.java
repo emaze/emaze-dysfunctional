@@ -15,7 +15,7 @@ public class RangeNotContainingTest {
     public void acceptsWhenContains() {
         DenseRange<Integer> range = r(0, 10);
         Predicate<DenseRange<Integer>> p = new RangeNotContaining<Integer>(0); 
-        Assert.assertTrue(p.test(range));
+        Assert.assertTrue(p.accept(range));
     }
 
 }

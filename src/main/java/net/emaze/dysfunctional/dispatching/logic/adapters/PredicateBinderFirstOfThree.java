@@ -23,7 +23,7 @@ public class PredicateBinderFirstOfThree<T1, T2, T3> implements BinaryPredicate<
     }
 
     @Override
-    public boolean test(T2 second, T3 third) {
-        return predicate.test(first, second, third);
+    public boolean accept(T2 second, T3 third) {
+        return predicate.accept(first, second, third);
     }
 }

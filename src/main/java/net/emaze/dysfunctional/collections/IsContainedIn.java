@@ -18,7 +18,7 @@ public class IsContainedIn<T> implements Predicate<T> {
     }
 
     @Override
-    public boolean test(T element) {
+    public boolean accept(T element) {
         return collection.contains(element);
     }
 }

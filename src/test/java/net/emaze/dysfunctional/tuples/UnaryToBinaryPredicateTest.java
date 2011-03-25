@@ -21,6 +21,6 @@ public class UnaryToBinaryPredicateTest {
     public void canAdapt() {
         final Predicate<Pair<O, O>> predicate = new Always<Pair<O, O>>();
         final UnaryToBinaryPredicate<O, O> adapted = new UnaryToBinaryPredicate<O, O>(predicate);
-        Assert.assertTrue(adapted.test(O.IGNORED, O.IGNORED));
+        Assert.assertTrue(adapted.accept(O.IGNORED, O.IGNORED));
     }
 }

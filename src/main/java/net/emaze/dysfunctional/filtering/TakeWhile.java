@@ -17,10 +17,10 @@ public class TakeWhile<T> implements Predicate<T> {
     }
       
     @Override
-    public boolean test(T element) {
+    public boolean accept(T element) {
         if (dropElement == false) {
             // first time and until predicate is true
-            dropElement = !takeWhile.test(element);
+            dropElement = !takeWhile.accept(element);
         }
         return !dropElement;
     }

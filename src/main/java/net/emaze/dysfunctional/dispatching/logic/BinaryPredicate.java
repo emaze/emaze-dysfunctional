@@ -7,5 +7,5 @@ package net.emaze.dysfunctional.dispatching.logic;
  * @author rferranti
  */
 public interface BinaryPredicate<T1,T2> {
-    boolean test(T1 former, T2 latter);
+    boolean accept(T1 former, T2 latter);
 }

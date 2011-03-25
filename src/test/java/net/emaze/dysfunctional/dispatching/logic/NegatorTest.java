@@ -16,14 +16,14 @@ public class NegatorTest {
     @Test
     public void negatingAlwaysYieldsFalse() {
         final Predicate<Object> p = new Negator<Object>(new Always<Object>());
-        boolean got = p.test(null);
+        boolean got = p.accept(null);
         Assert.assertEquals(false, got);
     }
 
     @Test
     public void negatingNeverYieldsFalse() {
         final Predicate<Object> p = new Negator<Object>(new Never<Object>());
-        boolean got = p.test(null);
+        boolean got = p.accept(null);
         Assert.assertEquals(true, got);
     }
 

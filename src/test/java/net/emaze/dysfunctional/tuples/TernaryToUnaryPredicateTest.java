@@ -20,6 +20,6 @@ public class TernaryToUnaryPredicateTest {
     @Test
     public void canAdapt() {
         final Predicate<Triple<O, O, O>> predicate = new TernaryToUnaryPredicate<O, O, O>(new TernaryAlways<O, O, O>());
-        Assert.assertTrue(predicate.test(Triple.of(O.IGNORED, O.IGNORED, O.IGNORED)));
+        Assert.assertTrue(predicate.accept(Triple.of(O.IGNORED, O.IGNORED, O.IGNORED)));
     }
 }

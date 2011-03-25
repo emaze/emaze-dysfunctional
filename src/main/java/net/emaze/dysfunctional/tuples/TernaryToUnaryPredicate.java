@@ -21,7 +21,7 @@ public class TernaryToUnaryPredicate<T1, T2, T3> implements Predicate<Triple<T1,
     }
 
     @Override
-    public boolean test(Triple<T1, T2, T3> triple) {
-        return predicate.test(triple.first(), triple.second(), triple.third());
+    public boolean accept(Triple<T1, T2, T3> triple) {
+        return predicate.accept(triple.first(), triple.second(), triple.third());
     }
 }

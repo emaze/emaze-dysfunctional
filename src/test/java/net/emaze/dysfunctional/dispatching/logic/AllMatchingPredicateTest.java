@@ -12,21 +12,21 @@ public class AllMatchingPredicateTest {
 
     @Test
     public void canEvaluateEmptyPredicateList() {
-        Assert.assertTrue(new AllMatchingPredicate<String>().test(null));
+        Assert.assertTrue(new AllMatchingPredicate<String>().accept(null));
     }
 
     @Test
     public void yieldsTrueWhenEveryPredicateReturnsTrue() {
         AllMatchingPredicate<String> test = new AllMatchingPredicate<String>();
         test.add(new Always<String>());
-        Assert.assertTrue(test.test("aaa"));
+        Assert.assertTrue(test.accept("aaa"));
     }
 
     @Test
     public void yieldsFalseOnFirstPredicateReturningFalse() {
         AllMatchingPredicate<String> test = new AllMatchingPredicate<String>();
         test.add(new Never<String>());
-        Assert.assertFalse(test.test("aaa"));
+        Assert.assertFalse(test.accept("aaa"));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -67,6 +67,6 @@ public class AllMatchingPredicateTest {
     public void canSetFunctors() {
         AllMatchingPredicate<String> pred = new AllMatchingPredicate<String>();
         pred.setFunctors(Arrays.<Predicate<String>>asList(new Always<String>(), new Always<String>()));
-        pred.test("ignored_value");
+        pred.accept("ignored_value");
     }
 }

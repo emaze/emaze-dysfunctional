@@ -13,7 +13,7 @@ public class StringEqualsIgnoreCase implements Predicate<String> {
     }
 
     @Override
-    public boolean test(String rhs) {
+    public boolean accept(String rhs) {
         dbc.precondition(rhs != null, "cannot check equalsIgnoreCase vs a null rhs");
         return lhs.equalsIgnoreCase(rhs);
     }

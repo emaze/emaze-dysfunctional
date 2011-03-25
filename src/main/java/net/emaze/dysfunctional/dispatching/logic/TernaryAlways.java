@@ -17,7 +17,7 @@ public class TernaryAlways<E1, E2, E3> implements TernaryPredicate<E1, E2, E3>{
      * @return true. always.
      */
     @Override
-    public boolean test(E1 first, E2 second, E3 third) {
+    public boolean accept(E1 first, E2 second, E3 third) {
         return true;
     }
 

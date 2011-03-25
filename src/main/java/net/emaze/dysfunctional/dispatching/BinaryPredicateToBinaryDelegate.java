@@ -21,6 +21,6 @@ public class BinaryPredicateToBinaryDelegate<T1, T2> implements BinaryDelegate<B
 
     @Override
     public Boolean perform(T1 first, T2 second) {
-        return adapted.test(first, second);
+        return adapted.accept(first, second);
     }
 }

@@ -16,9 +16,9 @@ public class FirstMatchingPredicate<E> implements CompositePredicate<E> {
     private final List<Predicate<E>> predicates = new ArrayList<Predicate<E>>();
 
     @Override
-    public boolean test(E element) {
+    public boolean accept(E element) {
         for(Predicate<E> predicate : predicates){
-            if(predicate.test(element)){
+            if(predicate.accept(element)){
                 return true;
             }
         }

@@ -13,17 +13,17 @@ public class IsNothingTest {
     @Test
     public void justIsNotNothing() {
         Predicate<Maybe<Integer>> p = new IsNothing<Integer>();
-        Assert.assertFalse(p.test(Maybe.just(1)));
+        Assert.assertFalse(p.accept(Maybe.just(1)));
     }
 
     @Test
     public void nothingMatches() {
         Predicate<Maybe<Integer>> p = new IsNothing<Integer>();
-        Assert.assertTrue(p.test(Maybe.<Integer>nothing()));
+        Assert.assertTrue(p.accept(Maybe.<Integer>nothing()));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testingAgainstNullYieldsException() {
-        new IsNothing<Object>().test(null);
+        new IsNothing<Object>().accept(null);
     }
 }

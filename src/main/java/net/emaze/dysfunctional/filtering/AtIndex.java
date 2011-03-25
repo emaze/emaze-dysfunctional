@@ -17,7 +17,7 @@ public class AtIndex<E> implements Predicate<E> {
     }
 
     @Override
-    public boolean test(E element) {
+    public boolean accept(E element) {
         return target == current++;
     }
 

@@ -12,11 +12,11 @@ public class IsTrueTest {
 
     @Test
     public void trueIsTrue() {
-        Assert.assertTrue(new IsTrue().test(Boolean.TRUE));
+        Assert.assertTrue(new IsTrue().accept(Boolean.TRUE));
     }
 
     @Test
     public void falseIsNotTrue() {
-        Assert.assertFalse(new IsTrue().test(Boolean.FALSE));
+        Assert.assertFalse(new IsTrue().accept(Boolean.FALSE));
     }
 }

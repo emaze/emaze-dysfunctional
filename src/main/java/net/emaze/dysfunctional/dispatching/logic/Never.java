@@ -13,7 +13,7 @@ public class Never<E> implements Predicate<E>{
      * @return false
      */
     @Override
-    public boolean test(E element) {
+    public boolean accept(E element) {
         return false;
     }
 

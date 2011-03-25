@@ -13,7 +13,7 @@ public class Always<E> implements Predicate<E>{
      * @return true. always.
      */
     @Override
-    public boolean test(E element) {
+    public boolean accept(E element) {
         return true;
     }
 
