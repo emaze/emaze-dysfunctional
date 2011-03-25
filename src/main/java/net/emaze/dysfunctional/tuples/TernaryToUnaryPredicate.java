@@ -1,8 +1,8 @@
 package net.emaze.dysfunctional.tuples;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.logic.Predicate;
-import net.emaze.dysfunctional.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 
 /**
  * Adapts a ternary predicate handling triples to a predicate handling triples.

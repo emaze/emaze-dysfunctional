@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.filtering;
 
 import java.util.Iterator;
-import net.emaze.dysfunctional.logic.Predicate;
+import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
 import net.emaze.dysfunctional.contracts.dbc;
 

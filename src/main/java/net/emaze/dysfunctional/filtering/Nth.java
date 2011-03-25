@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.filtering;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.logic.Predicate;
+import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
 /**
  * yields true at the nth iteration (1-based)

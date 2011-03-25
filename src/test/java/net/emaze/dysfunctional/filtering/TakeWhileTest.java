@@ -3,10 +3,10 @@ package net.emaze.dysfunctional.filtering;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import net.emaze.dysfunctional.logic.Always;
-import net.emaze.dysfunctional.logic.Never;
-import net.emaze.dysfunctional.logic.NotNull;
-import net.emaze.dysfunctional.logic.Predicate;
+import net.emaze.dysfunctional.dispatching.logic.Always;
+import net.emaze.dysfunctional.dispatching.logic.Never;
+import net.emaze.dysfunctional.dispatching.logic.NotNull;
+import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.options;
 
 import net.emaze.dysfunctional.casts.Casts;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.delegates.Delegate;
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 

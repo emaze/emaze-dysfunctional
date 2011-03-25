@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.options;
 import java.util.Iterator;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.delegates.Delegate;
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.filtering.Filtering;
 import net.emaze.dysfunctional.iterations.Iterations;
 
@@ -92,14 +92,32 @@ public abstract class Options {
         return new LiftMaybe<T>().perform(value);
     }
 
+    /**
+     * Applies lift (lazily) to an iterator
+     * @param <T> the value type parameter
+     * @param iterator the iterator to be lifted
+     * @return an iterator of Maybe
+     */
     public static <T> Iterator<Maybe<T>> lifts(Iterator<T> iterator) {
         return Iterations.transform(iterator, new LiftMaybe<T>());
     }
 
+    /**
+     * Applies lift (lazily) to an iterable
+     * @param <T> the value type parameter
+     * @param iterable the iterable to be lifted
+     * @return an iterator of Maybe
+     */
     public static <T> Iterator<Maybe<T>> lifts(Iterable<T> iterable) {
         return Iterations.transform(iterable, new LiftMaybe<T>());
     }
 
+    /**
+     * Applies lift (lazily) to an array
+     * @param <T> the value type parameter
+     * @param array the array to be lifted
+     * @return an iterator of Maybe
+     */
     public static <T> Iterator<Maybe<T>> lifts(T... array) {
         return Iterations.transform(array, new LiftMaybe<T>());
     }
@@ -114,14 +132,32 @@ public abstract class Options {
         return new DropMaybe<T>().perform(maybe);
     }
 
+    /**
+     * Applies drop (lazily) to an iterator
+     * @param <T> the value type parameter
+     * @param iterator the iterator to be dropped
+     * @return an iterator of T
+     */
     public static <T> Iterator<T> drops(Iterator<Maybe<T>> iterator) {
         return Iterations.transform(iterator, new DropMaybe<T>());
     }
 
-    public static <T> Iterator<T> drops(Iterable<Maybe<T>> iterator) {
-        return Iterations.transform(iterator, new DropMaybe<T>());
+    /**
+     * Applies drop (lazily) to an iterator
+     * @param <T> the value type parameter
+     * @param iterable the Iterable to be dropped
+     * @return an iterator of T
+     */
+    public static <T> Iterator<T> drops(Iterable<Maybe<T>> iterable) {
+        return Iterations.transform(iterable, new DropMaybe<T>());
     }
 
+    /**
+     * Applies drop (lazily) to an array
+     * @param <T> the value type parameter
+     * @param array the array to be dropped
+     * @return an iterator of T
+     */
     public static <T> Iterator<T> drops(Maybe<T>... array) {
         return Iterations.transform(array, new DropMaybe<T>());
     }

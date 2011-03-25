@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.interceptions;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.emaze.dysfunctional.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.tuples.Triple;
 import org.junit.Assert;
 import org.junit.Test;

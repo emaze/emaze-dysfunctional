@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.collections;
 
 import java.util.Collection;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.delegates.Delegate;
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
  *

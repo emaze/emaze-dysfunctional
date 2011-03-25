@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.interceptions;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.emaze.dysfunctional.delegates.BinaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 import net.emaze.dysfunctional.tuples.Pair;
 import org.junit.Assert;
 import org.junit.Test;

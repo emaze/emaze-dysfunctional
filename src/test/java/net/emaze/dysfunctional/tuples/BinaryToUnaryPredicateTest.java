@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
-import net.emaze.dysfunctional.logic.Predicate;
-import net.emaze.dysfunctional.logic.BinaryAlways;
+import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;

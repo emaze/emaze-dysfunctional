@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.delegates.IteratorPlucker;
+import net.emaze.dysfunctional.dispatching.delegates.IteratorPlucker;
 import net.emaze.dysfunctional.iterations.Iterations;
 import net.emaze.dysfunctional.options.Maybe;
 

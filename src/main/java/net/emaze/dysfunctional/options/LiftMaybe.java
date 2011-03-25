@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.options;
 
-import net.emaze.dysfunctional.delegates.Delegate;
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
  * note this is not the wrapping delegate you usually want, look @ LiftJust

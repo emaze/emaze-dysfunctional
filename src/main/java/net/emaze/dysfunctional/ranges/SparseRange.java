@@ -8,7 +8,7 @@ import net.emaze.dysfunctional.casts.Casts;
 import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.multiplexing.ChainIterator;
-import net.emaze.dysfunctional.delegates.IteratorPlucker;
+import net.emaze.dysfunctional.dispatching.delegates.IteratorPlucker;
 import net.emaze.dysfunctional.iterations.Iterations;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 import net.emaze.dysfunctional.strings.Strings;

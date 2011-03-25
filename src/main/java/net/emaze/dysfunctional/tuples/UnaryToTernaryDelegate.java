@@ -1,8 +1,8 @@
 package net.emaze.dysfunctional.tuples;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.delegates.Delegate;
-import net.emaze.dysfunctional.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 
 /**
  * Adapts a unary delegate handling triples to a ternary delegate.

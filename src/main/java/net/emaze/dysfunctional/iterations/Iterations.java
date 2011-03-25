@@ -7,9 +7,9 @@ import net.emaze.dysfunctional.adapting.ArrayIterator;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.consumers.EagerConsumer;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.delegates.Action;
-import net.emaze.dysfunctional.delegates.Delegate;
-import net.emaze.dysfunctional.logic.Predicate;
+import net.emaze.dysfunctional.dispatching.actions.Action;
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
 /**
  * iterating shortcuts (usage shouldn't be abused)

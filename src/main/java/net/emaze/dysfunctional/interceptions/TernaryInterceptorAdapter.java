@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.interceptions;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 
 /**
  *

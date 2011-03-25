@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.collections.CollectionProvider;
-import net.emaze.dysfunctional.options.Maybe;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,10 +22,7 @@ import org.junit.runners.Suite;
     ConsumersTest.One.class,
     ConsumersTest.All.class,
     ConsumersTest.Last.class,
-    ConsumersTest.Pipe.class,
-    ConsumersTest.MaybeFirst.class,
-    ConsumersTest.MaybeOne.class,
-    ConsumersTest.MaybeLast.class
+    ConsumersTest.Pipe.class
 })
 public class ConsumersTest {
 
@@ -250,118 +245,4 @@ public class ConsumersTest {
         }
     }
 
-    public static class MaybeFirst {
-
-        @Test
-        public void maybeFirstWithEmptyIteratorYieldsNothing() {
-            Assert.assertEquals(Maybe.nothing(), Consumers.maybeFirst(Collections.emptyList().iterator()));
-        }
-
-        @Test
-        public void maybeFirstWithNonEmptyIteratorYieldsJustTheFirst() {
-            Assert.assertEquals(Maybe.just(1), Consumers.maybeFirst(Arrays.asList(1, 2).iterator()));
-        }
-
-        @Test
-        public void maybeFirstWithNonEmptyIterableYieldsJustTheFirst() {
-            Assert.assertEquals(Maybe.just(1), Consumers.maybeFirst(Arrays.asList(1, 2)));
-        }
-
-        @Test
-        public void maybeFirstWithNonEmptyArrayYieldsJustTheFirst() {
-            Assert.assertEquals(Maybe.just(1), Consumers.maybeFirst(new Integer[]{1, 2}));
-        }
-
-        @Test(expected = IllegalArgumentException.class)
-        public void cannotCallMaybeFirstWithNullIterable() {
-            final Iterable<Object> iterable = null;
-            Consumers.maybeFirst(iterable);
-        }
-    }
-
-    public static class MaybeOne {
-
-        @Test
-        public void maybeOneWithEmptyIteratorYieldsNothing() {
-            Assert.assertEquals(Maybe.nothing(), Consumers.maybeOne(Collections.emptyList().iterator()));
-        }
-
-        @Test(expected = IllegalStateException.class)
-        public void maybeOneWithMultipleValuesIteratorThrows() {
-            Consumers.maybeOne(Arrays.asList(1, 2).iterator());
-        }
-
-        @Test
-        public void maybeOneWithSingleValueIteratorYieldsJustValue() {
-            Assert.assertEquals(Maybe.just(1), Consumers.maybeOne(Arrays.asList(1).iterator()));
-        }
-
-        @Test
-        public void maybeOneWithSingleValueIterableYieldsJustValue() {
-            Assert.assertEquals(Maybe.just(1), Consumers.maybeOne(Arrays.asList(1)));
-        }
-
-        @Test
-        public void maybeOneWithSingleValueArrayYieldsJustValue() {
-            Assert.assertEquals(Maybe.just(1), Consumers.maybeOne(new Integer[]{1}));
-        }
-
-        @Test(expected = IllegalArgumentException.class)
-        public void cannotCallMaybeOneWithNullIterable() {
-            final Iterable<Object> iterable = null;
-            Consumers.maybeOne(iterable);
-        }
-    }
-
-    public static class MaybeLast {
-
-        @Test
-        public void maybeLastWithEmptyIteratorYieldsNothing() {
-            Assert.assertEquals(Maybe.nothing(), Consumers.maybeLast(Collections.emptyList().iterator()));
-        }
-
-        @Test
-        public void maybeLastWithMultipleValuesIteratorYieldsTheLastElement() {
-            Assert.assertEquals(Maybe.just(2), Consumers.maybeLast(Arrays.asList(1, 2).iterator()));
-        }
-
-        @Test
-        public void maybeLastWithSingleValueIteratorYieldsJustLastValue() {
-            Assert.assertEquals(Maybe.just(1), Consumers.maybeLast(Arrays.asList(1).iterator()));
-        }
-
-        @Test
-        public void maybeLastWithSingleValueIterableYieldsJustLastValue() {
-            Assert.assertEquals(Maybe.just(1), Consumers.maybeLast(Arrays.asList(1)));
-        }
-
-        @Test
-        public void maybeLastWithSingleValueArrayYieldsJustLastValue() {
-            Assert.assertEquals(Maybe.just(1), Consumers.maybeLast(new Integer[]{1}));
-        }
-
-        @Test(expected = IllegalArgumentException.class)
-        public void callingMaybeLastWithNullIteratorYieldException() {
-            Iterator<Object> aNullIter = null;
-            Consumers.maybeLast(aNullIter);
-        }
-
-        @Test(expected = IllegalArgumentException.class)
-        public void callingMaybeLastWithNullIterableYieldException() {
-            Iterable<Object> aNullIterable = null;
-            Consumers.maybeLast(aNullIterable);
-        }
-
-        @Test(expected = IllegalArgumentException.class)
-        public void callingMaybeLastWithNullArrayYieldException() {
-            Object[] aNullArray = null;
-            Consumers.maybeLast(aNullArray);
-        }
-
-        @Test(expected = IllegalArgumentException.class)
-        public void cannotCallMaybeLastWithNullIterable() {
-            final Iterable<Object> iterable = null;
-            Consumers.maybeLast(iterable);
-        }
-    }
 }

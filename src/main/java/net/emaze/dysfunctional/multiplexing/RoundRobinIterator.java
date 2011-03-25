@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.logic.HasNext;
+import net.emaze.dysfunctional.dispatching.logic.HasNext;
 import net.emaze.dysfunctional.iterations.Iterations;
 import net.emaze.dysfunctional.numbers.CircularCounter;
 

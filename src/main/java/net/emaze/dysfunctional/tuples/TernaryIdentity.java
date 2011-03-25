@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.tuples;
 
-import net.emaze.dysfunctional.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 
 /**
  * Returns the three formal parameters (in a triple) passed to the delegate.

@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.reductions;
 import java.util.Iterator;
 import net.emaze.dysfunctional.consumers.Consumer;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.delegates.BinaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 
 /**
  * Reduces the Iterator<E> to R

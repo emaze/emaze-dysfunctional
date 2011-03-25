@@ -1,8 +1,8 @@
 package net.emaze.dysfunctional.tuples;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.delegates.BinaryDelegate;
-import net.emaze.dysfunctional.delegates.Delegate;
+import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
  * Adapts a unary delegate handling pairs to a binary delegate.

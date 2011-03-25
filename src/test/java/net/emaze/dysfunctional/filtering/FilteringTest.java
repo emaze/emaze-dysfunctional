@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.consumers.Consumers;
-import net.emaze.dysfunctional.logic.Always;
-import net.emaze.dysfunctional.logic.Never;
+import net.emaze.dysfunctional.dispatching.logic.Always;
+import net.emaze.dysfunctional.dispatching.logic.Never;
 import org.junit.Assert;
 import org.junit.Test;
 

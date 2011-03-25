@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.iterations;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.delegates.Delegate;
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
  * Decorates an iterator adapting (via a delegate) consumed elements

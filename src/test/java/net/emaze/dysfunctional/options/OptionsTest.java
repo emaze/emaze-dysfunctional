@@ -2,7 +2,8 @@ package net.emaze.dysfunctional.options;
 
 import java.util.Collections;
 import java.util.Iterator;
-import net.emaze.dysfunctional.delegates.Identity;
+import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import net.emaze.dysfunctional.iterations.Iterations;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -62,8 +63,8 @@ public class OptionsTest {
 
     @Test
     public void canFetchJustsFromIterator() {
-        final Iterable<Maybe<O>> iterable = Collections.singletonList(Maybe.just(O.ONE));
-        final Iterator<O> got = Options.justs(iterable.iterator());
+        final Iterator<Maybe<O>> iterator = Iterations.iterator(Maybe.just(O.ONE));
+        final Iterator<O> got = Options.justs(iterator);
         Assert.assertEquals(O.ONE, got.next());
     }
 

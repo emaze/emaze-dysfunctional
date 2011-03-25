@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.options;
 
-import net.emaze.dysfunctional.delegates.Identity;
+import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import org.junit.Assert;
 import org.junit.Test;
 

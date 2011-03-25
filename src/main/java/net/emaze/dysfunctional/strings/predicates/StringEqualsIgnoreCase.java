@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.strings.predicates;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.logic.Predicate;
+import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
 public class StringEqualsIgnoreCase implements Predicate<String> {
 

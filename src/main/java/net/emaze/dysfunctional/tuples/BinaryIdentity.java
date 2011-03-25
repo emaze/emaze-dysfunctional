@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.tuples;
 
-import net.emaze.dysfunctional.delegates.BinaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 
 /**
  * Returns both formal parameters (in a pair) passed to the delegate.

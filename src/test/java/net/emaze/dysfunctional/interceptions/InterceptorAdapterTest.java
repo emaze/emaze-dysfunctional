@@ -2,8 +2,8 @@ package net.emaze.dysfunctional.interceptions;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.emaze.dysfunctional.delegates.Delegate;
-import net.emaze.dysfunctional.delegates.Identity;
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import org.junit.Assert;
 import org.junit.Test;
 

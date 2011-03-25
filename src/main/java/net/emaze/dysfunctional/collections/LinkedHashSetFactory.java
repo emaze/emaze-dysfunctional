@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.collections;
 
 import java.util.LinkedHashSet;
-import net.emaze.dysfunctional.delegates.Provider;
+import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
 /**
  * Creates an empty LinkedHashSet.

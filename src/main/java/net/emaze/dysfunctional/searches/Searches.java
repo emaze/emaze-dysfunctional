@@ -4,9 +4,10 @@ import java.util.Iterator;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
 import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.logic.Predicate;
+import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.filtering.Filtering;
 import net.emaze.dysfunctional.options.Maybe;
+import net.emaze.dysfunctional.options.MaybeIterator;
 
 /**
  *
@@ -23,7 +24,7 @@ public abstract class Searches {
      * @return just the element found or nothing
      */
     public static <E> Maybe<E> search(Iterator<E> iterator, Predicate<E> predicate) {
-        return Consumers.maybeFirst(Filtering.filter(iterator, predicate));
+        return searchFirst(Filtering.filter(iterator, predicate));
     }
 
     /**
@@ -100,7 +101,7 @@ public abstract class Searches {
      * @return just the element found or nothing
      */
     public static <E> Maybe<E> searchOne(Iterator<E> iterator, Predicate<E> predicate) {
-        return Consumers.maybeOne(Filtering.filter(iterator, predicate));
+        return searchOne(Filtering.filter(iterator, predicate));
     }
 
     /**
@@ -168,5 +169,108 @@ public abstract class Searches {
      */
     public static <E> E findOne(E[] array, Predicate<E> predicate) {
         return findOne(new ArrayIterator<E>(array), predicate);
+    }
+
+    /**
+     * yields the first element if found, nothing otherwise.
+     * @param <E>
+     * @param iterator
+     * @return just the first element or nothing
+     */
+    public static <E> Maybe<E> searchFirst(Iterator<E> iterator) {
+        return new MaybeIterator<E>(iterator).next();
+    }
+
+    /**
+     * yields the first element if found, nothing otherwise.
+     * @param <E>
+     * @param iterable
+     * @return
+     */
+    public static <E> Maybe<E> searchFirst(Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot call maybeFirst with a null iterable");
+        return searchFirst(iterable.iterator());
+    }
+
+    /**
+     * yields the first element if found, nothing otherwise.
+     * @param <E>
+     * @param array
+     * @return
+     */
+    public static <E> Maybe<E> searchFirst(E[] array) {
+        return searchFirst(new ArrayIterator<E>(array));
+    }
+
+    /**
+     * yields the only element if found, nothing otherwise.
+     * @param <E>
+     * @param iterator
+     * @throws IllegalStateException if the iterator contains more than one element
+     * @return
+     */
+    public static <E> Maybe<E> searchOne(Iterator<E> iterator) {
+        Iterator<Maybe<E>> maybeIter = new MaybeIterator<E>(iterator);
+        final Maybe<E> element = maybeIter.next();
+        dbc.stateprecondition(!maybeIter.hasNext(), "Expected only one value in iterator");
+        return element;
+    }
+
+    /**
+     * yields the only element if found, nothing otherwise.
+     * @param <E>
+     * @param iterable
+     * @throws IllegalStateException if the iterator contains more than one element
+     * @return
+     */
+    public static <E> Maybe<E> searchOne(Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot call maybeOne with a null iterable");
+        return searchOne(iterable.iterator());
+    }
+
+    /**
+     * yields the only element if found, nothing otherwise.
+     * @param <E>
+     * @param array
+     * @throws IllegalStateException if the iterator contains more than one element
+     * @return
+     */
+    public static <E> Maybe<E> maybeOne(E[] array) {
+        return searchOne(new ArrayIterator<E>(array));
+    }
+
+    /**
+     *
+     * @param <T>
+     * @param iterator
+     * @return
+     */
+    public static <T> Maybe<T> searchLast(Iterator<T> iterator) {
+        dbc.precondition(iterator != null, "cannot call maybeLast with a null iterator");
+        if (iterator.hasNext()) {
+            return Maybe.just(Consumers.last(iterator));
+        }
+        return Maybe.nothing();
+    }
+
+    /**
+     *
+     * @param <T>
+     * @param iterable
+     * @return
+     */
+    public static <T> Maybe<T> searchLast(Iterable<T> iterable) {
+        dbc.precondition(iterable != null, "cannot call maybeLast with a null iterable");
+        return searchLast(iterable.iterator());
+    }
+
+    /**
+     *
+     * @param <T>
+     * @param array
+     * @return
+     */
+    public static <T> Maybe<T> searchLast(T[] array) {
+        return searchLast(new ArrayIterator<T>(array));
     }
 }

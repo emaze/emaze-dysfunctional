@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.reductions;
 
-import net.emaze.dysfunctional.delegates.BinaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 
 /**
  *

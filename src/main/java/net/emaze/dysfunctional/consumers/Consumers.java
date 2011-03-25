@@ -7,9 +7,7 @@ import java.util.List;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
 import net.emaze.dysfunctional.collections.CollectionProvider;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.delegates.Provider;
-import net.emaze.dysfunctional.options.Maybe;
-import net.emaze.dysfunctional.options.MaybeIterator;
+import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
 /**
  *
@@ -254,108 +252,5 @@ public abstract class Consumers {
      */
     public static <E> void pipe(E[] array, OutputIterator<E> outputIterator) {
         pipe(new ArrayIterator<E>(array), outputIterator);
-    }
-
-    /**
-     * yields the first element if found, nothing otherwise.
-     * @param <E>
-     * @param iterator
-     * @return just the first element or nothing
-     */
-    public static <E> Maybe<E> maybeFirst(Iterator<E> iterator) {
-        return new MaybeIterator<E>(iterator).next();
-    }
-
-    /**
-     * yields the first element if found, nothing otherwise.
-     * @param <E>
-     * @param iterable
-     * @return
-     */
-    public static <E> Maybe<E> maybeFirst(Iterable<E> iterable) {
-        dbc.precondition(iterable != null, "cannot call maybeFirst with a null iterable");
-        return maybeFirst(iterable.iterator());
-    }
-
-    /**
-     * yields the first element if found, nothing otherwise.
-     * @param <E>
-     * @param array
-     * @return
-     */
-    public static <E> Maybe<E> maybeFirst(E[] array) {
-        return maybeFirst(new ArrayIterator<E>(array));
-    }
-
-    /**
-     * yields the only element if found, nothing otherwise.
-     * @param <E>
-     * @param iterator
-     * @throws IllegalStateException if the iterator contains more than one element
-     * @return
-     */
-    public static <E> Maybe<E> maybeOne(Iterator<E> iterator) {
-        Iterator<Maybe<E>> maybeIter = new MaybeIterator<E>(iterator);
-        final Maybe<E> element = maybeIter.next();
-        dbc.stateprecondition(!maybeIter.hasNext(), "Expected only one value in iterator");
-        return element;
-    }
-
-    /**
-     * yields the only element if found, nothing otherwise.
-     * @param <E>
-     * @param iterable
-     * @throws IllegalStateException if the iterator contains more than one element
-     * @return
-     */
-    public static <E> Maybe<E> maybeOne(Iterable<E> iterable) {
-        dbc.precondition(iterable != null, "cannot call maybeOne with a null iterable");
-        return maybeOne(iterable.iterator());
-    }
-
-    /**
-     * yields the only element if found, nothing otherwise.
-     * @param <E>
-     * @param array
-     * @throws IllegalStateException if the iterator contains more than one element
-     * @return
-     */
-    public static <E> Maybe<E> maybeOne(E[] array) {
-        return maybeOne(new ArrayIterator<E>(array));
-    }
-
-    /**
-     * 
-     * @param <T>
-     * @param iterator
-     * @return
-     */
-    public static <T> Maybe<T> maybeLast(Iterator<T> iterator) {
-        dbc.precondition(iterator != null, "cannot call maybeLast with a null iterator");
-        if (iterator.hasNext()) {
-            return Maybe.just(Consumers.last(iterator));
-        }
-        return Maybe.nothing();
-    }
-
-    /**
-     *
-     * @param <T>
-     * @param iterable
-     * @return
-     */
-    public static <T> Maybe<T> maybeLast(Iterable<T> iterable) {
-        dbc.precondition(iterable != null, "cannot call maybeLast with a null iterable");
-        return maybeLast(iterable.iterator());
-    }
-
-    /**
-     *
-     * @param <T>
-     * @param array
-     * @return
-     */
-    public static <T> Maybe<T> maybeLast(T[] array) {
-        return maybeLast(new ArrayIterator<T>(array));
     }
 }
