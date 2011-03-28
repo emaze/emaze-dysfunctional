@@ -1,7 +1,5 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
-import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
-
 /**
  *
  * @param <T1>
