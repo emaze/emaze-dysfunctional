@@ -21,8 +21,8 @@ public class TernaryCapturingDelegate<R, T1, T2, T3> implements TernaryDelegate<
         this.first.setContent(first);
         this.second.setContent(second);
         this.third.setContent(third);
-        final R result = nested.perform(first, second, third);
-        this.result.setContent(result);
-        return result;
+        final R got = nested.perform(first, second, third);
+        this.result.setContent(got);
+        return got;
     }
 }

@@ -17,8 +17,8 @@ public class CapturingDelegate<R, T> implements Delegate<R, T> {
     @Override
     public R perform(T value) {
         this.first.setContent(value);
-        final R result = nested.perform(value);
-        this.result.setContent(result);
-        return result;
+        final R got = nested.perform(value);
+        this.result.setContent(got);
+        return got;
     }
 }

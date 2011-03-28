@@ -19,8 +19,8 @@ public class BinaryCapturingDelegate<R, T1, T2> implements BinaryDelegate<R, T1,
     public R perform(T1 former, T2 latter) {
         this.first.setContent(former);
         this.second.setContent(latter);
-        final R result = nested.perform(former, latter);
-        this.result.setContent(result);
-        return result;
+        final R got = nested.perform(former, latter);
+        this.result.setContent(got);
+        return got;
     }
 }
