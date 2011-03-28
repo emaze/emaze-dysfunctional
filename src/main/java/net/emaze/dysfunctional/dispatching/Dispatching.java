@@ -233,4 +233,8 @@ public abstract class Dispatching {
     public static <R, T, U> Delegate<R, T> compose(Delegate<R, U> f, Delegate<U, T> g) {
         return new Composer<R, T, U>(f, g);
     }
+
+    public static <R, T> Predicate<T> compose(Predicate<R> pred, Delegate<R, T> delegate) {
+        return new TransformingPredicate<R, T>(pred, delegate);
+    }
 }
