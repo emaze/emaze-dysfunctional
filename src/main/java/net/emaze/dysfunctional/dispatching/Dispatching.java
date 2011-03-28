@@ -224,17 +224,36 @@ public abstract class Dispatching {
     /**
      * given f, g yields f ° g (f of g, f following g)
      * @param <R>
-     * @param <T>
-     * @param <U>
+     * @param <T2>
+     * @param <T1>
      * @param f
      * @param g
      * @return
      */
-    public static <R, T, U> Delegate<R, T> compose(Delegate<R, U> f, Delegate<U, T> g) {
-        return new Composer<R, T, U>(f, g);
+    public static <R, T2, T1> Delegate<R, T1> compose(Delegate<R, T2> f, Delegate<T2, T1> g) {
+        return new Composer<R, T2, T1>(f, g);
     }
 
-    public static <R, T> Predicate<T> compose(Predicate<R> pred, Delegate<R, T> delegate) {
-        return new TransformingPredicate<R, T>(pred, delegate);
+    /**
+     * given f, g, h yields f ° g ° h (f of g of h, f following g following h)
+     * @param <R>
+     * @param <T3>
+     * @param <T2>
+     * @param <T1>
+     * @param f
+     * @param g
+     * @param h
+     * @return
+     */
+    public static <R, T3, T2, T1> Delegate<R, T1> compose(Delegate<R, T3> f, Delegate<T3, T2> g, Delegate<T2, T1> h) {
+        return compose(f, compose(g, h));
+    }
+
+    public static <R, T> Predicate<T> compose(Predicate<R> predicate, Delegate<R, T> delegate) {
+        return new TransformingPredicate<R, T>(predicate, delegate);
+    }
+
+    public static <R, T2, T1> Predicate<T1> compose(Predicate<R> p, Delegate<R, T2> f, Delegate<T2, T1> g) {
+        return compose(p, compose(f, g));
     }
 }
