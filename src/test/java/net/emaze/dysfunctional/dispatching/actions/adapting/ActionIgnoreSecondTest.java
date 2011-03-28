@@ -13,7 +13,7 @@ import org.junit.Test;
 public class ActionIgnoreSecondTest {
 
     @Test(expected = IllegalArgumentException.class)
-    public void adaptingNullPredicateYieldsException() {
+    public void adaptingNullActionYieldsException() {
         new ActionIgnoreSecond<O, O>(null);
     }
 
