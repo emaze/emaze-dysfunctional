@@ -60,7 +60,7 @@ public class DispatchingTest {
 
     @Test
     public void canBindSecondOfTwo() {
-        final Delegate<Pair<O, O>, O> adapted = Dispatching.mcurry(new BinaryIdentity<O, O>(), O.ONE);
+        final Delegate<Pair<O, O>, O> adapted = Dispatching.rcurry(new BinaryIdentity<O, O>(), O.ONE);
         Assert.assertNotNull(adapted);
     }
 

@@ -77,24 +77,12 @@ public abstract class Dispatching {
         return new BinderFirstOfThree<R, T1, T2, T3>(delegate, first);
     }
 
-    public static <T1, T2> Action<T1> mcurry(BinaryAction<T1, T2> action, T2 second) {
-        return new ActionBinderSecond<T1, T2>(action, second);
-    }
-
     public static <T1, T2, T3> BinaryAction<T1, T3> mcurry(TernaryAction<T1, T2, T3> action, T2 first) {
         return new ActionBinderSecondOfThree<T1, T2, T3>(action, first);
     }
 
-    public static <R, T1, T2> Delegate<R, T1> mcurry(BinaryDelegate<R, T1, T2> delegate, T2 second) {
-        return new BinderSecond<R, T1, T2>(delegate, second);
-    }
-
     public static <R, T1, T2, T3> BinaryDelegate<R, T1, T3> mcurry(TernaryDelegate<R, T1, T2, T3> delegate, T2 first) {
         return new BinderSecondOfThree<R, T1, T2, T3>(delegate, first);
-    }
-
-    public static <T1, T2> Predicate<T1> mcurry(BinaryPredicate<T1, T2> predicate, T2 second) {
-        return new PredicateBinderSecond<T1, T2>(predicate, second);
     }
 
     public static <T1, T2, T3> BinaryPredicate<T1, T3> mcurry(TernaryPredicate<T1, T2, T3> predicate, T2 second) {
