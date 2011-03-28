@@ -29,19 +29,19 @@ import net.emaze.dysfunctional.dispatching.delegates.adapting.IgnoreFirstOfThree
 import net.emaze.dysfunctional.dispatching.delegates.adapting.IgnoreSecond;
 import net.emaze.dysfunctional.dispatching.delegates.adapting.IgnoreSecondOfThree;
 import net.emaze.dysfunctional.dispatching.delegates.adapting.IgnoreThird;
-import net.emaze.dysfunctional.dispatching.logic.adapters.PredicateBinderFirst;
-import net.emaze.dysfunctional.dispatching.logic.adapters.PredicateBinderSecond;
-import net.emaze.dysfunctional.dispatching.logic.adapters.PredicateBinderSecondOfThree;
-import net.emaze.dysfunctional.dispatching.logic.adapters.PredicateIgnoreSecond;
-import net.emaze.dysfunctional.dispatching.logic.adapters.PredicateIgnoreFirst;
-import net.emaze.dysfunctional.dispatching.logic.adapters.PredicateIgnoreFirstOfThree;
+import net.emaze.dysfunctional.dispatching.logic.adapting.PredicateBinderFirst;
+import net.emaze.dysfunctional.dispatching.logic.adapting.PredicateBinderSecond;
+import net.emaze.dysfunctional.dispatching.logic.adapting.PredicateBinderSecondOfThree;
+import net.emaze.dysfunctional.dispatching.logic.adapting.PredicateIgnoreSecond;
+import net.emaze.dysfunctional.dispatching.logic.adapting.PredicateIgnoreFirst;
+import net.emaze.dysfunctional.dispatching.logic.adapting.PredicateIgnoreFirstOfThree;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
-import net.emaze.dysfunctional.dispatching.logic.adapters.PredicateBinderFirstOfThree;
-import net.emaze.dysfunctional.dispatching.logic.adapters.PredicateBinderThird;
-import net.emaze.dysfunctional.dispatching.logic.adapters.PredicateIgnoreSecondOfThree;
-import net.emaze.dysfunctional.dispatching.logic.adapters.PredicateIgnoreThird;
+import net.emaze.dysfunctional.dispatching.logic.adapting.PredicateBinderFirstOfThree;
+import net.emaze.dysfunctional.dispatching.logic.adapting.PredicateBinderThird;
+import net.emaze.dysfunctional.dispatching.logic.adapting.PredicateIgnoreSecondOfThree;
+import net.emaze.dysfunctional.dispatching.logic.adapting.PredicateIgnoreThird;
 
 /**
  *

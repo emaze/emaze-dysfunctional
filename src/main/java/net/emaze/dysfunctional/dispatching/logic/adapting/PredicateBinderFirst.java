@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.dispatching.logic.adapters;
+package net.emaze.dysfunctional.dispatching.logic.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
