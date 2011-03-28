@@ -125,30 +125,6 @@ public abstract class Dispatching {
         return new BinderThird<R, T1, T2, T3>(delegate, third);
     }
 
-    public static <T> ActionToDelegate<T> delegate(Action<T> adaptee) {
-        return new ActionToDelegate<T>(adaptee);
-    }
-
-    public static <T1, T2> BinaryActionToBinaryDelegate<T1, T2> delegate(BinaryAction<T1, T2> adaptee) {
-        return new BinaryActionToBinaryDelegate<T1, T2>(adaptee);
-    }
-
-    public static <T1, T2, T3> TernaryActionToTernaryDelegate<T1, T2, T3> delegate(TernaryAction<T1, T2, T3> adaptee) {
-        return new TernaryActionToTernaryDelegate<T1, T2, T3>(adaptee);
-    }
-
-    public static <T> PredicateToDelegate<T> delegate(Predicate<T> adaptee) {
-        return new PredicateToDelegate<T>(adaptee);
-    }
-
-    public static <T1, T2> BinaryPredicateToBinaryDelegate<T1, T2> delegate(BinaryPredicate<T1, T2> adaptee) {
-        return new BinaryPredicateToBinaryDelegate<T1, T2>(adaptee);
-    }
-
-    public static <T1, T2, T3> TernaryPredicateToTernaryDelegate<T1, T2, T3> delegate(TernaryPredicate<T1, T2, T3> adaptee) {
-        return new TernaryPredicateToTernaryDelegate<T1, T2, T3>(adaptee);
-    }
-
     public static <T1, T2> BinaryPredicate<T1, T2> ignore1st(Predicate<T2> predicate, Class<T1> ignored) {
         return new PredicateIgnoreFirst<T1, T2>(predicate);
     }
@@ -207,6 +183,54 @@ public abstract class Dispatching {
 
     public static <R, T1, T2, T3> TernaryDelegate<R, T1, T2, T3> ignore3rd(BinaryDelegate<R, T1, T2> delegate, Class<T3> ignored) {
         return new IgnoreThird<R, T1, T2, T3>(delegate);
+    }
+
+    public static <T> ActionToDelegate<T> delegate(Action<T> adaptee) {
+        return new ActionToDelegate<T>(adaptee);
+    }
+
+    public static <T1, T2> BinaryActionToBinaryDelegate<T1, T2> delegate(BinaryAction<T1, T2> adaptee) {
+        return new BinaryActionToBinaryDelegate<T1, T2>(adaptee);
+    }
+
+    public static <T1, T2, T3> TernaryActionToTernaryDelegate<T1, T2, T3> delegate(TernaryAction<T1, T2, T3> adaptee) {
+        return new TernaryActionToTernaryDelegate<T1, T2, T3>(adaptee);
+    }
+
+    public static <T> PredicateToDelegate<T> delegate(Predicate<T> adaptee) {
+        return new PredicateToDelegate<T>(adaptee);
+    }
+
+    public static <T1, T2> BinaryPredicateToBinaryDelegate<T1, T2> delegate(BinaryPredicate<T1, T2> adaptee) {
+        return new BinaryPredicateToBinaryDelegate<T1, T2>(adaptee);
+    }
+
+    public static <T1, T2, T3> TernaryPredicateToTernaryDelegate<T1, T2, T3> delegate(TernaryPredicate<T1, T2, T3> adaptee) {
+        return new TernaryPredicateToTernaryDelegate<T1, T2, T3>(adaptee);
+    }
+
+    public static <T> Action<T> action(Delegate<?, T> delegate) {
+        return new DelegateToAction<T>(delegate);
+    }
+
+    public static <T1, T2> BinaryAction<T1, T2> action(BinaryDelegate<?, T1, T2> delegate) {
+        return new BinaryDelegateToBinaryAction<T1, T2>(delegate);
+    }
+
+    public static <T1, T2, T3> TernaryAction<T1, T2, T3> action(TernaryDelegate<?, T1, T2, T3> delegate) {
+        return new TernaryDelegateToTernaryAction<T1, T2, T3>(delegate);
+    }
+
+    public static <T> Predicate<T> predicate(Delegate<Boolean, T> delegate) {
+        return new DelegateToPredicate<T>(delegate);
+    }
+
+    public static <T1, T2> BinaryPredicate<T1, T2> predicate(BinaryDelegate<Boolean, T1, T2> delegate) {
+        return new BinaryDelegateToBinaryPredicate<T1, T2>(delegate);
+    }
+
+    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> predicate(TernaryDelegate<Boolean, T1, T2, T3> delegate) {
+        return new TernaryDelegateToTernaryPredicate<T1, T2, T3>(delegate);
     }
 
     /**
