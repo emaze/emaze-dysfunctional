@@ -256,4 +256,12 @@ public abstract class Dispatching {
     public static <R, T2, T1> Predicate<T1> compose(Predicate<R> p, Delegate<R, T2> f, Delegate<T2, T1> g) {
         return compose(p, compose(f, g));
     }
+
+    public static <R, T1, T2> BinaryPredicate<T1, T2> compose(Predicate<R> predicate, BinaryDelegate<R, T1, T2> delegate) {
+        return new TransformingBinaryPredicate<R, T1, T2>(predicate, delegate);
+    }
+    
+    public static <R, T1, T2, T3> TernaryPredicate<T1, T2, T3> compose(Predicate<R> predicate, TernaryDelegate<R, T1, T2, T3> delegate) {
+        return new TransformingTernaryPredicate<R, T1, T2, T3>(predicate, delegate);
+    }
 }
