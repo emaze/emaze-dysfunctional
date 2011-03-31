@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.iterations;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
@@ -229,6 +230,29 @@ public abstract class Iterations {
         return new OneTimeIterable<T>(iterator);
     }
 
+
+    private static <T> T[] array(T... array){
+        return array;
+    }
+
+    /**
+     * Creates an iterator from the passed value.
+     * @param <T> the element parameter type
+     * @param value the value to be yielded by the iterator
+     * @return an iterator.
+     */
+    public static <T> Iterator<T> iterator(T value) {
+        return new ArrayIterator<T>(array(value));
+    }
+
+    public static <T> Iterator<T> iterator(T first, T second) {
+        return new ArrayIterator<T>(array(first, second));
+    }
+
+    public static <T> Iterator<T> iterator(T first, T second, T third) {
+        return new ArrayIterator<T>(array(first, second, third));
+    }
+    
     /**
      * Creates an iterator from the passed array.
      * @param <T> the array element parameter type
@@ -238,4 +262,5 @@ public abstract class Iterations {
     public static <T> Iterator<T> iterator(T... values) {
         return new ArrayIterator<T>(values);
     }
+    
 }

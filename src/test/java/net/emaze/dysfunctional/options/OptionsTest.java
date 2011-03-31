@@ -69,9 +69,13 @@ public class OptionsTest {
     }
 
     @Test
-    public void canFetchJustsFromArray() {
-        final Maybe[] array = Collections.singletonList(Maybe.just(O.ONE)).toArray(new Maybe[]{});
-        final Iterator<O> got = Options.justs(array);
+    public void canFetchJustsFromTwoMaybes() {
+        final Iterator<O> got = Options.justs(Maybe.just(O.ONE), Maybe.just(O.ONE));
+        Assert.assertEquals(O.ONE, got.next());
+    }
+    @Test
+    public void canFetchJustsFromThreeMaybes() {
+        final Iterator<O> got = Options.justs(Maybe.just(O.ONE), Maybe.just(O.ONE), Maybe.just(O.ONE));
         Assert.assertEquals(O.ONE, got.next());
     }
 

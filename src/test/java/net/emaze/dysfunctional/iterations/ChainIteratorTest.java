@@ -18,7 +18,7 @@ public class ChainIteratorTest {
     @Test
     public void sameCollectionCanBeChainedTwoTimes(){
         final List<Integer> input = Arrays.asList(1,2);
-        Iterator<Integer> iter = new ChainIterator(input.iterator(),input.iterator());
+        Iterator<Integer> iter = new ChainIterator(Iterations.iterator(input.iterator(),input.iterator()));
         final List<Integer> got = new ArrayList<Integer>();
         while(iter.hasNext()){
             got.add(iter.next());
@@ -29,14 +29,14 @@ public class ChainIteratorTest {
     @Test
     public void twoEmptyIteratorsLeadToAnEmptyIterator(){
         final List<Integer> input = new ArrayList<Integer>();
-        Iterator<Integer> iter = new ChainIterator(input.iterator(),input.iterator());
+        Iterator<Integer> iter = new ChainIterator(Iterations.iterator(input.iterator(),input.iterator()));
         Assert.assertEquals(false,iter.hasNext());
     }
     
     @Test(expected=NoSuchElementException.class)
     public void consumingtwoEmptyIteratorsThrowsAnException(){
         final List<Integer> input = new ArrayList<Integer>();
-        Iterator<Integer> iter = new ChainIterator(input.iterator(),input.iterator());
+        Iterator<Integer> iter = new ChainIterator(Iterations.iterator(input.iterator(),input.iterator()));
         iter.next();
     }
 }

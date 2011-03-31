@@ -44,8 +44,19 @@ public abstract class Multiplexing {
      * @param array
      * @return
      */
-    public static <E, T extends Iterable<E>> Iterator<E> flatten(T... array) {
-        return flatten(new ArrayIterator<T>(array));
+    public static <E, T extends Iterable<E>> Iterator<E> flatten(T first, T second) {
+        return flatten(Iterations.iterator(first, second));
+    }
+
+    /**
+     *
+     * @param <E>
+     * @param <T>
+     * @param array
+     * @return
+     */
+    public static <E, T extends Iterable<E>> Iterator<E> flatten(T first, T second, T third) {
+        return flatten(Iterations.iterator(first, second, third));
     }
 
     /**
@@ -72,14 +83,28 @@ public abstract class Multiplexing {
     }
 
     /**
-     *
+     * 
      * @param <E>
      * @param <T>
-     * @param iterators
+     * @param first
+     * @param second
      * @return
      */
-    public static <E, T extends Iterator<E>> Iterator<E> chain(T... iterators) {
-        return new ChainIterator<E>(iterators);
+    public static <E, T extends Iterator<E>> Iterator<E> chain(T first, T second) {
+        return new ChainIterator<E>(Iterations.iterator(first, second));
+    }
+
+    /**
+     * 
+     * @param <E>
+     * @param <T>
+     * @param first
+     * @param second
+     * @param third
+     * @return
+     */
+    public static <E, T extends Iterator<E>> Iterator<E> chain(T first, T second, T third) {
+        return new ChainIterator<E>(Iterations.iterator(first, second, third));
     }
 
     /**
@@ -108,11 +133,23 @@ public abstract class Multiplexing {
     /**
      * 
      * @param <E>
-     * @param iterators
+     * @param first
+     * @param second
      * @return
      */
-    public static <E> Iterator<E> mux(Iterator<E>... iterators) {
-        return mux(new ArrayIterator<Iterator<E>>(iterators));
+    public static <E> Iterator<E> mux(Iterator<E> first, Iterator<E> second) {
+        return mux(Iterations.iterator(first, second));
+    }
+
+    /**
+     * 
+     * @param <E>
+     * @param first
+     * @param second
+     * @return
+     */
+    public static <E> Iterator<E> mux(Iterator<E> first, Iterator<E> second, Iterator<E> third) {
+        return mux(Iterations.iterator(first, second, third));
     }
 
     /**
@@ -141,11 +178,24 @@ public abstract class Multiplexing {
     /**
      * 
      * @param <E>
-     * @param iterators
+     * @param first
+     * @param second
      * @return
      */
-    public static <E> Iterator<Maybe<E>> muxl(Iterator<E>... iterators) {
-        return muxl(new ArrayIterator<Iterator<E>>(iterators));
+    public static <E> Iterator<Maybe<E>> muxl(Iterator<E> first, Iterator<E> second) {
+        return muxl(Iterations.iterator(first, second));
+    }
+
+    /**
+     * 
+     * @param <E>
+     * @param first
+     * @param second
+     * @param third
+     * @return
+     */
+    public static <E> Iterator<Maybe<E>> muxl(Iterator<E> first, Iterator<E> second, Iterator<E> third) {
+        return muxl(Iterations.iterator(first, second, third));
     }
 
     /**
@@ -242,10 +292,23 @@ public abstract class Multiplexing {
     /**
      * 
      * @param <E>
-     * @param iterators
+     * @param first
+     * @param second
      * @return
      */
-    public static <E> Iterator<E> roundrobin(Iterator<E>... iterators) {
-        return new RoundRobinIterator<E>(new ArrayIterator<Iterator<E>>(iterators));
+    public static <E> Iterator<E> roundrobin(Iterator<E> first, Iterator<E> second) {
+        return new RoundRobinIterator<E>(Iterations.iterator(first, second));
+    }
+
+    /**
+     * 
+     * @param <E>
+     * @param first
+     * @param second
+     * @param third
+     * @return
+     */
+    public static <E> Iterator<E> roundrobin(Iterator<E> first, Iterator<E> second, Iterator<E> third) {
+        return new RoundRobinIterator<E>(Iterations.iterator(first, second, third));
     }
 }

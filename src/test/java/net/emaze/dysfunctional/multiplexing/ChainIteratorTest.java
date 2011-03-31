@@ -14,12 +14,6 @@ import org.junit.Test;
 public class ChainIteratorTest {
 
     @Test(expected = IllegalArgumentException.class)
-    public void creatingWithNullArrayYieldsException() {
-        Iterator<Object>[] iterators = null;
-        new ChainIterator<Object>(iterators);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
     public void creatingWithNullListYieldsException() {
         Iterator<Iterator<Object>> iterators = null;
         new ChainIterator<Object>(iterators);

@@ -1,15 +1,5 @@
 package net.emaze.dysfunctional.dispatching.logic;
 
-import net.emaze.dysfunctional.dispatching.logic.BinaryNever;
-import net.emaze.dysfunctional.dispatching.logic.Never;
-import net.emaze.dysfunctional.dispatching.logic.TernaryNever;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
-import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
-import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
-import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
-import net.emaze.dysfunctional.dispatching.logic.Always;
-import net.emaze.dysfunctional.dispatching.logic.Logic;
 import java.util.Arrays;
 import java.util.Iterator;
 import net.emaze.dysfunctional.testing.O;
@@ -157,12 +147,6 @@ public class LogicTest {
         }
 
         @Test(expected = IllegalArgumentException.class)
-        public void composingNullArrayOfPredicatesYieldsException() {
-            final Predicate<O>[] preds = null;
-            Logic.and(preds);
-        }
-
-        @Test(expected = IllegalArgumentException.class)
         public void composingNullIteratorOfBinaryPredicatesYieldsException() {
             final Iterator<BinaryPredicate<O, O>> preds = null;
             Logic.and2(preds);
@@ -175,9 +159,8 @@ public class LogicTest {
         }
 
         @Test(expected = IllegalArgumentException.class)
-        public void composingNullArrayOfBinaryPredicatesYieldsException() {
-            final BinaryPredicate<O, O>[] preds = null;
-            Logic.and2(preds);
+        public void composingNullPredicatesYieldsException() {
+            Logic.and2(null, null);
         }
 
         @Test(expected = IllegalArgumentException.class)
@@ -193,9 +176,8 @@ public class LogicTest {
         }
 
         @Test(expected = IllegalArgumentException.class)
-        public void composingNullArrayOfTernaryPredicatesYieldsException() {
-            final TernaryPredicate<O, O, O>[] preds = null;
-            Logic.and3(preds);
+        public void composingNullTernaryPredicatesYieldsException() {
+            Logic.and3(null, null);
         }
     }
 
@@ -215,8 +197,7 @@ public class LogicTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void composingNullArrayOfPredicatesYieldsException() {
-            final Predicate<O>[] preds = null;
-            Logic.or(preds);
+            Logic.or(null, null);
         }
 
         @Test(expected = IllegalArgumentException.class)
@@ -233,8 +214,7 @@ public class LogicTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void composingNullArrayOfBinaryPredicatesYieldsException() {
-            final BinaryPredicate<O, O>[] preds = null;
-            Logic.or2(preds);
+            Logic.or2(null, null);
         }
 
         @Test(expected = IllegalArgumentException.class)
@@ -251,8 +231,7 @@ public class LogicTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void composingNullArrayOfTernaryPredicatesYieldsException() {
-            final TernaryPredicate<O, O, O>[] preds = null;
-            Logic.or3(preds);
+            Logic.or3(null, null);
         }
     }
 

@@ -4,6 +4,7 @@ import java.util.Iterator;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
 import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.iterations.Iterations;
 
 /**
  *
@@ -38,12 +39,29 @@ public abstract class Logic {
     /**
      * Creates a composite AND predicate from the given predicates.
      * @param <T> the element type parameter
-     * @param predicates the predicates to be composed
+     * @param first
+     * @param second 
      * @return the composite predicate
      */
-    public static <T> CompositePredicate<T> and(Predicate<T>... predicates) {
-        dbc.precondition(predicates != null, "cannot compose a null array of predicates");
-        return Logic.and(new ArrayIterator<Predicate<T>>(predicates));
+    public static <T> CompositePredicate<T> and(Predicate<T> first, Predicate<T> second) {
+        dbc.precondition(first != null, "first predicate is null");
+        dbc.precondition(second != null, "second predicate is null");
+        return Logic.and(Iterations.iterator(first, second));
+    }
+
+    /**
+     * Creates a composite AND predicate from the given predicates.
+     * @param <T> the element type parameter
+     * @param first
+     * @param second
+     * @param third 
+     * @return the composite predicate
+     */
+    public static <T> CompositePredicate<T> and(Predicate<T> first, Predicate<T> second, Predicate<T> third) {
+        dbc.precondition(first != null, "first predicate is null");
+        dbc.precondition(second != null, "second predicate is null");
+        dbc.precondition(third != null, "third predicate is null");
+        return Logic.and(Iterations.iterator(first, second, third));
     }
 
     /**
@@ -76,12 +94,29 @@ public abstract class Logic {
      * Creates a composite AND predicate from the given predicates.
      * @param <T1> the former element type parameter
      * @param <T2> the latter element type parameter
-     * @param predicates the predicates to be composed
+     * @param first
+     * @param second
      * @return the composite predicate
      */
-    public static <T1, T2> CompositeBinaryPredicate<T1, T2> and2(BinaryPredicate<T1, T2>... predicates) {
-        dbc.precondition(predicates != null, "cannot compose a null array of predicates");
-        return Logic.and2(new ArrayIterator<BinaryPredicate<T1, T2>>(predicates));
+    public static <T1, T2> CompositeBinaryPredicate<T1, T2> and2(BinaryPredicate<T1, T2> first, BinaryPredicate<T1, T2> second) {
+        dbc.precondition(first != null, "first predicate is null");
+        dbc.precondition(second != null, "second predicate is null");
+        return Logic.and2(Iterations.iterator(first, second));
+    }
+
+    /**
+     * Creates a composite AND predicate from the given predicates.
+     * @param <T1> the former element type parameter
+     * @param <T2> the latter element type parameter
+     * @param first
+     * @param second
+     * @return the composite predicate
+     */
+    public static <T1, T2> CompositeBinaryPredicate<T1, T2> and2(BinaryPredicate<T1, T2> first, BinaryPredicate<T1, T2> second, BinaryPredicate<T1, T2> third) {
+        dbc.precondition(first != null, "first predicate is null");
+        dbc.precondition(second != null, "second predicate is null");
+        dbc.precondition(third != null, "third predicate is null");
+        return Logic.and2(Iterations.iterator(first, second, third));
     }
 
     /**
@@ -117,12 +152,31 @@ public abstract class Logic {
      * @param <T1> the first element type parameter
      * @param <T2> the second element type parameter
      * @param <T3> the third element type parameter
-     * @param predicates the predicates to be composed
+     * @param first
+     * @param second 
      * @return the composite predicate
      */
-    public static <T1, T2, T3> CompositeTernaryPredicate<T1, T2, T3> and3(TernaryPredicate<T1, T2, T3>... predicates) {
-        dbc.precondition(predicates != null, "cannot compose a null array of predicates");
-        return Logic.and3(new ArrayIterator<TernaryPredicate<T1, T2, T3>>(predicates));
+    public static <T1, T2, T3> CompositeTernaryPredicate<T1, T2, T3> and3(TernaryPredicate<T1, T2, T3> first, TernaryPredicate<T1, T2, T3> second) {
+        dbc.precondition(first != null, "first predicate is null");
+        dbc.precondition(second != null, "second predicate is null");
+        return Logic.and3(Iterations.iterator(first, second));
+    }
+
+    /**
+     * Creates a composite AND predicate from the given predicates.
+     * @param <T1> the first element type parameter
+     * @param <T2> the second element type parameter
+     * @param <T3> the third element type parameter
+     * @param first
+     * @param second
+     * @param third 
+     * @return the composite predicate
+     */
+    public static <T1, T2, T3> CompositeTernaryPredicate<T1, T2, T3> and3(TernaryPredicate<T1, T2, T3> first, TernaryPredicate<T1, T2, T3> second, TernaryPredicate<T1, T2, T3> third) {
+        dbc.precondition(first != null, "first predicate is null");
+        dbc.precondition(second != null, "second predicate is null");
+        dbc.precondition(third != null, "third predicate is null");
+        return Logic.and3(Iterations.iterator(first, second, third));
     }
 
     /**
@@ -152,12 +206,29 @@ public abstract class Logic {
     /**
      * Creates a composite OR predicate from the given predicates.
      * @param <T> the element type parameter
-     * @param predicates the predicates to be composed
+     * @param first
+     * @param second 
      * @return the composite predicate
      */
-    public static <T> CompositePredicate<T> or(Predicate<T>... predicates) {
-        dbc.precondition(predicates != null, "cannot compose a null array of predicates");
-        return Logic.or(new ArrayIterator<Predicate<T>>(predicates));
+    public static <T> CompositePredicate<T> or(Predicate<T> first, Predicate<T> second) {
+        dbc.precondition(first != null, "first predicate is null");
+        dbc.precondition(second != null, "second predicate is null");
+        return Logic.or(Iterations.iterator(first, second));
+    }
+
+    /**
+     * Creates a composite OR predicate from the given predicates.
+     * @param <T> the element type parameter
+     * @param first 
+     * @param second 
+     * @param third
+     * @return the composite predicate
+     */
+    public static <T> CompositePredicate<T> or(Predicate<T> first, Predicate<T> second, Predicate<T> third) {
+        dbc.precondition(first != null, "first predicate is null");
+        dbc.precondition(second != null, "second predicate is null");
+        dbc.precondition(third != null, "third predicate is null");
+        return Logic.or(Iterations.iterator(first, second, third));
     }
 
     /**
@@ -190,12 +261,30 @@ public abstract class Logic {
      * Creates a composite OR predicate from the given predicates.
      * @param <T1> the former element type parameter
      * @param <T2> the latter element type parameter
-     * @param predicates the predicates to be composed
+     * @param first
+     * @param second
      * @return the composite predicate
      */
-    public static <T1, T2> CompositeBinaryPredicate<T1, T2> or2(BinaryPredicate<T1, T2>... predicates) {
-        dbc.precondition(predicates != null, "cannot compose a null array of predicates");
-        return Logic.or2(new ArrayIterator<BinaryPredicate<T1, T2>>(predicates));
+    public static <T1, T2> CompositeBinaryPredicate<T1, T2> or2(BinaryPredicate<T1, T2> first, BinaryPredicate<T1, T2> second) {
+        dbc.precondition(first != null, "first predicate is null");
+        dbc.precondition(second != null, "second predicate is null");
+        return Logic.or2(Iterations.iterator(first, second));
+    }
+
+    /**
+     * Creates a composite OR predicate from the given predicates.
+     * @param <T1> the former element type parameter
+     * @param <T2> the latter element type parameter
+     * @param first
+     * @param second
+     * @param third 
+     * @return the composite predicate
+     */
+    public static <T1, T2> CompositeBinaryPredicate<T1, T2> or2(BinaryPredicate<T1, T2> first, BinaryPredicate<T1, T2> second, BinaryPredicate<T1, T2> third) {
+        dbc.precondition(first != null, "first predicate is null");
+        dbc.precondition(second != null, "second predicate is null");
+        dbc.precondition(third != null, "third predicate is null");
+        return Logic.or2(Iterations.iterator(first, second, third));
     }
 
     /**
@@ -231,12 +320,31 @@ public abstract class Logic {
      * @param <T1> the first element type parameter
      * @param <T2> the second element type parameter
      * @param <T3> the third element type parameter
-     * @param predicates the predicates to be composed
+     * @param first
+     * @param second
      * @return the composite predicate
      */
-    public static <T1, T2, T3> CompositeTernaryPredicate<T1, T2, T3> or3(TernaryPredicate<T1, T2, T3>... predicates) {
-        dbc.precondition(predicates != null, "cannot compose a null array of predicates");
-        return Logic.or3(new ArrayIterator<TernaryPredicate<T1, T2, T3>>(predicates));
+    public static <T1, T2, T3> CompositeTernaryPredicate<T1, T2, T3> or3(TernaryPredicate<T1, T2, T3> first, TernaryPredicate<T1, T2, T3> second) {
+        dbc.precondition(first != null, "first predicate is null");
+        dbc.precondition(second != null, "second predicate is null");
+        return Logic.or3(Iterations.iterator(first, second));
+    }
+
+    /**
+     * Creates a composite OR predicate from the given predicates.
+     * @param <T1> the first element type parameter
+     * @param <T2> the second element type parameter
+     * @param <T3> the third element type parameter
+     * @param first
+     * @param second
+     * @param third
+     * @return the composite predicate
+     */
+    public static <T1, T2, T3> CompositeTernaryPredicate<T1, T2, T3> or3(TernaryPredicate<T1, T2, T3> first, TernaryPredicate<T1, T2, T3> second, TernaryPredicate<T1, T2, T3> third) {
+        dbc.precondition(first != null, "first predicate is null");
+        dbc.precondition(second != null, "second predicate is null");
+        dbc.precondition(third != null, "third predicate is null");
+        return Logic.or3(Iterations.iterator(first, second, third));
     }
 
     /**

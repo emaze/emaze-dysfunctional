@@ -75,11 +75,24 @@ public abstract class Options {
     /**
      * Filters nothings out of an array of Maybe T, returning an Iterator of T.
      * @param <T> the Maybe type parameter
-     * @param maybes an array of Maybe<T>
+     * @param first
+     * @param second
      * @return an iterator of T
      */
-    public static <T> Iterator<T> justs(Maybe<T>... maybes) {
-        return Options.justs(new ArrayIterator<Maybe<T>>(maybes));
+    public static <T> Iterator<T> justs(Maybe<T> first, Maybe<T> second) {
+        return Options.justs(Iterations.iterator(first, second));
+    }
+
+    /**
+     * Filters nothings out of an array of Maybe T, returning an Iterator of T.
+     * @param <T> the Maybe type parameter
+     * @param first
+     * @param second
+     * @param third 
+     * @return an iterator of T
+     */
+    public static <T> Iterator<T> justs(Maybe<T> first, Maybe<T> second, Maybe<T> third) {
+        return Options.justs(Iterations.iterator(first, second, third));
     }
 
     /**
@@ -115,11 +128,24 @@ public abstract class Options {
     /**
      * Applies lift (lazily) to an array
      * @param <T> the value type parameter
-     * @param array the array to be lifted
+     * @param first 
+     * @param second
      * @return an iterator of Maybe
      */
-    public static <T> Iterator<Maybe<T>> lifts(T... array) {
-        return Iterations.transform(array, new LiftMaybe<T>());
+    public static <T> Iterator<Maybe<T>> lifts(T first, T second) {
+        return Iterations.transform(Iterations.iterator(first, second), new LiftMaybe<T>());
+    }
+
+    /**
+     * Applies lift (lazily) to an array
+     * @param <T>
+     * @param first
+     * @param second
+     * @param third
+     * @return
+     */
+    public static <T> Iterator<Maybe<T>> lifts(T first, T second, T third) {
+        return Iterations.transform(Iterations.iterator(first, second, third), new LiftMaybe<T>());
     }
 
     /**
@@ -155,10 +181,23 @@ public abstract class Options {
     /**
      * Applies drop (lazily) to an array
      * @param <T> the value type parameter
-     * @param array the array to be dropped
+     * @param first 
+     * @param second
      * @return an iterator of T
      */
-    public static <T> Iterator<T> drops(Maybe<T>... array) {
-        return Iterations.transform(array, new DropMaybe<T>());
+    public static <T> Iterator<T> drops(Maybe<T> first, Maybe<T> second) {
+        return Iterations.transform(Iterations.iterator(first, second), new DropMaybe<T>());
+    }
+
+    /**
+     * Applies drop (lazily) to an array
+     * @param <T> the value type parameter
+     * @param first
+     * @param second
+     * @param third
+     * @return an iterator of T
+     */
+    public static <T> Iterator<T> drops(Maybe<T> first, Maybe<T> second, Maybe<T> third) {
+        return Iterations.transform(Iterations.iterator(first, second, third), new DropMaybe<T>());
     }
 }
