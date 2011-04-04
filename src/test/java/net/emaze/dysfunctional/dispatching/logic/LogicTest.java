@@ -291,11 +291,6 @@ public class LogicTest {
         }
 
         @Test(expected = IllegalArgumentException.class)
-        public void composingNullArrayOfPredicatesYieldsException() {
-            Logic.or(null, null);
-        }
-
-        @Test(expected = IllegalArgumentException.class)
         public void composingNullIteratorOfBinaryPredicatesYieldsException() {
             final Iterator<BinaryPredicate<O, O>> preds = null;
             Logic.or2(preds);
@@ -305,11 +300,6 @@ public class LogicTest {
         public void composingNullIterableOfBinaryPredicatesYieldsException() {
             final Iterable<BinaryPredicate<O, O>> preds = null;
             Logic.or2(preds);
-        }
-
-        @Test(expected = IllegalArgumentException.class)
-        public void composingNullArrayOfBinaryPredicatesYieldsException() {
-            Logic.or2(null, null);
         }
 
         @Test(expected = IllegalArgumentException.class)
@@ -325,8 +315,93 @@ public class LogicTest {
         }
 
         @Test(expected = IllegalArgumentException.class)
-        public void composingNullArrayOfTernaryPredicatesYieldsException() {
-            Logic.or3(null, null);
+        public void composingTwoPredicatesYieldsExceptionWhenFormerIsNull() {
+            final Predicate<O> pred = null;
+            Logic.or(pred, new Always<O>());
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void composingTwoPredicatesYieldsExceptionWhenLatterIsNull() {
+            final Predicate<O> pred = null;
+            Logic.or(new Always<O>(), pred);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void composingThreePredicatesYieldsExceptionWhenFirstIsNull() {
+            final Predicate<O> pred = null;
+            Logic.or(pred, new Always<O>(), new Always<O>());
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void composingThreePredicatesYieldsExceptionWhenSecondIsNull() {
+            final Predicate<O> pred = null;
+            Logic.or(new Always<O>(), pred, new Always<O>());
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void composingThreePredicatesYieldsExceptionWhenThirdIsNull() {
+            final Predicate<O> pred = null;
+            Logic.or(new Always<O>(), new Always<O>(), pred);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void composingTwoBinaryPredicatesYieldsExceptionWhenFormerIsNull() {
+            final BinaryPredicate<O, O> pred = null;
+            Logic.or2(pred, new BinaryAlways<O, O>());
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void composingTwoBinaryPredicatesYieldsExceptionWhenLatterIsNull() {
+            final BinaryPredicate<O, O> pred = null;
+            Logic.or2(new BinaryAlways<O, O>(), pred);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void composingThreeBinaryPredicatesYieldsExceptionWhenFirstIsNull() {
+            final BinaryPredicate<O, O> pred = null;
+            Logic.or2(pred, new BinaryAlways<O, O>(), new BinaryAlways<O, O>());
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void composingThreeBinaryPredicatesYieldsExceptionWhenSecondIsNull() {
+            final BinaryPredicate<O, O> pred = null;
+            Logic.or2(new BinaryAlways<O, O>(), pred, new BinaryAlways<O, O>());
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void composingThreeBinaryPredicatesYieldsExceptionWhenThirdIsNull() {
+            final BinaryPredicate<O, O> pred = null;
+            Logic.or2(new BinaryAlways<O, O>(), new BinaryAlways<O, O>(), pred);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void composingTwoTernaryPredicatesYieldsExceptionWhenFormerIsNull() {
+            final TernaryPredicate<O, O, O> pred = null;
+            Logic.or3(pred, new TernaryAlways<O, O, O>());
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void composingTwoTernaryPredicatesYieldsExceptionWhenLatterIsNull() {
+            final TernaryPredicate<O, O, O> pred = null;
+            Logic.or3(new TernaryAlways<O, O, O>(), pred);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void composingThreeTernaryPredicatesYieldsExceptionWhenFirstIsNull() {
+            final TernaryPredicate<O, O, O> pred = null;
+            Logic.or3(pred, new TernaryAlways<O, O, O>(), new TernaryAlways<O, O, O>());
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void composingThreeTernaryPredicatesYieldsExceptionWhenSecondIsNull() {
+            final TernaryPredicate<O, O, O> pred = null;
+            Logic.or3(new TernaryAlways<O, O, O>(), pred, new TernaryAlways<O, O, O>());
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void composingThreeTernaryPredicatesYieldsExceptionWhenThirdIsNull() {
+            final TernaryPredicate<O, O, O> pred = null;
+            Logic.or3(new TernaryAlways<O, O, O>(), new TernaryAlways<O, O, O>(), pred);
         }
     }
 
