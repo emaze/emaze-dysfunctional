@@ -15,67 +15,70 @@ import net.emaze.dysfunctional.options.Maybe;
 public abstract class Multiplexing {
 
     /**
-     * 
-     * @param <E>
-     * @param <T>
-     * @param iterators
-     * @return
+     * Flattens an iterator of iterables of E to an iterator of E.
+     * @param <E> the iterable element type
+     * @param <T> the iterable type
+     * @param iterables the iterator of iterables to be flattened
+     * @return the flattened iterator
      */
-    public static <E, T extends Iterable<E>> Iterator<E> flatten(Iterator<T> iterators) {
-        return new ChainIterator<E>(Iterations.transform(iterators, new IteratorPlucker<E, T>()));
+    public static <E, T extends Iterable<E>> Iterator<E> flatten(Iterator<T> iterables) {
+        return new ChainIterator<E>(Iterations.transform(iterables, new IteratorPlucker<E, T>()));
     }
 
     /**
-     * 
-     * @param <E>
-     * @param <T>
-     * @param iterable
-     * @return
+     * Flattens an iterable of iterables of E to an iterator of E.
+     * @param <E> the iterable element type
+     * @param <T> the iterable type
+     * @param iterables the iterable of iterables to be flattened
+     * @return the flattened iterator
      */
-    public static <E, T extends Iterable<E>> Iterator<E> flatten(Iterable<T> iterable) {
-        dbc.precondition(iterable != null, "cannot flatten a null iterable");
-        return flatten(iterable.iterator());
+    public static <E, T extends Iterable<E>> Iterator<E> flatten(Iterable<T> iterables) {
+        dbc.precondition(iterables != null, "cannot flatten a null iterable");
+        return flatten(iterables.iterator());
     }
 
     /**
-     * 
-     * @param <E>
-     * @param <T>
-     * @param array
-     * @return
+     * Flattens passed iterables of E to an iterator of E.
+     * @param <E> the iterable element type
+     * @param <T> the iterable type
+     * @param first the first iterable to be flattened
+     * @param second the second iterable to be flattened
+     * @return the flattened iterator
      */
     public static <E, T extends Iterable<E>> Iterator<E> flatten(T first, T second) {
         return flatten(Iterations.iterator(first, second));
     }
 
     /**
-     *
-     * @param <E>
-     * @param <T>
-     * @param array
-     * @return
+     * Flattens passed iterables of E to an iterator of E.
+     * @param <E> the iterable element type
+     * @param <T> the iterable type
+     * @param first the first iterable to be flattened
+     * @param second the second iterable to be flattened
+     * @param third the third iterable to be flattened
+     * @return the flattened iterator
      */
     public static <E, T extends Iterable<E>> Iterator<E> flatten(T first, T second, T third) {
         return flatten(Iterations.iterator(first, second, third));
     }
 
     /**
-     *
-     * @param <E>
-     * @param <T> 
+     * Flattens an iterator of iterators of E to an iterator of E.
+     * @param <E> the iterator element type
+     * @param <T> the iterator type
      * @param iterators
-     * @return
+     * @return the flattened iterator
      */
     public static <E, T extends Iterator<E>> Iterator<E> chain(Iterator<T> iterators) {
         return new ChainIterator<E>(iterators);
     }
 
     /**
-     *
-     * @param <E>
-     * @param <T>
+     * Flattens an iterable of iterators of E to an iterator of E.
+     * @param <E> the iterator element type
+     * @param <T> the iterator type
      * @param iterable
-     * @return
+     * @return the flattened iterator
      */
     public static <E, T extends Iterator<E>> Iterator<E> chain(Iterable<T> iterable) {
         dbc.precondition(iterable != null, "cannot chain a null iterable");
@@ -83,25 +86,25 @@ public abstract class Multiplexing {
     }
 
     /**
-     * 
-     * @param <E>
-     * @param <T>
-     * @param first
-     * @param second
-     * @return
+     * Flattens passed iterators of E to an iterator of E.
+     * @param <E> the iterator element type
+     * @param <T> the iterator type
+     * @param first the first iterator to be flattened
+     * @param second the second iterator to be flattened
+     * @return the flattened iterator
      */
     public static <E, T extends Iterator<E>> Iterator<E> chain(T first, T second) {
         return new ChainIterator<E>(Iterations.iterator(first, second));
     }
 
     /**
-     * 
-     * @param <E>
-     * @param <T>
-     * @param first
-     * @param second
-     * @param third
-     * @return
+     * Flattens passed iterators of E to an iterator of E.
+     * @param <E> the iterator element type
+     * @param <T> the iterator type
+     * @param first the first iterator to be flattened
+     * @param second the second iterator to be flattened
+     * @param third the third iterator to be flattened
+     * @return the flattened iterator
      */
     public static <E, T extends Iterator<E>> Iterator<E> chain(T first, T second, T third) {
         return new ChainIterator<E>(Iterations.iterator(first, second, third));
@@ -146,6 +149,7 @@ public abstract class Multiplexing {
      * @param <E>
      * @param first
      * @param second
+     * @param third
      * @return
      */
     public static <E> Iterator<E> mux(Iterator<E> first, Iterator<E> second, Iterator<E> third) {
