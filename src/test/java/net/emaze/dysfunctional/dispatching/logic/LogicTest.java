@@ -108,8 +108,13 @@ public class LogicTest {
         }
 
         @Test
-        public void canComposeArrayOfPredicates() {
+        public void canComposeTwoPredicates() {
             Assert.assertTrue(Logic.or(new Always<O>(), new Never<O>()).accept(O.IGNORED));
+        }
+
+        @Test
+        public void canComposeThreePredicates() {
+            Assert.assertTrue(Logic.or(new Always<O>(), new Always<O>(), new Never<O>()).accept(O.IGNORED));
         }
 
         @Test
@@ -125,8 +130,13 @@ public class LogicTest {
         }
 
         @Test
-        public void canComposeArrayOfBinaryPredicates() {
+        public void canComposeTwoBinaryPredicates() {
             Assert.assertTrue(Logic.or2(new BinaryAlways<O, O>(), new BinaryNever<O, O>()).accept(O.IGNORED, O.IGNORED));
+        }
+
+        @Test
+        public void canComposeThreeBinaryPredicates() {
+            Assert.assertTrue(Logic.or2(new BinaryAlways<O, O>(), new BinaryAlways<O, O>(), new BinaryNever<O, O>()).accept(O.IGNORED, O.IGNORED));
         }
 
         @Test
@@ -142,8 +152,13 @@ public class LogicTest {
         }
 
         @Test
-        public void canComposeArrayOfTernaryPredicates() {
+        public void canComposeTwoTernaryPredicates() {
             Assert.assertTrue(Logic.or3(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>()).accept(O.IGNORED, O.IGNORED, O.IGNORED));
+        }
+
+        @Test
+        public void canComposeThreeTernaryPredicates() {
+            Assert.assertTrue(Logic.or3(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>(), new TernaryNever<O, O, O>()).accept(O.IGNORED, O.IGNORED, O.IGNORED));
         }
     }
 
