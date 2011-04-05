@@ -5,11 +5,15 @@ import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
+import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
+import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
@@ -54,6 +58,42 @@ public class DispatchingTest {
         @Test
         public void canAdaptTernaryActionToTernaryDelegate() {
             final TernaryDelegate<Void, O, O, O> adapted = Dispatching.delegate(new TernaryNoop<O, O, O>());
+            Assert.assertNotNull(adapted);
+        }
+
+        @Test
+        public void canAdaptPredicateToDelegate() {
+            final Delegate<Boolean, O> adapted = Dispatching.delegate(new Always<O>());
+            Assert.assertNotNull(adapted);
+        }
+
+        @Test
+        public void canAdaptBinaryPredicateToBinaryDelegate() {
+            final BinaryDelegate<Boolean, O, O> adapted = Dispatching.delegate(new BinaryAlways<O, O>());
+            Assert.assertNotNull(adapted);
+        }
+
+        @Test
+        public void canAdaptTernaryPredicateToTernaryDelegate() {
+            final TernaryDelegate<Boolean, O, O, O> adapted = Dispatching.delegate(new TernaryAlways<O, O, O>());
+            Assert.assertNotNull(adapted);
+        }
+
+        @Test
+        public void canAdaptDelegateToAction() {
+            final Action<O> adapted = Dispatching.action(new Identity<O>());
+            Assert.assertNotNull(adapted);
+        }
+
+        @Test
+        public void canAdaptBinaryDelegateToBinaryAction() {
+            final BinaryAction<O, O> adapted = Dispatching.action(new FirstParam<O, O>());
+            Assert.assertNotNull(adapted);
+        }
+
+        @Test
+        public void canAdaptTernaryDelegateToTernaryAction() {
+            final TernaryAction<O, O, O> adapted = Dispatching.action(new FirstParamOfThree<O, O, O>());
             Assert.assertNotNull(adapted);
         }
     }
