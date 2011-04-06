@@ -362,5 +362,16 @@ public class DispatchingTest {
             Predicate<O> composed = Dispatching.compose(new Always<O>(), i, i);
             Assert.assertNotNull(composed);
         }
+        @Test
+        public void canComposePredicatesAndBinaryDelegates() {
+            BinaryPredicate<O, O> composed = Dispatching.compose(new Always<O>(), new FirstParam<O, O>());
+            Assert.assertNotNull(composed);
+        }
+
+        @Test
+        public void canComposePredicateAndTernaryDelegates() {
+            TernaryPredicate<O, O, O> composed = Dispatching.compose(new Always<O>(), new FirstParamOfThree<O, O, O>());
+            Assert.assertNotNull(composed);
+        }
     }
 }
