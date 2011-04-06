@@ -18,6 +18,7 @@ import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
+import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 import net.emaze.dysfunctional.testing.O;
 import net.emaze.dysfunctional.tuples.BinaryIdentity;
 import net.emaze.dysfunctional.tuples.Pair;
@@ -37,7 +38,9 @@ import org.junit.runners.Suite;
     DispatchingTest.Adapting.class,
     DispatchingTest.CurryDelegates.class,
     DispatchingTest.CurryPredicates.class,
-    DispatchingTest.CurryActions.class
+    DispatchingTest.CurryActions.class,
+    DispatchingTest.Ignoring.class,
+    DispatchingTest.Composing.class
 })
 public class DispatchingTest {
 
@@ -94,6 +97,42 @@ public class DispatchingTest {
         @Test
         public void canAdaptTernaryDelegateToTernaryAction() {
             final TernaryAction<O, O, O> adapted = Dispatching.action(new FirstParamOfThree<O, O, O>());
+            Assert.assertNotNull(adapted);
+        }
+
+        @Test
+        public void canAdaptDelegateToPredicate() {
+            final Predicate<O> adapted = Dispatching.predicate(new Delegate<Boolean, O>() {
+
+                @Override
+                public Boolean perform(O t) {
+                    return true;
+                }
+            });
+            Assert.assertNotNull(adapted);
+        }
+
+        @Test
+        public void canAdaptBinaryDelegateToBinaryPredicate() {
+            final BinaryPredicate<O, O> adapted = Dispatching.predicate(new BinaryDelegate<Boolean, O, O>() {
+
+                @Override
+                public Boolean perform(O f, O s) {
+                    return true;
+                }
+            });
+            Assert.assertNotNull(adapted);
+        }
+
+        @Test
+        public void canAdaptTernaryDelegateToBinaryPredicate() {
+            final TernaryPredicate<O, O, O> adapted = Dispatching.predicate(new TernaryDelegate<Boolean, O, O, O>() {
+
+                @Override
+                public Boolean perform(O f, O s, O t) {
+                    return true;
+                }
+            });
             Assert.assertNotNull(adapted);
         }
     }
@@ -200,6 +239,128 @@ public class DispatchingTest {
         public void canRightCurryTernaryDelegate() {
             final BinaryPredicate<O, O> adapted = Dispatching.rcurry(new TernaryAlways<O, O, O>(), O.ONE);
             Assert.assertNotNull(adapted);
+        }
+    }
+
+    public static class Ignoring {
+
+        @Test
+        public void canIgnoreFirstForPredicates() {
+            BinaryPredicate<O, O> ignoring = Dispatching.ignore1st(new Always<O>(), O.class);
+            Assert.assertNotNull(ignoring);
+        }
+
+        @Test
+        public void canIgnoreFirstForBinaryPredicates() {
+            TernaryPredicate<O, O, O> ignoring = Dispatching.ignore1st(new BinaryAlways<O, O>(), O.class);
+            Assert.assertNotNull(ignoring);
+        }
+
+        @Test
+        public void canIgnoreSecondForPredicates() {
+            BinaryPredicate<O, O> ignoring = Dispatching.ignore2nd(new Always<O>(), O.class);
+            Assert.assertNotNull(ignoring);
+        }
+
+        @Test
+        public void canIgnoreSecondForBinaryPredicates() {
+            TernaryPredicate<O, O, O> ignoring = Dispatching.ignore2nd(new BinaryAlways<O, O>(), O.class);
+            Assert.assertNotNull(ignoring);
+        }
+
+        @Test
+        public void canIgnoreThirdForBinaryPredicates() {
+            TernaryPredicate<O, O, O> ignoring = Dispatching.ignore3rd(new BinaryAlways<O, O>(), O.class);
+            Assert.assertNotNull(ignoring);
+        }
+
+        @Test
+        public void canIgnoreFirstForActions() {
+            BinaryAction<O, O> ignoring = Dispatching.ignore1st(new Noop<O>(), O.class);
+            Assert.assertNotNull(ignoring);
+        }
+
+        @Test
+        public void canIgnoreFirstForBinaryActions() {
+            TernaryAction<O, O, O> ignoring = Dispatching.ignore1st(new BinaryNoop<O, O>(), O.class);
+            Assert.assertNotNull(ignoring);
+        }
+
+        @Test
+        public void canIgnoreSecondForActions() {
+            BinaryAction<O, O> ignoring = Dispatching.ignore2nd(new Noop<O>(), O.class);
+            Assert.assertNotNull(ignoring);
+        }
+
+        @Test
+        public void canIgnoreSecondForBinaryActions() {
+            TernaryAction<O, O, O> ignoring = Dispatching.ignore2nd(new BinaryNoop<O, O>(), O.class);
+            Assert.assertNotNull(ignoring);
+        }
+
+        @Test
+        public void canIgnoreThirdForBinaryActions() {
+            TernaryAction<O, O, O> ignoring = Dispatching.ignore3rd(new BinaryNoop<O, O>(), O.class);
+            Assert.assertNotNull(ignoring);
+        }
+
+        @Test
+        public void canIgnoreFirstForDelegates() {
+            BinaryDelegate<O, O, O> ignoring = Dispatching.ignore1st(new Identity<O>(), O.class);
+            Assert.assertNotNull(ignoring);
+        }
+
+        @Test
+        public void canIgnoreFirstForBinaryDelegates() {
+            TernaryDelegate<O, O, O, O> ignoring = Dispatching.ignore1st(new FirstParam<O, O>(), O.class);
+            Assert.assertNotNull(ignoring);
+        }
+
+        @Test
+        public void canIgnoreSecondForDelegates() {
+            BinaryDelegate<O, O, O> ignoring = Dispatching.ignore2nd(new Identity<O>(), O.class);
+            Assert.assertNotNull(ignoring);
+        }
+
+        @Test
+        public void canIgnoreSecondForBinaryDelegates() {
+            TernaryDelegate<O, O, O, O> ignoring = Dispatching.ignore2nd(new FirstParam<O, O>(), O.class);
+            Assert.assertNotNull(ignoring);
+        }
+
+        @Test
+        public void canIgnoreThirdForBinaryDelegates() {
+            TernaryDelegate<O, O, O, O> ignoring = Dispatching.ignore3rd(new FirstParam<O, O>(), O.class);
+            Assert.assertNotNull(ignoring);
+        }
+    }
+
+    public static class Composing {
+
+        @Test
+        public void canComposeTwoDelegates() {
+            Delegate<O, O> composed = Dispatching.compose(new Identity<O>(), new Identity<O>());
+            Assert.assertNotNull(composed);
+        }
+
+        @Test
+        public void canComposeThreeDelegates() {
+            final Identity<O> i = new Identity<O>();
+            Delegate<O, O> composed = Dispatching.compose(i, i, i);
+            Assert.assertNotNull(composed);
+        }
+
+        @Test
+        public void canComposePredicatesAndDelegates() {
+            Predicate<O> composed = Dispatching.compose(new Always<O>(), new Identity<O>());
+            Assert.assertNotNull(composed);
+        }
+
+        @Test
+        public void canComposePredicateAndTwoDelegates() {
+            final Identity<O> i = new Identity<O>();
+            Predicate<O> composed = Dispatching.compose(new Always<O>(), i, i);
+            Assert.assertNotNull(composed);
         }
     }
 }
