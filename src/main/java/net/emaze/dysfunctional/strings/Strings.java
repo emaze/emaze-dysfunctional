@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.strings;
 
 import java.util.Iterator;
+import net.emaze.dysfunctional.adapting.ArrayIterator;
 import net.emaze.dysfunctional.consumers.PipingConsumer;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.iterations.ConstantIterator;
@@ -14,6 +15,15 @@ import net.emaze.dysfunctional.multiplexing.InterposingIterator;
  * @author rferranti
  */
 public abstract class Strings {
+
+    public static <T> String join(T[] array) {
+        return join(new ArrayIterator<T>(array));
+    }
+
+    public static <T> String join(Iterable<T> iterable) {
+        dbc.precondition(iterable != null, "cannot join a null iterable");
+        return join(iterable.iterator());
+    }
 
     public static <T> String join(Iterator<T> iterator) {
         dbc.precondition(iterator != null, "cannot join a null iterator");
@@ -38,7 +48,7 @@ public abstract class Strings {
         return interpose(values, new ConstantIterator<V>(separator));
     }
 
-    public static boolean isEmpty(String value){
+    public static boolean isEmpty(String value) {
         return value == null || value.isEmpty();
     }
 }

@@ -30,13 +30,27 @@ public class StringsTest {
         }
 
         @Test
+        public void canJoinIterable() {
+            final Iterable<Integer> values = Arrays.asList(1, 2, 3, 4);
+            final String output = Strings.join(values);
+            Assert.assertEquals("1234", output);
+        }
+
+        @Test
+        public void canJoinArray() {
+            final Integer[] values = {1, 2, 3, 4};
+            final String output = Strings.join(values);
+            Assert.assertEquals("1234", output);
+        }
+
+        @Test
         public void canJoinEmptyIterator() {
             Iterator<Object> values = Arrays.asList().iterator();
             String output = Strings.join(values);
             Assert.assertEquals("", output);
         }
 
-        @Test(expected=IllegalArgumentException.class)
+        @Test(expected = IllegalArgumentException.class)
         public void cannotJoinANullIterator() {
             final Iterator<Object> nullIterator = null;
             Strings.join(nullIterator);
