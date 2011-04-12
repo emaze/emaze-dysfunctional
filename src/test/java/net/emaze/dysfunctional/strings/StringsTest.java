@@ -55,6 +55,12 @@ public class StringsTest {
             final Iterator<Object> nullIterator = null;
             Strings.join(nullIterator);
         }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotJoinANullIterable() {
+            final Iterable<Object> nullIterable = null;
+            Strings.join(nullIterable);
+        }
     }
 
     public static class Interpose {
