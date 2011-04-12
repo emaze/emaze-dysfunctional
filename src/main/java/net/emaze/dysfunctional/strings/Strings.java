@@ -16,6 +16,7 @@ import net.emaze.dysfunctional.multiplexing.InterposingIterator;
 public abstract class Strings {
 
     public static <T> String join(Iterator<T> iterator) {
+        dbc.precondition(iterator != null, "cannot join a null iterator");
         final StringOutputIterator output = new StringOutputIterator();
         final PipingConsumer<String> pipe = new PipingConsumer<String>(output);
         final Iterator<String> elements = Iterations.transform(iterator, new ToStringTransformer<T>());
@@ -25,7 +26,6 @@ public abstract class Strings {
     public static <T, V> String interpose(Iterator<T> values, Iterator<V> separators) {
         dbc.precondition(values != null, "calling interpose with a null values");
         dbc.precondition(separators != null, "calling interpose with a null separators");
-
         final Iterator<String> input = new InterposingIterator<String>(
                 new TransformingIterator<String, T>(values, new ToStringTransformer<T>()),
                 new TransformingIterator<String, V>(separators, new ToStringTransformer<V>()));

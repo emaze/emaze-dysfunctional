@@ -35,6 +35,12 @@ public class StringsTest {
             String output = Strings.join(values);
             Assert.assertEquals("", output);
         }
+
+        @Test(expected=IllegalArgumentException.class)
+        public void cannotJoinANullIterator() {
+            final Iterator<Object> nullIterator = null;
+            Strings.join(nullIterator);
+        }
     }
 
     public static class Interpose {
