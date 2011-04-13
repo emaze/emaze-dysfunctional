@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.reflection;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +34,12 @@ public class ClassType {
             throw new ReflectionException(ex);
         }
     }
-    
+
     public MethodType getMethodByName(String methodName) {
         dbc.precondition(methodName != null, "trying to fetch a method with a null methodName");
         final List<Method> matchingMethods = new ArrayList<Method>();
-        for(Method m : klass.getMethods()){
-            if(m.getName().equals(methodName)){
+        for (Method m : klass.getMethods()) {
+            if (m.getName().equals(methodName)) {
                 matchingMethods.add(m);
             }
         }
@@ -79,6 +80,15 @@ public class ClassType {
         } catch (NoSuchMethodException ex) {
             throw new ReflectionException(ex);
         }
+    }
+
+    public ConstructorType[] getConstructors() {
+        final Constructor<?>[] constructors = this.klass.getConstructors();
+        final ConstructorType[] wrappers = new ConstructorType[constructors.length];
+        for (int i = 0; i != constructors.length; ++i) {
+            wrappers[i] = new ConstructorType(constructors[i]);
+        }
+        return wrappers;
     }
 
     public <T> T getAnnotationValue(Class<? extends Annotation> annotationClass, String annotationMethodName) {
