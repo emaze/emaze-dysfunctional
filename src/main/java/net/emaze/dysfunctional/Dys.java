@@ -5,7 +5,7 @@ package net.emaze.dysfunctional;
  * @author rferranti
  */
 public interface Dys {
-
+    public abstract static class Arrays extends net.emaze.dysfunctional.adapting.Arrays {}
     public abstract static class Dispatching extends net.emaze.dysfunctional.dispatching.Dispatching {}
     public abstract static class Casts extends net.emaze.dysfunctional.casts.Casts {}
     public abstract static class Comparing extends net.emaze.dysfunctional.order.Comparing {}
