@@ -28,6 +28,9 @@ public class BoxTest {
         Assert.assertNotNull(new Box<Banana>().toString());
     }
 
+    /**
+     * you are what you eat.
+     */
     @Test
     public void nonEmptyContainersWithDifferentContentAreNotEqual() {
         final Box<Banana> myBento = new Box<Banana>();
