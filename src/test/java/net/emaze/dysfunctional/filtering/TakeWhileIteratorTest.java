@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import net.emaze.dysfunctional.Dys.Consumers;
+import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.Never;
 import org.junit.Assert;
