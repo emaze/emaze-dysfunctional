@@ -16,12 +16,12 @@ public class InterceptorAdapter<R, T> implements Delegate<R, T> {
 
     public InterceptorAdapter(Interceptor<T> interceptor, Delegate<R, T> inner) {
         dbc.precondition(interceptor != null, "cannot adapt a null interceptor");
-        dbc.precondition(inner != null, "cannot adato with a null inner delegate");
+        dbc.precondition(inner != null, "cannot adapt with a null inner delegate");
         this.interceptor = interceptor;
         this.inner = inner;
     }
 
-    @Override
+    @Override   
     public R perform(T value) {
         interceptor.before(value);
         try {
