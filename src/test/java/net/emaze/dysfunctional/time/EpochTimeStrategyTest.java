@@ -30,4 +30,27 @@ public class EpochTimeStrategyTest {
         thread.join();
         Assert.assertFalse(shouldFail.getContent());
     }
+
+    @Test
+    public void uninterruptedSleepWaitsAtLeastTheDuration() throws InterruptedException {
+        final long expectedMillis = 10;
+        Thread thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                strategy.sleep(expectedMillis, TimeUnit.MILLISECONDS);
+            }
+        });
+        final long start = System.currentTimeMillis();
+        thread.start();
+        thread.join();
+        long duration = System.currentTimeMillis() - start;
+        Assert.assertTrue(duration >= expectedMillis);
+    }
+
+    @Test
+    public void epochTimeUnitIsMilliSeconds() {
+        final TimeUnit got = strategy.currentTime().second();
+        Assert.assertEquals(TimeUnit.MILLISECONDS, got);
+    }
 }

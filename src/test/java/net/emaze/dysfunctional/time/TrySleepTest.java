@@ -26,4 +26,21 @@ public class TrySleepTest {
         thread.join();
         Assert.assertEquals(0, thread.getStackTrace().length);
     }
+    
+    @Test
+    public void uninterruptedSleepWaitsAtLeastTheDuration() throws InterruptedException {
+        final long expectedMillis = 10;
+        Thread thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                sleeper.perform(expectedMillis, TimeUnit.MILLISECONDS);
+            }
+        });
+        final long start = System.currentTimeMillis();
+        thread.start();
+        thread.join();
+        long duration = System.currentTimeMillis() - start;        
+        Assert.assertTrue(duration >= expectedMillis);
+    }
 }
