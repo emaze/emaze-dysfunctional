@@ -11,5 +11,5 @@ public interface TimeStrategy {
 
     Pair<Long, TimeUnit> currentTime();
 
-    void sleep(long howMuch, TimeUnit unit);
+    void sleep(long duration, TimeUnit unit);
 }

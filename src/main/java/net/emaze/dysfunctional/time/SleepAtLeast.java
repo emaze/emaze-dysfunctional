@@ -18,11 +18,10 @@ public class SleepAtLeast implements BinaryAction<Long, TimeUnit> {
 
     @Override
     public void perform(Long duration, TimeUnit unit) {
-        final Pair<Long, TimeUnit> elapsed = sleep(duration, unit);
-        long elapsedInRequestedUnit = unit.convert(elapsed.first(), unit);
+        long elapsedInRequestedUnit = 0;
         while (elapsedInRequestedUnit < duration) {
             final Pair<Long, TimeUnit> slept = sleep(duration - elapsedInRequestedUnit, unit);
-            elapsedInRequestedUnit += unit.convert(slept.first(), unit);
+            elapsedInRequestedUnit += slept.second().convert(slept.first(), unit);
         }
     }
 
