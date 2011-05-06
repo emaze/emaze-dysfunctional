@@ -44,6 +44,7 @@ public class TimeStrategiesTest {
                 }
             });
             thread.start();
+            thread.setUncaughtExceptionHandler(new DoNotLogOnUncaughtException());            
             thread.interrupt();
             thread.join();
             Assert.assertFalse(shouldFail.getContent());
@@ -97,6 +98,13 @@ public class TimeStrategiesTest {
         public void warpingTimeUnitInCurrentTimeIsInMillis() {
             final TimeUnit got = new WarpingTimeStrategy(0l).currentTime().second();
             Assert.assertEquals(TimeUnit.MILLISECONDS, got);
+        }
+    }
+
+    public static class DoNotLogOnUncaughtException implements Thread.UncaughtExceptionHandler {
+
+        @Override
+        public void uncaughtException(Thread t, Throwable e) {
         }
     }
 }
