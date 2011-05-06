@@ -1,10 +1,15 @@
 package net.emaze.dysfunctional.time;
 
+import java.util.concurrent.TimeUnit;
+import net.emaze.dysfunctional.tuples.Pair;
+
 /**
  *
  * @author rferranti
  */
 public interface TimeStrategy {
-    long currentTimeMillis();
-    void sleep(long millis);
+
+    Pair<Long, TimeUnit> currentTime();
+
+    void sleep(long howMuch, TimeUnit unit);
 }

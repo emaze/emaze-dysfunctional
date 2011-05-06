@@ -1,5 +1,8 @@
 package net.emaze.dysfunctional.time;
 
+import java.util.concurrent.TimeUnit;
+import net.emaze.dysfunctional.tuples.Pair;
+
 /**
  *
  * @author rferranti
@@ -13,16 +16,16 @@ public class WarpingTimeStrategy implements TimeStrategy {
     }
 
     @Override
-    public long currentTimeMillis() {
-        return now;
+    public Pair<Long, TimeUnit> currentTime() {
+        return Pair.of(now, TimeUnit.MILLISECONDS);
     }
 
     @Override
-    public void sleep(long millis) {
-        now += millis;
+    public void sleep(long duration, TimeUnit unit) {
+        now += unit.toMillis(duration);
     }
 
-    public void warp(long sinceEpoch) {
-        now = sinceEpoch;
+    public void warp(long sinceEpoch, TimeUnit unit) {
+        now = unit.toMillis(sinceEpoch);
     }
 }

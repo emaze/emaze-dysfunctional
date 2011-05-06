@@ -1,12 +1,13 @@
 package net.emaze.dysfunctional.time;
 
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.concurrent.TimeUnit;
+import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 
 /**
  *
  * @author rferranti
  */
-public class Sleep implements Action<Long> {
+public class Sleep implements BinaryAction<Long, TimeUnit> {
 
     private final TimeStrategy time;
 
@@ -15,7 +16,7 @@ public class Sleep implements Action<Long> {
     }
     
     @Override
-    public void perform(Long millis) {
-        time.sleep(millis);
+    public void perform(Long duration, TimeUnit unit) {
+        time.sleep(duration, unit);
     }
 }
