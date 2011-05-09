@@ -192,6 +192,14 @@ public class FilteringTest {
         Filtering.slice(1, 2, iterable);
     }
 
+    @Test
+    public void canSliceAnArray() {
+        final Integer[] source = {0, 1};
+        final List<Integer> expected = Arrays.asList(1);
+        final List<Integer> got = Consumers.all(Filtering.slice(1, 1, source));
+        Assert.assertEquals(expected, got);
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void cannotCallAtOnANullIterable() {
         final Iterable<Object> iterable = null;
@@ -203,6 +211,14 @@ public class FilteringTest {
         final List<Integer> list = Arrays.asList(1, 2, 3, 4);
         final Integer expected = list.get(list.size() - 1);
         final Integer last = Filtering.atMostLast(1, list).next();
+        Assert.assertEquals(expected, last);
+    }
+
+    @Test
+    public void canGetAtMostLastElementFromAnArray() {
+        final Integer[] arr = {1, 2, 3, 4};
+        final Integer expected = arr[arr.length - 1];
+        final Integer last = Filtering.atMostLast(1, arr).next();
         Assert.assertEquals(expected, last);
     }
 
