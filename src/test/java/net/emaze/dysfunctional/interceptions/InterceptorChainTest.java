@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import net.emaze.dysfunctional.dispatching.multicasting.Multicasting;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -31,6 +32,27 @@ public class InterceptorChainTest {
         BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
         InterceptorChain<String, String> chain = new InterceptorChain<String, String>(delegate);
         chain.remove(null);
+    }
+
+    @Test(expected = ClassCastException.class)
+    public void passingWrongTypeToRemoveInErasureYieldsException() {
+        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
+        Multicasting multi = new InterceptorChain<String, String>(delegate);
+        multi.remove(new Object());
+    }
+
+    @Test(expected = ClassCastException.class)
+    public void passingWrongTypeToAddInErasureYieldsException() {
+        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
+        Multicasting multi = new InterceptorChain<String, String>(delegate);
+        multi.add(new Object());
+    }
+
+    @Test(expected = ClassCastException.class)
+    public void passingWrongTypeToPerformInErasureYieldsException() {
+        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
+        Delegate d = new InterceptorChain<String, String>(delegate);
+        d.perform(new Object());
     }
 
     @Test
@@ -136,16 +158,16 @@ public class InterceptorChainTest {
         }
     }
 
-public static class ThrowingInterceptor implements Interceptor<String> {
+    public static class ThrowingInterceptor implements Interceptor<String> {
 
-    @Override
-    public void before(String value) {
-        throw new IllegalStateException();
-    }
+        @Override
+        public void before(String value) {
+            throw new IllegalStateException();
+        }
 
-    @Override
-    public void after(String value) {
-        throw new IllegalStateException();
+        @Override
+        public void after(String value) {
+            throw new IllegalStateException();
+        }
     }
-}
 }

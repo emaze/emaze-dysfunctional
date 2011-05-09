@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import net.emaze.dysfunctional.dispatching.multicasting.Multicasting;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -31,6 +32,34 @@ public class BinaryInterceptorChainTest {
         BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
         BinaryInterceptorChain<String, String, String> chain = new BinaryInterceptorChain<String, String, String>(delegate);
         chain.remove(null);
+    }
+
+    @Test(expected = ClassCastException.class)
+    public void passingWrongTypeToRemoveInErasureYieldsException() {
+        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
+        Multicasting multi = new BinaryInterceptorChain<String, String, String>(delegate);
+        multi.remove(new Object());
+    }
+
+    @Test(expected = ClassCastException.class)
+    public void passingWrongTypeToAddInErasureYieldsException() {
+        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
+        Multicasting multi = new BinaryInterceptorChain<String, String, String>(delegate);
+        multi.add(new Object());
+    }
+
+    @Test(expected = ClassCastException.class)
+    public void passingWrongTypeToFirstArgumentOfPerformInErasureYieldsException() {
+        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
+        BinaryDelegate d = new BinaryInterceptorChain<String, String, String>(delegate);
+        d.perform(new Object(), "a string");
+    }
+
+    @Test(expected = ClassCastException.class)
+    public void passingWrongTypeToSecondArgumentOfPerformInErasureYieldsException() {
+        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
+        BinaryDelegate d = new BinaryInterceptorChain<String, String, String>(delegate);
+        d.perform("a string", new Object());
     }
 
     @Test

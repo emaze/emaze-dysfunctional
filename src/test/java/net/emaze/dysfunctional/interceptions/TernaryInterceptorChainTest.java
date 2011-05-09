@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.multicasting.Multicasting;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -32,6 +34,41 @@ public class TernaryInterceptorChainTest {
         BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
         TernaryInterceptorChain<O, O, O, O> chain = new TernaryInterceptorChain<O, O, O, O>(delegate);
         chain.remove(null);
+    }
+
+    @Test(expected = ClassCastException.class)
+    public void passingWrongTypeToRemoveInErasureYieldsException() {
+        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
+        Multicasting multi = new TernaryInterceptorChain<O, O, O, O>(delegate);
+        multi.remove(new Object());
+    }
+
+    @Test(expected = ClassCastException.class)
+    public void passingWrongTypeToAddInErasureYieldsException() {
+        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
+        Multicasting multi = new TernaryInterceptorChain<O, O, O, O>(delegate);
+        multi.add(new Object());
+    }
+
+    @Test(expected = ClassCastException.class)
+    public void passingWrongTypeToFirstArgumentOfPerformInErasureYieldsException() {
+        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
+        TernaryDelegate d = new TernaryInterceptorChain<O, O, O, O>(delegate);
+        d.perform(new Object(), "a string", "a string");
+    }
+
+    @Test(expected = ClassCastException.class)
+    public void passingWrongTypeToSecondArgumentOfPerformInErasureYieldsException() {
+        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
+        TernaryDelegate d = new TernaryInterceptorChain<O, O, O, O>(delegate);
+        d.perform("a string", new Object(), "a string");
+    }
+
+    @Test(expected = ClassCastException.class)
+    public void passingWrongTypeToThirdArgumentOfPerformInErasureYieldsException() {
+        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
+        TernaryDelegate d = new TernaryInterceptorChain<O, O, O, O>(delegate);
+        d.perform("a string", "a string", new Object());
     }
 
     @Test
@@ -114,7 +151,6 @@ public class TernaryInterceptorChainTest {
             bucket.add(id);
             return null;
         }
-
     }
 
     public static class BucketFillingInterceptor implements TernaryInterceptor<O, O, O> {
