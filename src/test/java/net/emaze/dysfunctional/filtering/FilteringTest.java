@@ -221,4 +221,10 @@ public class FilteringTest {
         final List<Integer> got = Consumers.all(atMostAllElements);
         Assert.assertEquals(list, got);
     }
+
+    @Test
+    public void facadeIsNotFinal() {
+        new Filtering() {
+        };
+    }
 }
