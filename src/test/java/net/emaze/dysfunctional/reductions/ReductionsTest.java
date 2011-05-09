@@ -18,8 +18,8 @@ import org.junit.runners.Suite;
     ReductionsTest.CountLong.class,
     ReductionsTest.CountInteger.class,
     ReductionsTest.Maximum.class,
-    ReductionsTest.Minimum.class
-})
+    ReductionsTest.Minimum.class,
+    ReductionsTest.Facade.class,})
 public class ReductionsTest {
 
     private static List<Integer> list = Arrays.asList(1, 2);
@@ -114,6 +114,15 @@ public class ReductionsTest {
         public void canExtractMinimumWithComparable() {
             int min = Reductions.min(list.iterator(), 2);
             Assert.assertEquals(1, min);
+        }
+    }
+
+    public static class Facade {
+
+        @Test
+        public void facadeIsNotFinal() {
+            new Reductions() {
+            };
         }
     }
 }
