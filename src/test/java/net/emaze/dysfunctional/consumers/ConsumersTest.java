@@ -23,7 +23,8 @@ import org.junit.runners.Suite;
     ConsumersTest.All.class,
     ConsumersTest.Last.class,
     ConsumersTest.Pipe.class,
-    ConsumersTest.Facade.class,})
+    ConsumersTest.Facade.class
+})
 public class ConsumersTest {
 
     private static List<Integer> list = Arrays.asList(1, 2);

@@ -19,7 +19,8 @@ import org.junit.runners.Suite;
     ReductionsTest.CountInteger.class,
     ReductionsTest.Maximum.class,
     ReductionsTest.Minimum.class,
-    ReductionsTest.Facade.class,})
+    ReductionsTest.Facade.class
+})
 public class ReductionsTest {
 
     private static List<Integer> list = Arrays.asList(1, 2);
