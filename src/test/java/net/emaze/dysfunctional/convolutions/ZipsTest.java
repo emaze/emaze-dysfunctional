@@ -117,4 +117,10 @@ public class ZipsTest {
         final List<Integer> latter = null;
         Zips.longest(former, latter);
     }
+
+    @Test
+    public void facadeIsNotFinal() {
+        new Zips() {
+        };
+    }
 }

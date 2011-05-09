@@ -18,7 +18,9 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     PaginationTest.Functions.class,
-    PaginationTest.Degenerations.class
+    PaginationTest.Degenerations.class,
+    PaginationTest.Facade.class
+    
 })
 public class PaginationTest {
 
@@ -188,4 +190,14 @@ public class PaginationTest {
             Pagination.pagel(4, 2, collection, new ArrayList<Object>());
         }
     }
+    
+
+    public static class Facade {
+
+        @Test
+        public void facadeIsNotFinal() {
+            new Pagination() {
+            };
+        }
+    }    
 }
