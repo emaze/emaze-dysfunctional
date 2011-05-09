@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.dispatching.actions;
 
-import net.emaze.dysfunctional.dispatching.actions.ReflectiveAction;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -94,6 +93,18 @@ public class ReflectiveActionTest {
         action.setCallee(this);
         action.perform(bucket);
 
+        Assert.assertEquals(bucket, Arrays.asList(1, 1));
+    }
+    
+    @Test
+    public void canCallSameReflectiveActionTwoTimes() {
+        final List<Integer> bucket = new ArrayList<Integer>();
+        final ReflectiveAction<List<Integer>> action = new ReflectiveAction<List<Integer>>();
+        action.setCallee(this);
+        action.setMethodName("mockMethod");
+        action.setMessageClass(List.class);
+        action.perform(bucket);
+        action.perform(bucket);
         Assert.assertEquals(bucket, Arrays.asList(1, 1));
     }
 
