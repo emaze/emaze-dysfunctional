@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.strings.lexcasts;
 
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,6 +24,13 @@ public class ShortParserTest {
     public void parsingNullStringYieldsException() {
         new ShortParser(10).perform(null);
     }
+    
+    @Test(expected = ClassCastException.class)
+    public void passingNonStringToErasureYieldsException() {
+        Delegate d = new ShortParser(10);
+        d.perform(new Object());
+    }        
+
     
     @Test(expected=NumberFormatException.class)
     public void parsingInvalidStringYieldsException() {

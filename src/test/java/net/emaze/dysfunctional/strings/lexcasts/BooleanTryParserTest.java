@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.strings.lexcasts;
 
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.options.Maybe;
 import org.junit.Assert;
 import org.junit.Test;
@@ -18,6 +19,12 @@ public class BooleanTryParserTest {
         Assert.assertFalse(got.hasValue());
     }
 
+    @Test(expected = ClassCastException.class)
+    public void passingNonStringToErasureYieldsException() {
+        Delegate d = new BooleanTryParser();
+        d.perform(new Object());
+    }        
+    
     @Test
     public void parsingValidTrueStringYieldsTrue() {
         final Maybe<Boolean> got = new BooleanTryParser().perform("true");

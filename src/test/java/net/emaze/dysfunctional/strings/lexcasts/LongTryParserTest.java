@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.strings.lexcasts;
 
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.options.Maybe;
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,6 +21,12 @@ public class LongTryParserTest {
         new LongTryParser(Character.MIN_RADIX - 1);
     }
 
+    @Test(expected = ClassCastException.class)
+    public void passingNonStringToErasureYieldsException() {
+        Delegate d = new LongTryParser(10);
+        d.perform(new Object());
+    }        
+    
     @Test
     public void parsingNullStringYieldsNothing() {
         final Maybe<Long> got = new LongTryParser(10).perform(null);

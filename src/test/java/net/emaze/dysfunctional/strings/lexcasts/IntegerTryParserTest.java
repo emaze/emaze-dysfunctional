@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.strings.lexcasts;
 
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.options.Maybe;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,6 +20,12 @@ public class IntegerTryParserTest {
     public void lessThanMinRadixYieldsException() {
         new IntegerTryParser(Character.MIN_RADIX - 1);
     }
+    
+    @Test(expected = ClassCastException.class)
+    public void passingNonStringToErasureYieldsException() {
+        Delegate d = new IntegerTryParser(10);
+        d.perform(new Object());
+    }        
 
     @Test
     public void parsingNullStringYieldsNothing() {

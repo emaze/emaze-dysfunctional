@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.strings.lexcasts;
 
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.options.Maybe;
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,6 +10,12 @@ import org.junit.Test;
  * @author rferranti
  */
 public class DoubleTryParserTest {
+    
+    @Test(expected = ClassCastException.class)
+    public void passingNonStringToErasureYieldsException() {
+        Delegate d = new DoubleTryParser();
+        d.perform(new Object());
+    }        
 
     @Test
     public void parsingNullStringYieldsNothing() {

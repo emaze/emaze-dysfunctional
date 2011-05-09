@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.strings.lexcasts;
 
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,6 +30,12 @@ public class ByteParserTest {
         new ByteParser(10).perform("A");
     }
 
+    @Test(expected = ClassCastException.class)
+    public void passingNonStringToErasureYieldsException() {
+        Delegate d = new ByteParser(10);
+        d.perform(new Object());
+    }        
+    
     @Test
     public void parsingValidStringYieldsValue() {
         final byte got = new ByteParser(10).perform("1");
