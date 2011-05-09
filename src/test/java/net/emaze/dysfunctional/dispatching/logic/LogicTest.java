@@ -20,7 +20,8 @@ import org.junit.runners.Suite;
     LogicTest.OrDegenerationsTest.class,
     LogicTest.NotTest.class,
     LogicTest.AlwaysTest.class,
-    LogicTest.NeverTest.class
+    LogicTest.NeverTest.class,
+    LogicTest.Facade.class
 })
 public class LogicTest {
 
@@ -492,6 +493,15 @@ public class LogicTest {
         @Test
         public void canCreateTernaryNever() {
             Assert.assertNotNull(Logic.never3());
+        }
+    }
+
+    public static class Facade {
+
+        @Test
+        public void facadeIsNotFinal() {
+            new Logic() {
+            };
         }
     }
 }
