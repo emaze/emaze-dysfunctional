@@ -20,7 +20,7 @@ public class SleepAtLeast implements BinaryAction<Long, TimeUnit> {
     public void perform(Long duration, TimeUnit unit) {
         Pair<Long, TimeUnit> slept = sleep(duration, unit);
         long elapsedInStrategyUnit = slept.first();
-        while (elapsedInStrategyUnit < duration) {
+        while (elapsedInStrategyUnit < slept.second().convert(duration, unit)) {
             slept = sleep(slept.second().convert(duration, unit) - elapsedInStrategyUnit, unit);
             elapsedInStrategyUnit += slept.first();
         }

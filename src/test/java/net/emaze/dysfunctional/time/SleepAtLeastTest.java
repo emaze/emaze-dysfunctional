@@ -21,17 +21,25 @@ public class SleepAtLeastTest {
 
     @Test
     public void interruptingDuringSleepForcesResleepUntilDuration() throws InterruptedException {
-        final SelfInterruptingTimeStrategy interruptingStrategy = new SelfInterruptingTimeStrategy(0);
+        final InterruptingEverySecondTimeStrategy interruptingStrategy = new InterruptingEverySecondTimeStrategy(0);
         final SleepAtLeast sleeper = new SleepAtLeast(interruptingStrategy);
-        sleeper.perform(1l, TimeUnit.DAYS);
-        Assert.assertEquals(Pair.of(TimeUnit.DAYS.toMillis(1l), TimeUnit.MILLISECONDS), interruptingStrategy.currentTime());
+        sleeper.perform(2l, TimeUnit.SECONDS);
+        Assert.assertEquals(Pair.of(TimeUnit.SECONDS.toMillis(2l), TimeUnit.MILLISECONDS), interruptingStrategy.currentTime());
+    }
+    
+    @Test
+    public void interruptingDuringSleepDoesNotThrow() throws InterruptedException {
+        final InterruptingEverySecondTimeStrategy interruptingStrategy = new InterruptingEverySecondTimeStrategy(0);
+        final SleepAtLeast sleeper = new SleepAtLeast(interruptingStrategy);
+        sleeper.perform(1l, TimeUnit.SECONDS);
+        Assert.assertEquals(Pair.of(TimeUnit.SECONDS.toMillis(1l), TimeUnit.MILLISECONDS), interruptingStrategy.currentTime());
     }
 
-    public static class SelfInterruptingTimeStrategy implements TimeStrategy {
+    public static class InterruptingEverySecondTimeStrategy implements TimeStrategy {
 
         public long now;
 
-        public SelfInterruptingTimeStrategy(long now) {
+        public InterruptingEverySecondTimeStrategy(long now) {
             this.now = now;
         }
 
@@ -42,7 +50,7 @@ public class SleepAtLeastTest {
 
         @Override
         public void sleep(long duration, TimeUnit unit) {
-            now+= TimeUnit.MILLISECONDS.convert(duration, unit);
+            now+= TimeUnit.SECONDS.toMillis(1);
             throw new SleepInterruptedException(new InterruptedException("forged-exception"));
         }
     }
