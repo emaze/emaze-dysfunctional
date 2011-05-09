@@ -24,7 +24,8 @@ import org.junit.runners.Suite;
     MultiplexingTest.Muxl.class,
     MultiplexingTest.Demux.class,
     MultiplexingTest.Demuxl.class,
-    MultiplexingTest.Roundrobin.class
+    MultiplexingTest.Roundrobin.class,
+    MultiplexingTest.Facade.class
 })
 public class MultiplexingTest {
 
@@ -158,8 +159,14 @@ public class MultiplexingTest {
         }
 
         @Test
-        public void canMuxLongestFromArray() {
+        public void canMuxLongestFromTwoValues() {
             final Iterator<Maybe<O>> muxed = Multiplexing.muxl(AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
+            Assert.assertNotNull(muxed);
+        }
+
+        @Test
+        public void canMuxLongestFromThreeValues() {
+            final Iterator<Maybe<O>> muxed = Multiplexing.muxl(AN_ITERABLE.iterator(), AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
             Assert.assertNotNull(muxed);
         }
     }
@@ -257,6 +264,15 @@ public class MultiplexingTest {
         public void canRoundrobinFromThreeValues() {
             final Iterator<O> rr = Multiplexing.roundrobin(AN_ITERABLE.iterator(), AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
             Assert.assertNotNull(rr);
+        }
+    }
+
+    public static class Facade {
+
+        @Test
+        public void facadeIsNotFinal() {
+            new Multiplexing() {
+            };
         }
     }
 }
