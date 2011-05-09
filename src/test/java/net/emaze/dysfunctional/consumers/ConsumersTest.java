@@ -22,8 +22,8 @@ import org.junit.runners.Suite;
     ConsumersTest.One.class,
     ConsumersTest.All.class,
     ConsumersTest.Last.class,
-    ConsumersTest.Pipe.class
-})
+    ConsumersTest.Pipe.class,
+    ConsumersTest.Facade.class,})
 public class ConsumersTest {
 
     private static List<Integer> list = Arrays.asList(1, 2);
@@ -245,4 +245,12 @@ public class ConsumersTest {
         }
     }
 
+    public static class Facade {
+
+        @Test
+        public void facadeIsNotFinal() {
+            new Consumers() {
+            };
+        }
+    }
 }

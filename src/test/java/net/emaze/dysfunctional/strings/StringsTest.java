@@ -16,7 +16,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     StringsTest.Join.class,
     StringsTest.Interpose.class,
-    StringsTest.IsEmpty.class
+    StringsTest.IsEmpty.class,
+    StringsTest.Facade.class
 })
 public class StringsTest {
 
@@ -116,6 +117,15 @@ public class StringsTest {
         @Test
         public void nonEmptyStringIsNotEmpty() {
             Assert.assertFalse(Strings.isEmpty("non empty text"));
+        }
+    }
+
+    public static class Facade {
+
+        @Test
+        public void facadeIsNotFinal() {
+            new Strings() {
+            };
         }
     }
 }
