@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.strings.predicates;
 
+import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,6 +20,12 @@ public class StringEqualsIgnoreCaseTest {
         new StringEqualsIgnoreCase("a").accept(null);
     }
 
+    @Test(expected = ClassCastException.class)
+    public void passingNonStringToErasureYieldsException() {
+        Predicate p = new StringEqualsIgnoreCase("a");
+        p.accept(new Object());
+    }    
+    
     @Test
     public void testingEqualsYieldsTrue() {
         Assert.assertTrue(new StringEqualsIgnoreCase("a").accept("A"));

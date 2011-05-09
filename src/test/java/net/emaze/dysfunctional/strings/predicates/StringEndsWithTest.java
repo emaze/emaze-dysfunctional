@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.strings.predicates;
 
+import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,7 +19,13 @@ public class StringEndsWithTest {
     public void testingWithNullHaystackYieldsException() {
         new StringEndsWith("a").accept(null);
     }
-
+    
+    @Test(expected = ClassCastException.class)
+    public void passingNonStringToErasureYieldsException() {
+        Predicate p = new StringEndsWith("a");
+        p.accept(new Object());
+    }    
+    
     @Test
     public void testingContainedNeedleYieldsTrue() {
         Assert.assertTrue(new StringEndsWith("a").accept("a"));
