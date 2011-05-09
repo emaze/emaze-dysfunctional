@@ -1,10 +1,10 @@
 package net.emaze.dysfunctional.dispatching;
 
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.actions.Action;
-import net.emaze.dysfunctional.dispatching.ActionToDelegate;
+import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.options.Box;
+import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,6 +18,13 @@ public class ActionToDelegateTest {
     public void adaptingNullActionYieldsException() {
         new ActionToDelegate<Object>(null);
     }
+    
+    @Test// you probably expect this (expected = ClassCastException.class)
+    public void passingWrongTypeToErasureJustForwardsToTheNestedAction() {
+        Delegate d = new ActionToDelegate<O>(new Noop<O>());
+        d.perform(new Object());
+    }
+    
 
     @Test
     public void callingAdapterCallsAdapted() {

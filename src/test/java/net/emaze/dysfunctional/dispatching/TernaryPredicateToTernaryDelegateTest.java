@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.dispatching;
 
+import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.TernaryCapturingPredicate;
 import net.emaze.dysfunctional.testing.O;
@@ -15,6 +16,12 @@ public class TernaryPredicateToTernaryDelegateTest {
     @Test(expected = IllegalArgumentException.class)
     public void adaptingNullYieldsException() {
         new TernaryPredicateToTernaryDelegate<O, O, O>(null);
+    }
+    
+    @Test// you probably expect this (expected = ClassCastException.class)
+    public void passingWrongTypeToErasureJustForwardsToTheNestedAction() {
+        TernaryDelegate d = new TernaryPredicateToTernaryDelegate<O, O, O>(new TernaryAlways<O, O, O>());
+        d.perform(new Object(), new Object(), new Object());
     }
 
     @Test
