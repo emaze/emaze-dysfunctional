@@ -9,6 +9,7 @@ import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.dispatching.logic.IsTrue;
+import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +27,8 @@ import org.junit.runners.Suite;
     IterationsTest.Every.class,
     IterationsTest.Each.class,
     IterationsTest.OneTime.class,
-    IterationsTest.Facade.class
+    IterationsTest.Facade.class,
+    IterationsTest.Iter.class
 })
 public class IterationsTest {
 
@@ -225,6 +227,30 @@ public class IterationsTest {
         public void facadeIsNotFinal() {
             new Iterations() {
             };
+        }
+    }
+
+    public static class Iter {
+
+        @Test
+        public void canCreateIteratorFromTwoElements() {
+            final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER);
+            final List<O> expected = Arrays.asList(O.ONE, O.ANOTHER);
+            Assert.assertEquals(expected, Consumers.all(iterator));
+        }
+
+        @Test
+        public void canCreateIteratorFromThreeElements() {
+            final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+            final List<O> expected = Arrays.asList(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+            Assert.assertEquals(expected, Consumers.all(iterator));
+        }
+
+        @Test
+        public void canCreateIteratorFromManyElements() {
+            final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER, O.YET_ANOTHER, O.YET_ANOTHER);
+            final List<O> expected = Arrays.asList(O.ONE, O.ANOTHER, O.YET_ANOTHER, O.YET_ANOTHER);
+            Assert.assertEquals(expected, Consumers.all(iterator));
         }
     }
 }
