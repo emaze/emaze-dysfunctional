@@ -40,7 +40,8 @@ import org.junit.runners.Suite;
     DispatchingTest.CurryPredicates.class,
     DispatchingTest.CurryActions.class,
     DispatchingTest.Ignoring.class,
-    DispatchingTest.Composing.class
+    DispatchingTest.Composing.class,
+    DispatchingTest.Facade.class
 })
 public class DispatchingTest {
 
@@ -362,6 +363,7 @@ public class DispatchingTest {
             Predicate<O> composed = Dispatching.compose(new Always<O>(), i, i);
             Assert.assertNotNull(composed);
         }
+
         @Test
         public void canComposePredicatesAndBinaryDelegates() {
             BinaryPredicate<O, O> composed = Dispatching.compose(new Always<O>(), new FirstParam<O, O>());
@@ -372,6 +374,15 @@ public class DispatchingTest {
         public void canComposePredicateAndTernaryDelegates() {
             TernaryPredicate<O, O, O> composed = Dispatching.compose(new Always<O>(), new FirstParamOfThree<O, O, O>());
             Assert.assertNotNull(composed);
+        }
+    }
+
+    public static class Facade {
+
+        @Test
+        public void facadeIsNotFinal() {
+            new Dispatching() {
+            };
         }
     }
 }
