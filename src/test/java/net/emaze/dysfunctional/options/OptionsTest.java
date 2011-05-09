@@ -23,7 +23,8 @@ import org.junit.runners.Suite;
     OptionsTest.Lifts.class,
     OptionsTest.Drops.class,
     OptionsTest.Justs.class,
-    OptionsTest.LiftAndDrop.class
+    OptionsTest.LiftAndDrop.class,
+    OptionsTest.Facade.class
 })
 public class OptionsTest {
 
@@ -95,6 +96,7 @@ public class OptionsTest {
     }
 
     public static class Drops {
+
         @Test
         public void canDropAnIterator() {
             final Iterator<O> drops = Options.drops(Iterations.iterator(Maybe.just(O.ONE)));
@@ -170,6 +172,15 @@ public class OptionsTest {
         public void canDrop() {
             Object dropped = Options.drop(Maybe.nothing());
             Assert.assertNull(dropped);
+        }
+    }
+
+    public static class Facade {
+
+        @Test
+        public void facadeIsNotFinal() {
+            new Options() {
+            };
         }
     }
 }
