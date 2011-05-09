@@ -14,7 +14,8 @@ import org.junit.runners.Suite;
     BoxingTest.BoxingSuite.class,
     BoxingTest.BoxingDegenerationsSuite.class,
     BoxingTest.UnboxingSuite.class,
-    BoxingTest.UnboxingDegenerationsSuite.class
+    BoxingTest.UnboxingDegenerationsSuite.class,
+    BoxingTest.FacadeSuite.class
 })
 public class BoxingTest {
 
@@ -129,6 +130,7 @@ public class BoxingTest {
     }
 
     public static class UnboxingSuite {
+
         @Test
         public void canUnboxArrayOfDoubles() {
             final Double[] array = {1.};
@@ -184,10 +186,10 @@ public class BoxingTest {
             final boolean[] got = Boxing.unbox(array);
             Assert.assertEquals(array[0], Boolean.valueOf(got[0]));
         }
-        
     }
 
     public static class UnboxingDegenerationsSuite {
+
         @Test(expected = IllegalArgumentException.class)
         public void unboxingNullArrayOfDoublesYieldsException() {
             final Double[] array = null;
@@ -234,6 +236,15 @@ public class BoxingTest {
         public void unboxingNullArrayOfBooleansYieldsException() {
             final Boolean[] array = null;
             Boxing.unbox(array);
+        }
+    }
+
+    public static class FacadeSuite {
+
+        @Test
+        public void facadeIsNotFinal() {
+            new Boxing() {
+            };
         }
     }
 }
