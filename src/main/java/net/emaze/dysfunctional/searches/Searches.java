@@ -224,7 +224,7 @@ public abstract class Searches {
      * @return
      */
     public static <E> Maybe<E> searchOne(Iterable<E> iterable) {
-        dbc.precondition(iterable != null, "cannot call maybeOne with a null iterable");
+        dbc.precondition(iterable != null, "cannot call searchOne with a null iterable");
         return searchOne(iterable.iterator());
     }
 
@@ -235,7 +235,7 @@ public abstract class Searches {
      * @throws IllegalStateException if the iterator contains more than one element
      * @return
      */
-    public static <E> Maybe<E> maybeOne(E[] array) {
+    public static <E> Maybe<E> searchOne(E[] array) {
         return searchOne(new ArrayIterator<E>(array));
     }
 
@@ -246,7 +246,7 @@ public abstract class Searches {
      * @return
      */
     public static <T> Maybe<T> searchLast(Iterator<T> iterator) {
-        dbc.precondition(iterator != null, "cannot call maybeLast with a null iterator");
+        dbc.precondition(iterator != null, "cannot call searchLast with a null iterator");
         if (iterator.hasNext()) {
             return Maybe.just(Consumers.last(iterator));
         }
@@ -260,7 +260,7 @@ public abstract class Searches {
      * @return
      */
     public static <T> Maybe<T> searchLast(Iterable<T> iterable) {
-        dbc.precondition(iterable != null, "cannot call maybeLast with a null iterable");
+        dbc.precondition(iterable != null, "cannot call searchLast with a null iterable");
         return searchLast(iterable.iterator());
     }
 
