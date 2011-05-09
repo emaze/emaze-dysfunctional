@@ -18,10 +18,11 @@ public class SleepAtLeast implements BinaryAction<Long, TimeUnit> {
 
     @Override
     public void perform(Long duration, TimeUnit unit) {
-        long elapsedInRequestedUnit = 0;
-        while (elapsedInRequestedUnit < duration) {
-            final Pair<Long, TimeUnit> slept = sleep(duration - elapsedInRequestedUnit, unit);
-            elapsedInRequestedUnit += slept.second().convert(slept.first(), unit);
+        Pair<Long, TimeUnit> slept = sleep(duration, unit);
+        long elapsedInStrategyUnit = slept.first();
+        while (elapsedInStrategyUnit < duration) {
+            slept = sleep(slept.second().convert(duration, unit) - elapsedInStrategyUnit, unit);
+            elapsedInStrategyUnit += slept.first();
         }
     }
 
@@ -29,7 +30,7 @@ public class SleepAtLeast implements BinaryAction<Long, TimeUnit> {
         final Pair<Long, TimeUnit> start = time.currentTime();
         try {
             time.sleep(duration, unit);
-            return Pair.of(duration, unit);
+            return Pair.of(start.second().convert(duration, unit), start.second());
         } catch (SleepInterruptedException ex) {
             final Pair<Long, TimeUnit> now = time.currentTime();
             return Pair.of(now.first() - start.first(), now.second());
