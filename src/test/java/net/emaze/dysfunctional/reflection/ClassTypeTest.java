@@ -73,6 +73,12 @@ public class ClassTypeTest {
     }
 
     @Test
+    public void canFetchAllConstructors() throws NoSuchMethodException {
+        ConstructorType[] ctors = new ClassType(ClassTypeTest.class).getConstructors();
+        Assert.assertEquals(1, ctors.length);
+    }
+
+    @Test
     public void canCreateFromClassName() throws NoSuchMethodException {
         ClassType k = new ClassType(ClassTypeTest.class.getName());
         Assert.assertEquals(ClassTypeTest.class, k.getWrappedClass());
@@ -114,7 +120,7 @@ public class ClassTypeTest {
     public void gettingMethodByNameYieldsExceptionWhenAnAmbiguityIsFound() {
         new ClassType(BeanWithAmbiguousMethodNames.class).getMethodByName("a");
     }
-    
+
     @Test
     public void canGetMethodByName() {
         new ClassType(ClassTypeTest.class).getMethodByName("canGetMethodByName");
