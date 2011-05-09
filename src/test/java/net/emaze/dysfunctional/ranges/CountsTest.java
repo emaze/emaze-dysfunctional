@@ -44,6 +44,12 @@ public class CountsTest {
         Counts.counted(iterable, range);
     }
 
+    @Test
+    public void facadeIsNotFinal() {
+        new Counts() {
+        };
+    }
+
     private static class StubRange implements Range<Object> {
 
         @Override
