@@ -199,4 +199,9 @@ public class ComparingTest {
     public void cannotCallSameOrderWithANullLhs() {
         Comparing.sameOrder(null, 1);
     }
+    
+    @Test
+    public void facadeIsNotFinal() {
+        new Comparing() {};
+    }
 }
