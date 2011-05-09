@@ -21,8 +21,8 @@ import org.junit.runners.Suite;
     SearchesTest.SearchOne.class,
     SearchesTest.FindOne.class,
     SearchesTest.SearchFirst.class,
-    SearchesTest.SearchLast.class
-
+    SearchesTest.SearchLast.class,
+    SearchesTest.Facade.class
 })
 public class SearchesTest {
 
@@ -135,6 +135,12 @@ public class SearchesTest {
         }
 
         @Test
+        public void searchOneInSingleValueArrayWNoPredicateYieldsJustFirst() {
+            Maybe<Integer> got = Searches.searchOne(singleValueArray);
+            Assert.assertEquals(Maybe.just(1), got);
+        }
+
+        @Test
         public void searchOneWithEmptyIteratorYieldsNothing() {
             Assert.assertEquals(Maybe.nothing(), Searches.searchOne(Collections.emptyList().iterator()));
         }
@@ -197,7 +203,6 @@ public class SearchesTest {
             Assert.assertEquals(1, got);
         }
     }
-
 
     public static class SearchFirst {
 
@@ -277,6 +282,15 @@ public class SearchesTest {
         public void cannotCallMaybeLastWithNullIterable() {
             final Iterable<Object> iterable = null;
             Searches.searchLast(iterable);
+        }
+    }
+
+    public static class Facade {
+
+        @Test
+        public void facadeIsNotFinal() {
+            new Searches() {
+            };
         }
     }
 }
