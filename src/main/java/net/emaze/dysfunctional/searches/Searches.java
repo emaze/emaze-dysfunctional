@@ -188,7 +188,7 @@ public abstract class Searches {
      * @return
      */
     public static <E> Maybe<E> searchFirst(Iterable<E> iterable) {
-        dbc.precondition(iterable != null, "cannot call maybeFirst with a null iterable");
+        dbc.precondition(iterable != null, "cannot call searchFirst with a null iterable");
         return searchFirst(iterable.iterator());
     }
 
