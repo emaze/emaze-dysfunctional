@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
+import net.emaze.dysfunctional.iterations.Iterations;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -35,10 +36,16 @@ public class EagerConsumerTest {
         final EagerConsumer<ArrayList<Integer>, Integer> cons = new EagerConsumer<ArrayList<Integer>, Integer>(new ArrayListFactory<Integer>());
         cons.consume(null);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void creatingConsumerWithNullFactorYieldsException() {
         new EagerConsumer<ArrayList<Integer>, Integer>(null);
 
+    }
+
+    @Test(expected = ClassCastException.class)
+    public void consumingFromErasureWithWrongTypeYieldsException() {
+        final Consumer cons = new EagerConsumer<ArrayList<Integer>, Integer>(new ArrayListFactory<Integer>());
+        cons.consume(new Object());
     }
 }

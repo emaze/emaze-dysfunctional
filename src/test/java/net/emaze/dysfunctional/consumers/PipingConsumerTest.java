@@ -39,4 +39,11 @@ public class PipingConsumerTest {
     public void nullOutputIteratorYieldException() {
         new PipingConsumer<String>(null);
     }
+    
+    @Test(expected = ClassCastException.class)
+    public void consumingFromErasureWithWrongTypeYieldsException() {
+        final StringOutputIterator output = new StringOutputIterator();
+        final Consumer pipe = new PipingConsumer<String>(output);
+        pipe.consume(new Object());
+    }    
 }
