@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.time;
 
 import java.util.concurrent.TimeUnit;
+import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -26,7 +27,7 @@ public class TrySleepTest {
         thread.join();
         Assert.assertEquals(0, thread.getStackTrace().length);
     }
-    
+
     @Test
     public void uninterruptedSleepWaitsAtLeastTheDuration() throws InterruptedException {
         final long expectedMillis = 10;
@@ -40,7 +41,19 @@ public class TrySleepTest {
         final long start = System.currentTimeMillis();
         thread.start();
         thread.join();
-        long duration = System.currentTimeMillis() - start;        
+        long duration = System.currentTimeMillis() - start;
         Assert.assertTrue(duration >= expectedMillis);
+    }
+
+    @Test(expected = ClassCastException.class)
+    public void passingWrongTypeForTimeUnitInErasureYieldsException() {
+        BinaryAction action = sleeper;
+        action.perform(1l, new Object());
+    }
+
+    @Test(expected = ClassCastException.class)
+    public void passingWrongTypeForDurationInErasureYieldsException() {
+        BinaryAction action = sleeper;
+        action.perform(new Object(), TimeUnit.MILLISECONDS);
     }
 }

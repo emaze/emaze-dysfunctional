@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.time;
 
 import java.util.concurrent.TimeUnit;
+import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.tuples.Pair;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,4 +25,17 @@ public class SleepTest {
         final long currentTimeInMillis = currentTime.second().toMillis(currentTime.first());
         Assert.assertEquals(ICE_AGE + 1, currentTimeInMillis);
     }
+    
+
+    @Test(expected = ClassCastException.class)
+    public void passingWrongTypeForTimeUnitInErasureYieldsException() {
+        BinaryAction action = new Sleep(clock);
+        action.perform(1l, new Object());
+    }       
+    
+    @Test(expected = ClassCastException.class)
+    public void passingWrongTypeForDurationInErasureYieldsException() {
+        BinaryAction action = new Sleep(clock);
+        action.perform(new Object(), TimeUnit.MILLISECONDS);
+    }       
 }

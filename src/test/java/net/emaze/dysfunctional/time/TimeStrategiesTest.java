@@ -19,6 +19,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     TimeStrategiesTest.InterruptedSleepYieldsException.class,
     TimeStrategiesTest.UninterruptedSleepWaitsForDuration.class,
+    TimeStrategiesTest.Warping.class,
     TimeStrategiesTest.Resolutions.class
 })
 public class TimeStrategiesTest {
@@ -44,7 +45,7 @@ public class TimeStrategiesTest {
                 }
             });
             thread.start();
-            thread.setUncaughtExceptionHandler(new DoNotLogOnUncaughtException());            
+            thread.setUncaughtExceptionHandler(new DoNotLogOnUncaughtException());
             thread.interrupt();
             thread.join();
             Assert.assertFalse(shouldFail.getContent());
@@ -98,6 +99,16 @@ public class TimeStrategiesTest {
         public void warpingTimeUnitInCurrentTimeIsInMillis() {
             final TimeUnit got = new WarpingTimeStrategy(0l).currentTime().second();
             Assert.assertEquals(TimeUnit.MILLISECONDS, got);
+        }
+    }
+
+    public static class Warping {
+
+        @Test
+        public void canWarpTimeForWarpingTimeStrategy() {
+            final WarpingTimeStrategy wts = new WarpingTimeStrategy(0l);
+            wts.warp(1, TimeUnit.MILLISECONDS);
+            Assert.assertEquals(Pair.of(1l, TimeUnit.MILLISECONDS), wts.currentTime());
         }
     }
 
