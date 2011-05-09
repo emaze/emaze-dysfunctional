@@ -25,7 +25,9 @@ import org.junit.runners.Suite;
     IterationsTest.Any.class,
     IterationsTest.Every.class,
     IterationsTest.Each.class,
-    IterationsTest.OneTime.class})
+    IterationsTest.OneTime.class,
+    IterationsTest.Facade.class
+})
 public class IterationsTest {
 
     public static class Map {
@@ -214,6 +216,15 @@ public class IterationsTest {
         public void cannotCallEachWithNullAction() {
             final Iterable<Object> iterable = new ArrayList<Object>();
             Iterations.each(iterable, null);
+        }
+    }
+
+    public static class Facade {
+
+        @Test
+        public void facadeIsNotFinal() {
+            new Iterations() {
+            };
         }
     }
 }
