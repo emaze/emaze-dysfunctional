@@ -53,8 +53,14 @@ public class MultiplexingTest {
         }
 
         @Test
-        public void canChainFromArray() {
+        public void canChainFromTwoValues() {
             final Iterator<O> chained = Multiplexing.chain(AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
+            Assert.assertNotNull(chained);
+        }
+
+        @Test
+        public void canChainFromThreeValues() {
+            final Iterator<O> chained = Multiplexing.chain(AN_ITERABLE.iterator(), AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
             Assert.assertNotNull(chained);
         }
     }
@@ -82,8 +88,14 @@ public class MultiplexingTest {
         }
 
         @Test
-        public void canFlattenFromArray() {
+        public void canFlattenFromTwoValues() {
             final Iterator<O> flattened = Multiplexing.flatten(AN_ITERABLE, AN_ITERABLE);
+            Assert.assertNotNull(flattened);
+        }
+
+        @Test
+        public void canFlattenFromThreeValues() {
+            final Iterator<O> flattened = Multiplexing.flatten(AN_ITERABLE, AN_ITERABLE, AN_ITERABLE);
             Assert.assertNotNull(flattened);
         }
     }
@@ -111,8 +123,14 @@ public class MultiplexingTest {
         }
 
         @Test
-        public void canMuxFromArray() {
+        public void canMuxTwoValues() {
             final Iterator<O> muxed = Multiplexing.mux(AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
+            Assert.assertNotNull(muxed);
+        }
+
+        @Test
+        public void canMuxThreeValues() {
+            final Iterator<O> muxed = Multiplexing.mux(AN_ITERABLE.iterator(), AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
             Assert.assertNotNull(muxed);
         }
     }
@@ -167,7 +185,13 @@ public class MultiplexingTest {
         }
 
         @Test
-        public void canDemuxFromArray() {
+        public void canDemuxTwoValues() {
+            Iterator<List<O>> demux = Multiplexing.demux(1, O.IGNORED, O.IGNORED);
+            Assert.assertNotNull(demux);
+        }
+
+        @Test
+        public void canDemuxThreeValues() {
             Iterator<List<O>> demux = Multiplexing.demux(1, O.IGNORED, O.IGNORED, O.IGNORED);
             Assert.assertNotNull(demux);
         }
@@ -224,10 +248,15 @@ public class MultiplexingTest {
         }
 
         @Test
-        public void canRoundrobinFromArray() {
+        public void canRoundrobinFromTwoValues() {
             final Iterator<O> rr = Multiplexing.roundrobin(AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
             Assert.assertNotNull(rr);
         }
 
+        @Test
+        public void canRoundrobinFromThreeValues() {
+            final Iterator<O> rr = Multiplexing.roundrobin(AN_ITERABLE.iterator(), AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
+            Assert.assertNotNull(rr);
+        }
     }
 }
