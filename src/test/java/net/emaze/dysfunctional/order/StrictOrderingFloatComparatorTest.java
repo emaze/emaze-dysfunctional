@@ -13,50 +13,57 @@ public class StrictOrderingFloatComparatorTest {
 
     @Test
     public void positiveZeroIsGreaterThanNegativeZero() {
-        Assert.assertEquals(Order.LHS_IS_LESSER,comparator.compare(-0.0f, +0.0f));
+        Assert.assertEquals(Order.LHS_IS_LESSER, comparator.compare(-0.0f, +0.0f));
     }
-    
+
+    @Test
+    public void negativeZeroIsLesserThanPositiveZero() {
+        Assert.assertEquals(Order.LHS_IS_LESSER, comparator.compare(-0.0f, +0.0f));
+    }
+
     @Test
     public void oneIsGreaterThanPositiveZero() {
-        Assert.assertEquals(Order.LHS_IS_GREATER,comparator.compare(1f, +0.0f));
+        Assert.assertEquals(Order.LHS_IS_GREATER, comparator.compare(1f, +0.0f));
     }
+
     @Test
     public void oneIsGreaterThanNegativeZero() {
-        Assert.assertEquals(Order.LHS_IS_GREATER,comparator.compare(1f, -0.0f));
+        Assert.assertEquals(Order.LHS_IS_GREATER, comparator.compare(1f, -0.0f));
     }
-    
+
     @Test
     public void negativeOneIsLesserThanPositiveZero() {
-        Assert.assertEquals(Order.LHS_IS_LESSER,comparator.compare(-1f, +0.0f));
+        Assert.assertEquals(Order.LHS_IS_LESSER, comparator.compare(-1f, +0.0f));
     }
-    
+
     @Test
     public void positiveOneIsLesserThanPositiveZero() {
-        Assert.assertEquals(Order.LHS_IS_GREATER,comparator.compare(+1f, -0.0f));
+        Assert.assertEquals(Order.LHS_IS_GREATER, comparator.compare(+1f, -0.0f));
     }
-    
+
     @Test
     public void notANumberIsEqualsToHimself() {
         Assert.assertFalse(Float.NaN == Float.NaN);
-        Assert.assertEquals(Order.SAME_ORDER,comparator.compare(Float.NaN, Float.NaN));
+        Assert.assertEquals(Order.SAME_ORDER, comparator.compare(Float.NaN, Float.NaN));
     }
 
-    @Test(expected=IllegalArgumentException.class)
-    public void comparingWithNullLhsYieldsException(){
+    @Test(expected = IllegalArgumentException.class)
+    public void comparingWithNullLhsYieldsException() {
         comparator.compare(null, 0f);
     }
-    
-    @Test(expected=IllegalArgumentException.class)
-    public void comparingWithNullRhsYieldsException(){
+
+    @Test(expected = IllegalArgumentException.class)
+    public void comparingWithNullRhsYieldsException() {
         comparator.compare(0f, null);
     }
-    
+
     @Test
-    public void twoComparatorsHaveSameHashCode(){
+    public void twoComparatorsHaveSameHashCode() {
         Assert.assertEquals(new StrictOrderingFloatComparator().hashCode(), new StrictOrderingFloatComparator().hashCode());
     }
+
     @Test
-    public void twoComparatorsAreEquals(){
+    public void twoComparatorsAreEquals() {
         Assert.assertEquals(new StrictOrderingFloatComparator(), new StrictOrderingFloatComparator());
     }
 }
