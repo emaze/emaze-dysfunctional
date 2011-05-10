@@ -25,6 +25,7 @@ public class ReflectiveAction<T> implements Action<T> {
                     ? calleeType.getMethod(methodName, clazz)
                     : calleeType.getMethodByName(methodName);
             methodCache = m;
+            methodCacheIsMemoized = true;
         }
         methodCache.invoke(callee, message);
     }
