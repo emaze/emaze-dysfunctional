@@ -19,6 +19,11 @@ public class MethodTypeTest {
     public void exceptionInMethodLeadsToInvocationException() throws NoSuchMethodException {
         new MethodType(MethodTypeTest.class.getMethod("throwingMethod")).invoke(this);
     }
+    
+    @Test(expected = ReflectionException.class)
+    public void illegalAccessIsTransformedToReflectionException() throws NoSuchMethodException {
+        new MethodType(MethodTypeTest.class.getDeclaredMethod("privateMethod")).invoke(this);
+    }
 
     @Test
     public void equalsCanBeUsedWithMethod() throws NoSuchMethodException {
@@ -55,5 +60,8 @@ public class MethodTypeTest {
 
     public void throwingMethod() {
         throw new IllegalStateException();
+    }
+    
+    private void privateMethod() {
     }
 }

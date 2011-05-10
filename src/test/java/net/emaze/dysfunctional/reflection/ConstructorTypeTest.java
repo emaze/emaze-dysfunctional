@@ -19,6 +19,12 @@ public class ConstructorTypeTest {
         ct.newInstance((Object[]) null);
     }
 
+    @Test(expected = ReflectionException.class)
+    public void illegalAccessIsTransformedToReflectionException() throws NoSuchMethodException {
+        final ConstructorType ct = new ConstructorType(ClassWithPrivateConstructor.class.getDeclaredConstructor());
+        ct.newInstance();
+    }
+
     @Test
     public void canCreateAnObject() throws NoSuchMethodException {
         final ConstructorType ct = new ConstructorType(ConstructorTypeTest.class.getConstructor());
@@ -42,6 +48,10 @@ public class ConstructorTypeTest {
         public ClassWithThrowingConstructor() {
             throw new RuntimeException();
         }
+    }
+    public static class ClassWithPrivateConstructor {
+
+        private ClassWithPrivateConstructor() {}
     }
 
 
