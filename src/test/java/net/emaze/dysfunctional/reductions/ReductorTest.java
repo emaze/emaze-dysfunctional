@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.reductions;
 
 import net.emaze.dysfunctional.adapting.ArrayIterator;
+import net.emaze.dysfunctional.consumers.Consumer;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -27,4 +28,11 @@ public class ReductorTest {
     public void consumingNullIteratorYieldException() {
         new Reductor<Long, Integer>(new Count<Integer>(), 0l).consume(null);
     }
+    
+
+    @Test(expected = ClassCastException.class)
+    public void passingWrongTypeToErasureYieldsException() {
+        Consumer c = new Reductor<Long, Integer>(new Count<Integer>(), 0l);
+        c.consume(new Object());
+    }    
 }
