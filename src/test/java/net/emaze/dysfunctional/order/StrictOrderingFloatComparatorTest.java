@@ -13,7 +13,7 @@ public class StrictOrderingFloatComparatorTest {
 
     @Test
     public void positiveZeroIsGreaterThanNegativeZero() {
-        Assert.assertEquals(Order.LHS_IS_LESSER, comparator.compare(-0.0f, +0.0f));
+        Assert.assertEquals(Order.LHS_IS_GREATER, comparator.compare(+0.0f, -0.0f));
     }
 
     @Test

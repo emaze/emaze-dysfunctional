@@ -13,7 +13,7 @@ public class StrictOrderingDoubleComparatorTest {
 
     @Test
     public void positiveZeroIsGreaterThanNegativeZero() {
-        Assert.assertEquals(Order.LHS_IS_LESSER, comparator.compare(-0.0, +0.0));
+        Assert.assertEquals(Order.LHS_IS_GREATER, comparator.compare(+0.0, -0.0));
     }
 
     @Test
