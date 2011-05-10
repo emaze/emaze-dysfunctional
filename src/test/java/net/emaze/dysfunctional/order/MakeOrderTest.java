@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.order;
 
 import java.util.Comparator;
+import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 import net.emaze.dysfunctional.tuples.Pair;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,6 +15,13 @@ public class MakeOrderTest {
     @Test(expected = IllegalArgumentException.class)
     public void creatingMakeOrderWithNullComparatorYieldsException() {
         new MakeOrder<Object>(null);
+    }
+
+    @Test(expected = ClassCastException.class)
+    public void callingErasureWithWrongTypeYieldsException() {
+        Comparator<Integer> comp = new ComparableComparator<Integer>();
+        BinaryDelegate d = new MakeOrder<Integer>(comp);
+        d.perform(new Object(), new Object());
     }
 
     @Test
