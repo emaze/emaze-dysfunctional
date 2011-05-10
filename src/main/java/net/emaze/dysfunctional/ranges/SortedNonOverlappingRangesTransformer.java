@@ -59,6 +59,6 @@ public class SortedNonOverlappingRangesTransformer<T> implements Delegate<List<D
         if(Comparing.sameOrder(sequencer.next(current.upper()), next.lower(), comparator)){
             return true;
         }
-        return current.overlaps(next) && Comparing.lhsIsGreater(next.upper(), current.upper(), comparator);
+        return current.overlaps(next) && Comparing.lhsIsGreaterThanEquals(next.upper(), current.upper(), comparator);
     }
 }
