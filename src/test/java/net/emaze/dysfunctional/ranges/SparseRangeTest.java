@@ -77,10 +77,11 @@ public class SparseRangeTest {
             SparseRange<Integer> range = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(2, 3), RangeMother.r(0, 1));
             Assert.assertEquals(Integer.valueOf(3), range.upper());
         }
+
         @Test
         public void canDensifySparseRange() {
             SparseRange<Integer> range = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(0, 1), RangeMother.r(1, 2), RangeMother.r(4, 5));
-            Assert.assertEquals(Arrays.asList(RangeMother.r(0,2), RangeMother.r(4,5)), range.densified());
+            Assert.assertEquals(Arrays.asList(RangeMother.r(0, 2), RangeMother.r(4, 5)), range.densified());
         }
 
         @Test
@@ -148,6 +149,12 @@ public class SparseRangeTest {
         public void comparingAgainstNullYieldsException() {
             SparseRange<Integer> sr = RangeMother.r(RangeMother.p(0, 10));
             sr.compareTo(null);
+        }
+
+        @Test(expected = ClassCastException.class)
+        public void callingErasureWithWrongTypeYieldsException() {
+            Comparable c = RangeMother.r(RangeMother.p(0, 10));
+            c.compareTo(new Object());
         }
     }
 }

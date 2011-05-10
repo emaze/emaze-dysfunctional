@@ -121,5 +121,11 @@ public class DenseRangeTest {
         public void checkingIfContainsForNullYieldsException() {
             RangeMother.r(0, 10).contains(null);
         }
+        
+        @Test(expected = ClassCastException.class)
+        public void callingErasureWithWrongTypeYieldsException() {
+            Comparable c = RangeMother.r(0, 10);
+            c.compareTo(new Object());
+        }        
     }
 }
