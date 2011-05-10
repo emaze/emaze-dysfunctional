@@ -12,8 +12,7 @@ public class BoxTest {
     @Test
     public void accessorUnwrapsFromTheBox() {
         final Banana banana = new Banana();
-        final Box<Banana> bento = new Box<Banana>();
-        bento.setContent(banana);
+        final Box<Banana> bento = Box.of(banana);
         Assert.assertEquals(banana, bento.getContent());
     }
 
@@ -33,10 +32,8 @@ public class BoxTest {
      */
     @Test
     public void nonEmptyContainersWithDifferentContentAreNotEqual() {
-        final Box<Banana> myBento = new Box<Banana>();
-        final Box<Dick> yourBento = new Box<Dick>();
-        yourBento.setContent(new Dick());
-        myBento.setContent(new Banana());
+        final Box<Banana> myBento = Box.of(new Banana());
+        final Box<Dick> yourBento = Box.of(new Dick());
         Assert.assertFalse(yourBento.equals(myBento));
     }
 

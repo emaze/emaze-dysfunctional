@@ -13,6 +13,12 @@ public class Box<T> {
 
     private Maybe<T> content = Maybe.nothing();
 
+    public static <E> Box<E> of(E element) {
+        final Box<E> box = new Box<E>();
+        box.setContent(element);
+        return box;
+    }
+
     public T getContent() {
         return content.value();
     }
