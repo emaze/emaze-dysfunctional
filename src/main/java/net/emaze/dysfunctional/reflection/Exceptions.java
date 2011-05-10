@@ -4,7 +4,7 @@ package net.emaze.dysfunctional.reflection;
  * ripped from jmanner, please keep in sync
  * @author rferranti
  */
-public class Exceptions {
+public abstract class Exceptions {
 
     public static Throwable unwrap(Throwable source, Class<?> removee){
         Throwable t = source;

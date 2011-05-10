@@ -18,21 +18,20 @@ public class ExceptionsTest {
         Throwable got = Exceptions.unwrap(ite, InvocationTargetException.class);
         Assert.assertTrue(got instanceof RuntimeException);
     }
-    
+
     @Test
     public void unwrapReturnsSourceIfNotWrapped() {
         Exception ite = new RuntimeException();
         Throwable got = Exceptions.unwrap(ite, InvocationTargetException.class);
         Assert.assertTrue(got instanceof RuntimeException);
     }
-    
+
     @Test
     public void unwrapReturnsNullIfNoCauseInAnUnwrappable() {
         Exception ite = new RuntimeException();
         Throwable got = Exceptions.unwrap(ite, RuntimeException.class);
         Assert.assertNull(got);
     }
-
 
     @Test
     public void canFindInThrowable() {
@@ -47,11 +46,16 @@ public class ExceptionsTest {
         NoSuchElementException inner = new NoSuchElementException("the interesting exception");
         Assert.assertEquals(inner, Exceptions.findInThrowable(inner, NoSuchElementException.class));
     }
-    
+
     @Test
     public void returnsNullIfNotFound() {
         RuntimeException re = new RuntimeException("an exception with no cause");
         Assert.assertNull(Exceptions.findInThrowable(re, NoSuchElementException.class));
     }
 
+    @Test
+    public void facadeIsNotFinal() {
+        new Exceptions() {
+        };
+    }
 }
