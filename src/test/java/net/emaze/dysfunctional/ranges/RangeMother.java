@@ -15,9 +15,9 @@ import net.emaze.dysfunctional.tuples.Pair;
  * @author rferranti
  */
 public class RangeMother {
+
     public static final SequencingPolicy<Integer> sequencer = new IntegerSequencingPolicy();
     public static final Comparator<Integer> comparator = new ComparableComparator<Integer>();
-
 
     public static DenseRange<Integer> r(int lower, int upper) {
         return new DenseRange<Integer>(sequencer, comparator, lower, upper);
@@ -27,7 +27,19 @@ public class RangeMother {
         return Pair.of(lower, upper);
     }
 
-    public static SparseRange<Integer> r(Pair<Integer, Integer>... pairs) {
+    public static SparseRange<Integer> r(Pair<Integer, Integer> theOne) {
+        return sparse(Iterations.iterator(theOne));
+    }
+
+    public static SparseRange<Integer> r(Pair<Integer, Integer> former, Pair<Integer, Integer> latter) {
+        return sparse(Iterations.iterator(former, latter));
+    }
+
+    public static SparseRange<Integer> r(Pair<Integer, Integer> first, Pair<Integer, Integer> second, Pair<Integer, Integer> third) {
+        return sparse(Iterations.iterator(first, second, third));
+    }
+
+    private static SparseRange<Integer> sparse(Iterator<Pair<Integer, Integer>> pairs) {
         final Iterator<DenseRange<Integer>> ranges = Iterations.transform(pairs, new Delegate<DenseRange<Integer>, Pair<Integer, Integer>>() {
 
             @Override
