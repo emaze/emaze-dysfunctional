@@ -67,4 +67,9 @@ public class RangeOpsTest {
         Range<Integer> rhs = r(10, 20);
         Assert.assertEquals(r(p(0, 9), p(16, 20)), RangeOps.symmetricDifference(sequencer, comparator, lhs, rhs));
     }
+
+    @Test
+    public void rangeOpsIsNotFinal() {
+        new RangeOps();
+    }
 }
