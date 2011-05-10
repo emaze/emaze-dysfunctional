@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import junit.framework.Assert;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -13,6 +12,10 @@ import org.junit.Test;
  */
 public class SortedNonOverlappingRangesTransformerTest {
 
+    /**
+     * |---|
+     *      |---|
+     */
     @Test
     public void canMergeTwoContiguousNonOverlappingRanges() {
         DenseRange<Integer> a = new DenseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, 1, 1);
@@ -21,6 +24,10 @@ public class SortedNonOverlappingRangesTransformerTest {
         Assert.assertEquals(1, got.size());
     }
 
+    /**
+     * |---|
+     *     |---|
+     */
     @Test
     public void canMergeTwoOverlappingRanges() {
         DenseRange<Integer> a = new DenseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, 1, 2);
@@ -28,7 +35,11 @@ public class SortedNonOverlappingRangesTransformerTest {
         List<DenseRange<Integer>> got = new SortedNonOverlappingRangesTransformer<Integer>(RangeMother.sequencer, RangeMother.comparator).perform(Arrays.asList(a, b));
         Assert.assertEquals(1, got.size());
     }
-
+    
+    /**
+     * |---|
+     *   |-|
+     */
     @Test
     public void canMergeTwoOverlappingRangesWhenLatterIsSubset() {
         DenseRange<Integer> a = new DenseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, 1, 2);
@@ -37,8 +48,11 @@ public class SortedNonOverlappingRangesTransformerTest {
         Assert.assertEquals(1, got.size());
     }
 
+    /**
+     * |-|
+     * |---|
+     */
     @Test
-    @Ignore // FIXME: should pass
     public void canMergeTwoOverlappingRangesWhenFormerIsSubset() {
         DenseRange<Integer> a = new DenseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, 1, 1);
         DenseRange<Integer> b = new DenseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, 1, 2);
@@ -46,6 +60,10 @@ public class SortedNonOverlappingRangesTransformerTest {
         Assert.assertEquals(1, got.size());
     }
 
+    /**
+     * |-|.
+     *    .|-|
+     */
     @Test
     public void nonOverlappingRangesNonCountiguousRangesAreNotMerged() {
         DenseRange<Integer> a = new DenseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, 1, 1);
