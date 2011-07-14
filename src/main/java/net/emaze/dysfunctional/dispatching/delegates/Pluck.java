@@ -1,12 +1,7 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
 import net.emaze.dysfunctional.introspection.JavaIntrospector;
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.emaze.dysfunctional.reflection.MethodType;
 
 /**

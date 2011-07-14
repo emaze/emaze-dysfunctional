@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
-import net.emaze.dysfunctional.dispatching.delegates.Pluck;
 import org.junit.Assert;
 import org.junit.Test;
 
