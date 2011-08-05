@@ -16,7 +16,9 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
 public abstract class Groups {
 
     public static <K, V> Map<K, ArrayList<V>> groupBy(Iterable<V> groupies, Delegate<K, V> grouper) {
-        return groupBy(groupies, grouper, new ArrayListFactory<V>(), new HashMapFactory<K, ArrayList<V>>());
+        final HashMapFactory<K, ArrayList<V>> hashMapFactory = new HashMapFactory<K, ArrayList<V>>();
+        final ArrayListFactory<V> arrayListFactory = new ArrayListFactory<V>();
+        return groupBy(groupies, grouper, arrayListFactory, hashMapFactory);
     }
 
     public static <C extends Collection<V>, K, V> Map<K, C> groupBy(Iterable<V> groupies, Delegate<K, V> grouper, Provider<C> collectionProvider) {

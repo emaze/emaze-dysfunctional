@@ -44,4 +44,12 @@ public class Either<T1, T2> {
                 append(this.right, other.right).
                 isEquals();
     }
+    
+    public static <T1, T2> Either<T1, T2> left(T1 left){
+        return new Either<T1, T2>(Maybe.just(left), Maybe.<T2>nothing());
+    }
+    
+    public static <T1, T2> Either<T1, T2> right(T2 right){
+        return new Either<T1, T2>(Maybe.<T1>nothing(), Maybe.just(right));
+    }
 }

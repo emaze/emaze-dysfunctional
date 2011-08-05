@@ -3,7 +3,10 @@ package net.emaze.dysfunctional.options;
 import java.util.Iterator;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantDelegate;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import net.emaze.dysfunctional.dispatching.logic.NotNull;
 import net.emaze.dysfunctional.filtering.Filtering;
 import net.emaze.dysfunctional.iterations.Iterations;
 
@@ -199,5 +202,29 @@ public abstract class Options {
      */
     public static <T> Iterator<T> drops(Maybe<T> first, Maybe<T> second, Maybe<T> third) {
         return Iterations.transform(Iterations.iterator(first, second, third), new DropMaybe<T>());
+    }
+
+    /**
+     * filters out right types
+     * @param <T1>
+     * @param <T2>
+     * @param eithers
+     * @return 
+     */
+    public static <T1, T2> Iterator<T1> lefts(Iterator<Either<T1, T2>> eithers) {
+        dbc.precondition(eithers != null, "can not fetch lefts from a null iterator");
+        return Options.justs(Iterations.transform(eithers, new MaybeLeft<T1, T2>()));
+    }
+
+    /**
+     * filters out left types
+     * @param <T1>
+     * @param <T2>
+     * @param eithers
+     * @return 
+     */
+    public static <T1, T2> Iterator<T2> rights(Iterator<Either<T1, T2>> eithers) {
+        dbc.precondition(eithers != null, "can not fetch rights from a null iterator");
+        return Options.justs(Iterations.transform(eithers, new MaybeRight<T1, T2>()));
     }
 }

@@ -24,7 +24,8 @@ import org.junit.runners.Suite;
     OptionsTest.Drops.class,
     OptionsTest.Justs.class,
     OptionsTest.LiftAndDrop.class,
-    OptionsTest.Facade.class
+    OptionsTest.Facade.class,
+    OptionsTest.LeftAndRight.class
 })
 public class OptionsTest {
 
@@ -172,6 +173,68 @@ public class OptionsTest {
         public void canDrop() {
             Object dropped = Options.drop(Maybe.nothing());
             Assert.assertNull(dropped);
+        }
+    }
+
+    public static class LeftAndRight {
+
+        @Test(expected = IllegalArgumentException.class)
+        public void nullIteratorWillThrow() {
+            Options.lefts(null);
+        }
+
+        @Test
+        public void leftsForEmptyIteratorYieldEmptyIterator() {
+            final Iterator<Either<O, O>> iterator = Iterations.iterator();
+            Assert.assertFalse(Options.lefts(iterator).hasNext());
+        }
+
+        @Test
+        public void fetchingLeftsYieldsLeftType() {
+            final Either<Integer, Boolean> leftHasValue = Either.left(1);
+            final Iterator<Either<Integer, Boolean>> iterator = Iterations.iterator(leftHasValue);
+            Assert.assertEquals(Arrays.asList(1), Consumers.all(Options.lefts(iterator)));
+        }
+
+        @Test
+        public void fetchingLeftsDoesNotYieldRightTypes() {
+            final Either<Integer, Boolean> leftHasValue = Either.left(1);
+            final Either<Integer, Boolean> rightHasValue = Either.right(true);
+            final Iterator<Either<Integer, Boolean>> iterator = Iterations.iterator(leftHasValue, rightHasValue);
+            Assert.assertEquals(Arrays.asList(1), Consumers.all(Options.lefts(iterator)));
+        }
+        @Test
+        public void justNullIsValidLeftValue(){
+            final Either<Integer, Boolean> leftHasValue = Either.left(null);
+            final Iterator<Either<Integer, Boolean>> iterator = Iterations.iterator(leftHasValue);
+            Assert.assertEquals(Arrays.asList((Integer)null), Consumers.all(Options.lefts(iterator)));        
+        }
+        
+        @Test
+        public void rightsForEmptyIteratorYieldEmptyIterator() {
+            final Iterator<Either<O, O>> iterator = Iterations.iterator();
+            Assert.assertFalse(Options.rights(iterator).hasNext());
+        }
+        
+        @Test
+        public void fetchingRightsYieldsRightType() {
+            final Either<Integer, Boolean> rightHasValue = Either.right(false);
+            final Iterator<Either<Integer, Boolean>> iterator = Iterations.iterator(rightHasValue);
+            Assert.assertEquals(Arrays.asList(false), Consumers.all(Options.rights(iterator)));
+        }
+
+        @Test
+        public void fetchingRightsDoesNotYieldLeftTypes() {
+            final Either<Integer, Boolean> leftHasValue = Either.left(1);
+            final Either<Integer, Boolean> rightHasValue = Either.right(true);
+            final Iterator<Either<Integer, Boolean>> iterator = Iterations.iterator(leftHasValue, rightHasValue);
+            Assert.assertEquals(Arrays.asList(true), Consumers.all(Options.rights(iterator)));
+        }
+        @Test
+        public void justNullIsValidRightValue(){
+            final Either<Integer, Boolean> rightHasValue = Either.right(null);
+            final Iterator<Either<Integer, Boolean>> iterator = Iterations.iterator(rightHasValue);
+            Assert.assertEquals(Arrays.asList((Boolean)null), Consumers.all(Options.rights(iterator)));        
         }
     }
 
