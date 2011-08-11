@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.iterations;
 
+import net.emaze.dysfunctional.dispatching.Tapper;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -111,7 +112,9 @@ public abstract class Iterations {
      * @param <E> the iterable element type parameter
      * @param iterable the iterable where elements are fetched from
      * @param action the action applied to every element fetched from the iterable
+     * @deprecated use Iterations.tap instead
      */
+    @Deprecated
     public static <E> void each(Iterable<E> iterable, Action<E> action) {
         dbc.precondition(iterable != null, "cannot call each with a null iterable");
         dbc.precondition(action != null, "cannot call each with a null action");
@@ -126,7 +129,9 @@ public abstract class Iterations {
      * @param <E> the iterator element type parameter
      * @param iterator the iterator where elements are fetched from
      * @param action the action applied to every element fetched from the iterator
+     * @deprecated use Iterations.tap instead
      */
+    @Deprecated
     public static <E> void each(Iterator<E> iterator, Action<E> action) {
         each(new OneTimeIterable<E>(iterator), action);
     }
@@ -136,7 +141,9 @@ public abstract class Iterations {
      * @param <E> the array element type parameter
      * @param array the array where elements are fetched from
      * @param action the action applied to every element fetched from the array
+     * @deprecated use Iterations.tap instead
      */
+    @Deprecated
     public static <E> void each(E[] array, Action<E> action) {
         each(new ArrayIterator<E>(array), action);
     }
@@ -221,17 +228,49 @@ public abstract class Iterations {
     }
 
     /**
+     * Lazily applies an action to every element of the iterator. 
+     * @param <E> the element type parameter
+     * @param iterator the iterator 
+     * @param action the action to be applied
+     * @return an iterator that when consumed applies a side effect to every element
+     */
+    public static <E> Iterator<E> tap(Iterator<E> iterator, Action<E> action) {
+        return transform(iterator, new Tapper<E>(action));
+    }
+
+    /**
+     * Lazily applies an action to every element of the iterator. 
+     * @param <E> the element type parameter
+     * @param iterable the iterable
+     * @param action the action to be applied
+     * @return an iterator that when consumed applies a side effect to every element
+     */
+    public static <E> Iterator<E> tap(Iterable<E> iterable, Action<E> action) {
+        return transform(iterable, new Tapper<E>(action));
+    }
+
+    /**
+     * Lazily applies an action to every element of the iterator. 
+     * @param <E> the element type parameter
+     * @param array the array
+     * @param action the action to be applied
+     * @return an iterator that when consumed applies a side effect to every element
+     */
+    public static <E> Iterator<E> tap(E[] array, Action<E> action) {
+        return transform(array, new Tapper<E>(action));
+    }
+
+    /**
      * Creates an iterable usable only ONE TIME from an iterator.
      * @param <T> the iterator element type parameter
-     * @param iterator the iterator to be yielded by the iterator
+     * @param iterator the iterator to be yielded by the iterable
      * @return an iterable consumable only once
      */
     public static <T> Iterable<T> oneTime(Iterator<T> iterator) {
         return new OneTimeIterable<T>(iterator);
     }
 
-
-    private static <T> T[] array(T... array){
+    private static <T> T[] array(T... array) {
         return array;
     }
 
@@ -245,14 +284,29 @@ public abstract class Iterations {
         return new ArrayIterator<T>(array(value));
     }
 
+    /**
+     * Creates an iterator from the passed values.
+     * @param <T> the elements parameter type
+     * @param first the first element
+     * @param second the second element
+     * @return an iterator.
+     */
     public static <T> Iterator<T> iterator(T first, T second) {
         return new ArrayIterator<T>(array(first, second));
     }
 
+    /**
+     * Creates an iterator from the passed values.
+     * @param <T> the elements parameter type
+     * @param first the first element
+     * @param second the second element
+     * @param third the third element
+     * @return an iterator.
+     */
     public static <T> Iterator<T> iterator(T first, T second, T third) {
         return new ArrayIterator<T>(array(first, second, third));
     }
-    
+
     /**
      * Creates an iterator from the passed array.
      * @param <T> the array element parameter type
@@ -262,5 +316,4 @@ public abstract class Iterations {
     public static <T> Iterator<T> iterator(T... values) {
         return new ArrayIterator<T>(values);
     }
-    
 }
