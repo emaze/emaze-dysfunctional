@@ -224,6 +224,18 @@ public abstract class Dispatching {
     /**
      * given f, g yields f ° g (f of g, f following g)
      * @param <R>
+     * @param <T>
+     * @param f
+     * @param g
+     * @return
+     */
+    public static <R, T> Provider<R> compose(final Delegate<R, T> f, final Provider<T> g) {
+        return new TransformingProvider<R, T>(f, g);
+    }
+
+    /**
+     * given f, g yields f ° g (f of g, f following g)
+     * @param <R>
      * @param <T2>
      * @param <T1>
      * @param f
@@ -260,7 +272,7 @@ public abstract class Dispatching {
     public static <R, T1, T2> BinaryPredicate<T1, T2> compose(Predicate<R> predicate, BinaryDelegate<R, T1, T2> delegate) {
         return new TransformingBinaryPredicate<R, T1, T2>(predicate, delegate);
     }
-    
+
     public static <R, T1, T2, T3> TernaryPredicate<T1, T2, T3> compose(Predicate<R> predicate, TernaryDelegate<R, T1, T2, T3> delegate) {
         return new TransformingTernaryPredicate<R, T1, T2, T3>(predicate, delegate);
     }
