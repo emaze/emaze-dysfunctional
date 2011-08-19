@@ -16,7 +16,7 @@ public class Flipper<R, T, U> implements BinaryDelegate<R, T, U> {
     private final BinaryDelegate<R, U, T> delegate;
 
     public Flipper(BinaryDelegate<R, U, T> delegate) {
-        dbc.precondition(delegate != null, "canno flip a null binary delegate");
+        dbc.precondition(delegate != null, "cannot flip a null binary delegate");
         this.delegate = delegate;
     }
 
