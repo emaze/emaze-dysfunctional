@@ -8,11 +8,11 @@ import net.emaze.dysfunctional.contracts.dbc;
  * @param <T> 
  * @author rferranti
  */
-public class ArrayToIterableAdapter<T> implements Iterable<T> {
+public class ArrayIterable<T> implements Iterable<T> {
 
     private final T[] values;
 
-    public ArrayToIterableAdapter(T[] values) {
+    public ArrayIterable(T[] values) {
         dbc.precondition(values != null, "trying to create an ArrayToIterableAdapter<T> from a null array");
         this.values = values;
     }

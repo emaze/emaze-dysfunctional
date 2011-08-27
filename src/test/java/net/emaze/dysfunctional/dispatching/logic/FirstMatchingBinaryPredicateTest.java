@@ -16,58 +16,22 @@ import org.junit.Test;
 public class FirstMatchingBinaryPredicateTest {
 
     @Test(expected = IllegalArgumentException.class)
-    public void addingNullFunctorToPredicateYieldsException() {
-        FirstMatchingBinaryPredicate<O, O> pred = new FirstMatchingBinaryPredicate<O, O>();
-        pred.add(null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void removingNullFunctorToPredicateYieldsException() {
-        FirstMatchingBinaryPredicate<O, O> pred = new FirstMatchingBinaryPredicate<O, O>();
-        pred.remove(null);
-    }
-
-    @Test
-    public void removingNonPresentPredicateYieldsFalse() {
-        FirstMatchingBinaryPredicate<O, O> pred = new FirstMatchingBinaryPredicate<O, O>();
-        boolean got = pred.remove(new BinaryAlways<O, O>());
-        Assert.assertFalse(got);
-    }
-
-    @Test
-    public void removingPresentPredicateYieldsTrue() {
-        FirstMatchingBinaryPredicate<O, O> pred = new FirstMatchingBinaryPredicate<O, O>();
-        BinaryAlways<O, O> always = new BinaryAlways<O, O>();
-        pred.add(always);
-        boolean got = pred.remove(always);
-        Assert.assertTrue(got);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void settingNullFunctorsCollectionYieldsException() {
-        FirstMatchingBinaryPredicate<O, O> pred = new FirstMatchingBinaryPredicate<O, O>();
-        pred.setFunctors(null);
-    }
-
-    @Test
-    public void canSetFunctors() {
-        FirstMatchingBinaryPredicate<O, O> pred = new FirstMatchingBinaryPredicate<O, O>();
-        BinaryPredicate<O, O> always = new BinaryAlways<O, O>();
-        pred.setFunctors(Arrays.asList(always, always));
-        pred.accept(O.IGNORED, O.IGNORED);
+    public void creatingWithNullIterableYieldsException() {
+        final Iterable<BinaryPredicate<O, O>> pred = null;
+        new FirstMatchingBinaryPredicate<O, O>(pred);
     }
 
     @Test
     public void usingAlwaysReturnsTrue() {
-        FirstMatchingBinaryPredicate<O, O> pred = new FirstMatchingBinaryPredicate<O, O>();
-        pred.add(new BinaryAlways<O, O>());
+        final BinaryPredicate<O, O> always = new BinaryAlways<O, O>();
+        final FirstMatchingBinaryPredicate<O, O> pred = new FirstMatchingBinaryPredicate<O, O>(Arrays.asList(always));
         Assert.assertTrue(pred.accept(O.IGNORED, O.IGNORED));
     }
 
     @Test
     public void usingNeverReturnsFalse() {
-        FirstMatchingBinaryPredicate<O, O> pred = new FirstMatchingBinaryPredicate<O, O>();
-        pred.add(new BinaryNever<O, O>());
+        final BinaryPredicate<O, O> never = new BinaryNever<O, O>();
+        final FirstMatchingBinaryPredicate<O, O> pred = new FirstMatchingBinaryPredicate<O, O>(Arrays.asList(never));
         Assert.assertFalse(pred.accept(O.IGNORED, O.IGNORED));
     }
 }

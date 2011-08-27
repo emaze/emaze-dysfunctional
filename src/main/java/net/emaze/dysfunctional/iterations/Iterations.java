@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.iterations;
 
 import net.emaze.dysfunctional.dispatching.Tapper;
 import java.util.Iterator;
+import net.emaze.dysfunctional.adapting.ArrayIterable;
 import net.emaze.dysfunctional.adapting.ArrayIterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.actions.Action;
@@ -228,4 +229,47 @@ public abstract class Iterations {
     public static <T> Iterator<T> iterator(T... values) {
         return new ArrayIterator<T>(values);
     }
+    /**
+     * Creates an iterable from the passed value.
+     * @param <T> the element parameter type
+     * @param value the value to be yielded by the iterator
+     * @return an iterable.
+     */
+    public static <T> Iterable<T> iterable(T value) {
+        return new ArrayIterable<T>(array(value));
+    }
+
+    /**
+     * Creates an iterable from the passed values.
+     * @param <T> the elements parameter type
+     * @param first the first element
+     * @param second the second element
+     * @return an iterable.
+     */
+    public static <T> Iterable<T> iterable(T first, T second) {
+        return new ArrayIterable<T>(array(first, second));
+    }
+
+    /**
+     * Creates an iterable from the passed values.
+     * @param <T> the elements parameter type
+     * @param first the first element
+     * @param second the second element
+     * @param third the third element
+     * @return an iterable.
+     */
+    public static <T> Iterable<T> iterable(T first, T second, T third) {
+        return new ArrayIterable<T>(array(first, second, third));
+    }
+
+    /**
+     * Creates an iterable from the passed array.
+     * @param <T> the array element parameter type
+     * @param values the values to be yielded by the iterator
+     * @return an iterable.
+     */
+    public static <T> Iterable<T> iterable(T... values) {
+        return new ArrayIterable<T>(values);
+    }
+    
 }

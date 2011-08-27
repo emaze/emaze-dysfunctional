@@ -1,11 +1,14 @@
 package net.emaze.dysfunctional.interceptions;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
-import net.emaze.dysfunctional.dispatching.multicasting.Multicasting;
+import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import net.emaze.dysfunctional.iterations.Iterations;
+import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,110 +20,44 @@ public class InterceptorChainTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingChainWithNullInnermostDelegateYieldsException() {
-        new InterceptorChain<Object, Object>(null);
+        final Deque<Interceptor<O>> chain = new ArrayDeque<Interceptor<O>>();
+        new InterceptorChain<O, O>(null, chain);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void addingNullFunctorToChainYieldsException() {
-        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
-        InterceptorChain<String, String> chain = new InterceptorChain<String, String>(delegate);
-        chain.add(null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void removingNullFunctorToChainYieldsException() {
-        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
-        InterceptorChain<String, String> chain = new InterceptorChain<String, String>(delegate);
-        chain.remove(null);
-    }
-
-    @Test(expected = ClassCastException.class)
-    public void passingWrongTypeToRemoveInErasureYieldsException() {
-        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
-        Multicasting multi = new InterceptorChain<String, String>(delegate);
-        multi.remove(new Object());
-    }
-
-    @Test(expected = ClassCastException.class)
-    public void passingWrongTypeToAddInErasureYieldsException() {
-        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
-        Multicasting multi = new InterceptorChain<String, String>(delegate);
-        multi.add(new Object());
-    }
-
-    @Test(expected = ClassCastException.class)
-    public void passingWrongTypeToPerformInErasureYieldsException() {
-        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
-        Delegate d = new InterceptorChain<String, String>(delegate);
-        d.perform(new Object());
-    }
-
-    @Test
-    public void removingNonPresentInterceptorYieldsFalse() {
-        final List<Integer> bucket = new ArrayList<Integer>();
-        BucketFillingDelegate delegate = new BucketFillingDelegate(1, bucket);
-        InterceptorChain<String, String> chain = new InterceptorChain<String, String>(delegate);
-        boolean got = chain.remove(new BucketFillingInterceptor(2, bucket));
-        Assert.assertFalse(got);
-    }
-
-    @Test
-    public void removingPresentInterceptorYieldsTrue() {
-        final List<Integer> bucket = new ArrayList<Integer>();
-        BucketFillingDelegate delegate = new BucketFillingDelegate(1, bucket);
-        InterceptorChain<String, String> chain = new InterceptorChain<String, String>(delegate);
-        Interceptor<String> interceptor = new BucketFillingInterceptor(2, bucket);
-        chain.add(interceptor);
-        boolean got = chain.remove(interceptor);
-        Assert.assertTrue(got);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void settingNullFunctorsCollectionYieldsException() {
-        final List<Integer> bucket = new ArrayList<Integer>();
-        BucketFillingDelegate delegate = new BucketFillingDelegate(1, bucket);
-        InterceptorChain<String, String> chain = new InterceptorChain<String, String>(delegate);
-        chain.setFunctors(null);
-    }
-
-    @Test
-    public void settingFunctorsRemovesOldFunctors() {
-        final List<Integer> bucket = new ArrayList<Integer>();
-        BucketFillingDelegate delegate = new BucketFillingDelegate(1, bucket);
-        InterceptorChain<String, String> chain = new InterceptorChain<String, String>(delegate);
-        Interceptor<String> interceptor = new BucketFillingInterceptor(2, bucket);
-        chain.add(interceptor);
-        chain.setFunctors(Collections.<Interceptor<String>>emptyList());
-        chain.perform("test");
-        Assert.assertEquals(1, bucket.size());
+    public void creatingChainWithNullChaingYieldsException() {
+        final Delegate<O, O> firstParam = new Identity<O>();
+        new InterceptorChain<O, O>(firstParam, null);
     }
 
     @Test
     public void chainingIsDoneInCorrectOrder() {
         final List<Integer> bucket = new ArrayList<Integer>();
-        final InterceptorChain<String, String> chain = new InterceptorChain<String, String>(new BucketFillingDelegate(4, bucket));
-        chain.add(new BucketFillingInterceptor(1, bucket));
-        chain.add(new BucketFillingInterceptor(2, bucket));
-        chain.add(new BucketFillingInterceptor(3, bucket));
-        chain.perform("useless_value");
+        final Iterable<Interceptor<O>> chain = Iterations.<Interceptor<O>>iterable(
+                new BucketFillingInterceptor(3, bucket),
+                new BucketFillingInterceptor(2, bucket),
+                new BucketFillingInterceptor(1, bucket));
+        final InterceptorChain<O, O> ic = new InterceptorChain<O, O>(new BucketFillingDelegate(4, bucket), chain);
+        ic.perform(O.IGNORED);
         Assert.assertEquals(Arrays.asList(1, 2, 3, 4, 3, 2, 1), bucket);
     }
 
     @Test
     public void whenAnInterceptorThrowsInBeforeCorrectAfterAreCalled() {
         final List<Integer> bucket = new ArrayList<Integer>();
-        final InterceptorChain<String, String> chain = new InterceptorChain<String, String>(new BucketFillingDelegate(4, bucket));
-        chain.add(new BucketFillingInterceptor(1, bucket));
-        chain.add(new ThrowingInterceptor());
-        chain.add(new BucketFillingInterceptor(3, bucket));
+        final Iterable<Interceptor<O>> chain = Iterations.<Interceptor<O>>iterable(
+                new BucketFillingInterceptor(3, bucket),
+                new ThrowingInterceptor(),
+                new BucketFillingInterceptor(1, bucket));
+        final InterceptorChain<O, O> ic = new InterceptorChain<O, O>(new BucketFillingDelegate(4, bucket), chain);
         try {
-            chain.perform("useless_value");
+            ic.perform(O.IGNORED);
         } catch (Exception ex) {
         }
         Assert.assertEquals(Arrays.asList(1, 1), bucket);
     }
 
-    public static class BucketFillingDelegate implements Delegate<String, String> {
+    public static class BucketFillingDelegate implements Delegate<O, O> {
 
         private final int id;
         private final List<Integer> bucket;
@@ -131,13 +68,13 @@ public class InterceptorChainTest {
         }
 
         @Override
-        public String perform(String value) {
+        public O perform(O value) {
             bucket.add(id);
             return value;
         }
     }
 
-    public static class BucketFillingInterceptor implements Interceptor<String> {
+    public static class BucketFillingInterceptor implements Interceptor<O> {
 
         private final int id;
         private final List<Integer> bucket;
@@ -148,25 +85,25 @@ public class InterceptorChainTest {
         }
 
         @Override
-        public void before(String value) {
+        public void before(O value) {
             bucket.add(id);
         }
 
         @Override
-        public void after(String value) {
+        public void after(O value) {
             bucket.add(id);
         }
     }
 
-    public static class ThrowingInterceptor implements Interceptor<String> {
+    public static class ThrowingInterceptor implements Interceptor<O> {
 
         @Override
-        public void before(String value) {
+        public void before(O value) {
             throw new IllegalStateException();
         }
 
         @Override
-        public void after(String value) {
+        public void after(O value) {
             throw new IllegalStateException();
         }
     }

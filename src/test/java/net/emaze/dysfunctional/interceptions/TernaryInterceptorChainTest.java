@@ -1,12 +1,13 @@
 package net.emaze.dysfunctional.interceptions;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
-import net.emaze.dysfunctional.dispatching.multicasting.Multicasting;
+import net.emaze.dysfunctional.iterations.Iterations;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,118 +20,38 @@ public class TernaryInterceptorChainTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingChainWithNullInnermostDelegateYieldsException() {
-        new TernaryInterceptorChain<O, O, O, O>(null);
+        final Deque<TernaryInterceptor<O, O, O>> chain = new ArrayDeque<TernaryInterceptor<O, O, O>>();
+        new TernaryInterceptorChain<O, O, O, O>(null, chain);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void addingNullFunctorToChainYieldsException() {
-        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
-        TernaryInterceptorChain<O, O, O, O> chain = new TernaryInterceptorChain<O, O, O, O>(delegate);
-        chain.add(null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void removingNullFunctorToChainYieldsException() {
-        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
-        TernaryInterceptorChain<O, O, O, O> chain = new TernaryInterceptorChain<O, O, O, O>(delegate);
-        chain.remove(null);
-    }
-
-    @Test(expected = ClassCastException.class)
-    public void passingWrongTypeToRemoveInErasureYieldsException() {
-        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
-        Multicasting multi = new TernaryInterceptorChain<O, O, O, O>(delegate);
-        multi.remove(new Object());
-    }
-
-    @Test(expected = ClassCastException.class)
-    public void passingWrongTypeToAddInErasureYieldsException() {
-        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
-        Multicasting multi = new TernaryInterceptorChain<O, O, O, O>(delegate);
-        multi.add(new Object());
-    }
-
-    @Test(expected = ClassCastException.class)
-    public void passingWrongTypeToFirstArgumentOfPerformInErasureYieldsException() {
-        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
-        TernaryDelegate d = new TernaryInterceptorChain<O, O, O, O>(delegate);
-        d.perform(new Object(), "a string", "a string");
-    }
-
-    @Test(expected = ClassCastException.class)
-    public void passingWrongTypeToSecondArgumentOfPerformInErasureYieldsException() {
-        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
-        TernaryDelegate d = new TernaryInterceptorChain<O, O, O, O>(delegate);
-        d.perform("a string", new Object(), "a string");
-    }
-
-    @Test(expected = ClassCastException.class)
-    public void passingWrongTypeToThirdArgumentOfPerformInErasureYieldsException() {
-        BucketFillingDelegate delegate = new BucketFillingDelegate(1, new ArrayList<Integer>());
-        TernaryDelegate d = new TernaryInterceptorChain<O, O, O, O>(delegate);
-        d.perform("a string", "a string", new Object());
-    }
-
-    @Test
-    public void removingNonPresentInterceptorYieldsFalse() {
-        final List<Integer> bucket = new ArrayList<Integer>();
-        BucketFillingDelegate delegate = new BucketFillingDelegate(1, bucket);
-        TernaryInterceptorChain<O, O, O, O> chain = new TernaryInterceptorChain<O, O, O, O>(delegate);
-        boolean got = chain.remove(new BucketFillingInterceptor(2, bucket));
-        Assert.assertFalse(got);
-    }
-
-    @Test
-    public void removingPresentInterceptorYieldsTrue() {
-        final List<Integer> bucket = new ArrayList<Integer>();
-        BucketFillingDelegate delegate = new BucketFillingDelegate(1, bucket);
-        TernaryInterceptorChain<O, O, O, O> chain = new TernaryInterceptorChain<O, O, O, O>(delegate);
-        TernaryInterceptor<O, O, O> interceptor = new BucketFillingInterceptor(2, bucket);
-        chain.add(interceptor);
-        boolean got = chain.remove(interceptor);
-        Assert.assertTrue(got);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void settingNullFunctorsCollectionYieldsException() {
-        final List<Integer> bucket = new ArrayList<Integer>();
-        BucketFillingDelegate delegate = new BucketFillingDelegate(1, bucket);
-        TernaryInterceptorChain<O, O, O, O> chain = new TernaryInterceptorChain<O, O, O, O>(delegate);
-        chain.setFunctors(null);
-    }
-
-    @Test
-    public void settingFunctorsRemovesOldFunctors() {
-        final List<Integer> bucket = new ArrayList<Integer>();
-        BucketFillingDelegate delegate = new BucketFillingDelegate(1, bucket);
-        TernaryInterceptorChain<O, O, O, O> chain = new TernaryInterceptorChain<O, O, O, O>(delegate);
-        TernaryInterceptor<O, O, O> interceptor = new BucketFillingInterceptor(2, bucket);
-        chain.add(interceptor);
-        chain.setFunctors(Collections.<TernaryInterceptor<O, O, O>>emptyList());
-        chain.perform(O.create(), O.create(), O.create());
-        Assert.assertEquals(1, bucket.size());
+    public void creatingChainWithNullChaingYieldsException() {
+        final TernaryDelegate<O, O, O, O> firstParam = new FirstParamOfThree<O, O, O>();
+        new TernaryInterceptorChain<O, O, O, O>(firstParam, null);
     }
 
     @Test
     public void chainingIsDoneInCorrectOrder() {
         final List<Integer> bucket = new ArrayList<Integer>();
-        final TernaryInterceptorChain<O, O, O, O> chain = new TernaryInterceptorChain<O, O, O, O>(new BucketFillingDelegate(4, bucket));
-        chain.add(new BucketFillingInterceptor(1, bucket));
-        chain.add(new BucketFillingInterceptor(2, bucket));
-        chain.add(new BucketFillingInterceptor(3, bucket));
-        chain.perform(O.create(), O.create(), O.create());
+        final Iterable<TernaryInterceptor<O, O, O>> chain = Iterations.<TernaryInterceptor<O, O, O>>iterable(
+                new BucketFillingInterceptor(3, bucket),
+                new BucketFillingInterceptor(2, bucket),
+                new BucketFillingInterceptor(1, bucket));
+        final TernaryInterceptorChain<O, O, O, O> ic = new TernaryInterceptorChain<O, O, O, O>(new BucketFillingDelegate(4, bucket), chain);
+        ic.perform(O.IGNORED, O.IGNORED, O.IGNORED);
         Assert.assertEquals(Arrays.asList(1, 2, 3, 4, 3, 2, 1), bucket);
     }
 
     @Test
     public void whenAnInterceptorThrowsInBeforeCorrectAfterAreCalled() {
         final List<Integer> bucket = new ArrayList<Integer>();
-        final TernaryInterceptorChain<O, O, O, O> chain = new TernaryInterceptorChain<O, O, O, O>(new BucketFillingDelegate(4, bucket));
-        chain.add(new BucketFillingInterceptor(1, bucket));
-        chain.add(new ThrowingInterceptor());
-        chain.add(new BucketFillingInterceptor(3, bucket));
+        final Iterable<TernaryInterceptor<O, O, O>> chain = Iterations.<TernaryInterceptor<O, O, O>>iterable(
+                new BucketFillingInterceptor(3, bucket),
+                new ThrowingInterceptor(),
+                new BucketFillingInterceptor(1, bucket));
+        final TernaryInterceptorChain<O, O, O, O> ic = new TernaryInterceptorChain<O, O, O, O>(new BucketFillingDelegate(4, bucket), chain);
         try {
-            chain.perform(O.create(), O.create(), O.create());
+            ic.perform(O.IGNORED, O.IGNORED, O.IGNORED);
         } catch (Exception ex) {
         }
         Assert.assertEquals(Arrays.asList(1, 1), bucket);

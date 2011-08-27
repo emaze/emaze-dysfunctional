@@ -1,12 +1,7 @@
 package net.emaze.dysfunctional.interceptions;
 
-import java.util.ArrayDeque;
-import java.util.Collection;
-import java.util.Deque;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
-import net.emaze.dysfunctional.dispatching.multicasting.Multicasting;
-import net.emaze.dysfunctional.iterations.OneTimeIterable;
 
 /**
  *
@@ -14,41 +9,24 @@ import net.emaze.dysfunctional.iterations.OneTimeIterable;
  * @param <T> 
  * @author rferranti
  */
-public class InterceptorChain<R, T> implements Delegate<R, T>, Multicasting<Interceptor<T>> {
+public class InterceptorChain<R, T> implements Delegate<R, T> {
 
-    private final Deque<Interceptor<T>> chain = new ArrayDeque<Interceptor<T>>();
+    private final Iterable<Interceptor<T>> chain;
     private final Delegate<R, T> innermost;
 
-    public InterceptorChain(Delegate<R, T> innermost) {
+    public InterceptorChain(Delegate<R, T> innermost, Iterable<Interceptor<T>> chain) {
         dbc.precondition(innermost != null, "innermost delegate cannot be null");
+        dbc.precondition(chain != null, "chain cannot be null");
         this.innermost = innermost;
+        this.chain = chain;
     }
 
     @Override
     public R perform(T param) {
         Delegate<R, T> current = innermost;
-        for (Interceptor<T> interceptor : new OneTimeIterable<Interceptor<T>>(chain.descendingIterator())) {
+        for (Interceptor<T> interceptor : chain) {
             current = new InterceptorAdapter<R, T>(interceptor, current);
         }
         return current.perform(param);
-    }
-
-    @Override
-    public void add(Interceptor<T> functor) {
-        dbc.precondition(functor != null, "cannot add a null functor to an InterceptorChain");
-        chain.add(functor);
-    }
-
-    @Override
-    public boolean remove(Interceptor<T> functor) {
-        dbc.precondition(functor != null, "cannot remove null functor from an InterceptorChain");
-        return chain.remove(functor);
-    }
-
-    @Override
-    public void setFunctors(Collection<Interceptor<T>> functors) {
-        dbc.precondition(functors != null, "functors cannot be null");
-        chain.clear();
-        chain.addAll(functors);
     }
 }
