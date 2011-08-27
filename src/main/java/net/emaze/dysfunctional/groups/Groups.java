@@ -2,11 +2,14 @@ package net.emaze.dysfunctional.groups;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.collections.HashMapFactory;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.Dispatching;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import net.emaze.dysfunctional.dispatching.delegates.Narrow;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
 /**
@@ -15,10 +18,10 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
  */
 public abstract class Groups {
 
-    public static <K, V> Map<K, ArrayList<V>> groupBy(Iterable<V> groupies, Delegate<K, V> grouper) {
-        final HashMapFactory<K, ArrayList<V>> hashMapFactory = new HashMapFactory<K, ArrayList<V>>();
-        final ArrayListFactory<V> arrayListFactory = new ArrayListFactory<V>();
-        return groupBy(groupies, grouper, arrayListFactory, hashMapFactory);
+    public static <K, V> Map<K, List<V>> groupBy(Iterable<V> groupies, Delegate<K, V> grouper) {
+        final HashMapFactory<K, List<V>> hashMapFactory = new HashMapFactory<K, List<V>>();
+        final Provider<List<V>> provider = Dispatching.compose(new Narrow<List<V>, ArrayList<V>>(), new ArrayListFactory<V>());
+        return groupBy(groupies, grouper, provider, hashMapFactory);
     }
 
     public static <C extends Collection<V>, K, V> Map<K, C> groupBy(Iterable<V> groupies, Delegate<K, V> grouper, Provider<C> collectionProvider) {
