@@ -1,8 +1,5 @@
 package net.emaze.dysfunctional.dispatching.actions;
 
-import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
-import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
-import net.emaze.dysfunctional.dispatching.actions.PipelinedBinaryAction;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,51 +13,15 @@ import org.junit.Test;
 public class PipelinedBinaryActionTest {
 
     @Test(expected = IllegalArgumentException.class)
-    public void addingNullFunctorToPipelineYieldsException() {
-        PipelinedBinaryAction<String, String> pipeline = new PipelinedBinaryAction<String, String>();
-        pipeline.add(null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void removingNullFunctorToPipelineYieldsException() {
-        PipelinedBinaryAction<String, String> pipeline = new PipelinedBinaryAction<String, String>();
-        pipeline.remove(null);
-    }
-
-    @Test
-    public void removingNonPresentPipelineYieldsFalse() {
-        PipelinedBinaryAction<String, String> pipeline = new PipelinedBinaryAction<String, String>();
-        boolean got = pipeline.remove(new BinaryNoop<String, String>());
-        Assert.assertFalse(got);
-    }
-
-    @Test
-    public void removingPresentPipelineYieldsTrue() {
-        PipelinedBinaryAction<String, String> pipeline = new PipelinedBinaryAction<String, String>();
-        BinaryNoop<String, String> noop = new BinaryNoop<String, String>();
-        pipeline.add(noop);
-        boolean got = pipeline.remove(noop);
-        Assert.assertTrue(got);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void settingNullFunctorsCollectionYieldsException() {
-        PipelinedBinaryAction<String, String> pipeline = new PipelinedBinaryAction<String, String>();
-        pipeline.setFunctors(null);
-    }
-
-    @Test
-    public void canSetFunctors() {
-        PipelinedBinaryAction<String, String> pipeline = new PipelinedBinaryAction<String, String>();
-        pipeline.setFunctors(Arrays.<BinaryAction<String, String>>asList(new BinaryNoop<String, String>(), new BinaryNoop<String, String>()));
+    public void creatingWithNullIterableYieldsException() {
+        new PipelinedBinaryAction<String, String>(null);
     }
 
     @Test
     public void actionsAreCalledInOrder() {
         final List<String> bucket = new ArrayList<String>();
-        PipelinedBinaryAction<String, String> pipeline = new PipelinedBinaryAction<String, String>();
-        pipeline.add(new BucketFillingBinaryAction<String>(bucket, "former"));
-        pipeline.add(new BucketFillingBinaryAction<String>(bucket, "latter"));
+        final List<BinaryAction<String, String>> actions = Arrays.<BinaryAction<String, String>>asList(new BucketFillingBinaryAction<String>(bucket, "former"), new BucketFillingBinaryAction<String>(bucket, "latter"));
+        final PipelinedBinaryAction<String, String> pipeline = new PipelinedBinaryAction<String, String>(actions);
         pipeline.perform("ignored_value", "ignored_value");
         Assert.assertEquals(Arrays.asList("former", "latter"), bucket);
     }

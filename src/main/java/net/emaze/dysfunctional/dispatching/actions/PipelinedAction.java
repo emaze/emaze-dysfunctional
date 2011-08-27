@@ -1,21 +1,22 @@
 package net.emaze.dysfunctional.dispatching.actions;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.multicasting.Multicasting;
 
 /**
  * A composite unary functor with no return value. On call every composed action
- * is called in registration order (where an order exists)
+ * is called.
  * @param <E> the type parameter
  * @author rferranti
  */
-public class PipelinedAction<E> implements Action<E>, Multicasting<Action<E>> {
+public class PipelinedAction<E> implements Action<E> {
 
-    private final List<Action<E>> actions = new ArrayList<Action<E>>();
+    private final Iterable<Action<E>> actions;
 
+    public PipelinedAction(Iterable<Action<E>> actions) {
+        dbc.precondition(actions != null, "cannot create a PipelinedAction with a null iterable");
+        this.actions = actions;
+    }
+    
     /**
      * performs every composed action
      * @param value
@@ -25,24 +26,5 @@ public class PipelinedAction<E> implements Action<E>, Multicasting<Action<E>> {
         for (Action<E> action : actions) {
             action.perform(value);
         }
-    }
-
-    @Override
-    public void add(Action<E> anAction) {
-        dbc.precondition(anAction != null, "trying to add a null action");
-        actions.add(anAction);
-    }
-
-    @Override
-    public boolean remove(Action<E> anAction) {
-        dbc.precondition(anAction != null, "trying to remove a null action");
-        return actions.remove(anAction);
-    }
-
-    @Override
-    public void setFunctors(Collection<Action<E>> functors){
-        dbc.precondition(functors != null, "cannot set a null functor collection");
-        this.actions.clear();
-        this.actions.addAll(functors);
     }
 }
