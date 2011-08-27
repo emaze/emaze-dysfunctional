@@ -2,6 +2,9 @@ package net.emaze.dysfunctional.dispatching.logic.adapting;
 
 import net.emaze.dysfunctional.dispatching.logic.CapturingPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Always;
+import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,9 +22,10 @@ public class PredicateIgnoreFirstTest {
 
     @Test
     public void canBindFirstParameter() {
-        final CapturingPredicate<O> mock = new CapturingPredicate<O>(new Always<O>());
-        final PredicateIgnoreFirst<O, O> adapted = new PredicateIgnoreFirst<O, O>(mock);
+        final Box<O> param = Box.empty();
+        final Predicate<O> mock = new CapturingPredicate<O>(new Always<O>(), param);
+        final BinaryPredicate<O, O> adapted = new PredicateIgnoreFirst<O, O>(mock);
         adapted.accept(O.IGNORED, O.ONE);
-        Assert.assertEquals(mock.first.getContent(), O.ONE);
+        Assert.assertEquals(O.ONE, param.getContent());
     }
 }

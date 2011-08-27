@@ -3,6 +3,8 @@ package net.emaze.dysfunctional.dispatching;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.CapturingPredicate;
+import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,10 +28,11 @@ public class PredicateToDelegateTest {
     
     @Test
     public void adapterCorrectlyPassesFirstParamToAdapted() {
-        final CapturingPredicate<O> adaptee = new CapturingPredicate<O>(new Always<O>());
+        final Box<O> param = Box.empty();
+        final Predicate<O> adaptee = new CapturingPredicate<O>(new Always<O>(), param);
         final PredicateToDelegate<O> adapted = new PredicateToDelegate<O>(adaptee);
         adapted.perform(O.ONE);
-        Assert.assertEquals(O.ONE, adaptee.first.getContent());
+        Assert.assertEquals(O.ONE, param.getContent());
     }
 
     @Test

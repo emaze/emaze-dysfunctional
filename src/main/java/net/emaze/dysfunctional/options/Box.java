@@ -19,6 +19,10 @@ public class Box<T> {
         return box;
     }
 
+    public static <E> Box<E> empty() {
+        return new Box<E>();
+    }
+
     public T getContent() {
         return content.value();
     }

@@ -1,7 +1,10 @@
 package net.emaze.dysfunctional.dispatching.logic.adapting;
 
+import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryCapturingPredicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
+import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,9 +22,10 @@ public class PredicateBinderSecondOfThreeTest {
 
     @Test
     public void canBindSecondParameter() {
-        final TernaryCapturingPredicate<O, O, O> mock = new TernaryCapturingPredicate<O, O, O>(new TernaryAlways<O, O, O>());
-        final PredicateBinderSecondOfThree<O, O, O> adapted = new PredicateBinderSecondOfThree<O, O, O>(mock, O.ONE);
+        final Box<O> param2 = Box.empty();
+        final TernaryPredicate<O, O, O> mock = new TernaryCapturingPredicate<O, O, O>(new TernaryAlways<O, O, O>(), Box.<O>empty(), param2, Box.<O>empty());
+        final BinaryPredicate<O, O> adapted = new PredicateBinderSecondOfThree<O, O, O>(mock, O.ONE);
         adapted.accept(O.ANOTHER, O.ANOTHER);
-        Assert.assertEquals(mock.second.getContent(), O.ONE);
+        Assert.assertEquals(O.ONE, param2.getContent());
     }
 }

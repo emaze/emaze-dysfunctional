@@ -1,7 +1,10 @@
 package net.emaze.dysfunctional.dispatching.logic.adapting;
 
-import net.emaze.dysfunctional.dispatching.logic.BinaryCapturingPredicate;
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
+import net.emaze.dysfunctional.dispatching.logic.BinaryCapturingPredicate;
+import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,9 +22,10 @@ public class PredicateBinderSecondTest {
 
     @Test
     public void canBindSecondParameter() {
-        final BinaryCapturingPredicate<O, O> mock = new BinaryCapturingPredicate<O, O>(new BinaryAlways<O, O>());
-        final PredicateBinderSecond<O, O> adapted = new PredicateBinderSecond<O, O>(mock, O.ONE);
+        final Box<O> param2 = Box.empty();
+        final BinaryPredicate<O, O> mock = new BinaryCapturingPredicate<O, O>(new BinaryAlways<O, O>(), Box.<O>empty(), param2);
+        final Predicate<O> adapted = new PredicateBinderSecond<O, O>(mock, O.ONE);
         adapted.accept(O.ANOTHER);
-        Assert.assertEquals(mock.second.getContent(), O.ONE);
+        Assert.assertEquals(O.ONE, param2.getContent());
     }
 }
