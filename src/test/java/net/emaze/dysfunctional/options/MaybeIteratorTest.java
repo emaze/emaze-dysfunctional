@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.options;
 
-import net.emaze.dysfunctional.adapting.ArrayIterator;
+import net.emaze.dysfunctional.iterations.ArrayIterator;
 import org.junit.Assert;
 import org.junit.Test;
 

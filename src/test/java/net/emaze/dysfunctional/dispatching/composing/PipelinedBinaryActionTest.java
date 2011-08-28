@@ -1,8 +1,9 @@
-package net.emaze.dysfunctional.dispatching.actions;
+package net.emaze.dysfunctional.dispatching.composing;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import org.junit.Assert;
 import org.junit.Test;
 

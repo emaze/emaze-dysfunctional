@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.reductions;
 
 import java.util.Comparator;
 import java.util.Iterator;
-import net.emaze.dysfunctional.adapting.ArrayIterator;
+import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 import net.emaze.dysfunctional.order.ComparableComparator;

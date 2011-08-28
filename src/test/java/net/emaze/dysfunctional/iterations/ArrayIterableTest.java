@@ -1,5 +1,6 @@
-package net.emaze.dysfunctional.adapting;
+package net.emaze.dysfunctional.iterations;
 
+import net.emaze.dysfunctional.iterations.ArrayIterable;
 import org.junit.Assert;
 import org.junit.Test;
 

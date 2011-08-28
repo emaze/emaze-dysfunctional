@@ -1,10 +1,9 @@
-package net.emaze.dysfunctional.dispatching.logic;
+package net.emaze.dysfunctional.dispatching.composing;
 
-import net.emaze.dysfunctional.dispatching.logic.BinaryNever;
-import net.emaze.dysfunctional.dispatching.logic.FirstMatchingBinaryPredicate;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
-import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
 import java.util.Arrays;
+import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
+import net.emaze.dysfunctional.dispatching.logic.BinaryNever;
+import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;

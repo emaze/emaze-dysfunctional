@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.eagers;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.adapting.ArrayIterator;
+import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.consumers.EagerConsumer;
 import net.emaze.dysfunctional.contracts.dbc;

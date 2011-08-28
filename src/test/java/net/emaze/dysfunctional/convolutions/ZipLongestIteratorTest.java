@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.convolutions;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.adapting.ArrayIterator;
+import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.tuples.Pair;
 import org.junit.Assert;

@@ -1,6 +1,7 @@
-package net.emaze.dysfunctional.dispatching.actions;
+package net.emaze.dysfunctional.dispatching.composing;
 
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 
 /**
  * A composite ternary functor with no return value. On call every composed 

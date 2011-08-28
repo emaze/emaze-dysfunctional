@@ -1,8 +1,11 @@
-package net.emaze.dysfunctional.dispatching.logic;
+package net.emaze.dysfunctional.dispatching.composing;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import net.emaze.dysfunctional.dispatching.logic.Always;
+import net.emaze.dysfunctional.dispatching.logic.Never;
+import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;

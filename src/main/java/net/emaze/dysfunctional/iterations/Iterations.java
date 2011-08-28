@@ -2,8 +2,6 @@ package net.emaze.dysfunctional.iterations;
 
 import net.emaze.dysfunctional.dispatching.Tapper;
 import java.util.Iterator;
-import net.emaze.dysfunctional.adapting.ArrayIterable;
-import net.emaze.dysfunctional.adapting.ArrayIterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;

@@ -1,5 +1,6 @@
-package net.emaze.dysfunctional.adapting;
+package net.emaze.dysfunctional.iterations;
 
+import net.emaze.dysfunctional.iterations.ArrayIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;

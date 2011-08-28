@@ -1,5 +1,11 @@
 package net.emaze.dysfunctional.dispatching.logic;
 
+import net.emaze.dysfunctional.dispatching.composing.FirstMatchingBinaryPredicate;
+import net.emaze.dysfunctional.dispatching.composing.FirstMatchingPredicate;
+import net.emaze.dysfunctional.dispatching.composing.FirstMatchingTernaryPredicate;
+import net.emaze.dysfunctional.dispatching.composing.AllMatchingBinaryPredicate;
+import net.emaze.dysfunctional.dispatching.composing.AllMatchingTernaryPredicate;
+import net.emaze.dysfunctional.dispatching.composing.AllMatchingPredicate;
 import java.util.Arrays;
 import java.util.Iterator;
 import net.emaze.dysfunctional.consumers.Consumers;

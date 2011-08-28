@@ -1,6 +1,7 @@
-package net.emaze.dysfunctional.dispatching.logic;
+package net.emaze.dysfunctional.dispatching.composing;
 
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 
 /**
  * A composite ternary predicate yielding true when every predicate match

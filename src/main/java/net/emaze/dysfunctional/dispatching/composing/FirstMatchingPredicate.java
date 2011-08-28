@@ -1,6 +1,7 @@
-package net.emaze.dysfunctional.dispatching.logic;
+package net.emaze.dysfunctional.dispatching.composing;
 
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
 /**
  * A composite unary predicate yielding true when the first predicate matches

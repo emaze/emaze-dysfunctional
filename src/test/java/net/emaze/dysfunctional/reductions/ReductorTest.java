@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.reductions;
 
-import net.emaze.dysfunctional.adapting.ArrayIterator;
+import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.consumers.Consumer;
 import org.junit.Assert;
 import org.junit.Test;

@@ -1,5 +1,8 @@
 package net.emaze.dysfunctional.dispatching.actions;
 
+import net.emaze.dysfunctional.dispatching.composing.PipelinedAction;
+import net.emaze.dysfunctional.dispatching.composing.PipelinedBinaryAction;
+import net.emaze.dysfunctional.dispatching.composing.PipelinedTernaryAction;
 import java.util.Arrays;
 import java.util.Collections;
 

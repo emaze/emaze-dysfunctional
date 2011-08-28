@@ -1,9 +1,10 @@
-package net.emaze.dysfunctional.dispatching.actions;
+package net.emaze.dysfunctional.dispatching.composing;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import net.emaze.dysfunctional.dispatching.actions.PipelinedTernaryActionTest.BucketFillingTernaryAction;
+import net.emaze.dysfunctional.dispatching.composing.PipelinedTernaryActionTest.BucketFillingTernaryAction;
+import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import org.junit.Test;
 import org.junit.Assert;
 
