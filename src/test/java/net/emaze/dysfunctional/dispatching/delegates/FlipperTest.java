@@ -1,8 +1,6 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
-import net.emaze.dysfunctional.dispatching.delegates.adapting.ConcatenateString;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
-import net.emaze.dysfunctional.dispatching.delegates.Flipper;
+import net.emaze.dysfunctional.dispatching.adapting.ConcatenateString;
 import org.junit.Assert;
 import org.junit.Test;
 
