@@ -1,9 +1,11 @@
 package net.emaze.dysfunctional.dispatching;
 
-import net.emaze.dysfunctional.dispatching.delegates.BinaryCapturingDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
 import net.emaze.dysfunctional.dispatching.delegates.SecondParam;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
+import net.emaze.dysfunctional.dispatching.spying.Spies;
+import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -21,17 +23,19 @@ public class BinaryDelegateToBinaryPredicateTest {
 
     @Test
     public void adapterCorrectlyPassesSecondParamToAdapted() {
-        BinaryCapturingDelegate<Boolean, Boolean, O> adaptee = new BinaryCapturingDelegate<Boolean, Boolean, O>(new FirstParam<Boolean, O>());
-        final BinaryPredicate<Boolean, O> adapted = new BinaryDelegateToBinaryPredicate<Boolean, O>(adaptee);
+        final Box<O> param2 = Box.empty();
+        final BinaryDelegate<Boolean, Boolean, O> spy = Spies.spy2nd(new FirstParam<Boolean, O>(), param2);
+        final BinaryPredicate<Boolean, O> adapted = new BinaryDelegateToBinaryPredicate<Boolean, O>(spy);
         adapted.accept(true, O.ONE);
-        Assert.assertEquals(O.ONE, adaptee.second.getContent());
+        Assert.assertEquals(O.ONE, param2.getContent());
     }
     
     @Test
     public void adapterCorrectlyPassesFirstParamToAdapted() {
-        BinaryCapturingDelegate<Boolean, O, Boolean> adaptee = new BinaryCapturingDelegate<Boolean, O, Boolean>(new SecondParam<O, Boolean>());
-        final BinaryPredicate<O, Boolean> adapted = new BinaryDelegateToBinaryPredicate<O, Boolean>(adaptee);
+        final Box<O> param1 = Box.empty();
+        final BinaryDelegate<Boolean, O, Boolean> spy = Spies.spy1st(new SecondParam<O, Boolean>(), param1);
+        final BinaryPredicate<O, Boolean> adapted = new BinaryDelegateToBinaryPredicate<O, Boolean>(spy);
         adapted.accept(O.ONE, true);
-        Assert.assertEquals(O.ONE, adaptee.first.getContent());
+        Assert.assertEquals(O.ONE, param1.getContent());
     }
 }

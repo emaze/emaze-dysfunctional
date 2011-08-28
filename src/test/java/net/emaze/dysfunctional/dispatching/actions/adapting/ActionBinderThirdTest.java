@@ -1,7 +1,9 @@
 package net.emaze.dysfunctional.dispatching.actions.adapting;
 
-import net.emaze.dysfunctional.dispatching.actions.TernaryCapturingAction;
+import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
+import net.emaze.dysfunctional.dispatching.spying.Spies;
+import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,9 +21,10 @@ public class ActionBinderThirdTest {
 
     @Test
     public void canBindThirdParameter() {
-        final TernaryCapturingAction<O, O, O> mock = new TernaryCapturingAction<O, O, O>(new TernaryNoop<O, O, O>());
-        final ActionBinderThird<O, O, O> adapted = new ActionBinderThird<O, O, O>(mock, O.ONE);
+        final Box<O> param3 = Box.empty();
+        final TernaryAction<O, O, O> spy = Spies.spy3rd(new TernaryNoop<O, O, O>(), param3);        
+        final ActionBinderThird<O, O, O> adapted = new ActionBinderThird<O, O, O>(spy, O.ONE);
         adapted.perform(O.ANOTHER, O.ANOTHER);
-        Assert.assertEquals(mock.third.getContent(), O.ONE);
+        Assert.assertEquals(param3.getContent(), O.ONE);
     }
 }

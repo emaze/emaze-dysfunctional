@@ -2,7 +2,8 @@ package net.emaze.dysfunctional.dispatching;
 
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
-import net.emaze.dysfunctional.dispatching.logic.BinaryCapturingPredicate;
+import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
+import net.emaze.dysfunctional.dispatching.spying.Spies;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -21,28 +22,26 @@ public class BinaryPredicateToBinaryDelegateTest {
 
     @Test// you probably expect this (expected = ClassCastException.class)
     public void passingWrongTypeToErasureJustForwardsToTheNestedAction() {
-        BinaryDelegate d = new BinaryPredicateToBinaryDelegate<O, O>(new BinaryAlways<O, O>());
+        final BinaryDelegate d = new BinaryPredicateToBinaryDelegate<O, O>(new BinaryAlways<O, O>());
         d.perform(new Object(), new Object());
     }
 
     @Test
     public void adapterCorrectlyPassesFirstParamToAdapted() {
-        final Box<O> firstParam = Box.empty();
-        final Box<O> secondParam = Box.empty();
-        final BinaryCapturingPredicate<O, O> adaptee = new BinaryCapturingPredicate<O, O>(new BinaryAlways<O, O>(), firstParam, secondParam);
-        final BinaryPredicateToBinaryDelegate<O, O> adapted = new BinaryPredicateToBinaryDelegate<O, O>(adaptee);
+        final Box<O> param1 = Box.empty();
+        final BinaryPredicate<O, O> spy = Spies.spy1st(new BinaryAlways<O, O>(), param1);
+        final BinaryPredicateToBinaryDelegate<O, O> adapted = new BinaryPredicateToBinaryDelegate<O, O>(spy);
         adapted.perform(O.ONE, O.ANOTHER);
-        Assert.assertEquals(O.ONE, firstParam.getContent());
+        Assert.assertEquals(O.ONE, param1.getContent());
     }
 
     @Test
     public void adapterCorrectlyPassesSecondParamToAdapted() {
-        final Box<O> firstParam = Box.empty();
-        final Box<O> secondParam = Box.empty();
-        final BinaryCapturingPredicate<O, O> adaptee = new BinaryCapturingPredicate<O, O>(new BinaryAlways<O, O>(), firstParam, secondParam);
-        final BinaryPredicateToBinaryDelegate<O, O> adapted = new BinaryPredicateToBinaryDelegate<O, O>(adaptee);
+        final Box<O> param2 = Box.empty();
+        final BinaryPredicate<O, O> spy = Spies.spy2nd(new BinaryAlways<O, O>(), param2);
+        final BinaryPredicateToBinaryDelegate<O, O> adapted = new BinaryPredicateToBinaryDelegate<O, O>(spy);
         adapted.perform(O.ONE, O.ANOTHER);
-        Assert.assertEquals(O.ANOTHER, secondParam.getContent());
+        Assert.assertEquals(O.ANOTHER, param2.getContent());
     }
 
     @Test

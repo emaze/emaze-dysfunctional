@@ -1,5 +1,7 @@
-package net.emaze.dysfunctional.dispatching.logic;
+package net.emaze.dysfunctional.dispatching.spying;
 
+import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
+import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -9,26 +11,28 @@ import org.junit.Test;
  *
  * @author rferranti
  */
-public class TernaryCapturingPredicateTest {
+public class TernaryCapturingActionTest {
+
+    private static final TernaryNoop<O, O, O> NOOP = new TernaryNoop<O, O, O>();
 
     @Test(expected = IllegalArgumentException.class)
-    public void wrappingNullPredicateYieldsException() {
-        new TernaryCapturingPredicate<O, O, O>(null, Box.<O>empty(), Box.<O>empty(), Box.<O>empty());
+    public void wrappingNullActionYieldsException() {
+        new TernaryCapturingAction<O, O, O>(null, Box.<O>empty(), Box.<O>empty(), Box.<O>empty());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void passingNullBoxForFirstParamYieldsException() {
-        new TernaryCapturingPredicate<O, O, O>(new TernaryAlways<O, O, O>(), null, Box.<O>empty(), Box.<O>empty());
+        new TernaryCapturingAction<O, O, O>(NOOP, null, Box.<O>empty(), Box.<O>empty());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void passingNullBoxForSecondParamYieldsException() {
-        new TernaryCapturingPredicate<O, O, O>(new TernaryAlways<O, O, O>(), Box.<O>empty(), null, Box.<O>empty());
+        new TernaryCapturingAction<O, O, O>(NOOP, Box.<O>empty(), null, Box.<O>empty());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void passingNullBoxForThirdParamYieldsException() {
-        new TernaryCapturingPredicate<O, O, O>(new TernaryAlways<O, O, O>(), Box.<O>empty(), Box.<O>empty(), null);
+        new TernaryCapturingAction<O, O, O>(NOOP, Box.<O>empty(), Box.<O>empty(), null);
     }
 
     @Test
@@ -36,8 +40,8 @@ public class TernaryCapturingPredicateTest {
         final Box<O> param1 = Box.empty();
         final Box<O> param2 = Box.empty();
         final Box<O> param3 = Box.empty();
-        final TernaryPredicate<O, O, O> pred = new TernaryCapturingPredicate<O, O, O>(new TernaryAlways<O, O, O>(), param1, param2, param3);
-        pred.accept(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+        final TernaryAction<O, O, O> action = new TernaryCapturingAction<O, O, O>(NOOP, param1, param2, param3);
+        action.perform(O.ONE, O.ANOTHER, O.YET_ANOTHER);
         Assert.assertEquals(O.ONE, param1.getContent());
     }
 
@@ -46,8 +50,8 @@ public class TernaryCapturingPredicateTest {
         final Box<O> param1 = Box.empty();
         final Box<O> param2 = Box.empty();
         final Box<O> param3 = Box.empty();
-        final TernaryPredicate<O, O, O> pred = new TernaryCapturingPredicate<O, O, O>(new TernaryAlways<O, O, O>(), param1, param2, param3);
-        pred.accept(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+        final TernaryAction<O, O, O> action = new TernaryCapturingAction<O, O, O>(NOOP, param1, param2, param3);
+        action.perform(O.ONE, O.ANOTHER, O.YET_ANOTHER);
         Assert.assertEquals(O.ANOTHER, param2.getContent());
     }
 
@@ -56,8 +60,8 @@ public class TernaryCapturingPredicateTest {
         final Box<O> param1 = Box.empty();
         final Box<O> param2 = Box.empty();
         final Box<O> param3 = Box.empty();
-        final TernaryPredicate<O, O, O> pred = new TernaryCapturingPredicate<O, O, O>(new TernaryAlways<O, O, O>(), param1, param2, param3);
-        pred.accept(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+        final TernaryAction<O, O, O> action = new TernaryCapturingAction<O, O, O>(NOOP, param1, param2, param3);
+        action.perform(O.ONE, O.ANOTHER, O.YET_ANOTHER);
         Assert.assertEquals(O.YET_ANOTHER, param3.getContent());
     }
 }

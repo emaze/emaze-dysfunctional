@@ -1,7 +1,9 @@
 package net.emaze.dysfunctional.dispatching.actions.adapting;
 
-import net.emaze.dysfunctional.dispatching.actions.BinaryCapturingAction;
+import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
+import net.emaze.dysfunctional.dispatching.spying.Spies;
+import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,9 +21,10 @@ public class ActionBinderFirstTest {
 
     @Test
     public void canBindFirstParameter() {
-        final BinaryCapturingAction<O, O> mock = new BinaryCapturingAction<O, O>(new BinaryNoop<O, O>());
-        final ActionBinderFirst<O, O> adapted = new ActionBinderFirst<O, O>(mock, O.ONE);
+        final Box<O> param1 = Box.empty();
+        final BinaryAction<O, O> spy = Spies.spy1st(new BinaryNoop<O, O>(), param1);
+        final ActionBinderFirst<O, O> adapted = new ActionBinderFirst<O, O>(spy, O.ONE);
         adapted.perform(O.ANOTHER);
-        Assert.assertEquals(mock.first.getContent(), O.ONE);
+        Assert.assertEquals(O.ONE, param1.getContent());
     }
 }

@@ -2,8 +2,8 @@ package net.emaze.dysfunctional.dispatching;
 
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.logic.Always;
-import net.emaze.dysfunctional.dispatching.logic.CapturingPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import net.emaze.dysfunctional.dispatching.spying.Spies;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -29,8 +29,8 @@ public class PredicateToDelegateTest {
     @Test
     public void adapterCorrectlyPassesFirstParamToAdapted() {
         final Box<O> param = Box.empty();
-        final Predicate<O> adaptee = new CapturingPredicate<O>(new Always<O>(), param);
-        final PredicateToDelegate<O> adapted = new PredicateToDelegate<O>(adaptee);
+        final Predicate<O> spy = Spies.spy1st(new Always<O>(), param);
+        final PredicateToDelegate<O> adapted = new PredicateToDelegate<O>(spy);
         adapted.perform(O.ONE);
         Assert.assertEquals(O.ONE, param.getContent());
     }

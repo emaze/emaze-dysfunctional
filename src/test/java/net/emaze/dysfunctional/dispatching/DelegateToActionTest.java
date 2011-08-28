@@ -1,8 +1,10 @@
 package net.emaze.dysfunctional.dispatching;
 
 import net.emaze.dysfunctional.dispatching.actions.Action;
-import net.emaze.dysfunctional.dispatching.delegates.CapturingDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import net.emaze.dysfunctional.dispatching.spying.Spies;
+import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,9 +22,10 @@ public class DelegateToActionTest {
 
     @Test
     public void adapterCorrectlyPassesParamToAdapted() {
-        final CapturingDelegate<O, O> capturer = new CapturingDelegate<O, O>(new Identity<O>());
-        final Action<O> adapted = new DelegateToAction<O>(capturer);
+        final Box<O> param = Box.empty();
+        final Delegate<O, O> spy = Spies.spy1st(new Identity<O>(), param);
+        final Action<O> adapted = new DelegateToAction<O>(spy);
         adapted.perform(O.ONE);
-        Assert.assertEquals(O.ONE, capturer.first.getContent());
+        Assert.assertEquals(O.ONE, param.getContent());
     }
 }

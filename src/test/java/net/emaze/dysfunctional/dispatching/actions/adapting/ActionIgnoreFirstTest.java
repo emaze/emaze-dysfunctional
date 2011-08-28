@@ -1,7 +1,9 @@
 package net.emaze.dysfunctional.dispatching.actions.adapting;
 
-import net.emaze.dysfunctional.dispatching.actions.CapturingAction;
+import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
+import net.emaze.dysfunctional.dispatching.spying.Spies;
+import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,9 +21,10 @@ public class ActionIgnoreFirstTest {
 
     @Test
     public void canBindFirstParameter() {
-        final CapturingAction<O> mock = new CapturingAction<O>(new Noop<O>());
-        final ActionIgnoreFirst<O, O> adapted = new ActionIgnoreFirst<O, O>(mock);
+        final Box<O> param = Box.empty();
+        final Action<O> spy = Spies.spy(new Noop<O>(), param);
+        final ActionIgnoreFirst<O, O> adapted = new ActionIgnoreFirst<O, O>(spy);
         adapted.perform(O.IGNORED, O.ONE);
-        Assert.assertEquals(mock.first.getContent(), O.ONE);
+        Assert.assertEquals(param.getContent(), O.ONE);
     }
 }

@@ -2,8 +2,10 @@ package net.emaze.dysfunctional.dispatching;
 
 import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
 import net.emaze.dysfunctional.dispatching.delegates.SecondParamOfThree;
-import net.emaze.dysfunctional.dispatching.delegates.TernaryCapturingDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.spying.Spies;
+import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -21,25 +23,28 @@ public class TernaryDelegateToTernaryPredicateTest {
 
     @Test
     public void adapterCorrectlyPassesFirstParamToAdapted() {
-        TernaryCapturingDelegate<Boolean, O, Boolean, O> adaptee = new TernaryCapturingDelegate<Boolean, O, Boolean, O>(new SecondParamOfThree<O, Boolean, O>());
-        final TernaryPredicate<O, Boolean, O> adapted = new TernaryDelegateToTernaryPredicate<O, Boolean, O>(adaptee);
+        final Box<O> param1 = Box.empty();
+        final TernaryDelegate<Boolean, O, Boolean, O> spy = Spies.spy1st(new SecondParamOfThree<O, Boolean, O>(), param1);
+        final TernaryPredicate<O, Boolean, O> adapted = new TernaryDelegateToTernaryPredicate<O, Boolean, O>(spy);
         adapted.accept(O.ONE, true, O.IGNORED);
-        Assert.assertEquals(O.ONE, adaptee.first.getContent());
+        Assert.assertEquals(O.ONE, param1.getContent());
     }
 
     @Test
     public void adapterCorrectlyPassesSecondParamToAdapted() {
-        TernaryCapturingDelegate<Boolean, Boolean, O, O> adaptee = new TernaryCapturingDelegate<Boolean, Boolean, O, O>(new FirstParamOfThree<Boolean, O, O>());
-        final TernaryPredicate<Boolean, O, O> adapted = new TernaryDelegateToTernaryPredicate<Boolean, O, O>(adaptee);
+        final Box<O> param2 = Box.empty();
+        final TernaryDelegate<Boolean, Boolean, O, O> spy = Spies.spy2nd(new FirstParamOfThree<Boolean, O, O>(), param2);
+        final TernaryPredicate<Boolean, O, O> adapted = new TernaryDelegateToTernaryPredicate<Boolean, O, O>(spy);
         adapted.accept(true, O.ONE, O.IGNORED);
-        Assert.assertEquals(O.ONE, adaptee.second.getContent());
+        Assert.assertEquals(O.ONE, param2.getContent());
     }
 
     @Test
     public void adapterCorrectlyPassesThirdParamToAdapted() {
-        TernaryCapturingDelegate<Boolean, Boolean, O, O> adaptee = new TernaryCapturingDelegate<Boolean, Boolean, O, O>(new FirstParamOfThree<Boolean, O, O>());
-        final TernaryPredicate<Boolean, O, O> adapted = new TernaryDelegateToTernaryPredicate<Boolean, O, O>(adaptee);
+        final Box<O> param3 = Box.empty();
+        final TernaryDelegate<Boolean, Boolean, O, O> spy = Spies.spy3rd(new FirstParamOfThree<Boolean, O, O>(), param3);
+        final TernaryPredicate<Boolean, O, O> adapted = new TernaryDelegateToTernaryPredicate<Boolean, O, O>(spy);
         adapted.accept(true, O.IGNORED, O.ONE);
-        Assert.assertEquals(O.ONE, adaptee.third.getContent());
+        Assert.assertEquals(O.ONE, param3.getContent());
     }
 }

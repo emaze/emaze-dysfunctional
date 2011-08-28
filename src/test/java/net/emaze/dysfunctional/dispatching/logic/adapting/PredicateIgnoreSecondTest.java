@@ -1,8 +1,8 @@
 package net.emaze.dysfunctional.dispatching.logic.adapting;
 
-import net.emaze.dysfunctional.dispatching.logic.CapturingPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import net.emaze.dysfunctional.dispatching.spying.Spies;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -22,8 +22,8 @@ public class PredicateIgnoreSecondTest {
     @Test
     public void canIgnoreSecondParameter() {
         final Box<O> param = Box.empty();
-        final Predicate<O> mock = new CapturingPredicate<O>(new Always<O>(), param);
-        final PredicateIgnoreSecond<O, O> adapted = new PredicateIgnoreSecond<O, O>(mock);
+        final Predicate<O> spy = Spies.spy1st(new Always<O>(), param);
+        final PredicateIgnoreSecond<O, O> adapted = new PredicateIgnoreSecond<O, O>(spy);
         adapted.accept(O.ONE, O.IGNORED);
         Assert.assertEquals(O.ONE, param.getContent());
     }

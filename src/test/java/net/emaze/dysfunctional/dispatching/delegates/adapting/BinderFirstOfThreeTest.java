@@ -1,7 +1,6 @@
 package net.emaze.dysfunctional.dispatching.delegates.adapting;
 
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
-import net.emaze.dysfunctional.dispatching.delegates.adapting.BinderFirstOfThree;
 import org.junit.Assert;
 import org.junit.Test;
 
