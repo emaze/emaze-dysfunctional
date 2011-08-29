@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.groups;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.collections.HashMapFactory;
@@ -16,22 +17,34 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
 public abstract class Groups {
 
     public static <K, V> Map<K, ArrayList<V>> groupBy(Iterable<V> groupies, Delegate<K, V> grouper) {
-        final HashMapFactory<K, ArrayList<V>> hashMapFactory = new HashMapFactory<K, ArrayList<V>>();
-        final ArrayListFactory<V> arrayListFactory = new ArrayListFactory<V>();
-        return groupBy(groupies, grouper, arrayListFactory, hashMapFactory);
+        return groupBy(groupies, grouper, new ArrayListFactory<V>(), new HashMapFactory<K, ArrayList<V>>());
+    }
+
+    public static <K, V> Map<K, ArrayList<V>> groupBy(Iterator<V> groupies, Delegate<K, V> grouper) {
+        return groupBy(groupies, grouper, new ArrayListFactory<V>(), new HashMapFactory<K, ArrayList<V>>());
     }
 
     public static <C extends Collection<V>, K, V> Map<K, C> groupBy(Iterable<V> groupies, Delegate<K, V> grouper, Provider<C> collectionProvider) {
         return groupBy(groupies, grouper, collectionProvider, new HashMapFactory<K, C>());
     }
 
+    public static <C extends Collection<V>, K, V> Map<K, C> groupBy(Iterator<V> groupies, Delegate<K, V> grouper, Provider<C> collectionProvider) {
+        return groupBy(groupies, grouper, collectionProvider, new HashMapFactory<K, C>());
+    }
+
     public static <VC extends Collection<V>, M extends Map<K, VC>, C extends VC, K, V> Map<K, VC> groupBy(Iterable<V> groupies, Delegate<K, V> grouper, Provider<C> collectionProvider, Provider<M> mapProvider) {
         dbc.precondition(groupies != null, "cannot group with a null iterable");
+        return groupBy(groupies.iterator(), grouper, collectionProvider, mapProvider);
+    }
+
+    public static <VC extends Collection<V>, M extends Map<K, VC>, C extends VC, K, V> Map<K, VC> groupBy(Iterator<V> groupies, Delegate<K, V> grouper, Provider<C> collectionProvider, Provider<M> mapProvider) {
+        dbc.precondition(groupies != null, "cannot group with a null iterator");
         dbc.precondition(grouper != null, "cannot group with a null grouper");
         dbc.precondition(collectionProvider != null, "cannot group with a null collectionProvider");
         dbc.precondition(mapProvider != null, "cannot group with a null mapProvider");
         final M grouped = mapProvider.provide();
-        for (V groupie : groupies) {
+        while (groupies.hasNext()) {
+            final V groupie = groupies.next();
             final K group = grouper.perform(groupie);
             if (!grouped.containsKey(group)) {
                 grouped.put(group, collectionProvider.provide());
