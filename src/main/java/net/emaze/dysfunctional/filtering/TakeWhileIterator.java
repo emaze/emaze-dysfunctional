@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
-import net.emaze.dysfunctional.options.Maybe;
 
 /**
  *
@@ -15,7 +14,8 @@ public class TakeWhileIterator<E> implements Iterator<E> {
 
     private final Predicate<E> filter;
     private final Iterator<E> iterator;
-    private Maybe<E> prefetched = Maybe.nothing();
+    private E prefetched;
+    private boolean hasPrefetched;
 
     public TakeWhileIterator(Iterator<E> iterator, Predicate<E> filter) {
         dbc.precondition(iterator != null, "trying to create a TakeWhileIterator from a null iterator");
@@ -26,7 +26,7 @@ public class TakeWhileIterator<E> implements Iterator<E> {
 
     @Override
     public boolean hasNext() {
-        if (prefetched.hasValue()) {
+        if (hasPrefetched) {
             return true;
         }
         if (!iterator.hasNext()) {
@@ -34,7 +34,8 @@ public class TakeWhileIterator<E> implements Iterator<E> {
         }
         final E element = iterator.next();
         if (filter.accept(element)) {
-            prefetched = Maybe.just(element);
+            prefetched = element;
+            hasPrefetched = true;
             return true;
         }
         return false;
@@ -42,10 +43,9 @@ public class TakeWhileIterator<E> implements Iterator<E> {
 
     @Override
     public E next() {
-        if (prefetched.hasValue()) {
-            final E element = prefetched.value();
-            prefetched = Maybe.nothing();
-            return element;
+        if (hasPrefetched) {
+            hasPrefetched = false;
+            return prefetched;
         }
         final E element = iterator.next();
         if (filter.accept(element)) {

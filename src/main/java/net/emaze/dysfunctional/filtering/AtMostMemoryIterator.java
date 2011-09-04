@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.options.Memoized;
 
 /**
  * 
@@ -14,8 +13,9 @@ import net.emaze.dysfunctional.options.Memoized;
 public class AtMostMemoryIterator<T> implements Iterator<T> {
 
     private final Iterator<T> iterator;
-    private final Memoized<Queue<T>> memory = new Memoized<Queue<T>>();
     private final int memorySize;
+    private Queue<T> memory;
+    private boolean hasMemory;
 
     public AtMostMemoryIterator(Iterator<T> iterator, int memorySize) {
         dbc.precondition(iterator != null, "creating a MemoryIterator with a null iterator");
@@ -26,10 +26,25 @@ public class AtMostMemoryIterator<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        if (!memory.isMemoized()) {
-            memory.memoize(fetch(iterator, memorySize));
+        if (!hasMemory) {
+            memory = fetch(iterator, memorySize);
+            hasMemory = true;
         }
-        return !memory.value().isEmpty();
+        return !memory.isEmpty();
+    }
+
+    @Override
+    public T next() {
+        if (!hasMemory) {
+            memory = fetch(iterator, memorySize);
+            hasMemory = true;
+        }
+        return memory.remove();
+    }
+
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException("not implemented yet");
     }
 
     private static <T> Queue<T> fetch(Iterator<T> iterator, int size) {
@@ -42,18 +57,5 @@ public class AtMostMemoryIterator<T> implements Iterator<T> {
             }
         }
         return mem;
-    }
-
-    @Override
-    public T next() {
-        if (!memory.isMemoized()) {
-            memory.memoize(fetch(iterator, memorySize));
-        }
-        return memory.value().remove();
-    }
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("not implemented yet");
     }
 }
