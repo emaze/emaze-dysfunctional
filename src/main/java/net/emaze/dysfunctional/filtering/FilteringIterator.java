@@ -2,7 +2,6 @@ package net.emaze.dysfunctional.filtering;
 
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import java.util.Iterator;
-import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
@@ -14,7 +13,8 @@ public class FilteringIterator<E> implements Iterator<E> {
 
     private final Predicate<E> filter;
     private final Iterator<E> iterator;
-    private Maybe<E> prefetched = Maybe.nothing();
+    private E prefetched;
+    private boolean hasPrefetched;
 
     public FilteringIterator(Iterator<E> iterator, Predicate<E> filter) {
         dbc.precondition(iterator != null, "trying to create a FilteringIterator from a null iterator");
@@ -25,7 +25,7 @@ public class FilteringIterator<E> implements Iterator<E> {
 
     @Override
     public boolean hasNext() {
-        if (prefetched.hasValue()) {
+        if (hasPrefetched) {
             return true;
         }
         while (true) {
@@ -34,7 +34,8 @@ public class FilteringIterator<E> implements Iterator<E> {
             }
             final E element = iterator.next();
             if (filter.accept(element)) {
-                prefetched = Maybe.just(element);
+                prefetched = element;
+                hasPrefetched = true;
                 return true;
             }
         }
@@ -42,10 +43,9 @@ public class FilteringIterator<E> implements Iterator<E> {
 
     @Override
     public E next() {
-        if (prefetched.hasValue()) {
-            final E element = prefetched.value();
-            prefetched = Maybe.nothing();
-            return element;
+        if (hasPrefetched) {
+            hasPrefetched = false;
+            return prefetched;
         }
         while (true) {
             final E element = iterator.next();
