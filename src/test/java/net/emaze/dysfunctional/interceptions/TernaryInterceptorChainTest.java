@@ -1,9 +1,8 @@
 package net.emaze.dysfunctional.interceptions;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Deque;
+import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
@@ -20,7 +19,7 @@ public class TernaryInterceptorChainTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingChainWithNullInnermostDelegateYieldsException() {
-        final Deque<TernaryInterceptor<O, O, O>> chain = new ArrayDeque<TernaryInterceptor<O, O, O>>();
+        final Iterator<TernaryInterceptor<O, O, O>> chain = Iterations.iterator();
         new TernaryInterceptorChain<O, O, O, O>(null, chain);
     }
 
@@ -33,7 +32,7 @@ public class TernaryInterceptorChainTest {
     @Test
     public void chainingIsDoneInCorrectOrder() {
         final List<Integer> bucket = new ArrayList<Integer>();
-        final Iterable<TernaryInterceptor<O, O, O>> chain = Iterations.<TernaryInterceptor<O, O, O>>iterable(
+        final Iterator<TernaryInterceptor<O, O, O>> chain = Iterations.<TernaryInterceptor<O, O, O>>iterator(
                 new BucketFillingInterceptor(3, bucket),
                 new BucketFillingInterceptor(2, bucket),
                 new BucketFillingInterceptor(1, bucket));
@@ -45,7 +44,7 @@ public class TernaryInterceptorChainTest {
     @Test
     public void whenAnInterceptorThrowsInBeforeCorrectAfterAreCalled() {
         final List<Integer> bucket = new ArrayList<Integer>();
-        final Iterable<TernaryInterceptor<O, O, O>> chain = Iterations.<TernaryInterceptor<O, O, O>>iterable(
+        final Iterator<TernaryInterceptor<O, O, O>> chain = Iterations.<TernaryInterceptor<O, O, O>>iterator(
                 new BucketFillingInterceptor(3, bucket),
                 new ThrowingInterceptor(),
                 new BucketFillingInterceptor(1, bucket));

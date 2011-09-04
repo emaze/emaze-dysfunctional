@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.interceptions;
 
+import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
@@ -11,22 +12,20 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
  */
 public class InterceptorChain<R, T> implements Delegate<R, T> {
 
-    private final Iterable<Interceptor<T>> chain;
-    private final Delegate<R, T> innermost;
+    private final Delegate<R, T> composed;
 
-    public InterceptorChain(Delegate<R, T> innermost, Iterable<Interceptor<T>> chain) {
+    public InterceptorChain(Delegate<R, T> innermost, Iterator<Interceptor<T>> chain) {
         dbc.precondition(innermost != null, "innermost delegate cannot be null");
         dbc.precondition(chain != null, "chain cannot be null");
-        this.innermost = innermost;
-        this.chain = chain;
+        Delegate<R, T> current = innermost;
+        while(chain.hasNext()){
+            current = new InterceptorAdapter<R, T>(chain.next(), current);
+        }
+        this.composed = current;
     }
 
     @Override
     public R perform(T param) {
-        Delegate<R, T> current = innermost;
-        for (Interceptor<T> interceptor : chain) {
-            current = new InterceptorAdapter<R, T>(interceptor, current);
-        }
-        return current.perform(param);
+        return composed.perform(param);
     }
 }

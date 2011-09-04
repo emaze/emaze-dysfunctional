@@ -1,9 +1,8 @@
 package net.emaze.dysfunctional.interceptions;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Deque;
+import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
@@ -20,7 +19,7 @@ public class InterceptorChainTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingChainWithNullInnermostDelegateYieldsException() {
-        final Deque<Interceptor<O>> chain = new ArrayDeque<Interceptor<O>>();
+        final Iterator<Interceptor<O>> chain = Iterations.iterator();
         new InterceptorChain<O, O>(null, chain);
     }
 
@@ -33,7 +32,7 @@ public class InterceptorChainTest {
     @Test
     public void chainingIsDoneInCorrectOrder() {
         final List<Integer> bucket = new ArrayList<Integer>();
-        final Iterable<Interceptor<O>> chain = Iterations.<Interceptor<O>>iterable(
+        final Iterator<Interceptor<O>> chain = Iterations.<Interceptor<O>>iterator(
                 new BucketFillingInterceptor(3, bucket),
                 new BucketFillingInterceptor(2, bucket),
                 new BucketFillingInterceptor(1, bucket));
@@ -45,7 +44,7 @@ public class InterceptorChainTest {
     @Test
     public void whenAnInterceptorThrowsInBeforeCorrectAfterAreCalled() {
         final List<Integer> bucket = new ArrayList<Integer>();
-        final Iterable<Interceptor<O>> chain = Iterations.<Interceptor<O>>iterable(
+        final Iterator<Interceptor<O>> chain = Iterations.<Interceptor<O>>iterator(
                 new BucketFillingInterceptor(3, bucket),
                 new ThrowingInterceptor(),
                 new BucketFillingInterceptor(1, bucket));

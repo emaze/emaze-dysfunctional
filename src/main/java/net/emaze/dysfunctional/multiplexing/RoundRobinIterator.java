@@ -8,7 +8,9 @@ import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.HasNext;
 import net.emaze.dysfunctional.iterations.Iterations;
-import net.emaze.dysfunctional.numbers.CircularCounter;
+import net.emaze.dysfunctional.order.IntegerSequencingPolicy;
+import net.emaze.dysfunctional.order.PeriodicIterator;
+import net.emaze.dysfunctional.order.PeriodicSequencingPolicy;
 
 /**
  * longest multiplexing
@@ -19,12 +21,13 @@ import net.emaze.dysfunctional.numbers.CircularCounter;
 public class RoundRobinIterator<E> implements Iterator<E> {
 
     private final List<Iterator<E>> iterators = new ArrayList<Iterator<E>>();
-    private final CircularCounter currentIndex;
+    private final PeriodicIterator<Integer> indexSelector;
 
     public <T extends Iterator<E>> RoundRobinIterator(Iterator<T> iterators) {
         dbc.precondition(iterators != null, "trying to create a RoundRobinIterator from a null iterator of iterators");
         this.iterators.addAll(Consumers.all(iterators));
-        this.currentIndex = new CircularCounter(this.iterators.size());
+        final PeriodicSequencingPolicy<Integer> period = new PeriodicSequencingPolicy<Integer>(new IntegerSequencingPolicy(), 0, this.iterators.size()-1);
+        this.indexSelector = new PeriodicIterator<Integer>(period, 0);
     }
 
     @Override
@@ -50,8 +53,8 @@ public class RoundRobinIterator<E> implements Iterator<E> {
     }
 
     private Iterator<E> firstNonEmpty() {
-        for (;; currentIndex.incrementAndGet()) {
-            final Iterator<E> currentIter = iterators.get(currentIndex.get());
+        while(true) {
+            final Iterator<E> currentIter = iterators.get(indexSelector.next());
             if (currentIter.hasNext()) {
                 return currentIter;
             }

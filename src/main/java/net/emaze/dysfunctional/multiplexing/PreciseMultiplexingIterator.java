@@ -9,7 +9,9 @@ import net.emaze.dysfunctional.dispatching.logic.HasNext;
 import net.emaze.dysfunctional.iterations.Iterations;
 import net.emaze.dysfunctional.options.MaybeIteratorTransformer;
 import net.emaze.dysfunctional.options.Maybe;
-import net.emaze.dysfunctional.numbers.CircularCounter;
+import net.emaze.dysfunctional.order.IntegerSequencingPolicy;
+import net.emaze.dysfunctional.order.PeriodicIterator;
+import net.emaze.dysfunctional.order.PeriodicSequencingPolicy;
 
 /**
  * squared: [1,2] [a,b,c] -> just(1),just(a),just(2),just(b),nothing,just(c)
@@ -19,12 +21,13 @@ import net.emaze.dysfunctional.numbers.CircularCounter;
 public class PreciseMultiplexingIterator<E> implements Iterator<Maybe<E>> {
 
     private final List<Iterator<Maybe<E>>> iterators = new ArrayList<Iterator<Maybe<E>>>();
-    private final CircularCounter currentIndex;
+    private final PeriodicIterator<Integer> indexSelector;
 
     public <T extends Iterator<E>> PreciseMultiplexingIterator(Iterator<T> iterators) {
         dbc.precondition(iterators != null, "trying to create a PreciseMultiplexingIterator from a null iterator of iterators");
         this.iterators.addAll(Consumers.all(Iterations.transform(iterators, new MaybeIteratorTransformer<T, E>())));
-        this.currentIndex = new CircularCounter(this.iterators.size());
+        final PeriodicSequencingPolicy<Integer> period = new PeriodicSequencingPolicy<Integer>(new IntegerSequencingPolicy(), 0, this.iterators.size()-1);
+        this.indexSelector = new PeriodicIterator<Integer>(period, 0);
     }
 
     @Override
@@ -34,7 +37,7 @@ public class PreciseMultiplexingIterator<E> implements Iterator<Maybe<E>> {
 
     @Override
     public Maybe<E> next() {
-        return iterators.get(currentIndex.getAndIncrement()).next();
+        return iterators.get(indexSelector.next()).next();
     }
 
     @Override

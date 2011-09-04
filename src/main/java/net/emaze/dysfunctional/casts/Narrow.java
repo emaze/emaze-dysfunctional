@@ -1,4 +1,6 @@
-package net.emaze.dysfunctional.dispatching.delegates;
+package net.emaze.dysfunctional.casts;
+
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
  * i.e: Provider<Set<Integer>> compose = Dispatching.compose(new Narrow<Set<Integer>, HashSet<Integer>>(), new HashSetFactory<Integer>());
