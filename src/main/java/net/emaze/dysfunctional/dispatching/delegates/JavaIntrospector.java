@@ -1,9 +1,8 @@
-package net.emaze.dysfunctional.introspection;
+package net.emaze.dysfunctional.dispatching.delegates;
 
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 
 /**
  *

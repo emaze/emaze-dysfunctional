@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
-import net.emaze.dysfunctional.introspection.JavaIntrospector;
 import java.beans.PropertyDescriptor;
 import net.emaze.dysfunctional.reflection.MethodType;
 

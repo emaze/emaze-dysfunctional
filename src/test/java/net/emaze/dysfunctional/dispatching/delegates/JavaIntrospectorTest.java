@@ -1,5 +1,6 @@
-package net.emaze.dysfunctional.introspection;
+package net.emaze.dysfunctional.dispatching.delegates;
 
+import net.emaze.dysfunctional.dispatching.delegates.JavaIntrospector;
 import java.beans.PropertyDescriptor;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
