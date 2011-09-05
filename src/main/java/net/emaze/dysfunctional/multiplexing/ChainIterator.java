@@ -8,7 +8,7 @@ import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.HasNext;
-import net.emaze.dysfunctional.iterations.Iterations;
+import net.emaze.dysfunctional.reductions.Reductions;
 
 /**
  * A composite iterator (iterators are consumed in order)
@@ -26,7 +26,7 @@ public class ChainIterator<E> implements Iterator<E> {
 
     @Override
     public boolean hasNext() {
-        return iterators.isEmpty() ? false : Iterations.any(iterators, new HasNext<Iterator<E>>());
+        return iterators.isEmpty() ? false : Reductions.any(iterators, new HasNext<Iterator<E>>());
     }
 
     private static <E> Maybe<Iterator<E>> currentElement(List<Iterator<E>> iterators) {

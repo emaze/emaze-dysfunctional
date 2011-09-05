@@ -3,6 +3,7 @@ package net.emaze.dysfunctional.options;
 import java.util.Iterator;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.Transforming;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.filtering.Filtering;
 import net.emaze.dysfunctional.iterations.Iterations;
@@ -22,7 +23,7 @@ public abstract class Options {
      * @return an iterator of Maybe<R>
      */
     public static <R, T> Iterator<Maybe<R>> transform(Iterator<Maybe<T>> maybes, Delegate<R, T> delegate) {
-        return Iterations.transform(maybes, new WithJust<R, T>(delegate));
+        return Transforming.transform(maybes, new WithJust<R, T>(delegate));
     }
 
     /**
@@ -58,7 +59,7 @@ public abstract class Options {
      */
     public static <T> Iterator<T> justs(Iterator<Maybe<T>> maybes) {
         final Iterator<Maybe<T>> justs = Filtering.filter(maybes, new IsJust<T>());
-        return Iterations.transform(justs, new FromJust<T>());
+        return Transforming.transform(justs, new FromJust<T>());
     }
 
     /**
@@ -112,7 +113,7 @@ public abstract class Options {
      * @return an iterator of Maybe
      */
     public static <T> Iterator<Maybe<T>> lifts(Iterator<T> iterator) {
-        return Iterations.transform(iterator, new LiftMaybe<T>());
+        return Transforming.transform(iterator, new LiftMaybe<T>());
     }
 
     /**
@@ -122,7 +123,7 @@ public abstract class Options {
      * @return an iterator of Maybe
      */
     public static <T> Iterator<Maybe<T>> lifts(Iterable<T> iterable) {
-        return Iterations.transform(iterable, new LiftMaybe<T>());
+        return Transforming.transform(iterable, new LiftMaybe<T>());
     }
 
     /**
@@ -133,7 +134,7 @@ public abstract class Options {
      * @return an iterator of Maybe
      */
     public static <T> Iterator<Maybe<T>> lifts(T first, T second) {
-        return Iterations.transform(Iterations.iterator(first, second), new LiftMaybe<T>());
+        return Transforming.transform(Iterations.iterator(first, second), new LiftMaybe<T>());
     }
 
     /**
@@ -145,7 +146,7 @@ public abstract class Options {
      * @return
      */
     public static <T> Iterator<Maybe<T>> lifts(T first, T second, T third) {
-        return Iterations.transform(Iterations.iterator(first, second, third), new LiftMaybe<T>());
+        return Transforming.transform(Iterations.iterator(first, second, third), new LiftMaybe<T>());
     }
 
     /**
@@ -165,7 +166,7 @@ public abstract class Options {
      * @return an iterator of T
      */
     public static <T> Iterator<T> drops(Iterator<Maybe<T>> iterator) {
-        return Iterations.transform(iterator, new DropMaybe<T>());
+        return Transforming.transform(iterator, new DropMaybe<T>());
     }
 
     /**
@@ -175,7 +176,7 @@ public abstract class Options {
      * @return an iterator of T
      */
     public static <T> Iterator<T> drops(Iterable<Maybe<T>> iterable) {
-        return Iterations.transform(iterable, new DropMaybe<T>());
+        return Transforming.transform(iterable, new DropMaybe<T>());
     }
 
     /**
@@ -186,7 +187,7 @@ public abstract class Options {
      * @return an iterator of T
      */
     public static <T> Iterator<T> drops(Maybe<T> first, Maybe<T> second) {
-        return Iterations.transform(Iterations.iterator(first, second), new DropMaybe<T>());
+        return Transforming.transform(Iterations.iterator(first, second), new DropMaybe<T>());
     }
 
     /**
@@ -198,7 +199,7 @@ public abstract class Options {
      * @return an iterator of T
      */
     public static <T> Iterator<T> drops(Maybe<T> first, Maybe<T> second, Maybe<T> third) {
-        return Iterations.transform(Iterations.iterator(first, second, third), new DropMaybe<T>());
+        return Transforming.transform(Iterations.iterator(first, second, third), new DropMaybe<T>());
     }
 
     /**
@@ -210,7 +211,7 @@ public abstract class Options {
      */
     public static <T1, T2> Iterator<T1> lefts(Iterator<Either<T1, T2>> eithers) {
         dbc.precondition(eithers != null, "can not fetch lefts from a null iterator");
-        return Options.justs(Iterations.transform(eithers, new MaybeLeft<T1, T2>()));
+        return Options.justs(Transforming.transform(eithers, new MaybeLeft<T1, T2>()));
     }
 
     /**
@@ -222,6 +223,6 @@ public abstract class Options {
      */
     public static <T1, T2> Iterator<T2> rights(Iterator<Either<T1, T2>> eithers) {
         dbc.precondition(eithers != null, "can not fetch rights from a null iterator");
-        return Options.justs(Iterations.transform(eithers, new MaybeRight<T1, T2>()));
+        return Options.justs(Transforming.transform(eithers, new MaybeRight<T1, T2>()));
     }
 }

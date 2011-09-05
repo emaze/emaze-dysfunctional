@@ -1,8 +1,8 @@
 package net.emaze.dysfunctional.strings;
 
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.Transforming;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
-import net.emaze.dysfunctional.iterations.Iterations;
 
 /**
  * ["oNe","tWo","threE"], "-" => "ONE-TWO-THREE"
@@ -21,6 +21,6 @@ public class WordsToUpperSnakeCase implements Delegate<String, String[]> {
     @Override
     public String perform(String[] words) {
         dbc.precondition(words != null, "cannot upperSnakeCase a null array of words");
-        return Strings.interpose(Iterations.transform(words, toUpper), snakeGlyph);
+        return Strings.interpose(Transforming.transform(words, toUpper), snakeGlyph);
     }
 }

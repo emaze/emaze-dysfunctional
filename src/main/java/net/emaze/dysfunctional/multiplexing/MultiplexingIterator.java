@@ -7,9 +7,10 @@ import java.util.List;
 import java.util.Queue;
 import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.Transforming;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.logic.HasNext;
-import net.emaze.dysfunctional.iterations.Iterations;
+import net.emaze.dysfunctional.reductions.Reductions;
 
 /**
  * shortest 
@@ -49,10 +50,10 @@ public class MultiplexingIterator<E> implements Iterator<E> {
     }
 
     private void tryPrefetch() {
-        if (!Iterations.every(iterators, new HasNext<Iterator<E>>())) {
+        if (!Reductions.every(iterators, new HasNext<Iterator<E>>())) {
             return;
         }
-        prefetched.addAll(Consumers.all(Iterations.transform(iterators, new Delegate<E, Iterator<E>>() {
+        prefetched.addAll(Consumers.all(Transforming.transform(iterators, new Delegate<E, Iterator<E>>() {
 
             @Override
             public E perform(Iterator<E> iter) {

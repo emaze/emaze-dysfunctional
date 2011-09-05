@@ -5,12 +5,12 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.casts.Casts;
-import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.Transforming;
 import net.emaze.dysfunctional.multiplexing.ChainIterator;
 import net.emaze.dysfunctional.dispatching.delegates.IteratorPlucker;
-import net.emaze.dysfunctional.iterations.Iterations;
 import net.emaze.dysfunctional.order.SequencingPolicy;
+import net.emaze.dysfunctional.reductions.Reductions;
 import net.emaze.dysfunctional.strings.Strings;
 
 /**
@@ -41,7 +41,7 @@ public class SparseRange<T> implements Range<T> {
     @Override
     public boolean contains(final T element) {
         dbc.precondition(element != null, "checking if null is contained in SparseRange<T>");
-        return Iterations.any(ranges, new RangeNotContaining<T>(element));
+        return Reductions.any(ranges, new RangeNotContaining<T>(element));
     }
 
     @Override
@@ -62,7 +62,7 @@ public class SparseRange<T> implements Range<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new ChainIterator<T>(Iterations.transform(ranges, new IteratorPlucker<T, DenseRange<T>>()));
+        return new ChainIterator<T>(Transforming.transform(ranges, new IteratorPlucker<T, DenseRange<T>>()));
     }
 
     @Override
@@ -87,7 +87,7 @@ public class SparseRange<T> implements Range<T> {
     @Override
     public boolean overlaps(final Range<T> other) {
         dbc.precondition(other != null, "checking for overlaps between a SparseRange<T> and null");
-        return Iterations.any(ranges, new RangeNotOverlappingWith<T>(other));
+        return Reductions.any(ranges, new RangeNotOverlappingWith<T>(other));
     }
 
     @Override

@@ -7,10 +7,10 @@ import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.HasNext;
-import net.emaze.dysfunctional.iterations.Iterations;
 import net.emaze.dysfunctional.order.IntegerSequencingPolicy;
 import net.emaze.dysfunctional.order.PeriodicIterator;
 import net.emaze.dysfunctional.order.PeriodicSequencingPolicy;
+import net.emaze.dysfunctional.reductions.Reductions;
 
 /**
  * longest multiplexing
@@ -49,7 +49,7 @@ public class RoundRobinIterator<E> implements Iterator<E> {
     }
 
     private boolean empty() {
-        return !Iterations.any(iterators, new HasNext<Iterator<E>>());
+        return !Reductions.any(iterators, new HasNext<Iterator<E>>());
     }
 
     private Iterator<E> firstNonEmpty() {

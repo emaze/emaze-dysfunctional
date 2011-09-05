@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.Transforming;
 import net.emaze.dysfunctional.dispatching.delegates.IteratorPlucker;
 import net.emaze.dysfunctional.iterations.Iterations;
 import net.emaze.dysfunctional.options.Maybe;
@@ -22,7 +23,7 @@ public abstract class Multiplexing {
      * @return the flattened iterator
      */
     public static <E, T extends Iterable<E>> Iterator<E> flatten(Iterator<T> iterables) {
-        return new ChainIterator<E>(Iterations.transform(iterables, new IteratorPlucker<E, T>()));
+        return new ChainIterator<E>(Transforming.transform(iterables, new IteratorPlucker<E, T>()));
     }
 
     /**

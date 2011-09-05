@@ -1,7 +1,9 @@
 package net.emaze.dysfunctional.reductions;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import net.emaze.dysfunctional.dispatching.logic.IsTrue;
 import net.emaze.dysfunctional.order.ComparableComparator;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,6 +21,8 @@ import org.junit.runners.Suite;
     ReductionsTest.CountInteger.class,
     ReductionsTest.Maximum.class,
     ReductionsTest.Minimum.class,
+    ReductionsTest.Any.class,
+    ReductionsTest.Every.class,
     ReductionsTest.Facade.class
 })
 public class ReductionsTest {
@@ -115,6 +119,81 @@ public class ReductionsTest {
         public void canExtractMinimumWithComparable() {
             int min = Reductions.minimum(list.iterator(), 2);
             Assert.assertEquals(1, min);
+        }
+    }
+    public static class Any {
+
+        @Test
+        public void anyMatchesIfAtLeastOnePredicateMatches() {
+            boolean got = Reductions.any(Arrays.asList(false, true), new IsTrue());
+            Assert.assertTrue(got);
+        }
+
+        @Test
+        public void anyDoesntMatchIfNoPredicateMatches() {
+            boolean got = Reductions.any(Arrays.asList(false), new IsTrue());
+            Assert.assertFalse(got);
+        }
+
+        @Test
+        public void canUseAnyWithIterators() {
+            boolean got = Reductions.any(Arrays.asList(false).iterator(), new IsTrue());
+            Assert.assertFalse(got);
+        }
+
+        @Test
+        public void canUseAnyWithArrays() {
+            boolean got = Reductions.any(new Boolean[]{false}, new IsTrue());
+            Assert.assertFalse(got);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallAnyWithNullIterable() {
+            final Iterable iterable = null;
+            Reductions.any(iterable, new IsTrue());
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallAnyWithNullPredicate() {
+            Reductions.any(new ArrayList(), null);
+        }
+    }
+
+    public static class Every {
+
+        @Test
+        public void everyMatchesIfEveryPredicateMatches() {
+            boolean got = Reductions.every(Arrays.asList(true, true), new IsTrue());
+            Assert.assertTrue(got);
+        }
+
+        @Test
+        public void everyDoesntMatchIfOnePredicateDoesntMatch() {
+            boolean got = Reductions.every(Arrays.asList(true, false), new IsTrue());
+            Assert.assertFalse(got);
+        }
+
+        @Test
+        public void canUseEveryWithIterators() {
+            boolean got = Reductions.every(Arrays.asList(false).iterator(), new IsTrue());
+            Assert.assertFalse(got);
+        }
+
+        @Test
+        public void canUseEveryWithArrays() {
+            boolean got = Reductions.every(new Boolean[]{false}, new IsTrue());
+            Assert.assertFalse(got);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallEveryWithNullIterable() {
+            final Iterable iterable = null;
+            Reductions.every(iterable, new IsTrue());
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallEveryWithNullPredicate() {
+            Reductions.every(new ArrayList(), null);
         }
     }
 

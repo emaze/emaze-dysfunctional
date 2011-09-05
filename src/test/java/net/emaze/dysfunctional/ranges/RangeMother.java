@@ -3,6 +3,7 @@ package net.emaze.dysfunctional.ranges;
 import java.util.Comparator;
 import java.util.Iterator;
 import net.emaze.dysfunctional.consumers.Consumers;
+import net.emaze.dysfunctional.dispatching.Transforming;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.iterations.Iterations;
 import net.emaze.dysfunctional.order.ComparableComparator;
@@ -40,7 +41,7 @@ public class RangeMother {
     }
 
     private static SparseRange<Integer> sparse(Iterator<Pair<Integer, Integer>> pairs) {
-        final Iterator<DenseRange<Integer>> ranges = Iterations.transform(pairs, new Delegate<DenseRange<Integer>, Pair<Integer, Integer>>() {
+        final Iterator<DenseRange<Integer>> ranges = Transforming.transform(pairs, new Delegate<DenseRange<Integer>, Pair<Integer, Integer>>() {
 
             @Override
             public DenseRange<Integer> perform(Pair<Integer, Integer> pair) {
