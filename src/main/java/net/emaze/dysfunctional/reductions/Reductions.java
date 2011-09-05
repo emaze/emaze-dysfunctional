@@ -108,7 +108,7 @@ public abstract class Reductions {
      * @param init the initial value to be used 
      * @return the max element contained in the iterator
      */
-    public static <E, C extends Comparator<E>> E max(Iterator<E> iterator, C comparator, E init) {
+    public static <E, C extends Comparator<E>> E maximum(Iterator<E> iterator, C comparator, E init) {
         return Reductions.reduce(iterator, new Max<E>(comparator), init);
     }
 
@@ -119,7 +119,7 @@ public abstract class Reductions {
      * @param init the initial value to be used
      * @return the max element contained in the iterator
      */
-    public static <E extends Comparable<E>> E max(Iterator<E> iterator, E init) {
+    public static <E extends Comparable<E>> E maximum(Iterator<E> iterator, E init) {
         return Reductions.reduce(iterator, new Max<E>(new ComparableComparator<E>()), init);
     }
 
@@ -132,7 +132,7 @@ public abstract class Reductions {
      * @param init the initial value to be used
      * @return the min element contained in the iterator
      */
-    public static <E, C extends Comparator<E>> E min(Iterator<E> iterator, C comparator, E init) {
+    public static <E, C extends Comparator<E>> E minimum(Iterator<E> iterator, C comparator, E init) {
         return Reductions.reduce(iterator, new Min<E>(comparator), init);
     }
 
@@ -143,7 +143,7 @@ public abstract class Reductions {
      * @param init the initial value to be used
      * @return the min element contained in the iterator
      */
-    public static <E extends Comparable<E>> E min(Iterator<E> iterator, E init) {
+    public static <E extends Comparable<E>> E minimum(Iterator<E> iterator, E init) {
         return Reductions.reduce(iterator, new Min<E>(new ComparableComparator<E>()), init);
     }
 }

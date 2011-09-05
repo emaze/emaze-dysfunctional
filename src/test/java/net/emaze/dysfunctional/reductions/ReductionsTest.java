@@ -92,13 +92,13 @@ public class ReductionsTest {
 
         @Test
         public void canExtractMaximumWithComparator() {
-            int max = Reductions.max(list.iterator(), new ComparableComparator<Integer>(), 0);
+            int max = Reductions.maximum(list.iterator(), new ComparableComparator<Integer>(), 0);
             Assert.assertEquals(2, max);
         }
 
         @Test
         public void canExtractMaximumWithComparable() {
-            int max = Reductions.max(list.iterator(), 0);
+            int max = Reductions.maximum(list.iterator(), 0);
             Assert.assertEquals(2, max);
         }
     }
@@ -107,13 +107,13 @@ public class ReductionsTest {
 
         @Test
         public void canExtractMinimumWithComparator() {
-            int min = Reductions.min(list.iterator(), new ComparableComparator<Integer>(), 2);
+            int min = Reductions.minimum(list.iterator(), new ComparableComparator<Integer>(), 2);
             Assert.assertEquals(1, min);
         }
 
         @Test
         public void canExtractMinimumWithComparable() {
-            int min = Reductions.min(list.iterator(), 2);
+            int min = Reductions.minimum(list.iterator(), 2);
             Assert.assertEquals(1, min);
         }
     }

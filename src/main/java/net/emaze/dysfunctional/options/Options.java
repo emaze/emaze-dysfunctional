@@ -3,10 +3,7 @@ package net.emaze.dysfunctional.options;
 import java.util.Iterator;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.ConstantDelegate;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
-import net.emaze.dysfunctional.dispatching.logic.NotNull;
 import net.emaze.dysfunctional.filtering.Filtering;
 import net.emaze.dysfunctional.iterations.Iterations;
 
