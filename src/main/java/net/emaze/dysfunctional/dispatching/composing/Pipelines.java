@@ -3,6 +3,9 @@ package net.emaze.dysfunctional.dispatching.composing;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
+import net.emaze.dysfunctional.dispatching.composing.PipelinedAction;
+import net.emaze.dysfunctional.dispatching.composing.PipelinedBinaryAction;
+import net.emaze.dysfunctional.dispatching.composing.PipelinedTernaryAction;
 import net.emaze.dysfunctional.iterations.Iterations;
 
 public abstract class Pipelines {
