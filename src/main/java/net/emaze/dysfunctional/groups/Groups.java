@@ -28,7 +28,7 @@ public abstract class Groups {
         return groupBy(groupies, grouper, collectionProvider, new HashMapFactory<K, C>());
     }
 
-    public static <VC extends Collection<V>, M extends Map<K, VC>, C extends VC, K, V> Map<K, VC> groupBy(Iterable<V> groupies, Delegate<K, V> grouper, Provider<C> collectionProvider, Provider<M> mapProvider) {
+    public static <M extends Map<K, C>, C extends Collection<V>, K, V> Map<K, C> groupBy(Iterable<V> groupies, Delegate<K, V> grouper, Provider<C> collectionProvider, Provider<M> mapProvider) {
         dbc.precondition(groupies != null, "cannot group with a null iterable");
         dbc.precondition(grouper != null, "cannot group with a null grouper");
         dbc.precondition(collectionProvider != null, "cannot group with a null collectionProvider");
