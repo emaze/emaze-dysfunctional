@@ -23,13 +23,22 @@ public abstract class Iterations {
     }
 
     /**
+     * Creates an empty iterator
+     * @param <T> the element parameter type
+     * @return an empty iterator.
+     */
+    public static <T> Iterator<T> iterator() {
+        return new EmptyIterator<T>();
+    }
+
+    /**
      * Creates an iterator from the passed value.
      * @param <T> the element parameter type
      * @param value the value to be yielded by the iterator
      * @return an iterator.
      */
     public static <T> Iterator<T> iterator(T value) {
-        return new ArrayIterator<T>(array(value));
+        return new SingletonIterator<T>(value);
     }
 
     /**
@@ -64,6 +73,16 @@ public abstract class Iterations {
     public static <T> Iterator<T> iterator(T... values) {
         return new ArrayIterator<T>(values);
     }
+
+    /**
+     * Creates an empty iterable.
+     * @param <T> the element parameter type
+     * @return an iterable always yielding an empty iterator.
+     */
+    public static <T> Iterable<T> iterable() {
+        return new EmptyIterable<T>();
+    }
+
     /**
      * Creates an iterable from the passed value.
      * @param <T> the element parameter type
@@ -71,7 +90,7 @@ public abstract class Iterations {
      * @return an iterable.
      */
     public static <T> Iterable<T> iterable(T value) {
-        return new ArrayIterable<T>(array(value));
+        return new SingletonIterable<T>(value);
     }
 
     /**
@@ -106,5 +125,4 @@ public abstract class Iterations {
     public static <T> Iterable<T> iterable(T... values) {
         return new ArrayIterable<T>(values);
     }
-    
 }
