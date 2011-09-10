@@ -13,38 +13,38 @@ public class StrictOrderingDoubleComparatorTest {
 
     @Test
     public void positiveZeroIsGreaterThanNegativeZero() {
-        Assert.assertEquals(Order.LHS_IS_GREATER, comparator.compare(+0.0, -0.0));
+        Assert.assertEquals(Order.GT.order(), comparator.compare(+0.0, -0.0));
     }
 
     @Test
     public void negativeZeroIsLesserThanPositiveZero() {
-        Assert.assertEquals(Order.LHS_IS_LESSER, comparator.compare(-0.0, +0.0));
+        Assert.assertEquals(Order.LT.order(), comparator.compare(-0.0, +0.0));
     }
 
     @Test
     public void oneIsGreaterThanPositiveZero() {
-        Assert.assertEquals(Order.LHS_IS_GREATER, comparator.compare(1., +0.0));
+        Assert.assertEquals(Order.GT.order(), comparator.compare(1., +0.0));
     }
 
     @Test
     public void oneIsGreaterThanNegativeZero() {
-        Assert.assertEquals(Order.LHS_IS_GREATER, comparator.compare(1., -0.0));
+        Assert.assertEquals(Order.GT.order(), comparator.compare(1., -0.0));
     }
 
     @Test
     public void negativeOneIsLesserThanPositiveZero() {
-        Assert.assertEquals(Order.LHS_IS_LESSER, comparator.compare(-1., +0.0));
+        Assert.assertEquals(Order.LT.order(), comparator.compare(-1., +0.0));
     }
 
     @Test
     public void positiveOneIsLesserThanPositiveZero() {
-        Assert.assertEquals(Order.LHS_IS_GREATER, comparator.compare(+1., -0.0));
+        Assert.assertEquals(Order.GT.order(), comparator.compare(+1., -0.0));
     }
 
     @Test
     public void notANumberIsEqualsToHimself() {
         Assert.assertFalse(Float.NaN == Float.NaN);
-        Assert.assertEquals(Order.SAME_ORDER, comparator.compare(Double.NaN, Double.NaN));
+        Assert.assertEquals(Order.EQ.order(), comparator.compare(Double.NaN, Double.NaN));
     }
 
     @Test(expected = IllegalArgumentException.class)

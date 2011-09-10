@@ -19,8 +19,7 @@ public class Min<T> implements BinaryDelegate<T, T, T> {
 
     @Override
     public T perform(T lhs, T rhs) {
-        final int result = comparator.compare(lhs, rhs);
-        if (result == Order.LHS_IS_LESSER || result == Order.SAME_ORDER) {
+        if (Order.from(comparator.compare(lhs, rhs)).isLte()) {
             return lhs;
         }
         return rhs;

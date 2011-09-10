@@ -20,9 +20,9 @@ public class MakeOrder<T> implements BinaryDelegate<Pair<T,T>, T, T> {
 
     @Override
     public Pair<T,T> perform(T lhs, T rhs) {
-        final int result = comparator.compare(lhs, rhs);
-        final T lower = Order.LHS_IS_GREATER == result ? rhs : lhs;
-        final T higher = Order.LHS_IS_GREATER == result ? lhs : rhs;
+        final Order result = Order.from(comparator.compare(lhs, rhs));
+        final T lower = Order.GT == result ? rhs : lhs;
+        final T higher = Order.GT == result ? lhs : rhs;
         return Pair.of(lower, higher);
     }
 }

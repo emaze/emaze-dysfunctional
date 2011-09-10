@@ -19,10 +19,9 @@ public class Max<T> implements BinaryDelegate<T, T, T> {
 
     @Override
     public T perform(T lhs, T rhs) {
-        final int result = comparator.compare(lhs, rhs);
-        if (result == Order.LHS_IS_GREATER || result == Order.SAME_ORDER) {
+        if (Order.from(comparator.compare(lhs, rhs)).isGte()) {
             return lhs;
         }
-        return rhs;        
+        return rhs;
     }
 }

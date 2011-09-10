@@ -63,7 +63,7 @@ public class SparseRangeTest {
         public void sameDensifiedRangeHaveSameOrder() {
             SparseRange<Integer> former = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(0, 1), RangeMother.r(1, 2), RangeMother.r(4, 5));
             SparseRange<Integer> latter = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(0, 2), RangeMother.r(4, 5));
-            Assert.assertEquals(Order.SAME_ORDER, former.compareTo(latter));
+            Assert.assertEquals(Order.EQ.order(), former.compareTo(latter));
         }
 
         @Test

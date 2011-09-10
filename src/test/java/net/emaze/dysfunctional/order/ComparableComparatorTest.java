@@ -39,7 +39,7 @@ public class ComparableComparatorTest {
         @Override
         public int compareTo(ComparableBean o) {
             called.setContent(true);
-            return Order.SAME_ORDER;
+            return Order.EQ.order();
         }
     }
 }

@@ -52,7 +52,7 @@ public class DenseRangeTest {
         public void rangesWithSameBoundsHaveSameOrder() {
             DenseRange<Integer> former = RangeMother.r(0, 10);
             DenseRange<Integer> latter = RangeMother.r(0, 10);
-            Assert.assertEquals(Order.SAME_ORDER, former.compareTo(latter));
+            Assert.assertEquals(Order.EQ.order(), former.compareTo(latter));
         }
 
         @Test

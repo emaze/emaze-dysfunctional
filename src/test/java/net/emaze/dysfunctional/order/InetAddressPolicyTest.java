@@ -32,7 +32,7 @@ public class InetAddressPolicyTest {
         InetAddressPolicy policy = new InetAddressPolicy();
         Inet4Address former = (Inet4Address) Inet4Address.getByName("127.0.0.1");
         Inet4Address latter = (Inet4Address) Inet4Address.getByName("127.0.0.0");
-        Assert.assertEquals(Order.LHS_IS_GREATER, policy.compare(former, latter));
+        Assert.assertEquals(Order.GT.order(), policy.compare(former, latter));
     }
 
     @Test
