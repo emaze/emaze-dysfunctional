@@ -44,14 +44,13 @@ public class CenteredWindowIterator<T> implements Iterator<Queue<Maybe<T>>> {
         }
         if (!freshIterator) {
             window.remove();
-        } 
+        }
         freshIterator = false;
         fillWindow();
         return new LinkedList<Maybe<T>>(window);
     }
-    
-    
-    private boolean isConsumed(){
+
+    private boolean isConsumed() {
         if (freshIterator) {
             return !center().hasValue();
         }
@@ -73,11 +72,10 @@ public class CenteredWindowIterator<T> implements Iterator<Queue<Maybe<T>>> {
 
     private void fillWindow() {
         while (window.size() != windowSize) {
-            if (!iter.hasNext()) {
-                window.add(Maybe.<T>nothing());
-            } else {
-                window.add(Maybe.just(iter.next()));
-            }
+            final Maybe<T> maybe = iter.hasNext()
+                    ? Maybe.just(iter.next())
+                    : Maybe.<T>nothing();
+            window.add(maybe);
         }
     }
 }
