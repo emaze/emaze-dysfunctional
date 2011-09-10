@@ -1,10 +1,13 @@
 package net.emaze.dysfunctional.windows;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Queue;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.options.Maybe;
 
 /**
@@ -12,19 +15,22 @@ import net.emaze.dysfunctional.options.Maybe;
  * @param <T>
  * @author rferranti
  */
-public class CenteredWindowIterator<T> implements Iterator<Queue<Maybe<T>>> {
+public class CenteredWindowIterator<W extends Collection<Maybe<T>>, T> implements Iterator<W> {
 
     private final Iterator<T> iter;
     private final int windowSize;
+    private final Provider<W> provider;    
     private final LinkedList<Maybe<T>> window = new LinkedList<Maybe<T>>();
     private boolean freshIterator = true;
 
-    public CenteredWindowIterator(Iterator<T> iter, int windowSize) {
+    public CenteredWindowIterator(Iterator<T> iter, int windowSize, Provider<W> provider) {
         dbc.precondition(iter != null, "cannot create a CenteredWindowIterator with a null iterator");
         dbc.precondition(windowSize > 2, "cannot create a CenteredWindowIterator with a non positive or 1 window size");
         dbc.precondition(windowSize % 2 == 1, "cannot create a CenteredWindowIterator with an even windowSize");
+        dbc.precondition(provider != null, "cannot create a CenteredWindowIterator with an null provider");
         this.iter = iter;
         this.windowSize = windowSize;
+        this.provider = provider;        
         for (int i = 0; i != windowSize / 2; ++i) {
             window.add(Maybe.<T>nothing());
         }
@@ -37,7 +43,7 @@ public class CenteredWindowIterator<T> implements Iterator<Queue<Maybe<T>>> {
     }
 
     @Override
-    public Queue<Maybe<T>> next() {
+    public W next() {
         fillWindow();
         if (isConsumed()) {
             throw new NoSuchElementException("iterator is consumed");
@@ -47,7 +53,9 @@ public class CenteredWindowIterator<T> implements Iterator<Queue<Maybe<T>>> {
         }
         freshIterator = false;
         fillWindow();
-        return new LinkedList<Maybe<T>>(window);
+        final W collection = provider.provide();
+        collection.addAll(window);
+        return collection;
     }
 
     private boolean isConsumed() {

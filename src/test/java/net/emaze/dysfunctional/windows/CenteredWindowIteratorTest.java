@@ -2,13 +2,17 @@ package net.emaze.dysfunctional.windows;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Queue;
+import net.emaze.dysfunctional.casts.Narrow;
+import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.consumers.Consumers;
+import net.emaze.dysfunctional.dispatching.Dispatching;
+import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import net.emaze.dysfunctional.iterations.Iterations;
 import net.emaze.dysfunctional.options.Maybe;
+import net.emaze.dysfunctional.testing.O;
 import org.junit.Test;
 import org.junit.Assert;
 
@@ -17,51 +21,61 @@ import org.junit.Assert;
  * @author rferranti
  */
 public class CenteredWindowIteratorTest {
+    private static Provider<List<Maybe<O>>> LIST_FACTORY = Dispatching.compose(new Narrow<List<Maybe<O>>, ArrayList<Maybe<O>>>(), new ArrayListFactory<Maybe<O>>());
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingCenteredWindowIteratorWithNullIteratorYieldsException() {
-        new CenteredWindowIterator<Object>(null, 1);
+        new CenteredWindowIterator<List<Maybe<O>>, O>(null, 1, LIST_FACTORY);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingCenteredWindowIteratorWithNonPositiveWindowSizeYieldsException() {
-        new CenteredWindowIterator<Object>(Collections.emptyList().iterator(), 0);
+        final Iterator<O> iter = Iterations.iterator();
+        new CenteredWindowIterator<List<Maybe<O>>, O>(iter, 0, LIST_FACTORY);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingCenteredWindowIteratorWithEvenWindowSizeYieldsException() {
-        new CenteredWindowIterator<Object>(Collections.emptyList().iterator(), 4);
+        final Iterator<O> iter = Iterations.iterator();
+        new CenteredWindowIterator<List<Maybe<O>>, O>(iter, 4, LIST_FACTORY);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void creatingCenteredWindowIteratorWithNullProviderYieldsException() {
+        final Iterator<O> iter = Iterations.iterator();
+        new CenteredWindowIterator<List<Maybe<O>>, O>(iter, 3, null);
     }
 
     @Test(expected = NoSuchElementException.class)
     public void consumingEmptyIteratorYieldsException() {
-        new CenteredWindowIterator<Object>(Collections.emptyList().iterator(), 3).next();
+        final Iterator<O> iter = Iterations.iterator();
+        new CenteredWindowIterator<List<Maybe<O>>, O>(iter, 3, LIST_FACTORY).next();
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void removingFromCenteredWindowIteratorYieldsException() {
-        new CenteredWindowIterator<Integer>(Arrays.asList(1).iterator(), 3).remove();
+        new CenteredWindowIterator<List<Maybe<O>>, O>(Iterations.iterator(O.ONE), 3, LIST_FACTORY).remove();
     }
 
     @Test
     public void windowsAreInOrder() {
-        Iterator<Integer> iter = Arrays.<Integer>asList(1, 2, 3).iterator();
-        CenteredWindowIterator<Integer> win = new CenteredWindowIterator<Integer>(iter, 3);
-        List<Queue<Maybe<Integer>>> got = Consumers.all(win);
-        List<List<Maybe<Integer>>> expected = new ArrayList<List<Maybe<Integer>>>();
-        expected.add(Arrays.asList(Maybe.<Integer>nothing(), Maybe.just(1), Maybe.just(2)));
-        expected.add(Arrays.asList(Maybe.just(1), Maybe.just(2), Maybe.just(3)));
-        expected.add(Arrays.asList(Maybe.just(2), Maybe.just(3), Maybe.<Integer>nothing()));
+        final Iterator<O> iter = Iterations.iterator(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+        final CenteredWindowIterator<List<Maybe<O>>, O> win = new CenteredWindowIterator<List<Maybe<O>>, O>(iter, 3, LIST_FACTORY);
+        final List<List<Maybe<O>>> got = Consumers.all(win);
+        final List<List<Maybe<O>>> expected = new ArrayList<List<Maybe<O>>>();
+        expected.add(Arrays.asList(Maybe.<O>nothing(), Maybe.just(O.ONE), Maybe.just(O.ANOTHER)));
+        expected.add(Arrays.asList(Maybe.just(O.ONE), Maybe.just(O.ANOTHER), Maybe.just(O.YET_ANOTHER)));
+        expected.add(Arrays.asList(Maybe.just(O.ANOTHER), Maybe.just(O.YET_ANOTHER), Maybe.<O>nothing()));
         Assert.assertEquals(expected, got);
     }
 
     @Test
     public void singletonIteratorYieldOneElementInWindow() {
-        Iterator<Integer> iter = Arrays.<Integer>asList(1).iterator();
-        CenteredWindowIterator<Integer> win = new CenteredWindowIterator<Integer>(iter, 3);
-        List<Queue<Maybe<Integer>>> got = Consumers.all(win);
-        List<List<Maybe<Integer>>> expected = new ArrayList<List<Maybe<Integer>>>();
-        expected.add(Arrays.asList(Maybe.<Integer>nothing(), Maybe.just(1), Maybe.<Integer>nothing()));
+        final Iterator<O> iter = Iterations.iterator(O.ONE);
+        final CenteredWindowIterator<List<Maybe<O>>, O> win = new CenteredWindowIterator<List<Maybe<O>>, O>(iter, 3, LIST_FACTORY);
+        final List<List<Maybe<O>>> got = Consumers.all(win);
+        final List<List<Maybe<O>>> expected = new ArrayList<List<Maybe<O>>>();
+        expected.add(Arrays.asList(Maybe.<O>nothing(), Maybe.just(O.ONE), Maybe.<O>nothing()));
         Assert.assertEquals(expected, got);
 
     }
