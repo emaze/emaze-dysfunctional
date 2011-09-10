@@ -1,10 +1,6 @@
 package net.emaze.dysfunctional.iterations;
 
-import net.emaze.dysfunctional.dispatching.Tapper;
 import java.util.Iterator;
-import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.actions.Action;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
  * iterating shortcuts (usage shouldn't be abused)
