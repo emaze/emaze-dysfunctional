@@ -1,14 +1,46 @@
 package net.emaze.dysfunctional.dispatching.composing;
 
+import java.util.Iterator;
+import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
-import net.emaze.dysfunctional.dispatching.composing.PipelinedAction;
-import net.emaze.dysfunctional.dispatching.composing.PipelinedBinaryAction;
-import net.emaze.dysfunctional.dispatching.composing.PipelinedTernaryAction;
 import net.emaze.dysfunctional.iterations.Iterations;
 
 public abstract class Pipelines {
+
+    public static class Unary {
+
+        public static <T> PipelinedAction<T> pipeline(Iterable<Action<T>> actions) {
+            return new PipelinedAction<T>(actions);
+        }
+
+        public static <T> PipelinedAction<T> pipeline(Iterator<Action<T>> actions) {
+            return new PipelinedAction<T>(Consumers.all(actions));
+        }
+    }
+
+    public static class Binary {
+
+        public static <T1, T2> PipelinedBinaryAction<T1, T2> pipeline(Iterable<BinaryAction<T1, T2>> actions) {
+            return new PipelinedBinaryAction<T1, T2>(actions);
+        }
+
+        public static <T1, T2> PipelinedBinaryAction<T1, T2> pipeline(Iterator<BinaryAction<T1, T2>> actions) {
+            return new PipelinedBinaryAction<T1, T2>(Consumers.all(actions));
+        }
+    }
+
+    public static class Ternary {
+
+        public static <T1, T2, T3> PipelinedTernaryAction<T1, T2, T3> pipeline(Iterable<TernaryAction<T1, T2, T3>> actions) {
+            return new PipelinedTernaryAction<T1, T2, T3>(actions);
+        }
+
+        public static <T1, T2, T3> PipelinedTernaryAction<T1, T2, T3> pipeline(Iterator<TernaryAction<T1, T2, T3>> actions) {
+            return new PipelinedTernaryAction<T1, T2, T3>(Consumers.all(actions));
+        }
+    }
 
     public static <T> PipelinedAction<T> pipeline(Action<T> action) {
         return new PipelinedAction<T>(Iterations.iterable(action));
