@@ -6,10 +6,10 @@ import net.emaze.dysfunctional.options.Box;
 
 public class BinaryCapturingDelegate<R, T1, T2> implements BinaryDelegate<R, T1, T2> {
 
-    public final BinaryDelegate<R, T1, T2> nested;
-    public final Box<R> result;
-    public final Box<T1> param1;
-    public final Box<T2> param2;
+    private final BinaryDelegate<R, T1, T2> nested;
+    private final Box<R> result;
+    private final Box<T1> param1;
+    private final Box<T2> param2;
 
     public BinaryCapturingDelegate(BinaryDelegate<R, T1, T2> nested, Box<R> result, Box<T1> param1, Box<T2> param2) {
         dbc.precondition(nested != null, "cannot capture from a null delegate");
