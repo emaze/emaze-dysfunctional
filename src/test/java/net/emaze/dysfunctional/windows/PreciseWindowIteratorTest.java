@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.TreeSet;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -41,7 +42,7 @@ public class PreciseWindowIteratorTest {
         PreciseWindowIterator<Integer> win = new PreciseWindowIterator<Integer>(iter, 1);
         Assert.assertTrue(win.hasNext());
     }
-    
+
     @Test
     public void canCallHasNextTwoTimes() {
         Iterator<Integer> iter = Arrays.asList(1).iterator();
@@ -56,22 +57,29 @@ public class PreciseWindowIteratorTest {
         PreciseWindowIterator<Integer> win = new PreciseWindowIterator<Integer>(iter, 1);
         Assert.assertFalse(win.hasNext());
     }
-    
+
+    @Test
+    public void hasNextDoesNotConsumeAnElement() {
+        Iterator<Integer> iter = Arrays.asList(1,2).iterator();
+        PreciseWindowIterator<Integer> win = new PreciseWindowIterator<Integer>(iter, 2);
+        win.hasNext();
+        win.next();
+    }
+
     @Test
     public void windowsAreInOrder() {
-        Iterator<Integer> iter = Arrays.<Integer>asList(1,2,3).iterator();
+        Iterator<Integer> iter = Arrays.<Integer>asList(1, 2, 3).iterator();
         PreciseWindowIterator<Integer> win = new PreciseWindowIterator<Integer>(iter, 2);
         List<Integer> got = new ArrayList<Integer>();
         got.addAll(win.next());
         got.addAll(win.next());
-        Assert.assertEquals(Arrays.asList(1,2,2,3), got);
+        Assert.assertEquals(Arrays.asList(1, 2, 2, 3), got);
     }
-    
+
     @Test
     public void windowsHaveTheCorrectSize() {
-        Iterator<Integer> iter = Arrays.<Integer>asList(1,2).iterator();
+        Iterator<Integer> iter = Arrays.<Integer>asList(1, 2).iterator();
         PreciseWindowIterator<Integer> win = new PreciseWindowIterator<Integer>(iter, 2);
         Assert.assertEquals(2, win.next().size());
     }
-
 }

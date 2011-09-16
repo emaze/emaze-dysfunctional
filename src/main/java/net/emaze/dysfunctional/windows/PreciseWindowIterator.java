@@ -26,24 +26,18 @@ public class PreciseWindowIterator<T> implements Iterator<Queue<T>> {
 
     @Override
     public boolean hasNext() {
-        if (window.size() == windowSize) {
-            return true;
-        }
         tryFillWindow();
         return window.size() == windowSize;
     }
 
     @Override
     public Queue<T> next() {
-        if (window.size() == windowSize) {
-            window.add(iter.next());
-            window.remove();
-        }
-        tryFillWindow();
-        if( window.size() != windowSize){
+        if(!hasNext()) { 
             throw new NoSuchElementException("iterator is consumed");
         }
-        return new LinkedList<T>(window);
+        final Queue<T> retval = new LinkedList<T>(window);
+        window.remove();
+        return retval;
     }
 
     @Override
