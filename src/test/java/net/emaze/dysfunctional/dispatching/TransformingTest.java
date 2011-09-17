@@ -9,6 +9,10 @@ import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import net.emaze.dysfunctional.dispatching.spying.Spies;
+import net.emaze.dysfunctional.iterations.Iterations;
+import net.emaze.dysfunctional.options.Box;
+import net.emaze.dysfunctional.testing.O;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -19,7 +23,9 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    TransformingTest.Transform.class,
     TransformingTest.Map.class,
+    TransformingTest.Tap.class,
     TransformingTest.Each.class,
     TransformingTest.Facade.class
 })
@@ -81,6 +87,36 @@ public class TransformingTest {
             Integer[] source = new Integer[]{1, 2, 3};
             List<Integer> got = Transforming.map(source, new Identity<Integer>());
             Assert.assertEquals(Arrays.asList(source), got);
+        }
+    }
+
+    public static class Tap {
+
+        @Test
+        public void canTapAnIterable() {
+            final Iterable<O> source = Iterations.iterable(O.ONE);
+            final Box<O> box = new Box<O>();
+            final Iterator<O> tap = Transforming.tap(source, Spies.spy(new Noop<O>(), box));
+            Consumers.all(tap);
+            Assert.assertEquals(O.ONE, box.getContent());
+        }
+
+        @Test
+        public void canTapAnIterator() {
+            final Iterator<O> source = Iterations.iterator(O.ONE);
+            final Box<O> box = new Box<O>();
+            final Iterator<O> tap = Transforming.tap(source, Spies.spy(new Noop<O>(), box));
+            Consumers.all(tap);
+            Assert.assertEquals(O.ONE, box.getContent());
+        }
+
+        @Test
+        public void canTapAnArray() {
+            final O[] source = {O.ONE};
+            final Box<O> box = new Box<O>();
+            final Iterator<O> tap = Transforming.tap(source, Spies.spy(new Noop<O>(), box));
+            Consumers.all(tap);
+            Assert.assertEquals(O.ONE, box.getContent());
         }
     }
 

@@ -93,4 +93,10 @@ public class WindowingTest {
         final Iterable<O> iterable = null;
         Windowing.centered(3, iterable, LIST_MAYBE_FACTORY);
     }
+
+    @Test
+    public void facadeIsNotFinal() {
+        new Windowing() {
+        };
+    }
 }

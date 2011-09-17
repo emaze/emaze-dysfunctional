@@ -11,6 +11,7 @@ import net.emaze.dysfunctional.collections.HashMapFactory;
 import net.emaze.dysfunctional.collections.HashSetFactory;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.dispatching.logic.Always;
+import net.emaze.dysfunctional.groups.GroupsTest.FacadeTest;
 import net.emaze.dysfunctional.groups.GroupsTest.GroupByTest;
 import net.emaze.dysfunctional.groups.GroupsTest.PartitionByTest;
 import net.emaze.dysfunctional.iterations.Iterations;
@@ -28,7 +29,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     GroupByTest.class,
-    PartitionByTest.class
+    PartitionByTest.class,
+    FacadeTest.class
 })
 public class GroupsTest {
 
@@ -158,6 +160,15 @@ public class GroupsTest {
         public void partitioningANullIterableUsingProvidersYieldsException() {
             final Iterable<O> values = null;
             Groups.partition(values, new Always<O>(), LIST_FACTORY, LIST_FACTORY);
+        }
+    }
+
+    public static class FacadeTest {
+
+        @Test
+        public void facadeIsNotFinal() {
+            new Groups() {
+            };
         }
     }
 }

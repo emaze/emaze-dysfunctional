@@ -2,7 +2,6 @@ package net.emaze.dysfunctional.dispatching.composing;
 
 import java.util.Iterator;
 import junit.framework.Assert;
-import net.emaze.dysfunctional.dispatching.LogicTest.FacadeTest;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
@@ -10,6 +9,7 @@ import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
 import net.emaze.dysfunctional.dispatching.composing.PipelinesTest.BinaryTest;
+import net.emaze.dysfunctional.dispatching.composing.PipelinesTest.FacadeTest;
 import net.emaze.dysfunctional.dispatching.composing.PipelinesTest.PipesTest;
 import net.emaze.dysfunctional.dispatching.composing.PipelinesTest.TernaryTest;
 import net.emaze.dysfunctional.dispatching.composing.PipelinesTest.UnaryTest;
