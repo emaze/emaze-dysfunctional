@@ -12,7 +12,7 @@ public abstract class Casts {
         return new Widen<R, T>().perform(value);
     }
 
-    public static <R extends T, T> Delegate<R, T> widen() {
+    public static <T, R extends T> Delegate<R, T> widen() {
         return new Widen<R, T>();
     }
 
