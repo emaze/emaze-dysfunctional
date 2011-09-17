@@ -11,7 +11,7 @@ public class TruncatingIterator<T> implements Iterator<T> {
 
     public TruncatingIterator(Iterator<T> inner, long size) {
         dbc.precondition(inner != null, "cannot create a truncating iterator with a null iterator");
-        dbc.precondition(inner != null, "cannot create a truncating iterator with a null iterator");
+        dbc.precondition(size >= 0, "cannot create a truncating iterator with a negative size");
         this.inner = inner;
         this.remaining = size;
     }

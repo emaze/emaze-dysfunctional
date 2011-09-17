@@ -38,4 +38,4 @@ public class SingletonIteratorTest {
         iterator.next();
         iterator.remove();
     }
-}
+}   
