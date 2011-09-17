@@ -26,7 +26,7 @@ public class CastsTest {
     @Test
     public void canDowncastUsingNarrow() {
         final B b = new B();
-        final A a = Casts.widen(b);
+        final A a = Casts.narrow(b);
         Assert.assertNotNull(a);
     }
 
