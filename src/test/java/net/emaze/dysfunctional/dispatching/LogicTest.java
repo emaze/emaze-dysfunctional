@@ -32,7 +32,8 @@ import org.junit.runners.Suite;
     LogicTest.OrDegenerationsTest.class,
     LogicTest.NotTest.class,
     LogicTest.AlwaysTest.class,
-    LogicTest.NeverTest.class
+    LogicTest.NeverTest.class,
+    LogicTest.FacadeTest.class
 })
 public class LogicTest {
 
@@ -202,6 +203,12 @@ public class LogicTest {
         }
 
         @Test
+        public void canComposeManyPredicates() {
+            final Never<O> never = new Never<O>();
+            Assert.assertFalse(Logic.and(new Always<O>(), never, never, never).accept(O.IGNORED));
+        }
+
+        @Test
         public void canComposeTwoBinaryPredicates() {
             Assert.assertFalse(Logic.and(new BinaryAlways<O, O>(), new BinaryNever<O, O>()).accept(O.IGNORED, O.IGNORED));
         }
@@ -212,6 +219,12 @@ public class LogicTest {
         }
 
         @Test
+        public void canComposeManyBinaryPredicates() {
+            final BinaryNever<O, O> never = new BinaryNever<O, O>();
+            Assert.assertFalse(Logic.and(new BinaryAlways<O, O>(), never, never, never).accept(O.IGNORED, O.IGNORED));
+        }
+
+        @Test
         public void canComposeTwoTernaryPredicates() {
             Assert.assertFalse(Logic.and(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>()).accept(O.IGNORED, O.IGNORED, O.IGNORED));
         }
@@ -219,6 +232,12 @@ public class LogicTest {
         @Test
         public void canComposeThreeTernaryPredicates() {
             Assert.assertFalse(Logic.and(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>(), new TernaryNever<O, O, O>()).accept(O.IGNORED, O.IGNORED, O.IGNORED));
+        }
+
+        @Test
+        public void canComposeManyTernaryPredicates() {
+            final TernaryNever<O, O, O> never = new TernaryNever<O, O, O>();
+            Assert.assertFalse(Logic.and(new TernaryAlways<O, O, O>(), never, never, never).accept(O.IGNORED, O.IGNORED, O.IGNORED));
         }
     }
 
@@ -235,6 +254,12 @@ public class LogicTest {
         }
 
         @Test
+        public void canComposeManyPredicates() {
+            final Never<O> never = new Never<O>();
+            Assert.assertTrue(Logic.or(new Always<O>(), new Always<O>(), never, never).accept(O.IGNORED));
+        }
+
+        @Test
         public void canComposeTwoBinaryPredicates() {
             Assert.assertTrue(Logic.or(new BinaryAlways<O, O>(), new BinaryNever<O, O>()).accept(O.IGNORED, O.IGNORED));
         }
@@ -245,6 +270,12 @@ public class LogicTest {
         }
 
         @Test
+        public void canComposeManyBinaryPredicates() {
+            final BinaryNever<O, O> never = new BinaryNever<O, O>();
+            Assert.assertTrue(Logic.or(new BinaryAlways<O, O>(), new BinaryAlways<O, O>(), never, never).accept(O.IGNORED, O.IGNORED));
+        }
+
+        @Test
         public void canComposeTwoTernaryPredicates() {
             Assert.assertTrue(Logic.or(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>()).accept(O.IGNORED, O.IGNORED, O.IGNORED));
         }
@@ -252,6 +283,12 @@ public class LogicTest {
         @Test
         public void canComposeThreeTernaryPredicates() {
             Assert.assertTrue(Logic.or(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>(), new TernaryNever<O, O, O>()).accept(O.IGNORED, O.IGNORED, O.IGNORED));
+        }
+
+        @Test
+        public void canComposeManyTernaryPredicates() {
+            final TernaryNever<O, O, O> never = new TernaryNever<O, O, O>();
+            Assert.assertTrue(Logic.or(new TernaryAlways<O, O, O>(), never, never, never).accept(O.IGNORED, O.IGNORED, O.IGNORED));
         }
     }
 
@@ -513,6 +550,33 @@ public class LogicTest {
         @Test
         public void canCreateTernaryNever() {
             Assert.assertNotNull(Logic.Ternary.never());
+        }
+    }
+
+    public static class FacadeTest {
+
+        @Test
+        public void logicIsNotFinal() {
+            new Logic() {
+            };
+        }
+
+        @Test
+        public void unaryIsNotFinal() {
+            new Logic.Unary() {
+            };
+        }
+
+        @Test
+        public void binaryIsNotFinal() {
+            new Logic.Binary() {
+            };
+        }
+
+        @Test
+        public void ternaryIsNotFinal() {
+            new Logic.Ternary() {
+            };
         }
     }
 }

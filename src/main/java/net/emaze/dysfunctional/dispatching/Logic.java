@@ -29,7 +29,7 @@ import net.emaze.dysfunctional.iterations.Iterations;
  */
 public abstract class Logic {
 
-    public static class Unary {
+    public static abstract class Unary {
 
         /**
          * Creates a composite AND predicate from the given predicates.
@@ -94,7 +94,7 @@ public abstract class Logic {
         }
     }
 
-    public static class Binary {
+    public static abstract class Binary {
 
         /**
          * Creates a composite AND predicate from the given predicates.
@@ -165,7 +165,7 @@ public abstract class Logic {
         }
     }
 
-    public static class Ternary {
+    public static abstract class Ternary {
 
         /**
          * Creates a composite AND predicate from the given predicates.
