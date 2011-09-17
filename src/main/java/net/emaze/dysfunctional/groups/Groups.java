@@ -59,7 +59,7 @@ public abstract class Groups {
         return new PartitionBy(partitioner, collectionsProvider, collectionsProvider).perform(values);
     }
 
-    public static <C extends Collection<T>, T> Pair<C, C> partition(Iterator<T> values, Predicate<T> partitioner, Provider<C> acceptedCollectionProvider, Provider<C> refusedCollectionProvider) {
+    public static <CA extends Collection<T>, CR extends Collection<T>, T> Pair<CA, CR> partition(Iterator<T> values, Predicate<T> partitioner, Provider<CA> acceptedCollectionProvider, Provider<CR> refusedCollectionProvider) {
         return new PartitionBy(partitioner, acceptedCollectionProvider, refusedCollectionProvider).perform(values);
     }
 
@@ -73,7 +73,7 @@ public abstract class Groups {
         return partition(values.iterator(), partitioner, collectionsProvider);
     }
 
-    public static <C extends Collection<T>, T> Pair<C, C> partition(Iterable<T> values, Predicate<T> partitioner, Provider<C> acceptedCollectionProvider, Provider<C> refusedCollectionProvider) {
+    public static <CA extends Collection<T>, CR extends Collection<T>, T> Pair<CA, CR> partition(Iterable<T> values, Predicate<T> partitioner, Provider<CA> acceptedCollectionProvider, Provider<CR> refusedCollectionProvider) {
         dbc.precondition(values != null, "cannot partition a null iterable");
         return partition(values.iterator(), partitioner, acceptedCollectionProvider, refusedCollectionProvider);
     }
