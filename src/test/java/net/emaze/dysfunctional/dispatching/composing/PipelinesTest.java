@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.dispatching.composing;
 
 import java.util.Iterator;
 import junit.framework.Assert;
+import net.emaze.dysfunctional.dispatching.LogicTest.FacadeTest;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
@@ -27,7 +28,8 @@ import org.junit.runners.Suite;
     UnaryTest.class,
     BinaryTest.class,
     TernaryTest.class,
-    PipesTest.class
+    PipesTest.class,
+    FacadeTest.class
 })
 public class PipelinesTest {
 
@@ -166,6 +168,25 @@ public class PipelinesTest {
             final TernaryNoop<O, O, O> noop = new TernaryNoop<O, O, O>();
             final TernaryAction<O, O, O> pipeline = Pipelines.pipeline(noop, noop, noop, noop);
             Assert.assertNotNull(pipeline);
+        }
+    }
+    
+    public static class FacadeTest{
+        @Test
+        public void pipelinesIsNotFinal(){
+            new Pipelines() {};
+        }
+        @Test
+        public void unaryIsNotFinal(){
+            new Pipelines.Unary() {};
+        }
+        @Test
+        public void binaryIsNotFinal(){
+            new Pipelines.Binary() {};
+        }
+        @Test
+        public void ternaryIsNotFinal(){
+            new Pipelines.Ternary() {};
         }
     }
 }

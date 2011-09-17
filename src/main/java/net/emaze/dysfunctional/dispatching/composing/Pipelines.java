@@ -9,7 +9,7 @@ import net.emaze.dysfunctional.iterations.Iterations;
 
 public abstract class Pipelines {
 
-    public static class Unary {
+    public static abstract class Unary {
 
         public static <T> Action<T> pipeline(Iterable<Action<T>> actions) {
             return new PipelinedAction<T>(actions);
@@ -20,7 +20,7 @@ public abstract class Pipelines {
         }
     }
 
-    public static class Binary {
+    public static abstract class Binary {
 
         public static <T1, T2> BinaryAction<T1, T2> pipeline(Iterable<BinaryAction<T1, T2>> actions) {
             return new PipelinedBinaryAction<T1, T2>(actions);
@@ -31,7 +31,7 @@ public abstract class Pipelines {
         }
     }
 
-    public static class Ternary {
+    public static abstract class Ternary {
 
         public static <T1, T2, T3> TernaryAction<T1, T2, T3> pipeline(Iterable<TernaryAction<T1, T2, T3>> actions) {
             return new PipelinedTernaryAction<T1, T2, T3>(actions);
