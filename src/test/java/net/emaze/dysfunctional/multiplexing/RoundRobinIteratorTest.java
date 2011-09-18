@@ -1,13 +1,10 @@
 package net.emaze.dysfunctional.multiplexing;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.NoSuchElementException;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -53,15 +50,5 @@ public class RoundRobinIteratorTest {
         Iterator<Iterator<Integer>> emptyAndNonEmpty = Arrays.asList(empty, nonEmpty).iterator();
         Iterator<Integer> iter = new RoundRobinIterator<Integer>(emptyAndNonEmpty);
         Assert.assertEquals(Integer.valueOf(1), iter.next());
-    }
-
-    @Test(expected=UnsupportedOperationException.class)
-    public void removingYieldsException() {
-        List<Integer> bucket = new ArrayList<Integer>();
-        bucket.add(1);
-        Iterator<Iterator<Integer>> justBucket = Collections.singletonList(bucket.iterator()).iterator();
-        Iterator<Integer> iter = new RoundRobinIterator<Integer>(justBucket);
-        iter.next();
-        iter.remove();
     }
 }

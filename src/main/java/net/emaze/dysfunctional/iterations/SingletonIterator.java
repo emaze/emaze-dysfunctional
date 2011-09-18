@@ -1,13 +1,12 @@
 package net.emaze.dysfunctional.iterations;
 
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  *
  * @author rferranti
  */
-public class SingletonIterator<T> implements Iterator<T> {
+public class SingletonIterator<T> extends ReadOnlyIterator<T> {
 
     private final T element;
     private boolean isConsumed;
@@ -28,10 +27,5 @@ public class SingletonIterator<T> implements Iterator<T> {
         }
         isConsumed = true;
         return element;
-    }
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

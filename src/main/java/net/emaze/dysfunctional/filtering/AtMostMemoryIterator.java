@@ -4,13 +4,14 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 
 /**
  * 
  * @param <T> 
  * @author rferranti
  */
-public class AtMostMemoryIterator<T> implements Iterator<T> {
+public class AtMostMemoryIterator<T> extends ReadOnlyIterator<T> {
 
     private final Iterator<T> iterator;
     private final int memorySize;
@@ -40,11 +41,6 @@ public class AtMostMemoryIterator<T> implements Iterator<T> {
             hasMemory = true;
         }
         return memory.remove();
-    }
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("not implemented yet");
     }
 
     private static <T> Queue<T> fetch(Iterator<T> iterator, int size) {

@@ -31,11 +31,4 @@ public class SingletonIteratorTest {
         iterator.next();
         iterator.next();
     }
-    
-    @Test(expected = UnsupportedOperationException.class)
-    public void removingFromSingletonIteratorYieldsException() {
-        final Iterator<O> iterator = new SingletonIterator<O>(O.ONE);
-        iterator.next();
-        iterator.remove();
-    }
-}   
+}

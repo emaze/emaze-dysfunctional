@@ -10,6 +10,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.Transforming;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.logic.HasNext;
+import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 import net.emaze.dysfunctional.reductions.Reductions;
 
 /**
@@ -17,7 +18,7 @@ import net.emaze.dysfunctional.reductions.Reductions;
  * @param <E>
  * @author rferranti
  */
-public class MultiplexingIterator<E> implements Iterator<E> {
+public class MultiplexingIterator<E> extends ReadOnlyIterator<E> {
 
     private final List<Iterator<E>> iterators = new ArrayList<Iterator<E>>();
     private final Queue<E> prefetched = new LinkedList<E>();
@@ -42,11 +43,6 @@ public class MultiplexingIterator<E> implements Iterator<E> {
             tryPrefetch();
         }
         return prefetched.remove();
-    }
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("Cannot remove from a MultiplexingIterator.");
     }
 
     private void tryPrefetch() {

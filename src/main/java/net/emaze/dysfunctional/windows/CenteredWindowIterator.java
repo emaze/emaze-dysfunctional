@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 import net.emaze.dysfunctional.options.Maybe;
 
 /**
@@ -13,11 +14,11 @@ import net.emaze.dysfunctional.options.Maybe;
  * @param <T>
  * @author rferranti
  */
-public class CenteredWindowIterator<W extends Collection<Maybe<T>>, T> implements Iterator<W> {
+public class CenteredWindowIterator<W extends Collection<Maybe<T>>, T> extends ReadOnlyIterator<W> {
 
     private final Iterator<T> iter;
     private final int windowSize;
-    private final Provider<W> provider;    
+    private final Provider<W> provider;
     private final LinkedList<Maybe<T>> window = new LinkedList<Maybe<T>>();
     private boolean freshIterator = true;
 
@@ -28,7 +29,7 @@ public class CenteredWindowIterator<W extends Collection<Maybe<T>>, T> implement
         dbc.precondition(provider != null, "cannot create a CenteredWindowIterator with an null provider");
         this.iter = iter;
         this.windowSize = windowSize;
-        this.provider = provider;        
+        this.provider = provider;
         for (int i = 0; i != windowSize / 2; ++i) {
             window.add(Maybe.<T>nothing());
         }
@@ -61,11 +62,6 @@ public class CenteredWindowIterator<W extends Collection<Maybe<T>>, T> implement
             return !center().hasValue();
         }
         return !nextOfCenter().hasValue();
-    }
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("Cannot remove from a CenteredWindowIterator.");
     }
 
     private Maybe<T> nextOfCenter() {

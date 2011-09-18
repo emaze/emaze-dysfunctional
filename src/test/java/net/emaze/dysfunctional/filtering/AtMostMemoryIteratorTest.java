@@ -12,12 +12,6 @@ import org.junit.Test;
  */
 public class AtMostMemoryIteratorTest {
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void removingFromAtMostMemoryIteratorYieldsException() {
-        final Iterator<Integer> iter = Arrays.asList(1, 2).iterator();
-        new AtMostMemoryIterator<Integer>(iter, 1).remove();
-    }
-
     @Test(expected = IllegalArgumentException.class)
     public void creatingAtMostMemoryIteratorWithNullIteratorYieldsException() {
         new AtMostMemoryIterator<Integer>(null, 1);

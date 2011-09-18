@@ -1,8 +1,6 @@
 package net.emaze.dysfunctional.convolutions;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.tuples.Pair;
@@ -64,16 +62,5 @@ public class ZipLongestIteratorTest {
         Iterator<Integer> latter = new ArrayIterator<Integer>(new Integer[]{});
         ZipLongestIterator<Integer, Integer> zipli = new ZipLongestIterator<Integer, Integer>(former, latter);
         Assert.assertFalse(zipli.hasNext());
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void removingFromZipYieldsException() {
-        List<Integer> former = new ArrayList<Integer>();
-        former.add(1);
-        List<Integer> latter = new ArrayList<Integer>();
-        latter.add(2);
-        ZipLongestIterator<Integer, Integer> zipli = new ZipLongestIterator<Integer, Integer>(former.iterator(), latter.iterator());
-        zipli.next();
-        zipli.remove();
     }
 }

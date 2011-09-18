@@ -10,11 +10,6 @@ import org.junit.Test;
  */
 public class ConstantIteratorTest {
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void removing() {
-        new ConstantIterator<Object>(1).remove();
-    }
-
     @Test
     public void canCreateConstantIteratorWithNull() {
         new ConstantIterator<Object>(null);

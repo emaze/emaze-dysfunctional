@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 import net.emaze.dysfunctional.options.Maybe;
 
 /**
@@ -12,7 +13,7 @@ import net.emaze.dysfunctional.options.Maybe;
  * @param <T> 
  * @author rferranti
  */
-public class DemultiplexingIterator<T> implements Iterator<List<T>> {
+public class DemultiplexingIterator<T> extends ReadOnlyIterator<List<T>> {
 
     private final Iterator<T> iterator;
     private final int channelSize;
@@ -27,7 +28,7 @@ public class DemultiplexingIterator<T> implements Iterator<List<T>> {
 
     @Override
     public boolean hasNext() {
-        if(!prefetched.hasValue()){
+        if (!prefetched.hasValue()) {
             prefetched = Maybe.just(prefetch(iterator, channelSize));
         }
         return prefetched.value().size() == channelSize;
@@ -35,8 +36,8 @@ public class DemultiplexingIterator<T> implements Iterator<List<T>> {
 
     @Override
     public List<T> next() {
-        if(prefetched.hasValue()){
-            if(prefetched.value().size() != channelSize){
+        if (prefetched.hasValue()) {
+            if (prefetched.value().size() != channelSize) {
                 throw new NoSuchElementException("iterator is not squared");
             }
             final List<T> value = prefetched.value();
@@ -50,14 +51,9 @@ public class DemultiplexingIterator<T> implements Iterator<List<T>> {
         return out;
     }
 
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("Cannot remove from a DemultiplexingIterator.");
-    }
-
-    private static <T> List<T> prefetch(Iterator<T> iter, int size){
+    private static <T> List<T> prefetch(Iterator<T> iter, int size) {
         final List<T> result = new ArrayList<T>(size);
-        for(int counter = 0;counter != size && iter.hasNext();++counter){
+        for (int counter = 0; counter != size && iter.hasNext(); ++counter) {
             result.add(iter.next());
 
         }

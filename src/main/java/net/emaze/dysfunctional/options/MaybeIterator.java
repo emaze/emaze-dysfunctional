@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.options;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 
 /**
  * Decorates an Iterator yielding Maybe.just(element) for every element in the
@@ -9,7 +10,7 @@ import net.emaze.dysfunctional.contracts.dbc;
  * @param <E>
  * @author rferranti
  */
-public class MaybeIterator<E> implements Iterator<Maybe<E>> {
+public class MaybeIterator<E> extends ReadOnlyIterator<Maybe<E>> {
 
     private final Iterator<E> iterator;
 
@@ -30,18 +31,9 @@ public class MaybeIterator<E> implements Iterator<Maybe<E>> {
      */
     @Override
     public Maybe<E> next() {
-        if(iterator.hasNext()){
+        if (iterator.hasNext()) {
             return Maybe.just(iterator.next());
         }
         return Maybe.nothing();
-    }
-
-    /**
-     * removing from a MaybeIterator (at the moment) yields an UnsupportedOperationException
-     * Maybe<TODO>: we could create a remove semantics
-     */
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("cannot remove from a MaybeIterator");
     }
 }

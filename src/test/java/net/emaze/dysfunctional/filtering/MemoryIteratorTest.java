@@ -10,12 +10,6 @@ import org.junit.Test;
  */
 public class MemoryIteratorTest {
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void removingFromMemoryIteratorYieldsException() {
-        final Iterator<Integer> iter = Arrays.asList(1, 2).iterator();
-        new MemoryIterator<Integer>(iter, 1).remove();
-    }
-
     @Test(expected = IllegalArgumentException.class)
     public void creatingMemoryIteratorWithNullIteratorYieldsException() {
         new MemoryIterator<Integer>(null, 1);
@@ -26,11 +20,10 @@ public class MemoryIteratorTest {
         final Iterator<Integer> iter = Arrays.asList(1, 2).iterator();
         new MemoryIterator<Integer>(iter, 0).remove();
     }
-    
+
     @Test(expected = IllegalStateException.class)
     public void iteratingOverTooSmallIteratorYieldsException() {
         final Iterator<Integer> iter = Arrays.asList(1).iterator();
         new MemoryIterator<Integer>(iter, 2).next();
     }
-    
 }

@@ -41,14 +41,4 @@ public class ChainIteratorTest {
         ChainIterator<Object> chain = new ChainIterator<Object>(iterators.iterator());
         Assert.assertTrue(chain.hasNext());
     }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void removingFromChainIteratorYieldsException() {
-        List<Object> nonEmptyIter = new ArrayList<Object>();
-        nonEmptyIter.add(1);
-        List<Iterator<Object>> iterators = Arrays.asList(nonEmptyIter.iterator());
-        ChainIterator<Object> chain = new ChainIterator<Object>(iterators.iterator());
-        chain.next();
-        chain.remove();
-    }
 }

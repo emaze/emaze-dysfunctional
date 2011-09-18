@@ -80,12 +80,5 @@ public class DemultiplexingIteratorTest {
             iter.hasNext();
             iter.next();
         }
-
-        @Test(expected = UnsupportedOperationException.class)
-        public void removingFromDemultiplexingIteratorYieldsException() {
-            Iterator<List<Integer>> iter = new DemultiplexingIterator<Integer>(2, Arrays.asList(1, 2).iterator());
-            iter.next();
-            iter.remove();
-        }
     }
 }

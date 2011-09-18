@@ -23,10 +23,4 @@ public class EmptyIteratorTest {
         final Iterator<O> iterator = new EmptyIterator<O>();
         iterator.next();
     }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void removingFromEmptyIteratorYieldsException() {
-        final Iterator<O> iterator = new EmptyIterator<O>();
-        iterator.remove();
-    }
 }

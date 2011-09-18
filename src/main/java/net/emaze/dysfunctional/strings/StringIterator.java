@@ -1,14 +1,14 @@
 package net.emaze.dysfunctional.strings;
 
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 
 /**
  *
  * @author rferranti
  */
-public class StringIterator implements Iterator<Character> {
+public class StringIterator extends ReadOnlyIterator<Character> {
     private final String value;
     private int currentPosition;
 
@@ -35,10 +35,4 @@ public class StringIterator implements Iterator<Character> {
         }
         return value.charAt(currentPosition++);
     }
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("Cannot remove from a StringIterator.");
-    }
-
 }

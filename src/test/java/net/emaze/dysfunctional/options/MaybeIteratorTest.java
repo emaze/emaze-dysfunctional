@@ -38,11 +38,4 @@ public class MaybeIteratorTest {
         MaybeIterator<Integer> maybeIter = new MaybeIterator<Integer>(new ArrayIterator<Integer>(new Integer[]{}));
         Assert.assertEquals(Maybe.nothing(), maybeIter.next());
     }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void removingFromMaybeIteratorYieldsException() {
-        MaybeIterator<Integer> maybeIter = new MaybeIterator<Integer>(new ArrayIterator<Integer>(new Integer[]{1}));
-        maybeIter.next();
-        maybeIter.remove();
-    }
 }

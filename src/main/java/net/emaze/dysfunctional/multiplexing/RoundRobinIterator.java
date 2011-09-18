@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.HasNext;
+import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 import net.emaze.dysfunctional.order.IntegerSequencingPolicy;
 import net.emaze.dysfunctional.order.PeriodicIterator;
 import net.emaze.dysfunctional.order.PeriodicSequencingPolicy;
@@ -18,7 +19,7 @@ import net.emaze.dysfunctional.reductions.Reductions;
  * @param <E>
  * @author rferranti
  */
-public class RoundRobinIterator<E> implements Iterator<E> {
+public class RoundRobinIterator<E> extends ReadOnlyIterator<E> {
 
     private final List<Iterator<E>> iterators = new ArrayList<Iterator<E>>();
     private final PeriodicIterator<Integer> indexSelector;
@@ -26,7 +27,7 @@ public class RoundRobinIterator<E> implements Iterator<E> {
     public <T extends Iterator<E>> RoundRobinIterator(Iterator<T> iterators) {
         dbc.precondition(iterators != null, "trying to create a RoundRobinIterator from a null iterator of iterators");
         this.iterators.addAll(Consumers.all(iterators));
-        final PeriodicSequencingPolicy<Integer> period = new PeriodicSequencingPolicy<Integer>(new IntegerSequencingPolicy(), 0, this.iterators.size()-1);
+        final PeriodicSequencingPolicy<Integer> period = new PeriodicSequencingPolicy<Integer>(new IntegerSequencingPolicy(), 0, this.iterators.size() - 1);
         this.indexSelector = new PeriodicIterator<Integer>(period, 0);
     }
 
@@ -43,17 +44,12 @@ public class RoundRobinIterator<E> implements Iterator<E> {
         return firstNonEmpty().next();
     }
 
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("cannot remove from a RoundRobinIterator");
-    }
-
     private boolean empty() {
         return !Reductions.any(iterators, new HasNext<Iterator<E>>());
     }
 
     private Iterator<E> firstNonEmpty() {
-        while(true) {
+        while (true) {
             final Iterator<E> currentIter = iterators.get(indexSelector.next());
             if (currentIter.hasNext()) {
                 return currentIter;

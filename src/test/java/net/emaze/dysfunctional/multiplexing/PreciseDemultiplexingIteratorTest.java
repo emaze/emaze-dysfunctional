@@ -48,13 +48,5 @@ public class PreciseDemultiplexingIteratorTest {
             Iterator<Maybe<Integer>> iter = Arrays.asList(Maybe.just(1)).iterator();
             new PreciseDemultiplexingIterator<Integer>(0, iter);
         }
-
-        @Test(expected = UnsupportedOperationException.class)
-        public void removingFromIteratorYieldsException() {
-            Iterator<Maybe<Integer>> iter = Arrays.asList(Maybe.just(1)).iterator();
-            PreciseDemultiplexingIterator<Integer> demu = new PreciseDemultiplexingIterator<Integer>(1, iter);
-            demu.next();
-            demu.remove();
-        }
     }
 }

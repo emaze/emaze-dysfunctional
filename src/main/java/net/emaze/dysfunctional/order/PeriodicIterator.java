@@ -2,8 +2,9 @@ package net.emaze.dysfunctional.order;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 
-public class PeriodicIterator<T> implements Iterator<T> {
+public class PeriodicIterator<T> extends ReadOnlyIterator<T> {
 
     private final PeriodicSequencingPolicy<T> sequencer;
     private T next;
@@ -24,10 +25,5 @@ public class PeriodicIterator<T> implements Iterator<T> {
         final T result = next;
         next = sequencer.next(next);
         return result;
-    }
-
-    @Override
-    public void remove() {
-        //ignore
     }
 }

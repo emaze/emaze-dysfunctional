@@ -7,13 +7,14 @@ import java.util.NoSuchElementException;
 import java.util.Queue;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 
 /**
  * [1,2,3,4,5], 3 -> (1,2,3), (2,3,4), (3,4,5)
  * @param <T>
  * @author rferranti
  */
-public class PreciseWindowIterator<W extends Collection<T>, T> implements Iterator<W> {
+public class PreciseWindowIterator<W extends Collection<T>, T> extends ReadOnlyIterator<W> {
 
     private final Iterator<T> iter;
     private final int windowSize;
@@ -23,7 +24,7 @@ public class PreciseWindowIterator<W extends Collection<T>, T> implements Iterat
     public PreciseWindowIterator(Iterator<T> iter, int windowSize, Provider<W> provider) {
         dbc.precondition(iter != null, "cannot create a PreciseWindowIterator with a null iterator");
         dbc.precondition(windowSize > 0, "cannot create a PreciseWindowIterator with a non positive window size");
-        dbc.precondition(provider != null, "cannot create a CenteredWindowIterator with an null provider");        
+        dbc.precondition(provider != null, "cannot create a CenteredWindowIterator with an null provider");
         this.iter = iter;
         this.windowSize = windowSize;
         this.provider = provider;
@@ -45,17 +46,12 @@ public class PreciseWindowIterator<W extends Collection<T>, T> implements Iterat
             window.remove();
         }
         tryFillWindow();
-        if( window.size() != windowSize){
+        if (window.size() != windowSize) {
             throw new NoSuchElementException("iterator is consumed");
         }
         final W collection = provider.provide();
         collection.addAll(window);
         return collection;
-    }
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("Cannot remove from a PreciseWindowIterator");
     }
 
     private void tryFillWindow() {

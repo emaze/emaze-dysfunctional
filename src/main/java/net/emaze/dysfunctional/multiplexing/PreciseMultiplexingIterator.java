@@ -7,6 +7,7 @@ import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.Transforming;
 import net.emaze.dysfunctional.dispatching.logic.HasNext;
+import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 import net.emaze.dysfunctional.options.MaybeIteratorTransformer;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.order.IntegerSequencingPolicy;
@@ -19,7 +20,7 @@ import net.emaze.dysfunctional.reductions.Reductions;
  * @param <E>
  * @author rferranti
  */
-public class PreciseMultiplexingIterator<E> implements Iterator<Maybe<E>> {
+public class PreciseMultiplexingIterator<E> extends ReadOnlyIterator<Maybe<E>> {
 
     private final List<Iterator<Maybe<E>>> iterators = new ArrayList<Iterator<Maybe<E>>>();
     private final PeriodicIterator<Integer> indexSelector;
@@ -27,7 +28,7 @@ public class PreciseMultiplexingIterator<E> implements Iterator<Maybe<E>> {
     public <T extends Iterator<E>> PreciseMultiplexingIterator(Iterator<T> iterators) {
         dbc.precondition(iterators != null, "trying to create a PreciseMultiplexingIterator from a null iterator of iterators");
         this.iterators.addAll(Consumers.all(Transforming.transform(iterators, new MaybeIteratorTransformer<T, E>())));
-        final PeriodicSequencingPolicy<Integer> period = new PeriodicSequencingPolicy<Integer>(new IntegerSequencingPolicy(), 0, this.iterators.size()-1);
+        final PeriodicSequencingPolicy<Integer> period = new PeriodicSequencingPolicy<Integer>(new IntegerSequencingPolicy(), 0, this.iterators.size() - 1);
         this.indexSelector = new PeriodicIterator<Integer>(period, 0);
     }
 
@@ -39,10 +40,5 @@ public class PreciseMultiplexingIterator<E> implements Iterator<Maybe<E>> {
     @Override
     public Maybe<E> next() {
         return iterators.get(indexSelector.next()).next();
-    }
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("Cannot remove from a PreciseMultiplexingIterator");
     }
 }

@@ -5,6 +5,7 @@ import net.emaze.dysfunctional.tuples.Pair;
 import java.util.Iterator;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 
 /**
  * Adapts two iterators yielding their longest convolution (via a Pair<Maybe<E1>,Maybe<E2>>)
@@ -12,7 +13,7 @@ import net.emaze.dysfunctional.contracts.dbc;
  * @param <E2>
  * @author rferranti
  */
-public class ZipLongestIterator<E1, E2> implements Iterator<Pair<Maybe<E1>, Maybe<E2>>> {
+public class ZipLongestIterator<E1, E2> extends ReadOnlyIterator<Pair<Maybe<E1>, Maybe<E2>>> {
 
     private final MaybeIterator<E1> former;
     private final MaybeIterator<E2> latter;
@@ -37,13 +38,5 @@ public class ZipLongestIterator<E1, E2> implements Iterator<Pair<Maybe<E1>, Mayb
     @Override
     public Pair<Maybe<E1>, Maybe<E2>> next() {
         return Pair.of(former.next(), latter.next());
-    }
-
-    /**
-     * removing from a ZipLongestIterator throws an UnsupportedOperationException
-     */
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("cannot remove from a ZipLongestIterator.");
     }
 }

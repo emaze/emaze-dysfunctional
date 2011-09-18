@@ -30,16 +30,7 @@ public class TakeWhileIteratorTest {
         TakeWhileIterator<Integer> twi = new TakeWhileIterator<Integer>(ints.iterator(), new Never<Integer>());
         Assert.assertFalse(twi.hasNext());
     }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void cannotRemoveFromIterator() {
-        List<Integer> ints = new ArrayList<Integer>();
-        ints.add(1);
-        TakeWhileIterator<Integer> twi = new TakeWhileIterator<Integer>(ints.iterator(), new Always<Integer>());
-        twi.next();
-        twi.remove();
-    }
-
+    
     @Test
     public void afterTakingAllNeededStops() {
         Iterator<Integer> srcIter = Arrays.asList(1, 2, 3, 4, 5).iterator();

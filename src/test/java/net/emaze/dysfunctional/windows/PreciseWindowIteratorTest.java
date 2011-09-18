@@ -20,9 +20,9 @@ import org.junit.Test;
  * @author rferranti
  */
 public class PreciseWindowIteratorTest {
+
     private static Provider<List<O>> LIST_FACTORY = Dispatching.compose(new Narrow<List<O>, ArrayList<O>>(), new ArrayListFactory<O>());
-            
-            
+
     @Test(expected = IllegalArgumentException.class)
     public void creatingPreciseWindowIteratorWithNullIteratorYieldsException() {
         new PreciseWindowIterator<List<O>, O>(null, 1, LIST_FACTORY);
@@ -32,7 +32,7 @@ public class PreciseWindowIteratorTest {
     public void creatingPreciseWindowIteratorWithNonPositiveWindowSizeYieldsException() {
         new PreciseWindowIterator<List<O>, O>(Collections.<O>emptyList().iterator(), 0, LIST_FACTORY);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void creatingPreciseWindowIteratorWithNullProviderYieldsException() {
         new PreciseWindowIterator<List<O>, O>(Collections.<O>emptyList().iterator(), 1, null);
@@ -43,18 +43,13 @@ public class PreciseWindowIteratorTest {
         new PreciseWindowIterator<List<O>, O>(Collections.<O>emptyList().iterator(), 3, LIST_FACTORY).next();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void removingFromPreciseWindowIteratorYieldsException() {
-        new PreciseWindowIterator<List<O>, O>(Iterations.iterator(O.ONE), 3, LIST_FACTORY).remove();
-    }
-
     @Test
     public void nonEmptyIterHasNext() {
         final Iterator<O> iter = Iterations.iterator(O.ONE);
         final PreciseWindowIterator<List<O>, O> win = new PreciseWindowIterator<List<O>, O>(iter, 1, LIST_FACTORY);
         Assert.assertTrue(win.hasNext());
     }
-    
+
     @Test
     public void canCallHasNextTwoTimes() {
         final Iterator<O> iter = Iterations.iterator(O.ONE);
@@ -69,7 +64,7 @@ public class PreciseWindowIteratorTest {
         final PreciseWindowIterator<List<O>, O> win = new PreciseWindowIterator<List<O>, O>(iter, 1, LIST_FACTORY);
         Assert.assertFalse(win.hasNext());
     }
-    
+
     @Test
     public void windowsAreInOrder() {
         final Iterator<O> iter = Iterations.iterator(O.ONE, O.ANOTHER, O.YET_ANOTHER);
@@ -79,12 +74,11 @@ public class PreciseWindowIteratorTest {
         got.addAll(win.next());
         Assert.assertEquals(Arrays.asList(O.ONE, O.ANOTHER, O.ANOTHER, O.YET_ANOTHER), got);
     }
-    
+
     @Test
     public void windowsHaveTheCorrectSize() {
         final Iterator<O> iter = Iterations.iterator(O.ONE, O.ANOTHER);
         final PreciseWindowIterator<List<O>, O> win = new PreciseWindowIterator<List<O>, O>(iter, 2, LIST_FACTORY);
         Assert.assertEquals(2, win.next().size());
     }
-
 }

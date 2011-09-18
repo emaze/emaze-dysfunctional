@@ -21,6 +21,7 @@ import org.junit.Assert;
  * @author rferranti
  */
 public class CenteredWindowIteratorTest {
+
     private static Provider<List<Maybe<O>>> LIST_FACTORY = Dispatching.compose(new Narrow<List<Maybe<O>>, ArrayList<Maybe<O>>>(), new ArrayListFactory<Maybe<O>>());
 
     @Test(expected = IllegalArgumentException.class)
@@ -39,7 +40,7 @@ public class CenteredWindowIteratorTest {
         final Iterator<O> iter = Iterations.iterator();
         new CenteredWindowIterator<List<Maybe<O>>, O>(iter, 4, LIST_FACTORY);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void creatingCenteredWindowIteratorWithNullProviderYieldsException() {
         final Iterator<O> iter = Iterations.iterator();
@@ -50,11 +51,6 @@ public class CenteredWindowIteratorTest {
     public void consumingEmptyIteratorYieldsException() {
         final Iterator<O> iter = Iterations.iterator();
         new CenteredWindowIterator<List<Maybe<O>>, O>(iter, 3, LIST_FACTORY).next();
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void removingFromCenteredWindowIteratorYieldsException() {
-        new CenteredWindowIterator<List<Maybe<O>>, O>(Iterations.iterator(O.ONE), 3, LIST_FACTORY).remove();
     }
 
     @Test

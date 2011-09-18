@@ -20,12 +20,6 @@ public class InterposingIteratorTest {
         new InterposingIterator<Integer>(Arrays.asList(1).iterator(), null);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void removingFromIteratorYieldsException() {
-        Iterator<Integer> iter = new InterposingIterator<Integer>(Arrays.asList(1).iterator(), Arrays.asList(1).iterator());
-        iter.remove();
-    }
-
     @Test(expected = IllegalStateException.class)
     public void tooSmallSeparatorIteratorYieldsToException() {
         Iterator<Integer> iter = new InterposingIterator<Integer>(Arrays.asList(1).iterator(), Arrays.<Integer>asList().iterator());

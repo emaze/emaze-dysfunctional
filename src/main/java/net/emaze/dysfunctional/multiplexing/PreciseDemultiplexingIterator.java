@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 import net.emaze.dysfunctional.options.Maybe;
 
 /**
@@ -11,7 +12,7 @@ import net.emaze.dysfunctional.options.Maybe;
  * @param <T> 
  * @author rferranti
  */
-public class PreciseDemultiplexingIterator<T> implements Iterator<List<Maybe<T>>> {
+public class PreciseDemultiplexingIterator<T> extends ReadOnlyIterator<List<Maybe<T>>> {
 
     private final Iterator<Maybe<T>> iterator;
     private final int channelSize;

@@ -7,7 +7,7 @@ import java.util.Iterator;
  * @param <T> 
  * @author rferranti
  */
-public class ConstantIterator<T> implements Iterator<T> {
+public class ConstantIterator<T> extends ReadOnlyIterator<T> {
 
     private final T value;
 
@@ -23,10 +23,5 @@ public class ConstantIterator<T> implements Iterator<T> {
     @Override
     public T next() {
         return value;
-    }
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("cannot remove from a ConstantIterator");
     }
 }

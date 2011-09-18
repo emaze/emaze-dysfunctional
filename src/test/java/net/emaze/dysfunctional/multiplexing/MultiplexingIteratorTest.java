@@ -33,7 +33,7 @@ public class MultiplexingIteratorTest {
 
         @Test
         public void canMultiplexIteratorsNotOfTheSameSize() {
-            final Iterator<Integer> former = Arrays.asList(1,3).iterator();
+            final Iterator<Integer> former = Arrays.asList(1, 3).iterator();
             final Iterator<Integer> latter = Arrays.asList(2).iterator();
             final Iterator<Iterator<Integer>> formerAndLatter = Arrays.asList(former, latter).iterator();
             Iterator<Integer> iter = new MultiplexingIterator<Integer>(formerAndLatter);
@@ -59,15 +59,6 @@ public class MultiplexingIteratorTest {
         @Test(expected = IllegalArgumentException.class)
         public void creatingWithEmptyIteratorsYieldsException() {
             new MultiplexingIterator<Object>(Collections.<Iterator<Object>>emptyList().iterator());
-        }
-
-        @Test(expected = UnsupportedOperationException.class)
-        public void removingFromIteratorYieldsException() {
-            final Iterator<Integer> inner = Arrays.asList(1).iterator();
-            final Iterator<Iterator<Integer>> onlyInner = Collections.singletonList(inner).iterator();
-            Iterator<Integer> iter = new MultiplexingIterator<Integer>(onlyInner);
-            iter.next();
-            iter.remove();
         }
     }
 }

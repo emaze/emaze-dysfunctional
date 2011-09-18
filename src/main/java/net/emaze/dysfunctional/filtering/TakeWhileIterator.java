@@ -4,13 +4,14 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 
 /**
  *
  * @param <E> the iterator element Type
  * @author rferranti
  */
-public class TakeWhileIterator<E> implements Iterator<E> {
+public class TakeWhileIterator<E> extends ReadOnlyIterator<E> {
 
     private final Predicate<E> filter;
     private final Iterator<E> iterator;
@@ -52,10 +53,5 @@ public class TakeWhileIterator<E> implements Iterator<E> {
             return element;
         }
         throw new NoSuchElementException();
-    }
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException();
     }
 }

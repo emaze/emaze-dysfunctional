@@ -32,13 +32,6 @@ public class StringIteratorTest {
     public void iteratingOverBoundYieldsException() {
         new StringIterator("").next();
     }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void removingYieldsException() {
-        StringIterator iter = new StringIterator("1");
-        iter.next();
-        iter.remove();
-    }
     
     @Test
     public void iteratingYieldsCharactersInOrder() {

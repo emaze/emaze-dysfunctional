@@ -8,6 +8,7 @@ import net.emaze.dysfunctional.consumers.Consumers;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.HasNext;
+import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 import net.emaze.dysfunctional.reductions.Reductions;
 
 /**
@@ -15,7 +16,7 @@ import net.emaze.dysfunctional.reductions.Reductions;
  * @param <E>
  * @author rferranti
  */
-public class ChainIterator<E> implements Iterator<E> {
+public class ChainIterator<E> extends ReadOnlyIterator<E> {
 
     private final List<Iterator<E>> iterators = new ArrayList<Iterator<E>>();
 
@@ -49,10 +50,5 @@ public class ChainIterator<E> implements Iterator<E> {
             return maybeElement.value().next();
         }
         throw new NoSuchElementException("iterator is consumed");
-    }
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("cannot remove from a ChainIterator");
     }
 }

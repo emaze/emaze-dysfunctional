@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.multiplexing;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 
 /**
  * A composite iterator interposing value yielded by the values iterator
@@ -10,7 +11,7 @@ import net.emaze.dysfunctional.contracts.dbc;
  * @param <T>
  * @author rferranti
  */
-public class InterposingIterator<T> implements Iterator<T> {
+public class InterposingIterator<T> extends ReadOnlyIterator<T> {
 
     private final Iterator<T> values;
     private final Iterator<T> separators;
@@ -37,10 +38,5 @@ public class InterposingIterator<T> implements Iterator<T> {
         final T value = toBeConsumed.next();
         consumingSeparator = !consumingSeparator;
         return value;
-    }
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("trying to remove a value from an InterleavingIterator");
     }
 }
