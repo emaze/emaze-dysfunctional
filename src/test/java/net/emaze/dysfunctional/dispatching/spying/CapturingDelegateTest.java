@@ -17,6 +17,16 @@ public class CapturingDelegateTest {
         new CapturingDelegate<O, O>(null, Box.<O>empty(), Box.<O>empty());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void creatingWitNullResultBoxYieldsException() {
+        new CapturingDelegate<O, O>(new Identity<O>(), null, Box.<O>empty());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void creatingWitNullParamBoxYieldsException() {
+        new CapturingDelegate<O, O>(new Identity<O>(), Box.<O>empty(), null);
+    }
+
     @Test
     public void parameterIsCaptured() {
         final Box<O> result = Box.empty();
