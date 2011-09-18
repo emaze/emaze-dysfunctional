@@ -94,6 +94,7 @@ public class GroupsTest {
             Groups.groupBy(values, new Identity<O>(), LIST_FACTORY);
         }
 
+        @Test(expected = IllegalArgumentException.class)
         public void groupingANullIterableUsingProvidersYieldsException() {
             final Iterable<O> values = null;
             Groups.groupBy(values, new Identity<O>(), LIST_FACTORY, MAP_FACTORY);
