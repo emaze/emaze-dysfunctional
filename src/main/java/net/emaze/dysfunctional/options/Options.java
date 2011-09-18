@@ -213,6 +213,17 @@ public abstract class Options {
         dbc.precondition(eithers != null, "can not fetch lefts from a null iterator");
         return Options.justs(Transforming.transform(eithers, new MaybeLeft<T1, T2>()));
     }
+    /**
+     * filters out right types
+     * @param <T1>
+     * @param <T2>
+     * @param eithers
+     * @return 
+     */
+    public static <T1, T2> Iterator<T1> lefts(Iterable<Either<T1, T2>> eithers) {
+        dbc.precondition(eithers != null, "can not fetch lefts from a null iterable");
+        return Options.justs(Transforming.transform(eithers.iterator(), new MaybeLeft<T1, T2>()));
+    }
 
     /**
      * filters out left types
@@ -224,5 +235,16 @@ public abstract class Options {
     public static <T1, T2> Iterator<T2> rights(Iterator<Either<T1, T2>> eithers) {
         dbc.precondition(eithers != null, "can not fetch rights from a null iterator");
         return Options.justs(Transforming.transform(eithers, new MaybeRight<T1, T2>()));
+    }
+    /**
+     * filters out left types
+     * @param <T1>
+     * @param <T2>
+     * @param eithers
+     * @return 
+     */
+    public static <T1, T2> Iterator<T2> rights(Iterable<Either<T1, T2>> eithers) {
+        dbc.precondition(eithers != null, "can not fetch rights from a null iterator");
+        return Options.justs(Transforming.transform(eithers.iterator(), new MaybeRight<T1, T2>()));
     }
 }
