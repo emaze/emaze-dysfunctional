@@ -9,7 +9,7 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
  */
 public class WithJust<R, T> implements Delegate<Maybe<R>, Maybe<T>> {
 
-    public final Delegate<R, T> delegate;
+    private final Delegate<R, T> delegate;
 
     public WithJust(Delegate<R, T> delegate) {
         dbc.precondition(delegate != null, "cannot create WithJust with a null delegate");
