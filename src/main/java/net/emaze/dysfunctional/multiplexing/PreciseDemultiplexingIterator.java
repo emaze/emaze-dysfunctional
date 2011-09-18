@@ -37,9 +37,4 @@ public class PreciseDemultiplexingIterator<T> extends ReadOnlyIterator<List<Mayb
         }
         return out;
     }
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("Cannot remove from a PreciseDemultiplexingIterator.");
-    }
 }
