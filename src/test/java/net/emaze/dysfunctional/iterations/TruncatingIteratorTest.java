@@ -43,7 +43,7 @@ public class TruncatingIteratorTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingWithNegativeSizeYieldsException() {
-        new TruncatingIterator<O>(null, -1);
+        new TruncatingIterator<O>(Iterations.iterator(O.ONE), -1);
     }
 
     @Test(expected = NoSuchElementException.class)
