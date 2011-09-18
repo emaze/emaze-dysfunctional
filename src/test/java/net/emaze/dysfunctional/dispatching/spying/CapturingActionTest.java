@@ -17,6 +17,11 @@ public class CapturingActionTest {
         new CapturingAction<O>(null, Box.<O>empty());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void capturingWithNullBoxYieldsException() {
+        new CapturingAction<O>(new Noop<O>(), null);
+    }
+
     @Test
     public void parametersAreCaptured() {
         final Box<O> param = Box.empty();
