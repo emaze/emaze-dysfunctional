@@ -383,6 +383,24 @@ public class LogicTest {
             final TernaryPredicate<O, O, O> pred = null;
             Logic.and(new TernaryAlways<O, O, O>(), new TernaryAlways<O, O, O>(), pred);
         }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void composingManyPredicatesYieldsExceptionWhenArrayIsNull() {
+            final Predicate<O>[] pred = null;
+            Logic.and(pred);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void composingManyBinaryPredicatesYieldsExceptionWhenArrayIsNull() {
+            final BinaryPredicate<O, O>[] pred = null;
+            Logic.and(pred);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void composingManyTernaryPredicatesYieldsExceptionWhenArrayIsNull() {
+            final TernaryPredicate<O, O, O>[] pred = null;
+            Logic.and(pred);
+        }
     }
 
     public static class OrDegenerationsTest {
@@ -476,6 +494,24 @@ public class LogicTest {
             final TernaryPredicate<O, O, O> pred = null;
             Logic.or(new TernaryAlways<O, O, O>(), new TernaryAlways<O, O, O>(), pred);
         }
+        
+        @Test(expected = IllegalArgumentException.class)
+        public void composingManyPredicatesYieldsExceptionWhenArrayIsNull() {
+            final Predicate<O>[] pred = null;
+            Logic.or(pred);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void composingManyBinaryPredicatesYieldsExceptionWhenArrayIsNull() {
+            final BinaryPredicate<O, O>[] pred = null;
+            Logic.or(pred);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void composingManyTernaryPredicatesYieldsExceptionWhenArrayIsNull() {
+            final TernaryPredicate<O, O, O>[] pred = null;
+            Logic.or(pred);
+        }        
     }
 
     public static class NotTest {
