@@ -18,7 +18,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     IterationsTest.OneTime.class,
     IterationsTest.Facade.class,
-    IterationsTest.Iter.class
+    IterationsTest.IteratorTest.class,
+    IterationsTest.IterableTest.class
 })
 public class IterationsTest {
 
@@ -39,7 +40,21 @@ public class IterationsTest {
         }
     }
 
-    public static class Iter {
+    public static class IteratorTest {
+
+        @Test
+        public void canCreateEmptyIterator() {
+            final Iterator<O> iterator = Iterations.iterator();
+            final List<O> expected = Arrays.asList();
+            Assert.assertEquals(expected, Consumers.all(iterator));
+        }
+
+        @Test
+        public void canCreateIteratorFromOneElement() {
+            final Iterator<O> iterator = Iterations.iterator(O.ONE);
+            final List<O> expected = Arrays.asList(O.ONE);
+            Assert.assertEquals(expected, Consumers.all(iterator));
+        }
 
         @Test
         public void canCreateIteratorFromTwoElements() {
@@ -61,5 +76,42 @@ public class IterationsTest {
             final List<O> expected = Arrays.asList(O.ONE, O.ANOTHER, O.YET_ANOTHER, O.YET_ANOTHER);
             Assert.assertEquals(expected, Consumers.all(iterator));
         }
+    }
+
+    public static class IterableTest {
+        @Test
+        public void canCreateEmptyIterable() {
+            final Iterable<O> iterable = Iterations.iterable();
+            final List<O> expected = Arrays.asList();
+            Assert.assertEquals(expected, Consumers.all(iterable));
+        }
+
+        @Test
+        public void canCreateIteratorFromOneElement() {
+            final Iterable<O> iterable = Iterations.iterable(O.ONE);
+            final List<O> expected = Arrays.asList(O.ONE);
+            Assert.assertEquals(expected, Consumers.all(iterable));
+        }
+
+        @Test
+        public void canCreateIteratorFromTwoElements() {
+            final Iterable<O> iterable = Iterations.iterable(O.ONE, O.ANOTHER);
+            final List<O> expected = Arrays.asList(O.ONE, O.ANOTHER);
+            Assert.assertEquals(expected, Consumers.all(iterable));
+        }
+
+        @Test
+        public void canCreateIteratorFromThreeElements() {
+            final Iterable<O> iterable = Iterations.iterable(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+            final List<O> expected = Arrays.asList(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+            Assert.assertEquals(expected, Consumers.all(iterable));
+        }
+
+        @Test
+        public void canCreateIteratorFromManyElements() {
+            final Iterable<O> iterable = Iterations.iterable(O.ONE, O.ANOTHER, O.YET_ANOTHER, O.YET_ANOTHER);
+            final List<O> expected = Arrays.asList(O.ONE, O.ANOTHER, O.YET_ANOTHER, O.YET_ANOTHER);
+            Assert.assertEquals(expected, Consumers.all(iterable));
+        }        
     }
 }
