@@ -24,6 +24,12 @@ public class TruncatingIteratorTest {
     }
 
     @Test
+    public void hasNextWhenIteratorHasNextAndShouldNotTruncate() {
+        final Iterator<O> ti = new TruncatingIterator<O>(Iterations.iterator(O.ONE), 1);
+        Assert.assertTrue(ti.hasNext());
+    }
+
+    @Test
     public void canConsumeBetweenBounds() {
         final Iterator<O> ti = new TruncatingIterator<O>(Iterations.iterator(O.ONE), 1);
         Assert.assertEquals(O.ONE, ti.next());
