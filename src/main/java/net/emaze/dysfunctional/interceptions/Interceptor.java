@@ -6,6 +6,6 @@ package net.emaze.dysfunctional.interceptions;
  * @author rferranti
  */
 public interface Interceptor<T> {
-    public void before(T value);
-    public void after(T value);
+    void before(T value);
+    void after(T value);
 }

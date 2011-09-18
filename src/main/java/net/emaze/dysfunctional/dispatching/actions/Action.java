@@ -11,5 +11,5 @@ public interface Action<E> {
      * Performs an action for the given element
      * @param element the element
      */
-    public void perform(E element);
+    void perform(E element);
 }

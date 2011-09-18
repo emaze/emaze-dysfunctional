@@ -14,5 +14,5 @@ public interface BinaryDelegate<R,T1,T2> {
      * @param latter the latter element
      * @return
      */
-    public R perform(T1 former,T2 latter);
+    R perform(T1 former,T2 latter);
 }

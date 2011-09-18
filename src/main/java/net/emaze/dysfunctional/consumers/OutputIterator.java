@@ -10,11 +10,11 @@ public interface OutputIterator<T> {
      *
      * @return
      */
-    public boolean hasNext();
+    boolean hasNext();
     
     /**
      *
      * @param element
      */
-    public void next(T element);
+    void next(T element);
 }

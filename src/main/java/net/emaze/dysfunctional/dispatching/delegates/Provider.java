@@ -6,5 +6,5 @@ package net.emaze.dysfunctional.dispatching.delegates;
  * @author rferranti
  */
 public interface Provider<T> {
-    public T provide();
+    T provide();
 }

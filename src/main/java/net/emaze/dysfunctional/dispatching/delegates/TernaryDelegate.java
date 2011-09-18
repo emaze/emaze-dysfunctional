@@ -17,5 +17,5 @@ public interface TernaryDelegate<R, T1, T2, T3> {
      * @param third the third element
      * @return the result
      */
-    public R perform(T1 first, T2 second, T3 third);
+    R perform(T1 first, T2 second, T3 third);
 }

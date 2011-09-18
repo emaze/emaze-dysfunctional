@@ -12,5 +12,5 @@ public interface BinaryAction<E1,E2> {
      * @param former the former element
      * @param latter the latter element
      */
-    public void perform(E1 former, E2 latter);
+    void perform(E1 former, E2 latter);
 }

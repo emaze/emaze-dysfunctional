@@ -10,7 +10,7 @@ import java.util.List;
 public interface Range<T> extends Iterable<T>, Comparable<Range<T>> {
     boolean contains(T element);
     boolean overlaps(Range<T> rhs);
-    public T lower();
-    public T upper();
-    public List<DenseRange<T>> densified();
+    T lower();
+    T upper();
+    List<DenseRange<T>> densified();
 }

@@ -7,6 +7,6 @@ package net.emaze.dysfunctional.interceptions;
  * @author rferranti
  */
 public interface BinaryInterceptor<T1, T2> {
-    public void before(T1 first, T2 second);
-    public void after(T1 first, T2 second);
+    void before(T1 first, T2 second);
+    void after(T1 first, T2 second);
 }

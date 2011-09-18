@@ -15,5 +15,5 @@ public interface TernaryAction<T1, T2, T3> {
      * @param second the second element
      * @param third the third element
      */
-    public void perform(T1 first, T2 second, T3 third);
+    void perform(T1 first, T2 second, T3 third);
 }
