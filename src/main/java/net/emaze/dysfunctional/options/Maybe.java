@@ -2,13 +2,14 @@ package net.emaze.dysfunctional.options;
 
 import net.emaze.dysfunctional.casts.Casts;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
 /**
  * Responsibility: Holds an optional value, sadly not actually a Maybe monad :'(
- * @param <E> 
+ * @param <E>
  * @author rferranti
  */
 public class Maybe<E> {
@@ -30,12 +31,19 @@ public class Maybe<E> {
         return element;
     }
 
-    public <T> Maybe<T> withValue(Delegate<T, E> delegate){
+    public <T> Maybe<T> withValue(Delegate<T, E> delegate) {
         dbc.precondition(delegate != null, "cannot perform withValue with a null delegate");
-        if(hasValue){
+        if (hasValue) {
             return Maybe.just(delegate.perform(element));
         }
         return Maybe.nothing();
+    }
+
+    public void withValue(Action<E> action) {
+        dbc.precondition(action != null, "cannot perform withValue with a null action");
+        if (hasValue) {
+            action.perform(element);
+        }
     }
 
     public static <E> Maybe<E> nothing() {
@@ -66,11 +74,9 @@ public class Maybe<E> {
 
     @Override
     public String toString() {
-        if(!hasValue){
+        if (!hasValue) {
             return "Nothing";
         }
         return String.format("Just %s", element);
     }
-
-    
 }
