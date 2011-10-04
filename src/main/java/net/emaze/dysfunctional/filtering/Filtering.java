@@ -161,7 +161,7 @@ public abstract class Filtering {
      * @return
      */
     public static <E> Iterator<E> take(long howMany, Iterator<E> iterator) {
-        return new TakeWhileIterator<E>(iterator, new UntilCount<E>(howMany));
+        return new TakeUpToIterator<E>(iterator, howMany);
     }
 
     /**

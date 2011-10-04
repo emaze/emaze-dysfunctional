@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import net.emaze.dysfunctional.iterations.Destructive;
 import net.emaze.dysfunctional.options.Maybe;
 
 /**
@@ -11,6 +12,7 @@ import net.emaze.dysfunctional.options.Maybe;
  * @param <E> the iterator element Type
  * @author rferranti
  */
+@Destructive
 public class TakeWhileIterator<E> implements Iterator<E> {
 
     private final Predicate<E> filter;
