@@ -7,7 +7,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import net.emaze.dysfunctional.tuples.Pair;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

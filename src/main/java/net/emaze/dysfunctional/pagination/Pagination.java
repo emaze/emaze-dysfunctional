@@ -153,8 +153,7 @@ public abstract class Pagination {
      */
     public static <T, C extends Collection<T>> Pair<Long, C> pagel(long start, long howMany, Iterator<T> iterator, C collection) {
         final C sliced = Consumers.all(Filtering.slice(start, howMany, iterator), collection);
-        final long prefetchingCompensation = sliced.size() == howMany && iterator.hasNext() ? 1 : 0;
-        final long fullSize = Reductions.reduce(iterator, new Count<T>(), start + sliced.size() + prefetchingCompensation);
+        final long fullSize = Reductions.reduce(iterator, new Count<T>(), start + sliced.size());
         return Pair.of(fullSize, sliced);
     }
 
