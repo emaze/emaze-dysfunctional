@@ -66,4 +66,17 @@ public abstract class Groups {
         }
         return grouped;
     }
+
+    public static <M extends Map<K, V>, K, V> Map<K, V> coupleBy(Iterator<V> groupies, Delegate<K, V> grouper, Provider<M> mapProvider) {
+        dbc.precondition(groupies != null, "cannot group with a null iterator");
+        dbc.precondition(grouper != null, "cannot group with a null grouper");
+        dbc.precondition(mapProvider != null, "cannot group with a null mapProvider");
+        final M grouped = mapProvider.provide();
+        while (groupies.hasNext()) {
+            final V groupie = groupies.next();
+            final K group = grouper.perform(groupie);
+            grouped.put(group, groupie);
+        }
+        return grouped;
+    }
 }
