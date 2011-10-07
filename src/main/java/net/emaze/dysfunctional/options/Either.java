@@ -22,7 +22,7 @@ public class Either<T1, T2> {
         this.right = right;
     }
 
-    public <R> R withValue(Delegate<R, T1> withLeft, Delegate<R, T2> withRight) {
+    public <R> R fmap(Delegate<R, T1> withLeft, Delegate<R, T2> withRight) {
         if (left.hasValue()) {
             return withLeft.perform(left.value());
         }

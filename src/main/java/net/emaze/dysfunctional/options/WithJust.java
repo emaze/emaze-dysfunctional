@@ -18,6 +18,6 @@ public class WithJust<R, T> implements Delegate<Maybe<R>, Maybe<T>> {
 
     @Override
     public Maybe<R> perform(Maybe<T> from) {
-        return from.withValue(delegate);
+        return from.fmap(delegate);
     }
 }

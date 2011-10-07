@@ -2,7 +2,6 @@ package net.emaze.dysfunctional.options;
 
 import net.emaze.dysfunctional.casts.Casts;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
@@ -31,7 +30,7 @@ public class Maybe<E> {
         return element;
     }
 
-    public <T> Maybe<T> withValue(Delegate<T, E> delegate) {
+    public <T> Maybe<T> fmap(Delegate<T, E> delegate) {
         dbc.precondition(delegate != null, "cannot perform withValue with a null delegate");
         if (hasValue) {
             return Maybe.just(delegate.perform(element));
@@ -39,13 +38,8 @@ public class Maybe<E> {
         return Maybe.nothing();
     }
 
-    public void withValue(Action<E> action) {
-        dbc.precondition(action != null, "cannot perform withValue with a null action");
-        if (hasValue) {
-            action.perform(element);
-        }
-    }
-
+    
+    
     public static <E> Maybe<E> nothing() {
         return new Maybe<E>(null, false);
     }

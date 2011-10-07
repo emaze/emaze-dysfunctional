@@ -62,7 +62,7 @@ public class EitherTest {
             final Integer rightValue = 1;
             final Either<Object, Integer> either = new Either<Object, Integer>(Maybe.nothing(), Maybe.just(rightValue));
             final Box<Integer> box = new Box<Integer>();
-            either.withValue(new Identity<Object>(), new Delegate<Object, Integer>() {
+            either.fmap(new Identity<Object>(), new Delegate<Object, Integer>() {
 
                 @Override
                 public Object perform(Integer value) {
@@ -78,7 +78,7 @@ public class EitherTest {
             final Integer leftValue = 1;
             final Either<Integer, Object> either = new Either<Integer, Object>(Maybe.just(leftValue), Maybe.nothing());
             final Box<Integer> box = new Box<Integer>();
-            either.withValue(new Delegate<Object, Integer>() {
+            either.fmap(new Delegate<Object, Integer>() {
 
                 @Override
                 public Object perform(Integer value) {
