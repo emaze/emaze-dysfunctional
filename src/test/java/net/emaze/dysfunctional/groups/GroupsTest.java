@@ -5,11 +5,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.collections.HashMapFactory;
 import net.emaze.dysfunctional.collections.HashSetFactory;
+import net.emaze.dysfunctional.collections.LinkedHashMapFactory;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
@@ -188,14 +190,15 @@ public class GroupsTest {
         public void indexByWithNullProvideYieldsException() {
             final Iterator<O> iterator = Iterations.iterator();
             final Delegate<O, O> delegate = new Identity<O>();
-            Groups.indexBy(iterator, delegate, null);
+            final Provider<HashMap<O, O>> nullProvider = null;
+            Groups.indexBy(iterator, delegate, nullProvider);
         }
 
         @Test
         public void everyElementFromIteratorIsIndexed() {
             final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER);
             final Delegate<O, O> delegate = new Identity<O>();
-            final Provider<HashMap<O, O>> provider = new HashMapFactory<O, O>();
+            final Provider<LinkedHashMap<O, O>> provider = new LinkedHashMapFactory<O, O>();
             final Map<O, O> indexed = Groups.indexBy(iterator, delegate, provider);
             Assert.assertEquals(Arrays.asList(O.ONE, O.ANOTHER), new ArrayList<O>(indexed.values()));
         }
