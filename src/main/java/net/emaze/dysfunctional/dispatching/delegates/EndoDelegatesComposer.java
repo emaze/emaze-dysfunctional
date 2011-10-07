@@ -10,7 +10,7 @@ public class EndoDelegatesComposer<T> implements Delegate<Delegate<T, T>, Iterat
         dbc.precondition(endoDelegates != null, "cannot compose a null iterator of endoDelegates");
         Delegate<T, T> current = new Identity<T>();
         while (endoDelegates.hasNext()) {
-            current = new Composer<T,T,T>(endoDelegates.next(), current);
+            current = new Composer<T, T, T>(endoDelegates.next(), current);
         }
         return current;
     }

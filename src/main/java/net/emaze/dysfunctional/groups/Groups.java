@@ -13,6 +13,7 @@ import net.emaze.dysfunctional.casts.Narrow;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import net.emaze.dysfunctional.iterations.Iterations;
 import net.emaze.dysfunctional.tuples.Pair;
 
 /**
@@ -76,6 +77,32 @@ public abstract class Groups {
     public static <CA extends Collection<T>, CR extends Collection<T>, T> Pair<CA, CR> partition(Iterable<T> values, Predicate<T> partitioner, Provider<CA> acceptedCollectionProvider, Provider<CR> refusedCollectionProvider) {
         dbc.precondition(values != null, "cannot partition a null iterable");
         return partition(values.iterator(), partitioner, acceptedCollectionProvider, refusedCollectionProvider);
+    }
+
+    public static <M extends Map<K, V>, K, V> Map<K, V> indexBy(V[] groupies, Delegate<K, V> grouper, Provider<M> mapProvider) {
+        dbc.precondition(groupies != null, "cannot index from a null array");
+        final Iterator<V> iterator = Iterations.iterator(groupies);
+        return indexBy(iterator, grouper, mapProvider);
+    }
+
+    public static <K, V> Map<K, V> indexBy(V[] groupies, Delegate<K, V> grouper) {
+        dbc.precondition(groupies != null, "cannot index from a null array");
+        final Iterator<V> iterator = Iterations.iterator(groupies);
+        return indexBy(iterator, grouper, new HashMapFactory<K, V>());
+    }
+
+    public static <M extends Map<K, V>, K, V> Map<K, V> indexBy(Iterable<V> groupies, Delegate<K, V> grouper, Provider<M> mapProvider) {
+        dbc.precondition(groupies != null, "cannot index from a null iterable");
+        return indexBy(groupies.iterator(), grouper, mapProvider);
+    }
+
+    public static <K, V> Map<K, V> indexBy(Iterable<V> groupies, Delegate<K, V> grouper) {
+        dbc.precondition(groupies != null, "cannot index from a null iterable");
+        return indexBy(groupies.iterator(), grouper, new HashMapFactory<K, V>());
+    }
+
+    public static <K, V> Map<K, V> indexBy(Iterator<V> groupies, Delegate<K, V> grouper) {
+        return indexBy(groupies, grouper, new HashMapFactory<K, V>());
     }
 
     public static <M extends Map<K, V>, K, V> Map<K, V> indexBy(Iterator<V> groupies, Delegate<K, V> grouper, Provider<M> mapProvider) {

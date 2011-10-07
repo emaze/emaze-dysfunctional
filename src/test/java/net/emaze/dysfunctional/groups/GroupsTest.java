@@ -176,7 +176,8 @@ public class GroupsTest {
         public void indexByWithNullIteratorYieldsException() {
             final Delegate<O, O> delegate = new Identity<O>();
             final Provider<HashMap<O, O>> mapProvider = new HashMapFactory<O, O>();
-            Groups.indexBy(null, delegate, mapProvider);
+            final Iterator<O> nullIterator = null;
+            Groups.indexBy(nullIterator, delegate, mapProvider);
         }
 
         @Test(expected = IllegalArgumentException.class)
