@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import net.emaze.dysfunctional.collections.HashMapFactory;
+import net.emaze.dysfunctional.collections.LinkedHashMapFactory;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
@@ -40,7 +42,7 @@ public class GroupsTest {
     public void everyElementFromIteratorIsCoupled(){
         final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER);
         final Delegate<O, O> delegate = new Identity<O>();
-        final Provider<HashMap<O, O>> provider = new HashMapFactory<O, O>();
+        final Provider<LinkedHashMap<O, O>> provider = new LinkedHashMapFactory<O, O>();
         final Map<O, O> coupleBy = Groups.coupleBy(iterator, delegate, provider);
         Assert.assertEquals(Arrays.asList(O.ONE, O.ANOTHER), new ArrayList<O>(coupleBy.values()));
     }
