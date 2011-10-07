@@ -24,8 +24,8 @@ public class BinaryActionToBinaryDelegateTest {
         final Box<Pair<O, O>> box = new Box<Pair<O, O>>();
         final BinaryAction<O, O> adaptee = new BinaryBoxingAction<O, O>(box);
         final BinaryDelegate<Void, O, O> del = new BinaryActionToBinaryDelegate<O, O>(adaptee);
-        final O former = new O();
-        final O latter = new O();
+        final O former = O.ONE;
+        final O latter = O.ANOTHER;
 
         del.perform(former, latter);
 

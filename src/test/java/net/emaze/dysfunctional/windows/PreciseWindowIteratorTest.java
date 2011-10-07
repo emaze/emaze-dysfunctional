@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.casts.Narrow;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
+import net.emaze.dysfunctional.collections.LinkedListFactory;
 import net.emaze.dysfunctional.dispatching.Dispatching;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.iterations.Iterations;
@@ -63,6 +65,14 @@ public class PreciseWindowIteratorTest {
         final Iterator<O> iter = Iterations.iterator();
         final PreciseWindowIterator<List<O>, O> win = new PreciseWindowIterator<List<O>, O>(iter, 1, LIST_FACTORY);
         Assert.assertFalse(win.hasNext());
+    }
+    
+    @Test
+    public void hasNextDoesNotConsumeAnElement() {
+        Iterator<Integer> iter = Arrays.asList(1,2).iterator();
+        PreciseWindowIterator<LinkedList<Integer>, Integer> win = new PreciseWindowIterator<LinkedList<Integer>, Integer>(iter, 2, new LinkedListFactory<Integer>());
+        win.hasNext();
+        win.next();
     }
 
     @Test

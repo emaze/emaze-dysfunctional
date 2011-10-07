@@ -83,12 +83,12 @@ public class StringsTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void interposingNullValuesYieldsException() {
-            Strings.interpose(null, 0);
+            Strings.interpose((Iterator) null, 0);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void interposingNullValuesYieldsExceptionOverload() {
-            Strings.interpose(null, new ConstantIterator<Integer>(0));
+            Strings.interpose((Iterator) null, new ConstantIterator<Integer>(0));
         }
 
         @Test(expected = IllegalArgumentException.class)

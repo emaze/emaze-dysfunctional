@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.groups;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -9,8 +10,11 @@ import java.util.Map;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.collections.HashMapFactory;
 import net.emaze.dysfunctional.collections.HashSetFactory;
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.logic.Always;
+import net.emaze.dysfunctional.groups.GroupsTest.IndexByTest;
 import net.emaze.dysfunctional.groups.GroupsTest.FacadeTest;
 import net.emaze.dysfunctional.groups.GroupsTest.GroupByTest;
 import net.emaze.dysfunctional.groups.GroupsTest.PartitionByTest;
@@ -30,8 +34,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     GroupByTest.class,
     PartitionByTest.class,
-    FacadeTest.class
-})
+    IndexByTest.class,
+    FacadeTest.class})
 public class GroupsTest {
 
     private static final ArrayListFactory<O> LIST_FACTORY = new ArrayListFactory<O>();
@@ -161,6 +165,39 @@ public class GroupsTest {
         public void partitioningANullIterableUsingProvidersYieldsException() {
             final Iterable<O> values = null;
             Groups.partition(values, new Always<O>(), LIST_FACTORY, LIST_FACTORY);
+        }
+    }
+
+    public static class IndexByTest {
+
+        @Test(expected = IllegalArgumentException.class)
+        public void indexByWithNullIteratorYieldsException() {
+            final Delegate<O, O> delegate = new Identity<O>();
+            final Provider<HashMap<O, O>> mapProvider = new HashMapFactory<O, O>();
+            Groups.indexBy(null, delegate, mapProvider);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void indexByWithNullDelegateYieldsException() {
+            final Iterator<O> iterator = Iterations.iterator();
+            final Provider<HashMap<O, O>> mapProvider = new HashMapFactory<O, O>();
+            Groups.indexBy(iterator, null, mapProvider);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void indexByWithNullProvideYieldsException() {
+            final Iterator<O> iterator = Iterations.iterator();
+            final Delegate<O, O> delegate = new Identity<O>();
+            Groups.indexBy(iterator, delegate, null);
+        }
+
+        @Test
+        public void everyElementFromIteratorIsIndexed() {
+            final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER);
+            final Delegate<O, O> delegate = new Identity<O>();
+            final Provider<HashMap<O, O>> provider = new HashMapFactory<O, O>();
+            final Map<O, O> indexed = Groups.indexBy(iterator, delegate, provider);
+            Assert.assertEquals(Arrays.asList(O.ONE, O.ANOTHER), new ArrayList<O>(indexed.values()));
         }
     }
 

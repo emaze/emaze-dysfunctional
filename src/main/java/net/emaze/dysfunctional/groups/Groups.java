@@ -77,4 +77,17 @@ public abstract class Groups {
         dbc.precondition(values != null, "cannot partition a null iterable");
         return partition(values.iterator(), partitioner, acceptedCollectionProvider, refusedCollectionProvider);
     }
+
+    public static <M extends Map<K, V>, K, V> Map<K, V> indexBy(Iterator<V> groupies, Delegate<K, V> grouper, Provider<M> mapProvider) {
+        dbc.precondition(groupies != null, "cannot group with a null iterator");
+        dbc.precondition(grouper != null, "cannot group with a null grouper");
+        dbc.precondition(mapProvider != null, "cannot group with a null mapProvider");
+        final M grouped = mapProvider.provide();
+        while (groupies.hasNext()) {
+            final V groupie = groupies.next();
+            final K group = grouper.perform(groupie);
+            grouped.put(group, groupie);
+        }
+        return grouped;
+    }
 }

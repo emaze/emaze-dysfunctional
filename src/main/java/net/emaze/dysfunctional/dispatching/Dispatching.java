@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.dispatching;
 
+import java.util.Iterator;
 import net.emaze.dysfunctional.dispatching.adapting.BinaryPredicateToBinaryDelegate;
 import net.emaze.dysfunctional.dispatching.adapting.TernaryDelegateToTernaryPredicate;
 import net.emaze.dysfunctional.dispatching.adapting.BinaryDelegateToBinaryPredicate;
@@ -54,6 +55,7 @@ import net.emaze.dysfunctional.dispatching.adapting.PredicateBinderFirstOfThree;
 import net.emaze.dysfunctional.dispatching.adapting.PredicateBinderThird;
 import net.emaze.dysfunctional.dispatching.adapting.PredicateIgnoreSecondOfThree;
 import net.emaze.dysfunctional.dispatching.adapting.PredicateIgnoreThird;
+import net.emaze.dysfunctional.dispatching.delegates.EndoDelegatesComposer;
 
 /**
  *
@@ -287,5 +289,13 @@ public abstract class Dispatching {
 
     public static <R, T1, T2, T3> TernaryPredicate<T1, T2, T3> compose(Predicate<R> predicate, TernaryDelegate<R, T1, T2, T3> delegate) {
         return new TransformingTernaryPredicate<R, T1, T2, T3>(predicate, delegate);
+    }
+
+    /**
+     * @param endofunctors to be composed (eg.f,g,h)
+     * @return f ° g ° h
+     */
+    public static <T> Delegate<T, T> compose (Iterator<Delegate<T, T>> endofunctors) {
+        return new EndoDelegatesComposer<T>().perform(endofunctors);
     }
 }

@@ -24,9 +24,9 @@ public class TernaryActionToTernaryDelegateTest {
         final Box<Triple<O, O, O>> box = new Box<Triple<O, O, O>>();
         final TernaryAction<O, O, O> adaptee = new TernaryBoxingAction<O, O, O>(box);
         final TernaryDelegate<Void, O, O, O> del = new TernaryActionToTernaryDelegate<O, O, O>(adaptee);
-        final O first = new O();
-        final O second = new O();
-        final O third = new O();
+        final O first = O.ONE;
+        final O second = O.ANOTHER;
+        final O third = O.YET_ANOTHER;
 
         del.perform(first, second, third);
 

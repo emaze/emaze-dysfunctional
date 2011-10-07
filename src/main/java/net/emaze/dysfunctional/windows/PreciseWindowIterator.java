@@ -41,16 +41,12 @@ public class PreciseWindowIterator<W extends Collection<T>, T> extends ReadOnlyI
 
     @Override
     public W next() {
-        if (window.size() == windowSize) {
-            window.add(iter.next());
-            window.remove();
-        }
-        tryFillWindow();
-        if (window.size() != windowSize) {
+        if(!hasNext()) { 
             throw new NoSuchElementException("iterator is consumed");
         }
         final W collection = provider.provide();
         collection.addAll(window);
+        window.remove();
         return collection;
     }
 

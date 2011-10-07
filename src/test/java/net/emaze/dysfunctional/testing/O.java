@@ -6,13 +6,22 @@ package net.emaze.dysfunctional.testing;
  */
 public class O {
 
-    public static O ONE = new O();
-    public static O ANOTHER = new O();
-    public static O YET_ANOTHER = new O();
-    public static O IGNORED = new O();
+    public static O ONE = new O("ONE");
+    public static O ANOTHER = new O("ANOTHER");
+    public static O YET_ANOTHER = new O("YET_ANOTHER");
+    public static O IGNORED = new O("IGNORED");
+    private final String label;
 
-    public static O create() {
-        return new O();
+    public O(String label) {
+        this.label = label;
     }
 
+    public static O create(String label) {
+        return new O(label);
+    }
+
+    @Override
+    public String toString() {
+        return label;
+    }
 }

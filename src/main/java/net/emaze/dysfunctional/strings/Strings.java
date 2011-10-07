@@ -32,6 +32,15 @@ public abstract class Strings {
         final Iterator<String> elements = Transforming.transform(iterator, new ToStringTransformer<T>());
         return pipe.consume(elements).toString();
     }
+    
+    public static <T, V> String interpose(T[] values, Iterator<V> separators) {
+        return interpose(new ArrayIterator<T>(values), separators);
+    }
+
+    public static <T, V> String interpose(Iterable<T> values, Iterator<V> separators) {
+        dbc.precondition(values != null, "calling interpose with a null values");
+        return interpose(values.iterator(), separators);
+    }
 
     public static <T, V> String interpose(Iterator<T> values, Iterator<V> separators) {
         dbc.precondition(values != null, "calling interpose with a null values");
@@ -42,6 +51,14 @@ public abstract class Strings {
         final StringOutputIterator output = new StringOutputIterator();
         final PipingConsumer<String> pipe = new PipingConsumer<String>(output);
         return pipe.consume(input).toString();
+    }
+    
+    public static <T, V> String interpose(T[] values, V separator) {
+        return interpose(values, new ConstantIterator<V>(separator));
+    }
+    
+    public static <T, V> String interpose(Iterable<T> values, V separator) {
+        return interpose(values, new ConstantIterator<V>(separator));
     }
 
     public static <T, V> String interpose(Iterator<T> values, V separator) {
