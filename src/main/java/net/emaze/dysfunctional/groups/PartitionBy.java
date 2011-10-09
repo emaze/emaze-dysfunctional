@@ -10,6 +10,9 @@ import net.emaze.dysfunctional.tuples.Pair;
 
 /**
  *
+ * @param <CA> 
+ * @param <CR> 
+ * @param <T> 
  * @author rferranti
  */
 public class PartitionBy<CA extends Collection<T>, CR extends Collection<T>, T> implements Delegate<Pair<CA, CR>, Iterator<T>> {

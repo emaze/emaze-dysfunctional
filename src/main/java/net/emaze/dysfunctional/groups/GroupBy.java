@@ -28,7 +28,7 @@ public class GroupBy<M extends Map<K, C>, C extends Collection<V>, K, V> impleme
 
     @Override
     public M perform(Iterator<V> groupies) {
-        dbc.precondition(groupies != null, "cannot group with a null iterable");
+        dbc.precondition(groupies != null, "cannot group with a null iterator");
         final M grouped = mapProvider.provide();
         while (groupies.hasNext()) {
             final V groupie = groupies.next();

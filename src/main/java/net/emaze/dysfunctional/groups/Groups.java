@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.groups;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -102,19 +103,10 @@ public abstract class Groups {
     }
 
     public static <K, V> Map<K, V> indexBy(Iterator<V> groupies, Delegate<K, V> grouper) {
-        return indexBy(groupies, grouper, new HashMapFactory<K, V>());
+        return new IndexBy<HashMap<K, V>, K, V>(grouper, new HashMapFactory<K, V>()).perform(groupies);        
     }
 
     public static <M extends Map<K, V>, K, V> Map<K, V> indexBy(Iterator<V> groupies, Delegate<K, V> grouper, Provider<M> mapProvider) {
-        dbc.precondition(groupies != null, "cannot group with a null iterator");
-        dbc.precondition(grouper != null, "cannot group with a null grouper");
-        dbc.precondition(mapProvider != null, "cannot group with a null mapProvider");
-        final M grouped = mapProvider.provide();
-        while (groupies.hasNext()) {
-            final V groupie = groupies.next();
-            final K group = grouper.perform(groupie);
-            grouped.put(group, groupie);
-        }
-        return grouped;
+        return new IndexBy<M, K, V>(grouper, mapProvider).perform(groupies);
     }
 }
