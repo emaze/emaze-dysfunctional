@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.contracts;
 
 /**
- * design by contract
+ * Design by contract.
  * @author rferranti
  */
 public abstract class dbc {

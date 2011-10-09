@@ -5,7 +5,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
 /**
- *
+ * A predicate accepting elements contained in the collection.
  * @author rferranti
  */
 public class IsContainedIn<T> implements Predicate<T> {

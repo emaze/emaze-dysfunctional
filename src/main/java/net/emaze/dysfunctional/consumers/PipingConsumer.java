@@ -4,8 +4,8 @@ import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- *
- * @param <E>
+ * A consumer pushing elements consumed into an OutputIterator.
+ * @param <E> the iterator type parameter
  * @author rferranti
  */
 public class PipingConsumer<E> implements Consumer<OutputIterator<E>, Iterator<E>> {

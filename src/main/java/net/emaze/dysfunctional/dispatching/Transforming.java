@@ -124,21 +124,22 @@ public class Transforming {
     }
 
     /**
-     * 
-     * @param <R>
-     * @param <E> 
+     * Applies (eagerly) a transformation on every element of the iterable.
+     * @param <R> the result iterator element type parameter
+     * @param <E> the input array element type parameter
      * @param iterable the iterable where elements are fetched from
      * @param delegate a delegate used to transform each element
      * @return a List<R> containing the transformed elements
      */
     public static <R, E> List<R> map(Iterable<E> iterable, Delegate<R, E> delegate) {
+        dbc.precondition(iterable.iterator() != null, "cannot map from a null iterable");
         return map(iterable.iterator(), delegate);
     }
 
     /**
-     *
-     * @param <R>
-     * @param <E> 
+     * Applies (eagerly) a transformation on every element of the iterator.
+     * @param <R> the result iterator element type parameter
+     * @param <E> the input array element type parameter
      * @param iterator the iterator where elements are fetched from
      * @param delegate a delegate used to transform each element
      * @return a List<R> containing the transformed elements
@@ -148,9 +149,9 @@ public class Transforming {
     }
 
     /**
-     *
-     * @param <R>
-     * @param <E> 
+     * Applies (eagerly) a transformation on every element of the array.
+     * @param <R> the result iterator element type parameter
+     * @param <E> the input array element type parameter
      * @param array the array where elements are fetched from
      * @param delegate a delegate used to transform each element
      * @return a List<R> containing the transformed elements

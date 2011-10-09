@@ -5,7 +5,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
- *
+ * An endodelegate adding all elements from a collection to a collection.
  * @param <C> the collection type parameter
  * @param <E> the element type parameter
  * @author rferranti

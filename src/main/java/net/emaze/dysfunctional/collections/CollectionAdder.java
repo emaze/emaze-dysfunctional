@@ -5,8 +5,8 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
- *
- * @param <T> 
+ * An endodelegate adding element to a collection.
+ * @param <T> the element type
  * @author rferranti
  */
 public class CollectionAdder<T> implements Delegate<T, T> {

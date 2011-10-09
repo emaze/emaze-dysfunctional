@@ -4,7 +4,7 @@ import java.util.HashMap;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
 /**
- *
+ * Creates an empty HashMap.
  * @author rferranti
  */
 public class HashMapFactory<K, V> implements Provider<HashMap<K, V>> {
