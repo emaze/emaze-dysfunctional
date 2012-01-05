@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
-import net.emaze.dysfunctional.iterations.Destructive;
 import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 
 /**
@@ -12,7 +11,6 @@ import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
  * @param <E> the iterator element Type
  * @author rferranti
  */
-@Destructive
 public class TakeWhileIterator<E> extends ReadOnlyIterator<E> {
 
     private final Predicate<E> filter;
