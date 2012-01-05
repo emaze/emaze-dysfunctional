@@ -16,7 +16,7 @@ public class UnaryToBinaryDelegate<R, T1, T2> implements BinaryDelegate<R, T1, T
     private final Delegate<R, Pair<T1, T2>> delegate;
 
     public UnaryToBinaryDelegate(Delegate<R, Pair<T1, T2>> delegate) {
-        dbc.precondition(delegate != null, "cannot create a UnaryToBinaryPredicate with a null Predicate");
+        dbc.precondition(delegate != null, "cannot create a UnaryToBinaryDelegate with a null Delegate");
         this.delegate = delegate;
     }
 
