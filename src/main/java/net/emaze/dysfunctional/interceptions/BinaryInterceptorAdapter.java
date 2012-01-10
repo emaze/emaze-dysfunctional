@@ -4,7 +4,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 
 /**
- *
+ * 
  * @param <R>
  * @param <T1>
  * @param <T2> 
@@ -22,6 +22,12 @@ public class BinaryInterceptorAdapter<R, T1, T2> implements BinaryDelegate<R, T1
         this.inner = inner;
     }
 
+    /**
+     * Executes a delegate in the nested interceptor context.
+     * @param first
+     * @param second
+     * @return 
+     */
     @Override
     public R perform(T1 first, T2 second) {
         interceptor.before(first, second);
