@@ -5,7 +5,7 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
 /**
- * Binary to 0-arity delegate adapter
+ * Unary to nullary delegate adapter.
  * @param <R> the return Type
  * @param <T> the only element Type
  * @author rferranti

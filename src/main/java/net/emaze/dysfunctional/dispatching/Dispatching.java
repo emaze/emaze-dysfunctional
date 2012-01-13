@@ -1,18 +1,6 @@
 package net.emaze.dysfunctional.dispatching;
 
 import java.util.Iterator;
-import net.emaze.dysfunctional.dispatching.adapting.BinaryPredicateToBinaryDelegate;
-import net.emaze.dysfunctional.dispatching.adapting.TernaryDelegateToTernaryPredicate;
-import net.emaze.dysfunctional.dispatching.adapting.BinaryDelegateToBinaryPredicate;
-import net.emaze.dysfunctional.dispatching.adapting.PredicateToDelegate;
-import net.emaze.dysfunctional.dispatching.adapting.TernaryPredicateToTernaryDelegate;
-import net.emaze.dysfunctional.dispatching.adapting.ActionToDelegate;
-import net.emaze.dysfunctional.dispatching.adapting.DelegateToPredicate;
-import net.emaze.dysfunctional.dispatching.adapting.TernaryActionToTernaryDelegate;
-import net.emaze.dysfunctional.dispatching.adapting.BinaryDelegateToBinaryAction;
-import net.emaze.dysfunctional.dispatching.adapting.BinaryActionToBinaryDelegate;
-import net.emaze.dysfunctional.dispatching.adapting.DelegateToAction;
-import net.emaze.dysfunctional.dispatching.adapting.TernaryDelegateToTernaryAction;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
@@ -20,6 +8,7 @@ import net.emaze.dysfunctional.dispatching.delegates.Composer;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
+import net.emaze.dysfunctional.dispatching.adapting.ActionBinder;
 import net.emaze.dysfunctional.dispatching.adapting.ActionBinderFirst;
 import net.emaze.dysfunctional.dispatching.adapting.ActionBinderFirstOfThree;
 import net.emaze.dysfunctional.dispatching.adapting.ActionBinderSecond;
@@ -30,32 +19,53 @@ import net.emaze.dysfunctional.dispatching.adapting.ActionIgnoreFirstOfThree;
 import net.emaze.dysfunctional.dispatching.adapting.ActionIgnoreSecond;
 import net.emaze.dysfunctional.dispatching.adapting.ActionIgnoreSecondOfThree;
 import net.emaze.dysfunctional.dispatching.adapting.ActionIgnoreThird;
-import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.adapting.ActionToDelegate;
+import net.emaze.dysfunctional.dispatching.adapting.BinaryActionToBinaryDelegate;
+import net.emaze.dysfunctional.dispatching.adapting.BinaryDelegateToBinaryAction;
+import net.emaze.dysfunctional.dispatching.adapting.BinaryDelegateToBinaryPredicate;
+import net.emaze.dysfunctional.dispatching.adapting.BinaryPredicateToBinaryDelegate;
 import net.emaze.dysfunctional.dispatching.adapting.Binder;
 import net.emaze.dysfunctional.dispatching.adapting.BinderFirst;
 import net.emaze.dysfunctional.dispatching.adapting.BinderFirstOfThree;
 import net.emaze.dysfunctional.dispatching.adapting.BinderSecond;
 import net.emaze.dysfunctional.dispatching.adapting.BinderSecondOfThree;
 import net.emaze.dysfunctional.dispatching.adapting.BinderThird;
+import net.emaze.dysfunctional.dispatching.adapting.DelegateToAction;
+import net.emaze.dysfunctional.dispatching.adapting.DelegateToPredicate;
 import net.emaze.dysfunctional.dispatching.adapting.IgnoreFirst;
 import net.emaze.dysfunctional.dispatching.adapting.IgnoreFirstOfThree;
+import net.emaze.dysfunctional.dispatching.adapting.IgnoreParameter;
 import net.emaze.dysfunctional.dispatching.adapting.IgnoreSecond;
 import net.emaze.dysfunctional.dispatching.adapting.IgnoreSecondOfThree;
 import net.emaze.dysfunctional.dispatching.adapting.IgnoreThird;
+import net.emaze.dysfunctional.dispatching.adapting.PredicateBinder;
 import net.emaze.dysfunctional.dispatching.adapting.PredicateBinderFirst;
+import net.emaze.dysfunctional.dispatching.adapting.PredicateBinderFirstOfThree;
 import net.emaze.dysfunctional.dispatching.adapting.PredicateBinderSecond;
 import net.emaze.dysfunctional.dispatching.adapting.PredicateBinderSecondOfThree;
-import net.emaze.dysfunctional.dispatching.adapting.PredicateIgnoreSecond;
+import net.emaze.dysfunctional.dispatching.adapting.PredicateBinderThird;
 import net.emaze.dysfunctional.dispatching.adapting.PredicateIgnoreFirst;
 import net.emaze.dysfunctional.dispatching.adapting.PredicateIgnoreFirstOfThree;
+import net.emaze.dysfunctional.dispatching.adapting.PredicateIgnoreSecond;
+import net.emaze.dysfunctional.dispatching.adapting.PredicateIgnoreSecondOfThree;
+import net.emaze.dysfunctional.dispatching.adapting.PredicateIgnoreThird;
+import net.emaze.dysfunctional.dispatching.adapting.PredicateToDelegate;
+import net.emaze.dysfunctional.dispatching.adapting.PropositionIgnoreParameter;
+import net.emaze.dysfunctional.dispatching.adapting.PropositionToProvider;
+import net.emaze.dysfunctional.dispatching.adapting.ProviderToProposition;
+import net.emaze.dysfunctional.dispatching.adapting.ProviderToRunnable;
+import net.emaze.dysfunctional.dispatching.adapting.RunnableIgnoreParameter;
+import net.emaze.dysfunctional.dispatching.adapting.RunnableToProvider;
+import net.emaze.dysfunctional.dispatching.adapting.TernaryActionToTernaryDelegate;
+import net.emaze.dysfunctional.dispatching.adapting.TernaryDelegateToTernaryAction;
+import net.emaze.dysfunctional.dispatching.adapting.TernaryDelegateToTernaryPredicate;
+import net.emaze.dysfunctional.dispatching.adapting.TernaryPredicateToTernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
-import net.emaze.dysfunctional.dispatching.adapting.PredicateBinderFirstOfThree;
-import net.emaze.dysfunctional.dispatching.adapting.PredicateBinderThird;
-import net.emaze.dysfunctional.dispatching.adapting.PredicateIgnoreSecondOfThree;
-import net.emaze.dysfunctional.dispatching.adapting.PredicateIgnoreThird;
 import net.emaze.dysfunctional.dispatching.delegates.EndoDelegatesComposer;
+import net.emaze.dysfunctional.dispatching.logic.Proposition;
 
 /**
  *
@@ -63,12 +73,20 @@ import net.emaze.dysfunctional.dispatching.delegates.EndoDelegatesComposer;
  */
 public abstract class Dispatching {
 
+    public static <T> Runnable curry(Action<T> action, T value) {
+        return new ActionBinder<T>(action, value);
+    }
+
     public static <T1, T2> Action<T2> curry(BinaryAction<T1, T2> action, T1 first) {
         return new ActionBinderFirst<T1, T2>(action, first);
     }
 
     public static <T1, T2, T3> BinaryAction<T2, T3> curry(TernaryAction<T1, T2, T3> action, T1 first) {
         return new ActionBinderFirstOfThree<T1, T2, T3>(action, first);
+    }
+
+    public static <T> Proposition curry(Predicate<T> predicate, T value) {
+        return new PredicateBinder<T>(predicate, value);
     }
 
     public static <T1, T2> Predicate<T2> curry(BinaryPredicate<T1, T2> predicate, T1 first) {
@@ -127,6 +145,10 @@ public abstract class Dispatching {
         return new BinderThird<R, T1, T2, T3>(delegate, third);
     }
 
+    public static <T> Predicate<T> ignore(Proposition proposition, Class<T> ignored) {
+        return new PropositionIgnoreParameter<T>(proposition);
+    }
+
     public static <T1, T2> BinaryPredicate<T1, T2> ignore1st(Predicate<T2> predicate, Class<T1> ignored) {
         return new PredicateIgnoreFirst<T1, T2>(predicate);
     }
@@ -145,6 +167,10 @@ public abstract class Dispatching {
 
     public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> ignore3rd(BinaryPredicate<T1, T2> predicate, Class<T3> ignored) {
         return new PredicateIgnoreThird<T1, T2, T3>(predicate);
+    }
+
+    public static <T> Action<T> ignore(Runnable runnable, Class<T> ignored) {
+        return new RunnableIgnoreParameter<T>(runnable);
     }
 
     public static <T1, T2> BinaryAction<T1, T2> ignore1st(Action<T2> action, Class<T1> ignored) {
@@ -167,6 +193,10 @@ public abstract class Dispatching {
         return new ActionIgnoreThird<T1, T2, T3>(action);
     }
 
+    public static <R, T> Delegate<R, T> ignore(Provider<R> provider, Class<T> ignored) {
+        return new IgnoreParameter<R, T>(provider);
+    }
+
     public static <R, T1, T2> BinaryDelegate<R, T1, T2> ignore1st(Delegate<R, T2> delegate, Class<T1> ignored) {
         return new IgnoreFirst<R, T1, T2>(delegate);
     }
@@ -185,6 +215,14 @@ public abstract class Dispatching {
 
     public static <R, T1, T2, T3> TernaryDelegate<R, T1, T2, T3> ignore3rd(BinaryDelegate<R, T1, T2> delegate, Class<T3> ignored) {
         return new IgnoreThird<R, T1, T2, T3>(delegate);
+    }
+
+    public static RunnableToProvider provider(Runnable adaptee) {
+        return new RunnableToProvider(adaptee);
+    }
+
+    public static PropositionToProvider provider(Proposition adaptee) {
+        return new PropositionToProvider(adaptee);
     }
 
     public static <T> ActionToDelegate<T> delegate(Action<T> adaptee) {
@@ -211,6 +249,10 @@ public abstract class Dispatching {
         return new TernaryPredicateToTernaryDelegate<T1, T2, T3>(adaptee);
     }
 
+    public static Runnable runnable(Provider<?> provider) {
+        return new ProviderToRunnable(provider);
+    }
+
     public static <T> Action<T> action(Delegate<?, T> delegate) {
         return new DelegateToAction<T>(delegate);
     }
@@ -221,6 +263,10 @@ public abstract class Dispatching {
 
     public static <T1, T2, T3> TernaryAction<T1, T2, T3> action(TernaryDelegate<?, T1, T2, T3> delegate) {
         return new TernaryDelegateToTernaryAction<T1, T2, T3>(delegate);
+    }
+
+    public static Proposition proposition(Provider<Boolean> provider) {
+        return new ProviderToProposition(provider);
     }
 
     public static <T> Predicate<T> predicate(Delegate<Boolean, T> delegate) {
@@ -237,6 +283,7 @@ public abstract class Dispatching {
 
     /**
      * given f, g yields f ° g (f of g, f following g)
+     *
      * @param <R>
      * @param <T>
      * @param f
@@ -249,6 +296,7 @@ public abstract class Dispatching {
 
     /**
      * given f, g yields f ° g (f of g, f following g)
+     *
      * @param <R>
      * @param <T2>
      * @param <T1>
@@ -262,6 +310,7 @@ public abstract class Dispatching {
 
     /**
      * given f, g, h yields f ° g ° h (f of g of h, f following g following h)
+     *
      * @param <R>
      * @param <T3>
      * @param <T2>
@@ -295,7 +344,7 @@ public abstract class Dispatching {
      * @param endofunctors to be composed (eg.f,g,h)
      * @return f ° g ° h
      */
-    public static <T> Delegate<T, T> compose (Iterator<Delegate<T, T>> endofunctors) {
+    public static <T> Delegate<T, T> compose(Iterator<Delegate<T, T>> endofunctors) {
         return new EndoDelegatesComposer<T>().perform(endofunctors);
     }
 }

@@ -1,7 +1,6 @@
 package net.emaze.dysfunctional.contracts;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *

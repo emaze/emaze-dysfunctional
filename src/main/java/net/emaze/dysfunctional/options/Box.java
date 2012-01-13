@@ -23,6 +23,14 @@ public class Box<T> {
         return new Box<E>();
     }
 
+    public boolean isEmpty() {
+        return content.hasValue();
+    }
+
+    public void unload() {
+        content = Maybe.nothing();
+    }
+
     public T getContent() {
         return content.value();
     }
