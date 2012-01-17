@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.dispatching;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
@@ -12,18 +11,19 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
-import net.emaze.dysfunctional.dispatching.logic.BinaryNever;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
-import net.emaze.dysfunctional.dispatching.logic.Never;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import net.emaze.dysfunctional.dispatching.logic.Proposition;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
-import net.emaze.dysfunctional.dispatching.logic.TernaryNever;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.Yes;
+import net.emaze.dysfunctional.iterations.Iterations;
 import net.emaze.dysfunctional.testing.O;
 import net.emaze.dysfunctional.tuples.BinaryIdentity;
 import net.emaze.dysfunctional.tuples.Pair;
@@ -51,6 +51,35 @@ import org.junit.runners.Suite;
 public class DispatchingTest {
 
     public static class Adapting {
+
+        @Test
+        public void canAdaptRunnableToProvider() {
+            final Provider<Void> adapted = Dispatching.provider(new Runnable() {
+
+                @Override
+                public void run() {
+                }
+            });
+            Assert.assertNotNull(adapted);
+        }
+
+        @Test
+        public void canAdaptPropositionToProvider() {
+            final Provider<Boolean> adapted = Dispatching.provider(new Yes());
+            Assert.assertNotNull(adapted);
+        }
+
+        @Test
+        public void canAdaptProviderToRunnable() {
+            final Runnable adapted = Dispatching.runnable(new ConstantProvider<O>(O.ONE));
+            Assert.assertNotNull(adapted);
+        }
+
+        @Test
+        public void canAdaptProviderToProposition() {
+            final Proposition adapted = Dispatching.proposition(new ConstantProvider<Boolean>(Boolean.TRUE));
+            Assert.assertNotNull(adapted);
+        }
 
         @Test
         public void canAdaptActionToDelegate() {
@@ -185,6 +214,12 @@ public class DispatchingTest {
     public static class CurryActions {
 
         @Test
+        public void canCurryAction() {
+            final Runnable runnable = Dispatching.curry(new Noop<O>(), O.ONE);
+            Assert.assertNotNull(runnable);
+        }
+
+        @Test
         public void canCurryBinaryAction() {
             final Action<O> adapted = Dispatching.curry(new BinaryNoop<O, O>(), O.ONE);
             Assert.assertNotNull(adapted);
@@ -216,6 +251,12 @@ public class DispatchingTest {
     }
 
     public static class CurryPredicates {
+
+        @Test
+        public void canCurryPredicate() {
+            final Proposition adapted = Dispatching.curry(new Always<O>(), O.ONE);
+            Assert.assertNotNull(adapted);
+        }
 
         @Test
         public void canCurryBinaryPredicate() {
@@ -380,7 +421,15 @@ public class DispatchingTest {
             TernaryPredicate<O, O, O> composed = Dispatching.compose(new Always<O>(), new FirstParamOfThree<O, O, O>());
             Assert.assertNotNull(composed);
         }
+
+        @Test
+        public void canComposeEndoDelegates() {
+            final Iterator<Delegate<O, O>> delegates = Iterations.<Delegate<O, O>>iterator(new Identity<O>(), new Identity<O>());
+            final Delegate<O, O> composed = Dispatching.compose(delegates);
+            Assert.assertNotNull(composed);
+        }
     }
+
     public static class Facade {
 
         @Test
