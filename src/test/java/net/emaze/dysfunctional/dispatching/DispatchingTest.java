@@ -6,6 +6,7 @@ import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
+import net.emaze.dysfunctional.dispatching.actions.Slacker;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
@@ -54,12 +55,7 @@ public class DispatchingTest {
 
         @Test
         public void canAdaptRunnableToProvider() {
-            final Provider<Void> adapted = Dispatching.provider(new Runnable() {
-
-                @Override
-                public void run() {
-                }
-            });
+            final Provider<Void> adapted = Dispatching.provider(new Slacker());
             Assert.assertNotNull(adapted);
         }
 
@@ -290,6 +286,24 @@ public class DispatchingTest {
     }
 
     public static class Ignoring {
+
+        @Test
+        public void canIgnoreParameterForProposition() {
+            Predicate<O> ignoring = Dispatching.ignore(new Yes(), O.class);
+            Assert.assertNotNull(ignoring);
+        }
+
+        @Test
+        public void canIgnoreParameterForRunnable() {
+            final Action<O> ignoring = Dispatching.ignore(new Slacker(), O.class);
+            Assert.assertNotNull(ignoring);
+        }
+
+        @Test
+        public void canIgnoreParameterForProvider() {
+            final Delegate<O, O> ignoring = Dispatching.ignore(new ConstantProvider<O>(O.ONE), O.class);
+            Assert.assertNotNull(ignoring);
+        }
 
         @Test
         public void canIgnoreFirstForPredicates() {
