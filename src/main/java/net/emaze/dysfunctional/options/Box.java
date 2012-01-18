@@ -24,6 +24,10 @@ public class Box<T> {
     }
 
     public boolean isEmpty() {
+        return !content.hasValue();
+    }
+
+    public boolean hasContent() {
         return content.hasValue();
     }
 
