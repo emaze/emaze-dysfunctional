@@ -1,17 +1,18 @@
-package net.emaze.dysfunctional.consumers;
+package net.emaze.dysfunctional.searches;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
  * gives up after consuming the first element
  * @param <E>
  * @author rferranti
  */
-public class GiveUpConsumer<E> implements Consumer<E,Iterator<E>>{
+public class FirstElement<E> implements Delegate<E,Iterator<E>>{
 
     @Override
-    public E consume(Iterator<E> consumable) {
+    public E perform(Iterator<E> consumable) {
         dbc.precondition(consumable != null, "consuming a null iterator");
         dbc.precondition(consumable.hasNext(), "no element to consume");
         return consumable.next();

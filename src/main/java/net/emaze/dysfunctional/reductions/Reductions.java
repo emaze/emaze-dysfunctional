@@ -27,7 +27,7 @@ public abstract class Reductions {
      * @return the reduced value
      */
     public static <R, E> R reduce(Iterator<E> iterator, BinaryDelegate<R, R, E> delegate, R init) {
-        return new Reductor<R, E>(delegate, init).consume(iterator);
+        return new Reductor<R, E>(delegate, init).perform(iterator);
     }
 
     /**

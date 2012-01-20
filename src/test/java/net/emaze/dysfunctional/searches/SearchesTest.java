@@ -208,28 +208,28 @@ public class SearchesTest {
 
         @Test
         public void searchFirstWithEmptyIteratorYieldsNothing() {
-            Assert.assertEquals(Maybe.nothing(), Searches.searchFirst(Collections.emptyList().iterator()));
+            Assert.assertEquals(Maybe.nothing(), Searches.search(Collections.emptyList().iterator()));
         }
 
         @Test
         public void searchFirstWithNonEmptyIteratorYieldsJustTheFirst() {
-            Assert.assertEquals(Maybe.just(1), Searches.searchFirst(Arrays.asList(1, 2).iterator()));
+            Assert.assertEquals(Maybe.just(1), Searches.search(Arrays.asList(1, 2).iterator()));
         }
 
         @Test
         public void searchFirstWithNonEmptyIterableYieldsJustTheFirst() {
-            Assert.assertEquals(Maybe.just(1), Searches.searchFirst(Arrays.asList(1, 2)));
+            Assert.assertEquals(Maybe.just(1), Searches.search(Arrays.asList(1, 2)));
         }
 
         @Test
         public void searchFirstWithNonEmptyArrayYieldsJustTheFirst() {
-            Assert.assertEquals(Maybe.just(1), Searches.searchFirst(new Integer[]{1, 2}));
+            Assert.assertEquals(Maybe.just(1), Searches.search(new Integer[]{1, 2}));
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallMaybeFirstWithNullIterable() {
             final Iterable<Object> iterable = null;
-            Searches.searchFirst(iterable);
+            Searches.search(iterable);
         }
     }
 

@@ -15,78 +15,6 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
  */
 public abstract class Consumers {
 
-    /**
-     * yields the first element in the iterator
-     * @param <E>
-     * @param iterator
-     * @throws IllegalArgumentException if the iterator is empty
-     * @return the first element
-     */
-    public static <E> E first(Iterator<E> iterator) {
-        return new GiveUpConsumer<E>().consume(iterator);
-    }
-
-    /**
-     * yields the first element of the iterable's iterator
-     * @param <E>
-     * @param iterable
-     * @throws IllegalArgumentException if the iterator is empty
-     * @return the first element
-     */
-    public static <E> E first(Iterable<E> iterable) {
-        dbc.precondition(iterable != null, "cannot call first with a null iterable");
-        return first(iterable.iterator());
-    }
-
-    /**
-     * yields the first element of the array
-     * @param <E>
-     * @param array
-     * @throws IllegalArgumentException if the iterator is empty
-     * @return the first element
-     */
-    public static <E> E first(E[] array) {
-        return first(new ArrayIterator<E>(array));
-    }
-
-    /**
-     * yields the only element
-     * @param <E> the element type
-     * @param iterator
-     * @throws IllegalArgumentException if the iterator is empty
-     * @throws IllegalStateException if the iterator contains more than one element
-     * @return the only element
-     */
-    public static <E> E one(Iterator<E> iterator) {
-        final E element = first(iterator);
-        dbc.stateprecondition(!iterator.hasNext(), "Expected only one value in iterator");
-        return element;
-    }
-
-    /**
-     * yields the only element
-     * @param <E> the element type
-     * @param iterable
-     * @throws IllegalArgumentException if the iterator is empty
-     * @throws IllegalStateException if the iterator contains more than one element
-     * @return the only element
-     */
-    public static <E> E one(Iterable<E> iterable) {
-        dbc.precondition(iterable != null, "cannot call one with a null iterable");
-        return one(iterable.iterator());
-    }
-
-    /**
-     * yields the only element
-     * @param <E> the element type
-     * @param array
-     * @throws IllegalArgumentException if the iterator is empty
-     * @throws IllegalStateException if the iterator contains more than one element
-     * @return the only element
-     */
-    public static <E> E one(E[] array) {
-        return one(new ArrayIterator<E>(array));
-    }
 
     /**
      * yields all elements of the iterator (in the provided collection).
@@ -97,7 +25,7 @@ public abstract class Consumers {
      * @return the collection filled with iterator values
      */
     public static <R extends Collection<E>, E> R all(Iterator<E> iterator, R collection) {
-        return new EagerConsumer<R, E>(new CollectionProvider<R, E>(collection)).consume(iterator);
+        return new ConsumeIntoCollection<R, E>(new CollectionProvider<R, E>(collection)).perform(iterator);
     }
 
     /**
@@ -134,7 +62,7 @@ public abstract class Consumers {
      * @return a collection filled with iterator values
      */
     public static <E, R extends Collection<E>> R all(Iterator<E> iterator, Provider<R> provider) {
-        return new EagerConsumer<R, E>(provider).consume(iterator);
+        return new ConsumeIntoCollection<R, E>(provider).perform(iterator);
     }
 
     /**
@@ -193,44 +121,13 @@ public abstract class Consumers {
     }
 
     /**
-     * yields last elemenet of the iterator
-     * @param <E>
-     * @param iterator
-     * @return
-     */
-    public static <E> E last(Iterator<E> iterator) {
-        return new StubbornConsumer<E>().consume(iterator);
-    }
-
-    /**
-     * yields last element of the iterable's iterator
-     * @param <E>
-     * @param iterable
-     * @return
-     */
-    public static <E> E last(Iterable<E> iterable) {
-        dbc.precondition(iterable != null, "cannot call last with a null iterable");
-        return last(iterable.iterator());
-    }
-
-    /**
-     * yields last element of the array
-     * @param <E>
-     * @param array
-     * @return
-     */
-    public static <E> E last(E[] array) {
-        return last(new ArrayIterator<E>(array));
-    }
-
-    /**
      * consumes the input iterator to the output iterator
      * @param <E>
      * @param iterator
      * @param outputIterator
      */
     public static <E> void pipe(Iterator<E> iterator, OutputIterator<E> outputIterator) {
-        new PipingConsumer<E>(outputIterator).consume(iterator);
+        new ConsumeIntoOutputIterator<E>(outputIterator).perform(iterator);
     }
 
     /**

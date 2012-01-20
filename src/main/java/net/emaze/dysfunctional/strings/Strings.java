@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.strings;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
-import net.emaze.dysfunctional.consumers.PipingConsumer;
+import net.emaze.dysfunctional.consumers.ConsumeIntoOutputIterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.iterations.ConstantIterator;
 import net.emaze.dysfunctional.consumers.StringOutputIterator;
@@ -28,9 +28,9 @@ public abstract class Strings {
     public static <T> String join(Iterator<T> iterator) {
         dbc.precondition(iterator != null, "cannot join a null iterator");
         final StringOutputIterator output = new StringOutputIterator();
-        final PipingConsumer<String> pipe = new PipingConsumer<String>(output);
+        final ConsumeIntoOutputIterator<String> pipe = new ConsumeIntoOutputIterator<String>(output);
         final Iterator<String> elements = Transforming.transform(iterator, new ToStringTransformer<T>());
-        return pipe.consume(elements).toString();
+        return pipe.perform(elements).toString();
     }
     
     public static <T, V> String interpose(T[] values, Iterator<V> separators) {
@@ -49,8 +49,8 @@ public abstract class Strings {
                 new TransformingIterator<String, T>(values, new ToStringTransformer<T>()),
                 new TransformingIterator<String, V>(separators, new ToStringTransformer<V>()));
         final StringOutputIterator output = new StringOutputIterator();
-        final PipingConsumer<String> pipe = new PipingConsumer<String>(output);
-        return pipe.consume(input).toString();
+        final ConsumeIntoOutputIterator<String> pipe = new ConsumeIntoOutputIterator<String>(output);
+        return pipe.perform(input).toString();
     }
     
     public static <T, V> String interpose(T[] values, V separator) {

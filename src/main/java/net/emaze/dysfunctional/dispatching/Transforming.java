@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
-import net.emaze.dysfunctional.consumers.EagerConsumer;
+import net.emaze.dysfunctional.consumers.ConsumeIntoCollection;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
@@ -145,7 +145,7 @@ public class Transforming {
      * @return a List<R> containing the transformed elements
      */
     public static <R, E> List<R> map(Iterator<E> iterator, Delegate<R, E> delegate) {
-        return new EagerConsumer<ArrayList<R>, R>(new ArrayListFactory<R>()).consume(new TransformingIterator<R, E>(iterator, delegate));
+        return new ConsumeIntoCollection<ArrayList<R>, R>(new ArrayListFactory<R>()).perform(new TransformingIterator<R, E>(iterator, delegate));
     }
 
     /**
