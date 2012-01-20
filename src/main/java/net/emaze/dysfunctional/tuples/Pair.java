@@ -1,11 +1,12 @@
 package net.emaze.dysfunctional.tuples;
 
-import net.emaze.dysfunctional.casts.Casts;
+import net.emaze.dysfunctional.Casts;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
 /**
  * Two things.
+ *
  * @param <T1> the first element type
  * @param <T2> the second element type
  * @author rferranti
@@ -33,7 +34,7 @@ public class Pair<T1, T2> {
         if (rhs instanceof Pair == false) {
             return false;
         }
-        final Pair<T1, T2> other = Casts.widen(rhs);
+        final Pair<T1, T2> other = (Pair<T1, T2>) rhs;
         return new EqualsBuilder().append(this.first, other.first).
                 append(this.second, other.second).
                 isEquals();

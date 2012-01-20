@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
-import net.emaze.dysfunctional.consumers.ConsumeIntoCollection;
+import net.emaze.dysfunctional.dispatching.delegates.ConsumeIntoCollection;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import org.junit.Assert;
 import org.junit.Test;

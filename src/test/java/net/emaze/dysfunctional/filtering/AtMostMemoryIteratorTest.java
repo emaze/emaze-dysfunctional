@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.filtering;
 
 import java.util.Arrays;
 import java.util.Iterator;
-import net.emaze.dysfunctional.reductions.Reductions;
+import net.emaze.dysfunctional.Reductions;
 import org.junit.Assert;
 import org.junit.Test;
 

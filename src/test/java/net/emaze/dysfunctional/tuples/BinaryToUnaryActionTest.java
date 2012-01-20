@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.tuples;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
-import net.emaze.dysfunctional.dispatching.spying.Spies;
+import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;

@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.ranges;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.consumers.Consumers;
+import net.emaze.dysfunctional.Consumers;
 import net.emaze.dysfunctional.order.ComparableComparator;
 import net.emaze.dysfunctional.order.IntegerSequencingPolicy;
 import net.emaze.dysfunctional.tuples.Pair;

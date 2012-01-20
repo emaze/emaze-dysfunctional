@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.collections.builders;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Map;
-import net.emaze.dysfunctional.casts.Casts;
+import net.emaze.dysfunctional.Casts;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 

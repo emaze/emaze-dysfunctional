@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.consumers;
 
-import net.emaze.dysfunctional.searches.LastElement;
+import net.emaze.dysfunctional.dispatching.delegates.LastElement;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

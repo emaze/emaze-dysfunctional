@@ -1,12 +1,13 @@
 package net.emaze.dysfunctional.strings;
 
+import net.emaze.dysfunctional.Strings;
 import java.util.Iterator;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.Transforming;
+import net.emaze.dysfunctional.Transforming;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
-import net.emaze.dysfunctional.iterations.Iterations;
-import net.emaze.dysfunctional.multiplexing.Multiplexing;
+import net.emaze.dysfunctional.Iterations;
+import net.emaze.dysfunctional.Multiplexing;
 
 /**
  * ["one","two","three"] => "oneTwoThree"

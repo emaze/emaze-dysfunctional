@@ -1,11 +1,17 @@
 package net.emaze.dysfunctional.consumers;
 
+import net.emaze.dysfunctional.output.OutputIterator;
+import net.emaze.dysfunctional.output.StringOutputIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import net.emaze.dysfunctional.Consumers;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.collections.CollectionProvider;
+import net.emaze.dysfunctional.options.Maybe;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +25,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     ConsumersTest.All.class,
     ConsumersTest.Pipe.class,
-    ConsumersTest.Facade.class
+    ConsumersTest.Facade.class,
+    ConsumersTest.RefactorMe.class
 })
 public class ConsumersTest {
 
@@ -156,6 +163,118 @@ public class ConsumersTest {
             @Override
             public void next(Object element) {
             }
+        }
+    }
+
+    public static class RefactorMe {
+
+        private static Integer[] SINGLE_ELEMENT_ARRAY = {1};
+
+        @Test
+        public void searchOneInSingleValueArrayWNoPredicateYieldsJustFirst() {
+            Maybe<Integer> got = Consumers.searchOne(SINGLE_ELEMENT_ARRAY);
+            Assert.assertEquals(Maybe.just(1), got);
+        }
+
+        @Test
+        public void searchOneWithEmptyIteratorYieldsNothing() {
+            Assert.assertEquals(Maybe.nothing(), Consumers.searchOne(Collections.emptyList().iterator()));
+        }
+
+        @Test(expected = IllegalStateException.class)
+        public void searchOneWithMultipleValuesIteratorThrows() {
+            Consumers.searchOne(Arrays.asList(1, 2).iterator());
+        }
+
+        @Test
+        public void searchOneWithSingleValueIteratorYieldsJustValue() {
+            Assert.assertEquals(Maybe.just(1), Consumers.searchOne(Arrays.asList(1).iterator()));
+        }
+
+        @Test
+        public void searchOneWithSingleValueIterableYieldsJustValue() {
+            Assert.assertEquals(Maybe.just(1), Consumers.searchOne(Arrays.asList(1)));
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallMaybeOneWithNullIterable() {
+            final Iterable<Object> iterable = null;
+            Consumers.searchOne(iterable);
+        }
+
+        @Test
+        public void searchFirstWithEmptyIteratorYieldsNothing() {
+            Assert.assertEquals(Maybe.nothing(), Consumers.search(Collections.emptyList().iterator()));
+        }
+
+        @Test
+        public void searchFirstWithNonEmptyIteratorYieldsJustTheFirst() {
+            Assert.assertEquals(Maybe.just(1), Consumers.search(Arrays.asList(1, 2).iterator()));
+        }
+
+        @Test
+        public void searchFirstWithNonEmptyIterableYieldsJustTheFirst() {
+            Assert.assertEquals(Maybe.just(1), Consumers.search(Arrays.asList(1, 2)));
+        }
+
+        @Test
+        public void searchFirstWithNonEmptyArrayYieldsJustTheFirst() {
+            Assert.assertEquals(Maybe.just(1), Consumers.search(new Integer[]{1, 2}));
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallMaybeFirstWithNullIterable() {
+            final Iterable<Object> iterable = null;
+            Consumers.search(iterable);
+        }
+
+        @Test
+        public void searchLastWithEmptyIteratorYieldsNothing() {
+            Assert.assertEquals(Maybe.nothing(), Consumers.searchLast(Collections.emptyList().iterator()));
+        }
+
+        @Test
+        public void searchLastWithMultipleValuesIteratorYieldsTheLastElement() {
+            Assert.assertEquals(Maybe.just(2), Consumers.searchLast(Arrays.asList(1, 2).iterator()));
+        }
+
+        @Test
+        public void searchLastWithSingleValueIteratorYieldsJustLastValue() {
+            Assert.assertEquals(Maybe.just(1), Consumers.searchLast(Arrays.asList(1).iterator()));
+        }
+
+        @Test
+        public void searchLastWithSingleValueIterableYieldsJustLastValue() {
+            Assert.assertEquals(Maybe.just(1), Consumers.searchLast(Arrays.asList(1)));
+        }
+
+        @Test
+        public void searchLastWithSingleValueArrayYieldsJustLastValue() {
+            Assert.assertEquals(Maybe.just(1), Consumers.searchLast(new Integer[]{1}));
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void callingMaybeLastWithNullIteratorYieldException() {
+            Iterator<Object> aNullIter = null;
+            Consumers.searchLast(aNullIter);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void callingMaybeLastWithNullIterableYieldException() {
+            Iterable<Object> aNullIterable = null;
+            Consumers.searchLast(aNullIterable);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void callingMaybeLastWithNullArrayYieldException() {
+            Object[] aNullArray = null;
+            Consumers.searchLast(aNullArray);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallMaybeLastWithNullIterable() {
+            final Iterable<Object> iterable = null;
+            Consumers.searchLast(iterable);
         }
     }
 

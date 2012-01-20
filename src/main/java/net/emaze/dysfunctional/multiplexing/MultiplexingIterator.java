@@ -5,13 +5,13 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import net.emaze.dysfunctional.consumers.Consumers;
+import net.emaze.dysfunctional.Consumers;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.Transforming;
+import net.emaze.dysfunctional.Transforming;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.logic.HasNext;
 import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
-import net.emaze.dysfunctional.reductions.Reductions;
+import net.emaze.dysfunctional.Reductions;
 
 /**
  * shortest 

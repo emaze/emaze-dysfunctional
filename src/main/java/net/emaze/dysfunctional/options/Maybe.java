@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.options;
 
-import net.emaze.dysfunctional.casts.Casts;
+import net.emaze.dysfunctional.Casts;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
@@ -8,6 +8,7 @@ import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
 /**
  * Responsibility: Holds an optional value.
+ *
  * @param <E>
  * @author rferranti
  */
@@ -37,7 +38,7 @@ public class Maybe<E> {
         }
         return Maybe.nothing();
     }
-    
+
     public static <E> Maybe<E> nothing() {
         return new Maybe<E>(null, false);
     }
@@ -58,7 +59,7 @@ public class Maybe<E> {
         if (rhs instanceof Maybe == false) {
             return false;
         }
-        final Maybe<E> other = Casts.widen(rhs);
+        final Maybe<E> other = (Maybe<E>) rhs;
         return new EqualsBuilder().append(this.hasValue, other.hasValue).
                 append(this.element, other.element).
                 isEquals();

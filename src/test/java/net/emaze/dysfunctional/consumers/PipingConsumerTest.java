@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional.consumers;
 
+import net.emaze.dysfunctional.dispatching.delegates.ConsumeIntoOutputIterator;
+import net.emaze.dysfunctional.output.StringOutputIterator;
 import java.util.Arrays;
 import java.util.List;
 import junit.framework.Assert;

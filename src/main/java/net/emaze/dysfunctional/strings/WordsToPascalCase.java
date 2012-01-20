@@ -1,7 +1,8 @@
 package net.emaze.dysfunctional.strings;
 
+import net.emaze.dysfunctional.Strings;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.Transforming;
+import net.emaze.dysfunctional.Transforming;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**

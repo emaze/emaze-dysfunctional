@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.adapting;
 
+import net.emaze.dysfunctional.Boxing;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

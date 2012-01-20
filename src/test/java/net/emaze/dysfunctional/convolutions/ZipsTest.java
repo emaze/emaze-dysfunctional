@@ -1,9 +1,10 @@
 package net.emaze.dysfunctional.convolutions;
 
+import net.emaze.dysfunctional.Zips;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import net.emaze.dysfunctional.consumers.Consumers;
+import net.emaze.dysfunctional.Consumers;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.tuples.Pair;
 import org.junit.Assert;

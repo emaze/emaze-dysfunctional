@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.strings;
 
+import net.emaze.dysfunctional.Strings;
 import java.util.Arrays;
 import java.util.Iterator;
 import junit.framework.Assert;

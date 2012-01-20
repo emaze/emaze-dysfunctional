@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.ranges;
 import java.util.Iterator;
 import java.util.List;
 import junit.framework.Assert;
-import net.emaze.dysfunctional.order.Comparing;
+import net.emaze.dysfunctional.Comparing;
 import org.junit.Test;
 
 /**

@@ -4,7 +4,7 @@ import java.util.Comparator;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.order.Comparing;
+import net.emaze.dysfunctional.Comparing;
 
 /**
  * Yields values generated from a Sequencing<T> policy in a given range([start:upto])

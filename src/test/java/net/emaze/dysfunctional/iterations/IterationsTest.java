@@ -1,9 +1,10 @@
 package net.emaze.dysfunctional.iterations;
 
+import net.emaze.dysfunctional.Iterations;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.consumers.Consumers;
+import net.emaze.dysfunctional.Consumers;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;

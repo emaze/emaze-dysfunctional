@@ -1,10 +1,11 @@
 package net.emaze.dysfunctional.filtering;
 
+import net.emaze.dysfunctional.Filtering;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.consumers.Consumers;
+import net.emaze.dysfunctional.Consumers;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.Never;
 import org.junit.Assert;

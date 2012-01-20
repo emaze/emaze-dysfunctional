@@ -4,14 +4,14 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.casts.Casts;
+import net.emaze.dysfunctional.Casts;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.Transforming;
+import net.emaze.dysfunctional.Transforming;
 import net.emaze.dysfunctional.multiplexing.ChainIterator;
 import net.emaze.dysfunctional.dispatching.delegates.IteratorPlucker;
 import net.emaze.dysfunctional.order.SequencingPolicy;
-import net.emaze.dysfunctional.reductions.Reductions;
-import net.emaze.dysfunctional.strings.Strings;
+import net.emaze.dysfunctional.Reductions;
+import net.emaze.dysfunctional.Strings;
 
 /**
  *

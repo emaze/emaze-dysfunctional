@@ -2,8 +2,8 @@ package net.emaze.dysfunctional.multiplexing;
 
 import java.util.Arrays;
 import java.util.Iterator;
-import net.emaze.dysfunctional.consumers.Consumers;
-import net.emaze.dysfunctional.iterations.Iterations;
+import net.emaze.dysfunctional.Consumers;
+import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;

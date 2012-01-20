@@ -1,8 +1,8 @@
 package net.emaze.dysfunctional.order;
 
 import java.util.Arrays;
-import net.emaze.dysfunctional.consumers.Consumers;
-import net.emaze.dysfunctional.filtering.Filtering;
+import net.emaze.dysfunctional.Consumers;
+import net.emaze.dysfunctional.Filtering;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;

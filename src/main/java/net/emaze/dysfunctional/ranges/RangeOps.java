@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import net.emaze.dysfunctional.order.Comparing;
+import net.emaze.dysfunctional.Comparing;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 import net.emaze.dysfunctional.tuples.Pair;
 

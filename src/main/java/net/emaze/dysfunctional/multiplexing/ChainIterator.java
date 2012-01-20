@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import net.emaze.dysfunctional.consumers.Consumers;
+import net.emaze.dysfunctional.Consumers;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.HasNext;
 import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
-import net.emaze.dysfunctional.reductions.Reductions;
+import net.emaze.dysfunctional.Reductions;
 
 /**
  * A composite iterator (iterators are consumed in order)
