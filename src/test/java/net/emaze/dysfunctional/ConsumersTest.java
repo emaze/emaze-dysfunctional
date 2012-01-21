@@ -8,7 +8,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.Consumers;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.collections.CollectionProvider;
 import net.emaze.dysfunctional.options.Maybe;
@@ -26,67 +25,69 @@ import org.junit.runners.Suite;
     ConsumersTest.All.class,
     ConsumersTest.Pipe.class,
     ConsumersTest.Facade.class,
-    ConsumersTest.RefactorMe.class
+    ConsumersTest.MaybeFirst.class,
+    ConsumersTest.MaybeLast.class,
+    ConsumersTest.MaybeOne.class
 })
 public class ConsumersTest {
 
-    private static List<Integer> list = Arrays.asList(1, 2);
-    private static Integer[] array = new Integer[]{1, 2};
+    private static List<Integer> LIST = Arrays.asList(1, 2);
+    private static Integer[] ARRAY = new Integer[]{1, 2};
 
     public static class All {
 
         @Test
         public void canFetchAllFromIterator() {
-            List<Integer> got = Consumers.all(list.iterator());
-            Assert.assertEquals(list, got);
+            List<Integer> got = Consumers.all(LIST.iterator());
+            Assert.assertEquals(LIST, got);
         }
 
         @Test
         public void canFetchAllFromIterable() {
-            List<Integer> got = Consumers.all(list);
-            Assert.assertEquals(list, got);
+            List<Integer> got = Consumers.all(LIST);
+            Assert.assertEquals(LIST, got);
         }
 
         @Test
         public void canFetchAllFromArray() {
-            List<Integer> got = Consumers.all(array);
-            Assert.assertEquals(list, got);
+            List<Integer> got = Consumers.all(ARRAY);
+            Assert.assertEquals(LIST, got);
         }
 
         @Test
         public void canFetchAllFromIteratorWithCollection() {
-            List<Integer> got = Consumers.all(list.iterator(), new ArrayList<Integer>());
-            Assert.assertEquals(list, got);
+            List<Integer> got = Consumers.all(LIST.iterator(), new ArrayList<Integer>());
+            Assert.assertEquals(LIST, got);
         }
 
         @Test
         public void canFetchAllFromIterableWithCollection() {
-            List<Integer> got = Consumers.all(list, new ArrayList<Integer>());
-            Assert.assertEquals(list, got);
+            List<Integer> got = Consumers.all(LIST, new ArrayList<Integer>());
+            Assert.assertEquals(LIST, got);
         }
 
         @Test
         public void canFetchAllFromArrayWithCollection() {
-            List<Integer> got = Consumers.all(array, new ArrayList<Integer>());
-            Assert.assertEquals(list, got);
+            List<Integer> got = Consumers.all(ARRAY, new ArrayList<Integer>());
+            Assert.assertEquals(LIST, got);
         }
 
         @Test
         public void canFetchAllFromIteratorWithFactory() {
-            List<Integer> got = Consumers.all(list.iterator(), new ArrayListFactory<Integer>());
-            Assert.assertEquals(list, got);
+            List<Integer> got = Consumers.all(LIST.iterator(), new ArrayListFactory<Integer>());
+            Assert.assertEquals(LIST, got);
         }
 
         @Test
         public void canFetchAllFromIterableWithFactory() {
-            List<Integer> got = Consumers.all(list, new ArrayListFactory<Integer>());
-            Assert.assertEquals(list, got);
+            List<Integer> got = Consumers.all(LIST, new ArrayListFactory<Integer>());
+            Assert.assertEquals(LIST, got);
         }
 
         @Test
         public void canFetchAllFromArrayWithFactory() {
-            List<Integer> got = Consumers.all(array, new ArrayListFactory<Integer>());
-            Assert.assertEquals(list, got);
+            List<Integer> got = Consumers.all(ARRAY, new ArrayListFactory<Integer>());
+            Assert.assertEquals(LIST, got);
         }
 
         @Test(expected = IllegalArgumentException.class)
@@ -98,25 +99,25 @@ public class ConsumersTest {
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallAllWithNullCollection() {
             final Collection<Integer> collection = null;
-            Consumers.all(list, collection);
+            Consumers.all(LIST, collection);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallAllWithANullIterableAndACollection() {
             final Iterable<Integer> iterable = null;
-            Consumers.all(iterable, list);
+            Consumers.all(iterable, LIST);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallAllWithNullCollectionProvider() {
             final CollectionProvider<List<Integer>, Integer> collectionProvider = null;
-            Consumers.all(list, collectionProvider);
+            Consumers.all(LIST, collectionProvider);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallAllWithNullIterableAndACollectionProvider() {
             final Iterable<Integer> iterable = null;
-            Consumers.all(iterable, new CollectionProvider<List<Integer>, Integer>(list));
+            Consumers.all(iterable, new CollectionProvider<List<Integer>, Integer>(LIST));
         }
     }
 
@@ -166,115 +167,121 @@ public class ConsumersTest {
         }
     }
 
-    public static class RefactorMe {
+    public static class MaybeOne {
 
         private static Integer[] SINGLE_ELEMENT_ARRAY = {1};
 
         @Test
-        public void searchOneInSingleValueArrayWNoPredicateYieldsJustFirst() {
-            Maybe<Integer> got = Consumers.searchOne(SINGLE_ELEMENT_ARRAY);
+        public void maybeOneInSingleValueArrayWNoPredicateYieldsJustFirst() {
+            Maybe<Integer> got = Consumers.maybeOne(SINGLE_ELEMENT_ARRAY);
             Assert.assertEquals(Maybe.just(1), got);
         }
 
         @Test
-        public void searchOneWithEmptyIteratorYieldsNothing() {
-            Assert.assertEquals(Maybe.nothing(), Consumers.searchOne(Collections.emptyList().iterator()));
+        public void maybeOneWithEmptyIteratorYieldsNothing() {
+            Assert.assertEquals(Maybe.nothing(), Consumers.maybeOne(Collections.emptyList().iterator()));
         }
 
         @Test(expected = IllegalStateException.class)
-        public void searchOneWithMultipleValuesIteratorThrows() {
-            Consumers.searchOne(Arrays.asList(1, 2).iterator());
+        public void maybeOneWithMultipleValuesIteratorThrows() {
+            Consumers.maybeOne(Arrays.asList(1, 2).iterator());
         }
 
         @Test
-        public void searchOneWithSingleValueIteratorYieldsJustValue() {
-            Assert.assertEquals(Maybe.just(1), Consumers.searchOne(Arrays.asList(1).iterator()));
+        public void maybeOneWithSingleValueIteratorYieldsJustValue() {
+            Assert.assertEquals(Maybe.just(1), Consumers.maybeOne(Arrays.asList(1).iterator()));
         }
 
         @Test
-        public void searchOneWithSingleValueIterableYieldsJustValue() {
-            Assert.assertEquals(Maybe.just(1), Consumers.searchOne(Arrays.asList(1)));
+        public void maybeOneWithSingleValueIterableYieldsJustValue() {
+            Assert.assertEquals(Maybe.just(1), Consumers.maybeOne(Arrays.asList(1)));
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallMaybeOneWithNullIterable() {
             final Iterable<Object> iterable = null;
-            Consumers.searchOne(iterable);
+            Consumers.maybeOne(iterable);
+        }
+    }
+
+    public static class MaybeFirst {
+
+        @Test
+        public void maybeFirstWithEmptyIteratorYieldsNothing() {
+            Assert.assertEquals(Maybe.nothing(), Consumers.maybeFirst(Collections.emptyList().iterator()));
         }
 
         @Test
-        public void searchFirstWithEmptyIteratorYieldsNothing() {
-            Assert.assertEquals(Maybe.nothing(), Consumers.search(Collections.emptyList().iterator()));
+        public void maybeFirstWithNonEmptyIteratorYieldsJustTheFirst() {
+            Assert.assertEquals(Maybe.just(1), Consumers.maybeFirst(Arrays.asList(1, 2).iterator()));
         }
 
         @Test
-        public void searchFirstWithNonEmptyIteratorYieldsJustTheFirst() {
-            Assert.assertEquals(Maybe.just(1), Consumers.search(Arrays.asList(1, 2).iterator()));
+        public void maybeFirstWithNonEmptyIterableYieldsJustTheFirst() {
+            Assert.assertEquals(Maybe.just(1), Consumers.maybeFirst(Arrays.asList(1, 2)));
         }
 
         @Test
-        public void searchFirstWithNonEmptyIterableYieldsJustTheFirst() {
-            Assert.assertEquals(Maybe.just(1), Consumers.search(Arrays.asList(1, 2)));
-        }
-
-        @Test
-        public void searchFirstWithNonEmptyArrayYieldsJustTheFirst() {
-            Assert.assertEquals(Maybe.just(1), Consumers.search(new Integer[]{1, 2}));
+        public void maybeFirstWithNonEmptyArrayYieldsJustTheFirst() {
+            Assert.assertEquals(Maybe.just(1), Consumers.maybeFirst(new Integer[]{1, 2}));
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallMaybeFirstWithNullIterable() {
             final Iterable<Object> iterable = null;
-            Consumers.search(iterable);
+            Consumers.maybeFirst(iterable);
+        }
+    }
+
+    public static class MaybeLast {
+
+        @Test
+        public void maybeLastWithEmptyIteratorYieldsNothing() {
+            Assert.assertEquals(Maybe.nothing(), Consumers.maybeLast(Collections.emptyList().iterator()));
         }
 
         @Test
-        public void searchLastWithEmptyIteratorYieldsNothing() {
-            Assert.assertEquals(Maybe.nothing(), Consumers.searchLast(Collections.emptyList().iterator()));
+        public void maybeLastWithMultipleValuesIteratorYieldsTheLastElement() {
+            Assert.assertEquals(Maybe.just(2), Consumers.maybeLast(Arrays.asList(1, 2).iterator()));
         }
 
         @Test
-        public void searchLastWithMultipleValuesIteratorYieldsTheLastElement() {
-            Assert.assertEquals(Maybe.just(2), Consumers.searchLast(Arrays.asList(1, 2).iterator()));
+        public void maybeLastWithSingleValueIteratorYieldsJustLastValue() {
+            Assert.assertEquals(Maybe.just(1), Consumers.maybeLast(Arrays.asList(1).iterator()));
         }
 
         @Test
-        public void searchLastWithSingleValueIteratorYieldsJustLastValue() {
-            Assert.assertEquals(Maybe.just(1), Consumers.searchLast(Arrays.asList(1).iterator()));
+        public void maybeLastWithSingleValueIterableYieldsJustLastValue() {
+            Assert.assertEquals(Maybe.just(1), Consumers.maybeLast(Arrays.asList(1)));
         }
 
         @Test
-        public void searchLastWithSingleValueIterableYieldsJustLastValue() {
-            Assert.assertEquals(Maybe.just(1), Consumers.searchLast(Arrays.asList(1)));
-        }
-
-        @Test
-        public void searchLastWithSingleValueArrayYieldsJustLastValue() {
-            Assert.assertEquals(Maybe.just(1), Consumers.searchLast(new Integer[]{1}));
+        public void maybeLastWithSingleValueArrayYieldsJustLastValue() {
+            Assert.assertEquals(Maybe.just(1), Consumers.maybeLast(new Integer[]{1}));
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void callingMaybeLastWithNullIteratorYieldException() {
             Iterator<Object> aNullIter = null;
-            Consumers.searchLast(aNullIter);
+            Consumers.maybeLast(aNullIter);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void callingMaybeLastWithNullIterableYieldException() {
             Iterable<Object> aNullIterable = null;
-            Consumers.searchLast(aNullIterable);
+            Consumers.maybeLast(aNullIterable);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void callingMaybeLastWithNullArrayYieldException() {
             Object[] aNullArray = null;
-            Consumers.searchLast(aNullArray);
+            Consumers.maybeLast(aNullArray);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallMaybeLastWithNullIterable() {
             final Iterable<Object> iterable = null;
-            Consumers.searchLast(iterable);
+            Consumers.maybeLast(iterable);
         }
     }
 
