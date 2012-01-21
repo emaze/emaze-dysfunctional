@@ -3,9 +3,6 @@ package net.emaze.dysfunctional.options;
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
-import net.emaze.dysfunctional.options.Maybe;
-import net.emaze.dysfunctional.options.MaybeIterator;
 
 /**
  * gives up only after consuming the last element (and returns it)

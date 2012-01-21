@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.options;
 
-import net.emaze.dysfunctional.Casts;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 

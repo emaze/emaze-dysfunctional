@@ -15,7 +15,7 @@ public class DbcTest {
 
     @Test(expected = IllegalStateException.class)
     public void failingStatePreconditionYieldsIllegalStateException() {
-        dbc.stateprecondition(false, "i'm a precondition failed message");
+        dbc.state(false, "i'm a precondition failed message");
     }
 
     @Test

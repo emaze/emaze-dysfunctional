@@ -1,22 +1,22 @@
 package net.emaze.dysfunctional;
 
-import net.emaze.dysfunctional.options.MaybeOneElement;
-import net.emaze.dysfunctional.dispatching.delegates.FirstElement;
-import net.emaze.dysfunctional.dispatching.delegates.OneElement;
-import net.emaze.dysfunctional.options.MaybeFirstElement;
-import net.emaze.dysfunctional.options.MaybeLastElement;
-import net.emaze.dysfunctional.dispatching.delegates.ConsumeIntoOutputIterator;
-import net.emaze.dysfunctional.dispatching.delegates.ConsumeIntoCollection;
-import net.emaze.dysfunctional.output.OutputIterator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.collections.CollectionProvider;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.delegates.ConsumeIntoCollection;
+import net.emaze.dysfunctional.dispatching.delegates.ConsumeIntoOutputIterator;
+import net.emaze.dysfunctional.dispatching.delegates.FirstElement;
+import net.emaze.dysfunctional.dispatching.delegates.OneElement;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.options.Maybe;
+import net.emaze.dysfunctional.options.MaybeFirstElement;
+import net.emaze.dysfunctional.options.MaybeLastElement;
+import net.emaze.dysfunctional.options.MaybeOneElement;
+import net.emaze.dysfunctional.output.OutputIterator;
 
 /**
  *

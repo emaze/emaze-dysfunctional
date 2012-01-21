@@ -7,10 +7,6 @@ import net.emaze.dysfunctional.dispatching.TransformingProvider;
 import net.emaze.dysfunctional.dispatching.TransformingTernaryPredicate;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
-import net.emaze.dysfunctional.dispatching.delegates.Composer;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.adapting.ActionBinder;
 import net.emaze.dysfunctional.dispatching.adapting.ActionBinderFirst;
@@ -64,12 +60,16 @@ import net.emaze.dysfunctional.dispatching.adapting.TernaryActionToTernaryDelega
 import net.emaze.dysfunctional.dispatching.adapting.TernaryDelegateToTernaryAction;
 import net.emaze.dysfunctional.dispatching.adapting.TernaryDelegateToTernaryPredicate;
 import net.emaze.dysfunctional.dispatching.adapting.TernaryPredicateToTernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.Composer;
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import net.emaze.dysfunctional.dispatching.delegates.EndoDelegatesComposer;
+import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
-import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
-import net.emaze.dysfunctional.dispatching.delegates.EndoDelegatesComposer;
 import net.emaze.dysfunctional.dispatching.logic.Proposition;
+import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 
 /**
  *

@@ -1,10 +1,9 @@
 package net.emaze.dysfunctional;
 
 import java.util.Iterator;
-import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.Transforming;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.options.DropMaybe;
 import net.emaze.dysfunctional.options.Either;
 import net.emaze.dysfunctional.options.FromJust;

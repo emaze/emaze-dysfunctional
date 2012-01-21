@@ -1,7 +1,6 @@
 package net.emaze.dysfunctional;
 
 import java.util.Iterator;
-import net.emaze.dysfunctional.Consumers;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;

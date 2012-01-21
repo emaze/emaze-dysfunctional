@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.ranges;
 
-import java.lang.Integer;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

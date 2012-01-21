@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.iterations.ArrayIterator;
-import net.emaze.dysfunctional.Consumers;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.Filtering;
+import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.reductions.Count;
 import net.emaze.dysfunctional.tuples.Pair;
 
@@ -27,7 +25,7 @@ public abstract class Pagination {
      */
     public static <T> Pair<Integer, List<T>> page(long start, long howMany, Iterator<T> iterator) {
         final Pair<Long, List<T>> page = Pagination.pagel(start, howMany, iterator);
-        dbc.stateprecondition(page.first() <= Integer.MAX_VALUE, "iterator size overflows an integer");
+        dbc.state(page.first() <= Integer.MAX_VALUE, "iterator size overflows an integer");
         return Pair.of(page.first().intValue(), page.second());
     }
 
@@ -43,7 +41,7 @@ public abstract class Pagination {
      */
     public static <T, C extends Collection<T>> Pair<Integer, C> page(long start, long howMany, Iterator<T> iterator, C collection) {
         final Pair<Long, C> page = Pagination.pagel(start, howMany, iterator, collection);
-        dbc.stateprecondition(page.first() <= Integer.MAX_VALUE, "iterator size overflows an integer");
+        dbc.state(page.first() <= Integer.MAX_VALUE, "iterator size overflows an integer");
         return Pair.of(page.first().intValue(), page.second());
     }
 

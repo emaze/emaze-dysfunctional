@@ -2,7 +2,6 @@ package net.emaze.dysfunctional.dispatching.delegates;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
  * gives up after consuming the first element

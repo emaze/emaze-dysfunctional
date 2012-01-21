@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.options;
 
-import net.emaze.dysfunctional.Casts;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.equality.EqualsBuilder;

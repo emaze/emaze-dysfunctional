@@ -1,14 +1,14 @@
 package net.emaze.dysfunctional;
 
-import net.emaze.dysfunctional.options.MaybeOneElement;
-import net.emaze.dysfunctional.dispatching.delegates.OneElement;
-import net.emaze.dysfunctional.options.MaybeLastElement;
-import net.emaze.dysfunctional.dispatching.delegates.FirstElement;
-import net.emaze.dysfunctional.options.MaybeFirstElement;
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.delegates.FirstElement;
+import net.emaze.dysfunctional.dispatching.delegates.OneElement;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.options.Maybe;
+import net.emaze.dysfunctional.options.MaybeFirstElement;
+import net.emaze.dysfunctional.options.MaybeLastElement;
+import net.emaze.dysfunctional.options.MaybeOneElement;
 
 /**
  *

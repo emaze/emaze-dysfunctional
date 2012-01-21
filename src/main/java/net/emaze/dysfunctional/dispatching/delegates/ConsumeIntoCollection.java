@@ -3,8 +3,6 @@ package net.emaze.dysfunctional.dispatching.delegates;
 import java.util.Collection;
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
 /**
  * Consumes every element from the consumable into the collection provided by

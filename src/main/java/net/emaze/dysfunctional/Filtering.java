@@ -1,9 +1,8 @@
 package net.emaze.dysfunctional;
 
 import java.util.Iterator;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
-import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.filtering.AtIndex;
 import net.emaze.dysfunctional.filtering.AtMostMemoryIterator;
 import net.emaze.dysfunctional.filtering.DropWhileIterator;
@@ -13,6 +12,7 @@ import net.emaze.dysfunctional.filtering.Nth;
 import net.emaze.dysfunctional.filtering.TakeUpToIterator;
 import net.emaze.dysfunctional.filtering.TakeWhileIterator;
 import net.emaze.dysfunctional.filtering.UntilCount;
+import net.emaze.dysfunctional.iterations.ArrayIterator;
 
 /**
  * @author rferranti

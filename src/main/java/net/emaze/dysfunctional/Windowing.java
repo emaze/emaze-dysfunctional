@@ -7,7 +7,6 @@ import java.util.List;
 import net.emaze.dysfunctional.casts.Narrow;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.Dispatching;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.windows.CenteredWindowIterator;

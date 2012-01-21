@@ -21,7 +21,7 @@ public class OneTimeIterable<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        dbc.stateprecondition(!consumed, "consuming an iterator two times");
+        dbc.state(!consumed, "consuming an iterator two times");
         consumed = true;
         return iterator;
     }

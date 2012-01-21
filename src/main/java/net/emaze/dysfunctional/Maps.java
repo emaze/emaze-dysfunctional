@@ -9,7 +9,6 @@ import net.emaze.dysfunctional.casts.Narrow;
 import net.emaze.dysfunctional.collections.HashMapFactory;
 import net.emaze.dysfunctional.collections.LinkedHashMapFactory;
 import net.emaze.dysfunctional.collections.TreeMapFactory;
-import net.emaze.dysfunctional.Dispatching;
 import net.emaze.dysfunctional.collections.builders.MapBuilder;
 import net.emaze.dysfunctional.collections.builders.MapTreeBuilder;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;

@@ -1,10 +1,10 @@
 package net.emaze.dysfunctional;
 
 import java.util.Iterator;
-import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.convolutions.ZipLongestIterator;
 import net.emaze.dysfunctional.convolutions.ZipShortestIterator;
+import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.iterations.OneTimeIterable;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.tuples.Pair;

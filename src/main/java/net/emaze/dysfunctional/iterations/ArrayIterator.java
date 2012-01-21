@@ -18,6 +18,10 @@ public class ArrayIterator<T> extends ReadOnlyIterator<T> {
         this.values = values;
     }
 
+    public static <T> ArrayIterator<T> of(T... elements) {
+        return new ArrayIterator<T>(elements);
+    }
+
     @Override
     public boolean hasNext() {
         return !isOutOfBounds();

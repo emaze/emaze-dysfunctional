@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.Casts;
 import net.emaze.dysfunctional.Comparing;
+import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
-import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 
 /**
@@ -67,7 +66,7 @@ public class DenseRange<T> implements Range<T> {
         if (rhs instanceof DenseRange == false) {
             return false;
         }
-        final DenseRange<T> other = Casts.widen(rhs);
+        final DenseRange<T> other = (DenseRange<T>)rhs;
         return new EqualsBuilder().append(this.sequencer, other.sequencer).
                 append(this.comparator, other.comparator).
                 append(this.lower, other.lower).

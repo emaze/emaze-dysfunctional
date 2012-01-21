@@ -6,8 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.Comparing;
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 
 /**

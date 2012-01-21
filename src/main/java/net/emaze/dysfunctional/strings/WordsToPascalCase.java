@@ -1,9 +1,10 @@
 package net.emaze.dysfunctional.strings;
 
-import net.emaze.dysfunctional.Strings;
+import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.Transforming;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import net.emaze.dysfunctional.iterations.ArrayIterator;
+import net.emaze.dysfunctional.iterations.TransformingIterator;
 
 /**
  * ["one","two","three"] => "OneTwoThree"
@@ -16,6 +17,7 @@ public class WordsToPascalCase implements Delegate<String, String[]> {
     @Override
     public String perform(String[] words) {
         dbc.precondition(words != null, "cannot pascalCase a null array of words");
-        return Strings.join(Transforming.transform(words, toTitle));
+        final Iterator<String> values = new TransformingIterator<String, String>(new ArrayIterator<String>(words), toTitle);
+        return new JoinStrings<String>().perform(values);
     }
 }
