@@ -16,52 +16,52 @@ public abstract class Comparing {
 
     public static <T extends Comparable<T>> boolean lhsIsLesser(T lhs, T rhs) {
         dbc.precondition(lhs != null, "cannot call lhsIsLesser with a null lhs");
-        return Order.from(lhs.compareTo(rhs)) == Order.LT;
+        return Order.of(lhs.compareTo(rhs)) == Order.LT;
     }
 
     public static <T> boolean lhsIsLesser(T lhs, T rhs, Comparator<T> comparator) {
         dbc.precondition(comparator != null, "cannot call lhsIsLesser with a null comparator");
-        return Order.from(comparator.compare(lhs, rhs)) == Order.LT;
+        return Order.of(comparator.compare(lhs, rhs)) == Order.LT;
     }
 
     public static <T> boolean lhsIsLesserThanEquals(T lhs, T rhs, Comparator<T> comparator) {
         dbc.precondition(comparator != null, "cannot call lhsIsLesserThanEquals with a null comparator");
-        return Order.from(comparator.compare(lhs, rhs)).isLte();
+        return Order.of(comparator.compare(lhs, rhs)).isLte();
     }
 
     public static <T extends Comparable<T>> boolean lhsIsLesserThanEquals(T lhs, T rhs) {
         dbc.precondition(lhs != null, "cannot call lhsIsLesserThanEquals with a null lhs");
-        return Order.from(lhs.compareTo(rhs)).isLte();
+        return Order.of(lhs.compareTo(rhs)).isLte();
     }
 
     public static <T extends Comparable<T>> boolean lhsIsGreater(T lhs, T rhs) {
         dbc.precondition(lhs != null, "cannot call lhsIsGreater with a null lhs");
-        return Order.from(lhs.compareTo(rhs)) == Order.GT;
+        return Order.of(lhs.compareTo(rhs)) == Order.GT;
     }
 
     public static <T> boolean lhsIsGreater(T lhs, T rhs, Comparator<T> comparator) {
         dbc.precondition(comparator != null, "cannot call lhsIsGreater with a null comparator");
-        return Order.from(comparator.compare(lhs, rhs)) == Order.GT;
+        return Order.of(comparator.compare(lhs, rhs)) == Order.GT;
     }
 
     public static <T> boolean lhsIsGreaterThanEquals(T lhs, T rhs, Comparator<T> comparator) {
         dbc.precondition(comparator != null, "cannot call lhsIsGreaterThanEquals with a null comparator");
-        return Order.from(comparator.compare(lhs, rhs)).isGte();
+        return Order.of(comparator.compare(lhs, rhs)).isGte();
     }
 
     public static <T extends Comparable<T>> boolean lhsIsGreaterThanEquals(T lhs, T rhs) {
         dbc.precondition(lhs != null, "cannot call lhsIsGreaterThanEquals with a null lhs");
-        return Order.from(lhs.compareTo(rhs)).isGte();
+        return Order.of(lhs.compareTo(rhs)).isGte();
     }
 
     public static <T> boolean sameOrder(T lhs, T rhs, Comparator<T> comparator) {
         dbc.precondition(comparator != null, "cannot call sameOrder with a null comparator");
-        return Order.from(comparator.compare(lhs, rhs)) == Order.EQ;
+        return Order.of(comparator.compare(lhs, rhs)) == Order.EQ;
     }
 
     public static <T extends Comparable<T>> boolean sameOrder(T lhs, T rhs) {
         dbc.precondition(lhs != null, "cannot call sameOrder with a null lhs");
-        return Order.from(lhs.compareTo(rhs)) == Order.EQ;
+        return Order.of(lhs.compareTo(rhs)) == Order.EQ;
     }
 
     public static <T> T max(T lhs, T rhs, Comparator<T> comparator) {

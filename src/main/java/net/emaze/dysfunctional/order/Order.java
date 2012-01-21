@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional.order;
 
+import java.util.Comparator;
+
 /**
  *
  * @author rferranti
@@ -25,7 +27,11 @@ public enum Order {
         return this == GT || this == EQ;
     }
 
-    public static Order from(int order) {
+    public static Order of(int order) {
         return Order.values()[order + 1];
+    }
+
+    public static <T> Order of(Comparator<T> comparator, T lhs, T rhs) {
+        return Order.values()[comparator.compare(lhs, rhs) + 1];
     }
 }
