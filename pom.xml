@@ -4,7 +4,7 @@
     <groupId>net.emaze</groupId>
     <artifactId>emaze-dysfunctional</artifactId>
     <packaging>jar</packaging>
-    <version>2.1-SNAPSHOT</version>
+    <version>3.0-SNAPSHOT</version>
     <name>emaze-dysfunctional</name>
     <parent>
         <groupId>net.emaze</groupId>
