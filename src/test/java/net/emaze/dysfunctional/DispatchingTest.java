@@ -1,6 +1,5 @@
-package net.emaze.dysfunctional.dispatching;
+package net.emaze.dysfunctional;
 
-import net.emaze.dysfunctional.Dispatching;
 import java.util.Iterator;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
@@ -25,7 +24,6 @@ import net.emaze.dysfunctional.dispatching.logic.Proposition;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Yes;
-import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.testing.O;
 import net.emaze.dysfunctional.tuples.BinaryIdentity;
 import net.emaze.dysfunctional.tuples.Pair;
