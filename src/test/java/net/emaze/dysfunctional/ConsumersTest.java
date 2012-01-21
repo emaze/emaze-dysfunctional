@@ -27,7 +27,9 @@ import org.junit.runners.Suite;
     ConsumersTest.Facade.class,
     ConsumersTest.MaybeFirst.class,
     ConsumersTest.MaybeLast.class,
-    ConsumersTest.MaybeOne.class
+    ConsumersTest.MaybeOne.class,
+    ConsumersTest.Nth.class,
+    ConsumersTest.At.class
 })
 public class ConsumersTest {
 
@@ -282,6 +284,60 @@ public class ConsumersTest {
         public void cannotCallMaybeLastWithNullIterable() {
             final Iterable<Object> iterable = null;
             Consumers.maybeLast(iterable);
+        }
+    }
+
+    public static class Nth {
+
+        @Test
+        public void canFetchNthFromIterator() {
+            Assert.assertEquals(Integer.valueOf(1), Consumers.nth(1, LIST.iterator()));
+        }
+
+        @Test
+        public void canFetchNthFromIterable() {
+            Assert.assertEquals(Integer.valueOf(1), Consumers.nth(1, LIST));
+        }
+
+        @Test
+        public void canFetchNthFromArray() {
+            Assert.assertEquals(Integer.valueOf(1), Consumers.nth(1, ARRAY));
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallNthWithANullIterable() {
+            final Iterable<Object> iterable = null;
+            Consumers.nth(1, iterable);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotFetchAtOnANullIterable() {
+            final Iterable<Object> iterable = null;
+            Consumers.nth(1, iterable);
+        }
+    }
+
+    public static class At {
+
+        @Test
+        public void canFetchAtFromIterator() {
+            Assert.assertEquals(Integer.valueOf(1), Consumers.at(0, LIST.iterator()));
+        }
+
+        @Test
+        public void canFetchAtFromIterable() {
+            Assert.assertEquals(Integer.valueOf(1), Consumers.at(0, LIST));
+        }
+
+        @Test
+        public void canFetchAtFromArray() {
+            Assert.assertEquals(Integer.valueOf(1), Consumers.at(0, ARRAY));
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallAtOnANullIterable() {
+            final Iterable<Object> iterable = null;
+            Consumers.at(2, iterable);
         }
     }
 

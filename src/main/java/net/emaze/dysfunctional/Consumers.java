@@ -12,6 +12,9 @@ import net.emaze.dysfunctional.dispatching.delegates.FirstElement;
 import net.emaze.dysfunctional.dispatching.delegates.LastElement;
 import net.emaze.dysfunctional.dispatching.delegates.OneElement;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import net.emaze.dysfunctional.filtering.AtIndex;
+import net.emaze.dysfunctional.filtering.FilteringIterator;
+import net.emaze.dysfunctional.filtering.Nth;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.options.MaybeFirstElement;
@@ -364,8 +367,8 @@ public abstract class Consumers {
      * Yields the last element.
      *
      * @param <E> the iterator element type
-     * @param iterator the iterator that will be consumed
-     * @throw IllegalArgumentException if no element is found
+     * @param iterator the iterator that will be consumed @throw
+     * IllegalArgumentException if no element is found
      * @return the last element
      */
     public static <E> E last(Iterator<E> iterator) {
@@ -376,8 +379,8 @@ public abstract class Consumers {
      * Yields the last element.
      *
      * @param <E> the iterable element type
-     * @param iterable the iterable that will be consumed
-     * @throw IllegalArgumentException if no element is found
+     * @param iterable the iterable that will be consumed @throw
+     * IllegalArgumentException if no element is found
      * @return the last element
      */
     public static <E> E last(Iterable<E> iterable) {
@@ -389,11 +392,171 @@ public abstract class Consumers {
      * Yields the last element.
      *
      * @param <E> the array element type
-     * @param array the array that will be consumed
-     * @throw IllegalArgumentException if no element is found
+     * @param array the array that will be consumed @throw
+     * IllegalArgumentException if no element is found
      * @return the last element
      */
     public static <E> E last(E[] array) {
         return new LastElement<E>().perform(new ArrayIterator<E>(array));
+    }
+
+    /**
+     * Yields nth (1-based) element of the iterator.
+     *
+     * @param <E> the iterator element type
+     * @param count the element cardinality
+     * @param iterator the iterator that will be consumed
+     * @return the nth element
+     */
+    public static <E> E nth(long count, Iterator<E> iterator) {
+        final Iterator<E> filtered = new FilteringIterator<E>(iterator, new Nth<E>(count));
+        return new FirstElement<E>().perform(filtered);
+    }
+
+    /**
+     * Yields nth (1-based) element of the iterable.
+     *
+     * @param <E> the iterable element type
+     * @param count the element cardinality
+     * @param iterable the iterable that will be consumed
+     * @return the nth element
+     */
+    public static <E> E nth(long count, Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot call nth with a null iterable");
+        final Iterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), new Nth<E>(count));
+        return new FirstElement<E>().perform(filtered);
+    }
+
+    /**
+     * Yields nth (1-based) element of the array.
+     *
+     * @param <E> the array element type
+     * @param count the element cardinality
+     * @param array the array that will be consumed
+     * @return the nth element
+     */
+    public static <E> E nth(long count, E[] array) {
+        final Iterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), new Nth<E>(count));
+        return new FirstElement<E>().perform(filtered);
+    }
+
+    /**
+     * Yields nth (1-based) element of the iterator if found or nothing.
+     *
+     * @param <E> the iterator element type
+     * @param count the element cardinality
+     * @param iterator the iterator that will be consumed
+     * @return just the element or nothing
+     */
+    public static <E> Maybe<E> maybeNth(long count, Iterator<E> iterator) {
+        final Iterator<E> filtered = new FilteringIterator<E>(iterator, new Nth<E>(count));
+        return new MaybeFirstElement<E>().perform(filtered);
+    }
+
+    /**
+     * Yields nth (1-based) element of the iterable if found or nothing.
+     *
+     * @param <E> the iterable element type
+     * @param count the element cardinality
+     * @param iterable the iterable that will be consumed
+     * @return just the element or nothing
+     */
+    public static <E> Maybe<E> maybeNth(long count, Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot call maybeNth with a null iterable");
+        final Iterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), new Nth<E>(count));
+        return new MaybeFirstElement<E>().perform(filtered);
+    }
+
+    /**
+     * Yields nth (1-based) element of the array if found or nothing.
+     *
+     * @param <E> the array element type
+     * @param count the element cardinality
+     * @param array the array that will be consumed
+     * @return just the element or nothing
+     */
+    public static <E> Maybe<E> maybeNth(long count, E[] array) {
+        final Iterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), new Nth<E>(count));
+        return new MaybeFirstElement<E>().perform(filtered);
+    }
+
+    /**
+     * Yields element at (0-based) position of the iterator.
+     *
+     * @param <E> the iterator element type
+     * @param index the element index
+     * @param iterator the iterator that will be consumed
+     * @return the element
+     */
+    public static <E> E at(long index, Iterator<E> iterator) {
+        final Iterator<E> filtered = new FilteringIterator<E>(iterator, new AtIndex<E>(index));
+        return new FirstElement<E>().perform(filtered);
+    }
+
+    /**
+     * Yields element at (0-based) position of the iterable.
+     *
+     * @param <E> the iterable element type
+     * @param index the element index
+     * @param iterable the iterable that will be consumed
+     * @return the element
+     */
+    public static <E> E at(long index, Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot call at with a null iterable");
+        final Iterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), new AtIndex<E>(index));
+        return new FirstElement<E>().perform(filtered);
+    }
+
+    /**
+     * Yields element at (0-based) position of the array.
+     *
+     * @param <E> the array element type
+     * @param index the element index
+     * @param array the array that will be consumed
+     * @return just the element or nothing
+     */
+    public static <E> E at(long index, E[] array) {
+        final Iterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), new AtIndex<E>(index));
+        return new FirstElement<E>().perform(filtered);
+    }
+
+    /**
+     * Yields element at (0-based) position of the iterator if found or nothing.
+     *
+     * @param <E> the iterator element type
+     * @param index the element index
+     * @param iterator the iterator that will be consumed
+     * @return just the element or nothing
+     */
+    public static <E> Maybe<E> maybeAt(long index, Iterator<E> iterator) {
+        final Iterator<E> filtered = new FilteringIterator<E>(iterator, new AtIndex<E>(index));
+        return new MaybeFirstElement<E>().perform(filtered);
+    }
+
+    /**
+     * Yields element at (0-based) position of the iterable if found or nothing.
+     *
+     * @param <E> the iterable element type
+     * @param index the element index
+     * @param iterable the iterable that will be consumed
+     * @return just the element or nothing
+     */
+    public static <E> Maybe<E> maybeAt(long index, Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot call maybeAt with a null iterable");
+        final Iterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), new AtIndex<E>(index));
+        return new MaybeFirstElement<E>().perform(filtered);
+    }
+
+    /**
+     * Yields element at (0-based) position of the array if found or nothing.
+     *
+     * @param <E> the array element type
+     * @param index the element index
+     * @param array the array that will be consumed
+     * @return just the element or nothing
+     */
+    public static <E> Maybe<E> maybeAt(long index, E[] array) {
+        final Iterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), new AtIndex<E>(index));
+        return new MaybeFirstElement<E>().perform(filtered);
     }
 }

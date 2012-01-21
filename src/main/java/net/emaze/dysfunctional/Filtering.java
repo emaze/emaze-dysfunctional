@@ -3,12 +3,10 @@ package net.emaze.dysfunctional;
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
-import net.emaze.dysfunctional.filtering.AtIndex;
 import net.emaze.dysfunctional.filtering.AtMostMemoryIterator;
 import net.emaze.dysfunctional.filtering.DropWhileIterator;
 import net.emaze.dysfunctional.filtering.FilteringIterator;
 import net.emaze.dysfunctional.filtering.MemoryIterator;
-import net.emaze.dysfunctional.filtering.Nth;
 import net.emaze.dysfunctional.filtering.TakeUpToIterator;
 import net.emaze.dysfunctional.filtering.TakeWhileIterator;
 import net.emaze.dysfunctional.filtering.UntilCount;
@@ -184,73 +182,7 @@ public abstract class Filtering {
         return new DropWhileIterator<E>(iterator, new UntilCount<E>(howMany));
     }
 
-    /**
-     * yields nth (1-based) element of the iterator
-     * @param <E>
-     * @param count
-     * @param iterator
-     * @return
-     */
-    public static <E> Iterator<E> nth(long count, Iterator<E> iterator) {
-        return filter(iterator, new Nth<E>(count));
-    }
 
-    /**
-     * yields nth (1-based) element of the iterable's iterator
-     * @param <E>
-     * @param count
-     * @param iterable
-     * @return
-     */
-    public static <E> Iterator<E> nth(long count, Iterable<E> iterable) {
-        dbc.precondition(iterable != null, "cannot call nth with a null iterable");
-        return nth(count, iterable.iterator());
-    }
-
-    /**
-     * yields nth (1-based) element of the array
-     * @param <E>
-     * @param count
-     * @param array
-     * @return
-     */
-    public static <E> Iterator<E> nth(long count, E[] array) {
-        return nth(count, new ArrayIterator<E>(array));
-    }
-
-    /**
-     * yields element at (0-based) position of the iterator
-     * @param <E>
-     * @param index
-     * @param iterator
-     * @return
-     */
-    public static <E> Iterator<E> at(long index, Iterator<E> iterator) {
-        return filter(iterator, new AtIndex<E>(index));
-    }
-
-    /**
-     * yields element at (0-based) position of the iterable's iterator
-     * @param <E>
-     * @param index
-     * @param iterable
-     * @return
-     */
-    public static <E> Iterator<E> at(long index, Iterable<E> iterable) {
-        dbc.precondition(iterable != null, "cannot call at with a null iterable");
-        return at(index, iterable.iterator());
-    }
-
-    /**
-     * yields element at (0-based) position of the array
-     * @param <E>
-     * @param index
-     * @param array
-     * @return
-     */
-    public static <E> Iterator<E> at(long index, E[] array) {
-        return at(index, new ArrayIterator<E>(array));
-    }
 
     /**
      *

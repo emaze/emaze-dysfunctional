@@ -1,11 +1,9 @@
 package net.emaze.dysfunctional;
 
-import net.emaze.dysfunctional.Filtering;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.Consumers;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.Never;
 import org.junit.Assert;
@@ -123,47 +121,6 @@ public class FilteringTest {
         Assert.assertEquals(Arrays.asList(2), Consumers.all(got));
     }
 
-    @Test
-    public void canFetchNthFromIterator() {
-        Assert.assertEquals(Integer.valueOf(1), Filtering.nth(1, sampleList.iterator()).next());
-    }
-
-    @Test
-    public void canFetchNthFromIterable() {
-        Assert.assertEquals(Integer.valueOf(1), Filtering.nth(1, sampleList).next());
-    }
-
-    @Test
-    public void canFetchNthFromArray() {
-        Assert.assertEquals(Integer.valueOf(1), Filtering.nth(1, sampleArray).next());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void cannotCallNthWithANullIterable() {
-        final Iterable<Object> iterable = null;
-        Filtering.nth(1, iterable);
-    }
-
-    @Test
-    public void canFetchAtFromIterator() {
-        Assert.assertEquals(Integer.valueOf(1), Filtering.at(0, sampleList.iterator()).next());
-    }
-
-    @Test
-    public void canFetchAtFromIterable() {
-        Assert.assertEquals(Integer.valueOf(1), Filtering.at(0, sampleList).next());
-    }
-
-    @Test
-    public void canFetchAtFromArray() {
-        Assert.assertEquals(Integer.valueOf(1), Filtering.at(0, sampleArray).next());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void cannotFetchAtOnANullIterable() {
-        final Iterable<Object> iterable = null;
-        Filtering.nth(1, iterable);
-    }
 
     @Test
     public void canSliceEmptyIterator() {
@@ -199,12 +156,6 @@ public class FilteringTest {
         final List<Integer> expected = Arrays.asList(1);
         final List<Integer> got = Consumers.all(Filtering.slice(1, 1, source));
         Assert.assertEquals(expected, got);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void cannotCallAtOnANullIterable() {
-        final Iterable<Object> iterable = null;
-        Filtering.at(2, iterable);
     }
 
     @Test

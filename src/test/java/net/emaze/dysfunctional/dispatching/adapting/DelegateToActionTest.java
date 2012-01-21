@@ -17,14 +17,14 @@ public class DelegateToActionTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void adaptingNullYieldsException() {
-        new DelegateToAction<O>(null);
+        new DelegateToAction<O, O>(null);
     }
 
     @Test
     public void adapterCorrectlyPassesParamToAdapted() {
         final Box<O> param = Box.empty();
         final Delegate<O, O> spy = Spies.spy1st(new Identity<O>(), param);
-        final Action<O> adapted = new DelegateToAction<O>(spy);
+        final Action<O> adapted = new DelegateToAction<O, O>(spy);
         adapted.perform(O.ONE);
         Assert.assertEquals(O.ONE, param.getContent());
     }
