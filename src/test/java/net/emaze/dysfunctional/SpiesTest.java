@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.dispatching.spying;
+package net.emaze.dysfunctional;
 
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.dispatching.actions.Action;

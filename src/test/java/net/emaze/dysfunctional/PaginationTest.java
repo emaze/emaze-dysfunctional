@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.pagination;
+package net.emaze.dysfunctional;
 
 import net.emaze.dysfunctional.Pagination;
 import java.util.ArrayList;

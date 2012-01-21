@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.dispatching;
+package net.emaze.dysfunctional;
 
 import net.emaze.dysfunctional.Logic;
 import java.util.Arrays;

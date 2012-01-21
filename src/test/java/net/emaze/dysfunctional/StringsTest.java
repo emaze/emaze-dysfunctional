@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.strings;
+package net.emaze.dysfunctional;
 
 import net.emaze.dysfunctional.Strings;
 import java.util.Arrays;

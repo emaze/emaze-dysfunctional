@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.reductions;
+package net.emaze.dysfunctional;
 
 import net.emaze.dysfunctional.Reductions;
 import java.util.ArrayList;
@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import net.emaze.dysfunctional.dispatching.logic.IsTrue;
 import net.emaze.dysfunctional.order.ComparableComparator;
+import net.emaze.dysfunctional.reductions.Count;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

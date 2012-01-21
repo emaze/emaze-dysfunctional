@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.convolutions;
+package net.emaze.dysfunctional;
 
 import net.emaze.dysfunctional.Zips;
 import java.util.ArrayList;

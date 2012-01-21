@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.windows;
+package net.emaze.dysfunctional;
 
 import net.emaze.dysfunctional.Windowing;
 import java.util.ArrayList;

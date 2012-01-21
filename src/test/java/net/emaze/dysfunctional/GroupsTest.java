@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.groups;
+package net.emaze.dysfunctional;
 
 import net.emaze.dysfunctional.Groups;
 import java.util.ArrayList;
@@ -17,10 +17,10 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.logic.Always;
-import net.emaze.dysfunctional.groups.GroupsTest.IndexByTest;
-import net.emaze.dysfunctional.groups.GroupsTest.FacadeTest;
-import net.emaze.dysfunctional.groups.GroupsTest.GroupByTest;
-import net.emaze.dysfunctional.groups.GroupsTest.PartitionByTest;
+import net.emaze.dysfunctional.GroupsTest.IndexByTest;
+import net.emaze.dysfunctional.GroupsTest.FacadeTest;
+import net.emaze.dysfunctional.GroupsTest.GroupByTest;
+import net.emaze.dysfunctional.GroupsTest.PartitionByTest;
 import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.testing.O;
 import net.emaze.dysfunctional.tuples.Pair;

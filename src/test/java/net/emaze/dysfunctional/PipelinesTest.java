@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.dispatching.composing;
+package net.emaze.dysfunctional;
 
 import net.emaze.dysfunctional.Pipelines;
 import java.util.Iterator;
@@ -9,11 +9,11 @@ import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
-import net.emaze.dysfunctional.dispatching.composing.PipelinesTest.BinaryTest;
-import net.emaze.dysfunctional.dispatching.composing.PipelinesTest.FacadeTest;
-import net.emaze.dysfunctional.dispatching.composing.PipelinesTest.PipesTest;
-import net.emaze.dysfunctional.dispatching.composing.PipelinesTest.TernaryTest;
-import net.emaze.dysfunctional.dispatching.composing.PipelinesTest.UnaryTest;
+import net.emaze.dysfunctional.PipelinesTest.BinaryTest;
+import net.emaze.dysfunctional.PipelinesTest.FacadeTest;
+import net.emaze.dysfunctional.PipelinesTest.PipesTest;
+import net.emaze.dysfunctional.PipelinesTest.TernaryTest;
+import net.emaze.dysfunctional.PipelinesTest.UnaryTest;
 import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Test;

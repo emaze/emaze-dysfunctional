@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.consumers;
+package net.emaze.dysfunctional;
 
 import net.emaze.dysfunctional.output.OutputIterator;
 import net.emaze.dysfunctional.output.StringOutputIterator;

@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.searches;
+package net.emaze.dysfunctional;
 
 import net.emaze.dysfunctional.Searches;
 import java.util.Arrays;

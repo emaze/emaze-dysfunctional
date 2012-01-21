@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.multiplexing;
+package net.emaze.dysfunctional;
 
 import net.emaze.dysfunctional.Multiplexing;
 import java.util.Arrays;

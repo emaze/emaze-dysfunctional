@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.filtering;
+package net.emaze.dysfunctional;
 
 import net.emaze.dysfunctional.Filtering;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.adapting;
+package net.emaze.dysfunctional;
 
 import net.emaze.dysfunctional.Boxing;
 import org.junit.Assert;

@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.tuples;
+package net.emaze.dysfunctional;
 
 import net.emaze.dysfunctional.Tuples;
 import net.emaze.dysfunctional.Logic;
@@ -9,6 +9,10 @@ import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.testing.O;
+import net.emaze.dysfunctional.tuples.BinaryIdentity;
+import net.emaze.dysfunctional.tuples.Pair;
+import net.emaze.dysfunctional.tuples.TernaryIdentity;
+import net.emaze.dysfunctional.tuples.Triple;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

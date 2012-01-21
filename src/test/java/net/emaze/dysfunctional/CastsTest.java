@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.casts;
+package net.emaze.dysfunctional;
 
 import net.emaze.dysfunctional.Casts;
 import junit.framework.Assert;

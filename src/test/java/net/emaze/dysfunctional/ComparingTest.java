@@ -1,6 +1,7 @@
-package net.emaze.dysfunctional.order;
+package net.emaze.dysfunctional;
 
 import net.emaze.dysfunctional.Comparing;
+import net.emaze.dysfunctional.order.ComparableComparator;
 import net.emaze.dysfunctional.tuples.Pair;
 import org.junit.Assert;
 import org.junit.Test;
