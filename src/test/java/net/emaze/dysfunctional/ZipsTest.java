@@ -1,10 +1,9 @@
 package net.emaze.dysfunctional;
 
-import net.emaze.dysfunctional.Zips;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.Consumers;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.tuples.Pair;
 import org.junit.Assert;
@@ -29,24 +28,24 @@ public class ZipsTest {
     public void canZipShortestWithIterators() {
         List<Integer> former = Arrays.asList(1, 3);
         List<Integer> latter = Arrays.asList(2, 4, 5);
-        Iterable<Pair<Integer, Integer>> got = Zips.shortest(former.iterator(), latter.iterator());
-        Assert.assertEquals(Arrays.asList(p(1, 2), p(3, 4)), Consumers.all(got.iterator()));
+        Iterator<Pair<Integer, Integer>> got = Zips.shortest(former.iterator(), latter.iterator());
+        Assert.assertEquals(Arrays.asList(p(1, 2), p(3, 4)), Consumers.all(got));
     }
 
     @Test
     public void canZipShortestWithArrays() {
         Integer[] former = new Integer[]{1, 3};
         Integer[] latter = new Integer[]{2, 4, 5};
-        Iterable<Pair<Integer, Integer>> got = Zips.shortest(former, latter);
-        Assert.assertEquals(Arrays.asList(p(1, 2), p(3, 4)), Consumers.all(got.iterator()));
+        Iterator<Pair<Integer, Integer>> got = Zips.shortest(former, latter);
+        Assert.assertEquals(Arrays.asList(p(1, 2), p(3, 4)), Consumers.all(got));
     }
 
     @Test
     public void canZipShortestWithIterables() {
         List<Integer> former = Arrays.asList(1, 3);
         List<Integer> latter = Arrays.asList(2, 4, 5);
-        Iterable<Pair<Integer, Integer>> got = Zips.shortest(former, latter);
-        Assert.assertEquals(Arrays.asList(p(1, 2), p(3, 4)), Consumers.all(got.iterator()));
+        Iterator<Pair<Integer, Integer>> got = Zips.shortest(former, latter);
+        Assert.assertEquals(Arrays.asList(p(1, 2), p(3, 4)), Consumers.all(got));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -67,42 +66,42 @@ public class ZipsTest {
     public void canZipLongestWithIterators() {
         List<Integer> former = Arrays.asList(1, 3);
         List<Integer> latter = Arrays.asList(2, 4, 5);
-        Iterable<Pair<Maybe<Integer>, Maybe<Integer>>> got = Zips.longest(former.iterator(), latter.iterator());
+        Iterator<Pair<Maybe<Integer>, Maybe<Integer>>> got = Zips.longest(former.iterator(), latter.iterator());
 
         List<Pair<Maybe<Integer>, Maybe<Integer>>> expected = new ArrayList<Pair<Maybe<Integer>, Maybe<Integer>>>();
         expected.add(p(Maybe.just(1), Maybe.just(2)));
         expected.add(p(Maybe.just(3), Maybe.just(4)));
         expected.add(p(Maybe.<Integer>nothing(), Maybe.just(5)));
 
-        Assert.assertEquals(expected, Consumers.all(got.iterator()));
+        Assert.assertEquals(expected, Consumers.all(got));
     }
 
     @Test
     public void canZipLongestWithArrays() {
         Integer[] former = new Integer[]{1, 3};
         Integer[] latter = new Integer[]{2, 4, 5};
-        Iterable<Pair<Maybe<Integer>, Maybe<Integer>>> got = Zips.longest(former, latter);
+        Iterator<Pair<Maybe<Integer>, Maybe<Integer>>> got = Zips.longest(former, latter);
 
         List<Pair<Maybe<Integer>, Maybe<Integer>>> expected = new ArrayList<Pair<Maybe<Integer>, Maybe<Integer>>>();
         expected.add(p(Maybe.just(1), Maybe.just(2)));
         expected.add(p(Maybe.just(3), Maybe.just(4)));
         expected.add(p(Maybe.<Integer>nothing(), Maybe.just(5)));
 
-        Assert.assertEquals(expected, Consumers.all(got.iterator()));
+        Assert.assertEquals(expected, Consumers.all(got));
     }
 
     @Test
     public void canZipLongestWithIterables() {
         List<Integer> former = Arrays.asList(1, 3);
         List<Integer> latter = Arrays.asList(2, 4, 5);
-        Iterable<Pair<Maybe<Integer>, Maybe<Integer>>> got = Zips.longest(former, latter);
+        Iterator<Pair<Maybe<Integer>, Maybe<Integer>>> got = Zips.longest(former, latter);
 
         List<Pair<Maybe<Integer>, Maybe<Integer>>> expected = new ArrayList<Pair<Maybe<Integer>, Maybe<Integer>>>();
         expected.add(p(Maybe.just(1), Maybe.just(2)));
         expected.add(p(Maybe.just(3), Maybe.just(4)));
         expected.add(p(Maybe.<Integer>nothing(), Maybe.just(5)));
 
-        Assert.assertEquals(expected, Consumers.all(got.iterator()));
+        Assert.assertEquals(expected, Consumers.all(got));
     }
 
     @Test(expected = IllegalArgumentException.class)
