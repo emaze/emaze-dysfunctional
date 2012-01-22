@@ -1,11 +1,11 @@
 package net.emaze.dysfunctional.convolutions;
 
-import net.emaze.dysfunctional.options.MaybeIterator;
-import net.emaze.dysfunctional.tuples.Pair;
 import java.util.Iterator;
-import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
+import net.emaze.dysfunctional.options.Maybe;
+import net.emaze.dysfunctional.options.MaybeIterator;
+import net.emaze.dysfunctional.tuples.Pair;
 
 /**
  * Adapts two iterators yielding their longest convolution (via a Pair<Maybe<E1>,Maybe<E2>>)

@@ -1,23 +1,40 @@
 package net.emaze.dysfunctional;
 
+import java.util.concurrent.atomic.AtomicLong;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import net.emaze.dysfunctional.dispatching.logic.Proposition;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 import net.emaze.dysfunctional.dispatching.spying.BinaryCapturingAction;
 import net.emaze.dysfunctional.dispatching.spying.BinaryCapturingDelegate;
 import net.emaze.dysfunctional.dispatching.spying.BinaryCapturingPredicate;
+import net.emaze.dysfunctional.dispatching.spying.BinaryMonitoringAction;
+import net.emaze.dysfunctional.dispatching.spying.BinaryMonitoringDelegate;
+import net.emaze.dysfunctional.dispatching.spying.BinaryMonitoringPredicate;
 import net.emaze.dysfunctional.dispatching.spying.CapturingAction;
 import net.emaze.dysfunctional.dispatching.spying.CapturingDelegate;
 import net.emaze.dysfunctional.dispatching.spying.CapturingPredicate;
+import net.emaze.dysfunctional.dispatching.spying.CapturingProposition;
+import net.emaze.dysfunctional.dispatching.spying.CapturingProvider;
+import net.emaze.dysfunctional.dispatching.spying.MonitoringAction;
+import net.emaze.dysfunctional.dispatching.spying.MonitoringDelegate;
+import net.emaze.dysfunctional.dispatching.spying.MonitoringPredicate;
+import net.emaze.dysfunctional.dispatching.spying.MonitoringProposition;
+import net.emaze.dysfunctional.dispatching.spying.MonitoringProvider;
+import net.emaze.dysfunctional.dispatching.spying.MonitoringRunnable;
 import net.emaze.dysfunctional.dispatching.spying.TernaryCapturingAction;
 import net.emaze.dysfunctional.dispatching.spying.TernaryCapturingDelegate;
 import net.emaze.dysfunctional.dispatching.spying.TernaryCapturingPredicate;
+import net.emaze.dysfunctional.dispatching.spying.TernaryMonitoringAction;
+import net.emaze.dysfunctional.dispatching.spying.TernaryMonitoringDelegate;
+import net.emaze.dysfunctional.dispatching.spying.TernaryMonitoringPredicate;
 import net.emaze.dysfunctional.options.Box;
 
 /**
@@ -25,6 +42,14 @@ import net.emaze.dysfunctional.options.Box;
  * @author rferranti
  */
 public abstract class Spies {
+
+    public static Proposition spy(Proposition proposition, Box<Boolean> result) {
+        return new CapturingProposition(proposition, result);
+    }
+
+    public static <R> Provider<R> spy(Provider<R> provider, Box<R> result) {
+        return new CapturingProvider<R>(provider, result);
+    }
 
     public static <R, T> Delegate<R, T> spy(Delegate<R, T> delegate, Box<R> result, Box<T> param) {
         return new CapturingDelegate<R, T>(delegate, result, param);
@@ -156,5 +181,53 @@ public abstract class Spies {
 
     public static <T> Predicate<T> spy1st(Predicate<T> predicate, Box<T> param) {
         return spy(predicate, Box.<Boolean>empty(), param);
+    }
+
+    public static <T> Action<T> monitor(Action<T> action, AtomicLong calls) {
+        return new MonitoringAction<T>(action, calls);
+    }
+
+    public static <R, T> Delegate<R, T> monitor(Delegate<R, T> delegate, AtomicLong calls) {
+        return new MonitoringDelegate<R, T>(delegate, calls);
+    }
+
+    public static <T> Predicate<T> monitor(Predicate<T> predicate, AtomicLong calls) {
+        return new MonitoringPredicate<T>(predicate, calls);
+    }
+
+    public static Proposition monitor(Proposition proposition, AtomicLong calls) {
+        return new MonitoringProposition(proposition, calls);
+    }
+
+    public static <T> Provider<T> monitor(Provider<T> provider, AtomicLong calls) {
+        return new MonitoringProvider<T>(provider, calls);
+    }
+
+    public static Runnable monitor(Runnable runnable, AtomicLong calls) {
+        return new MonitoringRunnable(runnable, calls);
+    }
+
+    public static <T1, T2> BinaryAction<T1, T2> monitor(BinaryAction<T1, T2> action, AtomicLong calls) {
+        return new BinaryMonitoringAction<T1, T2>(action, calls);
+    }
+
+    public static <R, T1, T2> BinaryDelegate<R, T1, T2> monitor(BinaryDelegate<R, T1, T2> delegate, AtomicLong calls) {
+        return new BinaryMonitoringDelegate<R, T1, T2>(delegate, calls);
+    }
+
+    public static <T1, T2> BinaryPredicate<T1, T2> monitor(BinaryPredicate<T1, T2> predicate, AtomicLong calls) {
+        return new BinaryMonitoringPredicate<T1, T2>(predicate, calls);
+    }
+
+    public static <T1, T2, T3> TernaryAction<T1, T2, T3> monitor(TernaryAction<T1, T2, T3> action, AtomicLong calls) {
+        return new TernaryMonitoringAction<T1, T2, T3>(action, calls);
+    }
+
+    public static <R, T1, T2, T3> TernaryDelegate<R, T1, T2, T3> monitor(TernaryDelegate<R, T1, T2, T3> delegate, AtomicLong calls) {
+        return new TernaryMonitoringDelegate<R, T1, T2, T3>(delegate, calls);
+    }
+
+    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> monitor(TernaryPredicate<T1, T2, T3> predicate, AtomicLong calls) {
+        return new TernaryMonitoringPredicate<T1, T2, T3>(predicate, calls);
     }
 }
