@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional;
 
-import net.emaze.dysfunctional.Strings;
 import java.util.Arrays;
 import java.util.Iterator;
 import junit.framework.Assert;
@@ -17,7 +16,6 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     StringsTest.Join.class,
     StringsTest.Interpose.class,
-    StringsTest.IsEmpty.class,
     StringsTest.Facade.class
 })
 public class StringsTest {
@@ -100,24 +98,6 @@ public class StringsTest {
         @Test(expected = IllegalArgumentException.class)
         public void interposingNullSeparatorsYieldsException() {
             Strings.interpose(Arrays.<String>asList().iterator(), (Iterator<String>) null);
-        }
-    }
-
-    public static class IsEmpty {
-
-        @Test
-        public void nullStringIsEmpty() {
-            Assert.assertTrue(Strings.isEmpty(null));
-        }
-
-        @Test
-        public void emptyStringIsEmpty() {
-            Assert.assertTrue(Strings.isEmpty(""));
-        }
-
-        @Test
-        public void nonEmptyStringIsNotEmpty() {
-            Assert.assertFalse(Strings.isEmpty("non empty text"));
         }
     }
 
