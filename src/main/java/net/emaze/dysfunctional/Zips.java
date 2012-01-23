@@ -5,7 +5,6 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.convolutions.ZipLongestIterator;
 import net.emaze.dysfunctional.convolutions.ZipShortestIterator;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
-import net.emaze.dysfunctional.iterations.OneTimeIterable;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.tuples.Pair;
 
@@ -15,7 +14,12 @@ import net.emaze.dysfunctional.tuples.Pair;
 public abstract class Zips {
 
     /**
-     * i.e: Zips.shortest([1,2],['a','b','c']) -> [1,'a'], [2,'b']
+     * Transforms two iterables to an iterator of tuples, containing elements of
+     * both iterables occurring at the same position; the iterator stops when
+     * the shortest input iterable is exhausted. E.g:
+     * <code>
+     * Zips.shortest([1,2],['a','b','c']) -> [1,'a'], [2,'b']
+     * </code>
      *
      * @param <T1> former element type parameter
      * @param <T2> latter element type parameter
@@ -30,7 +34,12 @@ public abstract class Zips {
     }
 
     /**
-     * i.e: Zips.shortest([1,2],['a','b','c']) -> [1,'a'], [2,'b']
+     * Transforms two iteratos to an iterator of tuples, containing elements of
+     * both iterators occurring at the same position; the iterator stops when
+     * the shortest input iterable is exhausted. E.g:
+     * <code>
+     * Zips.shortest([1,2],['a','b','c']) -> [1,'a'], [2,'b']
+     * </code>
      *
      * @param <T1> former element type parameter
      * @param <T2> latter element type parameter
@@ -43,7 +52,12 @@ public abstract class Zips {
     }
 
     /**
-     * i.e: Zips.shortest([1,2],['a','b','c']) -> [1,'a'], [2,'b']
+     * Transforms two arrays to an iterator of tuples, containing elements of
+     * both arrays occurring at the same position; the iterator stops when the
+     * shortest input iterable is exhausted. E.g:
+     * <code>
+     * Zips.shortest([1,2],['a','b','c']) -> [1,'a'], [2,'b']
+     * </code>
      *
      * @param <T1> former element type parameter
      * @param <T2> latter element type parameter
@@ -56,8 +70,14 @@ public abstract class Zips {
     }
 
     /**
-     * i.e: Zip.longest([1,2],['a','b','c']) -> [just(1),just('a')],
-     * [just(2),just('b')], [nothing(),just('c')],
+     * Transforms two iterables to an iterator of tuples, containing
+     * Maybe.just(elements) of both iterables occurring at the same position. If
+     * the iterables are of uneven length, missing values are filled-in with
+     * Maybe.nothing(). Iteration continues until the longest iterable is
+     * exhausted. E.g:
+     * <code>
+     * Zip.longest([1,2],['a','b','c']) -> [(just 1,just 'a'),(just 2 ,just 'b'), (nothing ,just 'c')]
+     * </code>
      *
      * @param <T1> the former element type parameter
      * @param <T2> the latter element type parameter
@@ -72,8 +92,14 @@ public abstract class Zips {
     }
 
     /**
-     * i.e: Zip.longest([1,2],['a','b','c']) -> [just(1),just('a')],
-     * [just(2),just('b')], [nothing(),just('c')],
+     * Transforms two iterators to an iterator of tuples, containing
+     * Maybe.just(elements) of both iterators occurring at the same position. If
+     * the iterables are of uneven length, missing values are filled-in with
+     * Maybe.nothing(). Iteration continues until the longest iterable is
+     * exhausted. E.g:
+     * <code>
+     * Zip.longest([1,2],['a','b','c']) -> [(just 1,just 'a'),(just 2 ,just 'b'), (nothing ,just 'c')]
+     * </code>
      *
      * @param <T1> the former element type parameter
      * @param <T2> the latter element type parameter
@@ -86,8 +112,14 @@ public abstract class Zips {
     }
 
     /**
-     * i.e: Zip.longest([1,2],['a','b','c']) -> [just(1),just('a')],
-     * [just(2),just('b')], [nothing(),just('c')],
+     * Transforms two arrays to an iterator of tuples, containing
+     * Maybe.just(elements) of both arrays occurring at the same position. If
+     * the iterables are of uneven length, missing values are filled-in with
+     * Maybe.nothing(). Iteration continues until the longest iterable is
+     * exhausted. E.g:
+     * <code>
+     * Zip.longest([1,2],['a','b','c']) -> [(just 1,just 'a'),(just 2 ,just 'b'), (nothing ,just 'c')]
+     * </code>
      *
      * @param <T1> the former element type parameter
      * @param <T2> the latter element type parameter

@@ -21,6 +21,7 @@ public abstract class Multiplexing {
 
     /**
      * Flattens an iterator of iterables of E to an iterator of E.
+     *
      * @param <E> the iterable element type
      * @param <T> the iterable type
      * @param iterables the iterator of iterables to be flattened
@@ -32,6 +33,7 @@ public abstract class Multiplexing {
 
     /**
      * Flattens an iterable of iterables of E to an iterator of E.
+     *
      * @param <E> the iterable element type
      * @param <T> the iterable type
      * @param iterables the iterable of iterables to be flattened
@@ -44,6 +46,7 @@ public abstract class Multiplexing {
 
     /**
      * Flattens passed iterables of E to an iterator of E.
+     *
      * @param <E> the iterable element type
      * @param <T> the iterable type
      * @param first the first iterable to be flattened
@@ -56,6 +59,7 @@ public abstract class Multiplexing {
 
     /**
      * Flattens passed iterables of E to an iterator of E.
+     *
      * @param <E> the iterable element type
      * @param <T> the iterable type
      * @param first the first iterable to be flattened
@@ -69,6 +73,7 @@ public abstract class Multiplexing {
 
     /**
      * Flattens an iterator of iterators of E to an iterator of E.
+     *
      * @param <E> the iterator element type
      * @param <T> the iterator type
      * @param iterators
@@ -80,6 +85,7 @@ public abstract class Multiplexing {
 
     /**
      * Flattens an iterable of iterators of E to an iterator of E.
+     *
      * @param <E> the iterator element type
      * @param <T> the iterator type
      * @param iterable
@@ -92,6 +98,7 @@ public abstract class Multiplexing {
 
     /**
      * Flattens passed iterators of E to an iterator of E.
+     *
      * @param <E> the iterator element type
      * @param <T> the iterator type
      * @param first the first iterator to be flattened
@@ -104,6 +111,7 @@ public abstract class Multiplexing {
 
     /**
      * Flattens passed iterators of E to an iterator of E.
+     *
      * @param <E> the iterator element type
      * @param <T> the iterator type
      * @param first the first iterator to be flattened
@@ -116,7 +124,13 @@ public abstract class Multiplexing {
     }
 
     /**
-     * 
+     * Multiplexes an iterator of iterators into a single iterator. The
+     * iteration stops whenever any of the source iterators is empty causing the
+     * same number of elements to be consumed from every iterator.
+     * <code>
+     * mux([1,2,3], [4,5]) -> [1,4,2,5]
+     * </code>
+     *
      * @param <E>
      * @param <T>
      * @param iterators
@@ -127,9 +141,15 @@ public abstract class Multiplexing {
     }
 
     /**
-     * 
+     * Multiplexes an iterable of iterators into a single iterator. The
+     * iteration stops whenever any of the source iterators is empty causing the
+     * same number of elements to be consumed from every iterator. E.g:
+     * <code>
+     * mux([1,2,3], [4,5]) -> [1,4,2,5]
+     * </code>
+     *
      * @param <E>
-     * @param <T> 
+     * @param <T>
      * @param iterable
      * @return
      */
@@ -139,7 +159,13 @@ public abstract class Multiplexing {
     }
 
     /**
-     * 
+     * Multiplexes two iterators into a single iterator. The iteration stops
+     * whenever any of the source iterators is empty causing the same number of
+     * elements to be consumed from every iterator. E.g:
+     * <code>
+     * mux([1,2], [3]) -> [1,3]
+     * </code>
+     *
      * @param <E>
      * @param first
      * @param second
@@ -150,7 +176,13 @@ public abstract class Multiplexing {
     }
 
     /**
-     * 
+     * Multiplexes three iterators into a single iterator. The iteration stops
+     * whenever any of the source iterators is empty causing the same number of
+     * elements to be consumed from every iterator. E.g:
+     * <code>
+     * mux([1,2], [3], [4]) -> [1, 3, 4]
+     * </code>
+     *
      * @param <E>
      * @param first
      * @param second
@@ -162,7 +194,12 @@ public abstract class Multiplexing {
     }
 
     /**
-     * 
+     * Multiplexes an iterator of iterators into a single iterator. The
+     * iteration stops when every source iterator is empty.E.g:
+     * <code>
+     * muxl([1,2], [4]) -> [just 1, just 4, just 2, nothing]
+     * </code>
+     *
      * @param <E>
      * @param <T>
      * @param iterators
@@ -173,9 +210,14 @@ public abstract class Multiplexing {
     }
 
     /**
-     * 
+     * Multiplexes an iterable of iterators into a single iterator. The
+     * iteration stops when every source iterator is empty.E.g:
+     * <code>
+     * muxl([1,2], [4]) -> [just 1, just 4, just 2, nothing]
+     * </code>
+     *
      * @param <E>
-     * @param <T> 
+     * @param <T>
      * @param iterable
      * @return
      */
@@ -185,7 +227,12 @@ public abstract class Multiplexing {
     }
 
     /**
-     * 
+     * Multiplexes two iterators into a single iterator. The iteration stops
+     * when every source iterator is empty.E.g:
+     * <code>
+     * muxl([1,2], [4]) -> [just 1, just 4, just 2, nothing]
+     * </code>
+     *
      * @param <E>
      * @param first
      * @param second
@@ -196,7 +243,12 @@ public abstract class Multiplexing {
     }
 
     /**
-     * 
+     * Multiplexes three iterators into a single iterator. The iteration stops
+     * when every source iterator is empty.E.g:
+     * <code>
+     * muxl([1,2], [4], [5]) -> [just 1, just 4, just 5, just 2, nothing, nothing]
+     * </code>
+     *
      * @param <E>
      * @param first
      * @param second
@@ -208,7 +260,7 @@ public abstract class Multiplexing {
     }
 
     /**
-     * 
+     *
      * @param <E>
      * @param channelSize
      * @param iterator
@@ -219,7 +271,7 @@ public abstract class Multiplexing {
     }
 
     /**
-     * 
+     *
      * @param <E>
      * @param channelSize
      * @param iterable
@@ -231,7 +283,7 @@ public abstract class Multiplexing {
     }
 
     /**
-     * 
+     *
      * @param <E>
      * @param channelSize
      * @param array
@@ -242,7 +294,7 @@ public abstract class Multiplexing {
     }
 
     /**
-     * 
+     *
      * @param <E>
      * @param channelSize
      * @param iterator
@@ -253,7 +305,7 @@ public abstract class Multiplexing {
     }
 
     /**
-     * 
+     *
      * @param <E>
      * @param channelSize
      * @param iterable
@@ -265,7 +317,7 @@ public abstract class Multiplexing {
     }
 
     /**
-     * 
+     *
      * @param <E>
      * @param channelSize
      * @param array
@@ -276,7 +328,7 @@ public abstract class Multiplexing {
     }
 
     /**
-     * 
+     *
      * @param <E>
      * @param <T>
      * @param iterators
@@ -287,7 +339,7 @@ public abstract class Multiplexing {
     }
 
     /**
-     * 
+     *
      * @param <E>
      * @param <T>
      * @param iterable
@@ -299,7 +351,7 @@ public abstract class Multiplexing {
     }
 
     /**
-     * 
+     *
      * @param <E>
      * @param first
      * @param second
@@ -310,7 +362,7 @@ public abstract class Multiplexing {
     }
 
     /**
-     * 
+     *
      * @param <E>
      * @param first
      * @param second
