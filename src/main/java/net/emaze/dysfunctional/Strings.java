@@ -14,12 +14,12 @@ import net.emaze.dysfunctional.strings.JoinStrings;
 public abstract class Strings {
 
     public static <T> String join(T[] array) {
-        return join(new ArrayIterator<T>(array));
+        return new JoinStrings<T>().perform(new ArrayIterator<T>(array));
     }
 
     public static <T> String join(Iterable<T> iterable) {
         dbc.precondition(iterable != null, "cannot join a null iterable");
-        return join(iterable.iterator());
+        return new JoinStrings<T>().perform(iterable.iterator());
     }
 
     public static <T> String join(Iterator<T> iterator) {
