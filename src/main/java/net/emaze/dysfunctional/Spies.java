@@ -43,190 +43,641 @@ import net.emaze.dysfunctional.options.Box;
  */
 public abstract class Spies {
 
+    /**
+     * Proxies a proposition, spying for result.
+     *
+     * @param proposition the proposition to be spied
+     * @param result a box that will be containing spied result
+     * @return the proxied proposition
+     */
     public static Proposition spy(Proposition proposition, Box<Boolean> result) {
         return new CapturingProposition(proposition, result);
     }
 
+    /**
+     * Proxies a provider, spying for result.
+     *
+     * @param <R> the provider result type
+     * @param provider the provider to be spied
+     * @param result a box that will be containing spied result
+     * @return the proxied provider
+     */
     public static <R> Provider<R> spy(Provider<R> provider, Box<R> result) {
         return new CapturingProvider<R>(provider, result);
     }
 
+    /**
+     * Proxies a delegate spying for result and parameter.
+     *
+     * @param <R> the delegate result type
+     * @param <T> the delegate parameter type
+     * @param delegate the delegate to be spied
+     * @param result a box that will be containing spied result
+     * @param param a box that will be containing spied param
+     * @return the proxied delegate
+     */
     public static <R, T> Delegate<R, T> spy(Delegate<R, T> delegate, Box<R> result, Box<T> param) {
         return new CapturingDelegate<R, T>(delegate, result, param);
     }
 
+    /**
+     * Proxies a binary delegate spying for result and parameters.
+     *
+     * @param <R>
+     * @param <T1>
+     * @param <T2>
+     * @param delegate
+     * @param result
+     * @param param1
+     * @param param2
+     * @return
+     */
     public static <R, T1, T2> BinaryDelegate<R, T1, T2> spy(BinaryDelegate<R, T1, T2> delegate, Box<R> result, Box<T1> param1, Box<T2> param2) {
         return new BinaryCapturingDelegate<R, T1, T2>(delegate, result, param1, param2);
     }
 
+    /**
+     * Proxies a ternary delegate spying for result and parameters.
+     *
+     * @param <R>
+     * @param <T1>
+     * @param <T2>
+     * @param <T3>
+     * @param delegate
+     * @param result
+     * @param param1
+     * @param param2
+     * @param param3
+     * @return
+     */
     public static <R, T1, T2, T3> TernaryDelegate<R, T1, T2, T3> spy(TernaryDelegate<R, T1, T2, T3> delegate, Box<R> result, Box<T1> param1, Box<T2> param2, Box<T3> param3) {
         return new TernaryCapturingDelegate<R, T1, T2, T3>(delegate, result, param1, param2, param3);
     }
 
+    /**
+     * Proxies a predicate spying for result and parameter.
+     *
+     * @param <T>
+     * @param delegate
+     * @param result
+     * @param param
+     * @return
+     */
     public static <T> Predicate<T> spy(Predicate<T> delegate, Box<Boolean> result, Box<T> param) {
         return new CapturingPredicate<T>(delegate, result, param);
     }
 
+    /**
+     * Proxies a binary predicate spying for result and parameters.
+     *
+     * @param <T1>
+     * @param <T2>
+     * @param delegate
+     * @param result
+     * @param param1
+     * @param param2
+     * @return
+     */
     public static <T1, T2> BinaryPredicate<T1, T2> spy(BinaryPredicate<T1, T2> delegate, Box<Boolean> result, Box<T1> param1, Box<T2> param2) {
         return new BinaryCapturingPredicate<T1, T2>(delegate, result, param1, param2);
     }
 
+    /**
+     * Proxies a ternary predicate spying for result and parameters.
+     *
+     * @param <T1>
+     * @param <T2>
+     * @param <T3>
+     * @param delegate
+     * @param result
+     * @param param1
+     * @param param2
+     * @param param3
+     * @return
+     */
     public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> spy(TernaryPredicate<T1, T2, T3> delegate, Box<Boolean> result, Box<T1> param1, Box<T2> param2, Box<T3> param3) {
         return new TernaryCapturingPredicate<T1, T2, T3>(delegate, result, param1, param2, param3);
     }
 
+    /**
+     * Proxies an action spying for parameter.
+     *
+     * @param <T>
+     * @param delegate
+     * @param param
+     * @return
+     */
     public static <T> Action<T> spy(Action<T> delegate, Box<T> param) {
         return new CapturingAction<T>(delegate, param);
     }
 
+    /**
+     * Proxies a binary action spying for parameters.
+     *
+     * @param <T1>
+     * @param <T2>
+     * @param delegate
+     * @param param1
+     * @param param2
+     * @return
+     */
     public static <T1, T2> BinaryAction<T1, T2> spy(BinaryAction<T1, T2> delegate, Box<T1> param1, Box<T2> param2) {
         return new BinaryCapturingAction<T1, T2>(delegate, param1, param2);
     }
 
+    /**
+     * Proxies a ternary action spying for parameters.
+     *
+     * @param <T1>
+     * @param <T2>
+     * @param <T3>
+     * @param delegate
+     * @param param1
+     * @param param2
+     * @param param3
+     * @return
+     */
     public static <T1, T2, T3> TernaryAction<T1, T2, T3> spy(TernaryAction<T1, T2, T3> delegate, Box<T1> param1, Box<T2> param2, Box<T3> param3) {
         return new TernaryCapturingAction<T1, T2, T3>(delegate, param1, param2, param3);
     }
 
+    /**
+     * Proxies a ternary delegate spying for result.
+     *
+     * @param <R>
+     * @param <T1>
+     * @param <T2>
+     * @param <T3>
+     * @param delegate
+     * @param result
+     * @return
+     */
     public static <R, T1, T2, T3> TernaryDelegate<R, T1, T2, T3> spyRes(TernaryDelegate<R, T1, T2, T3> delegate, Box<R> result) {
         return spy(delegate, result, Box.<T1>empty(), Box.<T2>empty(), Box.<T3>empty());
     }
 
+    /**
+     * Proxies a ternary delegate spying for first parameter.
+     *
+     * @param <R>
+     * @param <T1>
+     * @param <T2>
+     * @param <T3>
+     * @param delegate
+     * @param param1
+     * @return
+     */
     public static <R, T1, T2, T3> TernaryDelegate<R, T1, T2, T3> spy1st(TernaryDelegate<R, T1, T2, T3> delegate, Box<T1> param1) {
         return spy(delegate, Box.<R>empty(), param1, Box.<T2>empty(), Box.<T3>empty());
     }
 
+    /**
+     * Proxies a ternary delegate spying for second parameter
+     *
+     * @param <R>
+     * @param <T1>
+     * @param <T2>
+     * @param <T3>
+     * @param delegate
+     * @param param2
+     * @return
+     */
     public static <R, T1, T2, T3> TernaryDelegate<R, T1, T2, T3> spy2nd(TernaryDelegate<R, T1, T2, T3> delegate, Box<T2> param2) {
         return spy(delegate, Box.<R>empty(), Box.<T1>empty(), param2, Box.<T3>empty());
     }
 
+    /**
+     * Proxies a ternary delegate spying for third parameter.
+     *
+     * @param <R>
+     * @param <T1>
+     * @param <T2>
+     * @param <T3>
+     * @param delegate
+     * @param param3
+     * @return
+     */
     public static <R, T1, T2, T3> TernaryDelegate<R, T1, T2, T3> spy3rd(TernaryDelegate<R, T1, T2, T3> delegate, Box<T3> param3) {
         return spy(delegate, Box.<R>empty(), Box.<T1>empty(), Box.<T2>empty(), param3);
     }
 
+    /**
+     * Proxies a binary delegate spying for result.
+     *
+     * @param <R>
+     * @param <T1>
+     * @param <T2>
+     * @param delegate
+     * @param result
+     * @return
+     */
     public static <R, T1, T2> BinaryDelegate<R, T1, T2> spyRes(BinaryDelegate<R, T1, T2> delegate, Box<R> result) {
         return spy(delegate, result, Box.<T1>empty(), Box.<T2>empty());
     }
 
+    /**
+     * Proxies a binary delegate spying for first parameter.
+     *
+     * @param <R>
+     * @param <T1>
+     * @param <T2>
+     * @param delegate
+     * @param param1
+     * @return
+     */
     public static <R, T1, T2> BinaryDelegate<R, T1, T2> spy1st(BinaryDelegate<R, T1, T2> delegate, Box<T1> param1) {
         return spy(delegate, Box.<R>empty(), param1, Box.<T2>empty());
     }
 
+    /**
+     * Proxies a binary delegate spying for second parameter.
+     *
+     * @param <R>
+     * @param <T1>
+     * @param <T2>
+     * @param delegate
+     * @param param2
+     * @return
+     */
     public static <R, T1, T2> BinaryDelegate<R, T1, T2> spy2nd(BinaryDelegate<R, T1, T2> delegate, Box<T2> param2) {
         return spy(delegate, Box.<R>empty(), Box.<T1>empty(), param2);
     }
 
+    /**
+     * Proxies a delegate spying for result.
+     *
+     * @param <R>
+     * @param <T>
+     * @param delegate
+     * @param result
+     * @return
+     */
     public static <R, T> Delegate<R, T> spyRes(Delegate<R, T> delegate, Box<R> result) {
         return spy(delegate, result, Box.<T>empty());
     }
 
+    /**
+     * Proxies a delegate spying for parameter.
+     *
+     * @param <R>
+     * @param <T>
+     * @param delegate
+     * @param param
+     * @return
+     */
     public static <R, T> Delegate<R, T> spy1st(Delegate<R, T> delegate, Box<T> param) {
         return spy(delegate, Box.<R>empty(), param);
     }
 
+    /**
+     * Proxies a ternary action spying for first parameter.
+     *
+     * @param <T1>
+     * @param <T2>
+     * @param <T3>
+     * @param action
+     * @param param1
+     * @return
+     */
     public static <T1, T2, T3> TernaryAction<T1, T2, T3> spy1st(TernaryAction<T1, T2, T3> action, Box<T1> param1) {
         return spy(action, param1, Box.<T2>empty(), Box.<T3>empty());
     }
 
+    /**
+     * Proxies a ternary action spying for second parameter.
+     *
+     * @param <T1>
+     * @param <T2>
+     * @param <T3>
+     * @param action
+     * @param param2
+     * @return
+     */
     public static <T1, T2, T3> TernaryAction<T1, T2, T3> spy2nd(TernaryAction<T1, T2, T3> action, Box<T2> param2) {
         return spy(action, Box.<T1>empty(), param2, Box.<T3>empty());
     }
 
+    /**
+     * Proxies a ternary action spying for third parameter.
+     *
+     * @param <T1>
+     * @param <T2>
+     * @param <T3>
+     * @param action
+     * @param param3
+     * @return
+     */
     public static <T1, T2, T3> TernaryAction<T1, T2, T3> spy3rd(TernaryAction<T1, T2, T3> action, Box<T3> param3) {
         return spy(action, Box.<T1>empty(), Box.<T2>empty(), param3);
     }
 
+    /**
+     * Proxies a binary action spying for first parameter.
+     *
+     * @param <T1>
+     * @param <T2>
+     * @param action
+     * @param param1
+     * @return
+     */
     public static <T1, T2> BinaryAction<T1, T2> spy1st(BinaryAction<T1, T2> action, Box<T1> param1) {
         return spy(action, param1, Box.<T2>empty());
     }
 
+    /**
+     * Proxies a binary action spying for second parameter.
+     *
+     * @param <T1>
+     * @param <T2>
+     * @param action
+     * @param param2
+     * @return
+     */
     public static <T1, T2> BinaryAction<T1, T2> spy2nd(BinaryAction<T1, T2> action, Box<T2> param2) {
         return spy(action, Box.<T1>empty(), param2);
     }
 
+    /**
+     * Proxies a binary action spying for first parameter.
+     *
+     * @param <T>
+     * @param action
+     * @param param
+     * @return
+     */
     public static <T> Action<T> spy1st(Action<T> action, Box<T> param) {
         return spy(action, param);
     }
 
+    /**
+     * Proxies a ternary predicate spying for result.
+     *
+     * @param <T1>
+     * @param <T2>
+     * @param <T3>
+     * @param predicate
+     * @param result
+     * @return
+     */
     public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> spyRes(TernaryPredicate<T1, T2, T3> predicate, Box<Boolean> result) {
         return spy(predicate, result, Box.<T1>empty(), Box.<T2>empty(), Box.<T3>empty());
     }
 
+    /**
+     * Proxies a ternary predicate spying for first parameter.
+     *
+     * @param <T1>
+     * @param <T2>
+     * @param <T3>
+     * @param predicate
+     * @param param1
+     * @return
+     */
     public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> spy1st(TernaryPredicate<T1, T2, T3> predicate, Box<T1> param1) {
         return spy(predicate, Box.<Boolean>empty(), param1, Box.<T2>empty(), Box.<T3>empty());
     }
 
+    /**
+     * Proxies a ternary predicate spying for second parameter.
+     *
+     * @param <T1>
+     * @param <T2>
+     * @param <T3>
+     * @param predicate
+     * @param param2
+     * @return
+     */
     public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> spy2nd(TernaryPredicate<T1, T2, T3> predicate, Box<T2> param2) {
         return spy(predicate, Box.<Boolean>empty(), Box.<T1>empty(), param2, Box.<T3>empty());
     }
 
+    /**
+     * Proxies a ternary predicate spying for third parameter.
+     *
+     * @param <T1>
+     * @param <T2>
+     * @param <T3>
+     * @param predicate
+     * @param param3
+     * @return
+     */
     public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> spy3rd(TernaryPredicate<T1, T2, T3> predicate, Box<T3> param3) {
         return spy(predicate, Box.<Boolean>empty(), Box.<T1>empty(), Box.<T2>empty(), param3);
     }
 
+    /**
+     * Proxies a binary predicate spying for result.
+     *
+     * @param <T1>
+     * @param <T2>
+     * @param predicate
+     * @param result
+     * @return
+     */
     public static <T1, T2> BinaryPredicate<T1, T2> spyRes(BinaryPredicate<T1, T2> predicate, Box<Boolean> result) {
         return spy(predicate, result, Box.<T1>empty(), Box.<T2>empty());
     }
 
+    /**
+     * Proxies a binary predicate spying for first parameter
+     *
+     * @param <T1>
+     * @param <T2>
+     * @param predicate
+     * @param param1
+     * @return
+     */
     public static <T1, T2> BinaryPredicate<T1, T2> spy1st(BinaryPredicate<T1, T2> predicate, Box<T1> param1) {
         return spy(predicate, Box.<Boolean>empty(), param1, Box.<T2>empty());
     }
 
+    /**
+     * Proxies a binary predicate spying for second parameter.
+     *
+     * @param <T1>
+     * @param <T2>
+     * @param predicate
+     * @param param2
+     * @return
+     */
     public static <T1, T2> BinaryPredicate<T1, T2> spy2nd(BinaryPredicate<T1, T2> predicate, Box<T2> param2) {
         return spy(predicate, Box.<Boolean>empty(), Box.<T1>empty(), param2);
     }
 
+    /**
+     * Proxies a predicate spying for result.
+     *
+     * @param <T>
+     * @param predicate
+     * @param result
+     * @return
+     */
     public static <T> Predicate<T> spyRes(Predicate<T> predicate, Box<Boolean> result) {
         return spy(predicate, result, Box.<T>empty());
     }
 
+    /**
+     * Proxies a predicate spying for parameter.
+     *
+     * @param <T>
+     * @param predicate
+     * @param param
+     * @return
+     */
     public static <T> Predicate<T> spy1st(Predicate<T> predicate, Box<T> param) {
         return spy(predicate, Box.<Boolean>empty(), param);
     }
 
+    /**
+     * Monitors calls to an action.
+     *
+     * @param <T>
+     * @param action
+     * @param calls
+     * @return
+     */
     public static <T> Action<T> monitor(Action<T> action, AtomicLong calls) {
         return new MonitoringAction<T>(action, calls);
     }
 
+    /**
+     * Monitors calls to a delegate.
+     *
+     * @param <R>
+     * @param <T>
+     * @param delegate
+     * @param calls
+     * @return
+     */
     public static <R, T> Delegate<R, T> monitor(Delegate<R, T> delegate, AtomicLong calls) {
         return new MonitoringDelegate<R, T>(delegate, calls);
     }
 
+    /**
+     * Monitors calls to a predicate.
+     *
+     * @param <T>
+     * @param predicate
+     * @param calls
+     * @return
+     */
     public static <T> Predicate<T> monitor(Predicate<T> predicate, AtomicLong calls) {
         return new MonitoringPredicate<T>(predicate, calls);
     }
 
+    /**
+     * Monitors calls to a proposition.
+     *
+     * @param proposition
+     * @param calls
+     * @return
+     */
     public static Proposition monitor(Proposition proposition, AtomicLong calls) {
         return new MonitoringProposition(proposition, calls);
     }
 
+    /**
+     * Monitors calls to a provider.
+     *
+     * @param <T>
+     * @param provider
+     * @param calls
+     * @return
+     */
     public static <T> Provider<T> monitor(Provider<T> provider, AtomicLong calls) {
         return new MonitoringProvider<T>(provider, calls);
     }
 
+    /**
+     * Monitors calls to a runnable.
+     *
+     * @param runnable
+     * @param calls
+     * @return
+     */
     public static Runnable monitor(Runnable runnable, AtomicLong calls) {
         return new MonitoringRunnable(runnable, calls);
     }
 
+    /**
+     * Monitors calls to a binary action.
+     *
+     * @param <T1>
+     * @param <T2>
+     * @param action
+     * @param calls
+     * @return
+     */
     public static <T1, T2> BinaryAction<T1, T2> monitor(BinaryAction<T1, T2> action, AtomicLong calls) {
         return new BinaryMonitoringAction<T1, T2>(action, calls);
     }
 
+    /**
+     * Monitors calls to a binary delegate.
+     *
+     * @param <R>
+     * @param <T1>
+     * @param <T2>
+     * @param delegate
+     * @param calls
+     * @return
+     */
     public static <R, T1, T2> BinaryDelegate<R, T1, T2> monitor(BinaryDelegate<R, T1, T2> delegate, AtomicLong calls) {
         return new BinaryMonitoringDelegate<R, T1, T2>(delegate, calls);
     }
 
+    /**
+     * Monitors calls to a binary predicate
+     *
+     * @param <T1>
+     * @param <T2>
+     * @param predicate
+     * @param calls
+     * @return
+     */
     public static <T1, T2> BinaryPredicate<T1, T2> monitor(BinaryPredicate<T1, T2> predicate, AtomicLong calls) {
         return new BinaryMonitoringPredicate<T1, T2>(predicate, calls);
     }
 
+    /**
+     * Monitors calls to a ternary action.
+     *
+     * @param <T1>
+     * @param <T2>
+     * @param <T3>
+     * @param action
+     * @param calls
+     * @return
+     */
     public static <T1, T2, T3> TernaryAction<T1, T2, T3> monitor(TernaryAction<T1, T2, T3> action, AtomicLong calls) {
         return new TernaryMonitoringAction<T1, T2, T3>(action, calls);
     }
 
+    /**
+     * Monitors calls to a ternary delegate.
+     *
+     * @param <R>
+     * @param <T1>
+     * @param <T2>
+     * @param <T3>
+     * @param delegate
+     * @param calls
+     * @return
+     */
     public static <R, T1, T2, T3> TernaryDelegate<R, T1, T2, T3> monitor(TernaryDelegate<R, T1, T2, T3> delegate, AtomicLong calls) {
         return new TernaryMonitoringDelegate<R, T1, T2, T3>(delegate, calls);
     }
 
+    /**
+     * Monitors calls to a ternary predicate.
+     *
+     * @param <T1>
+     * @param <T2>
+     * @param <T3>
+     * @param predicate
+     * @param calls
+     * @return
+     */
     public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> monitor(TernaryPredicate<T1, T2, T3> predicate, AtomicLong calls) {
         return new TernaryMonitoringPredicate<T1, T2, T3>(predicate, calls);
     }
