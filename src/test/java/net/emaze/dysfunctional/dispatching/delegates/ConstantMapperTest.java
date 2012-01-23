@@ -8,22 +8,20 @@ import org.junit.Test;
 
 public class ConstantMapperTest {
 
-    
-    @Test(expected=IllegalArgumentException.class)
-    public void creatingConstantMapperWithNullMapWillThrow() {
-        new ConstantMapper<O, O>(null);
+    @Test(expected = IllegalArgumentException.class)
+    public void usingConstantMapperWithNullMapWillThrow() {
+        new ConstantMapper<O, O>().perform(null, O.ONE);
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void missingMappingYieldsException() {
-        new ConstantMapper<O, O>(Collections.<O, O>emptyMap()).perform(O.ONE);
+        new ConstantMapper<O, O>().perform(Collections.<O, O>emptyMap(), O.ONE);
     }
 
     @Test
     public void presentMappingYieldsValue() {
         final Map<O, O> mapping = Collections.singletonMap(O.ONE, O.ANOTHER);
-        final ConstantMapper<O, O> mapper = new ConstantMapper<O, O>(mapping);
-        Assert.assertEquals(O.ANOTHER, mapper.perform(O.ONE));
+        final ConstantMapper<O, O> mapper = new ConstantMapper<O, O>();
+        Assert.assertEquals(O.ANOTHER, mapper.perform(mapping, O.ONE));
     }
-
 }
