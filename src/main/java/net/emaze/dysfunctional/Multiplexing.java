@@ -1,9 +1,14 @@
 package net.emaze.dysfunctional;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import net.emaze.dysfunctional.casts.Narrow;
+import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.IteratorPlucker;
+import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.multiplexing.ChainIterator;
 import net.emaze.dysfunctional.multiplexing.DemultiplexingIterator;
@@ -20,7 +25,10 @@ import net.emaze.dysfunctional.options.Maybe;
 public abstract class Multiplexing {
 
     /**
-     * Flattens an iterator of iterables of E to an iterator of E.
+     * Flattens an iterator of iterables of E to an iterator of E. E.g:
+     * <code>
+     * flatten([1,2], [3,4]) -> [1,2,3,4]
+     * </code>
      *
      * @param <E> the iterable element type
      * @param <T> the iterable type
@@ -32,7 +40,10 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Flattens an iterable of iterables of E to an iterator of E.
+     * Flattens an iterable of iterables of E to an iterator of E.E.g:
+     * <code>
+     * flatten([1,2], [3,4]) -> [1,2,3,4]
+     * </code>
      *
      * @param <E> the iterable element type
      * @param <T> the iterable type
@@ -45,7 +56,10 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Flattens passed iterables of E to an iterator of E.
+     * Flattens passed iterables of E to an iterator of E. E.g:
+     * <code>
+     * flatten([1,2], [3,4]) -> [1,2,3,4]
+     * </code>
      *
      * @param <E> the iterable element type
      * @param <T> the iterable type
@@ -58,7 +72,10 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Flattens passed iterables of E to an iterator of E.
+     * Flattens passed iterables of E to an iterator of E. E.g:
+     * <code>
+     * flatten([1,2], [3,4], [5,6]) -> [1,2,3,4,5,6]
+     * </code>
      *
      * @param <E> the iterable element type
      * @param <T> the iterable type
@@ -72,7 +89,10 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Flattens an iterator of iterators of E to an iterator of E.
+     * Flattens an iterator of iterators of E to an iterator of E. E.g:
+     * <code>
+     * chain([1,2], [3,4]) -> [1,2,3,4]
+     * </code>
      *
      * @param <E> the iterator element type
      * @param <T> the iterator type
@@ -84,7 +104,10 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Flattens an iterable of iterators of E to an iterator of E.
+     * Flattens an iterable of iterators of E to an iterator of E. E.g:
+     * <code>
+     * chain([1,2], [3,4]) -> [1,2,3,4]
+     * </code>
      *
      * @param <E> the iterator element type
      * @param <T> the iterator type
@@ -97,7 +120,10 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Flattens passed iterators of E to an iterator of E.
+     * Flattens passed iterators of E to an iterator of E. E.g:
+     * <code>
+     * chain([1,2], [3,4]) -> [1,2,3,4]
+     * </code>
      *
      * @param <E> the iterator element type
      * @param <T> the iterator type
@@ -110,7 +136,10 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Flattens passed iterators of E to an iterator of E.
+     * Flattens passed iterators of E to an iterator of E. E.g:
+     * <code>
+     * chain([1,2], [3,4], [5,6]) -> [1,2,3,4,5,6]
+     * </code>
      *
      * @param <E> the iterator element type
      * @param <T> the iterator type
@@ -261,13 +290,41 @@ public abstract class Multiplexing {
 
     /**
      *
+     * @param <C>
+     * @param <E>
+     * @param channelSize
+     * @param iterator
+     * @param channelProvider
+     * @return
+     */
+    public static <C extends Collection<E>, E> Iterator<C> demux(int channelSize, Iterator<E> iterator, Provider<C> channelProvider) {
+        return new DemultiplexingIterator<C, E>(channelSize, iterator, channelProvider);
+    }
+
+    /**
+     *
      * @param <E>
      * @param channelSize
      * @param iterator
      * @return
      */
     public static <E> Iterator<List<E>> demux(int channelSize, Iterator<E> iterator) {
-        return new DemultiplexingIterator<E>(channelSize, iterator);
+        final Provider<List<E>> channelFactory = Dispatching.compose(new Narrow<List<E>, ArrayList<E>>(), new ArrayListFactory<E>());
+        return new DemultiplexingIterator<List<E>, E>(channelSize, iterator, channelFactory);
+    }
+
+    /**
+     *
+     * @param <C>
+     * @param <E>
+     * @param channelSize
+     * @param iterable
+     * @param channelProvider
+     * @return
+     */
+    public static <C extends Collection<E>, E> Iterator<C> demux(int channelSize, Iterable<E> iterable, Provider<C> channelProvider) {
+        dbc.precondition(iterable != null, "cannot demux a null iterable");
+        return demux(channelSize, iterable.iterator(), channelProvider);
     }
 
     /**
@@ -284,6 +341,19 @@ public abstract class Multiplexing {
 
     /**
      *
+     * @param <C>
+     * @param <E>
+     * @param channelSize
+     * @param array
+     * @param channelProvider
+     * @return
+     */
+    public static <C extends Collection<E>, E> Iterator<C> demux(int channelSize, Provider<C> channelProvider, E... array) {
+        return demux(channelSize, new ArrayIterator<E>(array), channelProvider);
+    }
+
+    /**
+     *
      * @param <E>
      * @param channelSize
      * @param array
@@ -295,13 +365,41 @@ public abstract class Multiplexing {
 
     /**
      *
+     * @param <C>
+     * @param <E>
+     * @param channelSize
+     * @param iterator
+     * @param channelProvider
+     * @return
+     */
+    public static <C extends Collection<Maybe<E>>, E> Iterator<C> demuxl(int channelSize, Iterator<Maybe<E>> iterator, Provider<C> channelProvider) {
+        return new PreciseDemultiplexingIterator<C, E>(channelSize, iterator, channelProvider);
+    }
+
+    /**
+     *
      * @param <E>
      * @param channelSize
      * @param iterator
      * @return
      */
     public static <E> Iterator<List<Maybe<E>>> demuxl(int channelSize, Iterator<Maybe<E>> iterator) {
-        return new PreciseDemultiplexingIterator<E>(channelSize, iterator);
+        final Provider<List<Maybe<E>>> channelFactory = Dispatching.compose(new Narrow<List<Maybe<E>>, ArrayList<Maybe<E>>>(), new ArrayListFactory<Maybe<E>>());
+        return new PreciseDemultiplexingIterator<List<Maybe<E>>, E>(channelSize, iterator, channelFactory);
+    }
+
+    /**
+     *
+     * @param <C>
+     * @param <E>
+     * @param channelSize
+     * @param iterable
+     * @param channelProvider
+     * @return
+     */
+    public static <C extends Collection<Maybe<E>>, E> Iterator<C> demuxl(int channelSize, Iterable<Maybe<E>> iterable, Provider<C> channelProvider) {
+        dbc.precondition(iterable != null, "cannot roundrobin a null iterable");
+        return new PreciseDemultiplexingIterator<C, E>(channelSize, iterable.iterator(), channelProvider);
     }
 
     /**
@@ -313,7 +411,21 @@ public abstract class Multiplexing {
      */
     public static <E> Iterator<List<Maybe<E>>> demuxl(int channelSize, Iterable<Maybe<E>> iterable) {
         dbc.precondition(iterable != null, "cannot roundrobin a null iterable");
-        return new PreciseDemultiplexingIterator<E>(channelSize, iterable.iterator());
+        final Provider<List<Maybe<E>>> channelFactory = Dispatching.compose(new Narrow<List<Maybe<E>>, ArrayList<Maybe<E>>>(), new ArrayListFactory<Maybe<E>>());
+        return new PreciseDemultiplexingIterator<List<Maybe<E>>, E>(channelSize, iterable.iterator(), channelFactory);
+    }
+
+    /**
+     *
+     * @param <C>
+     * @param <E>
+     * @param channelSize
+     * @param channelProvider
+     * @param array
+     * @return
+     */
+    public static <C extends Collection<Maybe<E>>, E> Iterator<C> demuxl(int channelSize, Provider<C> channelProvider, Maybe<E>... array) {
+        return demuxl(channelSize, new ArrayIterator<Maybe<E>>(array), channelProvider);
     }
 
     /**
