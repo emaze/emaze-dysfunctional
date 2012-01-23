@@ -10,7 +10,7 @@ import net.emaze.dysfunctional.iterations.SingletonIterable;
 import net.emaze.dysfunctional.iterations.SingletonIterator;
 
 /**
- * iterating shortcuts (usage shouldn't be abused)
+ * Iterator/Iterable shortcuts.
  * @author rferranti
  */
 public abstract class Iterations {
@@ -23,10 +23,6 @@ public abstract class Iterations {
      */
     public static <T> Iterable<T> oneTime(Iterator<T> iterator) {
         return new OneTimeIterable<T>(iterator);
-    }
-
-    private static <T> T[] array(T... array) {
-        return array;
     }
 
     /**
@@ -56,7 +52,7 @@ public abstract class Iterations {
      * @return an iterator.
      */
     public static <T> Iterator<T> iterator(T first, T second) {
-        return new ArrayIterator<T>(array(first, second));
+        return ArrayIterator.of(first, second);
     }
 
     /**
@@ -68,7 +64,7 @@ public abstract class Iterations {
      * @return an iterator.
      */
     public static <T> Iterator<T> iterator(T first, T second, T third) {
-        return new ArrayIterator<T>(array(first, second, third));
+        return ArrayIterator.of(first, second, third);
     }
 
     /**
@@ -108,7 +104,7 @@ public abstract class Iterations {
      * @return an iterable.
      */
     public static <T> Iterable<T> iterable(T first, T second) {
-        return new ArrayIterable<T>(array(first, second));
+        return ArrayIterable.of(first, second);
     }
 
     /**
@@ -120,7 +116,7 @@ public abstract class Iterations {
      * @return an iterable.
      */
     public static <T> Iterable<T> iterable(T first, T second, T third) {
-        return new ArrayIterable<T>(array(first, second, third));
+        return ArrayIterable.of(first, second, third);
     }
 
     /**

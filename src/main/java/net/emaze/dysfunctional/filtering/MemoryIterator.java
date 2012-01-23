@@ -52,7 +52,7 @@ public class MemoryIterator<T> extends ReadOnlyIterator<T> {
                 mem.remove();
             }
         }
-        dbc.stateprecondition(mem.size() == size, "iterator used by MemoryIterator is too short to memorize last %s elements", size);
+        dbc.state(mem.size() == size, "iterator used by MemoryIterator is too short to memorize last %s elements", size);
         return mem;
     }
 }

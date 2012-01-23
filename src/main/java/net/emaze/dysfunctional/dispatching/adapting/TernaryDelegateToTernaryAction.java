@@ -5,16 +5,18 @@ import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 
 /**
- *
- * @param <T1>
- * @param <T2> 
+ * 
  * @author rferranti
+ * @param <R>
+ * @param <T1>
+ * @param <T2>
+ * @param <T3> 
  */
-public class TernaryDelegateToTernaryAction<T1, T2, T3> implements TernaryAction<T1, T2, T3> {
+public class TernaryDelegateToTernaryAction<R, T1, T2, T3> implements TernaryAction<T1, T2, T3> {
 
-    private final TernaryDelegate<?, T1, T2, T3> adapted;
+    private final TernaryDelegate<R, T1, T2, T3> adapted;
 
-    public TernaryDelegateToTernaryAction(TernaryDelegate<?, T1, T2, T3> adapted) {
+    public TernaryDelegateToTernaryAction(TernaryDelegate<R, T1, T2, T3> adapted) {
         dbc.precondition(adapted != null, "cannot adapt a null delegate");
         this.adapted = adapted;
     }

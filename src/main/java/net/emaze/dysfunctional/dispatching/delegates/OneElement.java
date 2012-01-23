@@ -2,7 +2,6 @@ package net.emaze.dysfunctional.dispatching.delegates;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
  * Searches for one element in the iterator, throws is zero or more than one element is found.
@@ -16,7 +15,7 @@ public class OneElement<E> implements Delegate<E, Iterator<E>> {
         dbc.precondition(consumable != null, "consuming a null iterator");
         dbc.precondition(consumable.hasNext(), "no element to consume");
         final E found = consumable.next();
-        dbc.stateprecondition(!consumable.hasNext(), "found more than one element consuming the iterator");
+        dbc.state(!consumable.hasNext(), "found more than one element consuming the iterator");
         return found;
     }
 }

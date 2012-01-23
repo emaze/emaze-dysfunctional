@@ -12,7 +12,7 @@ public abstract class dbc {
         }
     }
     
-    public static void stateprecondition(boolean assertion, String format, Object... params) {
+    public static void state(boolean assertion, String format, Object... params) {
         if (!assertion) {
             throw new IllegalStateException(String.format(format, params));
         }

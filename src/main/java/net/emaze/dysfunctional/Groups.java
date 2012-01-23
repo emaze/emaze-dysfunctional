@@ -9,7 +9,6 @@ import net.emaze.dysfunctional.casts.Narrow;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.collections.HashMapFactory;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.Dispatching;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;

@@ -2,11 +2,9 @@ package net.emaze.dysfunctional;
 
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.Transforming;
 import net.emaze.dysfunctional.dispatching.delegates.IteratorPlucker;
-import net.emaze.dysfunctional.Iterations;
+import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.multiplexing.ChainIterator;
 import net.emaze.dysfunctional.multiplexing.DemultiplexingIterator;
 import net.emaze.dysfunctional.multiplexing.MultiplexingIterator;

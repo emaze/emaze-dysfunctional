@@ -9,11 +9,11 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
  * @param <T>
  * @author rferranti
  */
-public class DelegateToAction<T> implements Action<T> {
+public class DelegateToAction<R, T> implements Action<T> {
 
-    private final Delegate<?, T> adapted;
+    private final Delegate<R, T> adapted;
 
-    public DelegateToAction(Delegate<?, T> adapted) {
+    public DelegateToAction(Delegate<R, T> adapted) {
         dbc.precondition(adapted != null, "cannot adapt a null delegate");
         this.adapted = adapted;
     }

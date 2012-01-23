@@ -1,15 +1,11 @@
 package net.emaze.dysfunctional;
 
 import java.util.Iterator;
-import net.emaze.dysfunctional.iterations.ArrayIterator;
-import net.emaze.dysfunctional.dispatching.delegates.ConsumeIntoOutputIterator;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.iterations.ConstantIterator;
-import net.emaze.dysfunctional.output.StringOutputIterator;
-import net.emaze.dysfunctional.Transforming;
-import net.emaze.dysfunctional.iterations.TransformingIterator;
-import net.emaze.dysfunctional.multiplexing.InterposingIterator;
-import net.emaze.dysfunctional.strings.ToStringTransformer;
+import net.emaze.dysfunctional.strings.InterposeStrings;
+import net.emaze.dysfunctional.strings.JoinStrings;
 
 /**
  *
@@ -27,46 +23,32 @@ public abstract class Strings {
     }
 
     public static <T> String join(Iterator<T> iterator) {
-        dbc.precondition(iterator != null, "cannot join a null iterator");
-        final StringOutputIterator output = new StringOutputIterator();
-        final ConsumeIntoOutputIterator<String> pipe = new ConsumeIntoOutputIterator<String>(output);
-        final Iterator<String> elements = Transforming.transform(iterator, new ToStringTransformer<T>());
-        return pipe.perform(elements).toString();
+        return new JoinStrings<T>().perform(iterator);
     }
-    
+
     public static <T, V> String interpose(T[] values, Iterator<V> separators) {
-        return interpose(new ArrayIterator<T>(values), separators);
+        return new InterposeStrings<T, V>().perform(new ArrayIterator<T>(values), separators);
     }
 
     public static <T, V> String interpose(Iterable<T> values, Iterator<V> separators) {
-        dbc.precondition(values != null, "calling interpose with a null values");
-        return interpose(values.iterator(), separators);
+        dbc.precondition(values != null, "calling interpose with a null iterable");
+        return new InterposeStrings<T, V>().perform(values.iterator(), separators);
     }
 
     public static <T, V> String interpose(Iterator<T> values, Iterator<V> separators) {
-        dbc.precondition(values != null, "calling interpose with a null values");
-        dbc.precondition(separators != null, "calling interpose with a null separators");
-        final Iterator<String> input = new InterposingIterator<String>(
-                new TransformingIterator<String, T>(values, new ToStringTransformer<T>()),
-                new TransformingIterator<String, V>(separators, new ToStringTransformer<V>()));
-        final StringOutputIterator output = new StringOutputIterator();
-        final ConsumeIntoOutputIterator<String> pipe = new ConsumeIntoOutputIterator<String>(output);
-        return pipe.perform(input).toString();
+        return new InterposeStrings<T, V>().perform(values, separators);
     }
-    
+
     public static <T, V> String interpose(T[] values, V separator) {
-        return interpose(values, new ConstantIterator<V>(separator));
+        return new InterposeStrings<T, V>().perform(new ArrayIterator<T>(values), new ConstantIterator<V>(separator));
     }
-    
+
     public static <T, V> String interpose(Iterable<T> values, V separator) {
-        return interpose(values, new ConstantIterator<V>(separator));
+        dbc.precondition(values != null, "cannot interpose from a null iterable");
+        return new InterposeStrings<T, V>().perform(values.iterator(), new ConstantIterator<V>(separator));
     }
 
     public static <T, V> String interpose(Iterator<T> values, V separator) {
-        return interpose(values, new ConstantIterator<V>(separator));
-    }
-
-    public static boolean isEmpty(String value) {
-        return value == null || value.isEmpty();
+        return new InterposeStrings<T, V>().perform(values, new ConstantIterator<V>(separator));
     }
 }

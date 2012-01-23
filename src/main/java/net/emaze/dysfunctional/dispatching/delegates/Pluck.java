@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * plucks a property from a bean
+ * Plucks a property from a bean.
  * i.e:
  *  > let Bean bean = { String key : 'value'};
  *  > new Pluck<String, Bean> pluck = new Pluck<String,Bean>(Bean.class, "key");

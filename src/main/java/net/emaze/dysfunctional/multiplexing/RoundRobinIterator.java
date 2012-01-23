@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import net.emaze.dysfunctional.Consumers;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.HasNext;
 import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 import net.emaze.dysfunctional.order.IntegerSequencingPolicy;
 import net.emaze.dysfunctional.order.PeriodicIterator;
 import net.emaze.dysfunctional.order.PeriodicSequencingPolicy;
-import net.emaze.dysfunctional.Reductions;
+import net.emaze.dysfunctional.reductions.Any;
 
 /**
  * longest multiplexing
@@ -26,7 +25,9 @@ public class RoundRobinIterator<E> extends ReadOnlyIterator<E> {
 
     public <T extends Iterator<E>> RoundRobinIterator(Iterator<T> iterators) {
         dbc.precondition(iterators != null, "trying to create a RoundRobinIterator from a null iterator of iterators");
-        this.iterators.addAll(Consumers.all(iterators));
+        while(iterators.hasNext()){
+            this.iterators.add(iterators.next());
+        }
         final PeriodicSequencingPolicy<Integer> period = new PeriodicSequencingPolicy<Integer>(new IntegerSequencingPolicy(), 0, this.iterators.size() - 1);
         this.indexSelector = new PeriodicIterator<Integer>(period, 0);
     }
@@ -45,7 +46,7 @@ public class RoundRobinIterator<E> extends ReadOnlyIterator<E> {
     }
 
     private boolean empty() {
-        return !Reductions.any(iterators, new HasNext<Iterator<E>>());
+        return !new Any<Iterator<E>>(new HasNext<Iterator<E>>()).accept(iterators.iterator());
     }
 
     private Iterator<E> firstNonEmpty() {

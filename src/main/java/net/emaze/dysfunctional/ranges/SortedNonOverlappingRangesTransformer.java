@@ -7,11 +7,14 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
-import net.emaze.dysfunctional.Comparing;
+import net.emaze.dysfunctional.order.Max;
+import net.emaze.dysfunctional.order.Order;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 
 /**
- * transforms a list of DenseRange to an equivalent list of sorted ranges with no overlapping ranges
+ * transforms a list of DenseRange to an equivalent list of sorted ranges with
+ * no overlapping ranges
+ *
  * @param <T>
  * @author rferranti
  */
@@ -35,7 +38,7 @@ public class SortedNonOverlappingRangesTransformer<T> implements Delegate<List<D
         while (iter.hasNext()) {
             final DenseRange<T> next = iter.next();
             if (canBeMerged(current, next)) {
-                current = new DenseRange<T>(sequencer, comparator, current.lower(), Comparing.max(current.upper(), next.upper(), comparator));
+                current = new DenseRange<T>(sequencer, comparator, current.lower(), new Max<T>(comparator).perform(current.upper(), next.upper()));
             } else {
                 sortedNonOverlappingRanges.add(current);
                 current = next;
@@ -46,16 +49,13 @@ public class SortedNonOverlappingRangesTransformer<T> implements Delegate<List<D
     }
 
     /**
-     * |-----------|
-     *              |-----|
-     * or
-     * |-----------|
-     *           |--------|
+     * |-----------| |-----| or |-----------| |--------|
+     *
      * @param current the current range
      * @param next the next range
      * @return true if the two ranges can be merged
      */
     private boolean canBeMerged(DenseRange<T> current, DenseRange<T> next) {
-        return Comparing.sameOrder(sequencer.next(current.upper()), next.lower(), comparator) || current.overlaps(next);
+        return Order.of(comparator, sequencer.next(current.upper()), next.lower()) == Order.EQ || current.overlaps(next);
     }
 }
