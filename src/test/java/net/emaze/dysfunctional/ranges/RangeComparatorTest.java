@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import junit.framework.Assert;
 import net.emaze.dysfunctional.Comparing;
+import net.emaze.dysfunctional.order.Order;
 import org.junit.Test;
 
 /**
@@ -13,6 +14,7 @@ import org.junit.Test;
 public class RangeComparatorTest {
 
     public static class MockRange implements Range<Integer> {
+
         private final int lower;
         private final int upper;
 
@@ -60,47 +62,48 @@ public class RangeComparatorTest {
     @Test
     public void lowestRangesComesFirst() {
         RangeComparator<Integer> comparator = new RangeComparator<Integer>();
-        MockRange lesser = new MockRange(0,2);
-        MockRange greater = new MockRange(3,5);
-        Assert.assertTrue(Comparing.lhsIsLesser(lesser, greater, comparator));
+        MockRange lesser = new MockRange(0, 2);
+        MockRange greater = new MockRange(3, 5);
+        Assert.assertEquals(Order.LT, Order.of(comparator, lesser, greater));
     }
-    
+
     @Test
     public void lowestRangesComesFirstWithNegativeRanges() {
         RangeComparator<Integer> comparator = new RangeComparator<Integer>();
-        MockRange lesser = new MockRange(-5,-3);
-        MockRange greater = new MockRange(-2,-1);
-        Assert.assertTrue(Comparing.lhsIsLesser(lesser, greater, comparator));
+        MockRange lesser = new MockRange(-5, -3);
+        MockRange greater = new MockRange(-2, -1);
+        Assert.assertEquals(Order.LT, Order.of(comparator, lesser, greater));
     }
-    
+
     @Test
     public void lowerBoundsHasPriorityWhileDecidingOrder() {
         RangeComparator<Integer> comparator = new RangeComparator<Integer>();
-        MockRange lesser = new MockRange(0,2);
-        MockRange greater = new MockRange(1,2);
-        Assert.assertTrue(Comparing.lhsIsLesser(lesser, greater, comparator));
+        MockRange lesser = new MockRange(0, 2);
+        MockRange greater = new MockRange(1, 2);
+        Assert.assertEquals(Order.LT, Order.of(comparator, lesser, greater));
     }
+
     @Test
     public void lowerBoundsHasPriorityWhileDecidingOrderWithNegativeRanges() {
         RangeComparator<Integer> comparator = new RangeComparator<Integer>();
-        MockRange lesser = new MockRange(-5,-3);
-        MockRange greater = new MockRange(-4,-3);
-        Assert.assertTrue(Comparing.lhsIsLesser(lesser, greater, comparator));
+        MockRange lesser = new MockRange(-5, -3);
+        MockRange greater = new MockRange(-4, -3);
+        Assert.assertEquals(Order.LT, Order.of(comparator, lesser, greater));
     }
-    
+
     @Test
     public void withRangesWithSameLowerBoundNarrowerComesFirst() {
         RangeComparator<Integer> comparator = new RangeComparator<Integer>();
-        MockRange lesser = new MockRange(0,4);
-        MockRange greater = new MockRange(0,3);
-        Assert.assertTrue(Comparing.lhsIsLesser(lesser, greater, comparator));
+        MockRange lesser = new MockRange(0, 4);
+        MockRange greater = new MockRange(0, 3);
+        Assert.assertEquals(Order.LT, Order.of(comparator, lesser, greater));
     }
-    
+
     @Test
     public void forNegativeRangesWithSameLowerBoundNarrowerComesFirst() {
         RangeComparator<Integer> comparator = new RangeComparator<Integer>();
-        MockRange lesser = new MockRange(-5,0);
-        MockRange greater = new MockRange(-5,-3);
-        Assert.assertTrue(Comparing.lhsIsLesser(lesser, greater, comparator));
+        MockRange lesser = new MockRange(-5, 0);
+        MockRange greater = new MockRange(-5, -3);
+        Assert.assertEquals(Order.LT, Order.of(comparator, lesser, greater));
     }
 }
