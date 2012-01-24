@@ -18,22 +18,30 @@ import net.emaze.dysfunctional.iterations.ArrayIterator;
 public abstract class Filtering {
 
     /**
-     * filters an iterator returning matching elements
-     * @param <E> 
+     * Creates an iterator yielding elements from the source iterator matching
+     * the given predicate. This transformation is applied lazily and the
+     * predicate is applied while consuming returned iterator.
+     *
+     * @param <E> the iterator element type
      * @param iterator the iterator where elements are fetched from
      * @param predicate the predicate applied to each element
-     * @return an Iterator<E> containing the elements for which the predicate evaluates to true
+     * @return an iterator containing the elements for which the predicate
+     * evaluates to true
      */
     public static <E> Iterator<E> filter(Iterator<E> iterator, Predicate<E> predicate) {
         return new FilteringIterator<E>(iterator, predicate);
     }
 
     /**
-     * filters an iterable returning matching elements
-     * @param <E> 
+     * Creates an iterator yielding elements from the source iterable matching
+     * the given predicate. This transformation is applied lazily and the
+     * predicate is applied while consuming returned iterator.
+     *
+     * @param <E> the iterable element type
      * @param iterable the iterable where elements are fetched from
      * @param predicate the predicate applied to each element
-     * @return an Iterator<E> containing the elements for which the predicate evaluates to true
+     * @return an iterator containing the elements for which the predicate
+     * evaluates to true
      */
     public static <E> Iterator<E> filter(Iterable<E> iterable, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot call filter with a null iterable");
@@ -41,35 +49,41 @@ public abstract class Filtering {
     }
 
     /**
-     * filters an array returning matching elements
-     * @param <E>
+     * Creates an iterator yielding elements from the source array matching the
+     * given predicate. This transformation is applied lazily and the predicate
+     * is applied while consuming returned iterator.
+     *
+     * @param <E> the array element type
      * @param array the array where elements are fetched from
      * @param predicate the predicate applied to each element
-     * @return an Iterator<E> containing the elements for which the predicate evaluates to true
+     * @return an Iterator<E> containing the elements for which the predicate
+     * evaluates to true
      */
     public static <E> Iterator<E> filter(E[] array, Predicate<E> predicate) {
         return filter(new ArrayIterator<E>(array), predicate);
     }
 
     /**
-     * fetches the first element from an iterator, throwing an IllegalArgumentException if no element
-     * can be fetched
+     * Proxies an iterator so that at most first elements are yielded back to
+     * the consumer.
+     *
      * @param <E>
      * @param howMany
      * @param from
-     * @return first element from the iterator (throws IllegalArgumentException if the iterator is empty)
+     * @return an iterator
      */
     public static <E> Iterator<E> first(long howMany, Iterator<E> from) {
         return take(howMany, from);
     }
 
     /**
-     * fetches the first element from an iterable, throwing an IllegalArgumentException if no element
-     * can be fetched
+     * Proxies an iterator so that at most first elements are yielded back to
+     * the consumer.
+     *
      * @param <E>
      * @param howMany
      * @param from
-     * @return first element from the iterable (throws IllegalArgumentException if the iterable is empty)
+     * @return an iterator
      */
     public static <E> Iterator<E> first(long howMany, Iterable<E> from) {
         dbc.precondition(from != null, "cannot call first with a null iterable");
@@ -77,24 +91,27 @@ public abstract class Filtering {
     }
 
     /**
-     * fetches the first element from an array, throwing an IllegalArgumentException if no element
-     * can be fetched
+     * Proxies an iterator so that at most first elements are yielded back to
+     * the consumer.
+     *
      * @param <E>
      * @param howMany
      * @param from
-     * @return first element from the array (throws IllegalArgumentException if the array is empty)
+     * @return an iterator
      */
     public static <E> Iterator<E> first(long howMany, E[] from) {
         return first(howMany, new ArrayIterator<E>(from));
     }
 
     /**
-     * fetches the last element from an iterable, throwing an IllegalArgumentException if no element
-     * can be fetched
+     * fetches the last element from an iterable, throwing an
+     * IllegalArgumentException if no element can be fetched
+     *
      * @param <E>
      * @param howMany
      * @param from
-     * @return last element of the iterable (throws IllegalArgumentException if the iterable is empty)
+     * @return last element of the iterable (throws IllegalArgumentException if
+     * the iterable is empty)
      */
     public static <E> Iterator<E> last(int howMany, Iterable<E> from) {
         dbc.precondition(from != null, "cannot call last with a null iterable");
@@ -102,24 +119,28 @@ public abstract class Filtering {
     }
 
     /**
-     * fetches the last element from an iterator, throwing an IllegalArgumentException
-     * if no element matches
+     * fetches the last element from an iterator, throwing an
+     * IllegalArgumentException if no element matches
+     *
      * @param <E>
      * @param howMany
      * @param from
-     * @return last matching element from the iterator (throws IllegalArgumentException if not found)
+     * @return last matching element from the iterator (throws
+     * IllegalArgumentException if not enough elements are found)
      */
     public static <E> Iterator<E> last(int howMany, Iterator<E> from) {
         return new MemoryIterator<E>(from, howMany);
     }
 
     /**
-     * fetches the last element from an array, throwing an IllegalArgumentException
-     * if no element matches
+     * fetches the last element from an array, throwing an
+     * IllegalArgumentException if no element matches
+     *
      * @param <E>
      * @param howMany
      * @param from
-     * @return last matching element from the iterator (throws IllegalArgumentException if not found)
+     * @return last matching element from the iterator (throws
+     * IllegalArgumentException if not enough elements are found)
      */
     public static <E> Iterator<E> last(int howMany, E[] from) {
         return last(howMany, new ArrayIterator<E>(from));
@@ -127,10 +148,11 @@ public abstract class Filtering {
 
     /**
      * Fetches at most last elements from an iterable.
+     *
      * @param <E>
      * @param howMany
      * @param from
-     * @return 
+     * @return
      */
     public static <E> Iterator<E> atMostLast(int howMany, Iterable<E> from) {
         dbc.precondition(from != null, "cannot call atMostLast with a null iterable");
@@ -139,10 +161,11 @@ public abstract class Filtering {
 
     /**
      * Fetches at most last elements from an iterator.
+     *
      * @param <E>
      * @param howMany
      * @param from
-     * @return 
+     * @return
      */
     public static <E> Iterator<E> atMostLast(int howMany, Iterator<E> from) {
         return new AtMostMemoryIterator<E>(from, howMany);
@@ -150,10 +173,11 @@ public abstract class Filtering {
 
     /**
      * Fetches at most last elements from an array.
+     *
      * @param <E>
      * @param howMany
      * @param from
-     * @return 
+     * @return
      */
     public static <E> Iterator<E> atMostLast(int howMany, E[] from) {
         return atMostLast(howMany, new ArrayIterator<E>(from));
@@ -173,6 +197,29 @@ public abstract class Filtering {
     /**
      *
      * @param <E>
+     * @param iterable
+     * @param predicate
+     * @return
+     */
+    public static <E> Iterator<E> takeWhile(Iterable<E> iterable, Predicate<E> predicate) {
+        dbc.precondition(iterable != null, "cannot takeWhile from a null iterable");
+        return new TakeWhileIterator<E>(iterable.iterator(), predicate);
+    }
+
+    /**
+     *
+     * @param <E>
+     * @param iterator
+     * @param predicate
+     * @return
+     */
+    public static <E> Iterator<E> takeWhile(E[] array, Predicate<E> predicate) {
+        return new TakeWhileIterator<E>(new ArrayIterator<E>(array), predicate);
+    }
+
+    /**
+     *
+     * @param <E>
      * @param iterator
      * @param predicate
      * @return
@@ -184,6 +231,30 @@ public abstract class Filtering {
     /**
      *
      * @param <E>
+     * @param iterable
+     * @param predicate
+     * @return
+     */
+    public static <E> Iterator<E> dropWhile(Iterable<E> iterable, Predicate<E> predicate) {
+        dbc.precondition(iterable != null, "cannot dropWhile from a null iterable");
+        return new DropWhileIterator<E>(iterable.iterator(), predicate);
+    }
+
+    /**
+     *
+     * @param <E>
+     * @param iterable
+     * @param predicate
+     * @return
+     */
+    public static <E> Iterator<E> dropWhile(E[] array, Predicate<E> predicate) {
+        return new DropWhileIterator<E>(new ArrayIterator<E>(array), predicate);
+    }
+
+    /**
+     * Creates an iterator showing first elements of the passed iterator.
+     *
+     * @param <E>
      * @param howMany
      * @param iterator
      * @return
@@ -193,7 +264,33 @@ public abstract class Filtering {
     }
 
     /**
-     * 
+     * Creates an iterator showing first elements of the passed iterable.
+     *
+     * @param <E>
+     * @param howMany
+     * @param iterable
+     * @return
+     */
+    public static <E> Iterator<E> take(long howMany, Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot take from a null iterable");
+        return new TakeUpToIterator<E>(iterable.iterator(), howMany);
+    }
+
+    /**
+     * Creates an iterator showing first elements of the passed array.
+     *
+     * @param <E>
+     * @param howMany
+     * @param iterator
+     * @return
+     */
+    public static <E> Iterator<E> take(long howMany, E... array) {
+        return new TakeUpToIterator<E>(new ArrayIterator<E>(array), howMany);
+    }
+
+    /**
+     * Creates an iterator not showing first elements of the passed iterator.
+     *
      * @param <E>
      * @param howMany
      * @param iterator
@@ -203,9 +300,33 @@ public abstract class Filtering {
         return new DropWhileIterator<E>(iterator, new UntilCount<E>(howMany));
     }
 
-
+    /**
+     * Creates an iterator not showing first elements of the passed iterable.
+     *
+     * @param <E>
+     * @param howMany
+     * @param iterable
+     * @return
+     */
+    public static <E> Iterator<E> drop(long howMany, Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot drop from a null iterable");
+        return new DropWhileIterator<E>(iterable.iterator(), new UntilCount<E>(howMany));
+    }
 
     /**
+     * Creates an iterator not showing first elements of the passed array.
+     *
+     * @param <E>
+     * @param howMany
+     * @param iterator
+     * @return
+     */
+    public static <E> Iterator<E> drop(long howMany, E... array) {
+        return new DropWhileIterator<E>(new ArrayIterator<E>(array), new UntilCount<E>(howMany));
+    }
+
+    /**
+     * Creates an iterator showing a slice of the passed iterator.
      *
      * @param <E>
      * @param from
@@ -218,7 +339,8 @@ public abstract class Filtering {
     }
 
     /**
-     * 
+     * Creates an iterator showing a slice of the passed iterator.
+     *
      * @param <E>
      * @param from
      * @param howMany
@@ -231,7 +353,8 @@ public abstract class Filtering {
     }
 
     /**
-     * 
+     * Creates an iterator showing a slice of the passed array.
+     *
      * @param <E>
      * @param from
      * @param howMany
