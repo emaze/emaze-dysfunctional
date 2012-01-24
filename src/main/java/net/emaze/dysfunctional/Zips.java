@@ -34,7 +34,7 @@ public abstract class Zips {
     }
 
     /**
-     * Transforms two iteratos to an iterator of tuples, containing elements of
+     * Transforms two iterators to an iterator of tuples, containing elements of
      * both iterators occurring at the same position; the iterator stops when
      * the shortest input iterable is exhausted. E.g:
      * <code>
