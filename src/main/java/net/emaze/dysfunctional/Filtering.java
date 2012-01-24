@@ -20,7 +20,8 @@ public abstract class Filtering {
     /**
      * Creates an iterator yielding elements from the source iterator matching
      * the given predicate. This transformation is applied lazily and the
-     * predicate is applied while consuming returned iterator.
+     * predicate is applied while consuming returned iterator. E.g:
+     * <code>filter([1,2,3,4], isEven) -> [2,4]</code>
      *
      * @param <E> the iterator element type
      * @param iterator the iterator where elements are fetched from
@@ -35,7 +36,8 @@ public abstract class Filtering {
     /**
      * Creates an iterator yielding elements from the source iterable matching
      * the given predicate. This transformation is applied lazily and the
-     * predicate is applied while consuming returned iterator.
+     * predicate is applied while consuming returned iterator. E.g:
+     * <code>filter([1,2,3,4], isEven) -> [2,4]</code>
      *
      * @param <E> the iterable element type
      * @param iterable the iterable where elements are fetched from
@@ -51,7 +53,8 @@ public abstract class Filtering {
     /**
      * Creates an iterator yielding elements from the source array matching the
      * given predicate. This transformation is applied lazily and the predicate
-     * is applied while consuming returned iterator.
+     * is applied while consuming returned iterator. E.g:
+     * <code>filter([1,2,3,4], isEven) -> [2,4]</code>
      *
      * @param <E> the array element type
      * @param array the array where elements are fetched from
