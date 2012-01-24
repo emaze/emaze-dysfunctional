@@ -11,6 +11,7 @@ import java.util.List;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.collections.CollectionProvider;
 import net.emaze.dysfunctional.options.Maybe;
+import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,11 +26,16 @@ import org.junit.runners.Suite;
     ConsumersTest.All.class,
     ConsumersTest.Pipe.class,
     ConsumersTest.Facade.class,
+    ConsumersTest.First.class,
     ConsumersTest.MaybeFirst.class,
+    ConsumersTest.Last.class,
     ConsumersTest.MaybeLast.class,
+    ConsumersTest.One.class,
     ConsumersTest.MaybeOne.class,
     ConsumersTest.Nth.class,
-    ConsumersTest.At.class
+    ConsumersTest.MaybeNth.class,
+    ConsumersTest.At.class,
+    ConsumersTest.MaybeAt.class
 })
 public class ConsumersTest {
 
@@ -169,6 +175,30 @@ public class ConsumersTest {
         }
     }
 
+    public static class One {
+
+        @Test
+        public void oneWithSingleValueIteratorYieldsValue() {
+            Assert.assertEquals(O.ONE, Consumers.one(Iterations.iterator(O.ONE)));
+        }
+
+        @Test
+        public void oneWithSingleValueIterableYieldsValue() {
+            Assert.assertEquals(O.ONE, Consumers.one(Iterations.iterable(O.ONE)));
+        }
+
+        @Test
+        public void oneWithSingleValueArrayYieldsValue() {
+            Assert.assertEquals(O.ONE, Consumers.one(new O[]{O.ONE}));
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallOneWithNullIterable() {
+            final Iterable<Object> iterable = null;
+            Consumers.one(iterable);
+        }
+    }
+
     public static class MaybeOne {
 
         private static Integer[] SINGLE_ELEMENT_ARRAY = {1};
@@ -206,6 +236,38 @@ public class ConsumersTest {
         }
     }
 
+    public static class First {
+
+        @Test(expected = IllegalArgumentException.class)
+        public void firstWithEmptyIteratorYieldsException() {
+            Consumers.first(Iterations.iterator());
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void firstWithNullIterableYieldsException() {
+            Iterable<Object> iterable = null;
+            Consumers.first(iterable);
+        }
+
+        @Test
+        public void firstWithIteratorYieldsTheFirst() {
+            final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER);
+            Assert.assertEquals(O.ONE, Consumers.first(iterator));
+        }
+
+        @Test
+        public void firstWithIterableYieldsTheFirst() {
+            final Iterable<O> iterable = Iterations.iterable(O.ONE, O.ANOTHER);
+            Assert.assertEquals(O.ONE, Consumers.first(iterable));
+        }
+
+        @Test
+        public void firstWithArrayYieldsTheFirst() {
+            final O[] array = {O.ONE, O.ANOTHER};
+            Assert.assertEquals(O.ONE, Consumers.first(array));
+        }
+    }
+
     public static class MaybeFirst {
 
         @Test
@@ -232,6 +294,33 @@ public class ConsumersTest {
         public void cannotCallMaybeFirstWithNullIterable() {
             final Iterable<Object> iterable = null;
             Consumers.maybeFirst(iterable);
+        }
+    }
+
+    public static class Last {
+
+        @Test
+        public void lastFromIterableYieldsTheLastElement() {
+            final Iterable<O> iterable = Iterations.iterable(O.ONE, O.ANOTHER);
+            Assert.assertEquals(O.ANOTHER, Consumers.last(iterable));
+        }
+
+        @Test
+        public void lastFromIteratorYieldsTheLastElement() {
+            final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER);
+            Assert.assertEquals(O.ANOTHER, Consumers.last(iterator));
+        }
+
+        @Test
+        public void lastFromArrayYieldsTheLastElement() {
+            final O[] array = {O.ONE, O.ANOTHER};
+            Assert.assertEquals(O.ANOTHER, Consumers.last(array));
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void callingLastWithNullIterableYieldException() {
+            Iterable<Object> aNullIterable = null;
+            Consumers.last(aNullIterable);
         }
     }
 
@@ -317,6 +406,33 @@ public class ConsumersTest {
         }
     }
 
+    public static class MaybeNth {
+
+        @Test
+        public void canFetchNthFromAnIterable() {
+            final Iterable<O> iterable = Iterations.iterable(O.ONE, O.ANOTHER);
+            Assert.assertEquals(Maybe.just(O.ONE), Consumers.maybeNth(1, iterable));
+        }
+
+        @Test
+        public void canFetchNthFromAnIterator() {
+            final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER);
+            Assert.assertEquals(Maybe.just(O.ONE), Consumers.maybeNth(1, iterator));
+        }
+
+        @Test
+        public void canFetchNthFromAnArray() {
+            final O[] array = {O.ONE, O.ANOTHER};
+            Assert.assertEquals(Maybe.just(O.ONE), Consumers.maybeNth(1, array));
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotFetchAtOnANullIterable() {
+            final Iterable<Object> iterable = null;
+            Consumers.maybeNth(1, iterable);
+        }
+    }
+
     public static class At {
 
         @Test
@@ -338,6 +454,33 @@ public class ConsumersTest {
         public void cannotCallAtOnANullIterable() {
             final Iterable<Object> iterable = null;
             Consumers.at(2, iterable);
+        }
+    }
+
+    public static class MaybeAt {
+
+        @Test
+        public void canFetchAtFromIterator() {
+            final Iterator<O> iterator = Iterations.iterator(O.ONE);
+            Assert.assertEquals(Maybe.just(O.ONE), Consumers.maybeAt(0, iterator));
+        }
+
+        @Test
+        public void canFetchAtFromIterable() {
+            final Iterable<O> iterable = Iterations.iterable(O.ONE);
+            Assert.assertEquals(Maybe.just(O.ONE), Consumers.maybeAt(0, iterable));
+        }
+
+        @Test
+        public void canFetchAtFromArray() {
+            final O[] array = {O.ONE};
+            Assert.assertEquals(Maybe.just(O.ONE), Consumers.maybeAt(0, array));
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallAtOnANullIterable() {
+            final Iterable<Object> iterable = null;
+            Consumers.maybeAt(2, iterable);
         }
     }
 
