@@ -7,18 +7,18 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 /**
  *
  * @param <R>
- * @param <T> 
+ * @param <T>
  * @author rferranti
  */
 public class InterceptorChain<R, T> implements Delegate<R, T> {
 
     private final Delegate<R, T> composed;
 
-    public InterceptorChain(Delegate<R, T> innermost, Iterator<Interceptor<T>> chain) {
+    public <I extends Interceptor<T>> InterceptorChain(Delegate<R, T> innermost, Iterator<I> chain) {
         dbc.precondition(innermost != null, "innermost delegate cannot be null");
         dbc.precondition(chain != null, "chain cannot be null");
         Delegate<R, T> current = innermost;
-        while(chain.hasNext()){
+        while (chain.hasNext()) {
             current = new InterceptorAdapter<R, T>(chain.next(), current);
         }
         this.composed = current;

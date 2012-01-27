@@ -1,7 +1,5 @@
 package net.emaze.dysfunctional;
 
-import net.emaze.dysfunctional.Tuples;
-import net.emaze.dysfunctional.Logic;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
