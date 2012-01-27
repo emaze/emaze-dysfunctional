@@ -15,11 +15,11 @@ public class TransformingIterator<R,T> implements Iterator<R> {
     private final Delegate<R,T> transformer;
     private final Iterator<T> iterator;
 
-    public TransformingIterator(Iterator<T> iterator, Delegate<R,T> filter) {
+    public TransformingIterator(Iterator<T> iterator, Delegate<R,T> transformer ){
         dbc.precondition(iterator != null, "trying to create a TransformingIterator from a null iterator");
-        dbc.precondition(filter != null, "trying to create a TransformingIterator with a null filter");
+        dbc.precondition(transformer != null, "trying to create a TransformingIterator with a null transformer");
         this.iterator = iterator;
-        this.transformer = filter;
+        this.transformer = transformer;
     }
 
     @Override
