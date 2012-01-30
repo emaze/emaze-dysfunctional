@@ -10,8 +10,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * if you are going to add a test here, consider that Zips should be just
- * a thin facade, and tests on ZipsTest should be just "smoke tests"
+ * if you are going to add a test here, consider that Zips should be just a thin
+ * facade, and tests on ZipsTest should be just "smoke tests"
+ *
  * @author rferranti
  */
 public class ZipsTest {
