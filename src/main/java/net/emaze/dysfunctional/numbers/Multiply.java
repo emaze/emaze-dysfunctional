@@ -14,7 +14,7 @@ public class Multiply<R, T1, T2> implements BinaryDelegate<R, T1, T2> {
     }
 
     @Override
-    public R perform(T1 accmulator, T2 value) {
-        return policy.multiply(accmulator, value);
+    public R perform(T1 accumulator, T2 value) {
+        return policy.multiply(accumulator, value);
     }
 }
