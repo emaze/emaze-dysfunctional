@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.options;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
@@ -36,6 +37,13 @@ public class Maybe<E> {
             return Maybe.just(delegate.perform(element));
         }
         return Maybe.nothing();
+    }
+
+    public <T> Either<T, E> either(Provider<T> nothing) {
+        if (hasValue) {
+            return Either.right(element);
+        }
+        return Either.left(nothing.provide());
     }
 
     public static <E> Maybe<E> nothing() {

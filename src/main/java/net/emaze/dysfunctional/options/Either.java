@@ -28,6 +28,14 @@ public class Either<T1, T2> {
         return withRight.perform(right.value());
     }
 
+    public Maybe<T2> maybe() {
+        return right;
+    }
+
+    public Either<T2, T1> flip() {
+        return new Either<T2, T1>(right, left);
+    }
+
     @Override
     public int hashCode() {
         return new HashCodeBuilder().append(left).append(right).toHashCode();
