@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional;
 
-import net.emaze.dysfunctional.Reductions;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

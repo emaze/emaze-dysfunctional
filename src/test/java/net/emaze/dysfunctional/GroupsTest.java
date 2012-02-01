@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional;
 
-import net.emaze.dysfunctional.Groups;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,7 +20,6 @@ import net.emaze.dysfunctional.GroupsTest.IndexByTest;
 import net.emaze.dysfunctional.GroupsTest.FacadeTest;
 import net.emaze.dysfunctional.GroupsTest.GroupByTest;
 import net.emaze.dysfunctional.GroupsTest.PartitionByTest;
-import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.testing.O;
 import net.emaze.dysfunctional.tuples.Pair;
 import org.junit.Assert;

@@ -1,14 +1,11 @@
 package net.emaze.dysfunctional;
 
-import net.emaze.dysfunctional.Windowing;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.casts.Narrow;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
-import net.emaze.dysfunctional.Dispatching;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
-import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;

@@ -1,10 +1,8 @@
 package net.emaze.dysfunctional;
 
-import net.emaze.dysfunctional.Multiplexing;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.options.MaybeIterator;
 import net.emaze.dysfunctional.testing.O;

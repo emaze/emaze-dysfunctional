@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional;
 
-import net.emaze.dysfunctional.Pagination;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;

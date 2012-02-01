@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional;
 
-import net.emaze.dysfunctional.Casts;
 import junit.framework.Assert;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import org.junit.Test;

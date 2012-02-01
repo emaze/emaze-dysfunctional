@@ -1,17 +1,13 @@
-package net.emaze.dysfunctional.dispatching;
+package net.emaze.dysfunctional;
 
-import net.emaze.dysfunctional.Transforming;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import junit.framework.Assert;
-import net.emaze.dysfunctional.Consumers;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
-import net.emaze.dysfunctional.Spies;
-import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Test;

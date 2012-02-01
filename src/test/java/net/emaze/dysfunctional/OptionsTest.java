@@ -1,13 +1,10 @@
 package net.emaze.dysfunctional;
 
-import net.emaze.dysfunctional.Options;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.Consumers;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
-import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.options.Either;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.testing.O;

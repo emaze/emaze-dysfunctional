@@ -10,7 +10,7 @@ import org.junit.Test;
 public class SumTest {
 
 
-    @Test//explorative
+    @Test//@explorative
     public void canReduceIntegersUsingSum() {
         Iterator<Integer> iterator = Iterations.iterator(1,2, 3);
         Integer reduced = Reductions.reduce(iterator, new Sum<Integer, Integer, Integer>(new IntegerOperations()), 0);
