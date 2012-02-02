@@ -19,7 +19,6 @@ import org.junit.runners.Suite;
     PaginationTest.Functions.class,
     PaginationTest.Degenerations.class,
     PaginationTest.Facade.class
-    
 })
 public class PaginationTest {
 
@@ -77,7 +76,7 @@ public class PaginationTest {
         @Test
         public void canPageLongIterable() {
             final Iterable<Integer> iterable = Arrays.asList(1);
-            Pair<Long, List<Integer>> page = Pagination.pagel(0l, 1l, iterable);
+            Pair<Long, List<Integer>> page = Pagination.LongPages.page(0l, 1l, iterable);
             Assert.assertEquals(Long.valueOf(1), page.first());
         }
 
@@ -91,7 +90,7 @@ public class PaginationTest {
         @Test
         public void canPageLongIterableToCollection() {
             final Iterable<Integer> iterable = Arrays.asList(1);
-            Pair<Long, ArrayList<Integer>> page = Pagination.pagel(0l, 1l, iterable, new ArrayList<Integer>());
+            Pair<Long, ArrayList<Integer>> page = Pagination.LongPages.page(0l, 1l, iterable, new ArrayList<Integer>());
             Assert.assertEquals(Long.valueOf(1), page.first());
         }
 
@@ -104,7 +103,7 @@ public class PaginationTest {
 
         @Test
         public void canPageLongArray() {
-            Pair<Long, List<Integer>> page = Pagination.pagel(0l, 1l, new Integer[]{1});
+            Pair<Long, List<Integer>> page = Pagination.LongPages.page(0l, 1l, new Integer[]{1});
             Assert.assertEquals(Long.valueOf(1), page.first());
         }
 
@@ -116,7 +115,7 @@ public class PaginationTest {
 
         @Test
         public void canPageLongArrayToCollection() {
-            Pair<Long, ArrayList<Integer>> page = Pagination.pagel(0l, 1l, new Integer[]{1}, new ArrayList<Integer>());
+            Pair<Long, ArrayList<Integer>> page = Pagination.LongPages.page(0l, 1l, new Integer[]{1}, new ArrayList<Integer>());
             Assert.assertEquals(Long.valueOf(1), page.first());
         }
 
@@ -128,7 +127,7 @@ public class PaginationTest {
 
         @Test
         public void canPageLongCollection() {
-            Pair<Long, List<Integer>> page = Pagination.pagel(0l, 1l, Arrays.asList(1));
+            Pair<Long, List<Integer>> page = Pagination.LongPages.page(0l, 1l, Arrays.asList(1));
             Assert.assertEquals(Long.valueOf(1), page.first());
         }
 
@@ -140,7 +139,7 @@ public class PaginationTest {
 
         @Test
         public void canPageLongCollectionToCollection() {
-            Pair<Long, ArrayList<Integer>> page = Pagination.pagel(0l, 1l, Arrays.asList(1), new ArrayList<Integer>());
+            Pair<Long, ArrayList<Integer>> page = Pagination.LongPages.page(0l, 1l, Arrays.asList(1), new ArrayList<Integer>());
             Assert.assertEquals(Long.valueOf(1), page.first());
         }
 
@@ -168,28 +167,27 @@ public class PaginationTest {
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallPagelOnANullIterable() {
             final Iterable<Object> iterable = null;
-            Pagination.pagel(4, 2, iterable);
+            Pagination.LongPages.page(4, 2, iterable);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallPagelOnNullIterableAndACollection() {
             final Iterable<Object> iterable = null;
-            Pagination.pagel(4, 2, iterable, new ArrayList<Object>());
+            Pagination.LongPages.page(4, 2, iterable, new ArrayList<Object>());
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallPagelOnANullCollection() {
             final Collection<Object> collection = null;
-            Pagination.pagel(4, 2, collection);
+            Pagination.LongPages.page(4, 2, collection);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallPagelOnANullInputCollection() {
             final Collection<Object> collection = null;
-            Pagination.pagel(4, 2, collection, new ArrayList<Object>());
+            Pagination.LongPages.page(4, 2, collection, new ArrayList<Object>());
         }
     }
-    
 
     public static class Facade {
 
@@ -198,5 +196,5 @@ public class PaginationTest {
             new Pagination() {
             };
         }
-    }    
+    }
 }
