@@ -7,17 +7,21 @@ import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import net.emaze.dysfunctional.dispatching.logic.Proposition;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.Yes;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -28,6 +32,13 @@ import org.junit.Test;
  * @author rferranti
  */
 public class SpiesTest {
+
+    @Test
+    public void canSpyAProvider() {
+        final Box<O> result = new Box<O>();
+        final Provider<O> spied = Spies.spy(new ConstantProvider<O>(O.ONE), result);
+        Assert.assertNotNull(spied);
+    }
 
     @Test
     public void canSpyADelegate() {
@@ -116,6 +127,13 @@ public class SpiesTest {
     public void canSpyThirdParamOfTernaryDelegate() {
         final Box<O> param3 = new Box<O>();
         final TernaryDelegate<O, O, O, O> spied = Spies.spy3rd(new FirstParamOfThree<O, O, O>(), param3);
+        Assert.assertNotNull(spied);
+    }
+
+    @Test
+    public void canSpyAProposition() {
+        final Box<Boolean> result = new Box<Boolean>();
+        final Proposition spied = Spies.spy(new Yes(), result);
         Assert.assertNotNull(spied);
     }
 
