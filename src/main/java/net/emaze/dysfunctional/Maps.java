@@ -40,7 +40,7 @@ public class Maps {
         return new MapBuilder<K, V>(new TreeMap<K, V>(keyComp));
     }
 
-    public static class Tree {
+    public static class Nested {
 
         public static <K> MapTreeBuilder<K> from(Provider<Map<K, Object>> provider) {
             return new MapTreeBuilder<K>(provider);
