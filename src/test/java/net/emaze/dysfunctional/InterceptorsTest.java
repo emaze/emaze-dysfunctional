@@ -50,6 +50,12 @@ public class InterceptorsTest {
         }
 
         @Test
+        public void canInterceptMany() {
+            Delegate<O, O> intercepted = Interceptors.intercept(new Identity<O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
+            Assert.assertNotNull(intercepted);
+        }
+
+        @Test
         public void canInterceptIterator() {
             Delegate<O, O> intercepted = Interceptors.intercept(new Identity<O>(), Iterations.iterator(INTERCEPTOR));
             Assert.assertNotNull(intercepted);
@@ -91,6 +97,12 @@ public class InterceptorsTest {
         }
 
         @Test
+        public void canInterceptMany() {
+            final BinaryDelegate<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
+            Assert.assertNotNull(intercepted);
+        }
+
+        @Test
         public void canInterceptIterator() {
             final BinaryDelegate<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), Iterations.iterator(INTERCEPTOR));
             Assert.assertNotNull(intercepted);
@@ -128,6 +140,12 @@ public class InterceptorsTest {
         @Test
         public void canInterceptThree() {
             final TernaryDelegate<O, O, O, O> intercepted = Interceptors.intercept(new FirstParamOfThree<O, O, O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
+            Assert.assertNotNull(intercepted);
+        }
+
+        @Test
+        public void canInterceptMany() {
+            final TernaryDelegate<O, O, O, O> intercepted = Interceptors.intercept(new FirstParamOfThree<O, O, O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
