@@ -93,7 +93,7 @@ public abstract class Consumers {
      * @return a collection filled with iterator values
      */
     public static <E, R extends Collection<E>> R all(Iterable<E> iterable, Provider<R> provider) {
-        dbc.precondition(iterable != null, "cannot call first with a null iterable");
+        dbc.precondition(iterable != null, "cannot call all with a null iterable");
         return Consumers.all(iterable.iterator(), provider);
     }
 
@@ -186,7 +186,7 @@ public abstract class Consumers {
      * @return just the first element or nothing
      */
     public static <E> Maybe<E> maybeFirst(Iterable<E> iterable) {
-        dbc.precondition(iterable != null, "cannot call search with a null iterable");
+        dbc.precondition(iterable != null, "cannot call maybeFirst with a null iterable");
         return new MaybeFirstElement<E>().perform(iterable.iterator());
     }
 
@@ -233,7 +233,7 @@ public abstract class Consumers {
      * @return the found element
      */
     public static <E> E first(Iterable<E> iterable) {
-        dbc.precondition(iterable != null, "cannot call find with a null iterable");
+        dbc.precondition(iterable != null, "cannot call first with a null iterable");
         return new FirstElement<E>().perform(iterable.iterator());
     }
 
@@ -272,7 +272,7 @@ public abstract class Consumers {
      * @return just the element or nothing
      */
     public static <E> Maybe<E> maybeOne(Iterable<E> iterable) {
-        dbc.precondition(iterable != null, "cannot call searchOne with a null iterable");
+        dbc.precondition(iterable != null, "cannot call maybeOne with a null iterable");
         return new MaybeOneElement<E>().perform(iterable.iterator());
     }
 
@@ -312,7 +312,7 @@ public abstract class Consumers {
      * @return the found element
      */
     public static <E> E one(Iterable<E> iterable) {
-        dbc.precondition(iterable != null, "cannot call findOne with a null iterable");
+        dbc.precondition(iterable != null, "cannot call one with a null iterable");
         return new OneElement<E>().perform(iterable.iterator());
     }
 
@@ -348,7 +348,7 @@ public abstract class Consumers {
      * @return the last element or nothing
      */
     public static <E> Maybe<E> maybeLast(Iterable<E> iterable) {
-        dbc.precondition(iterable != null, "cannot call searchLast with a null iterable");
+        dbc.precondition(iterable != null, "cannot call maybeLast with a null iterable");
         return new MaybeLastElement<E>().perform(iterable.iterator());
     }
 
