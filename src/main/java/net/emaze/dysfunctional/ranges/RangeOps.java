@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import net.emaze.dysfunctional.order.Comparing;
+import net.emaze.dysfunctional.order.MakeOrder;
+import net.emaze.dysfunctional.order.Order;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 import net.emaze.dysfunctional.tuples.Pair;
 
@@ -36,8 +37,9 @@ public class RangeOps {
                 if (!l.overlaps(r)) {
                     continue;
                 }
-                final Pair<T, T> orderedLowerBounds = Comparing.ordered(l.lower(), r.lower(), comparator);
-                final Pair<T, T> orderedUpperBounds = Comparing.ordered(l.upper(), r.upper(), comparator);
+                final MakeOrder<T> makeOrder = new MakeOrder<T>(comparator);
+                final Pair<T, T> orderedLowerBounds = makeOrder.perform(l.lower(), r.lower());
+                final Pair<T, T> orderedUpperBounds = makeOrder.perform(l.upper(), r.upper());
                 intersection.add(new DenseRange<T>(sequencer, comparator, orderedLowerBounds.second(), orderedUpperBounds.first()));
             }
         }
@@ -66,10 +68,11 @@ public class RangeOps {
             return Collections.singletonList(lhs);
         }
         final List<DenseRange<T>> difference = new ArrayList<DenseRange<T>>();
-        if (Comparing.lhsIsLesser(lhs.lower(), rhs.lower(), comparator)) {
+        
+        if (Order.of(comparator, lhs.lower(), rhs.lower()) == Order.LT) {
             difference.add(new DenseRange<T>(sequencer, comparator, lhs.lower(), sequencer.prev(rhs.lower())));
         }
-        if (Comparing.lhsIsGreater(lhs.upper(), rhs.upper(), comparator)) {
+        if (Order.of(comparator, lhs.upper(), rhs.upper()) == Order.GT) {
             difference.add(new DenseRange<T>(sequencer, comparator, sequencer.next(rhs.upper()), lhs.upper()));
         }
         return difference;

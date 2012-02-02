@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.options;
 
-import net.emaze.dysfunctional.casts.Casts;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
@@ -48,7 +47,7 @@ public class Box<T> {
         if (rhs instanceof Box == false) {
             return false;
         }
-        final Box<T> other = Casts.widen(rhs);
+        final Box<T> other = (Box<T>) rhs;
         return new EqualsBuilder().append(this.content, other.content).
                 isEquals();
     }

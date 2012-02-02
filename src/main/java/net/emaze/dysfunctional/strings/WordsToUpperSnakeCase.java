@@ -1,11 +1,15 @@
 package net.emaze.dysfunctional.strings;
 
+import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.Transforming;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import net.emaze.dysfunctional.iterations.ArrayIterator;
+import net.emaze.dysfunctional.iterations.SingletonIterator;
+import net.emaze.dysfunctional.iterations.TransformingIterator;
 
 /**
  * ["oNe","tWo","threE"], "-" => "ONE-TWO-THREE"
+ *
  * @author rferranti
  */
 public class WordsToUpperSnakeCase implements Delegate<String, String[]> {
@@ -21,6 +25,7 @@ public class WordsToUpperSnakeCase implements Delegate<String, String[]> {
     @Override
     public String perform(String[] words) {
         dbc.precondition(words != null, "cannot upperSnakeCase a null array of words");
-        return Strings.interpose(Transforming.transform(words, toUpper), snakeGlyph);
+        final Iterator<String> values = new TransformingIterator<String, String>(new ArrayIterator<String>(words), toUpper);
+        return new InterposeStrings<String, String>().perform(values, new SingletonIterator<String>(snakeGlyph));
     }
 }

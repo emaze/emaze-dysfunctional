@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.iterations;
 
+import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.multiplexing.ChainIterator;
 import java.util.ArrayList;
 import java.util.Arrays;

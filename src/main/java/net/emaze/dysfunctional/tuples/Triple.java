@@ -1,11 +1,11 @@
 package net.emaze.dysfunctional.tuples;
 
-import net.emaze.dysfunctional.casts.Casts;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
 /**
  * a Pair + 1 at the same price
+ *
  * @param <T1> the first element type
  * @param <T2> the second element type
  * @param <T3> the third element type
@@ -40,7 +40,7 @@ public class Triple<T1, T2, T3> {
         if (rhs instanceof Triple == false) {
             return false;
         }
-        final Triple<T1, T2, T3> other = Casts.widen(rhs);
+        final Triple<T1, T2, T3> other = (Triple<T1, T2, T3>) rhs;
         return new EqualsBuilder().append(this.f, other.f).
                 append(this.s, other.s).
                 append(this.t, other.t).

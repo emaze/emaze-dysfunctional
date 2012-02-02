@@ -5,7 +5,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  *
- * @param <T> 
+ * @param <T>
  * @author rferranti
  */
 public class ArrayIterable<T> implements Iterable<T> {
@@ -20,5 +20,9 @@ public class ArrayIterable<T> implements Iterable<T> {
     @Override
     public Iterator<T> iterator() {
         return new ArrayIterator<T>(values);
+    }
+
+    public static <T> ArrayIterable<T> of(T... values) {
+        return new ArrayIterable<T>(values);
     }
 }

@@ -1,8 +1,8 @@
 package net.emaze.dysfunctional.convolutions;
 
-import net.emaze.dysfunctional.tuples.Pair;
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.tuples.Pair;
 
 /**
  * Adapts two iterators yielding their shortest convolution (via a Pair<E1,E2>)

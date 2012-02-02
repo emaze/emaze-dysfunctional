@@ -14,7 +14,7 @@ public class CompareToBuilder {
         if (comparison != Order.EQ) {
             return this;
         }
-        comparison = Order.from(superCompareTo);
+        comparison = Order.of(superCompareTo);
         return this;
     }
 
@@ -65,9 +65,9 @@ public class CompareToBuilder {
         } else {
             // the simple case, not an array, just test the element
             if (comparator == null) {
-                comparison = Order.from(((Comparable) lhs).compareTo(rhs));
+                comparison = Order.of(((Comparable) lhs).compareTo(rhs));
             } else {
-                comparison = Order.from(comparator.compare(lhs, rhs));
+                comparison = Order.of(comparator.compare(lhs, rhs));
             }
         }
         return this;
@@ -77,7 +77,7 @@ public class CompareToBuilder {
         if (comparison != Order.EQ) {
             return this;
         }
-        comparison = Order.from(Long.valueOf(lhs).compareTo(rhs));
+        comparison = Order.of(Long.valueOf(lhs).compareTo(rhs));
         return this;
     }
 
@@ -85,7 +85,7 @@ public class CompareToBuilder {
         if (comparison != Order.EQ) {
             return this;
         }
-        comparison = Order.from(Integer.valueOf(lhs).compareTo(rhs));
+        comparison = Order.of(Integer.valueOf(lhs).compareTo(rhs));
         return this;
     }
 
@@ -93,7 +93,7 @@ public class CompareToBuilder {
         if (comparison != Order.EQ) {
             return this;
         }
-        comparison = Order.from(Short.valueOf(lhs).compareTo(rhs));
+        comparison = Order.of(Short.valueOf(lhs).compareTo(rhs));
         return this;
     }
 
@@ -101,7 +101,7 @@ public class CompareToBuilder {
         if (comparison != Order.EQ) {
             return this;
         }
-        comparison = Order.from(Character.valueOf(lhs).compareTo(rhs));
+        comparison = Order.of(Character.valueOf(lhs).compareTo(rhs));
         return this;
     }
 
@@ -109,7 +109,7 @@ public class CompareToBuilder {
         if (comparison != Order.EQ) {
             return this;
         }
-        comparison = Order.from(Byte.valueOf(lhs).compareTo(rhs));
+        comparison = Order.of(Byte.valueOf(lhs).compareTo(rhs));
         return this;
     }
 
@@ -117,7 +117,7 @@ public class CompareToBuilder {
         if (comparison != Order.EQ) {
             return this;
         }
-        comparison = Order.from(new StrictOrderingDoubleComparator().compare(lhs, rhs));
+        comparison = Order.of(new StrictOrderingDoubleComparator().compare(lhs, rhs));
         return this;
     }
 
@@ -125,7 +125,7 @@ public class CompareToBuilder {
         if (comparison != Order.EQ) {
             return this;
         }
-        comparison = Order.from(new StrictOrderingFloatComparator().compare(lhs, rhs));
+        comparison = Order.of(new StrictOrderingFloatComparator().compare(lhs, rhs));
         return this;
     }
 
@@ -133,7 +133,7 @@ public class CompareToBuilder {
         if (comparison != Order.EQ) {
             return this;
         }
-        comparison = Order.from(Boolean.valueOf(lhs).compareTo(rhs));
+        comparison = Order.of(Boolean.valueOf(lhs).compareTo(rhs));
         return this;
     }
 
@@ -157,7 +157,7 @@ public class CompareToBuilder {
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = Order.from(Integer.valueOf(lhs.length).compareTo(rhs.length));
+            comparison = Order.of(Integer.valueOf(lhs.length).compareTo(rhs.length));
             return this;
         }
         for (int i = 0; i < lhs.length && comparison == Order.EQ; i++) {
@@ -182,7 +182,7 @@ public class CompareToBuilder {
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = Order.from(Integer.valueOf(lhs.length).compareTo(rhs.length));
+            comparison = Order.of(Integer.valueOf(lhs.length).compareTo(rhs.length));
             return this;
         }
         for (int i = 0; i < lhs.length && comparison == Order.EQ; i++) {
@@ -207,7 +207,7 @@ public class CompareToBuilder {
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = Order.from(Integer.valueOf(lhs.length).compareTo(rhs.length));
+            comparison = Order.of(Integer.valueOf(lhs.length).compareTo(rhs.length));
             return this;
         }
         for (int i = 0; i < lhs.length && comparison == Order.EQ; i++) {
@@ -232,7 +232,7 @@ public class CompareToBuilder {
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = Order.from(Integer.valueOf(lhs.length).compareTo(rhs.length));
+            comparison = Order.of(Integer.valueOf(lhs.length).compareTo(rhs.length));
             return this;
         }
         for (int i = 0; i < lhs.length && comparison == Order.EQ; i++) {
@@ -257,7 +257,7 @@ public class CompareToBuilder {
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = Order.from(Integer.valueOf(lhs.length).compareTo(rhs.length));
+            comparison = Order.of(Integer.valueOf(lhs.length).compareTo(rhs.length));
             return this;
         }
         for (int i = 0; i < lhs.length && comparison == Order.EQ; i++) {
@@ -282,7 +282,7 @@ public class CompareToBuilder {
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = Order.from(Integer.valueOf(lhs.length).compareTo(rhs.length));
+            comparison = Order.of(Integer.valueOf(lhs.length).compareTo(rhs.length));
             return this;
         }
         for (int i = 0; i < lhs.length && comparison == Order.EQ; i++) {
@@ -307,7 +307,7 @@ public class CompareToBuilder {
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = Order.from(Integer.valueOf(lhs.length).compareTo(rhs.length));
+            comparison = Order.of(Integer.valueOf(lhs.length).compareTo(rhs.length));
             return this;
         }
         for (int i = 0; i < lhs.length && comparison == Order.EQ; i++) {
@@ -332,7 +332,7 @@ public class CompareToBuilder {
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = Order.from(Integer.valueOf(lhs.length).compareTo(rhs.length));
+            comparison = Order.of(Integer.valueOf(lhs.length).compareTo(rhs.length));
             return this;
         }
         for (int i = 0; i < lhs.length && comparison == Order.EQ; i++) {
@@ -357,7 +357,7 @@ public class CompareToBuilder {
             return this;
         }
         if (lhs.length != rhs.length) {
-            comparison = Order.from(Integer.valueOf(lhs.length).compareTo(rhs.length));
+            comparison = Order.of(Integer.valueOf(lhs.length).compareTo(rhs.length));
             return this;
         }
         for (int i = 0; i < lhs.length && comparison == Order.EQ; i++) {

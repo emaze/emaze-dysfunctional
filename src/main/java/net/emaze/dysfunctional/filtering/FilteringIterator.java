@@ -1,8 +1,8 @@
 package net.emaze.dysfunctional.filtering;
 
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
 /**
  * Iterates on the iterator elements which the predicate matches

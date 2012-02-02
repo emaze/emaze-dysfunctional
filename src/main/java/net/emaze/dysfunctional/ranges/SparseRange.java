@@ -4,14 +4,14 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.casts.Casts;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.Transforming;
-import net.emaze.dysfunctional.multiplexing.ChainIterator;
 import net.emaze.dysfunctional.dispatching.delegates.IteratorPlucker;
+import net.emaze.dysfunctional.iterations.SingletonIterator;
+import net.emaze.dysfunctional.iterations.TransformingIterator;
+import net.emaze.dysfunctional.multiplexing.ChainIterator;
 import net.emaze.dysfunctional.order.SequencingPolicy;
-import net.emaze.dysfunctional.reductions.Reductions;
-import net.emaze.dysfunctional.strings.Strings;
+import net.emaze.dysfunctional.reductions.Any;
+import net.emaze.dysfunctional.strings.InterposeStrings;
 
 /**
  *
@@ -41,7 +41,7 @@ public class SparseRange<T> implements Range<T> {
     @Override
     public boolean contains(final T element) {
         dbc.precondition(element != null, "checking if null is contained in SparseRange<T>");
-        return Reductions.any(ranges, new RangeNotContaining<T>(element));
+        return new Any<DenseRange<T>>(new RangeNotContaining<T>(element)).accept(ranges.iterator());
     }
 
     @Override
@@ -62,7 +62,7 @@ public class SparseRange<T> implements Range<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new ChainIterator<T>(Transforming.transform(ranges, new IteratorPlucker<T, DenseRange<T>>()));
+        return new ChainIterator<T>(new TransformingIterator<Iterator<T>, DenseRange<T>>(ranges.iterator(), new IteratorPlucker<T, DenseRange<T>>()));
     }
 
     @Override
@@ -70,7 +70,7 @@ public class SparseRange<T> implements Range<T> {
         if (rhs instanceof SparseRange == false) {
             return false;
         }
-        final SparseRange<T> other = Casts.widen(rhs);
+        final SparseRange<T> other = (SparseRange<T>) rhs;
         return this.ranges.equals(other.ranges);
     }
 
@@ -81,13 +81,14 @@ public class SparseRange<T> implements Range<T> {
 
     @Override
     public String toString() {
-        return String.format("[%s]", Strings.interpose(ranges.iterator(), ","));
+        final String interposed = new InterposeStrings<DenseRange<T>, String>().perform(ranges.iterator(), new SingletonIterator<String>(","));
+        return String.format("[%s]", interposed);
     }
 
     @Override
     public boolean overlaps(final Range<T> other) {
         dbc.precondition(other != null, "checking for overlaps between a SparseRange<T> and null");
-        return Reductions.any(ranges, new RangeNotOverlappingWith<T>(other));
+        return new Any<DenseRange<T>>(new RangeNotOverlappingWith<T>(other)).accept(ranges.iterator());
     }
 
     @Override

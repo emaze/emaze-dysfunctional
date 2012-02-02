@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.reductions;
 
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
-import net.emaze.dysfunctional.consumers.Consumer;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ public class ReductorTest {
     public void canReduceAnIterator() {
         Integer[] arr = new Integer[]{1, 2, 3, 4};
         Reductor<Long, Integer> cc = new Reductor<Long, Integer>(new Count<Integer>(), 0l);
-        long count = cc.consume(new ArrayIterator<Integer>(arr));
+        long count = cc.perform(new ArrayIterator<Integer>(arr));
         Assert.assertEquals(4l, count);
     }
 
@@ -26,13 +26,13 @@ public class ReductorTest {
     
     @Test(expected = IllegalArgumentException.class)
     public void consumingNullIteratorYieldException() {
-        new Reductor<Long, Integer>(new Count<Integer>(), 0l).consume(null);
+        new Reductor<Long, Integer>(new Count<Integer>(), 0l).perform(null);
     }
     
 
     @Test(expected = ClassCastException.class)
     public void passingWrongTypeToErasureYieldsException() {
-        Consumer c = new Reductor<Long, Integer>(new Count<Integer>(), 0l);
-        c.consume(new Object());
+        Delegate c = new Reductor<Long, Integer>(new Count<Integer>(), 0l);
+        c.perform(new Object());
     }    
 }

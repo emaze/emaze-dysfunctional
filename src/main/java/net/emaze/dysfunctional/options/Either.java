@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.options;
 
-import net.emaze.dysfunctional.casts.Casts;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
@@ -29,6 +28,14 @@ public class Either<T1, T2> {
         return withRight.perform(right.value());
     }
 
+    public Maybe<T2> maybe() {
+        return right;
+    }
+
+    public Either<T2, T1> flip() {
+        return new Either<T2, T1>(right, left);
+    }
+
     @Override
     public int hashCode() {
         return new HashCodeBuilder().append(left).append(right).toHashCode();
@@ -39,17 +46,17 @@ public class Either<T1, T2> {
         if (rhs instanceof Either == false) {
             return false;
         }
-        final Either<T1, T2> other = Casts.widen(rhs);
+        final Either<T1, T2> other = (Either<T1, T2>) rhs;
         return new EqualsBuilder().append(this.left, other.left).
                 append(this.right, other.right).
                 isEquals();
     }
-    
-    public static <T1, T2> Either<T1, T2> left(T1 left){
+
+    public static <T1, T2> Either<T1, T2> left(T1 left) {
         return new Either<T1, T2>(Maybe.just(left), Maybe.<T2>nothing());
     }
-    
-    public static <T1, T2> Either<T1, T2> right(T2 right){
+
+    public static <T1, T2> Either<T1, T2> right(T2 right) {
         return new Either<T1, T2>(Maybe.<T1>nothing(), Maybe.just(right));
     }
 }

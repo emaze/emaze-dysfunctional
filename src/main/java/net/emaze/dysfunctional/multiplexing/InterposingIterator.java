@@ -34,7 +34,7 @@ public class InterposingIterator<T> extends ReadOnlyIterator<T> {
         final Iterator<T> toBeConsumed = consumingSeparator
                 ? separators
                 : values;
-        dbc.stateprecondition(!consumingSeparator || separators.hasNext(), "consuming an InterleavingIterator led to an empty separatorIterator (which should be same length or longer than the valueIterator)");
+        dbc.state(!consumingSeparator || separators.hasNext(), "consuming an InterleavingIterator led to an empty separatorIterator (which should be same length or longer than the valueIterator)");
         final T value = toBeConsumed.next();
         consumingSeparator = !consumingSeparator;
         return value;

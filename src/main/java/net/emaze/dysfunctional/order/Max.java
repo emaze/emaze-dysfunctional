@@ -19,7 +19,7 @@ public class Max<T> implements BinaryDelegate<T, T, T> {
 
     @Override
     public T perform(T lhs, T rhs) {
-        if (Order.from(comparator.compare(lhs, rhs)).isGte()) {
+        if (Order.of(comparator.compare(lhs, rhs)).isGte()) {
             return lhs;
         }
         return rhs;

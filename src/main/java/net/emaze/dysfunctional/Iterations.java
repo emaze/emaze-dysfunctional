@@ -1,0 +1,131 @@
+package net.emaze.dysfunctional;
+
+import java.util.Iterator;
+import net.emaze.dysfunctional.iterations.ArrayIterable;
+import net.emaze.dysfunctional.iterations.ArrayIterator;
+import net.emaze.dysfunctional.iterations.EmptyIterable;
+import net.emaze.dysfunctional.iterations.EmptyIterator;
+import net.emaze.dysfunctional.iterations.OneTimeIterable;
+import net.emaze.dysfunctional.iterations.SingletonIterable;
+import net.emaze.dysfunctional.iterations.SingletonIterator;
+
+/**
+ * Iterator/Iterable shortcuts.
+ * @author rferranti
+ */
+public abstract class Iterations {
+
+    /**
+     * Creates an iterable usable only ONE TIME from an iterator.
+     * @param <T> the iterator element type parameter
+     * @param iterator the iterator to be yielded by the iterable
+     * @return an iterable consumable only once
+     */
+    public static <T> Iterable<T> oneTime(Iterator<T> iterator) {
+        return new OneTimeIterable<T>(iterator);
+    }
+
+    /**
+     * Creates an empty iterator
+     * @param <T> the element parameter type
+     * @return an empty iterator.
+     */
+    public static <T> Iterator<T> iterator() {
+        return new EmptyIterator<T>();
+    }
+
+    /**
+     * Creates an iterator from the passed value.
+     * @param <T> the element parameter type
+     * @param value the value to be yielded by the iterator
+     * @return an iterator.
+     */
+    public static <T> Iterator<T> iterator(T value) {
+        return new SingletonIterator<T>(value);
+    }
+
+    /**
+     * Creates an iterator from the passed values.
+     * @param <T> the elements parameter type
+     * @param first the first element
+     * @param second the second element
+     * @return an iterator.
+     */
+    public static <T> Iterator<T> iterator(T first, T second) {
+        return ArrayIterator.of(first, second);
+    }
+
+    /**
+     * Creates an iterator from the passed values.
+     * @param <T> the elements parameter type
+     * @param first the first element
+     * @param second the second element
+     * @param third the third element
+     * @return an iterator.
+     */
+    public static <T> Iterator<T> iterator(T first, T second, T third) {
+        return ArrayIterator.of(first, second, third);
+    }
+
+    /**
+     * Creates an iterator from the passed array.
+     * @param <T> the array element parameter type
+     * @param values the values to be yielded by the iterator
+     * @return an iterator.
+     */
+    public static <T> Iterator<T> iterator(T... values) {
+        return new ArrayIterator<T>(values);
+    }
+
+    /**
+     * Creates an empty iterable.
+     * @param <T> the element parameter type
+     * @return an iterable always yielding an empty iterator.
+     */
+    public static <T> Iterable<T> iterable() {
+        return new EmptyIterable<T>();
+    }
+
+    /**
+     * Creates an iterable from the passed value.
+     * @param <T> the element parameter type
+     * @param value the value to be yielded by the iterator
+     * @return an iterable.
+     */
+    public static <T> Iterable<T> iterable(T value) {
+        return new SingletonIterable<T>(value);
+    }
+
+    /**
+     * Creates an iterable from the passed values.
+     * @param <T> the elements parameter type
+     * @param first the first element
+     * @param second the second element
+     * @return an iterable.
+     */
+    public static <T> Iterable<T> iterable(T first, T second) {
+        return ArrayIterable.of(first, second);
+    }
+
+    /**
+     * Creates an iterable from the passed values.
+     * @param <T> the elements parameter type
+     * @param first the first element
+     * @param second the second element
+     * @param third the third element
+     * @return an iterable.
+     */
+    public static <T> Iterable<T> iterable(T first, T second, T third) {
+        return ArrayIterable.of(first, second, third);
+    }
+
+    /**
+     * Creates an iterable from the passed array.
+     * @param <T> the array element parameter type
+     * @param values the values to be yielded by the iterator
+     * @return an iterable.
+     */
+    public static <T> Iterable<T> iterable(T... values) {
+        return new ArrayIterable<T>(values);
+    }
+}

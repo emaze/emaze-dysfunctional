@@ -1,16 +1,16 @@
 package net.emaze.dysfunctional.reductions;
 
 import java.util.Iterator;
-import net.emaze.dysfunctional.consumers.Consumer;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
  * Reduces the Iterator<E> to R
  * @param <E> 
  * @author rferranti
  */
-public class Reductor<R, E> implements Consumer<R, Iterator<E>> {
+public class Reductor<R, E> implements Delegate<R, Iterator<E>> {
 
     private final BinaryDelegate<R, R, E> delegate;
     private final R init;
@@ -22,7 +22,7 @@ public class Reductor<R, E> implements Consumer<R, Iterator<E>> {
     }
 
     @Override
-    public R consume(Iterator<E> iterator) {
+    public R perform(Iterator<E> iterator) {
         dbc.precondition(iterator != null, "consuming a null iterator");
         R current = init;
         while (iterator.hasNext()) {

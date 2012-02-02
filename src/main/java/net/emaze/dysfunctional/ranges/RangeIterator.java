@@ -1,14 +1,16 @@
 package net.emaze.dysfunctional.ranges;
 
 import java.util.Comparator;
-import net.emaze.dysfunctional.order.SequencingPolicy;
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.order.Comparing;
+import net.emaze.dysfunctional.order.Order;
+import net.emaze.dysfunctional.order.SequencingPolicy;
 
 /**
- * Yields values generated from a Sequencing<T> policy in a given range([start:upto])
- * @param <T> 
+ * Yields values generated from a Sequencing<T> policy in a given
+ * range([start:upto])
+ *
+ * @param <T>
  * @author rferranti
  */
 public class RangeIterator<T> implements Iterator<T> {
@@ -31,7 +33,7 @@ public class RangeIterator<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        return Comparing.lhsIsLesserThanEquals(current, upTo, comparator);
+        return Order.of(comparator, current, upTo).isLte();
     }
 
     @Override
@@ -46,6 +48,5 @@ public class RangeIterator<T> implements Iterator<T> {
      */
     @Override
     public void remove() {
-        
     }
 }
