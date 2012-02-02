@@ -18,6 +18,6 @@ public class DescendingPeriodicIteratorTest {
     public void callingNextYieldsElementsInDescendingOrder() {
         final PeriodicSequencingPolicy<Integer> sequencer = new PeriodicSequencingPolicy<Integer>(new IntegerSequencingPolicy(), 0, 2);
         final DescendingPeriodicIterator<Integer> periodicIterator = new DescendingPeriodicIterator<Integer>(sequencer, 0);
-        Assert.assertEquals(Arrays.asList(0, 2, 1), Consumers.all(Filtering.first(3, periodicIterator)));
+        Assert.assertEquals(Arrays.asList(0, 2, 1), Consumers.all(Filtering.take(3, periodicIterator)));
     }
 }

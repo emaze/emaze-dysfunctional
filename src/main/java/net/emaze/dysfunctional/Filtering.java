@@ -67,46 +67,6 @@ public abstract class Filtering {
     }
 
     /**
-     * Proxies an iterator so that at most first elements are yielded back to
-     * the consumer.
-     *
-     * @param <E>
-     * @param howMany
-     * @param from
-     * @return an iterator
-     */
-    public static <E> Iterator<E> first(long howMany, Iterator<E> from) {
-        return take(howMany, from);
-    }
-
-    /**
-     * Proxies an iterator so that at most first elements are yielded back to
-     * the consumer.
-     *
-     * @param <E>
-     * @param howMany
-     * @param from
-     * @return an iterator
-     */
-    public static <E> Iterator<E> first(long howMany, Iterable<E> from) {
-        dbc.precondition(from != null, "cannot call first with a null iterable");
-        return first(howMany, from.iterator());
-    }
-
-    /**
-     * Proxies an iterator so that at most first elements are yielded back to
-     * the consumer.
-     *
-     * @param <E>
-     * @param howMany
-     * @param from
-     * @return an iterator
-     */
-    public static <E> Iterator<E> first(long howMany, E[] from) {
-        return first(howMany, new ArrayIterator<E>(from));
-    }
-
-    /**
      * fetches the last element from an iterable, throwing an
      * IllegalArgumentException if no element can be fetched
      *
@@ -116,9 +76,9 @@ public abstract class Filtering {
      * @return last element of the iterable (throws IllegalArgumentException if
      * the iterable is empty)
      */
-    public static <E> Iterator<E> last(int howMany, Iterable<E> from) {
+    public static <E> Iterator<E> takeLast(int howMany, Iterable<E> from) {
         dbc.precondition(from != null, "cannot call last with a null iterable");
-        return last(howMany, from.iterator());
+        return takeLast(howMany, from.iterator());
     }
 
     /**
@@ -131,7 +91,7 @@ public abstract class Filtering {
      * @return last matching element from the iterator (throws
      * IllegalArgumentException if not enough elements are found)
      */
-    public static <E> Iterator<E> last(int howMany, Iterator<E> from) {
+    public static <E> Iterator<E> takeLast(int howMany, Iterator<E> from) {
         return new MemoryIterator<E>(from, howMany);
     }
 
@@ -145,8 +105,8 @@ public abstract class Filtering {
      * @return last matching element from the iterator (throws
      * IllegalArgumentException if not enough elements are found)
      */
-    public static <E> Iterator<E> last(int howMany, E[] from) {
-        return last(howMany, new ArrayIterator<E>(from));
+    public static <E> Iterator<E> takeLast(int howMany, E[] from) {
+        return takeLast(howMany, new ArrayIterator<E>(from));
     }
 
     /**

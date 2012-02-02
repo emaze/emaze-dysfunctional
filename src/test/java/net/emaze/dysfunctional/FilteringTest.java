@@ -10,8 +10,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * if you are going to add a test here, consider that Filtering should be just
- * a thin facade, and tests on FilteringTest should be just "smoke tests"
+ * if you are going to add a test here, consider that Filtering should be just a
+ * thin facade, and tests on FilteringTest should be just "smoke tests"
+ *
  * @author rferranti
  */
 public class FilteringTest {
@@ -43,30 +44,6 @@ public class FilteringTest {
         Filtering.filter(iterable, new Always<Object>());
     }
 
-    @Test
-    public void canFetchFirstFromIterator() {
-        Iterator<Integer> got = Filtering.first(1, sampleList.iterator());
-        Assert.assertEquals(Arrays.asList(1), Consumers.all(got));
-    }
-
-    @Test
-    public void canFetchFirstFromIterable() {
-        Iterator<Integer> got = Filtering.first(1, sampleList);
-        Assert.assertEquals(Arrays.asList(1), Consumers.all(got));
-    }
-
-    @Test
-    public void canFetchFirstFromArray() {
-        Iterator<Integer> got = Filtering.first(1, sampleArray);
-        Assert.assertEquals(Arrays.asList(1), Consumers.all(got));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void cannotCallFirstWithANullIterable() {
-        final Iterable<Object> iterable = null;
-        Filtering.first(1, iterable);
-    }
-
     @Test(expected = IllegalArgumentException.class)
     public void cannotCallAtMostLastWithANullIterable() {
         final Iterable<Object> iterable = null;
@@ -74,27 +51,27 @@ public class FilteringTest {
     }
 
     @Test
-    public void canFetchLastFromIterator() {
-        Iterator<Integer> got = Filtering.last(1, sampleList.iterator());
+    public void canTakeLastFromIterator() {
+        Iterator<Integer> got = Filtering.takeLast(1, sampleList.iterator());
         Assert.assertEquals(Arrays.asList(2), Consumers.all(got));
     }
 
     @Test
-    public void canFetchLastFromIterable() {
-        Iterator<Integer> got = Filtering.last(1, sampleList);
+    public void canTakeLastFromIterable() {
+        Iterator<Integer> got = Filtering.takeLast(1, sampleList);
         Assert.assertEquals(Arrays.asList(2), Consumers.all(got));
     }
 
     @Test
-    public void canFetchLastFromArray() {
-        Iterator<Integer> got = Filtering.last(1, sampleArray);
+    public void canTakeLastFromArray() {
+        Iterator<Integer> got = Filtering.takeLast(1, sampleArray);
         Assert.assertEquals(Arrays.asList(2), Consumers.all(got));
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void cannotCallLastOnANullIterable() {
+    public void cannotCallTakeLastOnANullIterable() {
         final Iterable<Object> iterable = null;
-        Filtering.last(1, iterable);
+        Filtering.takeLast(1, iterable);
     }
 
     @Test
@@ -120,7 +97,6 @@ public class FilteringTest {
         Iterator<Integer> got = Filtering.drop(1, sampleList.iterator());
         Assert.assertEquals(Arrays.asList(2), Consumers.all(got));
     }
-
 
     @Test
     public void canSliceEmptyIterator() {
