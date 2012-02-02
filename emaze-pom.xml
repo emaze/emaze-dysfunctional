@@ -1,0 +1,47 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.emaze</groupId>
+    <artifactId>emaze-dysfunctional</artifactId>
+    <packaging>jar</packaging>
+    <version>3.0-SNAPSHOT</version>
+    <name>emaze-dysfunctional</name>
+    <description></description>
+    <licenses>
+        <license>
+            <name>Simplified BSD License</name>
+            <url>http://www.opensource.org/licenses/BSD-3-Clause</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>    
+    <parent>
+        <groupId>net.emaze</groupId>
+        <artifactId>emaze-super-pom</artifactId>
+        <version>1.8</version>
+    </parent>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+            <version>4.10</version>
+        </dependency>
+    </dependencies>
+    <scm>
+      <connection>scm:hg:https://hg.intranet/emaze-dysfunctional</connection>
+      <developerConnection>scm:hg:file://${basedir}</developerConnection>
+    </scm>
+</project>
