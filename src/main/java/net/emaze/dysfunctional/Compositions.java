@@ -15,7 +15,7 @@ import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 
-public class Compositions {
+public abstract class Compositions {
 
     /**
      * Given f, g yields f ° g (f of g, f following g)
