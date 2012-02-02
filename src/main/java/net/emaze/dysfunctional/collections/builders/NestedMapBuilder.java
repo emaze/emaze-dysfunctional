@@ -6,38 +6,38 @@ import java.util.Map;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
-public class MapTreeBuilder<K> {
+public class NestedMapBuilder<K> {
 
     private final Deque<K> stack = new LinkedList<K>();
     private final Provider<Map<K, Object>> provider;
     private final Map<K, Object> buildee;
-    public final MapTreeBuilder<K> ___;
+    public final NestedMapBuilder<K> ___;
 
-    public MapTreeBuilder(Provider<Map<K, Object>> provider) {
+    public NestedMapBuilder(Provider<Map<K, Object>> provider) {
         dbc.precondition(provider != null, "cannot create a MapTreeBuilder with a null map provider");
         this.provider = provider;
         this.buildee = provider.provide();
         this.___ = this;
     }
 
-    public MapTreeBuilder<K> add(Map<K, ? extends Object> map) {
+    public NestedMapBuilder<K> add(Map<K, ? extends Object> map) {
         dbc.precondition(map != null, "cannot merge a null map");
         current().putAll(map);
         return this;
     }
 
-    public MapTreeBuilder<K> add(K key, Object value) {
+    public NestedMapBuilder<K> add(K key, Object value) {
         current().put(key, value);
         return this;
     }
 
-    public MapTreeBuilder<K> push(K key) {
+    public NestedMapBuilder<K> push(K key) {
         current().put(key, provider.provide());
         stack.addLast(key);
         return this;
     }
 
-    public MapTreeBuilder<K> pop() {
+    public NestedMapBuilder<K> pop() {
         dbc.precondition(stack.size() != 0, "popping from an empty stack");
         stack.removeLast();
         return this;

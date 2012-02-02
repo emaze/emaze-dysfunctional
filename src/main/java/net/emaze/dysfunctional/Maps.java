@@ -10,7 +10,7 @@ import net.emaze.dysfunctional.collections.HashMapFactory;
 import net.emaze.dysfunctional.collections.LinkedHashMapFactory;
 import net.emaze.dysfunctional.collections.TreeMapFactory;
 import net.emaze.dysfunctional.collections.builders.MapBuilder;
-import net.emaze.dysfunctional.collections.builders.MapTreeBuilder;
+import net.emaze.dysfunctional.collections.builders.NestedMapBuilder;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.order.ComparableComparator;
 
@@ -42,24 +42,24 @@ public class Maps {
 
     public static class Nested {
 
-        public static <K> MapTreeBuilder<K> from(Provider<Map<K, Object>> provider) {
-            return new MapTreeBuilder<K>(provider);
+        public static <K> NestedMapBuilder<K> from(Provider<Map<K, Object>> provider) {
+            return new NestedMapBuilder<K>(provider);
         }
 
-        public static <K> MapTreeBuilder<K> builder() {
-            return new MapTreeBuilder<K>(narrowed(new HashMapFactory<K, Object>()));
+        public static <K> NestedMapBuilder<K> builder() {
+            return new NestedMapBuilder<K>(narrowed(new HashMapFactory<K, Object>()));
         }
 
-        public static <K> MapTreeBuilder<K> sorted() {
-            return new MapTreeBuilder<K>(narrowed(new LinkedHashMapFactory<K, Object>()));
+        public static <K> NestedMapBuilder<K> sorted() {
+            return new NestedMapBuilder<K>(narrowed(new LinkedHashMapFactory<K, Object>()));
         }
 
-        public static <K extends Comparable<K>> MapTreeBuilder<K> ordered() {
-            return new MapTreeBuilder<K>(narrowed(new TreeMapFactory<K, Object>(new ComparableComparator<K>())));
+        public static <K extends Comparable<K>> NestedMapBuilder<K> ordered() {
+            return new NestedMapBuilder<K>(narrowed(new TreeMapFactory<K, Object>(new ComparableComparator<K>())));
         }
 
-        public static <K> MapTreeBuilder<K> ordered(Comparator<K> keyComp) {
-            return new MapTreeBuilder<K>(narrowed(new TreeMapFactory<K, Object>(keyComp)));
+        public static <K> NestedMapBuilder<K> ordered(Comparator<K> keyComp) {
+            return new NestedMapBuilder<K>(narrowed(new TreeMapFactory<K, Object>(keyComp)));
         }
 
         private static <M extends Map<K, Object>, K> Provider<Map<K, Object>> narrowed(Provider<M> provider) {

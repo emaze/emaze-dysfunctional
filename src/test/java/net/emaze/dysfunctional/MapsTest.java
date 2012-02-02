@@ -6,7 +6,7 @@ import net.emaze.dysfunctional.Maps.Nested;
 import net.emaze.dysfunctional.casts.Narrow;
 import net.emaze.dysfunctional.collections.HashMapFactory;
 import net.emaze.dysfunctional.collections.builders.MapBuilder;
-import net.emaze.dysfunctional.collections.builders.MapTreeBuilder;
+import net.emaze.dysfunctional.collections.builders.NestedMapBuilder;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.order.ComparableComparator;
 import org.junit.Assert;
@@ -69,31 +69,31 @@ public class MapsTest {
         @Test
         public void canCreateBuilderFromProvider() {
             final Provider<Map<String, Object>> provider = Dispatching.compose(new Narrow<Map<String, Object>, HashMap<String, Object>>(), new HashMapFactory<String, Object>());
-            final MapTreeBuilder<String> builder = Nested.from(provider);
+            final NestedMapBuilder<String> builder = Nested.from(provider);
             Assert.assertNotNull(builder);
         }
 
         @Test
         public void canCreateEmptyUnsortedBuilder() {
-            final MapTreeBuilder<String> builder = Nested.builder();
+            final NestedMapBuilder<String> builder = Nested.builder();
             Assert.assertNotNull(builder);
         }
 
         @Test
         public void canCreateEmptySortedBuilder() {
-            final MapTreeBuilder<String> builder = Nested.sorted();
+            final NestedMapBuilder<String> builder = Nested.sorted();
             Assert.assertNotNull(builder);
         }
 
         @Test
         public void canCreateEmptyOrderedBuilder() {
-            final MapTreeBuilder<String> builder = Nested.ordered();
+            final NestedMapBuilder<String> builder = Nested.ordered();
             Assert.assertNotNull(builder);
         }
 
         @Test
         public void canCreateEmptyOrderedWithComparatorBuilder() {
-            final MapTreeBuilder<String> builder = Nested.ordered(new ComparableComparator<String>());
+            final NestedMapBuilder<String> builder = Nested.ordered(new ComparableComparator<String>());
             Assert.assertNotNull(builder);
         }       
     }
