@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional;
 
-import java.util.Iterator;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
@@ -45,7 +44,6 @@ import org.junit.runners.Suite;
     DispatchingTest.CurryPredicates.class,
     DispatchingTest.CurryActions.class,
     DispatchingTest.Ignoring.class,
-    DispatchingTest.Composing.class,
     DispatchingTest.Facade.class
 })
 public class DispatchingTest {
@@ -395,53 +393,6 @@ public class DispatchingTest {
         }
     }
 
-    public static class Composing {
-
-        @Test
-        public void canComposeTwoDelegates() {
-            Delegate<O, O> composed = Dispatching.compose(new Identity<O>(), new Identity<O>());
-            Assert.assertNotNull(composed);
-        }
-
-        @Test
-        public void canComposeThreeDelegates() {
-            final Identity<O> i = new Identity<O>();
-            Delegate<O, O> composed = Dispatching.compose(i, i, i);
-            Assert.assertNotNull(composed);
-        }
-
-        @Test
-        public void canComposePredicatesAndDelegates() {
-            Predicate<O> composed = Dispatching.compose(new Always<O>(), new Identity<O>());
-            Assert.assertNotNull(composed);
-        }
-
-        @Test
-        public void canComposePredicateAndTwoDelegates() {
-            final Identity<O> i = new Identity<O>();
-            Predicate<O> composed = Dispatching.compose(new Always<O>(), i, i);
-            Assert.assertNotNull(composed);
-        }
-
-        @Test
-        public void canComposePredicatesAndBinaryDelegates() {
-            BinaryPredicate<O, O> composed = Dispatching.compose(new Always<O>(), new FirstParam<O, O>());
-            Assert.assertNotNull(composed);
-        }
-
-        @Test
-        public void canComposePredicateAndTernaryDelegates() {
-            TernaryPredicate<O, O, O> composed = Dispatching.compose(new Always<O>(), new FirstParamOfThree<O, O, O>());
-            Assert.assertNotNull(composed);
-        }
-
-        @Test
-        public void canComposeEndoDelegates() {
-            final Iterator<Delegate<O, O>> delegates = Iterations.<Delegate<O, O>>iterator(new Identity<O>(), new Identity<O>());
-            final Delegate<O, O> composed = Dispatching.compose(delegates);
-            Assert.assertNotNull(composed);
-        }
-    }
 
     public static class Facade {
 

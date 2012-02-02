@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.Dispatching;
+import net.emaze.dysfunctional.Compositions;
 import net.emaze.dysfunctional.casts.Narrow;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
@@ -25,7 +25,7 @@ import org.junit.runners.Suite;
 })
 public class PreciseDemultiplexingIteratorTest {
 
-    final static Provider<List<Maybe<Integer>>> MAYBE_INTEGER_LIST_FACTORY = Dispatching.compose(new Narrow<List<Maybe<Integer>>, ArrayList<Maybe<Integer>>>(), new ArrayListFactory<Maybe<Integer>>());
+    final static Provider<List<Maybe<Integer>>> MAYBE_INTEGER_LIST_FACTORY = Compositions.compose(new Narrow<List<Maybe<Integer>>, ArrayList<Maybe<Integer>>>(), new ArrayListFactory<Maybe<Integer>>());
 
     public static class Functions {
 

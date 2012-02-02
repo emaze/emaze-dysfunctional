@@ -34,7 +34,7 @@ public class MapsTest {
 
         @Test
         public void canCreateBuilderFromProvider() {
-            final Provider<Map<String, Object>> provider = Dispatching.compose(new Narrow<Map<String, Object>, HashMap<String, Object>>(), new HashMapFactory<String, Object>());
+            final Provider<Map<String, Object>> provider = Compositions.compose(new Narrow<Map<String, Object>, HashMap<String, Object>>(), new HashMapFactory<String, Object>());
             final MapBuilder<String, Object> builder = Maps.from(provider);
             Assert.assertNotNull(builder);
         }
@@ -68,7 +68,7 @@ public class MapsTest {
 
         @Test
         public void canCreateBuilderFromProvider() {
-            final Provider<Map<String, Object>> provider = Dispatching.compose(new Narrow<Map<String, Object>, HashMap<String, Object>>(), new HashMapFactory<String, Object>());
+            final Provider<Map<String, Object>> provider = Compositions.compose(new Narrow<Map<String, Object>, HashMap<String, Object>>(), new HashMapFactory<String, Object>());
             final NestedMapBuilder<String> builder = Nested.from(provider);
             Assert.assertNotNull(builder);
         }

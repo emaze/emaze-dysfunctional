@@ -5,10 +5,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import net.emaze.dysfunctional.Compositions;
 import net.emaze.dysfunctional.casts.Narrow;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.collections.HashMapFactory;
-import net.emaze.dysfunctional.Dispatching;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
@@ -24,7 +24,7 @@ import org.junit.Test;
 public class GroupByTest {
 
     private final Provider<HashMap<O, List<O>>> MAP_FACTORY = new HashMapFactory<O, List<O>>();
-    private final Provider<List<O>> LIST_FACTORY = Dispatching.compose(new Narrow<List<O>, ArrayList<O>>(), new ArrayListFactory<O>());
+    private final Provider<List<O>> LIST_FACTORY = Compositions.compose(new Narrow<List<O>, ArrayList<O>>(), new ArrayListFactory<O>());
     private final Delegate<O, O> GROUPER = new Identity<O>();
 
     @Test(expected = IllegalArgumentException.class)

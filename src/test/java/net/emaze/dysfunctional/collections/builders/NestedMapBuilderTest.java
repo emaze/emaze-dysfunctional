@@ -4,16 +4,16 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import net.emaze.dysfunctional.Casts;
+import net.emaze.dysfunctional.Compositions;
 import net.emaze.dysfunctional.casts.Narrow;
 import net.emaze.dysfunctional.collections.LinkedHashMapFactory;
-import net.emaze.dysfunctional.Dispatching;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class NestedMapBuilderTest {
 
-    private final Provider<Map<String, Object>> factory = Dispatching.compose(new Narrow<Map<String, Object>, LinkedHashMap<String, Object>>(), new LinkedHashMapFactory<String, Object>());
+    private final Provider<Map<String, Object>> factory = Compositions.compose(new Narrow<Map<String, Object>, LinkedHashMap<String, Object>>(), new LinkedHashMapFactory<String, Object>());
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingWithNullProviderYieldsException() {

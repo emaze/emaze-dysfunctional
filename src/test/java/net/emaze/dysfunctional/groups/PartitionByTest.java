@@ -3,9 +3,9 @@ package net.emaze.dysfunctional.groups;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import net.emaze.dysfunctional.Compositions;
 import net.emaze.dysfunctional.casts.Narrow;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
-import net.emaze.dysfunctional.Dispatching;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.Never;
@@ -22,7 +22,7 @@ import org.junit.Test;
  */
 public class PartitionByTest {
 
-    private final Provider<List<O>> LIST_FACTORY = Dispatching.compose(new Narrow<List<O>, ArrayList<O>>(), new ArrayListFactory<O>());
+    private final Provider<List<O>> LIST_FACTORY = Compositions.compose(new Narrow<List<O>, ArrayList<O>>(), new ArrayListFactory<O>());
     private final Predicate<O> PARTITIONER = new Always<O>();
 
     @Test(expected = IllegalArgumentException.class)

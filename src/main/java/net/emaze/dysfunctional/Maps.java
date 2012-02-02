@@ -63,7 +63,7 @@ public class Maps {
         }
 
         private static <M extends Map<K, Object>, K> Provider<Map<K, Object>> narrowed(Provider<M> provider) {
-            return Dispatching.compose(new Narrow<Map<K, Object>, M>(), provider);
+            return Compositions.compose(new Narrow<Map<K, Object>, M>(), provider);
         }
     }
 }
