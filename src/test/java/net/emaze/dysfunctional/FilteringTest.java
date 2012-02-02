@@ -17,18 +17,18 @@ import org.junit.Test;
  */
 public class FilteringTest {
 
-    final List<Integer> sampleList = Arrays.asList(1, 2);
+    final Iterable<Integer> sampleIterable = Iterations.iterable(1, 2);
     final Integer[] sampleArray = new Integer[]{1, 2};
 
     @Test
     public void canFilterAnIterator() {
-        Iterator<Integer> got = Filtering.filter(sampleList.iterator(), new Never<Integer>());
+        Iterator<Integer> got = Filtering.filter(sampleIterable.iterator(), new Never<Integer>());
         Assert.assertEquals(0, Consumers.all(got).size());
     }
 
     @Test
     public void canFilterAnIterable() {
-        Iterator<Integer> got = Filtering.filter(sampleList, new Never<Integer>());
+        Iterator<Integer> got = Filtering.filter(sampleIterable, new Never<Integer>());
         Assert.assertEquals(0, Consumers.all(got).size());
     }
 
@@ -52,13 +52,13 @@ public class FilteringTest {
 
     @Test
     public void canTakeLastFromIterator() {
-        Iterator<Integer> got = Filtering.takeLast(1, sampleList.iterator());
+        Iterator<Integer> got = Filtering.takeLast(1, sampleIterable.iterator());
         Assert.assertEquals(Arrays.asList(2), Consumers.all(got));
     }
 
     @Test
     public void canTakeLastFromIterable() {
-        Iterator<Integer> got = Filtering.takeLast(1, sampleList);
+        Iterator<Integer> got = Filtering.takeLast(1, sampleIterable);
         Assert.assertEquals(Arrays.asList(2), Consumers.all(got));
     }
 
@@ -76,25 +76,101 @@ public class FilteringTest {
 
     @Test
     public void canTakeWhileFromIterator() {
-        Iterator<Integer> got = Filtering.takeWhile(sampleList.iterator(), new Never<Integer>());
+        Iterator<Integer> got = Filtering.takeWhile(sampleIterable.iterator(), new Never<Integer>());
         Assert.assertEquals(0, Consumers.all(got).size());
     }
 
     @Test
     public void canDropWhileFromIterator() {
-        Iterator<Integer> got = Filtering.dropWhile(sampleList.iterator(), new Always<Integer>());
+        Iterator<Integer> got = Filtering.dropWhile(sampleIterable.iterator(), new Always<Integer>());
+        Assert.assertEquals(0, Consumers.all(got).size());
+    }
+
+    @Test
+    public void canTakeWhileFromIterable() {
+        Iterator<Integer> got = Filtering.takeWhile(sampleIterable, new Never<Integer>());
+        Assert.assertEquals(0, Consumers.all(got).size());
+    }
+
+    @Test
+    public void canDropWhileFromIterable() {
+        Iterator<Integer> got = Filtering.dropWhile(sampleIterable, new Always<Integer>());
+        Assert.assertEquals(0, Consumers.all(got).size());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void takeWhileFromNullIterableYieldsException() {
+        Iterable<Integer> nullIterable = null;
+        Iterator<Integer> got = Filtering.takeWhile(nullIterable, new Never<Integer>());
+        Assert.assertEquals(0, Consumers.all(got).size());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void dropWhileFromNullIterableYieldsException() {
+        Iterable<Integer> nullIterable = null;
+        Iterator<Integer> got = Filtering.dropWhile(nullIterable, new Always<Integer>());
+        Assert.assertEquals(0, Consumers.all(got).size());
+    }
+
+    @Test
+    public void canTakeWhileFromArray() {
+        Iterator<Integer> got = Filtering.takeWhile(sampleArray, new Never<Integer>());
+        Assert.assertEquals(0, Consumers.all(got).size());
+    }
+
+    @Test
+    public void canDropWhileFromArray() {
+        Iterator<Integer> got = Filtering.dropWhile(sampleArray, new Always<Integer>());
         Assert.assertEquals(0, Consumers.all(got).size());
     }
 
     @Test
     public void canTakeFromIterator() {
-        Iterator<Integer> got = Filtering.take(2, sampleList.iterator());
+        Iterator<Integer> got = Filtering.take(2, sampleIterable.iterator());
         Assert.assertEquals(Arrays.asList(1, 2), Consumers.all(got));
     }
 
     @Test
-    public void testDrop() {
-        Iterator<Integer> got = Filtering.drop(1, sampleList.iterator());
+    public void canTakeFromIterable() {
+        Iterator<Integer> got = Filtering.take(2, sampleIterable);
+        Assert.assertEquals(Arrays.asList(1, 2), Consumers.all(got));
+    }
+
+    @Test
+    public void canTakeFromArray() {
+        Iterator<Integer> got = Filtering.take(2, sampleArray);
+        Assert.assertEquals(Arrays.asList(1, 2), Consumers.all(got));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void takingFromNullIterableYieldsException() {
+        Iterable<Integer> nullIterable = null;
+        Iterator<Integer> got = Filtering.take(2, nullIterable);
+        Assert.assertEquals(Arrays.asList(1, 2), Consumers.all(got));
+    }
+
+    @Test
+    public void canDropFromIterator() {
+        Iterator<Integer> got = Filtering.drop(1, sampleIterable.iterator());
+        Assert.assertEquals(Arrays.asList(2), Consumers.all(got));
+    }
+
+    @Test
+    public void canDropFromIterable() {
+        Iterator<Integer> got = Filtering.drop(1, sampleIterable);
+        Assert.assertEquals(Arrays.asList(2), Consumers.all(got));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void droppingFromNullIterableYieldsException() {
+        Iterable<Integer> nullIterable = null;
+        Iterator<Integer> got = Filtering.drop(1, nullIterable);
+        Assert.assertEquals(Arrays.asList(2), Consumers.all(got));
+    }
+
+    @Test
+    public void canDropFromArray() {
+        Iterator<Integer> got = Filtering.drop(1, sampleArray);
         Assert.assertEquals(Arrays.asList(2), Consumers.all(got));
     }
 
