@@ -226,7 +226,7 @@ public abstract class Multiplexing {
      * Multiplexes an iterator of iterators into a single iterator. The
      * iteration stops when every source iterator is empty.E.g:
      * <code>
-     * muxl([1,2], [4]) -> [just 1, just 4, just 2, nothing]
+     * muxLongest([1,2], [4]) -> [just 1, just 4, just 2, nothing]
      * </code>
      *
      * @param <E>
@@ -234,7 +234,7 @@ public abstract class Multiplexing {
      * @param iterators
      * @return
      */
-    public static <E, T extends Iterator<E>> Iterator<Maybe<E>> muxl(Iterator<T> iterators) {
+    public static <E, T extends Iterator<E>> Iterator<Maybe<E>> muxLongest(Iterator<T> iterators) {
         return new PreciseMultiplexingIterator<E>(iterators);
     }
 
@@ -242,7 +242,7 @@ public abstract class Multiplexing {
      * Multiplexes an iterable of iterators into a single iterator. The
      * iteration stops when every source iterator is empty.E.g:
      * <code>
-     * muxl([1,2], [4]) -> [just 1, just 4, just 2, nothing]
+     * muxLongest([1,2], [4]) -> [just 1, just 4, just 2, nothing]
      * </code>
      *
      * @param <E>
@@ -250,16 +250,16 @@ public abstract class Multiplexing {
      * @param iterable
      * @return
      */
-    public static <E, T extends Iterator<E>> Iterator<Maybe<E>> muxl(Iterable<T> iterable) {
-        dbc.precondition(iterable != null, "cannot muxl a null iterable");
-        return muxl(iterable.iterator());
+    public static <E, T extends Iterator<E>> Iterator<Maybe<E>> muxLongest(Iterable<T> iterable) {
+        dbc.precondition(iterable != null, "cannot muxLongest a null iterable");
+        return muxLongest(iterable.iterator());
     }
 
     /**
      * Multiplexes two iterators into a single iterator. The iteration stops
      * when every source iterator is empty.E.g:
      * <code>
-     * muxl([1,2], [4]) -> [just 1, just 4, just 2, nothing]
+     * muxLongest([1,2], [4]) -> [just 1, just 4, just 2, nothing]
      * </code>
      *
      * @param <E>
@@ -267,15 +267,15 @@ public abstract class Multiplexing {
      * @param second
      * @return
      */
-    public static <E> Iterator<Maybe<E>> muxl(Iterator<E> first, Iterator<E> second) {
-        return muxl(Iterations.iterator(first, second));
+    public static <E> Iterator<Maybe<E>> muxLongest(Iterator<E> first, Iterator<E> second) {
+        return muxLongest(Iterations.iterator(first, second));
     }
 
     /**
      * Multiplexes three iterators into a single iterator. The iteration stops
      * when every source iterator is empty.E.g:
      * <code>
-     * muxl([1,2], [4], [5]) -> [just 1, just 4, just 5, just 2, nothing, nothing]
+     * muxLongest([1,2], [4], [5]) -> [just 1, just 4, just 5, just 2, nothing, nothing]
      * </code>
      *
      * @param <E>
@@ -284,8 +284,8 @@ public abstract class Multiplexing {
      * @param third
      * @return
      */
-    public static <E> Iterator<Maybe<E>> muxl(Iterator<E> first, Iterator<E> second, Iterator<E> third) {
-        return muxl(Iterations.iterator(first, second, third));
+    public static <E> Iterator<Maybe<E>> muxLongest(Iterator<E> first, Iterator<E> second, Iterator<E> third) {
+        return muxLongest(Iterations.iterator(first, second, third));
     }
 
     /**
@@ -372,7 +372,7 @@ public abstract class Multiplexing {
      * @param channelProvider
      * @return
      */
-    public static <C extends Collection<Maybe<E>>, E> Iterator<C> demuxl(int channelSize, Iterator<Maybe<E>> iterator, Provider<C> channelProvider) {
+    public static <C extends Collection<Maybe<E>>, E> Iterator<C> demuxLongest(int channelSize, Iterator<Maybe<E>> iterator, Provider<C> channelProvider) {
         return new PreciseDemultiplexingIterator<C, E>(channelSize, iterator, channelProvider);
     }
 
@@ -383,7 +383,7 @@ public abstract class Multiplexing {
      * @param iterator
      * @return
      */
-    public static <E> Iterator<List<Maybe<E>>> demuxl(int channelSize, Iterator<Maybe<E>> iterator) {
+    public static <E> Iterator<List<Maybe<E>>> demuxLongest(int channelSize, Iterator<Maybe<E>> iterator) {
         final Provider<List<Maybe<E>>> channelFactory = Compositions.compose(new Narrow<List<Maybe<E>>, ArrayList<Maybe<E>>>(), new ArrayListFactory<Maybe<E>>());
         return new PreciseDemultiplexingIterator<List<Maybe<E>>, E>(channelSize, iterator, channelFactory);
     }
@@ -397,8 +397,8 @@ public abstract class Multiplexing {
      * @param channelProvider
      * @return
      */
-    public static <C extends Collection<Maybe<E>>, E> Iterator<C> demuxl(int channelSize, Iterable<Maybe<E>> iterable, Provider<C> channelProvider) {
-        dbc.precondition(iterable != null, "cannot roundrobin a null iterable");
+    public static <C extends Collection<Maybe<E>>, E> Iterator<C> demuxLongest(int channelSize, Iterable<Maybe<E>> iterable, Provider<C> channelProvider) {
+        dbc.precondition(iterable != null, "cannot demuxLongest a null iterable");
         return new PreciseDemultiplexingIterator<C, E>(channelSize, iterable.iterator(), channelProvider);
     }
 
@@ -409,8 +409,8 @@ public abstract class Multiplexing {
      * @param iterable
      * @return
      */
-    public static <E> Iterator<List<Maybe<E>>> demuxl(int channelSize, Iterable<Maybe<E>> iterable) {
-        dbc.precondition(iterable != null, "cannot roundrobin a null iterable");
+    public static <E> Iterator<List<Maybe<E>>> demuxLongest(int channelSize, Iterable<Maybe<E>> iterable) {
+        dbc.precondition(iterable != null, "cannot demuxLongest a null iterable");
         final Provider<List<Maybe<E>>> channelFactory = Compositions.compose(new Narrow<List<Maybe<E>>, ArrayList<Maybe<E>>>(), new ArrayListFactory<Maybe<E>>());
         return new PreciseDemultiplexingIterator<List<Maybe<E>>, E>(channelSize, iterable.iterator(), channelFactory);
     }
@@ -424,8 +424,8 @@ public abstract class Multiplexing {
      * @param array
      * @return
      */
-    public static <C extends Collection<Maybe<E>>, E> Iterator<C> demuxl(int channelSize, Provider<C> channelProvider, Maybe<E>... array) {
-        return demuxl(channelSize, new ArrayIterator<Maybe<E>>(array), channelProvider);
+    public static <C extends Collection<Maybe<E>>, E> Iterator<C> demuxLongest(int channelSize, Provider<C> channelProvider, Maybe<E>... array) {
+        return demuxLongest(channelSize, new ArrayIterator<Maybe<E>>(array), channelProvider);
     }
 
     /**
@@ -435,8 +435,8 @@ public abstract class Multiplexing {
      * @param array
      * @return
      */
-    public static <E> Iterator<List<Maybe<E>>> demuxl(int channelSize, Maybe<E>... array) {
-        return demuxl(channelSize, new ArrayIterator<Maybe<E>>(array));
+    public static <E> Iterator<List<Maybe<E>>> demuxLongest(int channelSize, Maybe<E>... array) {
+        return demuxLongest(channelSize, new ArrayIterator<Maybe<E>>(array));
     }
 
     /**

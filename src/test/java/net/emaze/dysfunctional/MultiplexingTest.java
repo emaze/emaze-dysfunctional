@@ -140,32 +140,32 @@ public class MultiplexingTest {
         @Test(expected = IllegalArgumentException.class)
         public void cannotMuxLongestANullIterable() {
             final Iterable<Iterator<O>> iterable = null;
-            Multiplexing.muxl(iterable);
+            Multiplexing.muxLongest(iterable);
         }
 
         @Test
         public void canMuxLongestFromIterable() {
             final List<Iterator<O>> iterable = Arrays.asList(AN_ITERABLE.iterator());
-            final Iterator<Maybe<O>> muxed = Multiplexing.muxl(iterable);
+            final Iterator<Maybe<O>> muxed = Multiplexing.muxLongest(iterable);
             Assert.assertNotNull(muxed);
         }
 
         @Test
         public void canMuxLongestFromIterator() {
             final List<Iterator<O>> iterable = Arrays.asList(AN_ITERABLE.iterator());
-            final Iterator<Maybe<O>> muxed = Multiplexing.muxl(iterable.iterator());
+            final Iterator<Maybe<O>> muxed = Multiplexing.muxLongest(iterable.iterator());
             Assert.assertNotNull(muxed);
         }
 
         @Test
         public void canMuxLongestFromTwoValues() {
-            final Iterator<Maybe<O>> muxed = Multiplexing.muxl(AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
+            final Iterator<Maybe<O>> muxed = Multiplexing.muxLongest(AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
             Assert.assertNotNull(muxed);
         }
 
         @Test
         public void canMuxLongestFromThreeValues() {
-            final Iterator<Maybe<O>> muxed = Multiplexing.muxl(AN_ITERABLE.iterator(), AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
+            final Iterator<Maybe<O>> muxed = Multiplexing.muxLongest(AN_ITERABLE.iterator(), AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
             Assert.assertNotNull(muxed);
         }
     }
@@ -208,25 +208,25 @@ public class MultiplexingTest {
         @Test(expected = IllegalArgumentException.class)
         public void cannotDemuxlANullIterable() {
             final Iterable<Maybe<O>> iterable = null;
-            Multiplexing.demuxl(1, iterable);
+            Multiplexing.demuxLongest(1, iterable);
         }
 
         @Test
         public void canDemuxLongestFromIterable() {
             MaybeIterator<O> maybeIter = new MaybeIterator<O>(AN_ITERABLE.iterator());
-            Iterator<List<Maybe<O>>> demuxl = Multiplexing.demuxl(1, Iterations.oneTime(maybeIter));
+            Iterator<List<Maybe<O>>> demuxl = Multiplexing.demuxLongest(1, Iterations.oneTime(maybeIter));
             Assert.assertNotNull(demuxl);
         }
 
         @Test
         public void canDemuxLongestFromIterator() {
-            Iterator<List<Maybe<O>>> demuxl = Multiplexing.demuxl(1, new MaybeIterator<O>(AN_ITERABLE.iterator()));
+            Iterator<List<Maybe<O>>> demuxl = Multiplexing.demuxLongest(1, new MaybeIterator<O>(AN_ITERABLE.iterator()));
             Assert.assertNotNull(demuxl);
         }
 
         @Test
         public void canDemuxLongestFromArray() {
-            Iterator<List<Maybe<O>>> demuxl = Multiplexing.demuxl(1, Maybe.just(O.IGNORED), Maybe.<O>nothing());
+            Iterator<List<Maybe<O>>> demuxl = Multiplexing.demuxLongest(1, Maybe.just(O.IGNORED), Maybe.<O>nothing());
             Assert.assertNotNull(demuxl);
         }
     }
