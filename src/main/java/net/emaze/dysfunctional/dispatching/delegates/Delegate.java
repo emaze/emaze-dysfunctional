@@ -2,8 +2,8 @@ package net.emaze.dysfunctional.dispatching.delegates;
 
 /**
  * A unary functor
- * @param <R>
- * @param <T> 
+ * @param <R> the delegate return type
+ * @param <T> the delegate parameter type
  * @author rferranti
  */
 public interface Delegate<R,T> {

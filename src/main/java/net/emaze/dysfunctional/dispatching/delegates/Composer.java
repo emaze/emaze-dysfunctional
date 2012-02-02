@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.dispatching.delegates;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- * given f, g yields f ° g (f of g, f following g)
+ * Given f, g yields f ° g (f of g, f following g).
  * @param <R> the return Type
  * @param <T1> the former element Type
  * @param <T2> the latter element Type

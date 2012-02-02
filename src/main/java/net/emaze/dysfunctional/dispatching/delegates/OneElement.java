@@ -5,7 +5,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  * Searches for one element in the iterator, throws is zero or more than one element is found.
- * @param <E>
+ * @param <E> the iterator element type
  * @author rferranti
  */
 public class OneElement<E> implements Delegate<E, Iterator<E>> {

@@ -1,8 +1,8 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
 /**
- * Provides an instance of T.
- * @param <T>
+ * Constantly returns a value.
+ * @param <T> the provider return type
  * @author rferranti
  */
 public class ConstantProvider<T> implements Provider<T> {

@@ -4,8 +4,8 @@ import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- * gives up only after consuming the last element (and returns it)
- * @param <E> 
+ * Gives up only after consuming the last element (and returns it).
+ * @param <E> the iterator element type
  * @author rferranti
  */
 public class LastElement<E> implements Delegate<E,Iterator<E>>{
