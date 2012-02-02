@@ -66,8 +66,15 @@ public class StringsTest {
     public static class Interpose {
 
         @Test
-        public void canInterposeIntegers() {
+        public void canInterposeIteratorIntegers() {
             Iterator<Integer> values = Arrays.asList(1, 2, 3, 4, 5).iterator();
+            String output = Strings.interpose(values, 0);
+            Assert.assertEquals("102030405", output);
+        }
+
+        @Test
+        public void canInterposeIterable() {
+            Iterable<Integer> values = Arrays.asList(1, 2, 3, 4, 5);
             String output = Strings.interpose(values, 0);
             Assert.assertEquals("102030405", output);
         }
@@ -82,12 +89,14 @@ public class StringsTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void interposingNullValuesYieldsException() {
-            Strings.interpose((Iterator) null, 0);
+            final Iterator<Integer> iterator = null;
+            Strings.interpose(iterator, 0);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void interposingNullValuesYieldsExceptionOverload() {
-            Strings.interpose((Iterator) null, new ConstantIterator<Integer>(0));
+            final Iterator<Integer> iterator = null;
+            Strings.interpose(iterator, new ConstantIterator<Integer>(0));
         }
 
         @Test(expected = IllegalArgumentException.class)
