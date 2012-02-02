@@ -36,7 +36,7 @@ public abstract class Multiplexing {
      * @return the flattened iterator
      */
     public static <E, T extends Iterable<E>> Iterator<E> flatten(Iterator<T> iterables) {
-        return new ChainIterator<E>(Transforming.transform(iterables, new IteratorPlucker<E, T>()));
+        return new ChainIterator<E>(Applications.transform(iterables, new IteratorPlucker<E, T>()));
     }
 
     /**

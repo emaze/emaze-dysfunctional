@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.options.Either;
 import net.emaze.dysfunctional.options.Maybe;
@@ -19,7 +20,6 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    OptionsTest.Transform.class,
     OptionsTest.Lifts.class,
     OptionsTest.Drops.class,
     OptionsTest.Justs.class,
@@ -28,43 +28,6 @@ import org.junit.runners.Suite;
     OptionsTest.LeftAndRight.class
 })
 public class OptionsTest {
-
-    public static class Transform {
-
-        @Test
-        public void canTransformAnIteratorOfJusts() {
-            final Iterable<Maybe<O>> iter = Collections.singletonList(Maybe.just(O.ONE));
-            final Iterator<Maybe<O>> got = Options.transform(iter.iterator(), new Identity<O>());
-            Assert.assertEquals(O.ONE, got.next().value());
-        }
-
-        @Test
-        public void canTransformAnIteratorOfNothing() {
-            final Iterable<Maybe<O>> iter = Collections.singletonList(Maybe.<O>nothing());
-            final Iterator<Maybe<O>> got = Options.transform(iter.iterator(), new Identity<O>());
-            Assert.assertFalse(got.next().hasValue());
-        }
-
-        @Test
-        public void canTransformAnIterable() {
-            final Iterable<Maybe<O>> iter = Collections.singletonList(Maybe.just(O.ONE));
-            final Iterator<Maybe<O>> got = Options.transform(iter, new Identity<O>());
-            Assert.assertEquals(O.ONE, got.next().value());
-        }
-
-        @Test(expected = IllegalArgumentException.class)
-        public void transformNullIterableYieldsException() {
-            final Iterable<Maybe<O>> iterable = null;
-            Options.transform(iterable, new Identity<O>());
-        }
-
-        @Test
-        public void canTransformAnArray() {
-            final Maybe[] array = Collections.singletonList(Maybe.just(O.ONE)).toArray(new Maybe[]{});
-            final Iterator<Maybe<O>> got = Options.transform(array, new Identity<O>());
-            Assert.assertEquals(O.ONE, got.next().value());
-        }
-    }
 
     public static class Lifts {
 
@@ -165,7 +128,8 @@ public class OptionsTest {
 
         @Test
         public void canLift() {
-            final Maybe<Object> lifted = Options.lift(null);
+            Object anObject = null;
+            final Maybe<Object> lifted = Options.lift(anObject);
             Assert.assertFalse(lifted.hasValue());
         }
 

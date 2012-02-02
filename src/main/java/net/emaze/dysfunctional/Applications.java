@@ -17,7 +17,7 @@ import net.emaze.dysfunctional.iterations.TransformingIterator;
  *
  * @author rferranti
  */
-public class Transforming {
+public class Applications {
 
     /**
      * Applies a (lazy) transformation on every element of the iterable.

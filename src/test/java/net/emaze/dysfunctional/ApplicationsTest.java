@@ -20,46 +20,46 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    TransformingTest.Transform.class,
-    TransformingTest.Map.class,
-    TransformingTest.Tap.class,
-    TransformingTest.Each.class,
-    TransformingTest.Facade.class
+    ApplicationsTest.Transform.class,
+    ApplicationsTest.Map.class,
+    ApplicationsTest.Tap.class,
+    ApplicationsTest.Each.class,
+    ApplicationsTest.Facade.class
 })
-public class TransformingTest {
+public class ApplicationsTest {
 
     public static class Transform {
 
         @Test
         public void canTransformAnIterable() {
             List<Integer> source = Arrays.asList(1, 2, 3);
-            Iterator<Integer> got = Transforming.transform(source, new Identity<Integer>());
+            Iterator<Integer> got = Applications.transform(source, new Identity<Integer>());
             Assert.assertEquals(source, Consumers.all(got));
         }
 
         @Test
         public void canTransformAnIterator() {
             List<Integer> source = Arrays.asList(1, 2, 3);
-            Iterator<Integer> got = Transforming.transform(source.iterator(), new Identity<Integer>());
+            Iterator<Integer> got = Applications.transform(source.iterator(), new Identity<Integer>());
             Assert.assertEquals(source, Consumers.all(got));
         }
 
         @Test
         public void canTransformAnArray() {
             Integer[] source = new Integer[]{1, 2, 3};
-            Iterator<Integer> got = Transforming.transform(source, new Identity<Integer>());
+            Iterator<Integer> got = Applications.transform(source, new Identity<Integer>());
             Assert.assertEquals(Arrays.asList(source), Consumers.all(got));
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallTransformWithNullIterable() {
             final Iterable<Object> iterable = null;
-            Transforming.transform(iterable, new Identity<Object>());
+            Applications.transform(iterable, new Identity<Object>());
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallTransformWithNullDelegate() {
-            Transforming.transform(new ArrayList(), null);
+            Applications.transform(new ArrayList(), null);
         }
     }
 
@@ -68,21 +68,21 @@ public class TransformingTest {
         @Test
         public void canMapAnIterable() {
             List<Integer> source = Arrays.asList(1, 2, 3);
-            List<Integer> got = Transforming.map(source, new Identity<Integer>());
+            List<Integer> got = Applications.map(source, new Identity<Integer>());
             Assert.assertEquals(source, got);
         }
 
         @Test
         public void canMapAnIterator() {
             List<Integer> source = Arrays.asList(1, 2, 3);
-            List<Integer> got = Transforming.map(source.iterator(), new Identity<Integer>());
+            List<Integer> got = Applications.map(source.iterator(), new Identity<Integer>());
             Assert.assertEquals(source, got);
         }
 
         @Test
         public void canMapAnArray() {
             Integer[] source = new Integer[]{1, 2, 3};
-            List<Integer> got = Transforming.map(source, new Identity<Integer>());
+            List<Integer> got = Applications.map(source, new Identity<Integer>());
             Assert.assertEquals(Arrays.asList(source), got);
         }
     }
@@ -93,7 +93,7 @@ public class TransformingTest {
         public void canTapAnIterable() {
             final Iterable<O> source = Iterations.iterable(O.ONE);
             final Box<O> box = new Box<O>();
-            final Iterator<O> tap = Transforming.tap(source, Spies.spy(new Noop<O>(), box));
+            final Iterator<O> tap = Applications.tap(source, Spies.spy(new Noop<O>(), box));
             Consumers.all(tap);
             Assert.assertEquals(O.ONE, box.getContent());
         }
@@ -102,7 +102,7 @@ public class TransformingTest {
         public void canTapAnIterator() {
             final Iterator<O> source = Iterations.iterator(O.ONE);
             final Box<O> box = new Box<O>();
-            final Iterator<O> tap = Transforming.tap(source, Spies.spy(new Noop<O>(), box));
+            final Iterator<O> tap = Applications.tap(source, Spies.spy(new Noop<O>(), box));
             Consumers.all(tap);
             Assert.assertEquals(O.ONE, box.getContent());
         }
@@ -111,7 +111,7 @@ public class TransformingTest {
         public void canTapAnArray() {
             final O[] source = {O.ONE};
             final Box<O> box = new Box<O>();
-            final Iterator<O> tap = Transforming.tap(source, Spies.spy(new Noop<O>(), box));
+            final Iterator<O> tap = Applications.tap(source, Spies.spy(new Noop<O>(), box));
             Consumers.all(tap);
             Assert.assertEquals(O.ONE, box.getContent());
         }
@@ -132,34 +132,34 @@ public class TransformingTest {
         @Test
         public void eachPerformsActionForEachElementInIterable() {
             CountingAction<Object> counter = new CountingAction<Object>();
-            Transforming.each(Arrays.asList(new Object(), new Object()), counter);
+            Applications.each(Arrays.asList(new Object(), new Object()), counter);
             Assert.assertEquals(2, counter.count);
         }
 
         @Test
         public void canUseEeachWithIterators() {
             CountingAction<Object> counter = new CountingAction<Object>();
-            Transforming.each(Arrays.asList(new Object(), new Object()).iterator(), counter);
+            Applications.each(Arrays.asList(new Object(), new Object()).iterator(), counter);
             Assert.assertEquals(2, counter.count);
         }
 
         @Test
         public void canUseAnyWithArrays() {
             CountingAction<Object> counter = new CountingAction<Object>();
-            Transforming.each(new Object[]{new Object(), new Object()}, counter);
+            Applications.each(new Object[]{new Object(), new Object()}, counter);
             Assert.assertEquals(2, counter.count);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallEachWithNullIterable() {
             final Iterable<Object> iterable = null;
-            Transforming.each(iterable, new Noop<Object>());
+            Applications.each(iterable, new Noop<Object>());
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallEachWithNullAction() {
             final Iterable<Object> iterable = new ArrayList<Object>();
-            Transforming.each(iterable, null);
+            Applications.each(iterable, null);
         }
     }
 
@@ -167,7 +167,7 @@ public class TransformingTest {
 
         @Test
         public void facadeIsNotFinal() {
-            new Transforming() {
+            new Applications() {
             };
         }
     }
