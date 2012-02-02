@@ -1,10 +1,5 @@
 package net.emaze.dysfunctional;
 
-import java.util.Iterator;
-import net.emaze.dysfunctional.dispatching.TransformingBinaryPredicate;
-import net.emaze.dysfunctional.dispatching.TransformingPredicate;
-import net.emaze.dysfunctional.dispatching.TransformingProvider;
-import net.emaze.dysfunctional.dispatching.TransformingTernaryPredicate;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
@@ -61,9 +56,7 @@ import net.emaze.dysfunctional.dispatching.adapting.TernaryDelegateToTernaryActi
 import net.emaze.dysfunctional.dispatching.adapting.TernaryDelegateToTernaryPredicate;
 import net.emaze.dysfunctional.dispatching.adapting.TernaryPredicateToTernaryDelegate;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
-import net.emaze.dysfunctional.dispatching.delegates.Composer;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
-import net.emaze.dysfunctional.dispatching.delegates.EndoDelegatesComposer;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
