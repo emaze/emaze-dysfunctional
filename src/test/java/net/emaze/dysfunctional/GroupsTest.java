@@ -60,6 +60,13 @@ public class GroupsTest {
         }
 
         @Test
+        public void canGroupFromAnArray() {
+            final O[] values = {O.ONE};
+            final Map<O, List<O>> grouped = Groups.groupBy(values, new Identity<O>());
+            Assert.assertEquals(Arrays.asList(O.ONE), grouped.get(O.ONE));
+        }
+
+        @Test
         public void canGroupFromAnIterableUsingProvider() {
             final Iterable<O> values = Iterations.iterable(O.ONE);
             final Map<O, ArrayList<O>> grouped = Groups.groupBy(values, new Identity<O>(), LIST_FACTORY);
@@ -74,6 +81,13 @@ public class GroupsTest {
         }
 
         @Test
+        public void canGroupFromAnArrayUsingProvider() {
+            final O[] values = {O.ONE};
+            final Map<O, ArrayList<O>> grouped = Groups.groupBy(values, new Identity<O>(), LIST_FACTORY);
+            Assert.assertEquals(Arrays.asList(O.ONE), grouped.get(O.ONE));
+        }
+
+        @Test
         public void canGroupFromAnIterableUsingProviders() {
             final Iterable<O> values = Iterations.iterable(O.ONE);
             final Map<O, ArrayList<O>> grouped = Groups.groupBy(values, new Identity<O>(), LIST_FACTORY, MAP_FACTORY);
@@ -83,6 +97,13 @@ public class GroupsTest {
         @Test
         public void canGroupFromAnIteratorUsingProviders() {
             final Iterator<O> values = Iterations.iterator(O.ONE);
+            final Map<O, ArrayList<O>> grouped = Groups.groupBy(values, new Identity<O>(), LIST_FACTORY, MAP_FACTORY);
+            Assert.assertEquals(Arrays.asList(O.ONE), grouped.get(O.ONE));
+        }
+
+        @Test
+        public void canGroupFromAnArrayUsingProviders() {
+            final O[] values = {O.ONE};
             final Map<O, ArrayList<O>> grouped = Groups.groupBy(values, new Identity<O>(), LIST_FACTORY, MAP_FACTORY);
             Assert.assertEquals(Arrays.asList(O.ONE), grouped.get(O.ONE));
         }
@@ -123,6 +144,13 @@ public class GroupsTest {
         }
 
         @Test
+        public void canPartitionFromAnArray() {
+            final O[] values = {O.ONE};
+            final Pair<List<O>, List<O>> partitioned = Groups.partition(values, new Always<O>());
+            Assert.assertEquals(Arrays.asList(O.ONE), partitioned.first());
+        }
+
+        @Test
         public void canPartitionFromAnIterableUsingProvider() {
             final Iterable<O> values = Iterations.iterable(O.ONE);
             final Pair<ArrayList<O>, ArrayList<O>> partitioned = Groups.partition(values, new Always<O>(), LIST_FACTORY);
@@ -137,6 +165,13 @@ public class GroupsTest {
         }
 
         @Test
+        public void canPartitionFromAnArrayUsingProvider() {
+            final O[] values = {O.ONE};
+            final Pair<ArrayList<O>, ArrayList<O>> partitioned = Groups.partition(values, new Always<O>(), LIST_FACTORY);
+            Assert.assertEquals(Arrays.asList(O.ONE), partitioned.first());
+        }
+
+        @Test
         public void canPartitionFromAnIterableUsingProviders() {
             final Iterable<O> values = Iterations.iterable(O.ONE);
             final Pair<ArrayList<O>, HashSet<O>> partitioned = Groups.partition(values, new Always<O>(), LIST_FACTORY, SET_FACTORY);
@@ -146,6 +181,13 @@ public class GroupsTest {
         @Test
         public void canPartitionFromAnIteratorUsingProviders() {
             final Iterator<O> values = Iterations.iterator(O.ONE);
+            final Pair<ArrayList<O>, HashSet<O>> partitioned = Groups.partition(values, new Always<O>(), LIST_FACTORY, SET_FACTORY);
+            Assert.assertEquals(Arrays.asList(O.ONE), partitioned.first());
+        }
+
+        @Test
+        public void canPartitionFromAnArrayUsingProviders() {
+            final O[] values = {O.ONE};
             final Pair<ArrayList<O>, HashSet<O>> partitioned = Groups.partition(values, new Always<O>(), LIST_FACTORY, SET_FACTORY);
             Assert.assertEquals(Arrays.asList(O.ONE), partitioned.first());
         }
@@ -180,6 +222,21 @@ public class GroupsTest {
         }
 
         @Test(expected = IllegalArgumentException.class)
+        public void indexByUsingProviderWithNullIterableYieldsException() {
+            final Delegate<O, O> delegate = new Identity<O>();
+            final Provider<HashMap<O, O>> mapProvider = new HashMapFactory<O, O>();
+            final Iterable<O> nullIterable = null;
+            Groups.indexBy(nullIterable, delegate, mapProvider);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void indexByWithNullIterableYieldsException() {
+            final Delegate<O, O> delegate = new Identity<O>();
+            final Iterable<O> nullIterable = null;
+            Groups.indexBy(nullIterable, delegate);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
         public void indexByWithNullDelegateYieldsException() {
             final Iterator<O> iterator = Iterations.iterator();
             final Provider<HashMap<O, O>> mapProvider = new HashMapFactory<O, O>();
@@ -201,6 +258,57 @@ public class GroupsTest {
             final Provider<LinkedHashMap<O, O>> provider = new LinkedHashMapFactory<O, O>();
             final Map<O, O> indexed = Groups.indexBy(iterator, delegate, provider);
             Assert.assertEquals(Arrays.asList(O.ONE, O.ANOTHER), new ArrayList<O>(indexed.values()));
+        }
+
+        @Test
+        public void canIndexUsingIterable() {
+            final Iterable<O> iterable = Iterations.iterable(O.ONE, O.ANOTHER);
+            final Delegate<O, O> delegate = new Identity<O>();
+            final Map<O, O> indexed = Groups.indexBy(iterable, delegate);
+            Assert.assertNotNull(indexed);
+        }
+
+        @Test
+        public void canIndexUsingIterator() {
+            final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER);
+            final Delegate<O, O> delegate = new Identity<O>();
+            final Map<O, O> indexed = Groups.indexBy(iterator, delegate);
+            Assert.assertNotNull(indexed);
+        }
+
+        @Test
+        public void canIndexUsingArray() {
+            final O[] array = {O.ONE, O.ANOTHER};
+            final Delegate<O, O> delegate = new Identity<O>();
+            final Map<O, O> indexed = Groups.indexBy(array, delegate);
+            Assert.assertNotNull(indexed);
+        }
+
+        @Test
+        public void canIndexUsingIterableAndProvider() {
+            final Iterable<O> iterable = Iterations.iterable(O.ONE, O.ANOTHER);
+            final Delegate<O, O> delegate = new Identity<O>();
+            final Provider<LinkedHashMap<O, O>> provider = new LinkedHashMapFactory<O, O>();
+            final Map<O, O> indexed = Groups.indexBy(iterable, delegate, provider);
+            Assert.assertNotNull(indexed);
+        }
+
+        @Test
+        public void canIndexUsingIteratorAndProvider() {
+            final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER);
+            final Delegate<O, O> delegate = new Identity<O>();
+            final Provider<LinkedHashMap<O, O>> provider = new LinkedHashMapFactory<O, O>();
+            final Map<O, O> indexed = Groups.indexBy(iterator, delegate, provider);
+            Assert.assertNotNull(indexed);
+        }
+
+        @Test
+        public void canIndexUsingArrayAndProvider() {
+            final O[] array = {O.ONE, O.ANOTHER};
+            final Delegate<O, O> delegate = new Identity<O>();
+            final Provider<LinkedHashMap<O, O>> provider = new LinkedHashMapFactory<O, O>();
+            final Map<O, O> indexed = Groups.indexBy(array, delegate, provider);
+            Assert.assertNotNull(indexed);
         }
     }
 
