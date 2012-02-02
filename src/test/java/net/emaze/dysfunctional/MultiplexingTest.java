@@ -1,8 +1,11 @@
 package net.emaze.dysfunctional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import net.emaze.dysfunctional.collections.ArrayListFactory;
+import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.options.MaybeIterator;
 import net.emaze.dysfunctional.testing.O;
@@ -22,7 +25,7 @@ import org.junit.runners.Suite;
     MultiplexingTest.Mux.class,
     MultiplexingTest.Muxl.class,
     MultiplexingTest.Demux.class,
-    MultiplexingTest.Demuxl.class,
+    MultiplexingTest.DemuxLongest.class,
     MultiplexingTest.Roundrobin.class,
     MultiplexingTest.Facade.class
 })
@@ -178,6 +181,13 @@ public class MultiplexingTest {
             Multiplexing.demux(1, iterable);
         }
 
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotDemuxNullIterableUsingProvider() {
+            final Provider<ArrayList<O>> provider = new ArrayListFactory<O>();
+            final Iterable<O> iterable = null;
+            Multiplexing.demux(1, iterable, provider);
+        }
+
         @Test
         public void canDemuxFromIterable() {
             Iterator<List<O>> demux = Multiplexing.demux(1, AN_ITERABLE);
@@ -187,6 +197,27 @@ public class MultiplexingTest {
         @Test
         public void canDemuxFromIterator() {
             Iterator<List<O>> demux = Multiplexing.demux(1, AN_ITERABLE.iterator());
+            Assert.assertNotNull(demux);
+        }
+
+        @Test
+        public void canDemuxFromIteratorUsingProvider() {
+            Provider<ArrayList<O>> provider = new ArrayListFactory<O>();
+            Iterator<ArrayList<O>> demux = Multiplexing.demux(1, AN_ITERABLE.iterator(), provider);
+            Assert.assertNotNull(demux);
+        }
+
+        @Test
+        public void canDemuxFromIterableUsingProvider() {
+            Provider<ArrayList<O>> provider = new ArrayListFactory<O>();
+            Iterator<ArrayList<O>> demux = Multiplexing.demux(1, AN_ITERABLE, provider);
+            Assert.assertNotNull(demux);
+        }
+
+        @Test
+        public void canDemuxFromArrayUsingProvider() {
+            Provider<ArrayList<O>> provider = new ArrayListFactory<O>();
+            Iterator<ArrayList<O>> demux = Multiplexing.demux(1, provider, O.ONE, O.ANOTHER);
             Assert.assertNotNull(demux);
         }
 
@@ -203,12 +234,19 @@ public class MultiplexingTest {
         }
     }
 
-    public static class Demuxl {
+    public static class DemuxLongest {
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotDemuxlANullIterable() {
             final Iterable<Maybe<O>> iterable = null;
             Multiplexing.demuxLongest(1, iterable);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotDemuxlANullIterableWithProvider() {
+            Provider<ArrayList<Maybe<O>>> provider = new ArrayListFactory<Maybe<O>>();
+            final Iterable<Maybe<O>> iterable = null;
+            Multiplexing.demuxLongest(1, iterable, provider);
         }
 
         @Test
@@ -227,6 +265,28 @@ public class MultiplexingTest {
         @Test
         public void canDemuxLongestFromArray() {
             Iterator<List<Maybe<O>>> demuxl = Multiplexing.demuxLongest(1, Maybe.just(O.IGNORED), Maybe.<O>nothing());
+            Assert.assertNotNull(demuxl);
+        }
+
+        @Test
+        public void canDemuxLongestFromIterableWithProvider() {
+            Provider<ArrayList<Maybe<O>>> provider = new ArrayListFactory<Maybe<O>>();
+            MaybeIterator<O> maybeIter = new MaybeIterator<O>(AN_ITERABLE.iterator());
+            Iterator<ArrayList<Maybe<O>>> demuxl = Multiplexing.demuxLongest(1, Iterations.oneTime(maybeIter), provider);
+            Assert.assertNotNull(demuxl);
+        }
+
+        @Test
+        public void canDemuxLongestFromIteratorWithProvider() {
+            Provider<ArrayList<Maybe<O>>> provider = new ArrayListFactory<Maybe<O>>();
+            Iterator<ArrayList<Maybe<O>>> demuxl = Multiplexing.demuxLongest(1, new MaybeIterator<O>(AN_ITERABLE.iterator()), provider);
+            Assert.assertNotNull(demuxl);
+        }
+
+        @Test
+        public void canDemuxLongestFromArrayWithProvider() {
+            Provider<ArrayList<Maybe<O>>> provider = new ArrayListFactory<Maybe<O>>();
+            Iterator<ArrayList<Maybe<O>>> demuxl = Multiplexing.demuxLongest(1, provider, Maybe.just(O.IGNORED), Maybe.<O>nothing());
             Assert.assertNotNull(demuxl);
         }
     }
