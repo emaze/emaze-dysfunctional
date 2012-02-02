@@ -41,7 +41,7 @@ public class MapsTest {
 
         @Test
         public void canCreateEmptyUnsortedBuilder() {
-            final MapBuilder<String, Object> builder = Maps.unsorted();
+            final MapBuilder<String, Object> builder = Maps.builder();
             Assert.assertNotNull(builder);
         }
 
@@ -75,7 +75,7 @@ public class MapsTest {
 
         @Test
         public void canCreateEmptyUnsortedBuilder() {
-            final MapTreeBuilder<String> builder = Nested.unsorted();
+            final MapTreeBuilder<String> builder = Nested.builder();
             Assert.assertNotNull(builder);
         }
 

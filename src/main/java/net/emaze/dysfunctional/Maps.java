@@ -24,7 +24,7 @@ public class Maps {
         return new MapBuilder<K, V>(provider.provide());
     }
 
-    public static <K, V> MapBuilder<K, V> unsorted() {
+    public static <K, V> MapBuilder<K, V> builder() {
         return new MapBuilder<K, V>(new HashMap<K, V>());
     }
 
@@ -46,7 +46,7 @@ public class Maps {
             return new MapTreeBuilder<K>(provider);
         }
 
-        public static <K> MapTreeBuilder<K> unsorted() {
+        public static <K> MapTreeBuilder<K> builder() {
             return new MapTreeBuilder<K>(narrowed(new HashMapFactory<K, Object>()));
         }
 
