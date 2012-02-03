@@ -33,14 +33,14 @@ public class CastsTest {
     @Test
     public void canGetWidener() {
         final A a = new B();
-        final Delegate<B, A> widener = Casts.widen();
+        final Delegate<B, A> widener = Casts.widener();
         Assert.assertNotNull(widener.perform(a));
     }
 
     @Test
     public void canGetNarrower() {
         final B b = new B();
-        final Delegate<A, B> narrower = Casts.narrow();
+        final Delegate<A, B> narrower = Casts.narrower();
         final A got = narrower.perform(b);
         Assert.assertNotNull(got);
     }
@@ -48,7 +48,7 @@ public class CastsTest {
     @Test
     public void canGetVariator() {
         final B b = new B();
-        final Delegate<A, B> variator = Casts.vary();
+        final Delegate<A, B> variator = Casts.variator();
         final A got = variator.perform(b);
         Assert.assertNotNull(got);
     }

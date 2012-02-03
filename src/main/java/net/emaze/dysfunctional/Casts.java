@@ -26,7 +26,7 @@ public abstract class Casts {
      * @param <R>
      * @return
      */
-    public static <T, R extends T> Delegate<R, T> widen() {
+    public static <T, R extends T> Delegate<R, T> widener() {
         return new Vary<R, T>();
     }
 
@@ -47,7 +47,7 @@ public abstract class Casts {
      * @param <T>
      * @return
      */
-    public static <R, T extends R> Delegate<R, T> narrow() {
+    public static <R, T extends R> Delegate<R, T> narrower() {
         return new Vary<R, T>();
     }
 
@@ -57,7 +57,7 @@ public abstract class Casts {
      * @param <R>
      * @return
      */
-    public static <R, T> Delegate<R, T> vary() {
+    public static <R, T> Delegate<R, T> variator() {
         return new Vary<R, T>();
     }
 }
