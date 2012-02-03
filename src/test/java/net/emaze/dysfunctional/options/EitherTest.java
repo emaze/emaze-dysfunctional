@@ -88,6 +88,13 @@ public class EitherTest {
             }, new Identity<Object>());
             Assert.assertEquals(leftValue, box.getContent());
         }
+
+        @Test
+        public void canFlipAnEither() {
+            final Either<String, Integer> either = Either.right(1);
+            final Either<Integer, String> flipped = either.flip();
+            Assert.assertFalse(flipped.maybe().hasValue());
+        }
     }
 
     public static class Degenerations {

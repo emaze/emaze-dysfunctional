@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.options;
 
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import org.junit.Assert;
@@ -72,5 +72,22 @@ public class MaybeTest {
     @Test
     public void toStringOfJustReflectsValue() {
         Assert.assertEquals("Just 1", Maybe.just(1).toString());
+    }
+
+    @Test
+    public void transformingNothingToEitherYieldsLeft() {
+        final int marker = 0;
+        final Either<Integer, Object> either = Maybe.nothing().either(new ConstantProvider<Integer>(marker));
+        final Maybe<Integer> perform = new MaybeLeft<Integer, Object>().perform(either);
+        Assert.assertEquals(marker, perform.value().intValue());
+    }
+
+    @Test
+    public void transformingJustSomethingToEitherYieldsRight() {
+        final int left = 0;
+        final int right = 1;
+        final Either<Integer, Integer> either = Maybe.just(right).either(new ConstantProvider<Integer>(left));
+        final Maybe<Integer> perform = new MaybeRight<Integer, Integer>().perform(either);
+        Assert.assertEquals(right, perform.value().intValue());
     }
 }
