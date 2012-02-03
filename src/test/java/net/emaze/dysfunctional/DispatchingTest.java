@@ -304,95 +304,94 @@ public class DispatchingTest {
 
         @Test
         public void canIgnoreFirstForPredicates() {
-            BinaryPredicate<O, O> ignoring = Dispatching.ignore1st(new Always<O>(), O.class);
+            final BinaryPredicate<O, O> ignoring = Dispatching.ignore1st(new Always<O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
         @Test
         public void canIgnoreFirstForBinaryPredicates() {
-            TernaryPredicate<O, O, O> ignoring = Dispatching.ignore1st(new BinaryAlways<O, O>(), O.class);
+            final TernaryPredicate<O, O, O> ignoring = Dispatching.ignore1st(new BinaryAlways<O, O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
         @Test
         public void canIgnoreSecondForPredicates() {
-            BinaryPredicate<O, O> ignoring = Dispatching.ignore2nd(new Always<O>(), O.class);
+            final BinaryPredicate<O, O> ignoring = Dispatching.ignore2nd(new Always<O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
         @Test
         public void canIgnoreSecondForBinaryPredicates() {
-            TernaryPredicate<O, O, O> ignoring = Dispatching.ignore2nd(new BinaryAlways<O, O>(), O.class);
+            final TernaryPredicate<O, O, O> ignoring = Dispatching.ignore2nd(new BinaryAlways<O, O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
         @Test
         public void canIgnoreThirdForBinaryPredicates() {
-            TernaryPredicate<O, O, O> ignoring = Dispatching.ignore3rd(new BinaryAlways<O, O>(), O.class);
+            final TernaryPredicate<O, O, O> ignoring = Dispatching.ignore3rd(new BinaryAlways<O, O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
         @Test
         public void canIgnoreFirstForActions() {
-            BinaryAction<O, O> ignoring = Dispatching.ignore1st(new Noop<O>(), O.class);
+            final BinaryAction<O, O> ignoring = Dispatching.ignore1st(new Noop<O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
         @Test
         public void canIgnoreFirstForBinaryActions() {
-            TernaryAction<O, O, O> ignoring = Dispatching.ignore1st(new BinaryNoop<O, O>(), O.class);
+            final TernaryAction<O, O, O> ignoring = Dispatching.ignore1st(new BinaryNoop<O, O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
         @Test
         public void canIgnoreSecondForActions() {
-            BinaryAction<O, O> ignoring = Dispatching.ignore2nd(new Noop<O>(), O.class);
+            final BinaryAction<O, O> ignoring = Dispatching.ignore2nd(new Noop<O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
         @Test
         public void canIgnoreSecondForBinaryActions() {
-            TernaryAction<O, O, O> ignoring = Dispatching.ignore2nd(new BinaryNoop<O, O>(), O.class);
+            final TernaryAction<O, O, O> ignoring = Dispatching.ignore2nd(new BinaryNoop<O, O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
         @Test
         public void canIgnoreThirdForBinaryActions() {
-            TernaryAction<O, O, O> ignoring = Dispatching.ignore3rd(new BinaryNoop<O, O>(), O.class);
+            final TernaryAction<O, O, O> ignoring = Dispatching.ignore3rd(new BinaryNoop<O, O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
         @Test
         public void canIgnoreFirstForDelegates() {
-            BinaryDelegate<O, O, O> ignoring = Dispatching.ignore1st(new Identity<O>(), O.class);
+            final BinaryDelegate<O, O, O> ignoring = Dispatching.ignore1st(new Identity<O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
         @Test
         public void canIgnoreFirstForBinaryDelegates() {
-            TernaryDelegate<O, O, O, O> ignoring = Dispatching.ignore1st(new FirstParam<O, O>(), O.class);
+            final TernaryDelegate<O, O, O, O> ignoring = Dispatching.ignore1st(new FirstParam<O, O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
         @Test
         public void canIgnoreSecondForDelegates() {
-            BinaryDelegate<O, O, O> ignoring = Dispatching.ignore2nd(new Identity<O>(), O.class);
+            final BinaryDelegate<O, O, O> ignoring = Dispatching.ignore2nd(new Identity<O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
         @Test
         public void canIgnoreSecondForBinaryDelegates() {
-            TernaryDelegate<O, O, O, O> ignoring = Dispatching.ignore2nd(new FirstParam<O, O>(), O.class);
+            final TernaryDelegate<O, O, O, O> ignoring = Dispatching.ignore2nd(new FirstParam<O, O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
         @Test
         public void canIgnoreThirdForBinaryDelegates() {
-            TernaryDelegate<O, O, O, O> ignoring = Dispatching.ignore3rd(new FirstParam<O, O>(), O.class);
+            final TernaryDelegate<O, O, O, O> ignoring = Dispatching.ignore3rd(new FirstParam<O, O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
     }
-
 
     public static class Facade {
 

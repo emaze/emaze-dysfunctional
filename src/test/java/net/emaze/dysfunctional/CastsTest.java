@@ -31,6 +31,13 @@ public class CastsTest {
     }
 
     @Test
+    public void canCastUsingVary() {
+        final B b = new B();
+        final A a = Casts.vary(b);
+        Assert.assertNotNull(a);
+    }
+
+    @Test
     public void canGetWidener() {
         final A a = new B();
         final Delegate<B, A> widener = Casts.widener();

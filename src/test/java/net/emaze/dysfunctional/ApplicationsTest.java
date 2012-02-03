@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 import junit.framework.Assert;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
@@ -32,22 +33,22 @@ public class ApplicationsTest {
 
         @Test
         public void canTransformAnIterable() {
-            List<Integer> source = Arrays.asList(1, 2, 3);
-            Iterator<Integer> got = Applications.transform(source, new Identity<Integer>());
+            final Iterable<Integer> source = Arrays.asList(1, 2, 3);
+            final Iterator<Integer> got = Applications.transform(source, new Identity<Integer>());
             Assert.assertEquals(source, Consumers.all(got));
         }
 
         @Test
         public void canTransformAnIterator() {
-            List<Integer> source = Arrays.asList(1, 2, 3);
-            Iterator<Integer> got = Applications.transform(source.iterator(), new Identity<Integer>());
+            final Iterable<Integer> source = Arrays.asList(1, 2, 3);
+            final Iterator<Integer> got = Applications.transform(source.iterator(), new Identity<Integer>());
             Assert.assertEquals(source, Consumers.all(got));
         }
 
         @Test
         public void canTransformAnArray() {
-            Integer[] source = new Integer[]{1, 2, 3};
-            Iterator<Integer> got = Applications.transform(source, new Identity<Integer>());
+            final Integer[] source = new Integer[]{1, 2, 3};
+            final Iterator<Integer> got = Applications.transform(source, new Identity<Integer>());
             Assert.assertEquals(Arrays.asList(source), Consumers.all(got));
         }
 
@@ -67,28 +68,28 @@ public class ApplicationsTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void mappingNullIterableYieldsException() {
-            Iterable<Integer> source = null;
+            final Iterable<Integer> source = null;
             Applications.map(source, new Identity<Integer>());
         }
 
         @Test
         public void canMapAnIterable() {
-            List<Integer> source = Arrays.asList(1, 2, 3);
-            List<Integer> got = Applications.map(source, new Identity<Integer>());
+            final List<Integer> source = Arrays.asList(1, 2, 3);
+            final List<Integer> got = Applications.map(source, new Identity<Integer>());
             Assert.assertEquals(source, got);
         }
 
         @Test
         public void canMapAnIterator() {
-            List<Integer> source = Arrays.asList(1, 2, 3);
-            List<Integer> got = Applications.map(source.iterator(), new Identity<Integer>());
+            final List<Integer> source = Arrays.asList(1, 2, 3);
+            final List<Integer> got = Applications.map(source.iterator(), new Identity<Integer>());
             Assert.assertEquals(source, got);
         }
 
         @Test
         public void canMapAnArray() {
-            Integer[] source = new Integer[]{1, 2, 3};
-            List<Integer> got = Applications.map(source, new Identity<Integer>());
+            final Integer[] source = new Integer[]{1, 2, 3};
+            final List<Integer> got = Applications.map(source, new Identity<Integer>());
             Assert.assertEquals(Arrays.asList(source), got);
         }
     }
@@ -125,35 +126,28 @@ public class ApplicationsTest {
 
     public static class Each {
 
-        public static class CountingAction<T> implements Action<T> {
-
-            public int count = 0;
-
-            @Override
-            public void perform(T element) {
-                ++count;
-            }
-        }
-
         @Test
         public void eachPerformsActionForEachElementInIterable() {
-            CountingAction<Object> counter = new CountingAction<Object>();
+            final AtomicLong calls = new AtomicLong();
+            final Action<Object> counter = Spies.monitor(new Noop<Object>(), calls);
             Applications.each(Arrays.asList(new Object(), new Object()), counter);
-            Assert.assertEquals(2, counter.count);
+            Assert.assertEquals(2l, calls.get());
         }
 
         @Test
         public void canUseEeachWithIterators() {
-            CountingAction<Object> counter = new CountingAction<Object>();
+            final AtomicLong calls = new AtomicLong();
+            final Action<Object> counter = Spies.monitor(new Noop<Object>(), calls);
             Applications.each(Arrays.asList(new Object(), new Object()).iterator(), counter);
-            Assert.assertEquals(2, counter.count);
+            Assert.assertEquals(2l, calls.get());
         }
 
         @Test
         public void canUseAnyWithArrays() {
-            CountingAction<Object> counter = new CountingAction<Object>();
+            final AtomicLong calls = new AtomicLong();
+            final Action<Object> counter = Spies.monitor(new Noop<Object>(), calls);
             Applications.each(new Object[]{new Object(), new Object()}, counter);
-            Assert.assertEquals(2, counter.count);
+            Assert.assertEquals(2l, calls.get());
         }
 
         @Test(expected = IllegalArgumentException.class)
@@ -164,7 +158,7 @@ public class ApplicationsTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallEachWithNullAction() {
-            final Iterable<Object> iterable = new ArrayList<Object>();
+            final Iterable<Object> iterable = Iterations.iterable();
             Applications.each(iterable, null);
         }
     }

@@ -17,39 +17,39 @@ public class CompositionsTest {
 
     @Test
     public void canComposeTwoDelegates() {
-        Delegate<O, O> composed = Compositions.compose(new Identity<O>(), new Identity<O>());
+        final Delegate<O, O> composed = Compositions.compose(new Identity<O>(), new Identity<O>());
         Assert.assertNotNull(composed);
     }
 
     @Test
     public void canComposeThreeDelegates() {
         final Identity<O> i = new Identity<O>();
-        Delegate<O, O> composed = Compositions.compose(i, i, i);
+        final Delegate<O, O> composed = Compositions.compose(i, i, i);
         Assert.assertNotNull(composed);
     }
 
     @Test
     public void canComposePredicatesAndDelegates() {
-        Predicate<O> composed = Compositions.compose(new Always<O>(), new Identity<O>());
+        final Predicate<O> composed = Compositions.compose(new Always<O>(), new Identity<O>());
         Assert.assertNotNull(composed);
     }
 
     @Test
     public void canComposePredicateAndTwoDelegates() {
         final Identity<O> i = new Identity<O>();
-        Predicate<O> composed = Compositions.compose(new Always<O>(), i, i);
+        final Predicate<O> composed = Compositions.compose(new Always<O>(), i, i);
         Assert.assertNotNull(composed);
     }
 
     @Test
     public void canComposePredicatesAndBinaryDelegates() {
-        BinaryPredicate<O, O> composed = Compositions.compose(new Always<O>(), new FirstParam<O, O>());
+        final BinaryPredicate<O, O> composed = Compositions.compose(new Always<O>(), new FirstParam<O, O>());
         Assert.assertNotNull(composed);
     }
 
     @Test
     public void canComposePredicateAndTernaryDelegates() {
-        TernaryPredicate<O, O, O> composed = Compositions.compose(new Always<O>(), new FirstParamOfThree<O, O, O>());
+        final TernaryPredicate<O, O, O> composed = Compositions.compose(new Always<O>(), new FirstParamOfThree<O, O, O>());
         Assert.assertNotNull(composed);
     }
 

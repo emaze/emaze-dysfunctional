@@ -57,6 +57,16 @@ public abstract class Casts {
      * @param <R>
      * @return
      */
+    public static <R, T> R vary(T value) {
+        return new Vary<R, T>().perform(value);
+    }
+
+    /**
+     *
+     * @param <T>
+     * @param <R>
+     * @return
+     */
     public static <R, T> Delegate<R, T> variator() {
         return new Vary<R, T>();
     }
