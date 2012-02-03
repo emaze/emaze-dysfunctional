@@ -23,7 +23,7 @@ public class AverageTest {
         Assert.assertEquals(Pair.of(6, 1L), sumAndCount);
     }
 
-    @Test//@explorative
+    @Test//@Sample
     public void canCalculateAverageWithReductions() {
         Iterator<Integer> iter = Iterations.iterator(1, 2, 3);
         Pair<Integer, Long> average = Reductions.reduce(iter, new Average<Integer>(new IntegerOperations()), Pair.of(0, 0l));
