@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.tuples;
 
+import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
@@ -33,6 +34,10 @@ public class Triple<T1, T2, T3> {
 
     public T3 third() {
         return t;
+    }
+
+    public <R> R fmap(TernaryDelegate<R, T1, T2, T3> delegate) {
+        return delegate.perform(f, s, t);
     }
 
     @Override

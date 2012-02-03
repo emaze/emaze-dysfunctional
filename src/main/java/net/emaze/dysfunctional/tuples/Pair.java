@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.tuples;
 
+import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
@@ -26,6 +27,10 @@ public class Pair<T1, T2> {
 
     public T2 second() {
         return second;
+    }
+
+    public <R> R fmap(BinaryDelegate<R, T1, T2> delegate) {
+        return delegate.perform(first, second);
     }
 
     @Override
