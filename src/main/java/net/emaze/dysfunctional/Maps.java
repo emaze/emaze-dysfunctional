@@ -14,7 +14,7 @@ import net.emaze.dysfunctional.collections.builders.NestedMapBuilder;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.order.ComparableComparator;
 
-public class Maps {
+public abstract class Maps {
 
     public static <K, V> MapBuilder<K, V> from(Map<K, V> map) {
         return new MapBuilder<K, V>(map);
@@ -40,7 +40,7 @@ public class Maps {
         return new MapBuilder<K, V>(new TreeMap<K, V>(keyComp));
     }
 
-    public static class Nested {
+    public abstract static class Nested {
 
         public static <K> NestedMapBuilder<K> from(Provider<Map<K, Object>> provider) {
             return new NestedMapBuilder<K>(provider);
