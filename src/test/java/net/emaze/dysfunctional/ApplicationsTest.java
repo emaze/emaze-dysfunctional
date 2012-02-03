@@ -65,6 +65,12 @@ public class ApplicationsTest {
 
     public static class Map {
 
+        @Test(expected = IllegalArgumentException.class)
+        public void mappingNullIterableYieldsException() {
+            Iterable<Integer> source = null;
+            Applications.map(source, new Identity<Integer>());
+        }
+
         @Test
         public void canMapAnIterable() {
             List<Integer> source = Arrays.asList(1, 2, 3);
