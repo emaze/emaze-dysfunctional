@@ -9,7 +9,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
-import net.emaze.dysfunctional.collections.CollectionProvider;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
+import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -118,14 +119,14 @@ public class ConsumersTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallAllWithNullCollectionProvider() {
-            final CollectionProvider<List<Integer>, Integer> collectionProvider = null;
+            final Provider<List<Integer>> collectionProvider = null;
             Consumers.all(LIST, collectionProvider);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallAllWithNullIterableAndACollectionProvider() {
             final Iterable<Integer> iterable = null;
-            Consumers.all(iterable, new CollectionProvider<List<Integer>, Integer>(LIST));
+            Consumers.all(iterable, new ConstantProvider<List<Integer>>(LIST));
         }
     }
 
