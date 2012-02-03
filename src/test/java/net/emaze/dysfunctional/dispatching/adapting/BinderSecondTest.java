@@ -17,8 +17,8 @@ public class BinderSecondTest {
 
     @Test
     public void secondParamIsCorrectlyBound() {
-        Delegate<String,String> delegate = new BinderSecond<String, String, String>(new ConcatenateString(), "bound");
-        String got = delegate.perform("passed");
+        final Delegate<String,String> delegate = new BinderSecond<String, String, String>(new ConcatenateString(), "bound");
+        final String got = delegate.perform("passed");
         Assert.assertEquals("passedbound", got);
     }
 

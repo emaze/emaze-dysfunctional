@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.dispatching.actions;
 
-import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
 import org.junit.Test;
 
 /**

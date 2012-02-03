@@ -25,8 +25,8 @@ public class TransformingTernaryPredicateTest {
 
     @Test
     public void canComposePredicateAndDelegate() {
-        TernaryPredicate<O, O, O> composed = new TransformingTernaryPredicate<O, O, O, O>(new Always<O>(), new FirstParamOfThree<O, O, O>());
-        boolean got = composed.accept(O.IGNORED, O.IGNORED, O.IGNORED);
+        final TernaryPredicate<O, O, O> composed = new TransformingTernaryPredicate<O, O, O, O>(new Always<O>(), new FirstParamOfThree<O, O, O>());
+        final boolean got = composed.accept(O.IGNORED, O.IGNORED, O.IGNORED);
         Assert.assertEquals(true, got);
     }
 }

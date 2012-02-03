@@ -20,7 +20,7 @@ public class DelegateToPredicateTest {
     @Test
     public void adapterCorrectlyPassesParamToAdapted() {
         final Predicate<Boolean> adapted = new DelegateToPredicate<Boolean>(new Identity<Boolean>());
-        boolean got = adapted.accept(true);
+        final boolean got = adapted.accept(true);
         Assert.assertEquals(true, got);
     }
 }

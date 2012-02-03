@@ -47,7 +47,7 @@ public class BinaryPredicateToBinaryDelegateTest {
     @Test
     public void adapterCorrectlyReturnsResultToAdapted() {
         final BinaryPredicateToBinaryDelegate<O, O> adapted = new BinaryPredicateToBinaryDelegate<O, O>(new BinaryAlways<O, O>());
-        boolean got = adapted.perform(O.IGNORED, O.IGNORED);
+        final boolean got = adapted.perform(O.IGNORED, O.IGNORED);
         Assert.assertEquals(true, got);
     }
 }

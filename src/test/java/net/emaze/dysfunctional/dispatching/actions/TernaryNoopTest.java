@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.dispatching.actions;
 
-import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Test;
 

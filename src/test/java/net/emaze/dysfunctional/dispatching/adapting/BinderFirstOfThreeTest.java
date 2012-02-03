@@ -18,8 +18,8 @@ public class BinderFirstOfThreeTest {
 
     @Test
     public void thirdParamIsCorrectlyBound() {
-        BinaryDelegate<String,String, String> delegate = new BinderFirstOfThree<String, String, String, String>(new ConcatenateThreeStrings(), "bound");
-        String got = delegate.perform("passed", "passed");
+        final BinaryDelegate<String,String, String> delegate = new BinderFirstOfThree<String, String, String, String>(new ConcatenateThreeStrings(), "bound");
+        final String got = delegate.perform("passed", "passed");
         Assert.assertEquals("boundpassedpassed", got);
     }
 

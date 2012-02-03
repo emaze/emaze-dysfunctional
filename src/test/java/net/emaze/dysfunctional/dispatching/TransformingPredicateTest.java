@@ -25,8 +25,8 @@ public class TransformingPredicateTest {
 
     @Test
     public void canComposePredicateAndDelegate() {
-        Predicate<O> composed = new TransformingPredicate<O, O>(new Always<O>(), new Identity<O>());
-        boolean got = composed.accept(O.IGNORED);
+        final Predicate<O> composed = new TransformingPredicate<O, O>(new Always<O>(), new Identity<O>());
+        final boolean got = composed.accept(O.IGNORED);
         Assert.assertEquals(true, got);
     }
 }

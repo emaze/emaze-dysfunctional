@@ -25,8 +25,8 @@ public class TransformingBinaryPredicateTest {
 
     @Test
     public void canComposePredicateAndDelegate() {
-        BinaryPredicate<O, O> composed = new TransformingBinaryPredicate<O, O, O>(new Always<O>(), new FirstParam<O, O>());
-        boolean got = composed.accept(O.IGNORED, O.IGNORED);
+        final BinaryPredicate<O, O> composed = new TransformingBinaryPredicate<O, O, O>(new Always<O>(), new FirstParam<O, O>());
+        final boolean got = composed.accept(O.IGNORED, O.IGNORED);
         Assert.assertEquals(true, got);
     }
 }

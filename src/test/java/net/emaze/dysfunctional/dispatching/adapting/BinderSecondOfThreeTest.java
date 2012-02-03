@@ -17,8 +17,8 @@ public class BinderSecondOfThreeTest {
 
     @Test
     public void secondParamIsCorrectlyBound() {
-        BinaryDelegate<String,String, String> delegate = new BinderSecondOfThree<String, String, String, String>(new ConcatenateThreeStrings(), "bound");
-        String got = delegate.perform("passed", "passed");
+        final BinaryDelegate<String,String, String> delegate = new BinderSecondOfThree<String, String, String, String>(new ConcatenateThreeStrings(), "bound");
+        final String got = delegate.perform("passed", "passed");
         Assert.assertEquals("passedboundpassed", got);
     }
 

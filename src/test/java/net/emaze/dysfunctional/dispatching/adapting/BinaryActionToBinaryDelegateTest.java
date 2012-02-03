@@ -1,10 +1,12 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
+import java.util.concurrent.atomic.AtomicLong;
+import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
+import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
-import net.emaze.dysfunctional.tuples.Pair;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,28 +23,31 @@ public class BinaryActionToBinaryDelegateTest {
 
     @Test
     public void callingAdapterCallsAdapted() {
-        final Box<Pair<O, O>> box = new Box<Pair<O, O>>();
-        final BinaryAction<O, O> adaptee = new BinaryBoxingAction<O, O>(box);
+        final AtomicLong calls = new AtomicLong();
+        final BinaryAction<O, O> adaptee = Spies.monitor(new BinaryNoop<O, O>(), calls);
         final BinaryDelegate<Void, O, O> del = new BinaryActionToBinaryDelegate<O, O>(adaptee);
-        final O former = O.ONE;
-        final O latter = O.ANOTHER;
+        del.perform(O.ONE, O.ANOTHER);
 
-        del.perform(former, latter);
-
-        Assert.assertEquals(Pair.of(former, latter), box.getContent());
+        Assert.assertEquals(1l, calls.get());
     }
 
-    public class BinaryBoxingAction<T1, T2> implements BinaryAction<T1, T2> {
+    @Test
+    public void callingAdapterPassesFirstArgument() {
+        final Box<O> param1 = Box.empty();
+        final BinaryAction<O, O> adaptee = Spies.spy1st(new BinaryNoop<O, O>(), param1);
+        final BinaryDelegate<Void, O, O> del = new BinaryActionToBinaryDelegate<O, O>(adaptee);
+        del.perform(O.ONE, O.ANOTHER);
 
-        private Box<Pair<T1, T2>> box;
+        Assert.assertEquals(O.ONE, param1.getContent());
+    }
 
-        public BinaryBoxingAction(Box<Pair<T1, T2>> box) {
-            this.box = box;
-        }
+    @Test
+    public void callingAdapterPassesSecondArgument() {
+        final Box<O> param2 = Box.empty();
+        final BinaryAction<O, O> adaptee = Spies.spy2nd(new BinaryNoop<O, O>(), param2);
+        final BinaryDelegate<Void, O, O> del = new BinaryActionToBinaryDelegate<O, O>(adaptee);
+        del.perform(O.ONE, O.ANOTHER);
 
-        @Override
-        public void perform(T1 former, T2 latter) {
-            box.setContent(Pair.of(former, latter));
-        }
+        Assert.assertEquals(O.ANOTHER, param2.getContent());
     }
 }

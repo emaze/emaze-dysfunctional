@@ -15,7 +15,7 @@ public class TapperTest {
 
     @Test
     public void tappingAnActionYieldsPossiblyMutatedOriginalValue() {
-        Delegate<O, O> tapper = new Tapper<O>(new Noop<O>());
+        final Delegate<O, O> tapper = new Tapper<O>(new Noop<O>());
         Assert.assertSame(O.ONE, tapper.perform(O.ONE));
     }
 }
