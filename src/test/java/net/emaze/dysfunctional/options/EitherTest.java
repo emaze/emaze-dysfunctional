@@ -93,7 +93,13 @@ public class EitherTest {
         public void canFlipAnEither() {
             final Either<String, Integer> either = Either.right(1);
             final Either<Integer, String> flipped = either.flip();
-            Assert.assertFalse(flipped.maybe().hasValue());
+            final Either<Integer, String> expected = Either.left(1);
+            Assert.assertEquals(expected, flipped);
+        }
+
+        @Test
+        public void transformingEitherToMaybeYieldsRightSide() {
+            Assert.assertEquals(Maybe.just(1), Either.right(1).maybe());
         }
     }
 
