@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.collections.CollectionProvider;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
 import net.emaze.dysfunctional.dispatching.delegates.ConsumeIntoCollection;
 import net.emaze.dysfunctional.dispatching.delegates.ConsumeIntoOutputIterator;
 import net.emaze.dysfunctional.dispatching.delegates.FirstElement;
@@ -38,7 +38,7 @@ public abstract class Consumers {
      * @return the collection filled with iterator values
      */
     public static <R extends Collection<E>, E> R all(Iterator<E> iterator, R collection) {
-        return new ConsumeIntoCollection<R, E>(new CollectionProvider<R, E>(collection)).perform(iterator);
+        return new ConsumeIntoCollection<R, E>(new ConstantProvider<R>(collection)).perform(iterator);
     }
 
     /**
