@@ -27,7 +27,7 @@ import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
  */
 public abstract class Logic {
 
-    public static abstract class Unary {
+    public abstract static class Unary {
 
         /**
          * Creates a composite AND predicate from the given predicates.
@@ -90,7 +90,7 @@ public abstract class Logic {
         }
     }
 
-    public static abstract class Binary {
+    public abstract static class Binary {
 
         /**
          * Creates a composite AND predicate from the given predicates.
@@ -160,7 +160,7 @@ public abstract class Logic {
         }
     }
 
-    public static abstract class Ternary {
+    public abstract static class Ternary {
 
         /**
          * Creates a composite AND predicate from the given predicates.

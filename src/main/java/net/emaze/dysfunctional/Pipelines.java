@@ -10,7 +10,7 @@ import net.emaze.dysfunctional.dispatching.composing.PipelinedTernaryAction;
 
 public abstract class Pipelines {
 
-    public static abstract class Unary {
+    public abstract static class Unary {
 
         /**
          * Creates a pipeline from an iterable of actions.
@@ -35,7 +35,7 @@ public abstract class Pipelines {
         }
     }
 
-    public static abstract class Binary {
+    public abstract static class Binary {
 
         /**
          * Creates a pipeline from an iterable of binary actions.
@@ -62,7 +62,7 @@ public abstract class Pipelines {
         }
     }
 
-    public static abstract class Ternary {
+    public abstract static class Ternary {
 
         /**
          * Creates a pipeline from an iterable of ternary actions.

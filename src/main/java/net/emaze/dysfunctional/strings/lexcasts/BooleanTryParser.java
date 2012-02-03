@@ -7,11 +7,11 @@ import net.emaze.dysfunctional.options.Maybe;
 
 public class BooleanTryParser implements Delegate<Maybe<Boolean>, String> {
 
-    private static final List<String> acceptedValues = Arrays.asList("true", "false");
+    private static final List<String> ACCEPTED_VALUES = Arrays.asList("true", "false");
 
     @Override
     public Maybe<Boolean> perform(String parsee) {
-        if (parsee == null || !acceptedValues.contains(parsee.toLowerCase())) {
+        if (parsee == null || !ACCEPTED_VALUES.contains(parsee.toLowerCase())) {
             return Maybe.nothing();
         }
         return Maybe.just(Boolean.parseBoolean(parsee));

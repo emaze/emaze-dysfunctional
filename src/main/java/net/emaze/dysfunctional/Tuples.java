@@ -103,7 +103,7 @@ public abstract class Tuples {
         return new TernaryToUnaryAction<T, U, V>(action);
     }
 
-    public static abstract class Pairs {
+    public abstract static class Pairs {
 
         /**
          * Adapts a delegate accepting a pair to a binary delegate.
@@ -143,7 +143,7 @@ public abstract class Tuples {
         }
     }
 
-    public static abstract class Triples {
+    public abstract static class Triples {
 
         /**
          * Adapts a delegate accepting a triple to a ternary delegate.
