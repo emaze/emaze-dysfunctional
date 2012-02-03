@@ -80,21 +80,50 @@ public class StringsTest {
         }
 
         @Test
-        public void canInterposeWithMultipleSeparators() {
+        public void canInterposeArray() {
+            Integer[] values = {1, 2, 3, 4, 5};
+            String output = Strings.interpose(values, 0);
+            Assert.assertEquals("102030405", output);
+        }
+
+        @Test
+        public void canInterposeIterableWithMultipleSeparators() {
+            Iterable<Integer> values = Arrays.asList(1, 2, 3, 4, 5);
+            Iterator<String> separators = Arrays.asList("-", "+", "-", "+").iterator();
+            String output = Strings.interpose(values, separators);
+            Assert.assertEquals("1-2+3-4+5", output);
+        }
+
+        @Test
+        public void canInterposeIteratorWithMultipleSeparators() {
             Iterator<Integer> values = Arrays.asList(1, 2, 3, 4, 5).iterator();
             Iterator<String> separators = Arrays.asList("-", "+", "-", "+").iterator();
             String output = Strings.interpose(values, separators);
             Assert.assertEquals("1-2+3-4+5", output);
         }
 
+        @Test
+        public void canInterposeArrayWithMultipleSeparators() {
+            Integer[] values = {1, 2, 3, 4, 5};
+            Iterator<String> separators = Arrays.asList("-", "+", "-", "+").iterator();
+            String output = Strings.interpose(values, separators);
+            Assert.assertEquals("1-2+3-4+5", output);
+        }
+
         @Test(expected = IllegalArgumentException.class)
-        public void interposingNullValuesYieldsException() {
+        public void interposingNullValuesIteratorYieldsException() {
             final Iterator<Integer> iterator = null;
             Strings.interpose(iterator, 0);
         }
 
         @Test(expected = IllegalArgumentException.class)
-        public void interposingNullValuesYieldsExceptionOverload() {
+        public void interposingNullValuesIterableWithSeparatorsYieldsException() {
+            final Iterable<Integer> iterable = null;
+            Strings.interpose(iterable, new ConstantIterator<Integer>(0));
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void interposingNullValuesIteratorWithSeparatorsYieldsException() {
             final Iterator<Integer> iterator = null;
             Strings.interpose(iterator, new ConstantIterator<Integer>(0));
         }
