@@ -38,6 +38,7 @@ public abstract class Consumers {
      * @return the collection filled with iterator values
      */
     public static <R extends Collection<E>, E> R all(Iterator<E> iterator, R collection) {
+        dbc.precondition(collection != null, "cannot call all with a null collection");
         return new ConsumeIntoCollection<R, E>(new ConstantProvider<R>(collection)).perform(iterator);
     }
 
