@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.options;
 
+import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -45,10 +46,41 @@ public class BoxTest {
     }
 
     @Test
-    public void boxesWithEqualContentHaveSameHashcode(){
+    public void boxesWithEqualContentHaveSameHashcode() {
         Box<Banana> former = new Box<Banana>();
         Box<Banana> latter = new Box<Banana>();
         Assert.assertEquals(former.hashCode(), latter.hashCode());
+    }
+
+    @Test
+    public void boxWithNoValueIsEmpty() {
+        Box<O> box = Box.empty();
+        Assert.assertTrue(box.isEmpty());
+    }
+
+    @Test
+    public void emptyBoxHasNoContent() {
+        Box<O> box = Box.empty();
+        Assert.assertFalse(box.hasContent());
+    }
+
+    @Test
+    public void boxWithValueIsNotEmpty() {
+        Box<O> box = Box.of(O.ONE);
+        Assert.assertFalse(box.isEmpty());
+    }
+
+    @Test
+    public void loadedBoxHasContent() {
+        Box<O> box = Box.of(O.ONE);
+        Assert.assertTrue(box.hasContent());
+    }
+
+    @Test
+    public void unloadingBoxLeadsToEmpty() {
+        Box<O> box = Box.of(O.ONE);
+        box.unload();
+        Assert.assertTrue(box.isEmpty());
     }
 
     public static class Dick {
