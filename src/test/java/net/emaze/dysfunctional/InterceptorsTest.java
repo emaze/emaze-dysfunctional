@@ -72,6 +72,42 @@ public class InterceptorsTest {
             final Iterable<NullInterceptor<O>> iterable = null;
             Interceptors.intercept(new Identity<O>(), iterable);
         }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void interceptingWithNullInterceptorYieldsException() {
+            final Interceptor<O> nullInterceptor = null;
+            Interceptors.intercept(new Identity<O>(), nullInterceptor);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void interceptingWithFormerNullInterceptorYieldsException() {
+            final Interceptor<O> nullInterceptor = null;
+            Interceptors.intercept(new Identity<O>(), nullInterceptor, INTERCEPTOR);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void interceptingWithLatterNullInterceptorYieldsException() {
+            final Interceptor<O> nullInterceptor = null;
+            Interceptors.intercept(new Identity<O>(), INTERCEPTOR, nullInterceptor);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void interceptingWithFirstNullInterceptorYieldsException() {
+            final Interceptor<O> nullInterceptor = null;
+            Interceptors.intercept(new Identity<O>(), nullInterceptor, INTERCEPTOR, INTERCEPTOR);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void interceptingWithSecondNullInterceptorYieldsException() {
+            final Interceptor<O> nullInterceptor = null;
+            Interceptors.intercept(new Identity<O>(), INTERCEPTOR, nullInterceptor, INTERCEPTOR);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void interceptingWithThirdNullInterceptorYieldsException() {
+            final Interceptor<O> nullInterceptor = null;
+            Interceptors.intercept(new Identity<O>(), INTERCEPTOR, INTERCEPTOR, nullInterceptor);
+        }
     }
 
     public static class Binary {
@@ -119,6 +155,42 @@ public class InterceptorsTest {
             final Iterable<BinaryInterceptor<O, O>> iterable = null;
             Interceptors.intercept(new FirstParam<O, O>(), iterable);
         }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void interceptingWithNullInterceptorYieldsException() {
+            final BinaryInterceptor<O, O> nullInterceptor = null;
+            Interceptors.intercept(new FirstParam<O, O>(), nullInterceptor);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void interceptingWithFormerNullInterceptorYieldsException() {
+            final BinaryInterceptor<O, O> nullInterceptor = null;
+            Interceptors.intercept(new FirstParam<O, O>(), nullInterceptor, INTERCEPTOR);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void interceptingWithLatterNullInterceptorYieldsException() {
+            final BinaryInterceptor<O, O> nullInterceptor = null;
+            Interceptors.intercept(new FirstParam<O, O>(), INTERCEPTOR, nullInterceptor);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void interceptingWithFirstNullInterceptorYieldsException() {
+            final BinaryInterceptor<O, O> nullInterceptor = null;
+            Interceptors.intercept(new FirstParam<O, O>(), nullInterceptor, INTERCEPTOR, INTERCEPTOR);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void interceptingWithSecondNullInterceptorYieldsException() {
+            final BinaryInterceptor<O, O> nullInterceptor = null;
+            Interceptors.intercept(new FirstParam<O, O>(), INTERCEPTOR, nullInterceptor, INTERCEPTOR);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void interceptingWithThirdNullInterceptorYieldsException() {
+            final BinaryInterceptor<O, O> nullInterceptor = null;
+            Interceptors.intercept(new FirstParam<O, O>(), INTERCEPTOR, INTERCEPTOR, nullInterceptor);
+        }
     }
 
     public static class Ternary {
@@ -165,6 +237,42 @@ public class InterceptorsTest {
         public void interceptingNullIterableYieldsException() {
             final Iterable<TernaryInterceptor<O, O, O>> iterable = null;
             Interceptors.intercept(new FirstParamOfThree<O, O, O>(), iterable);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void interceptingWithNullInterceptorYieldsException() {
+            final TernaryInterceptor<O, O, O> nullInterceptor = null;
+            Interceptors.intercept(new FirstParamOfThree<O, O, O>(), nullInterceptor);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void interceptingWithFormerNullInterceptorYieldsException() {
+            final TernaryInterceptor<O, O, O> nullInterceptor = null;
+            Interceptors.intercept(new FirstParamOfThree<O, O, O>(), nullInterceptor, INTERCEPTOR);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void interceptingWithLatterNullInterceptorYieldsException() {
+            final TernaryInterceptor<O, O, O> nullInterceptor = null;
+            Interceptors.intercept(new FirstParamOfThree<O, O, O>(), INTERCEPTOR, nullInterceptor);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void interceptingWithFirstNullInterceptorYieldsException() {
+            final TernaryInterceptor<O, O, O> nullInterceptor = null;
+            Interceptors.intercept(new FirstParamOfThree<O, O, O>(), nullInterceptor, INTERCEPTOR, INTERCEPTOR);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void interceptingWithSecondNullInterceptorYieldsException() {
+            final TernaryInterceptor<O, O, O> nullInterceptor = null;
+            Interceptors.intercept(new FirstParamOfThree<O, O, O>(), INTERCEPTOR, nullInterceptor, INTERCEPTOR);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void interceptingWithThirdNullInterceptorYieldsException() {
+            final TernaryInterceptor<O, O, O> nullInterceptor = null;
+            Interceptors.intercept(new FirstParamOfThree<O, O, O>(), INTERCEPTOR, INTERCEPTOR, nullInterceptor);
         }
     }
 
