@@ -17,17 +17,17 @@ public class CastsTest {
     }
 
     @Test
-    public void canUpcastUsingWiden() {
-        final A a = new B();
-        final B b = Casts.widen(a);
-        Assert.assertNotNull(b);
-    }
-
-    @Test
-    public void canDowncastUsingNarrow() {
+    public void canUpcastUsingNarrow() {
         final B b = new B();
         final A a = Casts.narrow(b);
         Assert.assertNotNull(a);
+    }
+
+    @Test
+    public void canDowncastUsingWiden() {
+        final A a = new B();
+        final B b = Casts.widen(a);
+        Assert.assertNotNull(b);
     }
 
     @Test
@@ -42,6 +42,14 @@ public class CastsTest {
         final B b = new B();
         final Delegate<A, B> narrower = Casts.narrow();
         final A got = narrower.perform(b);
+        Assert.assertNotNull(got);
+    }
+
+    @Test
+    public void canGetVariator() {
+        final B b = new B();
+        final Delegate<A, B> variator = Casts.vary();
+        final A got = variator.perform(b);
         Assert.assertNotNull(got);
     }
 

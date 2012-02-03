@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import net.emaze.dysfunctional.casts.Narrow;
+import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.collections.HashMapFactory;
 import net.emaze.dysfunctional.contracts.dbc;
@@ -37,7 +37,7 @@ public abstract class Groups {
      * @return a map containing grouped values
      */
     public static <K, V> Map<K, List<V>> groupBy(Iterator<V> groupies, Delegate<K, V> grouper) {
-        final Provider<List<V>> provider = Compositions.compose(new Narrow<List<V>, ArrayList<V>>(), new ArrayListFactory<V>());
+        final Provider<List<V>> provider = Compositions.compose(new Vary<List<V>, ArrayList<V>>(), new ArrayListFactory<V>());
         return new GroupBy<HashMap<K, List<V>>, List<V>, K, V>(grouper, provider, new HashMapFactory<K, List<V>>()).perform(groupies);
     }
 
@@ -90,7 +90,7 @@ public abstract class Groups {
      */
     public static <K, V> Map<K, List<V>> groupBy(Iterable<V> groupies, Delegate<K, V> grouper) {
         dbc.precondition(groupies != null, "cannot group a null iterable");
-        final Provider<List<V>> provider = Compositions.compose(new Narrow<List<V>, ArrayList<V>>(), new ArrayListFactory<V>());
+        final Provider<List<V>> provider = Compositions.compose(new Vary<List<V>, ArrayList<V>>(), new ArrayListFactory<V>());
         return new GroupBy<HashMap<K, List<V>>, List<V>, K, V>(grouper, provider, new HashMapFactory<K, List<V>>()).perform(groupies.iterator());
     }
 
@@ -144,7 +144,7 @@ public abstract class Groups {
      * @return a map containing grouped values
      */
     public static <K, V> Map<K, List<V>> groupBy(V[] groupies, Delegate<K, V> grouper) {
-        final Provider<List<V>> provider = Compositions.compose(new Narrow<List<V>, ArrayList<V>>(), new ArrayListFactory<V>());
+        final Provider<List<V>> provider = Compositions.compose(new Vary<List<V>, ArrayList<V>>(), new ArrayListFactory<V>());
         return new GroupBy<HashMap<K, List<V>>, List<V>, K, V>(grouper, provider, new HashMapFactory<K, List<V>>()).perform(new ArrayIterator<V>(groupies));
     }
 
@@ -196,7 +196,7 @@ public abstract class Groups {
      * @return the two partitioned collections in a pair.
      */
     public static <T> Pair<List<T>, List<T>> partition(Iterator<T> values, Predicate<T> partitioner) {
-        final Provider<List<T>> provider = Compositions.compose(new Narrow<List<T>, ArrayList<T>>(), new ArrayListFactory<T>());
+        final Provider<List<T>> provider = Compositions.compose(new Vary<List<T>, ArrayList<T>>(), new ArrayListFactory<T>());
         return new PartitionBy<List<T>, List<T>, T>(partitioner, provider, provider).perform(values);
     }
 
@@ -252,7 +252,7 @@ public abstract class Groups {
      */
     public static <T> Pair<List<T>, List<T>> partition(Iterable<T> values, Predicate<T> partitioner) {
         dbc.precondition(values != null, "cannot partition a null iterable");
-        final Provider<List<T>> provider = Compositions.compose(new Narrow<List<T>, ArrayList<T>>(), new ArrayListFactory<T>());
+        final Provider<List<T>> provider = Compositions.compose(new Vary<List<T>, ArrayList<T>>(), new ArrayListFactory<T>());
         return new PartitionBy<List<T>, List<T>, T>(partitioner, provider, provider).perform(values.iterator());
     }
 
@@ -309,7 +309,7 @@ public abstract class Groups {
      * @return the two partitioned collections in a pair.
      */
     public static <T> Pair<List<T>, List<T>> partition(T[] values, Predicate<T> partitioner) {
-        final Provider<List<T>> provider = Compositions.compose(new Narrow<List<T>, ArrayList<T>>(), new ArrayListFactory<T>());
+        final Provider<List<T>> provider = Compositions.compose(new Vary<List<T>, ArrayList<T>>(), new ArrayListFactory<T>());
         return new PartitionBy<List<T>, List<T>, T>(partitioner, provider, provider).perform(new ArrayIterator<T>(values));
     }
 

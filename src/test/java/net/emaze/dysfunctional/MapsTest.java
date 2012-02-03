@@ -3,7 +3,7 @@ package net.emaze.dysfunctional;
 import java.util.HashMap;
 import java.util.Map;
 import net.emaze.dysfunctional.Maps.Nested;
-import net.emaze.dysfunctional.casts.Narrow;
+import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.HashMapFactory;
 import net.emaze.dysfunctional.collections.builders.MapBuilder;
 import net.emaze.dysfunctional.collections.builders.NestedMapBuilder;
@@ -34,7 +34,7 @@ public class MapsTest {
 
         @Test
         public void canCreateBuilderFromProvider() {
-            final Provider<Map<String, Object>> provider = Compositions.compose(new Narrow<Map<String, Object>, HashMap<String, Object>>(), new HashMapFactory<String, Object>());
+            final Provider<Map<String, Object>> provider = Compositions.compose(new Vary<Map<String, Object>, HashMap<String, Object>>(), new HashMapFactory<String, Object>());
             final MapBuilder<String, Object> builder = Maps.from(provider);
             Assert.assertNotNull(builder);
         }
@@ -68,7 +68,7 @@ public class MapsTest {
 
         @Test
         public void canCreateBuilderFromProvider() {
-            final Provider<Map<String, Object>> provider = Compositions.compose(new Narrow<Map<String, Object>, HashMap<String, Object>>(), new HashMapFactory<String, Object>());
+            final Provider<Map<String, Object>> provider = Compositions.compose(new Vary<Map<String, Object>, HashMap<String, Object>>(), new HashMapFactory<String, Object>());
             final NestedMapBuilder<String> builder = Nested.from(provider);
             Assert.assertNotNull(builder);
         }

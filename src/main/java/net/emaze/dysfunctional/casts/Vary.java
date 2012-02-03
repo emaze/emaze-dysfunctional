@@ -7,7 +7,7 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
  * @param <R>
  * @param <T> 
  */
-public class Narrow<R, T> implements Delegate<R, T> {
+public class Vary<R, T> implements Delegate<R, T> {
 
     @Override
     public R perform(T value) {

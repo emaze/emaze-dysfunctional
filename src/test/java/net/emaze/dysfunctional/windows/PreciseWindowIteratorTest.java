@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.Compositions;
-import net.emaze.dysfunctional.casts.Narrow;
+import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.collections.LinkedListFactory;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
@@ -23,7 +23,7 @@ import org.junit.Test;
  */
 public class PreciseWindowIteratorTest {
 
-    private static Provider<List<O>> LIST_FACTORY = Compositions.compose(new Narrow<List<O>, ArrayList<O>>(), new ArrayListFactory<O>());
+    private static Provider<List<O>> LIST_FACTORY = Compositions.compose(new Vary<List<O>, ArrayList<O>>(), new ArrayListFactory<O>());
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingPreciseWindowIteratorWithNullIteratorYieldsException() {

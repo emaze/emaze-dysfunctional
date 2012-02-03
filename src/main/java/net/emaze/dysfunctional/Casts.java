@@ -1,7 +1,6 @@
 package net.emaze.dysfunctional;
 
-import net.emaze.dysfunctional.casts.Narrow;
-import net.emaze.dysfunctional.casts.Widen;
+import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
@@ -18,7 +17,7 @@ public abstract class Casts {
      * @return
      */
     public static <R, T> R widen(T value) {
-        return new Widen<R, T>().perform(value);
+        return new Vary<R, T>().perform(value);
     }
 
     /**
@@ -28,7 +27,7 @@ public abstract class Casts {
      * @return
      */
     public static <T, R extends T> Delegate<R, T> widen() {
-        return new Widen<R, T>();
+        return new Vary<R, T>();
     }
 
     /**
@@ -39,7 +38,7 @@ public abstract class Casts {
      * @return
      */
     public static <R, T extends R> R narrow(T value) {
-        return new Narrow<R, T>().perform(value);
+        return new Vary<R, T>().perform(value);
     }
 
     /**
@@ -49,6 +48,16 @@ public abstract class Casts {
      * @return
      */
     public static <R, T extends R> Delegate<R, T> narrow() {
-        return new Narrow<R, T>();
+        return new Vary<R, T>();
+    }
+
+    /**
+     *
+     * @param <T>
+     * @param <R>
+     * @return
+     */
+    public static <R, T> Delegate<R, T> vary() {
+        return new Vary<R, T>();
     }
 }

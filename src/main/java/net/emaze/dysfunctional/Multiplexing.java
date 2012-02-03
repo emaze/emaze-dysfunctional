@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.casts.Narrow;
+import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.IteratorPlucker;
@@ -309,7 +309,7 @@ public abstract class Multiplexing {
      * @return
      */
     public static <E> Iterator<List<E>> demux(int channelSize, Iterator<E> iterator) {
-        final Provider<List<E>> channelFactory = Compositions.compose(new Narrow<List<E>, ArrayList<E>>(), new ArrayListFactory<E>());
+        final Provider<List<E>> channelFactory = Compositions.compose(new Vary<List<E>, ArrayList<E>>(), new ArrayListFactory<E>());
         return new DemultiplexingIterator<List<E>, E>(channelSize, iterator, channelFactory);
     }
 
@@ -384,7 +384,7 @@ public abstract class Multiplexing {
      * @return
      */
     public static <E> Iterator<List<Maybe<E>>> demuxLongest(int channelSize, Iterator<Maybe<E>> iterator) {
-        final Provider<List<Maybe<E>>> channelFactory = Compositions.compose(new Narrow<List<Maybe<E>>, ArrayList<Maybe<E>>>(), new ArrayListFactory<Maybe<E>>());
+        final Provider<List<Maybe<E>>> channelFactory = Compositions.compose(new Vary<List<Maybe<E>>, ArrayList<Maybe<E>>>(), new ArrayListFactory<Maybe<E>>());
         return new PreciseDemultiplexingIterator<List<Maybe<E>>, E>(channelSize, iterator, channelFactory);
     }
 
@@ -411,7 +411,7 @@ public abstract class Multiplexing {
      */
     public static <E> Iterator<List<Maybe<E>>> demuxLongest(int channelSize, Iterable<Maybe<E>> iterable) {
         dbc.precondition(iterable != null, "cannot demuxLongest a null iterable");
-        final Provider<List<Maybe<E>>> channelFactory = Compositions.compose(new Narrow<List<Maybe<E>>, ArrayList<Maybe<E>>>(), new ArrayListFactory<Maybe<E>>());
+        final Provider<List<Maybe<E>>> channelFactory = Compositions.compose(new Vary<List<Maybe<E>>, ArrayList<Maybe<E>>>(), new ArrayListFactory<Maybe<E>>());
         return new PreciseDemultiplexingIterator<List<Maybe<E>>, E>(channelSize, iterable.iterator(), channelFactory);
     }
 
