@@ -12,18 +12,33 @@ import org.junit.Test;
 public class ComparingTest {
 
     @Test
-    public void canEvaluateMax() {
+    public void canEvaluateMaxWithComparator() {
         Assert.assertEquals(Integer.valueOf(2), Comparing.max(1, 2, new ComparableComparator<Integer>()));
     }
 
     @Test
-    public void canEvaluateMin() {
+    public void canEvaluateMinWithComparator() {
         Assert.assertEquals(Integer.valueOf(1), Comparing.min(1, 2, new ComparableComparator<Integer>()));
     }
 
     @Test
-    public void canEvaluateOrdered() {
+    public void canEvaluateOrderedWithComparator() {
         Assert.assertEquals(Pair.of(1, 2), Comparing.ordered(1, 2, new ComparableComparator<Integer>()));
+    }
+
+    @Test
+    public void canEvaluateMax() {
+        Assert.assertEquals(Integer.valueOf(2), Comparing.max(1, 2));
+    }
+
+    @Test
+    public void canEvaluateMin() {
+        Assert.assertEquals(Integer.valueOf(1), Comparing.min(1, 2));
+    }
+
+    @Test
+    public void canEvaluateOrdered() {
+        Assert.assertEquals(Pair.of(1, 2), Comparing.ordered(1, 2));
     }
 
     @Test
