@@ -8,36 +8,36 @@ import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class EveryTest {
+public class AnyTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingWithNullPredicateYieldsException() {
-        new Every<O>(null);
+        new Any<O>(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void callingWithNullIteratorYieldsException() {
-        new Every<O>(new Always<O>()).accept(null);
+        new Any<O>(new Always<O>()).accept(null);
     }
 
     @Test
-    public void callingWithAnElementYieldingFalseYieldsFalse() {
+    public void callingWithAnElementYieldingTrueYieldsTrue() {
         final Iterator<O> iterator = Iterations.iterator(O.ONE);
-        final boolean got = new Every<O>(new Never<O>()).accept(iterator);
+        final boolean got = new Any<O>(new Always<O>()).accept(iterator);
+        Assert.assertTrue(got);
+    }
+
+    @Test
+    public void callingWithEveryElementYieldingFalseYieldsFalse() {
+        final Iterator<O> iterator = Iterations.iterator(O.ONE);
+        final boolean got = new Any<O>(new Never<O>()).accept(iterator);
         Assert.assertFalse(got);
     }
 
     @Test
-    public void callingWithEveryElementYieldingTrueYieldsTrue() {
-        final Iterator<O> iterator = Iterations.iterator(O.ONE);
-        final boolean got = new Every<O>(new Always<O>()).accept(iterator);
-        Assert.assertTrue(got);
-    }
-
-    @Test
-    public void callingWithEmptyIteratorYieldsTrue() {
+    public void callingWithEmptyIteratorYieldsFalse() {
         final Iterator<O> iterator = Iterations.iterator();
-        final boolean got = new Every<O>(new Never<O>()).accept(iterator);
-        Assert.assertTrue(got);
+        final boolean got = new Any<O>(new Never<O>()).accept(iterator);
+        Assert.assertFalse(got);
     }
 }
