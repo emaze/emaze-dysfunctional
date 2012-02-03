@@ -27,25 +27,25 @@ public class ZipsTest {
 
     @Test
     public void canZipShortestWithIterators() {
-        List<Integer> former = Arrays.asList(1, 3);
-        List<Integer> latter = Arrays.asList(2, 4, 5);
-        Iterator<Pair<Integer, Integer>> got = Zips.shortest(former.iterator(), latter.iterator());
+        final List<Integer> former = Arrays.asList(1, 3);
+        final List<Integer> latter = Arrays.asList(2, 4, 5);
+        final Iterator<Pair<Integer, Integer>> got = Zips.shortest(former.iterator(), latter.iterator());
         Assert.assertEquals(Arrays.asList(p(1, 2), p(3, 4)), Consumers.all(got));
     }
 
     @Test
     public void canZipShortestWithArrays() {
-        Integer[] former = new Integer[]{1, 3};
-        Integer[] latter = new Integer[]{2, 4, 5};
-        Iterator<Pair<Integer, Integer>> got = Zips.shortest(former, latter);
+        final Integer[] former = new Integer[]{1, 3};
+        final Integer[] latter = new Integer[]{2, 4, 5};
+        final Iterator<Pair<Integer, Integer>> got = Zips.shortest(former, latter);
         Assert.assertEquals(Arrays.asList(p(1, 2), p(3, 4)), Consumers.all(got));
     }
 
     @Test
     public void canZipShortestWithIterables() {
-        List<Integer> former = Arrays.asList(1, 3);
-        List<Integer> latter = Arrays.asList(2, 4, 5);
-        Iterator<Pair<Integer, Integer>> got = Zips.shortest(former, latter);
+        final List<Integer> former = Arrays.asList(1, 3);
+        final List<Integer> latter = Arrays.asList(2, 4, 5);
+        final Iterator<Pair<Integer, Integer>> got = Zips.shortest(former, latter);
         Assert.assertEquals(Arrays.asList(p(1, 2), p(3, 4)), Consumers.all(got));
     }
 
@@ -65,11 +65,11 @@ public class ZipsTest {
 
     @Test
     public void canZipLongestWithIterators() {
-        List<Integer> former = Arrays.asList(1, 3);
-        List<Integer> latter = Arrays.asList(2, 4, 5);
-        Iterator<Pair<Maybe<Integer>, Maybe<Integer>>> got = Zips.longest(former.iterator(), latter.iterator());
+        final List<Integer> former = Arrays.asList(1, 3);
+        final List<Integer> latter = Arrays.asList(2, 4, 5);
+        final Iterator<Pair<Maybe<Integer>, Maybe<Integer>>> got = Zips.longest(former.iterator(), latter.iterator());
 
-        List<Pair<Maybe<Integer>, Maybe<Integer>>> expected = new ArrayList<Pair<Maybe<Integer>, Maybe<Integer>>>();
+        final List<Pair<Maybe<Integer>, Maybe<Integer>>> expected = new ArrayList<Pair<Maybe<Integer>, Maybe<Integer>>>();
         expected.add(p(Maybe.just(1), Maybe.just(2)));
         expected.add(p(Maybe.just(3), Maybe.just(4)));
         expected.add(p(Maybe.<Integer>nothing(), Maybe.just(5)));
@@ -79,11 +79,11 @@ public class ZipsTest {
 
     @Test
     public void canZipLongestWithArrays() {
-        Integer[] former = new Integer[]{1, 3};
-        Integer[] latter = new Integer[]{2, 4, 5};
-        Iterator<Pair<Maybe<Integer>, Maybe<Integer>>> got = Zips.longest(former, latter);
+        final Integer[] former = new Integer[]{1, 3};
+        final Integer[] latter = new Integer[]{2, 4, 5};
+        final Iterator<Pair<Maybe<Integer>, Maybe<Integer>>> got = Zips.longest(former, latter);
 
-        List<Pair<Maybe<Integer>, Maybe<Integer>>> expected = new ArrayList<Pair<Maybe<Integer>, Maybe<Integer>>>();
+        final List<Pair<Maybe<Integer>, Maybe<Integer>>> expected = new ArrayList<Pair<Maybe<Integer>, Maybe<Integer>>>();
         expected.add(p(Maybe.just(1), Maybe.just(2)));
         expected.add(p(Maybe.just(3), Maybe.just(4)));
         expected.add(p(Maybe.<Integer>nothing(), Maybe.just(5)));
@@ -93,11 +93,11 @@ public class ZipsTest {
 
     @Test
     public void canZipLongestWithIterables() {
-        List<Integer> former = Arrays.asList(1, 3);
-        List<Integer> latter = Arrays.asList(2, 4, 5);
+        final List<Integer> former = Arrays.asList(1, 3);
+        final List<Integer> latter = Arrays.asList(2, 4, 5);
         Iterator<Pair<Maybe<Integer>, Maybe<Integer>>> got = Zips.longest(former, latter);
 
-        List<Pair<Maybe<Integer>, Maybe<Integer>>> expected = new ArrayList<Pair<Maybe<Integer>, Maybe<Integer>>>();
+        final List<Pair<Maybe<Integer>, Maybe<Integer>>> expected = new ArrayList<Pair<Maybe<Integer>, Maybe<Integer>>>();
         expected.add(p(Maybe.just(1), Maybe.just(2)));
         expected.add(p(Maybe.just(3), Maybe.just(4)));
         expected.add(p(Maybe.<Integer>nothing(), Maybe.just(5)));

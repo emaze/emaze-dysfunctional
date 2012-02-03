@@ -26,43 +26,43 @@ public class PaginationTest {
 
         @Test
         public void canEvaluateFullSize() {
-            Pair<Integer, List<Integer>> page = Pagination.page(0, 2, Arrays.asList(1, 2, 3, 4).iterator());
+            Pair<Integer, List<Integer>> page = Pagination.page(0, 2, Iterations.iterable(1, 2, 3, 4));
             Assert.assertEquals(Integer.valueOf(4), page.first());
         }
 
         @Test
         public void properlyPagesFirstPage() {
-            Pair<Integer, List<Integer>> page = Pagination.page(0, 2, Arrays.asList(1, 2, 3, 4).iterator());
+            Pair<Integer, List<Integer>> page = Pagination.page(0, 2, Iterations.iterable(1, 2, 3, 4));
             Assert.assertEquals(Arrays.asList(1, 2), page.second());
         }
 
         @Test
         public void properlyPagesOtherPages() {
-            Pair<Integer, List<Integer>> page = Pagination.page(2, 2, Arrays.asList(1, 2, 3, 4).iterator());
+            Pair<Integer, List<Integer>> page = Pagination.page(2, 2, Iterations.iterable(1, 2, 3, 4));
             Assert.assertEquals(Arrays.asList(3, 4), page.second());
         }
 
         @Test
         public void properlyPagesBounds() {
-            Pair<Integer, List<Integer>> page = Pagination.page(3, 2, Arrays.asList(1, 2, 3, 4).iterator());
+            Pair<Integer, List<Integer>> page = Pagination.page(3, 2, Iterations.iterable(1, 2, 3, 4));
             Assert.assertEquals(Arrays.asList(4), page.second());
         }
 
         @Test
         public void properlyReportsSizeWithBounds() {
-            Pair<Integer, List<Integer>> page = Pagination.page(3, 2, Arrays.asList(1, 2, 3, 4).iterator());
+            Pair<Integer, List<Integer>> page = Pagination.page(3, 2, Iterations.iterable(1, 2, 3, 4));
             Assert.assertEquals(Integer.valueOf(4), page.first());
         }
 
         @Test
         public void properlyPagesAfterBounds() {
-            Pair<Integer, List<Integer>> page = Pagination.page(4, 2, Arrays.asList(1, 2, 3, 4).iterator());
+            Pair<Integer, List<Integer>> page = Pagination.page(4, 2, Iterations.iterable(1, 2, 3, 4));
             Assert.assertEquals(Arrays.<Integer>asList(), page.second());
         }
 
         @Test
         public void properlyReportsSizeAfterBounds() {
-            Pair<Integer, List<Integer>> page = Pagination.page(4, 2, Arrays.asList(1, 2, 3, 4).iterator());
+            Pair<Integer, List<Integer>> page = Pagination.page(4, 2, Iterations.iterable(1, 2, 3, 4));
             Assert.assertEquals(Integer.valueOf(4), page.first());
         }
 

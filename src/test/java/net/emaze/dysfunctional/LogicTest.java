@@ -41,25 +41,25 @@ public class LogicTest {
 
         @Test
         public void canComposeIteratorOfPredicatesWithAnd() {
-            final Iterable<Predicate<O>> preds = Arrays.asList(new Always<O>(), new Never<O>());
+            final Iterable<Predicate<O>> preds = Iterations.iterable(new Always<O>(), new Never<O>());
             Assert.assertFalse(Logic.Unary.and(preds.iterator()).accept(O.IGNORED));
         }
 
         @Test
         public void canComposeIterableOfPredicatesWithAnd() {
-            final Iterable<Predicate<O>> preds = Arrays.asList(new Always<O>(), new Never<O>());
+            final Iterable<Predicate<O>> preds = Iterations.iterable(new Always<O>(), new Never<O>());
             Assert.assertFalse(Logic.Unary.and(preds).accept(O.IGNORED));
         }
 
         @Test
         public void canComposeIteratorOfPredicatesWithOr() {
-            final Iterable<Predicate<O>> preds = Arrays.asList(new Always<O>(), new Never<O>());
+            final Iterable<Predicate<O>> preds = Iterations.iterable(new Always<O>(), new Never<O>());
             Assert.assertTrue(Logic.Unary.or(preds.iterator()).accept(O.IGNORED));
         }
 
         @Test
         public void canComposeIterableOfPredicatesWithOr() {
-            final Iterable<Predicate<O>> preds = Arrays.asList(new Always<O>(), new Never<O>());
+            final Iterable<Predicate<O>> preds = Iterations.iterable(new Always<O>(), new Never<O>());
             Assert.assertTrue(Logic.Unary.or(preds).accept(O.IGNORED));
         }
 
@@ -92,25 +92,25 @@ public class LogicTest {
 
         @Test
         public void canComposeIteratorOfBinaryPredicatesWithAnd() {
-            final Iterable<BinaryPredicate<O, O>> preds = Arrays.asList(new BinaryAlways<O, O>(), new BinaryNever<O, O>());
+            final Iterable<BinaryPredicate<O, O>> preds = Iterations.iterable(new BinaryAlways<O, O>(), new BinaryNever<O, O>());
             Assert.assertFalse(Logic.Binary.and(preds.iterator()).accept(O.IGNORED, O.IGNORED));
         }
 
         @Test
         public void canComposeIterableOfBinaryPredicatesWithAnd() {
-            final Iterable<BinaryPredicate<O, O>> preds = Arrays.asList(new BinaryAlways<O, O>(), new BinaryNever<O, O>());
+            final Iterable<BinaryPredicate<O, O>> preds = Iterations.iterable(new BinaryAlways<O, O>(), new BinaryNever<O, O>());
             Assert.assertFalse(Logic.Binary.and(preds).accept(O.IGNORED, O.IGNORED));
         }
 
         @Test
         public void canComposeIteratorOfBinaryPredicatesWithOr() {
-            final Iterable<BinaryPredicate<O, O>> preds = Arrays.asList(new BinaryAlways<O, O>(), new BinaryNever<O, O>());
+            final Iterable<BinaryPredicate<O, O>> preds = Iterations.iterable(new BinaryAlways<O, O>(), new BinaryNever<O, O>());
             Assert.assertTrue(Logic.Binary.or(preds.iterator()).accept(O.IGNORED, O.IGNORED));
         }
 
         @Test
         public void canComposeIterableOfBinaryPredicatesWithOr() {
-            final Iterable<BinaryPredicate<O, O>> preds = Arrays.asList(new BinaryAlways<O, O>(), new BinaryNever<O, O>());
+            final Iterable<BinaryPredicate<O, O>> preds = Iterations.iterable(new BinaryAlways<O, O>(), new BinaryNever<O, O>());
             Assert.assertTrue(Logic.Binary.or(preds).accept(O.IGNORED, O.IGNORED));
         }
 
@@ -143,25 +143,25 @@ public class LogicTest {
 
         @Test
         public void canComposeIteratorOfTernaryPredicatesWithAnd() {
-            final Iterable<TernaryPredicate<O, O, O>> preds = Arrays.asList(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>());
+            final Iterable<TernaryPredicate<O, O, O>> preds = Iterations.iterable(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>());
             Assert.assertFalse(Logic.Ternary.and(preds.iterator()).accept(O.IGNORED, O.IGNORED, O.IGNORED));
         }
 
         @Test
         public void canComposeIterableOfTernaryPredicatesWithAnd() {
-            final Iterable<TernaryPredicate<O, O, O>> preds = Arrays.asList(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>());
+            final Iterable<TernaryPredicate<O, O, O>> preds = Iterations.iterable(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>());
             Assert.assertFalse(Logic.Ternary.and(preds).accept(O.IGNORED, O.IGNORED, O.IGNORED));
         }
 
         @Test
         public void canComposeIteratorOfTernaryPredicatesWithOr() {
-            final Iterable<TernaryPredicate<O, O, O>> preds = Arrays.asList(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>());
+            final Iterable<TernaryPredicate<O, O, O>> preds = Iterations.iterable(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>());
             Assert.assertTrue(Logic.Ternary.or(preds.iterator()).accept(O.IGNORED, O.IGNORED, O.IGNORED));
         }
 
         @Test
         public void canComposeIterableOfTernaryPredicatesWithOr() {
-            final Iterable<TernaryPredicate<O, O, O>> preds = Arrays.asList(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>());
+            final Iterable<TernaryPredicate<O, O, O>> preds = Iterations.iterable(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>());
             Assert.assertTrue(Logic.Ternary.or(preds).accept(O.IGNORED, O.IGNORED, O.IGNORED));
         }
 
@@ -494,7 +494,7 @@ public class LogicTest {
             final TernaryPredicate<O, O, O> pred = null;
             Logic.or(new TernaryAlways<O, O, O>(), new TernaryAlways<O, O, O>(), pred);
         }
-        
+
         @Test(expected = IllegalArgumentException.class)
         public void composingManyPredicatesYieldsExceptionWhenArrayIsNull() {
             final Predicate<O>[] pred = null;
@@ -511,7 +511,7 @@ public class LogicTest {
         public void composingManyTernaryPredicatesYieldsExceptionWhenArrayIsNull() {
             final TernaryPredicate<O, O, O>[] pred = null;
             Logic.or(pred);
-        }        
+        }
     }
 
     public static class NotTest {

@@ -31,7 +31,7 @@ import org.junit.runners.Suite;
 })
 public class MultiplexingTest {
 
-    public static List<O> AN_ITERABLE = Arrays.asList(O.ONE);
+    private static Iterable<O> AN_ITERABLE = Iterations.iterable(O.ONE);
 
     public static class Chain {
 
@@ -43,14 +43,14 @@ public class MultiplexingTest {
 
         @Test
         public void canChainFromIterable() {
-            final List<Iterator<O>> iterable = Arrays.asList(AN_ITERABLE.iterator());
+            final Iterable<Iterator<O>> iterable = Iterations.iterable(AN_ITERABLE.iterator());
             final Iterator<O> chained = Multiplexing.chain(iterable);
             Assert.assertNotNull(chained);
         }
 
         @Test
         public void canChainFromIterator() {
-            final List<Iterator<O>> iterable = Arrays.asList(AN_ITERABLE.iterator());
+            final Iterable<Iterator<O>> iterable = Iterations.iterable(AN_ITERABLE.iterator());
             final Iterator<O> chained = Multiplexing.chain(iterable.iterator());
             Assert.assertNotNull(chained);
         }
@@ -78,14 +78,14 @@ public class MultiplexingTest {
 
         @Test
         public void canFlattenFromIterable() {
-            final List<Iterable<O>> iterable = Arrays.<Iterable<O>>asList(AN_ITERABLE);
+            final Iterable<Iterable<O>> iterable = Iterations.iterable(AN_ITERABLE);
             final Iterator<O> flattened = Multiplexing.flatten(iterable);
             Assert.assertNotNull(flattened);
         }
 
         @Test
         public void canFlattenFromIterator() {
-            final List<Iterable<O>> iterable = Arrays.<Iterable<O>>asList(AN_ITERABLE);
+            final Iterable<Iterable<O>> iterable = Iterations.iterable(AN_ITERABLE);
             final Iterator<O> flattened = Multiplexing.flatten(iterable.iterator());
             Assert.assertNotNull(flattened);
         }
@@ -113,14 +113,14 @@ public class MultiplexingTest {
 
         @Test
         public void canMuxFromIterable() {
-            final List<Iterator<O>> iterable = Arrays.asList(AN_ITERABLE.iterator());
+            final Iterable<Iterator<O>> iterable = Iterations.iterable(AN_ITERABLE.iterator());
             final Iterator<O> muxed = Multiplexing.mux(iterable);
             Assert.assertNotNull(muxed);
         }
 
         @Test
         public void canMuxFromIterator() {
-            final List<Iterator<O>> iterable = Arrays.asList(AN_ITERABLE.iterator());
+            final Iterable<Iterator<O>> iterable = Iterations.iterable(AN_ITERABLE.iterator());
             final Iterator<O> muxed = Multiplexing.mux(iterable.iterator());
             Assert.assertNotNull(muxed);
         }
@@ -148,14 +148,14 @@ public class MultiplexingTest {
 
         @Test
         public void canMuxLongestFromIterable() {
-            final List<Iterator<O>> iterable = Arrays.asList(AN_ITERABLE.iterator());
+            final Iterable<Iterator<O>> iterable = Iterations.iterable(AN_ITERABLE.iterator());
             final Iterator<Maybe<O>> muxed = Multiplexing.muxLongest(iterable);
             Assert.assertNotNull(muxed);
         }
 
         @Test
         public void canMuxLongestFromIterator() {
-            final List<Iterator<O>> iterable = Arrays.asList(AN_ITERABLE.iterator());
+            final Iterable<Iterator<O>> iterable = Iterations.iterable(AN_ITERABLE.iterator());
             final Iterator<Maybe<O>> muxed = Multiplexing.muxLongest(iterable.iterator());
             Assert.assertNotNull(muxed);
         }
@@ -301,14 +301,14 @@ public class MultiplexingTest {
 
         @Test
         public void canRoundrobinFromIterable() {
-            final List<Iterator<O>> iterable = Arrays.asList(AN_ITERABLE.iterator());
+            final Iterable<Iterator<O>> iterable = Iterations.iterable(AN_ITERABLE.iterator());
             final Iterator<O> rr = Multiplexing.roundrobin(iterable);
             Assert.assertNotNull(rr);
         }
 
         @Test
         public void canRoundrobinFromIterator() {
-            final List<Iterator<O>> iterable = Arrays.asList(AN_ITERABLE.iterator());
+            final Iterable<Iterator<O>> iterable = Iterations.iterable(AN_ITERABLE.iterator());
             final Iterator<O> rr = Multiplexing.roundrobin(iterable.iterator());
             Assert.assertNotNull(rr);
         }

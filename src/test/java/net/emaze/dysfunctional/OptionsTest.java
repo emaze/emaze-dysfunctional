@@ -47,15 +47,15 @@ public class OptionsTest {
         @Test
         public void canLiftTwoValues() {
             final Iterator<Maybe<O>> lifts = Options.lifts(O.ONE, O.ANOTHER);
-            final List<Maybe<O>> expected = Arrays.asList(Maybe.just(O.ONE), Maybe.just(O.ANOTHER));
-            Assert.assertEquals(expected, Consumers.all(lifts));
+            final Iterable<Maybe<O>> expected = Iterations.iterable(Maybe.just(O.ONE), Maybe.just(O.ANOTHER));
+            Assert.assertEquals(Consumers.all(expected), Consumers.all(lifts));
         }
 
         @Test
         public void canLiftThreeValues() {
             final Iterator<Maybe<O>> lifts = Options.lifts(O.ONE, O.ANOTHER, O.YET_ANOTHER);
-            final List<Maybe<O>> expected = Arrays.asList(Maybe.just(O.ONE), Maybe.just(O.ANOTHER), Maybe.just(O.YET_ANOTHER));
-            Assert.assertEquals(expected, Consumers.all(lifts));
+            final Iterable<Maybe<O>> expected = Iterations.iterable(Maybe.just(O.ONE), Maybe.just(O.ANOTHER), Maybe.just(O.YET_ANOTHER));
+            Assert.assertEquals(Consumers.all(expected), Consumers.all(lifts));
         }
     }
 

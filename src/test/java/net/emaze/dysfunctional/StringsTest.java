@@ -24,8 +24,8 @@ public class StringsTest {
 
         @Test
         public void canJoinIntegers() {
-            Iterator<Integer> values = Arrays.asList(1, 2, 3, 4).iterator();
-            String output = Strings.join(values);
+            final Iterator<Integer> values = Arrays.asList(1, 2, 3, 4).iterator();
+            final String output = Strings.join(values);
             Assert.assertEquals("1234", output);
         }
 
@@ -45,8 +45,8 @@ public class StringsTest {
 
         @Test
         public void canJoinEmptyIterator() {
-            Iterator<Object> values = Arrays.asList().iterator();
-            String output = Strings.join(values);
+            final Iterator<Object> values = Arrays.asList().iterator();
+            final String output = Strings.join(values);
             Assert.assertEquals("", output);
         }
 
@@ -67,46 +67,46 @@ public class StringsTest {
 
         @Test
         public void canInterposeIteratorIntegers() {
-            Iterator<Integer> values = Arrays.asList(1, 2, 3, 4, 5).iterator();
-            String output = Strings.interpose(values, 0);
+            final Iterator<Integer> values = Arrays.asList(1, 2, 3, 4, 5).iterator();
+            final String output = Strings.interpose(values, 0);
             Assert.assertEquals("102030405", output);
         }
 
         @Test
         public void canInterposeIterable() {
-            Iterable<Integer> values = Arrays.asList(1, 2, 3, 4, 5);
-            String output = Strings.interpose(values, 0);
+            final Iterable<Integer> values = Arrays.asList(1, 2, 3, 4, 5);
+            final String output = Strings.interpose(values, 0);
             Assert.assertEquals("102030405", output);
         }
 
         @Test
         public void canInterposeArray() {
-            Integer[] values = {1, 2, 3, 4, 5};
-            String output = Strings.interpose(values, 0);
+            final Integer[] values = {1, 2, 3, 4, 5};
+            final String output = Strings.interpose(values, 0);
             Assert.assertEquals("102030405", output);
         }
 
         @Test
         public void canInterposeIterableWithMultipleSeparators() {
-            Iterable<Integer> values = Arrays.asList(1, 2, 3, 4, 5);
-            Iterator<String> separators = Arrays.asList("-", "+", "-", "+").iterator();
-            String output = Strings.interpose(values, separators);
+            final Iterable<Integer> values = Arrays.asList(1, 2, 3, 4, 5);
+            final Iterator<String> separators = Arrays.asList("-", "+", "-", "+").iterator();
+            final String output = Strings.interpose(values, separators);
             Assert.assertEquals("1-2+3-4+5", output);
         }
 
         @Test
         public void canInterposeIteratorWithMultipleSeparators() {
-            Iterator<Integer> values = Arrays.asList(1, 2, 3, 4, 5).iterator();
-            Iterator<String> separators = Arrays.asList("-", "+", "-", "+").iterator();
-            String output = Strings.interpose(values, separators);
+            final Iterator<Integer> values = Arrays.asList(1, 2, 3, 4, 5).iterator();
+            final Iterator<String> separators = Arrays.asList("-", "+", "-", "+").iterator();
+            final String output = Strings.interpose(values, separators);
             Assert.assertEquals("1-2+3-4+5", output);
         }
 
         @Test
         public void canInterposeArrayWithMultipleSeparators() {
-            Integer[] values = {1, 2, 3, 4, 5};
-            Iterator<String> separators = Arrays.asList("-", "+", "-", "+").iterator();
-            String output = Strings.interpose(values, separators);
+            final Integer[] values = {1, 2, 3, 4, 5};
+            final Iterator<String> separators = Arrays.asList("-", "+", "-", "+").iterator();
+            final String output = Strings.interpose(values, separators);
             Assert.assertEquals("1-2+3-4+5", output);
         }
 

@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import net.emaze.dysfunctional.dispatching.logic.IsTrue;
@@ -28,24 +27,24 @@ import org.junit.runners.Suite;
 })
 public class ReductionsTest {
 
-    private static List<Integer> list = Arrays.asList(1, 2);
-    private static Integer[] array = new Integer[]{1, 2};
+    private static List<Integer> LIST = Arrays.asList(1, 2);
+    private static Integer[] ARRAY = new Integer[]{1, 2};
 
     public static class Reduce {
 
         @Test
         public void canReduceFromIterator() {
-            Assert.assertEquals(Long.valueOf(2l), Reductions.reduce(list.iterator(), new Count<Integer>(), 0l));
+            Assert.assertEquals(Long.valueOf(2l), Reductions.reduce(Iterations.iterator(1, 2), new Count<Integer>(), 0l));
         }
 
         @Test
         public void canReduceFromIterable() {
-            Assert.assertEquals(Long.valueOf(2l), Reductions.reduce(list, new Count<Integer>(), 0l));
+            Assert.assertEquals(Long.valueOf(2l), Reductions.reduce(Iterations.iterable(1, 2), new Count<Integer>(), 0l));
         }
 
         @Test
         public void canReduceFromArray() {
-            Assert.assertEquals(Long.valueOf(2l), Reductions.reduce(array, new Count<Integer>(), 0l));
+            Assert.assertEquals(Long.valueOf(2l), Reductions.reduce(new Integer[]{1, 2}, new Count<Integer>(), 0l));
         }
 
         @Test(expected = IllegalArgumentException.class)
@@ -65,12 +64,12 @@ public class ReductionsTest {
 
         @Test
         public void canCountFromIterator() {
-            Assert.assertEquals(2l, Reductions.count(list.iterator()));
+            Assert.assertEquals(2l, Reductions.count(Iterations.iterator(1, 2)));
         }
 
         @Test
         public void canCountFromIterable() {
-            Assert.assertEquals(2l, Reductions.count(list));
+            Assert.assertEquals(2l, Reductions.count(Iterations.iterable(1, 2)));
         }
     }
 
@@ -78,12 +77,12 @@ public class ReductionsTest {
 
         @Test
         public void canCountAsIntegerFromIterator() {
-            Assert.assertEquals(2l, Reductions.counti(list.iterator()));
+            Assert.assertEquals(2l, Reductions.counti(Iterations.iterator(1, 2)));
         }
 
         @Test
         public void canCountAsIntegerFromIterable() {
-            Assert.assertEquals(2l, Reductions.counti(list));
+            Assert.assertEquals(2l, Reductions.counti(Iterations.iterable(1, 2)));
         }
 
         @Test(expected = IllegalArgumentException.class)
@@ -97,13 +96,13 @@ public class ReductionsTest {
 
         @Test
         public void canExtractMaximumWithComparator() {
-            int max = Reductions.maximum(list.iterator(), new ComparableComparator<Integer>(), 0);
+            int max = Reductions.maximum(Iterations.iterator(1, 2), new ComparableComparator<Integer>(), 0);
             Assert.assertEquals(2, max);
         }
 
         @Test
         public void canExtractMaximumWithComparable() {
-            int max = Reductions.maximum(list.iterator(), 0);
+            int max = Reductions.maximum(Iterations.iterator(1, 2), 0);
             Assert.assertEquals(2, max);
         }
     }
@@ -112,33 +111,34 @@ public class ReductionsTest {
 
         @Test
         public void canExtractMinimumWithComparator() {
-            int min = Reductions.minimum(list.iterator(), new ComparableComparator<Integer>(), 2);
+            int min = Reductions.minimum(Iterations.iterator(1, 2), new ComparableComparator<Integer>(), 2);
             Assert.assertEquals(1, min);
         }
 
         @Test
         public void canExtractMinimumWithComparable() {
-            int min = Reductions.minimum(list.iterator(), 2);
+            int min = Reductions.minimum(Iterations.iterator(1, 2), 2);
             Assert.assertEquals(1, min);
         }
     }
+
     public static class Any {
 
         @Test
         public void anyMatchesIfAtLeastOnePredicateMatches() {
-            boolean got = Reductions.any(Arrays.asList(false, true), new IsTrue());
+            boolean got = Reductions.any(Iterations.iterable(false, true), new IsTrue());
             Assert.assertTrue(got);
         }
 
         @Test
         public void anyDoesntMatchIfNoPredicateMatches() {
-            boolean got = Reductions.any(Arrays.asList(false), new IsTrue());
+            boolean got = Reductions.any(Iterations.iterable(false), new IsTrue());
             Assert.assertFalse(got);
         }
 
         @Test
         public void canUseAnyWithIterators() {
-            boolean got = Reductions.any(Arrays.asList(false).iterator(), new IsTrue());
+            boolean got = Reductions.any(Iterations.iterator(false), new IsTrue());
             Assert.assertFalse(got);
         }
 
@@ -150,13 +150,13 @@ public class ReductionsTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallAnyWithNullIterable() {
-            final Iterable iterable = null;
+            final Iterable<Boolean> iterable = null;
             Reductions.any(iterable, new IsTrue());
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallAnyWithNullPredicate() {
-            Reductions.any(new ArrayList(), null);
+            Reductions.any(Iterations.iterable(), null);
         }
     }
 
@@ -164,19 +164,19 @@ public class ReductionsTest {
 
         @Test
         public void everyMatchesIfEveryPredicateMatches() {
-            boolean got = Reductions.every(Arrays.asList(true, true), new IsTrue());
+            boolean got = Reductions.every(Iterations.iterable(true, true), new IsTrue());
             Assert.assertTrue(got);
         }
 
         @Test
         public void everyDoesntMatchIfOnePredicateDoesntMatch() {
-            boolean got = Reductions.every(Arrays.asList(true, false), new IsTrue());
+            boolean got = Reductions.every(Iterations.iterable(true, false), new IsTrue());
             Assert.assertFalse(got);
         }
 
         @Test
         public void canUseEveryWithIterators() {
-            boolean got = Reductions.every(Arrays.asList(false).iterator(), new IsTrue());
+            boolean got = Reductions.every(Iterations.iterator(false), new IsTrue());
             Assert.assertFalse(got);
         }
 
@@ -188,13 +188,13 @@ public class ReductionsTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallEveryWithNullIterable() {
-            final Iterable iterable = null;
+            final Iterable<Boolean> iterable = null;
             Reductions.every(iterable, new IsTrue());
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallEveryWithNullPredicate() {
-            Reductions.every(new ArrayList(), null);
+            Reductions.every(Iterations.iterable(), null);
         }
     }
 
