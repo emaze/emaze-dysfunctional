@@ -43,12 +43,19 @@ public class MemoryIteratorTest {
         final MemoryIterator<Integer> memoryIterator = new MemoryIterator<Integer>(iter, 2);
         memoryIterator.hasNext();
         Assert.assertTrue(memoryIterator.hasNext());
-    }
+    }   
 
     @Test
     public void memoryYieldsOnlyLastNElement() {
         final Iterator<Integer> iter = Iterations.iterator(1, 2, 3);
         final MemoryIterator<Integer> memoryIterator = new MemoryIterator<Integer>(iter, 2);
         Assert.assertEquals(Arrays.asList(2, 3), Consumers.all(memoryIterator));
+    }
+    @Test
+    public void canUseNextWithoutCallingHasNext() {
+        final Iterator<Integer> iter = Iterations.iterator(1, 2, 3);
+        final MemoryIterator<Integer> memoryIterator = new MemoryIterator<Integer>(iter, 2);
+        memoryIterator.next();
+        memoryIterator.next();
     }
 }
