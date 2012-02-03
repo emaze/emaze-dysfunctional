@@ -1,11 +1,11 @@
 package net.emaze.dysfunctional.filtering;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.Consumers;
+import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.Never;
 import org.junit.Assert;
@@ -16,6 +16,13 @@ import org.junit.Test;
  * @author rferranti
  */
 public class TakeWhileIteratorTest {
+
+    @Test
+    public void emptyIteratorHasNoNext() {
+        Iterator<Integer> ints = Iterations.iterator();
+        TakeWhileIterator<Integer> twi = new TakeWhileIterator<Integer>(ints, new Always<Integer>());
+        Assert.assertFalse(twi.hasNext());
+    }
 
     @Test
     public void canTakeEveryObject() {
@@ -30,7 +37,7 @@ public class TakeWhileIteratorTest {
         TakeWhileIterator<Integer> twi = new TakeWhileIterator<Integer>(ints.iterator(), new Never<Integer>());
         Assert.assertFalse(twi.hasNext());
     }
-    
+
     @Test
     public void afterTakingAllNeededStops() {
         Iterator<Integer> srcIter = Arrays.asList(1, 2, 3, 4, 5).iterator();

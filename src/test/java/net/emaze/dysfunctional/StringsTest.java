@@ -117,6 +117,12 @@ public class StringsTest {
         }
 
         @Test(expected = IllegalArgumentException.class)
+        public void interposingNullValuesIterableYieldsException() {
+            final Iterable<Integer> iterable = null;
+            Strings.interpose(iterable, 0);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
         public void interposingNullValuesIterableWithSeparatorsYieldsException() {
             final Iterable<Integer> iterable = null;
             Strings.interpose(iterable, new ConstantIterator<Integer>(0));
