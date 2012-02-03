@@ -134,6 +134,13 @@ public class OptionsTest {
         }
 
         @Test
+        public void canLiftDelegate() {
+            Delegate<Integer, Integer> delegate = new Identity<Integer>();
+            Delegate<Maybe<Integer>, Maybe<Integer>> lifted = Options.lift(delegate);
+            Assert.assertNotNull(lifted);
+        }
+
+        @Test
         public void canDrop() {
             Object dropped = Options.drop(Maybe.nothing());
             Assert.assertNull(dropped);
