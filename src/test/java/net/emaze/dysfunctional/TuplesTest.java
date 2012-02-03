@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional;
 
+import net.emaze.dysfunctional.Tuples.Pairs;
+import net.emaze.dysfunctional.Tuples.Triples;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
@@ -24,8 +26,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     TuplesTest.Tupled.class,
     TuplesTest.PairsUntupled.class,
-    TuplesTest.TriplesUntupled.class
-})
+    TuplesTest.TriplesUntupled.class,
+    TuplesTest.Facades.class})
 public class TuplesTest {
 
     public static class Tupled {
@@ -100,6 +102,27 @@ public class TuplesTest {
         public void canAdaptDelegate() {
             final Identity<Triple<O, O, O>> delegate = new Identity<Triple<O, O, O>>();
             Assert.assertNotNull(Tuples.Triples.untupled(delegate));
+        }
+    }
+
+    public static class Facades {
+
+        @Test
+        public void tuplesIsNotFinal() {
+            new Tuples() {
+            };
+        }
+
+        @Test
+        public void pairsIsNotFinal() {
+            new Pairs() {
+            };
+        }
+
+        @Test
+        public void triplesIsNotFinal() {
+            new Triples() {
+            };
         }
     }
 }

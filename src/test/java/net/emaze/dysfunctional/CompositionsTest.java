@@ -59,4 +59,10 @@ public class CompositionsTest {
         final Delegate<O, O> composed = Compositions.compose(delegates);
         Assert.assertNotNull(composed);
     }
+
+    @Test
+    public void facadeIsNotFinal() {
+        new Compositions() {
+        };
+    }
 }

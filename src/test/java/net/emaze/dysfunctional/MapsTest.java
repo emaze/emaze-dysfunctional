@@ -19,7 +19,11 @@ import org.junit.runners.Suite;
  * @author rferranti
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({MapsTest.Builder.class, MapsTest.NestedBuilder.class})
+@Suite.SuiteClasses({
+    MapsTest.Builder.class,
+    MapsTest.NestedBuilder.class,
+    MapsTest.Facades.class
+})
 public class MapsTest {
 
     private static final Map<String, Object> A_MAP = new HashMap<String, Object>();
@@ -95,6 +99,21 @@ public class MapsTest {
         public void canCreateEmptyOrderedWithComparatorBuilder() {
             final NestedMapBuilder<String> builder = Nested.ordered(new ComparableComparator<String>());
             Assert.assertNotNull(builder);
-        }       
+        }
+    }
+
+    public static class Facades {
+
+        @Test
+        public void mapsIsNotFinal() {
+            new Maps() {
+            };
+        }
+
+        @Test
+        public void nestedIsNotFinal() {
+            new Nested() {
+            };
+        }
     }
 }

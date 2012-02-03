@@ -23,7 +23,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     InterceptorsTest.Unary.class,
     InterceptorsTest.Binary.class,
-    InterceptorsTest.Ternary.class
+    InterceptorsTest.Ternary.class,
+    InterceptorsTest.Facades.class
 })
 public class InterceptorsTest {
 
@@ -273,6 +274,15 @@ public class InterceptorsTest {
         public void interceptingWithThirdNullInterceptorYieldsException() {
             final TernaryInterceptor<O, O, O> nullInterceptor = null;
             Interceptors.intercept(new FirstParamOfThree<O, O, O>(), INTERCEPTOR, INTERCEPTOR, nullInterceptor);
+        }
+    }
+
+    public static class Facades {
+
+        @Test
+        public void interceptorsIsNotFinal() {
+            new Interceptors() {
+            };
         }
     }
 
