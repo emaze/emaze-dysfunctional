@@ -1,5 +1,8 @@
 package net.emaze.dysfunctional.tuples;
 
+import net.emaze.dysfunctional.dispatching.delegates.ConstantDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -51,5 +54,38 @@ public class TripleTest {
     public void tripleAndObjectAreNotEquals() {
         Triple<Integer, Integer, Integer> t = Triple.of(1, 2, 3);
         Assert.assertFalse(t.equals(new Object()));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void fmapWithNullFirstDelegateYieldsException() {
+        Triple.of(O.ONE, O.ONE, O.ONE).fmap(null, new Identity<O>(), new Identity<O>());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void fmapWithNullSecondDelegateYieldsException() {
+        Triple.of(O.ONE, O.ONE, O.ONE).fmap(new Identity<O>(), null, new Identity<O>());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void fmapWithNullThirdDelegateYieldsException() {
+        Triple.of(O.ONE, O.ONE, O.ONE).fmap(new Identity<O>(), new Identity<O>(), null);
+    }
+
+    @Test
+    public void firstDelegateOfFmapTransformsFirstType() {
+        final Triple<O, O, O> mapped = Triple.of(O.ONE, O.ONE, O.ONE).fmap(new ConstantDelegate<O, O>(O.ANOTHER), new Identity<O>(), new Identity<O>());
+        Assert.assertEquals(O.ANOTHER, mapped.first());
+    }
+
+    @Test
+    public void secondDelegateOfFmapTransformsSecondType() {
+        final Triple<O, O, O> mapped = Triple.of(O.ONE, O.ONE, O.ONE).fmap(new Identity<O>(), new ConstantDelegate<O, O>(O.ANOTHER), new Identity<O>());
+        Assert.assertEquals(O.ANOTHER, mapped.second());
+    }
+
+    @Test
+    public void thirdDelegateOfFmapTransformsThirdType() {
+        final Triple<O, O, O> mapped = Triple.of(O.ONE, O.ONE, O.ONE).fmap(new Identity<O>(), new Identity<O>(), new ConstantDelegate<O, O>(O.ANOTHER));
+        Assert.assertEquals(O.ANOTHER, mapped.third());
     }
 }
