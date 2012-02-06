@@ -1,8 +1,9 @@
 package net.emaze.dysfunctional.iterations;
 
 /**
- * An infinite Iterator always yields the same value
- * @param <T> 
+ * An infinite Iterator always yielding the same value.
+ *
+ * @param <T> the element type
  * @author rferranti
  */
 public class ConstantIterator<T> extends ReadOnlyIterator<T> {

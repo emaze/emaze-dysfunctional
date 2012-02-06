@@ -3,7 +3,9 @@ package net.emaze.dysfunctional.iterations;
 import java.util.Iterator;
 
 /**
+ * A singleton iterable.
  *
+ * @param <T> the element type
  * @author rferranti
  */
 public class SingletonIterable<T> implements Iterable<T> {

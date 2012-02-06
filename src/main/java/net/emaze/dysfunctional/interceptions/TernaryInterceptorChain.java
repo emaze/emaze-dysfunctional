@@ -5,7 +5,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 
 /**
- *
+ * 
  * @param <R>
  * @param <T1>
  * @param <T2>

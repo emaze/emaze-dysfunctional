@@ -6,7 +6,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 /**
  * Adapts an Iterator to the Iterable interface enabling the iterator to be consumed
  * where an iterable is expected (a OneTimeIterable can be consumed ONLY ONCE )
- * @param <T> 
+ * @param <T> the element type
  * @author rferranti
  */
 public class OneTimeIterable<T> implements Iterable<T> {

@@ -4,8 +4,9 @@ import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
+ * An array backed iterable.
  *
- * @param <T>
+ * @param <T> the element type
  * @author rferranti
  */
 public class ArrayIterable<T> implements Iterable<T> {

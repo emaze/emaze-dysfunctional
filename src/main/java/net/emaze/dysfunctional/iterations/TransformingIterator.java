@@ -6,16 +6,17 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
  * Decorates an iterator adapting (via a delegate) consumed elements
- * @param <R>
- * @param <T> 
+ *
+ * @param <R> the resulting element type
+ * @param <T> the source element type
  * @author rferranti
  */
-public class TransformingIterator<R,T> implements Iterator<R> {
+public class TransformingIterator<R, T> implements Iterator<R> {
 
-    private final Delegate<R,T> transformer;
+    private final Delegate<R, T> transformer;
     private final Iterator<T> iterator;
 
-    public TransformingIterator(Iterator<T> iterator, Delegate<R,T> transformer ){
+    public TransformingIterator(Iterator<T> iterator, Delegate<R, T> transformer) {
         dbc.precondition(iterator != null, "trying to create a TransformingIterator from a null iterator");
         dbc.precondition(transformer != null, "trying to create a TransformingIterator with a null transformer");
         this.iterator = iterator;
@@ -36,5 +37,4 @@ public class TransformingIterator<R,T> implements Iterator<R> {
     public void remove() {
         iterator.remove();
     }
-
 }

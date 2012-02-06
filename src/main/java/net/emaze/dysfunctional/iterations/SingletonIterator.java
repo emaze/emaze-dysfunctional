@@ -3,7 +3,9 @@ package net.emaze.dysfunctional.iterations;
 import java.util.NoSuchElementException;
 
 /**
+ * A singleton iterator.
  *
+ * @param <T> the element type
  * @author rferranti
  */
 public class SingletonIterator<T> extends ReadOnlyIterator<T> {

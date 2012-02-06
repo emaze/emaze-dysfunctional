@@ -4,9 +4,10 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
+ * Adapts a unary interceptor to a unary delegate.
  *
- * @param <R>
- * @param <T>
+ * @param <R> the delegate result type
+ * @param <T> the delegate parameter type
  * @author rferranti
  */
 public class InterceptorAdapter<R, T> implements Delegate<R, T> {
@@ -21,7 +22,7 @@ public class InterceptorAdapter<R, T> implements Delegate<R, T> {
         this.inner = inner;
     }
 
-    @Override   
+    @Override
     public R perform(T value) {
         interceptor.before(value);
         try {

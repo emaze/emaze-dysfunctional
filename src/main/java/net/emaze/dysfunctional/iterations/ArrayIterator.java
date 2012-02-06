@@ -4,8 +4,9 @@ import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
+ * An array backed iterator.
  *
- * @param <T>
+ * @param <T> the element type
  * @author rferranti
  */
 public class ArrayIterator<T> extends ReadOnlyIterator<T> {

@@ -4,10 +4,10 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 
 /**
- * 
- * @param <R>
- * @param <T1>
- * @param <T2> 
+ * Adapts a binary interceptor to binary delegate.
+ * @param <R> the delegate result type
+ * @param <T1> the delegate first parameter type
+ * @param <T2> the delegate second parameter type
  * @author rferranti
  */
 public class BinaryInterceptorAdapter<R, T1, T2> implements BinaryDelegate<R, T1, T2> {
