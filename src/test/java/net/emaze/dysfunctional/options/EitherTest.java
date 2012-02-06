@@ -3,6 +3,7 @@ package net.emaze.dysfunctional.options;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantDelegate;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,7 +60,7 @@ public class EitherTest {
         }
 
         @Test
-        public void withRightEitherCallsRightDelegateWithRightValue() {
+        public void fmapCallsRightDelegateWithRightValue() {
             final Integer rightValue = 1;
             final Either<Object, Integer> either = new Either<Object, Integer>(Maybe.nothing(), Maybe.just(rightValue));
             final Box<Integer> box = new Box<Integer>();
@@ -68,7 +69,7 @@ public class EitherTest {
         }
 
         @Test
-        public void withLeftEitherCallsLeftDelegateWithLeftValue() {
+        public void fmapCallsLeftDelegateWithLeftValue() {
             final Integer leftValue = 1;
             final Either<Integer, Object> either = new Either<Integer, Object>(Maybe.just(leftValue), Maybe.nothing());
             final Box<Integer> box = new Box<Integer>();
@@ -110,6 +111,18 @@ public class EitherTest {
         @Test(expected = IllegalArgumentException.class)
         public void creatingEitheWithNullRightYieldsException() {
             new Either<Integer, Integer>(Maybe.just(1), null);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void fmapWithNullLeftDelegateYieldsException() {
+            final Either<O, O> either = Either.right(O.ONE);
+            either.fmap(null, new Identity<O>());
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void fmapWithNullRightDelegateYieldsException() {
+            final Either<O, O> either = Either.right(O.ONE);
+            either.fmap(new Identity<O>(), null);
         }
     }
 }

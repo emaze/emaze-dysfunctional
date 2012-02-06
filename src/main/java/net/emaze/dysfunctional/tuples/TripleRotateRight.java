@@ -3,6 +3,13 @@ package net.emaze.dysfunctional.tuples;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
+/**
+ * 
+ * @author rferranti
+ * @param <T1>
+ * @param <T2>
+ * @param <T3> 
+ */
 public class TripleRotateRight<T1, T2, T3> implements Delegate<Triple<T3, T1, T2>, Triple<T1, T2, T3>> {
 
     @Override

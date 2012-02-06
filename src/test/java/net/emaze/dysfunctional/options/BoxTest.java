@@ -99,6 +99,11 @@ public class BoxTest {
         Assert.assertEquals(mapped, box);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void fmappingWithNullDelegateYieldsException() {
+        Box.of(1).fmap(null);
+    }
+
     public static class Dick {
     }
 
