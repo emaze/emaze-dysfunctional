@@ -59,6 +59,12 @@ public class OptionsTest {
             final Iterable<Maybe<O>> expected = Iterations.iterable(Maybe.just(O.ONE), Maybe.just(O.ANOTHER), Maybe.just(O.YET_ANOTHER));
             Assert.assertEquals(Consumers.all(expected), Consumers.all(lifts));
         }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void liftingNullIterableYieldsException() {
+            final Iterable<O> iterable = null;
+            Options.Maybes.lifts(iterable);
+        }
     }
 
     public static class Drops {
@@ -88,6 +94,12 @@ public class OptionsTest {
             final Iterator<O> drops = Options.Maybes.drops(Maybe.just(O.ONE), Maybe.just(O.ANOTHER), Maybe.just(O.YET_ANOTHER));
             final List<O> expected = Arrays.asList(O.ONE, O.ANOTHER, O.YET_ANOTHER);
             Assert.assertEquals(expected, Consumers.all(drops));
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void droppingNullIterableYieldsException() {
+            final Iterable<Maybe<O>> iterable = null;
+            Options.Maybes.drops(iterable);
         }
     }
 
@@ -381,7 +393,7 @@ public class OptionsTest {
             final Iterable<O> iterable = null;
             Options.Eithers.pures(iterable);
         }
-        
+
         @Test
         public void canEvaluateEitherPuresOfAnIterator() {
             final Iterator<O> iterator = Iterations.iterator(O.ONE);
@@ -424,8 +436,7 @@ public class OptionsTest {
         public void canEvaluateEitherPuresOfManyElements() {
             final Iterator<Either<String, Integer>> pures = Options.Eithers.pures(1, 2, 3, 4);
             Assert.assertNotNull(pures);
-        }        
-        
+        }
     }
 
     public static class Facade {
@@ -433,6 +444,24 @@ public class OptionsTest {
         @Test
         public void facadeIsNotFinal() {
             new Options() {
+            };
+        }
+
+        @Test
+        public void maybesFacadeIsNotFinal() {
+            new Options.Maybes() {
+            };
+        }
+
+        @Test
+        public void boxesFacadeIsNotFinal() {
+            new Options.Boxes() {
+            };
+        }
+
+        @Test
+        public void eithersFacadeIsNotFinal() {
+            new Options.Eithers() {
             };
         }
     }
