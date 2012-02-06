@@ -29,31 +29,76 @@ public abstract class Options {
 
     public abstract static class Maybes {
 
+        /**
+         *
+         * @param <T>
+         * @param value
+         * @return
+         */
         public static <T> Maybe<T> pure(T value) {
             return new PureMaybe<T>().perform(value);
         }
 
+        /**
+         *
+         * @param <T>
+         * @param values
+         * @return
+         */
         public static <T> Iterator<Maybe<T>> pures(Iterator<T> values) {
             return new TransformingIterator<Maybe<T>, T>(values, new PureMaybe<T>());
         }
 
+        /**
+         *
+         * @param <T>
+         * @param values
+         * @return
+         */
         public static <T> Iterator<Maybe<T>> pures(Iterable<T> values) {
             dbc.precondition(values != null, "cannot perform pures on a null iterable");
             return new TransformingIterator<Maybe<T>, T>(values.iterator(), new PureMaybe<T>());
         }
 
+        /**
+         *
+         * @param <T>
+         * @param value
+         * @return
+         */
         public static <T> Iterator<Maybe<T>> pures(T value) {
             return new TransformingIterator<Maybe<T>, T>(new SingletonIterator<T>(value), new PureMaybe<T>());
         }
 
+        /**
+         *
+         * @param <T>
+         * @param first
+         * @param second
+         * @return
+         */
         public static <T> Iterator<Maybe<T>> pures(T first, T second) {
             return new TransformingIterator<Maybe<T>, T>(Iterations.iterator(first, second), new PureMaybe<T>());
         }
 
+        /**
+         *
+         * @param <T>
+         * @param first
+         * @param second
+         * @param third
+         * @return
+         */
         public static <T> Iterator<Maybe<T>> pures(T first, T second, T third) {
             return new TransformingIterator<Maybe<T>, T>(Iterations.iterator(first, second, third), new PureMaybe<T>());
         }
 
+        /**
+         *
+         * @param <T>
+         * @param values
+         * @return
+         */
         public static <T> Iterator<Maybe<T>> pures(T... values) {
             return new TransformingIterator<Maybe<T>, T>(Iterations.iterator(values), new PureMaybe<T>());
         }
@@ -252,31 +297,76 @@ public abstract class Options {
 
     public abstract static class Boxes {
 
+        /**
+         *
+         * @param <T>
+         * @param value
+         * @return
+         */
         public static <T> Box<T> pure(T value) {
             return new PureBox<T>().perform(value);
         }
 
+        /**
+         *
+         * @param <T>
+         * @param values
+         * @return
+         */
         public static <T> Iterator<Box<T>> pures(Iterator<T> values) {
             return new TransformingIterator<Box<T>, T>(values, new PureBox<T>());
         }
 
+        /**
+         *
+         * @param <T>
+         * @param values
+         * @return
+         */
         public static <T> Iterator<Box<T>> pures(Iterable<T> values) {
             dbc.precondition(values != null, "cannot perform pures on a null iterable");
             return new TransformingIterator<Box<T>, T>(values.iterator(), new PureBox<T>());
         }
 
+        /**
+         *
+         * @param <T>
+         * @param value
+         * @return
+         */
         public static <T> Iterator<Box<T>> pures(T value) {
             return new TransformingIterator<Box<T>, T>(new SingletonIterator<T>(value), new PureBox<T>());
         }
 
+        /**
+         *
+         * @param <T>
+         * @param first
+         * @param second
+         * @return
+         */
         public static <T> Iterator<Box<T>> pures(T first, T second) {
             return new TransformingIterator<Box<T>, T>(Iterations.iterator(first, second), new PureBox<T>());
         }
 
+        /**
+         *
+         * @param <T>
+         * @param first
+         * @param second
+         * @param third
+         * @return
+         */
         public static <T> Iterator<Box<T>> pures(T first, T second, T third) {
             return new TransformingIterator<Box<T>, T>(Iterations.iterator(first, second, third), new PureBox<T>());
         }
 
+        /**
+         *
+         * @param <T>
+         * @param values
+         * @return
+         */
         public static <T> Iterator<Box<T>> pures(T... values) {
             return new TransformingIterator<Box<T>, T>(Iterations.iterator(values), new PureBox<T>());
         }
@@ -284,35 +374,95 @@ public abstract class Options {
 
     public abstract static class Eithers {
 
+        /**
+         *
+         * @param <LT>
+         * @param <RT>
+         * @param value
+         * @return
+         */
         public static <LT, RT> Either<LT, RT> pure(RT value) {
             return new PureEither<LT, RT>().perform(value);
         }
 
+        /**
+         *
+         * @param <LT>
+         * @param <RT>
+         * @param leftClass
+         * @param value
+         * @return
+         */
         public static <LT, RT> Either<LT, RT> pure(Class<LT> leftClass, RT value) {
             return new PureEither<LT, RT>().perform(value);
         }
 
+        /**
+         *
+         * @param <LT>
+         * @param <RT>
+         * @param values
+         * @return
+         */
         public static <LT, RT> Iterator<Either<LT, RT>> pures(Iterator<RT> values) {
             return new TransformingIterator<Either<LT, RT>, RT>(values, new PureEither<LT, RT>());
         }
 
+        /**
+         *
+         * @param <LT>
+         * @param <RT>
+         * @param values
+         * @return
+         */
         public static <LT, RT> Iterator<Either<LT, RT>> pures(Iterable<RT> values) {
             dbc.precondition(values != null, "cannot perform pures on a null iterable");
             return new TransformingIterator<Either<LT, RT>, RT>(values.iterator(), new PureEither<LT, RT>());
         }
 
+        /**
+         *
+         * @param <LT>
+         * @param <RT>
+         * @param value
+         * @return
+         */
         public static <LT, RT> Iterator<Either<LT, RT>> pures(RT value) {
             return new TransformingIterator<Either<LT, RT>, RT>(new SingletonIterator<RT>(value), new PureEither<LT, RT>());
         }
 
+        /**
+         *
+         * @param <LT>
+         * @param <RT>
+         * @param first
+         * @param second
+         * @return
+         */
         public static <LT, RT> Iterator<Either<LT, RT>> pures(RT first, RT second) {
             return new TransformingIterator<Either<LT, RT>, RT>(Iterations.iterator(first, second), new PureEither<LT, RT>());
         }
 
+        /**
+         *
+         * @param <LT>
+         * @param <RT>
+         * @param first
+         * @param second
+         * @param third
+         * @return
+         */
         public static <LT, RT> Iterator<Either<LT, RT>> pures(RT first, RT second, RT third) {
             return new TransformingIterator<Either<LT, RT>, RT>(Iterations.iterator(first, second, third), new PureEither<LT, RT>());
         }
 
+        /**
+         *
+         * @param <LT>
+         * @param <RT>
+         * @param values
+         * @return
+         */
         public static <LT, RT> Iterator<Either<LT, RT>> pures(RT... values) {
             return new TransformingIterator<Either<LT, RT>, RT>(ArrayIterator.of(values), new PureEither<LT, RT>());
         }

@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.options.Either;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.testing.O;
@@ -25,7 +26,8 @@ import org.junit.runners.Suite;
     OptionsTest.Justs.class,
     OptionsTest.LiftAndDrop.class,
     OptionsTest.Facade.class,
-    OptionsTest.LeftAndRight.class
+    OptionsTest.LeftAndRight.class,
+    OptionsTest.Pures.class
 })
 public class OptionsTest {
 
@@ -270,6 +272,160 @@ public class OptionsTest {
             final Iterator<Either<Integer, Boolean>> iterator = Iterations.iterator(rightHasValue);
             Assert.assertEquals(Arrays.asList((Boolean) null), Consumers.all(Options.Eithers.rights(iterator)));
         }
+    }
+
+    public static class Pures {
+
+        @Test(expected = IllegalArgumentException.class)
+        public void maybePuresOfNullIterableYieldsException() {
+            final Iterable<O> iterable = null;
+            Options.Maybes.pures(iterable);
+        }
+
+        @Test
+        public void canEvaluateMaybePuresOfAnIterator() {
+            final Iterator<O> iterator = Iterations.iterator(O.ONE);
+            final Iterator<Maybe<O>> pures = Options.Maybes.pures(iterator);
+            Assert.assertNotNull(pures);
+        }
+
+        @Test
+        public void canEvaluateMaybePuresOfAnIterable() {
+            final Iterable<O> iterator = Iterations.iterable(O.ONE);
+            final Iterator<Maybe<O>> pures = Options.Maybes.pures(iterator);
+            Assert.assertNotNull(pures);
+        }
+
+        @Test
+        public void canEvaluateMaybePureOfAnElement() {
+            final Maybe<O> pure = Options.Maybes.pure(O.ONE);
+            Assert.assertNotNull(pure);
+        }
+
+        @Test
+        public void canEvaluateMaybePuresOfAnElement() {
+            final Iterator<Maybe<O>> pures = Options.Maybes.pures(O.ONE);
+            Assert.assertNotNull(pures);
+        }
+
+        @Test
+        public void canEvaluateMaybePuresOfTwoElements() {
+            final Iterator<Maybe<O>> pures = Options.Maybes.pures(O.ONE, O.ANOTHER);
+            Assert.assertNotNull(pures);
+        }
+
+        @Test
+        public void canEvaluateMaybePuresOfThreeElements() {
+            final Iterator<Maybe<O>> pures = Options.Maybes.pures(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+            Assert.assertNotNull(pures);
+        }
+
+        @Test
+        public void canEvaluateMaybePuresOfManyElements() {
+            final Iterator<Maybe<Integer>> pures = Options.Maybes.pures(1, 2, 3, 4);
+            Assert.assertNotNull(pures);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void boxPuresOfNullIterableYieldsException() {
+            final Iterable<O> iterable = null;
+            Options.Boxes.pures(iterable);
+        }
+
+        @Test
+        public void canEvaluateBoxPuresOfAnIterator() {
+            final Iterator<O> iterator = Iterations.iterator(O.ONE);
+            final Iterator<Box<O>> pures = Options.Boxes.pures(iterator);
+            Assert.assertNotNull(pures);
+        }
+
+        @Test
+        public void canEvaluateBoxPuresOfAnIterable() {
+            final Iterable<O> iterator = Iterations.iterable(O.ONE);
+            final Iterator<Box<O>> pures = Options.Boxes.pures(iterator);
+            Assert.assertNotNull(pures);
+        }
+
+        @Test
+        public void canEvaluateBoxPureOfAnElement() {
+            final Box<O> pure = Options.Boxes.pure(O.ONE);
+            Assert.assertNotNull(pure);
+        }
+
+        @Test
+        public void canEvaluateBoxPuresOfAnElement() {
+            final Iterator<Box<O>> pures = Options.Boxes.pures(O.ONE);
+            Assert.assertNotNull(pures);
+        }
+
+        @Test
+        public void canEvaluateBoxPuresOfTwoElements() {
+            final Iterator<Box<O>> pures = Options.Boxes.pures(O.ONE, O.ANOTHER);
+            Assert.assertNotNull(pures);
+        }
+
+        @Test
+        public void canEvaluateBoxPuresOfThreeElements() {
+            final Iterator<Box<O>> pures = Options.Boxes.pures(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+            Assert.assertNotNull(pures);
+        }
+
+        @Test
+        public void canEvaluateBoxPuresOfManyElements() {
+            final Iterator<Box<Integer>> pures = Options.Boxes.pures(1, 2, 3, 4);
+            Assert.assertNotNull(pures);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void eitherPuresOfNullIterableYieldsException() {
+            final Iterable<O> iterable = null;
+            Options.Eithers.pures(iterable);
+        }
+        
+        @Test
+        public void canEvaluateEitherPuresOfAnIterator() {
+            final Iterator<O> iterator = Iterations.iterator(O.ONE);
+            final Iterator<Either<String, O>> pures = Options.Eithers.pures(iterator);
+            Assert.assertNotNull(pures);
+        }
+
+        @Test
+        public void canEvaluateEitherPuresOfAnIterable() {
+            final Iterable<O> iterator = Iterations.iterable(O.ONE);
+            final Iterator<Either<String, O>> pures = Options.Eithers.pures(iterator);
+            Assert.assertNotNull(pures);
+        }
+
+        @Test
+        public void canEvaluateEitherPureOfAnElement() {
+            final Either<String, O> pure = Options.Eithers.pure(O.ONE);
+            Assert.assertNotNull(pure);
+        }
+
+        @Test
+        public void canEvaluateEitherPuresOfAnElement() {
+            final Iterator<Either<String, O>> pures = Options.Eithers.pures(O.ONE);
+            Assert.assertNotNull(pures);
+        }
+
+        @Test
+        public void canEvaluateEitherPuresOfTwoElements() {
+            final Iterator<Either<String, O>> pures = Options.Eithers.pures(O.ONE, O.ANOTHER);
+            Assert.assertNotNull(pures);
+        }
+
+        @Test
+        public void canEvaluateEitherPuresOfThreeElements() {
+            final Iterator<Either<String, O>> pures = Options.Eithers.pures(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+            Assert.assertNotNull(pures);
+        }
+
+        @Test
+        public void canEvaluateEitherPuresOfManyElements() {
+            final Iterator<Either<String, Integer>> pures = Options.Eithers.pures(1, 2, 3, 4);
+            Assert.assertNotNull(pures);
+        }        
+        
     }
 
     public static class Facade {
