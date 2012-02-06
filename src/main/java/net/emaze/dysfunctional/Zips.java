@@ -160,4 +160,17 @@ public abstract class Zips {
         dbc.precondition(iterable != null, "cannot call counted with a null iterable");
         return new ZipShortestIterator<CT, ET>(range.iterator(), iterable.iterator());
     }
+
+    public static <T> Iterator<Pair<Integer, T>> counted(T... elements) {
+        dbc.precondition(elements != null, "cannot call counted with a null array");
+        final SequencingPolicy<Integer> sequencer = new IntegerSequencingPolicy();
+        final Comparator<Integer> comparator = new ComparableComparator<Integer>();
+        final Range<Integer> range = new DenseRange<Integer>(sequencer, comparator, 0, Integer.MAX_VALUE);
+        return new ZipShortestIterator<Integer, T>(range.iterator(), ArrayIterator.of(elements));
+    }
+
+    public static <CT, ET> Iterator<Pair<CT, ET>> counted(ET[] array, Range<CT> range) {
+        dbc.precondition(array != null, "cannot call counted with a null array");
+        return new ZipShortestIterator<CT, ET>(range.iterator(), new ArrayIterator<ET>(array));
+    }
 }

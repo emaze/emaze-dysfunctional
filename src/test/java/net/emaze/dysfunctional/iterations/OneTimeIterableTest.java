@@ -12,18 +12,18 @@ import org.junit.Test;
  */
 public class OneTimeIterableTest {
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void creatingFromNullIteratorYieldsException() {
         new OneTimeIterable<O>(null);
     }
-    
-    @Test(expected=IllegalStateException.class)
+
+    @Test(expected = IllegalStateException.class)
     public void consumingTwoTimesYieldsException() {
         Iterable<O> oneTime = new OneTimeIterable<O>(Iterations.iterator(O.ONE));
         oneTime.iterator();
         oneTime.iterator();
     }
-    
+
     @Test
     public void consumingTheFirstTimeYieldsIterator() {
         final Iterator<O> iterator = Iterations.iterator(O.ONE);
@@ -31,5 +31,4 @@ public class OneTimeIterableTest {
         Iterator<O> got = oneTime.iterator();
         Assert.assertEquals(got, iterator);
     }
-    
 }
