@@ -1,11 +1,17 @@
 package net.emaze.dysfunctional;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.convolutions.ZipLongestIterator;
 import net.emaze.dysfunctional.convolutions.ZipShortestIterator;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.options.Maybe;
+import net.emaze.dysfunctional.order.ComparableComparator;
+import net.emaze.dysfunctional.order.IntegerSequencingPolicy;
+import net.emaze.dysfunctional.order.SequencingPolicy;
+import net.emaze.dysfunctional.ranges.DenseRange;
+import net.emaze.dysfunctional.ranges.Range;
 import net.emaze.dysfunctional.tuples.Pair;
 
 /**
@@ -129,5 +135,29 @@ public abstract class Zips {
      */
     public static <T1, T2> Iterator<Pair<Maybe<T1>, Maybe<T2>>> longest(T1[] former, T2[] latter) {
         return new ZipLongestIterator<T1, T2>(new ArrayIterator<T1>(former), new ArrayIterator<T2>(latter));
+    }
+
+    public static <CT, ET> Iterator<Pair<CT, ET>> counted(Iterator<ET> iterator, Range<CT> range) {
+        return new ZipShortestIterator<CT, ET>(range.iterator(), iterator);
+    }
+
+    public static <T> Iterator<Pair<Integer, T>> counted(Iterator<T> iterator) {
+        final SequencingPolicy<Integer> sequencer = new IntegerSequencingPolicy();
+        final Comparator<Integer> comparator = new ComparableComparator<Integer>();
+        final Range<Integer> range = new DenseRange<Integer>(sequencer, comparator, 0, Integer.MAX_VALUE);
+        return new ZipShortestIterator<Integer, T>(range.iterator(), iterator);
+    }
+
+    public static <T> Iterator<Pair<Integer, T>> counted(Iterable<T> iterable) {
+        dbc.precondition(iterable != null, "cannot call counted with a null iterable");
+        final SequencingPolicy<Integer> sequencer = new IntegerSequencingPolicy();
+        final Comparator<Integer> comparator = new ComparableComparator<Integer>();
+        final Range<Integer> range = new DenseRange<Integer>(sequencer, comparator, 0, Integer.MAX_VALUE);
+        return new ZipShortestIterator<Integer, T>(range.iterator(), iterable.iterator());
+    }
+
+    public static <CT, ET> Iterator<Pair<CT, ET>> counted(Iterable<ET> iterable, Range<CT> range) {
+        dbc.precondition(iterable != null, "cannot call counted with a null iterable");
+        return new ZipShortestIterator<CT, ET>(range.iterator(), iterable.iterator());
     }
 }
