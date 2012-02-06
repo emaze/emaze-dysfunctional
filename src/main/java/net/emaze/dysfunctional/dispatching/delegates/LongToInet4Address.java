@@ -13,16 +13,15 @@ public class LongToInet4Address implements Delegate<Inet4Address, Long> {
     @Override
     public Inet4Address perform(Long address) {
         dbc.precondition(address != null, "cannot transform a null Long to an Inet4Address");
-        final byte[] octects = new byte[4];
-        for (int i = 0; i != octects.length; ++i) {
+        final byte[] octets = new byte[4];
+        for (int i = 0; i != octets.length; ++i) {
             final int shiftBy = 24 - Byte.SIZE * i;
-            octects[i] = (byte) ((address >>> shiftBy) & 0xff);
+            octets[i] = (byte) ((address >>> shiftBy) & 0xff);
         }
         try {
-            return (Inet4Address) Inet4Address.getByAddress(octects);
+            return (Inet4Address) Inet4Address.getByAddress(octets);
         } catch (UnknownHostException ex) {
-            throw new IllegalStateException("Never happens: UnknownHostException building a Inet4Address from octects", ex);
+            throw new IllegalStateException("Never happens: UnknownHostException building a Inet4Address from octets", ex);
         }
     }
-    
 }
