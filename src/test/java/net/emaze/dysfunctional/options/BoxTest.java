@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional.options;
 
+import net.emaze.dysfunctional.dispatching.delegates.ConstantDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -81,6 +83,20 @@ public class BoxTest {
         Box<O> box = Box.of(O.ONE);
         box.unload();
         Assert.assertTrue(box.isEmpty());
+    }
+
+    @Test
+    public void fmappingAnEmptyBoxYieldsEmptyBox() {
+        final Box<O> box = Box.empty();
+        final Box<Integer> mapped = box.fmap(new ConstantDelegate<Integer, O>(1));
+        Assert.assertEquals(mapped, Box.<Integer>empty());
+    }
+
+    @Test
+    public void fmappingLoadedBoxYieldsEmptyBox() {
+        final Box<Integer> box = Box.of(1);
+        final Box<Integer> mapped = box.fmap(new Identity<Integer>());
+        Assert.assertEquals(mapped, box);
     }
 
     public static class Dick {

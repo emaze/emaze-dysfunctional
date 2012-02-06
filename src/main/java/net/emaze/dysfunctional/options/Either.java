@@ -6,14 +6,19 @@ import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
 /**
+ * Either type represents values with two possibilities. A value of type
+ * Either<Left,Right> is either Left or Right.
+ *
  * @author rferranti
+ * @param <LT> the left type
+ * @param <RT> the right type
  */
-public class Either<T1, T2> {
+public class Either<LT, RT> {
 
-    private final Maybe<T1> left;
-    private final Maybe<T2> right;
+    private final Maybe<LT> left;
+    private final Maybe<RT> right;
 
-    public Either(Maybe<T1> left, Maybe<T2> right) {
+    public Either(Maybe<LT> left, Maybe<RT> right) {
         dbc.precondition(left != null, "cannot create Either with null left");
         dbc.precondition(right != null, "cannot create Either with null right");
         dbc.precondition(left.hasValue() != right.hasValue(), "Either left or right must have a value");
@@ -21,19 +26,21 @@ public class Either<T1, T2> {
         this.right = right;
     }
 
-    public <R> R fmap(Delegate<R, T1> withLeft, Delegate<R, T2> withRight) {
+    public <LR, RR> Either<LR, RR> fmap(Delegate<LR, LT> withLeft, Delegate<RR, RT> withRight) {
+        dbc.precondition(withLeft != null, "cannot fmap an either with a null left delegate");
+        dbc.precondition(withRight != null, "cannot fmap an either with a null right delegate");
         if (left.hasValue()) {
-            return withLeft.perform(left.value());
+            return Either.left(withLeft.perform(left.value()));
         }
-        return withRight.perform(right.value());
+        return Either.right(withRight.perform(right.value()));
     }
 
-    public Maybe<T2> maybe() {
+    public Maybe<RT> maybe() {
         return right;
     }
 
-    public Either<T2, T1> flip() {
-        return new Either<T2, T1>(right, left);
+    public Either<RT, LT> flip() {
+        return new Either<RT, LT>(right, left);
     }
 
     @Override
@@ -46,7 +53,7 @@ public class Either<T1, T2> {
         if (rhs instanceof Either == false) {
             return false;
         }
-        final Either<T1, T2> other = (Either<T1, T2>) rhs;
+        final Either<LT, RT> other = (Either<LT, RT>) rhs;
         return new EqualsBuilder().append(this.left, other.left).
                 append(this.right, other.right).
                 isEquals();

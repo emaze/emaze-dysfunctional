@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.options;
 
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import net.emaze.dysfunctional.Spies;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantDelegate;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import org.junit.Assert;
 import org.junit.Test;
@@ -62,14 +63,7 @@ public class EitherTest {
             final Integer rightValue = 1;
             final Either<Object, Integer> either = new Either<Object, Integer>(Maybe.nothing(), Maybe.just(rightValue));
             final Box<Integer> box = new Box<Integer>();
-            either.fmap(new Identity<Object>(), new Delegate<Object, Integer>() {
-
-                @Override
-                public Object perform(Integer value) {
-                    box.setContent(value);
-                    return null;
-                }
-            });
+            either.fmap(new Identity<Object>(), Spies.spy1st(new ConstantDelegate<Object, Integer>(null), box));
             Assert.assertEquals(rightValue, box.getContent());
         }
 
@@ -78,14 +72,7 @@ public class EitherTest {
             final Integer leftValue = 1;
             final Either<Integer, Object> either = new Either<Integer, Object>(Maybe.just(leftValue), Maybe.nothing());
             final Box<Integer> box = new Box<Integer>();
-            either.fmap(new Delegate<Object, Integer>() {
-
-                @Override
-                public Object perform(Integer value) {
-                    box.setContent(value);
-                    return null;
-                }
-            }, new Identity<Object>());
+            either.fmap(Spies.spy1st(new ConstantDelegate<Object, Integer>(null), box), new Identity<Object>());
             Assert.assertEquals(leftValue, box.getContent());
         }
 

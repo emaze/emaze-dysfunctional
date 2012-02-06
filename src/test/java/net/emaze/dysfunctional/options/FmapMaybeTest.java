@@ -8,39 +8,39 @@ import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class LiftDelegateTest {
+public class FmapMaybeTest {
 
     @Test(expected = IllegalArgumentException.class)
-    public void creatingLiftDelegateWithNullDelegateYieldsException() {
-        new LiftDelegate<O, O>(null);
+    public void creatingFmapWithNullDelegateYieldsException() {
+        new FmapMaybe<Object, Object>(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void callingLiftDelegateWithNullDelegateYieldsException() {
-        new LiftDelegate<O, O>(new Identity<O>()).perform(null);
+    public void callingFmapWithNullDelegateYieldsException() {
+        new FmapMaybe<O, O>(new Identity<O>()).perform(null);
     }
 
     @Test
-    public void callingLiftDelegateOnNothingDoesntCallNestedDelegate() {
+    public void callingFmapOnNothingDoesntCallNestedDelegate() {
         final AtomicLong calls = new AtomicLong();
         final Delegate<O, O> delegate = Spies.monitor(new Identity<O>(), calls);
-        final LiftDelegate<O, O> lifted = new LiftDelegate<O, O>(delegate);
-        final Maybe<O> got = lifted.perform(Maybe.<O>nothing());
+        final FmapMaybe<O, O> lifted = new FmapMaybe<O, O>(delegate);
+        lifted.perform(Maybe.<O>nothing());
         Assert.assertEquals(0l, calls.get());
     }
 
     @Test
-    public void callingLiftDelegateOnNothingYieldsNothing() {
+    public void callingFmapOnNothingYieldsNothing() {
         final Delegate<O, O> delegate = new Identity<O>();
-        final LiftDelegate<O, O> lifted = new LiftDelegate<O, O>(delegate);
+        final FmapMaybe<O, O> lifted = new FmapMaybe<O, O>(delegate);
         final Maybe<O> got = lifted.perform(Maybe.<O>nothing());
         Assert.assertEquals(Maybe.<O>nothing(), got);
     }
 
     @Test
-    public void callingLiftDelegateOnJustSomethingYieldsJustSomething() {
+    public void callingFmapOnJustSomethingYieldsJustSomething() {
         final Delegate<O, O> delegate = new Identity<O>();
-        final LiftDelegate<O, O> lifted = new LiftDelegate<O, O>(delegate);
+        final FmapMaybe<O, O> lifted = new FmapMaybe<O, O>(delegate);
         final Maybe<O> got = lifted.perform(Maybe.just(O.ONE));
         Assert.assertEquals(Maybe.just(O.ONE), got);
     }

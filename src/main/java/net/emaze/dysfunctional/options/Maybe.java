@@ -7,9 +7,9 @@ import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
 /**
- * Responsibility: Holds an optional value.
+ * Holds an optional value.
  *
- * @param <E>
+ * @param <E> the value type
  * @author rferranti
  */
 public class Maybe<E> {
@@ -32,7 +32,7 @@ public class Maybe<E> {
     }
 
     public <T> Maybe<T> fmap(Delegate<T, E> delegate) {
-        dbc.precondition(delegate != null, "cannot perform withValue with a null delegate");
+        dbc.precondition(delegate != null, "cannot perform fmap with a null delegate");
         if (hasValue) {
             return Maybe.just(delegate.perform(element));
         }

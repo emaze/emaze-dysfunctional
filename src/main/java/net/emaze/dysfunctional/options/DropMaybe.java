@@ -4,7 +4,11 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
- * note this is not the unwrapping delegate you usually want, look at FromJust.
+ * Unwraps a Maybe<T> transforming a nothing(T) to null, just(T) to T.
+ *
+ * Note this is not the unwrapping delegate you usually want, look at FromJust.
+ * Adjoint of LiftMaybe.
+ *
  * @author rferranti
  */
 public class DropMaybe<T> implements Delegate<T, Maybe<T>> {
