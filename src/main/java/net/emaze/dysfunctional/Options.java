@@ -85,7 +85,7 @@ public abstract class Options {
         }
 
         /**
-         * Creates an iterator yielding values pure() Maybe<T> monadic value of
+         * Creates an iterator yielding pure() Maybe<T> monadic value of
          * the passed values. E.g:
          * <code>Maybes.pures(1, 2) -> [Just 1, Just 2]</code>
          *
@@ -99,7 +99,7 @@ public abstract class Options {
         }
 
         /**
-         * Creates an iterator yielding values pure() Maybe<T> monadic value of
+         * Creates an iterator yielding pure() Maybe<T> monadic value of
          * the passed values. E.g:
          * <code>Maybes.pures(1, 2, 3) -> [Just 1, Just 2, Just 3]</code>
          *
