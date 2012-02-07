@@ -71,6 +71,7 @@ public abstract class Interceptors {
      *
      * @param <R> the delegate result type
      * @param <T> the delegate parameter type
+     * @param <I> the interceptor type
      * @param innermost the delegate to be intercepted
      * @param interceptors an iterable of interceptor
      * @return the resulting delegate
@@ -85,6 +86,7 @@ public abstract class Interceptors {
      *
      * @param <R> the delegate result type
      * @param <T> the delegate parameter type
+     * @param <I> the interceptor type
      * @param innermost the delegate to be intercepted
      * @param interceptors an iterator of interceptor
      * @return the resulting delegate
@@ -165,6 +167,7 @@ public abstract class Interceptors {
      * @param <R> the delegate result type
      * @param <T1> the delegate first parameter type
      * @param <T2> the delegate second parameter type
+     * @param <I> the binary interceptor type
      * @param innermost the delegate to be intercepted
      * @param interceptors an iterable of interceptors
      * @return the resulting delegate
@@ -180,6 +183,7 @@ public abstract class Interceptors {
      * @param <R> the delegate result type
      * @param <T1> the delegate first parameter type
      * @param <T2> the delegate second parameter type
+     * @param <I> the interceptor type
      * @param innermost the delegate to be intercepted
      * @param interceptors an iterator of interceptors
      * @return the resulting delegate
@@ -265,6 +269,7 @@ public abstract class Interceptors {
      * @param <T1> the delegate first parameter type
      * @param <T2> the delegate second parameter type
      * @param <T3> the delegate third parameter type
+     * @param <I> the interceptor type
      * @param innermost the delegate to be intercepted
      * @param interceptors an iterable of interceptors
      * @return the resulting delegate

@@ -54,6 +54,7 @@ public abstract class Windowing {
      * contained elements. e.g: iterator: [1,2,3] windowSize: 2 -> [[1,2],
      * [2,3]]
      *
+     * @param <W> the window type
      * @param <T> the iterator element type
      * @param windowSize the window size
      * @param iterator the iterable to be adapted
@@ -69,6 +70,7 @@ public abstract class Windowing {
      * contained elements. e.g: iterable: [1,2,3] windowSize: 2 -> [[1,2],
      * [2,3]]
      *
+     * @param <W> the window type
      * @param <T> the iterator element type
      * @param windowSize the window size
      * @param iterable the iterable to be adapted
@@ -119,6 +121,7 @@ public abstract class Windowing {
      * [[nothing, just(1), just(2)], [just(1), just(2), just(3)], [just(2),
      * just(3), nothing]]
      *
+     * @param <W> the window type
      * @param <T> the iterator element type
      * @param windowSize the window size (must be an odd positive integer)
      * @param iterator the iterator to be adapted
@@ -135,6 +138,7 @@ public abstract class Windowing {
      * [[nothing, just(1), just(2)], [just(1), just(2), just(3)], [just(2),
      * just(3), nothing]]
      *
+     * @param <W> the window type
      * @param <T> the iterator element type
      * @param windowSize the window size (must be an odd positive integer)
      * @param iterable the iterable to be adapted
