@@ -89,6 +89,16 @@ public class EitherTest {
         public void transformingEitherToMaybeYieldsRightSide() {
             Assert.assertEquals(Maybe.just(1), Either.right(1).maybe());
         }
+
+        @Test
+        public void toStringForLeftYieldsLeft() {
+            Assert.assertEquals("Left 1", Either.left(1).toString());
+        }
+
+        @Test
+        public void toStringForRightYieldsRight() {
+            Assert.assertEquals("Right 1", Either.right(1).toString());
+        }
     }
 
     public static class Degenerations {

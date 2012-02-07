@@ -59,6 +59,14 @@ public class Either<LT, RT> {
                 isEquals();
     }
 
+    @Override
+    public String toString() {
+        if (left.hasValue()) {
+            return String.format("Left %s", left.value());
+        }
+        return String.format("Right %s", right.value());
+    }
+
     public static <T1, T2> Either<T1, T2> left(T1 left) {
         return new Either<T1, T2>(Maybe.just(left), Maybe.<T2>nothing());
     }

@@ -7,6 +7,7 @@ import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
 /**
  * A mutable container of an optional value.
+ *
  * @param <T> the content type
  * @author rferranti
  */
@@ -19,7 +20,7 @@ public class Box<T> {
         box.setContent(element);
         return box;
     }
-    
+
     public static <E> Box<E> empty() {
         return new Box<E>();
     }
@@ -27,7 +28,7 @@ public class Box<T> {
     public <R> Box<R> fmap(Delegate<R, T> delegate) {
         dbc.precondition(delegate != null, "cannot perform fmap with a null delegate");
         final Maybe<R> m = content.fmap(delegate);
-        return m.hasValue() ? Box.of(m.value()): Box.<R>empty();
+        return m.hasValue() ? Box.of(m.value()) : Box.<R>empty();
     }
 
     public boolean isEmpty() {
