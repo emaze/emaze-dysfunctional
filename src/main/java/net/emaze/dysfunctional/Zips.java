@@ -15,6 +15,8 @@ import net.emaze.dysfunctional.ranges.Range;
 import net.emaze.dysfunctional.tuples.Pair;
 
 /**
+ * longest, shortest, counted.
+ *
  * @author rferranti
  */
 public abstract class Zips {

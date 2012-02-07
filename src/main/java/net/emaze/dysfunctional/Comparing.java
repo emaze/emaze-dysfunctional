@@ -8,6 +8,7 @@ import net.emaze.dysfunctional.order.Min;
 import net.emaze.dysfunctional.tuples.Pair;
 
 /**
+ * max, min, ordered.
  *
  * @author rferranti
  */

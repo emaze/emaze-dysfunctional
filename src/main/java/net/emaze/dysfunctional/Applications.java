@@ -14,6 +14,7 @@ import net.emaze.dysfunctional.iterations.OneTimeIterable;
 import net.emaze.dysfunctional.iterations.TransformingIterator;
 
 /**
+ * transform, tap, each, map.
  *
  * @author rferranti
  */

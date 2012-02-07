@@ -22,6 +22,7 @@ import net.emaze.dysfunctional.dispatching.logic.TernaryNever;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 
 /**
+ * and, or, not, always, never.
  *
  * @author rferranti
  */
@@ -31,6 +32,7 @@ public abstract class Logic {
 
         /**
          * Creates a composite AND predicate from the given predicates.
+         *
          * @param <T> the element type parameter
          * @param predicates the predicates to be composed
          * @return the composite predicate
@@ -42,6 +44,7 @@ public abstract class Logic {
 
         /**
          * Creates a composite AND predicate from the given predicates.
+         *
          * @param <T> the element type parameter
          * @param predicates the predicates to be composed
          * @return the composite predicate
@@ -52,6 +55,7 @@ public abstract class Logic {
 
         /**
          * Creates a composite OR predicate from the given predicates.
+         *
          * @param <T> the element type parameter
          * @param predicates the predicates to be composed
          * @return the composite predicate
@@ -63,6 +67,7 @@ public abstract class Logic {
 
         /**
          * Creates a composite OR predicate from the given predicates.
+         *
          * @param <T> the element type parameter
          * @param predicates the predicates to be composed
          * @return the composite predicate
@@ -73,6 +78,7 @@ public abstract class Logic {
 
         /**
          * Creates a predicate always yielding true.
+         *
          * @param <T> the element type parameter
          * @return the predicate
          */
@@ -82,6 +88,7 @@ public abstract class Logic {
 
         /**
          * Creates a predicate always yielding false.
+         *
          * @param <T> the element type parameter
          * @return the predicate
          */
@@ -94,6 +101,7 @@ public abstract class Logic {
 
         /**
          * Creates a composite AND predicate from the given predicates.
+         *
          * @param <T1> the former element type parameter
          * @param <T2> the latter element type parameter
          * @param predicates the predicates to be composed
@@ -106,6 +114,7 @@ public abstract class Logic {
 
         /**
          * Creates a composite AND predicate from the given predicates.
+         *
          * @param <T1> the former element type parameter
          * @param <T2> the latter element type parameter
          * @param predicates the predicates to be composed
@@ -117,6 +126,7 @@ public abstract class Logic {
 
         /**
          * Creates a composite OR predicate from the given predicates.
+         *
          * @param <T1> the former element type parameter
          * @param <T2> the latter element type parameter
          * @param predicates the predicates to be composed
@@ -129,6 +139,7 @@ public abstract class Logic {
 
         /**
          * Creates a composite OR predicate from the given predicates.
+         *
          * @param <T1> the former element type parameter
          * @param <T2> the latter element type parameter
          * @param predicates the predicates to be composed
@@ -141,6 +152,7 @@ public abstract class Logic {
 
         /**
          * Creates a predicate always yielding true.
+         *
          * @param <T1> the first element type parameter
          * @param <T2> the second element type parameter
          * @return the predicate
@@ -151,6 +163,7 @@ public abstract class Logic {
 
         /**
          * Creates a predicate always yielding false.
+         *
          * @param <T1> the first element type parameter
          * @param <T2> the second element type parameter
          * @return the predicate
@@ -164,6 +177,7 @@ public abstract class Logic {
 
         /**
          * Creates a composite AND predicate from the given predicates.
+         *
          * @param <T1> the first element type parameter
          * @param <T2> the second element type parameter
          * @param <T3> the third element type parameter
@@ -177,6 +191,7 @@ public abstract class Logic {
 
         /**
          * Creates a composite AND predicate from the given predicates.
+         *
          * @param <T1> the first element type parameter
          * @param <T2> the second element type parameter
          * @param <T3> the third element type parameter
@@ -189,6 +204,7 @@ public abstract class Logic {
 
         /**
          * Creates a composite OR predicate from the given predicates.
+         *
          * @param <T1> the first element type parameter
          * @param <T2> the second element type parameter
          * @param <T3> the third element type parameter
@@ -202,6 +218,7 @@ public abstract class Logic {
 
         /**
          * Creates a composite OR predicate from the given predicates.
+         *
          * @param <T1> the first element type parameter
          * @param <T2> the second element type parameter
          * @param <T3> the third element type parameter
@@ -214,6 +231,7 @@ public abstract class Logic {
 
         /**
          * Creates a predicate always yielding true.
+         *
          * @param <T1> the first element type parameter
          * @param <T2> the second element type parameter
          * @param <T3> the third element type parameter
@@ -225,6 +243,7 @@ public abstract class Logic {
 
         /**
          * Creates a predicate always yielding false.
+         *
          * @param <T1> the first element type parameter
          * @param <T2> the second element type parameter
          * @param <T3> the third element type parameter
@@ -237,9 +256,10 @@ public abstract class Logic {
 
     /**
      * Creates a composite AND predicate from the given predicates.
+     *
      * @param <T> the element type parameter
      * @param first
-     * @param second 
+     * @param second
      * @return the composite predicate
      */
     public static <T> Predicate<T> and(Predicate<T> first, Predicate<T> second) {
@@ -250,10 +270,11 @@ public abstract class Logic {
 
     /**
      * Creates a composite AND predicate from the given predicates.
+     *
      * @param <T> the element type parameter
      * @param first
      * @param second
-     * @param third 
+     * @param third
      * @return the composite predicate
      */
     public static <T> Predicate<T> and(Predicate<T> first, Predicate<T> second, Predicate<T> third) {
@@ -265,6 +286,7 @@ public abstract class Logic {
 
     /**
      * Creates a composite AND predicate from the given predicates.
+     *
      * @param <T> the element type parameter
      * @param predicates the predicates to be composed
      * @return the composite predicate
@@ -276,6 +298,7 @@ public abstract class Logic {
 
     /**
      * Creates a composite AND predicate from the given predicates.
+     *
      * @param <T1> the former element type parameter
      * @param <T2> the latter element type parameter
      * @param first
@@ -290,11 +313,12 @@ public abstract class Logic {
 
     /**
      * Creates a composite AND predicate from the given predicates.
+     *
      * @param <T1> the former element type parameter
      * @param <T2> the latter element type parameter
      * @param first
      * @param second
-     * @param third 
+     * @param third
      * @return the composite predicate
      */
     public static <T1, T2> BinaryPredicate<T1, T2> and(BinaryPredicate<T1, T2> first, BinaryPredicate<T1, T2> second, BinaryPredicate<T1, T2> third) {
@@ -306,9 +330,10 @@ public abstract class Logic {
 
     /**
      * Creates a composite AND predicate from the given predicates.
+     *
      * @param <T1> the former element type parameter
      * @param <T2> the latter element type parameter
-     * @param predicates 
+     * @param predicates
      * @return the composite predicate
      */
     public static <T1, T2> BinaryPredicate<T1, T2> and(BinaryPredicate<T1, T2>... predicates) {
@@ -318,11 +343,12 @@ public abstract class Logic {
 
     /**
      * Creates a composite AND predicate from the given predicates.
+     *
      * @param <T1> the first element type parameter
      * @param <T2> the second element type parameter
      * @param <T3> the third element type parameter
      * @param first
-     * @param second 
+     * @param second
      * @return the composite predicate
      */
     public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> and(TernaryPredicate<T1, T2, T3> first, TernaryPredicate<T1, T2, T3> second) {
@@ -333,12 +359,13 @@ public abstract class Logic {
 
     /**
      * Creates a composite AND predicate from the given predicates.
+     *
      * @param <T1> the first element type parameter
      * @param <T2> the second element type parameter
      * @param <T3> the third element type parameter
      * @param first
      * @param second
-     * @param third 
+     * @param third
      * @return the composite predicate
      */
     public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> and(TernaryPredicate<T1, T2, T3> first, TernaryPredicate<T1, T2, T3> second, TernaryPredicate<T1, T2, T3> third) {
@@ -350,6 +377,7 @@ public abstract class Logic {
 
     /**
      * Creates a composite AND predicate from the given predicates.
+     *
      * @param <T1> the first element type parameter
      * @param <T2> the second element type parameter
      * @param <T3> the third element type parameter
@@ -363,9 +391,10 @@ public abstract class Logic {
 
     /**
      * Creates a composite OR predicate from the given predicates.
+     *
      * @param <T> the element type parameter
      * @param first
-     * @param second 
+     * @param second
      * @return the composite predicate
      */
     public static <T> Predicate<T> or(Predicate<T> first, Predicate<T> second) {
@@ -376,9 +405,10 @@ public abstract class Logic {
 
     /**
      * Creates a composite OR predicate from the given predicates.
+     *
      * @param <T> the element type parameter
-     * @param first 
-     * @param second 
+     * @param first
+     * @param second
      * @param third
      * @return the composite predicate
      */
@@ -391,6 +421,7 @@ public abstract class Logic {
 
     /**
      * Creates a composite OR predicate from the given predicates.
+     *
      * @param <T> the element type parameter
      * @param predicates
      * @return the composite predicate
@@ -402,6 +433,7 @@ public abstract class Logic {
 
     /**
      * Creates a composite OR predicate from the given predicates.
+     *
      * @param <T1> the former element type parameter
      * @param <T2> the latter element type parameter
      * @param first
@@ -416,11 +448,12 @@ public abstract class Logic {
 
     /**
      * Creates a composite OR predicate from the given predicates.
+     *
      * @param <T1> the former element type parameter
      * @param <T2> the latter element type parameter
      * @param first
      * @param second
-     * @param third 
+     * @param third
      * @return the composite predicate
      */
     public static <T1, T2> BinaryPredicate<T1, T2> or(BinaryPredicate<T1, T2> first, BinaryPredicate<T1, T2> second, BinaryPredicate<T1, T2> third) {
@@ -432,6 +465,7 @@ public abstract class Logic {
 
     /**
      * Creates a composite OR predicate from the given predicates.
+     *
      * @param <T1> the former element type parameter
      * @param <T2> the latter element type parameter
      * @param predicates
@@ -444,6 +478,7 @@ public abstract class Logic {
 
     /**
      * Creates a composite OR predicate from the given predicates.
+     *
      * @param <T1> the first element type parameter
      * @param <T2> the second element type parameter
      * @param <T3> the third element type parameter
@@ -459,6 +494,7 @@ public abstract class Logic {
 
     /**
      * Creates a composite OR predicate from the given predicates.
+     *
      * @param <T1> the first element type parameter
      * @param <T2> the second element type parameter
      * @param <T3> the third element type parameter
@@ -476,6 +512,7 @@ public abstract class Logic {
 
     /**
      * Creates a composite OR predicate from the given predicates.
+     *
      * @param <T1> the first element type parameter
      * @param <T2> the second element type parameter
      * @param <T3> the third element type parameter
@@ -489,6 +526,7 @@ public abstract class Logic {
 
     /**
      * Negates the given predicate.
+     *
      * @param <T> the element type parameter
      * @param predicate the predicate to be negated
      * @return the negated predicate
@@ -500,6 +538,7 @@ public abstract class Logic {
 
     /**
      * Negates the given predicate.
+     *
      * @param <T1> the first element type parameter
      * @param <T2> the second element type parameter
      * @param predicate the predicate to be negated
@@ -512,6 +551,7 @@ public abstract class Logic {
 
     /**
      * Negates the given predicate.
+     *
      * @param <T1> the first element type parameter
      * @param <T2> the second element type parameter
      * @param <T3> the third element type parameter

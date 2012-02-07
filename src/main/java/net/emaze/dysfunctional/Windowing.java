@@ -13,6 +13,7 @@ import net.emaze.dysfunctional.windows.CenteredWindowIterator;
 import net.emaze.dysfunctional.windows.PreciseWindowIterator;
 
 /**
+ * window, centered.
  *
  * @author rferranti
  */

@@ -19,6 +19,7 @@ import net.emaze.dysfunctional.multiplexing.RoundRobinIterator;
 import net.emaze.dysfunctional.options.Maybe;
 
 /**
+ * flatten, chain, mux, muxLongest, demux, demuxLongest, roundrobin.
  *
  * @author rferranti
  */

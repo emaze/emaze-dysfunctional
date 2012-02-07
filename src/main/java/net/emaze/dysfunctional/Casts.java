@@ -4,6 +4,7 @@ import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
+ * widen, widener, narrow, narrower, vary, variator.
  *
  * @author rferranti
  */

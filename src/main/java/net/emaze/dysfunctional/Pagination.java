@@ -10,6 +10,7 @@ import net.emaze.dysfunctional.reductions.Count;
 import net.emaze.dysfunctional.tuples.Pair;
 
 /**
+ * page.
  *
  * @author rferranti
  */
@@ -134,6 +135,9 @@ public abstract class Pagination {
         return Pair.of(in.size(), Consumers.all(Filtering.slice(start, howMany, in), out));
     }
 
+    /**
+     * page.
+     */
     public static class LongPages {
 
         /**

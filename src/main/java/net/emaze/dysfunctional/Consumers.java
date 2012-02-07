@@ -23,6 +23,8 @@ import net.emaze.dysfunctional.options.MaybeOneElement;
 import net.emaze.dysfunctional.output.OutputIterator;
 
 /**
+ * all, maybeFirst, first, maybeOne, one, maybeLast, last, nth, maybeNth, at,
+ * maybeAt, pipe.
  *
  * @author rferranti
  */

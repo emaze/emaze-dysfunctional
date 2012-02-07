@@ -20,6 +20,7 @@ import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.tuples.Pair;
 
 /**
+ * groupBy, partition, indexBy.
  *
  * @author rferranti
  */

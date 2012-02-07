@@ -65,6 +65,8 @@ import net.emaze.dysfunctional.dispatching.logic.Proposition;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 
 /**
+ * curry, mcurry, rcurry, ignore, ignore1st, ignore2nd, ignore3rd, provider,
+ * delegate, runnable, action, proposition, predicate.
  *
  * @author rferranti
  */
@@ -766,5 +768,4 @@ public abstract class Dispatching {
     public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> predicate(TernaryDelegate<Boolean, T1, T2, T3> delegate) {
         return new TernaryDelegateToTernaryPredicate<T1, T2, T3>(delegate);
     }
-
 }

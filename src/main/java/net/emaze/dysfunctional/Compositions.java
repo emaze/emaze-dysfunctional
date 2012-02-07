@@ -15,6 +15,10 @@ import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 
+/**
+ * compose
+ * @author rferranti
+ */
 public abstract class Compositions {
 
     /**

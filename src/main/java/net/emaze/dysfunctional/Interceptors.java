@@ -14,6 +14,10 @@ import net.emaze.dysfunctional.interceptions.TernaryInterceptorChain;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.iterations.SingletonIterator;
 
+/**
+ * intercept.
+ * @author rferranti
+ */
 public abstract class Interceptors {
 
     /**

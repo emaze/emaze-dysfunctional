@@ -24,6 +24,11 @@ import net.emaze.dysfunctional.tuples.UnaryToTernaryAction;
 import net.emaze.dysfunctional.tuples.UnaryToTernaryDelegate;
 import net.emaze.dysfunctional.tuples.UnaryToTernaryPredicate;
 
+/**
+ * tupled.
+ *
+ * @author rferranti
+ */
 public abstract class Tuples {
 
     /**
@@ -103,6 +108,9 @@ public abstract class Tuples {
         return new TernaryToUnaryAction<T, U, V>(action);
     }
 
+    /**
+     * untupled.
+     */
     public abstract static class Pairs {
 
         /**
@@ -143,6 +151,9 @@ public abstract class Tuples {
         }
     }
 
+    /**
+     * untupled.
+     */
     public abstract static class Triples {
 
         /**

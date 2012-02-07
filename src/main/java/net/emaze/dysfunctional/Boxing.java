@@ -3,7 +3,7 @@ package net.emaze.dysfunctional;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- * Array boxing and unboxing.
+ * Array boxing and unboxing. box, unbox.
  * @author rferranti
  */
 public abstract class Boxing {

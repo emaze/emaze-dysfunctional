@@ -15,6 +15,7 @@ import net.emaze.dysfunctional.reductions.Every;
 import net.emaze.dysfunctional.reductions.Reductor;
 
 /**
+ * reduce, any, every, count, maximum, minimum.
  *
  * @author rferranti
  */
@@ -46,7 +47,7 @@ public abstract class Reductions {
      */
     public static <R, E> R reduce(Iterable<E> iterable, BinaryDelegate<R, R, E> delegate, R init) {
         dbc.precondition(iterable != null, "cannot call reduce with a null iterable");
-        return new Reductor<R, E>(delegate, init).perform(iterable.iterator());        
+        return new Reductor<R, E>(delegate, init).perform(iterable.iterator());
     }
 
     /**
@@ -60,7 +61,7 @@ public abstract class Reductions {
      * @return the reduced value
      */
     public static <R, E> R reduce(E[] array, BinaryDelegate<R, R, E> delegate, R init) {
-        return new Reductor<R, E>(delegate, init).perform(new ArrayIterator<E>(array));        
+        return new Reductor<R, E>(delegate, init).perform(new ArrayIterator<E>(array));
     }
 
     /**

@@ -27,6 +27,9 @@ import net.emaze.dysfunctional.options.PureMaybe;
  */
 public abstract class Options {
 
+    /**
+     * pure, pures, justs, lift, lifts, drop, drops.
+     */
     public abstract static class Maybes {
 
         /**
@@ -346,6 +349,9 @@ public abstract class Options {
         }
     }
 
+    /**
+     * pure, pures.
+     */
     public abstract static class Boxes {
 
         /**
@@ -443,6 +449,9 @@ public abstract class Options {
         }
     }
 
+    /**
+     * pure, pures, lefts, rights.
+     */
     public abstract static class Eithers {
 
         /**

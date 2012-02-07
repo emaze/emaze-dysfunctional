@@ -8,6 +8,7 @@ import net.emaze.dysfunctional.strings.InterposeStrings;
 import net.emaze.dysfunctional.strings.JoinStrings;
 
 /**
+ * join, interpose.
  *
  * @author rferranti
  */

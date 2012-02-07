@@ -8,8 +8,16 @@ import net.emaze.dysfunctional.dispatching.composing.PipelinedAction;
 import net.emaze.dysfunctional.dispatching.composing.PipelinedBinaryAction;
 import net.emaze.dysfunctional.dispatching.composing.PipelinedTernaryAction;
 
+/**
+ * pipeline.
+ *
+ * @author rferranti
+ */
 public abstract class Pipelines {
 
+    /**
+     * pipeline.
+     */
     public abstract static class Unary {
 
         /**
@@ -35,6 +43,9 @@ public abstract class Pipelines {
         }
     }
 
+    /**
+     * pipeline.
+     */
     public abstract static class Binary {
 
         /**
@@ -62,6 +73,9 @@ public abstract class Pipelines {
         }
     }
 
+    /**
+     * pipeline.
+     */
     public abstract static class Ternary {
 
         /**

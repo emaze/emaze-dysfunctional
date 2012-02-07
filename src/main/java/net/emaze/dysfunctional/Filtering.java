@@ -13,6 +13,8 @@ import net.emaze.dysfunctional.filtering.UntilCount;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 
 /**
+ * filter, takeLast, atMostLast, takeWhile, dropWhile, take, drop, slice.
+ *
  * @author rferranti
  */
 public abstract class Filtering {

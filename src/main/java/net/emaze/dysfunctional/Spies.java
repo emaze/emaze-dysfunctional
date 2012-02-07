@@ -38,6 +38,7 @@ import net.emaze.dysfunctional.dispatching.spying.TernaryMonitoringPredicate;
 import net.emaze.dysfunctional.options.Box;
 
 /**
+ * spy, spy1st, spy2nd, spy3rd, spyRes, monitor.
  *
  * @author rferranti
  */
