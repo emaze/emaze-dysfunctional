@@ -124,18 +124,54 @@ public class ZipsTest {
     }
 
     @Test
-    public void canGetCountedIterator() {
-        List<String> bucket = Arrays.asList("a", "b");
-        Iterator<Pair<Integer, String>> iterator = Zips.counted(bucket);
-        Assert.assertEquals(Arrays.asList(Pair.of(0, "a"), Pair.of(1, "b")), Consumers.all(iterator));
+    public void canMakeAnIterableCounted() {
+        final Iterable<String> bucket = Iterations.iterable("a", "b");
+        final Iterator<Pair<Integer, String>> iterator = Zips.counted(bucket);
+        final Iterator<Pair<Integer, String>> expected = Iterations.iterator(Pair.of(0, "a"), Pair.of(1, "b"));
+        Assert.assertEquals(Consumers.all(expected), Consumers.all(iterator));
     }
 
     @Test
-    public void canGetCountedIteratorWithRange() {
-        Range<Integer> range = new DenseRange<Integer>(new IntegerSequencingPolicy(), new ComparableComparator<Integer>(), 1, 10);
-        List<String> bucket = Arrays.asList("a", "b");
-        Iterator<Pair<Integer, String>> iterator = Zips.counted(bucket, range);
-        Assert.assertEquals(Arrays.asList(Pair.of(1, "a"), Pair.of(2, "b")), Consumers.all(iterator));
+    public void canMakeAnIterableCountedWithRange() {
+        final Range<Integer> range = new DenseRange<Integer>(new IntegerSequencingPolicy(), new ComparableComparator<Integer>(), 1, 10);
+        final Iterable<String> bucket = Iterations.iterable("a", "b");
+        final Iterator<Pair<Integer, String>> iterator = Zips.counted(bucket, range);
+        final Iterator<Pair<Integer, String>> expected = Iterations.iterator(Pair.of(1, "a"), Pair.of(2, "b"));
+        Assert.assertEquals(Consumers.all(expected), Consumers.all(iterator));
+    }
+
+    @Test
+    public void canMakeAnIteratorCounted() {
+        final Iterator<String> bucket = Iterations.iterator("a", "b");
+        final Iterator<Pair<Integer, String>> iterator = Zips.counted(bucket);
+        final Iterator<Pair<Integer, String>> expected = Iterations.iterator(Pair.of(0, "a"), Pair.of(1, "b"));
+        Assert.assertEquals(Consumers.all(expected), Consumers.all(iterator));
+    }
+
+    @Test
+    public void canMakeAnIteratorCountedWithRange() {
+        final Range<Integer> range = new DenseRange<Integer>(new IntegerSequencingPolicy(), new ComparableComparator<Integer>(), 1, 10);
+        final Iterator<String> bucket = Iterations.iterator("a", "b");
+        final Iterator<Pair<Integer, String>> iterator = Zips.counted(bucket, range);
+        final Iterator<Pair<Integer, String>> expected = Iterations.iterator(Pair.of(1, "a"), Pair.of(2, "b"));
+        Assert.assertEquals(Consumers.all(expected), Consumers.all(iterator));
+    }
+
+    @Test
+    public void canMakeAnArrayCounted() {
+        final String[] bucket = {"a", "b"};
+        final Iterator<Pair<Integer, String>> iterator = Zips.counted(bucket);
+        final Iterator<Pair<Integer, String>> expected = Iterations.iterator(Pair.of(0, "a"), Pair.of(1, "b"));
+        Assert.assertEquals(Consumers.all(expected), Consumers.all(iterator));
+    }
+
+    @Test
+    public void canMakeAnArrayCountedWithRange() {
+        final Range<Integer> range = new DenseRange<Integer>(new IntegerSequencingPolicy(), new ComparableComparator<Integer>(), 1, 10);
+        final String[] bucket = {"a", "b"};
+        final Iterator<Pair<Integer, String>> iterator = Zips.counted(bucket, range);
+        final Iterator<Pair<Integer, String>> expected = Iterations.iterator(Pair.of(1, "a"), Pair.of(2, "b"));
+        Assert.assertEquals(Consumers.all(expected), Consumers.all(iterator));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -147,6 +183,19 @@ public class ZipsTest {
     @Test(expected = IllegalArgumentException.class)
     public void cannotCallCountedWithANullIterableAndARange() {
         final Iterable<Object> iterable = null;
+        final StubRange range = new StubRange();
+        Zips.counted(iterable, range);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void cannotCallCountedWithANullArray() {
+        final Object[] iterable = null;
+        Zips.counted(iterable);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void cannotCallCountedWithANullArrayAndARange() {
+        final Object[] iterable = null;
         final StubRange range = new StubRange();
         Zips.counted(iterable, range);
     }
