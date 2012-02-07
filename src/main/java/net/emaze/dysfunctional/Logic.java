@@ -28,6 +28,9 @@ import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
  */
 public abstract class Logic {
 
+    /**
+     * and, or, not, always, never.
+     */
     public abstract static class Unary {
 
         /**
@@ -97,6 +100,9 @@ public abstract class Logic {
         }
     }
 
+    /**
+     * and, or, not, always, never.
+     */
     public abstract static class Binary {
 
         /**
@@ -173,6 +179,9 @@ public abstract class Logic {
         }
     }
 
+    /**
+     * and, or, not, always, never.
+     */
     public abstract static class Ternary {
 
         /**
