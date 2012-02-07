@@ -5,6 +5,7 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
 /**
  * Creates an empty LinkedList.
+ *
  * @param <E> the LinkedList element type parameter
  * @author rferranti
  */

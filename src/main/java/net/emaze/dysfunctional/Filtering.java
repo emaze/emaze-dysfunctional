@@ -4,7 +4,7 @@ import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.filtering.AtMostMemoryIterator;
-import net.emaze.dysfunctional.filtering.DropWhileIterator;
+import net.emaze.dysfunctional.filtering.DropWhile;
 import net.emaze.dysfunctional.filtering.FilteringIterator;
 import net.emaze.dysfunctional.filtering.MemoryIterator;
 import net.emaze.dysfunctional.filtering.TakeUpToIterator;
@@ -67,14 +67,15 @@ public abstract class Filtering {
     }
 
     /**
-     * fetches the last element from an iterable, throwing an
-     * IllegalArgumentException if no element can be fetched
+     * Creates an iterator yielding last n elements from the source iterable.
+     * Consuming the resulting iterator yields an IllegalArgumentException if
+     * not enough elements can be fetched. E.g:
+     * <code>takeLast(2, [1, 2, 3]) -> [2, 3]</code>
      *
-     * @param <E>
-     * @param howMany
-     * @param from
-     * @return last element of the iterable (throws IllegalArgumentException if
-     * the iterable is empty)
+     * @param <E> the iterable element type
+     * @param howMany number of elements to be yielded
+     * @param from the source iterable
+     * @return the resulting iterator
      */
     public static <E> Iterator<E> takeLast(int howMany, Iterable<E> from) {
         dbc.precondition(from != null, "cannot call last with a null iterable");
@@ -82,40 +83,45 @@ public abstract class Filtering {
     }
 
     /**
-     * fetches the last element from an iterator, throwing an
-     * IllegalArgumentException if no element matches
+     * Creates an iterator yielding last n elements from the source iterator.
+     * Consuming the resulting iterator yields an IllegalArgumentException if
+     * not enough elements can be fetched. E.g:
+     * <code>takeLast(2, [1, 2, 3]) -> [2, 3]</code>
      *
-     * @param <E>
-     * @param howMany
-     * @param from
-     * @return last matching element from the iterator (throws
-     * IllegalArgumentException if not enough elements are found)
+     * @param <E> the iterator element type
+     * @param howMany number of elements to be yielded
+     * @param from the source iterator
+     * @return the resulting iterator
      */
     public static <E> Iterator<E> takeLast(int howMany, Iterator<E> from) {
         return new MemoryIterator<E>(from, howMany);
     }
 
     /**
-     * fetches the last element from an array, throwing an
-     * IllegalArgumentException if no element matches
+     * Creates an iterator yielding last n elements from the source array.
+     * Consuming the resulting iterator yields an IllegalArgumentException if
+     * not enough elements can be fetched. E.g:
+     * <code>takeLast(2, [1, 2, 3]) -> [2, 3]</code>
      *
-     * @param <E>
-     * @param howMany
-     * @param from
-     * @return last matching element from the iterator (throws
-     * IllegalArgumentException if not enough elements are found)
+     * @param <E> the array element type
+     * @param howMany number of elements to be yielded
+     * @param from the source array
+     * @return the resulting iterator
      */
     public static <E> Iterator<E> takeLast(int howMany, E[] from) {
         return takeLast(howMany, new ArrayIterator<E>(from));
     }
 
     /**
-     * Fetches at most last elements from an iterable.
+     * Creates an iterator yielding at most last n elements from the source
+     * iterable. E.g:
+     * <code>atMostLast(4, [1, 2, 3]) -> [1, 2, 3]</code>
+     * <code>atMostLast(2, [1, 2, 3]) -> [2, 3]</code>
      *
-     * @param <E>
-     * @param howMany
-     * @param from
-     * @return
+     * @param <E> the iterable element type
+     * @param howMany number of elements to be yielded (at most)
+     * @param from the source iterable
+     * @return the resulting iterator
      */
     public static <E> Iterator<E> atMostLast(int howMany, Iterable<E> from) {
         dbc.precondition(from != null, "cannot call atMostLast with a null iterable");
@@ -123,46 +129,58 @@ public abstract class Filtering {
     }
 
     /**
-     * Fetches at most last elements from an iterator.
+     * Creates an iterator yielding at most last n elements from the source
+     * iterator. E.g:
+     * <code>atMostLast(4, [1, 2, 3]) -> [1, 2, 3]</code>
+     * <code>atMostLast(2, [1, 2, 3]) -> [2, 3]</code>
      *
-     * @param <E>
-     * @param howMany
-     * @param from
-     * @return
+     * @param <E> the iterator element type
+     * @param howMany number of elements to be yielded (at most)
+     * @param from the source iterator
+     * @return the resulting iterator
      */
     public static <E> Iterator<E> atMostLast(int howMany, Iterator<E> from) {
         return new AtMostMemoryIterator<E>(from, howMany);
     }
 
     /**
-     * Fetches at most last elements from an array.
+     * Creates an iterator yielding at most last n elements from the source
+     * array. E.g:
+     * <code>atMostLast(4, [1, 2, 3]) -> [1, 2, 3]</code>
+     * <code>atMostLast(2, [1, 2, 3]) -> [2, 3]</code>
      *
-     * @param <E>
-     * @param howMany
-     * @param from
-     * @return
+     * @param <E> the array element type
+     * @param howMany number of elements to be yielded (at most)
+     * @param from the source array
+     * @return the resulting iterator
      */
     public static <E> Iterator<E> atMostLast(int howMany, E[] from) {
         return atMostLast(howMany, new ArrayIterator<E>(from));
     }
 
     /**
+     * Creates an iterator yielding values from the source iterator up until the
+     * passed predicate matches. E.g:
+     * <code>takeWhile([2, 4, 3, 6], isEven) -> [2, 4]</code>
      *
-     * @param <E>
-     * @param iterator
-     * @param predicate
-     * @return
+     * @param <E> the iterator element type
+     * @param iterator the source iterator
+     * @param predicate the predicate to be evaluated
+     * @return the resulting iterator
      */
     public static <E> Iterator<E> takeWhile(Iterator<E> iterator, Predicate<E> predicate) {
         return new TakeWhileIterator<E>(iterator, predicate);
     }
 
     /**
+     * Creates an iterator yielding values from the source iterable up until the
+     * passed predicate matches. E.g:
+     * <code>takeWhile([2, 4, 3, 6], isEven) -> [2, 4]</code>
      *
-     * @param <E>
-     * @param iterable
-     * @param predicate
-     * @return
+     * @param <E> the iterable element type
+     * @param iterable the source iterable
+     * @param predicate the predicate to be evaluated
+     * @return the resulting iterator
      */
     public static <E> Iterator<E> takeWhile(Iterable<E> iterable, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot takeWhile from a null iterable");
@@ -170,69 +188,87 @@ public abstract class Filtering {
     }
 
     /**
+     * Creates an iterator yielding values from the source array up until the
+     * passed predicate matches. E.g:
+     * <code>takeWhile([2, 4, 3, 6], isEven) -> [2, 4]</code>
      *
-     * @param <E>
-     * @param iterator
-     * @param predicate
-     * @return
+     * @param <E> the array element type
+     * @param array the source iterable
+     * @param predicate the predicate to be evaluated
+     * @return the resulting iterator
      */
     public static <E> Iterator<E> takeWhile(E[] array, Predicate<E> predicate) {
         return new TakeWhileIterator<E>(new ArrayIterator<E>(array), predicate);
     }
 
     /**
+     * Creates an iterator yielding values from the source iterator up until the
+     * passed predicate doesn't match. E.g:
+     * <code>dropWhile([2, 4, 3, 6], isOdd) -> [2, 4]</code>
      *
-     * @param <E>
-     * @param iterator
-     * @param predicate
-     * @return
+     * @param <E> the iterator element type
+     * @param iterator the source iterator
+     * @param predicate the predicate to be evaluated
+     * @return the resulting iterator
      */
     public static <E> Iterator<E> dropWhile(Iterator<E> iterator, Predicate<E> predicate) {
-        return new DropWhileIterator<E>(iterator, predicate);
+        return new FilteringIterator<E>(iterator, new DropWhile<E>(predicate));
     }
 
     /**
+     * Creates an iterator yielding values from the source iterable up until the
+     * passed predicate doesn't match. E.g:
+     * <code>dropWhile([2, 4, 3, 6], isOdd) -> [2, 4]</code>
      *
-     * @param <E>
-     * @param iterable
-     * @param predicate
-     * @return
+     * @param <E> the iterable element type
+     * @param iterable the source iterable
+     * @param predicate the predicate to be evaluated
+     * @return the resulting iterator
      */
     public static <E> Iterator<E> dropWhile(Iterable<E> iterable, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot dropWhile from a null iterable");
-        return new DropWhileIterator<E>(iterable.iterator(), predicate);
+        return new FilteringIterator<E>(iterable.iterator(), new DropWhile<E>(predicate));
     }
 
     /**
+     * Creates an iterator yielding values from the source array up until the
+     * passed predicate doesn't match. E.g:
+     * <code>dropWhile([2, 4, 3, 6], isOdd) -> [2, 4]</code>
      *
-     * @param <E>
-     * @param iterable
-     * @param predicate
-     * @return
+     * @param <E> the array element type
+     * @param array the source array
+     * @param predicate the predicate to be evaluated
+     * @return the resulting iterator
      */
     public static <E> Iterator<E> dropWhile(E[] array, Predicate<E> predicate) {
-        return new DropWhileIterator<E>(new ArrayIterator<E>(array), predicate);
+        return new FilteringIterator<E>(new ArrayIterator<E>(array), new DropWhile<E>(predicate));
     }
 
     /**
-     * Creates an iterator showing first elements of the passed iterator.
+     * Creates an iterator yielding at most first n elements of the passed
+     * iterator. E.g:
+     * <code>take(2, [1, 2, 3]) -> [1, 2]</code>
+     * <code>take(4, [1, 2, 3]) -> [1, 2, 3]</code>
      *
-     * @param <E>
-     * @param howMany
-     * @param iterator
-     * @return
+     * @param <E> the iterator element type
+     * @param howMany elements to be consumed (at most)
+     * @param iterator the source iterator
+     * @return the resulting iterator
      */
     public static <E> Iterator<E> take(long howMany, Iterator<E> iterator) {
         return new TakeUpToIterator<E>(iterator, howMany);
     }
 
     /**
-     * Creates an iterator showing first elements of the passed iterable.
+     * Creates an iterator yielding at most first n elements of the passed
+     * iterable. E.g:
+     * <code>take(2, [1, 2, 3]) -> [1, 2]</code>
+     * <code>take(4, [1, 2, 3]) -> [1, 2, 3]</code>
      *
-     * @param <E>
-     * @param howMany
-     * @param iterable
-     * @return
+     * @param <E> the iterable element type
+     * @param howMany elements to be consumed (at most)
+     * @param iterable the source iterable
+     * @return the resulting iterator
      */
     public static <E> Iterator<E> take(long howMany, Iterable<E> iterable) {
         dbc.precondition(iterable != null, "cannot take from a null iterable");
@@ -240,91 +276,107 @@ public abstract class Filtering {
     }
 
     /**
-     * Creates an iterator showing first elements of the passed array.
+     * Creates an iterator yielding at most first n elements of the passed
+     * array. E.g:
+     * <code>take(2, [1, 2, 3]) -> [1, 2]</code>
+     * <code>take(4, [1, 2, 3]) -> [1, 2, 3]</code>
      *
-     * @param <E>
-     * @param howMany
-     * @param iterator
-     * @return
+     * @param <E> the array element type
+     * @param howMany elements to be consumed (at most)
+     * @param array the source array
+     * @return the resulting iterator
      */
     public static <E> Iterator<E> take(long howMany, E... array) {
         return new TakeUpToIterator<E>(new ArrayIterator<E>(array), howMany);
     }
 
     /**
-     * Creates an iterator not showing first elements of the passed iterator.
+     * Creates an iterator yielding all but first n elements from the passed
+     * iterator. E.g:
+     * <code>drop(3, [1,2,3,4]) -> [4]</code>
      *
-     * @param <E>
-     * @param howMany
-     * @param iterator
-     * @return
+     * @param <E> the iterator element type
+     * @param howMany elements to be discarded
+     * @param iterator the source iterator
+     * @return the resulting iterator
      */
     public static <E> Iterator<E> drop(long howMany, Iterator<E> iterator) {
-        return new DropWhileIterator<E>(iterator, new UntilCount<E>(howMany));
+        return new FilteringIterator<E>(iterator, new DropWhile<E>(new UntilCount<E>(howMany)));
     }
 
     /**
-     * Creates an iterator not showing first elements of the passed iterable.
+     * Creates an iterator yielding all but first n elements from the passed
+     * iterable. E.g:
+     * <code>drop(3, [1,2,3,4]) -> [4]</code>
      *
-     * @param <E>
-     * @param howMany
-     * @param iterable
-     * @return
+     * @param <E> the iterator element type
+     * @param howMany elements to be discarded
+     * @param iterable the source iterable
+     * @return the resulting iterator
      */
     public static <E> Iterator<E> drop(long howMany, Iterable<E> iterable) {
         dbc.precondition(iterable != null, "cannot drop from a null iterable");
-        return new DropWhileIterator<E>(iterable.iterator(), new UntilCount<E>(howMany));
+        return new FilteringIterator<E>(iterable.iterator(), new DropWhile<E>(new UntilCount<E>(howMany)));
     }
 
     /**
-     * Creates an iterator not showing first elements of the passed array.
+     * Creates an iterator yielding all but first n elements from the passed
+     * array. E.g:
+     * <code>drop(3, [1,2,3,4]) -> [4]</code>
      *
-     * @param <E>
-     * @param howMany
-     * @param iterator
-     * @return
+     * @param <E> the iterator element type
+     * @param howMany elements to be discarded
+     * @param array the source array
+     * @return the resulting iterator
      */
     public static <E> Iterator<E> drop(long howMany, E... array) {
-        return new DropWhileIterator<E>(new ArrayIterator<E>(array), new UntilCount<E>(howMany));
+        return new FilteringIterator<E>(new ArrayIterator<E>(array), new DropWhile<E>(new UntilCount<E>(howMany)));
     }
 
     /**
-     * Creates an iterator showing a slice of the passed iterator.
+     * Creates an iterator yielding a slice of the source iterator. E.g:
+     * <code>slice(1, 2, ["a", "b", "c", "d"]) ->  ["b", "c"]</code>
      *
-     * @param <E>
-     * @param from
-     * @param howMany
-     * @param iterator
-     * @return
+     * @param <E> the iterator element type
+     * @param from the index at which the slice starts
+     * @param howMany the slice size (at most)
+     * @param iterator the source iterator
+     * @return the resulting iterator
      */
     public static <E> Iterator<E> slice(long from, long howMany, Iterator<E> iterator) {
-        return take(howMany, drop(from, iterator));
+        final Iterator<E> dropping = new FilteringIterator<E>(iterator, new DropWhile<E>(new UntilCount<E>(from)));
+        return new TakeUpToIterator<E>(dropping, howMany);
     }
 
     /**
-     * Creates an iterator showing a slice of the passed iterator.
+     * Creates an iterator yielding a slice of the source iterable. E.g:
+     * <code>slice(1, 2, ["a", "b", "c", "d"]) ->  ["b", "c"]</code>
      *
-     * @param <E>
-     * @param from
-     * @param howMany
-     * @param iterable
-     * @return
+     * @param <E> the iterator element type
+     * @param from the index at which the slice starts
+     * @param howMany the slice size (at most)
+     * @param iterable the source iterable
+     * @return the resulting iterator
      */
     public static <E> Iterator<E> slice(long from, long howMany, Iterable<E> iterable) {
         dbc.precondition(iterable != null, "cannot call slice with a null iterable");
-        return take(howMany, drop(from, iterable.iterator()));
+        final Iterator<E> dropping = new FilteringIterator<E>(iterable.iterator(), new DropWhile<E>(new UntilCount<E>(from)));
+        return new TakeUpToIterator<E>(dropping, howMany);
     }
 
     /**
-     * Creates an iterator showing a slice of the passed array.
+     * Creates an iterator yielding a slice of the source array. E.g:
+     * <code>slice(1, 2, ["a", "b", "c", "d"]) ->  ["b", "c"]</code>
      *
-     * @param <E>
-     * @param from
-     * @param howMany
-     * @param array
-     * @return
+     * @param <E> the iterator element type
+     * @param from the index at which the slice starts
+     * @param howMany the slice size (at most)
+     * @param array the source array
+     * @return the resulting iterator
      */
-    public static <E> Iterator<E> slice(long from, long howMany, E[] array) {
-        return take(howMany, drop(from, new ArrayIterator<E>(array)));
+    public static <E> Iterator<E> slice(long from, long howMany, E... array) {
+        final Iterator<E> dropping = new FilteringIterator<E>(ArrayIterator.of(array), new DropWhile<E>(new UntilCount<E>(from)));
+        return new TakeUpToIterator<E>(dropping, howMany);
+
     }
 }

@@ -3,10 +3,17 @@ package net.emaze.dysfunctional.collections.builders;
 import java.util.Map;
 import net.emaze.dysfunctional.contracts.dbc;
 
+/**
+ * A map builder.
+ *
+ * @author rferranti
+ * @param <K> the map key type
+ * @param <V> the map value type
+ */
 public class MapBuilder<K, V> {
 
     private final Map<K, V> state;
-    
+
     public MapBuilder(Map<K, V> state) {
         dbc.precondition(state != null, "cannot create a MapBuilder with a null state");
         this.state = state;

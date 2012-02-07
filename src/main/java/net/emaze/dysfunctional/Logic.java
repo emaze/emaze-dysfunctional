@@ -266,8 +266,7 @@ public abstract class Logic {
     /**
      * Creates a composite AND predicate from the given predicates.
      * @param <T> the element type parameter
-     * @param first
-     * @param second 
+     * @param predicates the predicates to be composed
      * @return the composite predicate
      */
     public static <T> Predicate<T> and(Predicate<T>... predicates) {
@@ -295,6 +294,7 @@ public abstract class Logic {
      * @param <T2> the latter element type parameter
      * @param first
      * @param second
+     * @param third 
      * @return the composite predicate
      */
     public static <T1, T2> BinaryPredicate<T1, T2> and(BinaryPredicate<T1, T2> first, BinaryPredicate<T1, T2> second, BinaryPredicate<T1, T2> third) {

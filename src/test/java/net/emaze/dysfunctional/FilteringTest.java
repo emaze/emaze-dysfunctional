@@ -243,6 +243,12 @@ public class FilteringTest {
     }
 
     @Test
+    public void dropWhileThatNeverMatchesHasNoNext() {
+        Iterator<Integer> twi = Filtering.dropWhile(Iterations.iterator(1), new Always<Integer>());
+        Assert.assertFalse(twi.hasNext());
+    }
+
+    @Test
     public void facadeIsNotFinal() {
         new Filtering() {
         };

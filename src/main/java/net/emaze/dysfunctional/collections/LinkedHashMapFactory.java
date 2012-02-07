@@ -5,6 +5,7 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
 /**
  * Creates an empty LinkedHashMap.
+ *
  * @param <K> the LinkedHashMap key type parameter
  * @param <V> the LinkedHashMap value type parameter
  * @author rferranti

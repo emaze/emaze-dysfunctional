@@ -388,6 +388,7 @@ public abstract class Groups {
      * Indexes elements from the iterator using passed delegate. E.g:
      * <code> indexBy([1,2,3,4], id) -> {1:1, 2:2, 3:3, 4:4}</code>
      *
+     * @param <M> the map type
      * @param <K> the key type
      * @param <V> the value type
      * @param groupies elements to be indexed
@@ -402,12 +403,10 @@ public abstract class Groups {
      * Indexes elements from the iterator using passed delegate. E.g:
      * <code> indexBy([1,2,3,4], id) -> {1:1, 2:2, 3:3, 4:4}</code>
      *
-     * @param <M> the map type
      * @param <K> the key type
      * @param <V> the value type
      * @param groupies elements to be indexed
      * @param indexer the delegate used to index elements
-     * @param mapProvider a provider used to create the resulting map
      * @return indexed elements in a map
      */
     public static <K, V> Map<K, V> indexBy(Iterator<V> groupies, Delegate<K, V> indexer) {

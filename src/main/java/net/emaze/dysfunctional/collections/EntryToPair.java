@@ -6,7 +6,7 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.tuples.Pair;
 
 /**
- * Transforms a Map.Entry to a Pair
+ * Transforms a Map.Entry to a Pair.
  *
  * @author rferranti, sbaruzza
  * @param <K> the key type

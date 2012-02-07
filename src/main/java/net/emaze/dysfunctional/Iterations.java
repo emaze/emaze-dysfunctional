@@ -10,7 +10,7 @@ import net.emaze.dysfunctional.iterations.SingletonIterable;
 import net.emaze.dysfunctional.iterations.SingletonIterator;
 
 /**
- * Iterator/Iterable shortcuts.
+ * Iterators and Iterables shortcuts.
  * @author rferranti
  */
 public abstract class Iterations {

@@ -6,6 +6,8 @@ import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
 /**
  * A predicate accepting elements contained in the collection.
+ *
+ * @param <T> the element type
  * @author rferranti
  */
 public class IsContainedIn<T> implements Predicate<T> {

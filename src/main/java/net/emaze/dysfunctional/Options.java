@@ -174,7 +174,7 @@ public abstract class Options {
         }
 
         /**
-         * Transforms a delegate to another working on maybe monadic values.\
+         * Transforms a delegate to another working on maybe monadic values.
          *
          * @param <R> the delegate return type
          * @param <T> the delegate parameter type

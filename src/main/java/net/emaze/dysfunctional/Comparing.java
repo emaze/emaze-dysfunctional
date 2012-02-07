@@ -82,7 +82,6 @@ public abstract class Comparing {
      * @param <T> the element type
      * @param lhs the left element
      * @param rhs the right element
-     * @param comparator the comparator used to compare elements
      * @return the two elements ordered in a pair
      */
     public static <T extends Comparable<T>> Pair<T, T> ordered(T lhs, T rhs) {

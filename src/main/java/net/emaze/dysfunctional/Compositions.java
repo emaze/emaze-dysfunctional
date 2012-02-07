@@ -18,7 +18,9 @@ import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 public abstract class Compositions {
 
     /**
-     * Given f, g yields f ° g (f of g, f following g)
+     * Composes a delegate with a provider (delegate ° provider).
+     *
+     * Given f, g yields f ° g (f of g, f following g).
      *
      * @param <R> the delegate return type
      * @param <T> the delegate and provider parameter type
@@ -31,7 +33,9 @@ public abstract class Compositions {
     }
 
     /**
-     * Given f, g yields f ° g (f of g, f following g)
+     * Composes a delegate with another delegate.
+     *
+     * Given f, g yields f ° g (f of g, f following g).
      *
      * @param <R> f return type
      * @param <T2> f parameter type and g return type
@@ -45,7 +49,9 @@ public abstract class Compositions {
     }
 
     /**
-     * Given f, g, h yields f ° g ° h (f of g of h, f following g following h)
+     * Composes three delegates.
+     *
+     * Given f, g, h yields f ° g ° h (f of g of h, f following g following h).
      *
      * @param <R>
      * @param <T3>
@@ -121,7 +127,7 @@ public abstract class Compositions {
     /**
      * Composes an iterator of endodelegates.
      *
-     * @param endodelegates to be composed (eg. f,g,h)
+     * @param endodelegates to be composed (e.g: f,g,h)
      * @return a delegate performing f ° g ° h
      */
     public static <T> Delegate<T, T> compose(Iterator<Delegate<T, T>> endodelegates) {

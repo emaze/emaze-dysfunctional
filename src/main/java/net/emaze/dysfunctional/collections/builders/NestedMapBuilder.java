@@ -6,6 +6,12 @@ import java.util.Map;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
+/**
+ * A builder for nested maps.
+ *
+ * @param <K> the map key type
+ * @author rferranti
+ */
 public class NestedMapBuilder<K> {
 
     private final Deque<K> stack = new LinkedList<K>();

@@ -281,6 +281,7 @@ public abstract class Interceptors {
      * @param <T1> the delegate first parameter type
      * @param <T2> the delegate second parameter type
      * @param <T3> the delegate third parameter type
+     * @param <I> the ternary interceptor type
      * @param innermost the delegate to be intercepted
      * @param interceptors an iterator of interceptors
      * @return the resulting delegate

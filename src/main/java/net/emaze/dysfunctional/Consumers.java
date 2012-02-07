@@ -157,7 +157,7 @@ public abstract class Consumers {
     }
 
     /**
-     * Consumes the iterable's input iterator to the output iterator.
+     * Consumes an iterable into the output iterator.
      *
      * @param <E> the iterator element type
      * @param iterable the iterable that will be consumed
@@ -169,7 +169,7 @@ public abstract class Consumers {
     }
 
     /**
-     * Consumes the array to the output iterator.
+     * Consumes the array into the output iterator.
      *
      * @param <E> the iterator element type
      * @param array the array that will be consumed

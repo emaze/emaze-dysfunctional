@@ -5,6 +5,7 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
 /**
  * Creates an empty LinkedHashSet.
+ *
  * @param <E> the LinkedHashSet element type parameter
  * @author rferranti
  */
