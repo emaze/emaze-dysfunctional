@@ -3,7 +3,8 @@ package net.emaze.dysfunctional.filtering;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
 /**
- * yields true at index `target` (0-based)
+ * A stateful predicate yielding true when called the {@code nth - 1} time.
+ *
  * @param <E> the element type parameter
  * @author rferranti
  */
@@ -16,9 +17,14 @@ public class AtIndex<E> implements Predicate<E> {
         this.target = target;
     }
 
+    /**
+     * yields true at index target (0-based).
+     *
+     * @param element the ignored parameter
+     * @return
+     */
     @Override
     public boolean accept(E element) {
         return target == current++;
     }
-
 }
