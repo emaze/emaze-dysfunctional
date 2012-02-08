@@ -4,12 +4,23 @@ import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- * Searches for one element in the iterator, throws is zero or more than one element is found.
+ * A unary delegate consuming an iterator yielding the only element contained in
+ * it.
+ *
  * @param <E> the iterator element type
  * @author rferranti
  */
 public class OneElement<E> implements Delegate<E, Iterator<E>> {
 
+    /**
+     * Consumes the iterator and yields the only element contained in it.
+     *
+     * @param consumable the iterator to be consumed
+     * @throws IllegalArgumentException if the source iterator is empty
+     * @throws IllegalStateException if the source iterator contains more than
+     * one element
+     * @return the only element contained in the iterator
+     */
     @Override
     public E perform(Iterator<E> consumable) {
         dbc.precondition(consumable != null, "consuming a null iterator");

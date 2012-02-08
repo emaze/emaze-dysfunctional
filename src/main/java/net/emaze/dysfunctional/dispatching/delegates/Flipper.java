@@ -3,9 +3,11 @@ package net.emaze.dysfunctional.dispatching.delegates;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- * BinaryDelegate<R,U,T> to BinaryDelegate<R,T,U> adapter
- * (just swaps formal params)
+ * Adapts a binary delegate to another binary delegate by swapping formal
+ * parameters.
+ *
  * == No dolphins were harmed during the making of this functor ==
+ *
  * @param <R> return type of the given binary delegate
  * @param <T> former formal parameter type of the given delegate
  * @param <U> latter formal parameter type of the given delegate
@@ -21,9 +23,13 @@ public class Flipper<R, T, U> implements BinaryDelegate<R, T, U> {
     }
 
     /**
-     * performs on the nested delegate swapping former and latter formal parameters
-     * @param former the former formal parameter used as latter in the nested delegate
-     * @param latter the latter formal parameter used as former in the nested delegate
+     * Performs on the nested delegate swapping former and latter formal
+     * parameters.
+     *
+     * @param former the former formal parameter used as latter in the nested
+     * delegate
+     * @param latter the latter formal parameter used as former in the nested
+     * delegate
      * @return
      */
     @Override

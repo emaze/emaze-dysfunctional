@@ -5,6 +5,9 @@ import java.net.UnknownHostException;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
+ * A unary delegate transforming a Long to an Inet4Address.
+ *
+ * See {@link Inet4AddressToLong}.
  *
  * @author rferranti
  */

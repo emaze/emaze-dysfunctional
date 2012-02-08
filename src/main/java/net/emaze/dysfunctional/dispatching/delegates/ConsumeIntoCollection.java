@@ -6,7 +6,8 @@ import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  * Consumes every element from the consumable into the collection provided by
- * the provider
+ * the provider.
+ *
  * @param <R> the collection type parameter
  * @param <E> the collection element type parameter
  * @author rferranti

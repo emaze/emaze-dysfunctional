@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
 /**
- * A ternary functor
+ * A ternary functor.
  * @param <R> the result Type
  * @param <T1> the first element Type
  * @param <T2> the second element Type

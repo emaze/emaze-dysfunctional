@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
 /**
- * Constantly returns a value. Same as:
+ * A delegate constantly returning the same value. Same as:
  * <code>Dispatching.ignore(new ConstantProvider<T>(value));</code>
  *
  * @author rferranti
