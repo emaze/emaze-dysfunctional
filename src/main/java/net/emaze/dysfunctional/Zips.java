@@ -139,10 +139,37 @@ public abstract class Zips {
         return new ZipLongestIterator<T1, T2>(new ArrayIterator<T1>(former), new ArrayIterator<T2>(latter));
     }
 
+    /**
+     * Creates an iterator yielding values from the source iterator and its
+     * index.
+     *
+     * <code>E.g:
+     * counted(["a", "b","c"], [0..inf]) -> [(0,"a"), (1, "b"), (2, "c")]
+     * </code>
+     *
+     *
+     * @param <CT> the counter type
+     * @param <ET> the element type
+     * @param iterator the source iterator
+     * @param range the source range
+     * @return the resulting iterator
+     */
     public static <CT, ET> Iterator<Pair<CT, ET>> counted(Iterator<ET> iterator, Range<CT> range) {
         return new ZipShortestIterator<CT, ET>(range.iterator(), iterator);
     }
 
+    /**
+     * Creates an iterator yielding values from the source iterator and its
+     * index.
+     *
+     * <code>E.g:
+     * counted(["a", "b","c"]) -> [(0,"a"), (1, "b"), (2, "c")]
+     * </code>
+     *
+     * @param <T> the element type
+     * @param iterator the source iterator
+     * @return the resulting iterator
+     */
     public static <T> Iterator<Pair<Integer, T>> counted(Iterator<T> iterator) {
         final SequencingPolicy<Integer> sequencer = new IntegerSequencingPolicy();
         final Comparator<Integer> comparator = new ComparableComparator<Integer>();
@@ -150,6 +177,18 @@ public abstract class Zips {
         return new ZipShortestIterator<Integer, T>(range.iterator(), iterator);
     }
 
+    /**
+     * Creates an iterator yielding values from the source iterator and its
+     * index.
+     *
+     * <code>E.g:
+     * counted(["a", "b","c"]) -> [(0,"a"), (1, "b"), (2, "c")]
+     * </code>
+     *
+     * @param <T> the element type
+     * @param iterable the source iterable
+     * @return the resulting iterator
+     */
     public static <T> Iterator<Pair<Integer, T>> counted(Iterable<T> iterable) {
         dbc.precondition(iterable != null, "cannot call counted with a null iterable");
         final SequencingPolicy<Integer> sequencer = new IntegerSequencingPolicy();
@@ -158,19 +197,58 @@ public abstract class Zips {
         return new ZipShortestIterator<Integer, T>(range.iterator(), iterable.iterator());
     }
 
+    /**
+     * Creates an iterator yielding values from the source iterator and its
+     * index.
+     *
+     * <code>E.g:
+     * counted(["a", "b","c"], [0..inf]) -> [(0,"a"), (1, "b"), (2, "c")]
+     * </code>
+     *
+     * @param <CT> the counter type
+     * @param <ET> the element type
+     * @param iterable the source iterable
+     * @param range the source range
+     * @return the resulting iterator
+     */
     public static <CT, ET> Iterator<Pair<CT, ET>> counted(Iterable<ET> iterable, Range<CT> range) {
         dbc.precondition(iterable != null, "cannot call counted with a null iterable");
         return new ZipShortestIterator<CT, ET>(range.iterator(), iterable.iterator());
     }
 
-    public static <T> Iterator<Pair<Integer, T>> counted(T... elements) {
-        dbc.precondition(elements != null, "cannot call counted with a null array");
+    /**
+     * Creates an iterator yielding values from the source iterator and its
+     * index.
+     *
+     * <code>E.g:
+     * counted(["a", "b","c"]) -> [(0,"a"), (1, "b"), (2, "c")]
+     * </code>
+     *
+     * @param <T> the element type
+     * @param array the source array
+     * @return the resulting iterator
+     */
+    public static <T> Iterator<Pair<Integer, T>> counted(T... array) {
+        dbc.precondition(array != null, "cannot call counted with a null array");
         final SequencingPolicy<Integer> sequencer = new IntegerSequencingPolicy();
         final Comparator<Integer> comparator = new ComparableComparator<Integer>();
         final Range<Integer> range = new DenseRange<Integer>(sequencer, comparator, 0, Integer.MAX_VALUE);
-        return new ZipShortestIterator<Integer, T>(range.iterator(), ArrayIterator.of(elements));
+        return new ZipShortestIterator<Integer, T>(range.iterator(), new ArrayIterator<T>(array));
     }
 
+    /**
+     * Creates an iterator yielding values from the source iterator and its
+     * index.
+     * <code>E.g:
+     * counted(["a", "b","c"], [0..inf]) -> [(0,"a"), (1, "b"), (2, "c")]
+     * </code>
+     *
+     * @param <CT> the counter type
+     * @param <ET> the element type
+     * @param array the source array
+     * @param range the source range
+     * @return the resulting iterator
+     */
     public static <CT, ET> Iterator<Pair<CT, ET>> counted(ET[] array, Range<CT> range) {
         dbc.precondition(array != null, "cannot call counted with a null array");
         return new ZipShortestIterator<CT, ET>(range.iterator(), new ArrayIterator<ET>(array));
