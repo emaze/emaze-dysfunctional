@@ -7,7 +7,7 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 /**
  * Searches for zero or one element, throws if more than one element is found.
  *
- * @param <E>
+ * @param <E> the iterator element type
  * @author rferranti
  */
 public class MaybeOneElement<E> implements Delegate<Maybe<E>, Iterator<E>> {

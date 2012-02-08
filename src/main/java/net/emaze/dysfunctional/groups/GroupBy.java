@@ -8,8 +8,14 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
 /**
+ * A unary delegate grouping elements from an iterator. Group key is provided by
+ * the passed delegate.
  *
  * @author rferranti
+ * @param <M> the map type
+ * @param <C> the collection type
+ * @param <K> the map key type
+ * @param <V> the map value type
  */
 public class GroupBy<M extends Map<K, C>, C extends Collection<V>, K, V> implements Delegate<M, Iterator<V>> {
 

@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.options;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
- * Pointed.pure() implementation of the Either<LT,RT> Bifunctor.
+ * Pointed.pure() implementation of the {@literal Either<LT,RT>} Bifunctor.
  *
  * @author rferranti
  * @param <LT> the right type

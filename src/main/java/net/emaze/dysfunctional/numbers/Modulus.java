@@ -4,6 +4,14 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 import net.emaze.dysfunctional.numbers.policies.ModulusPolicy;
 
+/**
+ * A binary delegate evaluating modulus of a type.
+ *
+ * @author rferranti
+ * @param <R> the ModulusPolicy result type
+ * @param <T1> the accumulator type
+ * @param <T2> the modulus type
+ */
 public class Modulus<R, T1, T2> implements BinaryDelegate<R, T1, T2> {
 
     private final ModulusPolicy<R, T1, T2> policy;

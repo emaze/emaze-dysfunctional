@@ -7,7 +7,7 @@ import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
 /**
  * Either type represents values with two possibilities. A value of type
- * Either<Left,Right> is either Left or Right.
+ * {@literal Either<Left,Right>} is either Left or Right.
  *
  * @author rferranti
  * @param <LT> the left type

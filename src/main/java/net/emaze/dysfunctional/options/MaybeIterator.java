@@ -7,7 +7,8 @@ import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 /**
  * Decorates an Iterator yielding Maybe.just(element) for every element in the
  * contained iterator and Maybe.nothing() beyond the nested iterator bounds
- * @param <E>
+ *
+ * @param <E> the iterator element type
  * @author rferranti
  */
 public class MaybeIterator<E> extends ReadOnlyIterator<Maybe<E>> {
@@ -25,8 +26,10 @@ public class MaybeIterator<E> extends ReadOnlyIterator<Maybe<E>> {
     }
 
     /**
-     * calling next over the boundary of the contained iterator leads Maybe.nothing indefinitely
-     * "no matter how many times you try, you can't shoot the dog"
+     * calling next over the boundary of the contained iterator leads
+     * Maybe.nothing indefinitely "no matter how many times you try, you can't
+     * shoot the dog"
+     *
      * @return
      */
     @Override

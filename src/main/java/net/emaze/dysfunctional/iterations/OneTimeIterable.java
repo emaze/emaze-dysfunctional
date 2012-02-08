@@ -4,8 +4,10 @@ import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- * Adapts an Iterator to the Iterable interface enabling the iterator to be consumed
- * where an iterable is expected (a OneTimeIterable can be consumed ONLY ONCE )
+ * Adapts an iterator to the iterable interface enabling the iterator to be
+ * consumed where an iterable is expected. A OneTimeIterable can be consumed
+ * only once.
+ *
  * @param <T> the element type
  * @author rferranti
  */

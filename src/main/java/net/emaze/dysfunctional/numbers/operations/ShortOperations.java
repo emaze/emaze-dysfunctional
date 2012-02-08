@@ -6,6 +6,11 @@ import net.emaze.dysfunctional.numbers.policies.MultiplyPolicy;
 import net.emaze.dysfunctional.numbers.policies.SubtractPolicy;
 import net.emaze.dysfunctional.numbers.policies.SumPolicy;
 
+/**
+ * Default short policies.
+ *
+ * @author rferranti
+ */
 public class ShortOperations implements
         SumPolicy<Short, Short, Short>,
         SubtractPolicy<Short, Short, Short>,

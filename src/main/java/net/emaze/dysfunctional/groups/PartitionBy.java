@@ -9,10 +9,12 @@ import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.tuples.Pair;
 
 /**
+ * A unary delegate partitioning elements from the passed iterator. Partitioning
+ * is done by evaluating the passed predicate.
  *
- * @param <CA> 
- * @param <CR> 
- * @param <T> 
+ * @param <CA> the accepted values collection type
+ * @param <CR> the rejected values collection type
+ * @param <T> the element type
  * @author rferranti
  */
 public class PartitionBy<CA extends Collection<T>, CR extends Collection<T>, T> implements Delegate<Pair<CA, CR>, Iterator<T>> {

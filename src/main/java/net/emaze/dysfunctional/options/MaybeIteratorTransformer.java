@@ -6,14 +6,15 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
  * transforms an Iterator<T> in a MaybeIterator<T>
+ *
  * @author rferranti
- * @param <E>
- * @param <T>
+ * @param <E> the iterator element type
+ * @param <I> the iterator type
  */
-public class MaybeIteratorTransformer<T extends Iterator<E>, E> implements Delegate<Iterator<Maybe<E>>, T> {
+public class MaybeIteratorTransformer<I extends Iterator<E>, E> implements Delegate<Iterator<Maybe<E>>, I> {
 
     @Override
-    public MaybeIterator<E> perform(T iterator) {
+    public MaybeIterator<E> perform(I iterator) {
         dbc.precondition(iterator != null, "cannot transform a null iterator to a MaybeIterator");
         return new MaybeIterator<E>(iterator);
     }

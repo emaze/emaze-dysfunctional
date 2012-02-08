@@ -7,7 +7,9 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
 /**
- * Indexes elements from an iterator, key is provided by the passed delegate.
+ * A unary delegate indexing elements from an iterator. Indexing key is provided
+ * by the passed delegate.
+ *
  * @param <M> the output Map type parameter
  * @param <K> the key type parameter
  * @param <V> the value type parameter

@@ -17,7 +17,7 @@ import net.emaze.dysfunctional.reductions.Any;
 /**
  * squared: [1,2] [a,b,c] -> just(1),just(a),just(2),just(b),nothing,just(c)
  *
- * @param <E>
+ * @param <E> the iterator element type
  * @author rferranti
  */
 public class PreciseMultiplexingIterator<E> extends ReadOnlyIterator<Maybe<E>> {
@@ -28,7 +28,7 @@ public class PreciseMultiplexingIterator<E> extends ReadOnlyIterator<Maybe<E>> {
     public <T extends Iterator<E>> PreciseMultiplexingIterator(Iterator<T> iterators) {
         dbc.precondition(iterators != null, "trying to create a PreciseMultiplexingIterator from a null iterator of iterators");
         final Iterator<Iterator<Maybe<E>>> transformed = new TransformingIterator<Iterator<Maybe<E>>, T>(iterators, new MaybeIteratorTransformer<T, E>());
-        while(transformed.hasNext()){
+        while (transformed.hasNext()) {
             this.iterators.add(transformed.next());
         }
         final PeriodicSequencingPolicy<Integer> period = new PeriodicSequencingPolicy<Integer>(new IntegerSequencingPolicy(), 0, this.iterators.size() - 1);

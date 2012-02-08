@@ -4,7 +4,9 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
 /**
- * Unary Predicate matching Maybe.just elements
+ * Unary Predicate matching Maybe.just elements.
+ *
+ * @param <T> the maybe type parameter
  * @author dangelocola, rferranti
  */
 public class IsJust<T> implements Predicate<Maybe<T>> {
@@ -14,5 +16,4 @@ public class IsJust<T> implements Predicate<Maybe<T>> {
         dbc.precondition(element != null, "testing IsJust against null");
         return element.hasValue();
     }
-
 }

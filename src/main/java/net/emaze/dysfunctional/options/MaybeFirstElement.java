@@ -6,7 +6,8 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
  * Searches the first element.
- * @param <E>
+ *
+ * @param <E> the iterator element type
  * @author rferranti
  */
 public class MaybeFirstElement<E> implements Delegate<Maybe<E>, Iterator<E>> {

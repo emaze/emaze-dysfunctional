@@ -6,6 +6,11 @@ import net.emaze.dysfunctional.numbers.policies.MultiplyPolicy;
 import net.emaze.dysfunctional.numbers.policies.SubtractPolicy;
 import net.emaze.dysfunctional.numbers.policies.SumPolicy;
 
+/**
+ * Default long policies.
+ *
+ * @author rferranti
+ */
 public class LongOperations implements
         SumPolicy<Long, Long, Long>,
         SubtractPolicy<Long, Long, Long>,

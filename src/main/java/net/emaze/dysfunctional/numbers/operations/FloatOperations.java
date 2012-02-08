@@ -5,6 +5,11 @@ import net.emaze.dysfunctional.numbers.policies.MultiplyPolicy;
 import net.emaze.dysfunctional.numbers.policies.SubtractPolicy;
 import net.emaze.dysfunctional.numbers.policies.SumPolicy;
 
+/**
+ * Default float policies.
+ *
+ * @author rferranti
+ */
 public class FloatOperations implements
         SumPolicy<Float, Float, Float>,
         SubtractPolicy<Float, Float, Float>,

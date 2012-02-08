@@ -5,11 +5,14 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 
 /**
- * 
- * @param <R>
- * @param <T1>
- * @param <T2>
- * @param <T3>
+ * Composes a delegate with an iterator of interceptors.
+ *
+ * (delegate ° interceptor1 ° interceptor2)
+ *
+ * @param <R> the delegate result type
+ * @param <T1> the delegate first parameter type
+ * @param <T2> the delegate second parameter type
+ * @param <T3> the delegate third parameter type
  * @author rferranti
  */
 public class TernaryInterceptorChain<R, T1, T2, T3> implements TernaryDelegate<R, T1, T2, T3> {

@@ -4,7 +4,12 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
- * Performs fmap on an Either<LT, RT>
+ * Performs fmap on an {@literal Either<LT, RT>}
+ *
+ * @param <LR> the left result type parameter
+ * @param <RR> the right result type parameter
+ * @param <RT> the right source type parameter
+ * @param <LT> the left source type parameter
  * @author rferranti
  */
 public class FmapEither<LR, RR, LT, RT> implements Delegate<Either<LR, RR>, Either<LT, RT>> {

@@ -14,8 +14,11 @@ import net.emaze.dysfunctional.reductions.Any;
 
 /**
  * longest multiplexing
+ * <code>
  * [1,2] [a,b,c] -> [1,a,2,b,c]
- * @param <E>
+ * </code>
+ *
+ * @param <E> the iterator element type
  * @author rferranti
  */
 public class RoundRobinIterator<E> extends ReadOnlyIterator<E> {
@@ -25,7 +28,7 @@ public class RoundRobinIterator<E> extends ReadOnlyIterator<E> {
 
     public <T extends Iterator<E>> RoundRobinIterator(Iterator<T> iterators) {
         dbc.precondition(iterators != null, "trying to create a RoundRobinIterator from a null iterator of iterators");
-        while(iterators.hasNext()){
+        while (iterators.hasNext()) {
             this.iterators.add(iterators.next());
         }
         final PeriodicSequencingPolicy<Integer> period = new PeriodicSequencingPolicy<Integer>(new IntegerSequencingPolicy(), 0, this.iterators.size() - 1);

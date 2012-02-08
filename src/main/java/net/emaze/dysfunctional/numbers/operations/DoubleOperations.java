@@ -5,6 +5,10 @@ import net.emaze.dysfunctional.numbers.policies.MultiplyPolicy;
 import net.emaze.dysfunctional.numbers.policies.SubtractPolicy;
 import net.emaze.dysfunctional.numbers.policies.SumPolicy;
 
+/**
+ * Default double policies.
+ * @author rferranti
+ */
 public class DoubleOperations implements
         SumPolicy<Double, Double, Double>,
         SubtractPolicy<Double, Double, Double>,

@@ -6,6 +6,11 @@ import net.emaze.dysfunctional.numbers.policies.MultiplyPolicy;
 import net.emaze.dysfunctional.numbers.policies.SubtractPolicy;
 import net.emaze.dysfunctional.numbers.policies.SumPolicy;
 
+/**
+ * Default integer policies.
+ *
+ * @author rferranti
+ */
 public class IntegerOperations implements
         SumPolicy<Integer, Integer, Integer>,
         SubtractPolicy<Integer, Integer, Integer>,

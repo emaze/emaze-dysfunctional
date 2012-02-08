@@ -9,6 +9,7 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
  * Note this is not the unwrapping delegate you usually want, look at FromJust.
  * Adjoint of LiftMaybe.
  *
+ * @param <T> the result type and maybe type parameter
  * @author rferranti
  */
 public class DropMaybe<T> implements Delegate<T, Maybe<T>> {

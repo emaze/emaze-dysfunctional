@@ -7,7 +7,7 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 /**
  * gives up only after consuming the last element (and returns it)
  *
- * @param <E>
+ * @param <E> the iterator element type
  * @author rferranti
  */
 public class MaybeLastElement<E> implements Delegate<Maybe<E>, Iterator<E>> {

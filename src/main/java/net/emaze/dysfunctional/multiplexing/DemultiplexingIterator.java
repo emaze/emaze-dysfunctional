@@ -11,6 +11,7 @@ import net.emaze.dysfunctional.options.Maybe;
 /**
  * shortest
  *
+ * @param <C> 
  * @param <T>
  * @author rferranti
  */

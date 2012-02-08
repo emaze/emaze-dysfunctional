@@ -11,9 +11,9 @@ import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.reductions.Any;
 
 /**
- * A composite iterator (iterators are consumed in order)
+ * A composite iterator. Composed iterators are consumed in order.
  *
- * @param <E>
+ * @param <E> the element type
  * @author rferranti
  */
 public class ChainIterator<E> extends ReadOnlyIterator<E> {

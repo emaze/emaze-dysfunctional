@@ -4,7 +4,10 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
- * Performs fmap on a Box<T>.
+ * Performs fmap on a {@literal Box<T>}.
+ *
+ * @param <R> the resulting box type parameter
+ * @param <T> the source box type parameter
  * @author rferranti
  */
 public class FmapBox<R, T> implements Delegate<Box<R>, Box<T>> {

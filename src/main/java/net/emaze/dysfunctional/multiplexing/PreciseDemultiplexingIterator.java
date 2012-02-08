@@ -10,6 +10,7 @@ import net.emaze.dysfunctional.options.Maybe;
 /**
  * squared
  *
+ * @param <C> 
  * @param <T>
  * @author rferranti
  */

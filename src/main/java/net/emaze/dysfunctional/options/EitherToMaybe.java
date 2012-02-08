@@ -7,8 +7,8 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
  * Transforms an either to a maybe containing just() right type or nothing().
  *
  * @author rferranti
- * @param <LT>
- * @param <RT>
+ * @param <LT> the left type parameter
+ * @param <RT> the right type parameter
  */
 public class EitherToMaybe<LT, RT> implements Delegate<Maybe<RT>, Either<LT, RT>> {
 

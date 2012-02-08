@@ -5,6 +5,7 @@ import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 
 /**
  * Adapts a binary interceptor to binary delegate.
+ *
  * @param <R> the delegate result type
  * @param <T1> the delegate first parameter type
  * @param <T2> the delegate second parameter type
@@ -24,9 +25,10 @@ public class BinaryInterceptorAdapter<R, T1, T2> implements BinaryDelegate<R, T1
 
     /**
      * Executes a delegate in the nested interceptor context.
+     *
      * @param first
      * @param second
-     * @return 
+     * @return
      */
     @Override
     public R perform(T1 first, T2 second) {

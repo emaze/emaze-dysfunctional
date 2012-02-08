@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.options;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
- * Pointed.pure() implementation of the Box<T> functor.
+ * Pointed.pure() implementation of the {@literal Box<T>} functor.
  *
  * @author rferranti
  * @param <T> the box value type

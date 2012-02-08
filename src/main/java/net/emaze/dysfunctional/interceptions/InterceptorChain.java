@@ -5,9 +5,12 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
+ * Composes a delegate with an iterator of interceptors.
  *
- * @param <R>
- * @param <T>
+ * (delegate ° interceptor1 ° interceptor2)
+ *
+ * @param <R> the delegate result type
+ * @param <T> the delegate parameter type
  * @author rferranti
  */
 public class InterceptorChain<R, T> implements Delegate<R, T> {
