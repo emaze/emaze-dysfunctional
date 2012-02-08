@@ -4,6 +4,14 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 import net.emaze.dysfunctional.options.Box;
 
+/**
+ * Proxies a binary delegate capturing parameters and result.
+ *
+ * @author rferranti
+ * @param <R> the result type
+ * @param <T1> the first parameter type
+ * @param <T2> the second parameter type
+ */
 public class BinaryCapturingDelegate<R, T1, T2> implements BinaryDelegate<R, T1, T2> {
 
     private final BinaryDelegate<R, T1, T2> nested;

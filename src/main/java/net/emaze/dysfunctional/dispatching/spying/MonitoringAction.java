@@ -4,6 +4,12 @@ import java.util.concurrent.atomic.AtomicLong;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 
+/**
+ * Proxies an action monitoring its calls.
+ *
+ * @author rferranti
+ * @param <T> the parameter type
+ */
 public class MonitoringAction<T> implements Action<T> {
 
     private final Action<T> nested;

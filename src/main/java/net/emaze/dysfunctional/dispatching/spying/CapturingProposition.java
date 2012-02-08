@@ -5,6 +5,7 @@ import net.emaze.dysfunctional.dispatching.logic.Proposition;
 import net.emaze.dysfunctional.options.Box;
 
 /**
+ * Proxies a proposition capturing the result.
  *
  * @author rferranti
  */

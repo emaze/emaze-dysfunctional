@@ -5,15 +5,17 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
 /**
+ * Proxies a provider monitoring its calls.
  *
  * @author rferranti
+ * @param <R> the result type
  */
-public class MonitoringProvider<T> implements Provider<T> {
+public class MonitoringProvider<R> implements Provider<R> {
 
-    private final Provider<T> nested;
+    private final Provider<R> nested;
     private final AtomicLong calls;
 
-    public MonitoringProvider(Provider<T> nested, AtomicLong calls) {
+    public MonitoringProvider(Provider<R> nested, AtomicLong calls) {
         dbc.precondition(nested != null, "cannot monitor a null provider");
         dbc.precondition(calls != null, "cannot monitor with a null AtomicLong");
         this.nested = nested;
@@ -21,7 +23,7 @@ public class MonitoringProvider<T> implements Provider<T> {
     }
 
     @Override
-    public T provide() {
+    public R provide() {
         calls.incrementAndGet();
         return nested.provide();
     }

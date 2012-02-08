@@ -4,6 +4,14 @@ import java.util.concurrent.atomic.AtomicLong;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 
+/**
+ * Proxies a binary delegate monitoring its calls.
+ *
+ * @author rferranti
+ * @param <R>
+ * @param <T1>
+ * @param <T2>
+ */
 public class BinaryMonitoringDelegate<R, T1, T2> implements BinaryDelegate<R, T1, T2> {
 
     private final BinaryDelegate<R, T1, T2> nested;

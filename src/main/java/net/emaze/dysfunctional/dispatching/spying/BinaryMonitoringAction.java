@@ -4,6 +4,13 @@ import java.util.concurrent.atomic.AtomicLong;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 
+/**
+ * Proxies a binary action monitoring its calls.
+ *
+ * @author rferranti
+ * @param <T1> the first parameter type
+ * @param <T2> the second parameter type
+ */
 public class BinaryMonitoringAction<T1, T2> implements BinaryAction<T1, T2> {
 
     private final BinaryAction<T1, T2> nested;

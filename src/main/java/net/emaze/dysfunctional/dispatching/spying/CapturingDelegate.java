@@ -4,6 +4,13 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.options.Box;
 
+/**
+ * Proxies a delegate capturing parameter and result.
+ *
+ * @author rferranti
+ * @param <R> the result type
+ * @param <T> the parameter type
+ */
 public class CapturingDelegate<R, T> implements Delegate<R, T> {
 
     private final Delegate<R, T> nested;

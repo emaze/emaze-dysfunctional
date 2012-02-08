@@ -4,6 +4,12 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.options.Box;
 
+/**
+ * Proxies a predicate capturing parameter and result.
+ *
+ * @author rferranti
+ * @param <T> the parameter type
+ */
 public class CapturingPredicate<T> implements Predicate<T> {
 
     private final Predicate<T> nested;

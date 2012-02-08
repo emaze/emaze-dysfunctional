@@ -4,6 +4,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
+ * Proxies a runnable monitoring its calls.
  *
  * @author rferranti
  */

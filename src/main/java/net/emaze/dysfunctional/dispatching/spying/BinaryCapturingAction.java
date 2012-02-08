@@ -4,6 +4,13 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.options.Box;
 
+/**
+ * Proxies a binary action capturing parameters.
+ *
+ * @author rferranti
+ * @param <T1> the first parameter type
+ * @param <T2> the second parameter type
+ */
 public class BinaryCapturingAction<T1, T2> implements BinaryAction<T1, T2> {
 
     private final BinaryAction<T1, T2> nested;

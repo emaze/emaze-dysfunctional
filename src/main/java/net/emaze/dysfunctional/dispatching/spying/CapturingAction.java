@@ -4,6 +4,12 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.options.Box;
 
+/**
+ * Proxies an action capturing parameter.
+ *
+ * @author rferranti
+ * @param <T> the parameter type
+ */
 public class CapturingAction<T> implements Action<T> {
 
     private final Action<T> nested;

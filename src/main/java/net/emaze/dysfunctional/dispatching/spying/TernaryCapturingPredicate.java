@@ -4,6 +4,14 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 import net.emaze.dysfunctional.options.Box;
 
+/**
+ * Proxies a predicate capturing parameters and result.
+ *
+ * @author rferranti
+ * @param <T1> the first parameter type
+ * @param <T2> the second parameter type
+ * @param <T3> the third parameter type
+ */
 public class TernaryCapturingPredicate<T1, T2, T3> implements TernaryPredicate<T1, T2, T3> {
 
     private final TernaryPredicate<T1, T2, T3> nested;

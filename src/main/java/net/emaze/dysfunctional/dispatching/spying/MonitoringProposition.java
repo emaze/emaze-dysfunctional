@@ -5,6 +5,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.Proposition;
 
 /**
+ * Proxies a proposition monitoring its calls.
  *
  * @author rferranti
  */

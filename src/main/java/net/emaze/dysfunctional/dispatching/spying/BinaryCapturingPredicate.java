@@ -4,6 +4,13 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.options.Box;
 
+/**
+ * Proxies a binary predicate capturing parameters and result.
+ *
+ * @author rferranti
+ * @param <T1> the first parameter type
+ * @param <T2> the second parameter type
+ */
 public class BinaryCapturingPredicate<T1, T2> implements BinaryPredicate<T1, T2> {
 
     private final BinaryPredicate<T1, T2> nested;

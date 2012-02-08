@@ -4,6 +4,15 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.options.Box;
 
+/**
+ * Proxies a ternary delegate capturing parameters and result.
+ *
+ * @author rferranti
+ * @param <R> the result type
+ * @param <T1> the first parameter type
+ * @param <T2> the second parameter type
+ * @param <T3> the third parameter type
+ */
 public class TernaryCapturingDelegate<R, T1, T2, T3> implements TernaryDelegate<R, T1, T2, T3> {
 
     private final TernaryDelegate<R, T1, T2, T3> nested;
@@ -17,7 +26,7 @@ public class TernaryCapturingDelegate<R, T1, T2, T3> implements TernaryDelegate<
         dbc.precondition(result != null, "cannot capture with a null result box");
         dbc.precondition(param1 != null, "cannot capture with a null param1 box");
         dbc.precondition(param2 != null, "cannot capture from a null param2 box");
-        dbc.precondition(param3 != null, "cannot capture from a null param3 box");        
+        dbc.precondition(param3 != null, "cannot capture from a null param3 box");
         this.nested = nested;
         this.result = result;
         this.param1 = param1;

@@ -4,6 +4,14 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.options.Box;
 
+/**
+ * Proxies a ternary action capturing parameters.
+ *
+ * @author rferranti
+ * @param <T1> the first parameter type
+ * @param <T2> the second parameter type
+ * @param <T3> the third parameter type
+ */
 public class TernaryCapturingAction<T1, T2, T3> implements TernaryAction<T1, T2, T3> {
 
     private final TernaryAction<T1, T2, T3> nested;
@@ -15,7 +23,7 @@ public class TernaryCapturingAction<T1, T2, T3> implements TernaryAction<T1, T2,
         dbc.precondition(nested != null, "cannot capture from a null action");
         dbc.precondition(param1 != null, "cannot capture with a null param1 box");
         dbc.precondition(param2 != null, "cannot capture from a null param2 box");
-        dbc.precondition(param3 != null, "cannot capture from a null param3 box");        
+        dbc.precondition(param3 != null, "cannot capture from a null param3 box");
         this.nested = nested;
         this.param1 = param1;
         this.param2 = param2;

@@ -4,6 +4,14 @@ import java.util.concurrent.atomic.AtomicLong;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 
+/**
+ * Proxies a ternary action monitoring its calls.
+ *
+ * @author rferranti
+ * @param <T1> the first parameter type
+ * @param <T2> the second parameter type
+ * @param <T3> the third parameter type
+ */
 public class TernaryMonitoringAction<T1, T2, T3> implements TernaryAction<T1, T2, T3> {
 
     private final TernaryAction<T1, T2, T3> nested;

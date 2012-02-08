@@ -4,6 +4,15 @@ import java.util.concurrent.atomic.AtomicLong;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 
+/**
+ * Proxies a ternary delegate monitoring its calls.
+ *
+ * @author rferranti
+ * @param <R> the result type
+ * @param <T1> the first parameter type
+ * @param <T2> the second parameter type
+ * @param <T3> the third parameter type
+ */
 public class TernaryMonitoringDelegate<R, T1, T2, T3> implements TernaryDelegate<R, T1, T2, T3> {
 
     private final TernaryDelegate<R, T1, T2, T3> nested;

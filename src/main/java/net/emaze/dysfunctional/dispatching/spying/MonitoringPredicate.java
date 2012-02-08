@@ -4,6 +4,12 @@ import java.util.concurrent.atomic.AtomicLong;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
+/**
+ * Proxies a predicate monitoring its calls.
+ *
+ * @author rferranti
+ * @param <T> the parameter type
+ */
 public class MonitoringPredicate<T> implements Predicate<T> {
 
     private final Predicate<T> nested;
