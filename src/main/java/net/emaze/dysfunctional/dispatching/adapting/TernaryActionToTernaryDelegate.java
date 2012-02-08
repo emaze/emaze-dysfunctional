@@ -5,10 +5,12 @@ import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 
 /**
+ * Adapts a ternary action to a ternary delegate. Adapter result type is Void
+ * and always yields null.
  *
- * @param <T1>
- * @param <T2>
- * @param <T3>
+ * @param <T1> the adapted action first parameter type
+ * @param <T2> the adapted action second parameter type
+ * @param <T3> the adapted action third parameter type
  * @author rferranti
  */
 public class TernaryActionToTernaryDelegate<T1, T2, T3> implements TernaryDelegate<Void, T1, T2, T3> {

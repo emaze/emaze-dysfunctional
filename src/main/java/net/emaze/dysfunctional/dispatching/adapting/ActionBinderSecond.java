@@ -5,9 +5,11 @@ import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 
 /**
- * Binary to unary action adapter (rcurry)
- * @param <T1> the former element Type
- * @param <T2> the latter element Type
+ * Binary to unary action adapter. Adapting is performed by currying the
+ * parameter passed in construction to the adapted action.
+ *
+ * @param <T1> the adapted action former element type
+ * @param <T2> the adapted action latter element type
  * @author rferranti
  */
 public class ActionBinderSecond<T1, T2> implements Action<T1> {

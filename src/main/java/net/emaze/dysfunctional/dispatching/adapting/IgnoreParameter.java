@@ -5,9 +5,11 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
 /**
- * Adapts a Provider<R> as a Delegate<R,T> ignoring the first parameter.
- * @param <R>
- * @param <T>
+ * Adapts a provider to a delegate. Adapting is performed by ignoring the
+ * parameter passed to the adapted provider.
+ *
+ * @param <R> the adapter result type
+ * @param <T> the adapter parameter type
  * @author rferranti
  */
 public class IgnoreParameter<R, T> implements Delegate<R, T> {

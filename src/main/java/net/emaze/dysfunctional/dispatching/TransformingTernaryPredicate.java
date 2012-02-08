@@ -6,11 +6,12 @@ import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 
 /**
+ * Composes a predicate with a ternary delegate (predicate ° delegate).
  *
- * @param <R>
- * @param <T1>
- * @param <T2>
- * @param <T3>
+ * @param <R> the delegate result type
+ * @param <T1> the delegate first parameter type
+ * @param <T2> the delegate second parameter type
+ * @param <T3> the delegate third parameter type
  * @author rferranti
  */
 public class TransformingTernaryPredicate<R, T1, T2, T3> implements TernaryPredicate<T1, T2, T3> {

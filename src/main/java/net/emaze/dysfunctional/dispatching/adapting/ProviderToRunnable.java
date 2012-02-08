@@ -4,9 +4,9 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
 /**
- * Adapts a Provider<?> as a Runnable ignoring returned value.
+ * Adapts a provider as a runnable. Adapting is performed by ignoring result of
+ * the adapted provider.
  *
- * @param <T>
  * @author rferranti
  */
 public class ProviderToRunnable implements Runnable {

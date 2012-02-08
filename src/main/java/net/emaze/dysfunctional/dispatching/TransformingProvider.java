@@ -4,6 +4,13 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
+/**
+ * Composes a delegate with a provider (delegate ° provider).
+ *
+ * @author rferranti
+ * @param <R> the delegate result type
+ * @param <T> the delegate parameter type
+ */
 public class TransformingProvider<R, T> implements Provider<R> {
 
     private final Delegate<R, T> transformer;

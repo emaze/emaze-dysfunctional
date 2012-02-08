@@ -5,8 +5,10 @@ import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
+ * Adapts an action to a delegate. Adapter result type is Void and always yields
+ * null.
  *
- * @param <T>
+ * @param <T> the adapted action parameter type
  * @author rferranti
  */
 public class ActionToDelegate<T> implements Delegate<Void, T> {

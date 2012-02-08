@@ -6,10 +6,11 @@ import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
 /**
+ * Composes a predicate with a binary delegate (predicate ° delegate).
  *
- * @param <R>
- * @param <T1>
- * @param <T2>
+ * @param <R> the delegate result type
+ * @param <T1> the delegate first parameter type
+ * @param <T2> the delegate second parameter type
  * @author rferranti
  */
 public class TransformingBinaryPredicate<R, T1, T2> implements BinaryPredicate<T1, T2> {

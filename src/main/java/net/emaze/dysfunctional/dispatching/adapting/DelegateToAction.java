@@ -5,8 +5,11 @@ import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
+ * Adapts a delegate to an action. Adapting is performed by ignoring result of
+ * the adapted delegate.
  *
- * @param <T>
+ * @param <R> the adapted delegate result type
+ * @param <T> the adapted delegate parameter type
  * @author rferranti
  */
 public class DelegateToAction<R, T> implements Action<T> {

@@ -5,10 +5,12 @@ import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 
 /**
- * Ternary to binary predicate adapter (rcurry)
- * @param <T1> the first element Type
- * @param <T2> the second element Type
- * @param <T3> the third element type
+ * Ternary to binary predicate adapter. Adapting is performed by currying the
+ * third parameter of the adapted predicate.
+ *
+ * @param <T1> the adapted predicate first element Type
+ * @param <T2> the adapted predicate second element Type
+ * @param <T3> the adapted predicate third element type
  * @author rferranti
  */
 public class PredicateBinderThird<T1, T2, T3> implements BinaryPredicate<T1, T2> {

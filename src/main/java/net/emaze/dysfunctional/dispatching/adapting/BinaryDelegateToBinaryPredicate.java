@@ -5,9 +5,10 @@ import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 
 /**
+ * Adapts a binary delegate with Boolean result type to a binary Predicate.
  *
- * @param <T1>
- * @param <T2>
+ * @param <T1> the adapted delegate first parameter type
+ * @param <T2> the adapted delegate second parameter type
  * @author rferranti
  */
 public class BinaryDelegateToBinaryPredicate<T1, T2> implements BinaryPredicate<T1, T2> {

@@ -5,8 +5,9 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
 /**
+ * Adapts a predicate to a delegate with Boolean result type.
  *
- * @param <T>
+ * @param <T> the adapted predicate parameter type
  * @author rferranti
  */
 public class PredicateToDelegate<T> implements Delegate<Boolean, T> {

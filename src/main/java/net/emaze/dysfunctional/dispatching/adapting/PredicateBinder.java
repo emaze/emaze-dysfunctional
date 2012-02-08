@@ -5,8 +5,10 @@ import net.emaze.dysfunctional.dispatching.logic.Proposition;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
 /**
- * Unary to nullary predicate adapter (curry)
- * @param <T> the parameter element Type
+ * Unary to nullary predicate adapter. Adapting is performed by currying the
+ * parameter of the adapted predicate.
+ *
+ * @param <T> the adapted predicate parameter type
  * @author rferranti
  */
 public class PredicateBinder<T> implements Proposition {

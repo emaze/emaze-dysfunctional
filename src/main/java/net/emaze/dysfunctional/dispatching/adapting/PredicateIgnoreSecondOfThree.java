@@ -5,9 +5,12 @@ import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 
 /**
- * @param <T1>
- * @param <T2>
- * @param <T3> 
+ * Binary to ternary predicate adapter. Adapting is performed by ignoring the
+ * second parameter of the adapted predicate.
+ *
+ * @param <T1> the adapted predicate first parameter type
+ * @param <T2> the adapted predicate second parameter type
+ * @param <T3> the adapted predicate third parameter type
  * @author rferranti
  */
 public class PredicateIgnoreSecondOfThree<T1, T2, T3> implements TernaryPredicate<T1, T2, T3> {

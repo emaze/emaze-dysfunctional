@@ -5,9 +5,11 @@ import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 
 /**
+ * Adapts a binary action to a binary delegate. Adapter result type is Void and
+ * always yields null.
  *
- * @param <T1>
- * @param <T2> 
+ * @param <T1> the adapted action first parameter type
+ * @param <T2> the adapted action second parameter type
  * @author rferranti
  */
 public class BinaryActionToBinaryDelegate<T1, T2> implements BinaryDelegate<Void, T1, T2> {

@@ -8,9 +8,11 @@ import net.emaze.dysfunctional.options.MaybeIterator;
 import net.emaze.dysfunctional.tuples.Pair;
 
 /**
- * Adapts two iterators yielding their longest convolution (via a Pair<Maybe<E1>,Maybe<E2>>)
- * @param <E1>
- * @param <E2>
+ * Adapts two iterators yielding their longest convolution (via a
+ * Pair<Maybe<E1>,Maybe<E2>>)
+ *
+ * @param <E1> the first iterator element type
+ * @param <E2> the second iterator element type
  * @author rferranti
  */
 public class ZipLongestIterator<E1, E2> extends ReadOnlyIterator<Pair<Maybe<E1>, Maybe<E2>>> {
@@ -31,8 +33,9 @@ public class ZipLongestIterator<E1, E2> extends ReadOnlyIterator<Pair<Maybe<E1>,
     }
 
     /**
-     * iterating over the longest iterator gives a Pair of Maybe.nothing indefinitely
-     * "no matter how many times you try, you can't shoot the dog"
+     * iterating over the longest iterator gives a Pair of Maybe.nothing
+     * indefinitely "no matter how many times you try, you can't shoot the dog"
+     *
      * @return
      */
     @Override

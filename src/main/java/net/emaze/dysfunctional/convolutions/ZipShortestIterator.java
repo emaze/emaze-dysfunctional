@@ -6,8 +6,8 @@ import net.emaze.dysfunctional.tuples.Pair;
 
 /**
  * Adapts two iterators yielding their shortest convolution (via a Pair<E1,E2>)
- * @param <E1>
- * @param <E2>
+ * @param <E1> the first iterator element type
+ * @param <E2> the second iterator element type
  * @author rferranti
  */
 public class ZipShortestIterator<E1, E2> implements Iterator<Pair<E1, E2>> {

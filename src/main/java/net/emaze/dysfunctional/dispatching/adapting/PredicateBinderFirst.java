@@ -5,9 +5,11 @@ import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
 /**
- * Binary to unary predicate adapter (curry)
- * @param <T1> the former element Type
- * @param <T2> the latter element Type
+ * Binary to unary predicate adapter. Adapting is performed by currying the
+ * first parameter of the adapted predicate.
+ *
+ * @param <T1> the adapted predicate first parameter type
+ * @param <T2> the adapted predicate second element type
  * @author rferranti
  */
 public class PredicateBinderFirst<T1, T2> implements Predicate<T2> {

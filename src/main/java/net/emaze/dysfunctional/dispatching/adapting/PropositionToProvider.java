@@ -5,8 +5,8 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.logic.Proposition;
 
 /**
- * Adapts a proposition as a Provider<Boolean>.
- * @param <T>
+ * Adapts a proposition as a provider with Boolean result type.
+ *
  * @author rferranti
  */
 public class PropositionToProvider implements Provider<Boolean> {

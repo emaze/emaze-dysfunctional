@@ -5,9 +5,10 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
 /**
+ * Composes a predicate with a delegate (predicate ° delegate).
  *
- * @param <R>
- * @param <T>
+ * @param <R> the delegate result type
+ * @param <T> the delegate parameter type
  * @author rferranti
  */
 public class TransformingPredicate<R, T> implements Predicate<T> {
@@ -15,7 +16,7 @@ public class TransformingPredicate<R, T> implements Predicate<T> {
     private final Predicate<R> predicate;
     private final Delegate<R, T> delegate;
 
-    public TransformingPredicate(Predicate<R> predicate, Delegate<R,T> delegate) {
+    public TransformingPredicate(Predicate<R> predicate, Delegate<R, T> delegate) {
         dbc.precondition(predicate != null, "cannot compose delegate with a null predicate");
         dbc.precondition(delegate != null, "cannot compose predicate with a null delegate");
         this.predicate = predicate;

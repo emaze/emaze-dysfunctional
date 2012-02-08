@@ -5,9 +5,12 @@ import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 
 /**
- * @param <T1>
- * @param <T2>
- * @param <T3> 
+ * Adapts a binary action to a ternary action. Adapting is performed by ignoring
+ * the second parameter passed to the adapted action.
+ *
+ * @param <T1> the adapter first parameter type
+ * @param <T2> the adapter second parameter type
+ * @param <T3> the adapter third parameter type
  * @author rferranti
  */
 public class ActionIgnoreSecondOfThree<T1, T2, T3> implements TernaryAction<T1, T2, T3> {

@@ -5,9 +5,11 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
 /**
- * Unary to nullary delegate adapter.
- * @param <R> the return Type
- * @param <T> the only element Type
+ * Unary to nullary delegate adapter. Adapting is performed by currying the
+ * parameter of the adapted delegate.
+ *
+ * @param <R> the adapted delegate result type
+ * @param <T> the adapted delegate only element type
  * @author rferranti
  */
 public class Binder<R, T> implements Provider<R> {

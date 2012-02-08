@@ -4,9 +4,9 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
 /**
- * Adapts a Runnable as a Provider<Void>.
+ * Adapts a runnable to a provider. Adapter result type is Void and always
+ * yields null.
  *
- * @param <T>
  * @author rferranti
  */
 public class RunnableToProvider implements Provider<Void> {

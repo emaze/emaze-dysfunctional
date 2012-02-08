@@ -5,10 +5,12 @@ import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 
 /**
- * Ternary to binary action adapter (curry)
- * @param <T1> the first element Type
- * @param <T2> the second element Type
- * @param <T3> the third element type
+ * Ternary to binary action adapter. Adapting is performed by currying the first
+ * parameter of the adapted ternary action.
+ *
+ * @param <T1> the adapted action first element Type
+ * @param <T2> the adapted action second element Type
+ * @param <T3> the adapted action third element type
  * @author rferranti
  */
 public class ActionBinderFirstOfThree<T1, T2, T3> implements BinaryAction<T2, T3> {

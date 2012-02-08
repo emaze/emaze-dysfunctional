@@ -5,8 +5,11 @@ import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
 /**
- * @param <T1>
- * @param <T2>
+ * Unary to binary predicate adapter. Adapting is performed by ignoring the
+ * first parameter of the adapted predicate.
+ *
+ * @param <T1> the adapted predicate first parameter type
+ * @param <T2> the adapted predicate second parameter type
  * @author rferranti
  */
 public class PredicateIgnoreFirst<T1, T2> implements BinaryPredicate<T1, T2> {

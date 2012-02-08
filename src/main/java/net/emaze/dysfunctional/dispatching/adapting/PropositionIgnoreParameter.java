@@ -5,8 +5,10 @@ import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.dispatching.logic.Proposition;
 
 /**
- * Adapts a Proposition to a Predicate<T> ignoring the parameter.
- * @param <T>
+ * Adapts a proposition to a predicate. Adapting is performed by ignoring the
+ * parameter of the adapted proposition.
+ *
+ * @param <T> the adapter parameter type
  * @author rferranti
  */
 public class PropositionIgnoreParameter<T> implements Predicate<T> {

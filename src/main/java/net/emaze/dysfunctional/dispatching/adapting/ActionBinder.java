@@ -4,10 +4,10 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 
 /**
- * Unary to nullary action adapter
+ * Unary to nullary action adapter. Adapting is performed by currying the
+ * parameter of the adapted action.
  *
- * @param <R> the return Type
- * @param <T> the only element Type
+ * @param <T> the adapted action parameter type
  * @author rferranti
  */
 public class ActionBinder<T> implements Runnable {

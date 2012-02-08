@@ -5,8 +5,11 @@ import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 
 /**
- * @param <T1>
- * @param <T2>
+ * Adapts an action to a binary action. Adapting is performed by ignoring the
+ * first parameter passed to the adapted action.
+ *
+ * @param <T1> the adapter first parameter type
+ * @param <T2> the adapter second parameter type
  * @author rferranti
  */
 public class ActionIgnoreFirst<T1, T2> implements BinaryAction<T1, T2> {

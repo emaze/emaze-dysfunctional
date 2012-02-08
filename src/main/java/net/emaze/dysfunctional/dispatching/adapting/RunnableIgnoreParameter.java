@@ -4,8 +4,10 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 
 /**
- * Adapts a Runnable as an Action<T> ignoring the passed parameter.
- * @param <T>
+ * Adapts a runnable as an action. Adapting is performed by ignoring parameter
+ * of the adapted action.
+ *
+ * @param <T> the adapter parameter type
  * @author rferranti
  */
 public class RunnableIgnoreParameter<T> implements Action<T> {
