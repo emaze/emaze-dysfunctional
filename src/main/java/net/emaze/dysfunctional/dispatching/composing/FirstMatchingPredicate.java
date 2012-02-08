@@ -16,7 +16,7 @@ public class FirstMatchingPredicate<E> implements Predicate<E> {
     private final Iterator<Predicate<E>> predicates;
 
     public FirstMatchingPredicate(Iterator<Predicate<E>> predicates) {
-        dbc.precondition(predicates != null, "cannot create a FirstMatchingPredicate with a null iterator");
+        dbc.precondition(predicates != null, "cannot avaluate any of a null iterator of predicates");
         this.predicates = predicates;
     }
 

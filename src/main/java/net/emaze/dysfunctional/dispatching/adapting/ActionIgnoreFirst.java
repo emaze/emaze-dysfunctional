@@ -14,15 +14,15 @@ import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
  */
 public class ActionIgnoreFirst<T1, T2> implements BinaryAction<T1, T2> {
 
-    private final Action<T2> action;
+    private final Action<T2> adapted;
 
-    public ActionIgnoreFirst(Action<T2> action) {
-        dbc.precondition(action != null, "cannot ignore the first parameter with a null action");
-        this.action = action;
+    public ActionIgnoreFirst(Action<T2> adaptee) {
+        dbc.precondition(adaptee != null, "cannot ignore first parameter of a null action");
+        this.adapted = adaptee;
     }
 
     @Override
     public void perform(T1 first, T2 second) {
-        action.perform(second);
+        adapted.perform(second);
     }
 }

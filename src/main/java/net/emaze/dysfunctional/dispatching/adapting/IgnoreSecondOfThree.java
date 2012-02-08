@@ -16,15 +16,15 @@ import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
  */
 public class IgnoreSecondOfThree<R, T1, T2, T3> implements TernaryDelegate<R, T1, T2, T3> {
 
-    private final BinaryDelegate<R, T1, T3> delegate;
+    private final BinaryDelegate<R, T1, T3> adapted;
 
-    public IgnoreSecondOfThree(BinaryDelegate<R, T1, T3> delegate) {
-        dbc.precondition(delegate != null, "cannot ignore the second parameter of a null delegate");
-        this.delegate = delegate;
+    public IgnoreSecondOfThree(BinaryDelegate<R, T1, T3> adaptee) {
+        dbc.precondition(adaptee != null, "cannot ignore second parameter of a null binary delegate");
+        this.adapted = adaptee;
     }
 
     @Override
     public R perform(T1 first, T2 second, T3 third) {
-        return delegate.perform(first, third);
+        return adapted.perform(first, third);
     }
 }

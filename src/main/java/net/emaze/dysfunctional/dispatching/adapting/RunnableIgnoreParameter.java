@@ -14,9 +14,9 @@ public class RunnableIgnoreParameter<T> implements Action<T> {
 
     private final Runnable adapted;
 
-    public RunnableIgnoreParameter(Runnable adapted) {
-        dbc.precondition(adapted != null, "cannot ignore parameter with a null Runnable");
-        this.adapted = adapted;
+    public RunnableIgnoreParameter(Runnable adaptee) {
+        dbc.precondition(adaptee != null, "cannot ignore parameter of a null runnable");
+        this.adapted = adaptee;
     }
 
     @Override

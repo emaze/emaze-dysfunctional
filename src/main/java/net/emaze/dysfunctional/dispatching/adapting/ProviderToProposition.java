@@ -13,9 +13,9 @@ public class ProviderToProposition implements Proposition {
 
     private final Provider<Boolean> adapted;
 
-    public ProviderToProposition(Provider<Boolean> adapted) {
-        dbc.precondition(adapted != null, "cannot adapt a null provider");
-        this.adapted = adapted;
+    public ProviderToProposition(Provider<Boolean> adaptee) {
+        dbc.precondition(adaptee != null, "cannot adapt a null provider to proposition");
+        this.adapted = adaptee;
     }
 
     @Override

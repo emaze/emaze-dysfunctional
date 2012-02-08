@@ -12,17 +12,17 @@ import net.emaze.dysfunctional.dispatching.actions.Action;
  */
 public class ActionBinder<T> implements Runnable {
 
-    private final Action<T> action;
+    private final Action<T> adapted;
     private final T only;
 
-    public ActionBinder(Action<T> action, T only) {
-        dbc.precondition(action != null, "cannot bind the parameter of a null action");
-        this.action = action;
+    public ActionBinder(Action<T> adaptee, T only) {
+        dbc.precondition(adaptee != null, "cannot bind parameter of a null action");
+        this.adapted = adaptee;
         this.only = only;
     }
 
     @Override
     public void run() {
-        action.perform(only);
+        adapted.perform(only);
     }
 }

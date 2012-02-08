@@ -4,8 +4,9 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 
 /**
- * A composite ternary functor with no return value. On call every composed 
+ * A composite ternary functor with no return value. On call every composed
  * action is called.
+ *
  * @param <E1> the first type parameter
  * @param <E2> the second type parameter
  * @param <E3> the third type parameter
@@ -16,12 +17,13 @@ public class PipelinedTernaryAction<E1, E2, E3> implements TernaryAction<E1, E2,
     private final Iterable<TernaryAction<E1, E2, E3>> actions;
 
     public PipelinedTernaryAction(Iterable<TernaryAction<E1, E2, E3>> actions) {
-        dbc.precondition(actions != null, "cannot create a PipelinedTernaryAction with a null iterable");        
+        dbc.precondition(actions != null, "cannot create a pipeline from a null iterable of actions");
         this.actions = actions;
     }
 
     /**
      * Performs every composed action.
+     *
      * @param first the first element
      * @param second the second element
      * @param third the third element

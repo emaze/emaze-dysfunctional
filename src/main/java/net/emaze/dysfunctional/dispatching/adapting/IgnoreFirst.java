@@ -15,15 +15,15 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
  */
 public class IgnoreFirst<R, T1, T2> implements BinaryDelegate<R, T1, T2> {
 
-    private final Delegate<R, T2> delegate;
+    private final Delegate<R, T2> adapted;
 
-    public IgnoreFirst(Delegate<R, T2> delegate) {
-        dbc.precondition(delegate != null, "cannot ignore the first parameter of a null delegate");
-        this.delegate = delegate;
+    public IgnoreFirst(Delegate<R, T2> adaptee) {
+        dbc.precondition(adaptee != null, "cannot ignore first parameter of a null delegate");
+        this.adapted = adaptee;
     }
 
     @Override
     public R perform(T1 first, T2 second) {
-        return delegate.perform(second);
+        return adapted.perform(second);
     }
 }

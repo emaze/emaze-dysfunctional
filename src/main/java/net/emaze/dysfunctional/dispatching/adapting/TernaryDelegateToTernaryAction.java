@@ -18,9 +18,9 @@ public class TernaryDelegateToTernaryAction<R, T1, T2, T3> implements TernaryAct
 
     private final TernaryDelegate<R, T1, T2, T3> adapted;
 
-    public TernaryDelegateToTernaryAction(TernaryDelegate<R, T1, T2, T3> adapted) {
-        dbc.precondition(adapted != null, "cannot adapt a null delegate");
-        this.adapted = adapted;
+    public TernaryDelegateToTernaryAction(TernaryDelegate<R, T1, T2, T3> adaptee) {
+        dbc.precondition(adaptee != null, "cannot adapt a null ternary delegate to ternary action");
+        this.adapted = adaptee;
     }
 
     @Override

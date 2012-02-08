@@ -15,17 +15,17 @@ import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
  */
 public class ActionBinderSecondOfThree<T1, T2, T3> implements BinaryAction<T1, T3> {
 
-    private final TernaryAction<T1, T2, T3> action;
+    private final TernaryAction<T1, T2, T3> adapted;
     private final T2 second;
 
-    public ActionBinderSecondOfThree(TernaryAction<T1, T2, T3> action, T2 second) {
-        dbc.precondition(action != null, "cannot bind the second parameter of a null ternary action");
-        this.action = action;
+    public ActionBinderSecondOfThree(TernaryAction<T1, T2, T3> adaptee, T2 second) {
+        dbc.precondition(adaptee != null, "cannot bind second parameter of a null ternary action");
+        this.adapted = adaptee;
         this.second = second;
     }
 
     @Override
     public void perform(T1 first, T3 third) {
-        action.perform(first, second, third);
+        adapted.perform(first, second, third);
     }
 }

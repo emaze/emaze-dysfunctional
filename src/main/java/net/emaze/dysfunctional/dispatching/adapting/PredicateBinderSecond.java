@@ -14,17 +14,17 @@ import net.emaze.dysfunctional.dispatching.logic.Predicate;
  */
 public class PredicateBinderSecond<T1, T2> implements Predicate<T1> {
 
-    private final BinaryPredicate<T1, T2> predicate;
+    private final BinaryPredicate<T1, T2> adapted;
     private final T2 second;
 
-    public PredicateBinderSecond(BinaryPredicate<T1, T2> predicate, T2 second) {
-        dbc.precondition(predicate != null, "cannot bind the second parameter of a null binary predicate");
-        this.predicate = predicate;
+    public PredicateBinderSecond(BinaryPredicate<T1, T2> adaptee, T2 second) {
+        dbc.precondition(adaptee != null, "cannot bind second parameter of a null binary predicate");
+        this.adapted = adaptee;
         this.second = second;
     }
 
     @Override
     public boolean accept(T1 first) {
-        return predicate.accept(first, second);
+        return adapted.accept(first, second);
     }
 }

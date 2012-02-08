@@ -14,17 +14,17 @@ import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
  */
 public class ActionBinderFirst<T1, T2> implements Action<T2> {
 
-    private final BinaryAction<T1, T2> action;
+    private final BinaryAction<T1, T2> adapted;
     private final T1 first;
 
-    public ActionBinderFirst(BinaryAction<T1, T2> action, T1 first) {
-        dbc.precondition(action != null, "cannot bind the first parameter of a null binary action");
-        this.action = action;
+    public ActionBinderFirst(BinaryAction<T1, T2> adaptee, T1 first) {
+        dbc.precondition(adaptee != null, "cannot bind the first parameter of a null binary action");
+        this.adapted = adaptee;
         this.first = first;
     }
 
     @Override
     public void perform(T2 second) {
-        action.perform(first, second);
+        adapted.perform(first, second);
     }
 }

@@ -15,15 +15,15 @@ import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
  */
 public class PredicateIgnoreSecondOfThree<T1, T2, T3> implements TernaryPredicate<T1, T2, T3> {
 
-    private final BinaryPredicate<T1, T3> predicate;
+    private final BinaryPredicate<T1, T3> adapted;
 
-    public PredicateIgnoreSecondOfThree(BinaryPredicate<T1, T3> predicate) {
-        dbc.precondition(predicate != null, "cannot ignore the second parameter with a null predicate");
-        this.predicate = predicate;
+    public PredicateIgnoreSecondOfThree(BinaryPredicate<T1, T3> adaptee) {
+        dbc.precondition(adaptee != null, "cannot ignore second parameter of a null binary predicate");
+        this.adapted = adaptee;
     }
 
     @Override
     public boolean accept(T1 first, T2 second, T3 third) {
-        return predicate.accept(first, third);
+        return adapted.accept(first, third);
     }
 }

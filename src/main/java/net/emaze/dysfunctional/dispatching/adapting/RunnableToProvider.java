@@ -13,9 +13,9 @@ public class RunnableToProvider implements Provider<Void> {
 
     private final Runnable adapted;
 
-    public RunnableToProvider(Runnable adapted) {
-        dbc.precondition(adapted != null, "cannot adapt a null runnable");
-        this.adapted = adapted;
+    public RunnableToProvider(Runnable adaptee) {
+        dbc.precondition(adaptee != null, "cannot adapt a null runnable to provider");
+        this.adapted = adaptee;
     }
 
     @Override

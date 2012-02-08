@@ -14,15 +14,15 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
  */
 public class IgnoreParameter<R, T> implements Delegate<R, T> {
 
-    private final Provider<R> provider;
+    private final Provider<R> adapted;
 
-    public IgnoreParameter(Provider<R> provider) {
-        dbc.precondition(provider != null, "cannot ignore parameter with a null provider");
-        this.provider = provider;
+    public IgnoreParameter(Provider<R> adaptee) {
+        dbc.precondition(adaptee != null, "cannot ignore parameter of a null provider");
+        this.adapted = adaptee;
     }
 
     @Override
     public R perform(T parameter) {
-        return provider.provide();
+        return adapted.provide();
     }
 }

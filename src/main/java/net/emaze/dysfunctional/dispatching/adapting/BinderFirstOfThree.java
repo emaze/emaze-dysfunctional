@@ -16,17 +16,17 @@ import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
  */
 public class BinderFirstOfThree<R, T1, T2, T3> implements BinaryDelegate<R, T2, T3> {
 
-    private final TernaryDelegate<R, T1, T2, T3> delegate;
+    private final TernaryDelegate<R, T1, T2, T3> adapted;
     private final T1 first;
 
-    public BinderFirstOfThree(TernaryDelegate<R, T1, T2, T3> delegate, T1 first) {
-        dbc.precondition(delegate != null, "cannot bind the first parameter of a null ternary delegate");
-        this.delegate = delegate;
+    public BinderFirstOfThree(TernaryDelegate<R, T1, T2, T3> adaptee, T1 first) {
+        dbc.precondition(adaptee != null, "cannot bind first parameter of a null ternary delegate");
+        this.adapted = adaptee;
         this.first = first;
     }
 
     @Override
     public R perform(T2 second, T3 third) {
-        return delegate.perform(first, second, third);
+        return adapted.perform(first, second, third);
     }
 }

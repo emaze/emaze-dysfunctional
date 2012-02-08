@@ -14,15 +14,15 @@ import net.emaze.dysfunctional.dispatching.logic.Predicate;
  */
 public class PredicateIgnoreSecond<T1, T2> implements BinaryPredicate<T1, T2> {
 
-    private final Predicate<T1> predicate;
+    private final Predicate<T1> adapted;
 
-    public PredicateIgnoreSecond(Predicate<T1> predicate) {
-        dbc.precondition(predicate != null, "cannot ignore the second parameter with a null predicate");
-        this.predicate = predicate;
+    public PredicateIgnoreSecond(Predicate<T1> adaptee) {
+        dbc.precondition(adaptee != null, "cannot ignore second parameter of a null predicate");
+        this.adapted = adaptee;
     }
 
     @Override
     public boolean accept(T1 first, T2 second) {
-        return predicate.accept(first);
+        return adapted.accept(first);
     }
 }

@@ -15,17 +15,17 @@ import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
  */
 public class PredicateBinderFirstOfThree<T1, T2, T3> implements BinaryPredicate<T2, T3> {
 
-    private final TernaryPredicate<T1, T2, T3> predicate;
+    private final TernaryPredicate<T1, T2, T3> adapted;
     private final T1 first;
 
-    public PredicateBinderFirstOfThree(TernaryPredicate<T1, T2, T3> predicate, T1 first) {
-        dbc.precondition(predicate != null, "cannot bind the first parameter of a null ternary predicate");
-        this.predicate = predicate;
+    public PredicateBinderFirstOfThree(TernaryPredicate<T1, T2, T3> adaptee, T1 first) {
+        dbc.precondition(adaptee != null, "cannot bind first parameter of a null ternary predicate");
+        this.adapted = adaptee;
         this.first = first;
     }
 
     @Override
     public boolean accept(T2 second, T3 third) {
-        return predicate.accept(first, second, third);
+        return adapted.accept(first, second, third);
     }
 }

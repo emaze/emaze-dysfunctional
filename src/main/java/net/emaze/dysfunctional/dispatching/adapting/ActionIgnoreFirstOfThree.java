@@ -15,15 +15,15 @@ import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
  */
 public class ActionIgnoreFirstOfThree<T1, T2, T3> implements TernaryAction<T1, T2, T3> {
 
-    private final BinaryAction<T2, T3> action;
+    private final BinaryAction<T2, T3> adapted;
 
-    public ActionIgnoreFirstOfThree(BinaryAction<T2, T3> action) {
-        dbc.precondition(action != null, "cannot ignore the first parameter with a null action");
-        this.action = action;
+    public ActionIgnoreFirstOfThree(BinaryAction<T2, T3> adaptee) {
+        dbc.precondition(adaptee != null, "cannot ignore first parameter of a null action");
+        this.adapted = adaptee;
     }
 
     @Override
     public void perform(T1 first, T2 second, T3 third) {
-        action.perform(second, third);
+        adapted.perform(second, third);
     }
 }

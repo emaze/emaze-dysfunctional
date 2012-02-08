@@ -13,17 +13,17 @@ import net.emaze.dysfunctional.dispatching.logic.Predicate;
  */
 public class PredicateBinder<T> implements Proposition {
 
-    private final Predicate<T> predicate;
+    private final Predicate<T> adapted;
     private final T parameter;
 
-    public PredicateBinder(Predicate<T> predicate, T parameter) {
-        dbc.precondition(predicate != null, "cannot bind parameter of a null predicate");
-        this.predicate = predicate;
+    public PredicateBinder(Predicate<T> adaptee, T parameter) {
+        dbc.precondition(adaptee != null, "cannot bind parameter of a null predicate");
+        this.adapted = adaptee;
         this.parameter = parameter;
     }
 
     @Override
     public boolean state() {
-        return predicate.accept(parameter);
+        return adapted.accept(parameter);
     }
 }

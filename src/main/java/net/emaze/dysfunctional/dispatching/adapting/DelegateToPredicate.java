@@ -14,9 +14,9 @@ public class DelegateToPredicate<T> implements Predicate<T> {
 
     private final Delegate<Boolean, T> adapted;
 
-    public DelegateToPredicate(Delegate<Boolean, T> adapted) {
-        dbc.precondition(adapted != null, "cannot adapt a null delegate");
-        this.adapted = adapted;
+    public DelegateToPredicate(Delegate<Boolean, T> adaptee) {
+        dbc.precondition(adaptee != null, "cannot adapt a null delegate to predicate");
+        this.adapted = adaptee;
     }
 
     @Override

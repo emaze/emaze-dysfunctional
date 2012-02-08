@@ -15,17 +15,17 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
  */
 public class BinderFirst<R, T, U> implements Delegate<R, U> {
 
-    private final BinaryDelegate<R, T, U> delegate;
+    private final BinaryDelegate<R, T, U> adapted;
     private final T first;
 
-    public BinderFirst(BinaryDelegate<R, T, U> delegate, T first) {
-        dbc.precondition(delegate != null, "cannot bind the first parameter of a null binary delegate");
-        this.delegate = delegate;
+    public BinderFirst(BinaryDelegate<R, T, U> adaptee, T first) {
+        dbc.precondition(adaptee != null, "cannot bind first parameter of a null binary delegate");
+        this.adapted = adaptee;
         this.first = first;
     }
 
     @Override
     public R perform(U second) {
-        return delegate.perform(first, second);
+        return adapted.perform(first, second);
     }
 }

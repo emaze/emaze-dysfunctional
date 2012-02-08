@@ -15,9 +15,9 @@ public class ActionToDelegate<T> implements Delegate<Void, T> {
 
     private final Action<T> adapted;
 
-    public ActionToDelegate(Action<T> adapted) {
-        dbc.precondition(adapted != null, "cannot adapt a null action");
-        this.adapted = adapted;
+    public ActionToDelegate(Action<T> adaptee) {
+        dbc.precondition(adaptee != null, "cannot adapt a null action to a delegate");
+        this.adapted = adaptee;
     }
 
     @Override

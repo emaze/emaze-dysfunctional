@@ -16,9 +16,9 @@ public class BinaryActionToBinaryDelegate<T1, T2> implements BinaryDelegate<Void
 
     private final BinaryAction<T1, T2> adapted;
 
-    public BinaryActionToBinaryDelegate(BinaryAction<T1, T2> adapted) {
-        dbc.precondition(adapted != null, "cannot adapt a null action");
-        this.adapted = adapted;
+    public BinaryActionToBinaryDelegate(BinaryAction<T1, T2> adaptee) {
+        dbc.precondition(adaptee != null, "cannot adapt a null binary action to a binary delegate");
+        this.adapted = adaptee;
     }
 
     @Override

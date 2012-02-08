@@ -8,8 +8,8 @@ import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
  * A composite binary predicate yielding true when every predicate match (no
  * further predicate is evaluated beyond the first returning false)
  *
- * @param <E1>
- * @param <E2>
+ * @param <E1> the predicates first parameter type
+ * @param <E2> the predicates second parameter type
  * @author rferranti
  */
 public class AllMatchingBinaryPredicate<E1, E2> implements BinaryPredicate<E1, E2> {
@@ -17,7 +17,7 @@ public class AllMatchingBinaryPredicate<E1, E2> implements BinaryPredicate<E1, E
     private final Iterator<BinaryPredicate<E1, E2>> predicates;
 
     public AllMatchingBinaryPredicate(Iterator<BinaryPredicate<E1, E2>> predicates) {
-        dbc.precondition(predicates != null, "cannot create AllMatchingBinaryPredicate with a null iterator");
+        dbc.precondition(predicates != null, "cannot evaluate every of a null iterator of binary predicates");
         this.predicates = predicates;
     }
 

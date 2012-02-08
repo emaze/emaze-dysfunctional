@@ -16,9 +16,9 @@ public class TernaryDelegateToTernaryPredicate<T1, T2, T3> implements TernaryPre
 
     private final TernaryDelegate<Boolean, T1, T2, T3> adapted;
 
-    public TernaryDelegateToTernaryPredicate(TernaryDelegate<Boolean, T1, T2, T3> adapted) {
-        dbc.precondition(adapted != null, "cannot adapt a null delegate");
-        this.adapted = adapted;
+    public TernaryDelegateToTernaryPredicate(TernaryDelegate<Boolean, T1, T2, T3> adaptee) {
+        dbc.precondition(adaptee != null, "cannot adapt a null ternary delegate to ternary predicate");
+        this.adapted = adaptee;
     }
 
     @Override

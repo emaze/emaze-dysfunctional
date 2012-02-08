@@ -15,9 +15,9 @@ public class BinaryPredicateToBinaryDelegate<T1, T2> implements BinaryDelegate<B
 
     private final BinaryPredicate<T1, T2> adapted;
 
-    public BinaryPredicateToBinaryDelegate(BinaryPredicate<T1, T2> adapted) {
-        dbc.precondition(adapted != null, "cannot adapt a null predicate");
-        this.adapted = adapted;
+    public BinaryPredicateToBinaryDelegate(BinaryPredicate<T1, T2> adaptee) {
+        dbc.precondition(adaptee != null, "cannot adapt a null binary predicate to binary delegate");
+        this.adapted = adaptee;
     }
 
     @Override

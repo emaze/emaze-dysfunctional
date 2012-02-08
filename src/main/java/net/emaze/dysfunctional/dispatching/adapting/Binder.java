@@ -14,17 +14,17 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
  */
 public class Binder<R, T> implements Provider<R> {
 
-    private final Delegate<R, T> delegate;
+    private final Delegate<R, T> adapted;
     private final T only;
 
-    public Binder(Delegate<R, T> delegate, T only) {
-        dbc.precondition(delegate != null, "cannot bind the parameter of a null delegate");
-        this.delegate = delegate;
+    public Binder(Delegate<R, T> adaptee, T only) {
+        dbc.precondition(adaptee != null, "cannot bind parameter of a null delegate");
+        this.adapted = adaptee;
         this.only = only;
     }
 
     @Override
     public R provide() {
-        return delegate.perform(only);
+        return adapted.perform(only);
     }
 }

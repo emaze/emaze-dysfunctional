@@ -13,15 +13,15 @@ import net.emaze.dysfunctional.dispatching.logic.Proposition;
  */
 public class PropositionIgnoreParameter<T> implements Predicate<T> {
 
-    private final Proposition proposition;
+    private final Proposition adapted;
 
-    public PropositionIgnoreParameter(Proposition proposition) {
-        dbc.precondition(proposition != null, "cannot ignore parameter with a null proposition");
-        this.proposition = proposition;
+    public PropositionIgnoreParameter(Proposition adaptee) {
+        dbc.precondition(adaptee != null, "cannot ignore parameter of a null proposition");
+        this.adapted = adaptee;
     }
 
     @Override
     public boolean accept(T parameter) {
-        return proposition.state();
+        return adapted.state();
     }
 }
