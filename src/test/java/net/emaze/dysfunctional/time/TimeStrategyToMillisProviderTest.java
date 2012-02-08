@@ -14,7 +14,7 @@ public class TimeStrategyToMillisProviderTest {
 
     @Test
     public void canConvertEpoch() {
-        final TimeStrategyToMillisProvider provider = new TimeStrategyToMillisProvider(new WarpingTimeStrategy(0));
+        final TimeStrategyToMillisProvider provider = new TimeStrategyToMillisProvider(new WarpingTimeStrategy(new WarpingKnobs()));
         Assert.assertEquals(0l, provider.provide().longValue());
     }
 

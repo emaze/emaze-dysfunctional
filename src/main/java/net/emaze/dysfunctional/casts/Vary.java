@@ -6,11 +6,12 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
  * Casts a value.
  *
  * Usually composed with other functors to make the simulate covaraiant /
- * controvariant types. E.g:
- * <code>
+ * controvariant types.
+ *
+ * <pre> E.g:
  *   final Delegate<Integer, Integer> source = new Identity<Integer>();
  *   final Delegate<Number, Integer> got = Applications.compose(new Vary<Number, Integer>(), source);
- * </code>
+ * </pre>
  *
  * @author rferranti
  * @param <R> the result type

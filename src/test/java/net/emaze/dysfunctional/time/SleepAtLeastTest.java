@@ -12,7 +12,7 @@ import org.junit.Test;
  */
 public class SleepAtLeastTest {
 
-    private final WarpingTimeStrategy strategy = new WarpingTimeStrategy(0l);
+    private final WarpingTimeStrategy strategy = new WarpingTimeStrategy(new WarpingKnobs());
 
     @Test
     public void canSleep() {

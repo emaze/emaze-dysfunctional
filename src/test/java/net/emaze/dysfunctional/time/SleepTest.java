@@ -13,10 +13,11 @@ import org.junit.Test;
 public class SleepTest {
 
     final long ICE_AGE = 0l;
-    final WarpingTimeStrategy clock = new WarpingTimeStrategy(ICE_AGE);
+    final WarpingTimeStrategy clock = new WarpingTimeStrategy(new WarpingKnobs());
 
     /**
-     * when you don't want to wait for something just leap forward in the future.
+     * when you don't want to wait for something just leap forward in the
+     * future.
      */
     @Test
     public void sleepMovesTimeToTheFuture() {
@@ -25,17 +26,16 @@ public class SleepTest {
         final long currentTimeInMillis = currentTime.second().toMillis(currentTime.first());
         Assert.assertEquals(ICE_AGE + 1, currentTimeInMillis);
     }
-    
 
     @Test(expected = ClassCastException.class)
     public void passingWrongTypeForTimeUnitInErasureYieldsException() {
         BinaryAction action = new Sleep(clock);
         action.perform(1l, new Object());
-    }       
-    
+    }
+
     @Test(expected = ClassCastException.class)
     public void passingWrongTypeForDurationInErasureYieldsException() {
         BinaryAction action = new Sleep(clock);
         action.perform(new Object(), TimeUnit.MILLISECONDS);
-    }       
+    }
 }

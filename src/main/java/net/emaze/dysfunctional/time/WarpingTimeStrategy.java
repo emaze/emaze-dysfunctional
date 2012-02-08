@@ -9,23 +9,19 @@ import net.emaze.dysfunctional.tuples.Pair;
  */
 public class WarpingTimeStrategy implements TimeStrategy {
 
-    private long now;
+    private final WarpingKnobs knobs;
 
-    public WarpingTimeStrategy(long now) {
-        this.now = now;
+    public WarpingTimeStrategy(WarpingKnobs knobs) {
+        this.knobs = knobs;
     }
 
     @Override
     public Pair<Long, TimeUnit> currentTime() {
-        return Pair.of(now, TimeUnit.MILLISECONDS);
+        return knobs.state();
     }
 
     @Override
     public void sleep(long duration, TimeUnit unit) {
-        now += unit.toMillis(duration);
-    }
-
-    public void warp(long sinceEpoch, TimeUnit unit) {
-        now = unit.toMillis(sinceEpoch);
+        knobs.add(duration, unit);
     }
 }

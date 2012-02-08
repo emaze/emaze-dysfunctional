@@ -60,7 +60,7 @@ public class TimeStrategiesTest {
         @DataPoint
         public static HiResTimeStrategy hiResStrategy = new HiResTimeStrategy();
         @DataPoint
-        public static WarpingTimeStrategy warpingStrategy = new WarpingTimeStrategy(0);
+        public static WarpingTimeStrategy warpingStrategy = new WarpingTimeStrategy(new WarpingKnobs());
 
         @Theory
         public void uninterruptedSleepWaitsAtLeastTheDuration(final TimeStrategy strategy) throws InterruptedException {
@@ -97,7 +97,7 @@ public class TimeStrategiesTest {
 
         @Test
         public void warpingTimeUnitInCurrentTimeIsInMillis() {
-            final TimeUnit got = new WarpingTimeStrategy(0l).currentTime().second();
+            final TimeUnit got = new WarpingTimeStrategy(new WarpingKnobs()).currentTime().second();
             Assert.assertEquals(TimeUnit.MILLISECONDS, got);
         }
     }
@@ -106,8 +106,9 @@ public class TimeStrategiesTest {
 
         @Test
         public void canWarpTimeForWarpingTimeStrategy() {
-            final WarpingTimeStrategy wts = new WarpingTimeStrategy(0l);
-            wts.warp(1, TimeUnit.MILLISECONDS);
+            WarpingKnobs warper = new WarpingKnobs();
+            final WarpingTimeStrategy wts = new WarpingTimeStrategy(warper);
+            warper.warp(1, TimeUnit.MILLISECONDS);
             Assert.assertEquals(Pair.of(1l, TimeUnit.MILLISECONDS), wts.currentTime());
         }
     }
