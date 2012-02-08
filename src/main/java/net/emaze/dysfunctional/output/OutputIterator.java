@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.output;
 
 /**
  *
+ * @param <T> 
  * @author rferranti
  */
 public interface OutputIterator<T> {

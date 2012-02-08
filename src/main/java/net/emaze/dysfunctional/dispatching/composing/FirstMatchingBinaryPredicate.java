@@ -17,7 +17,7 @@ public class FirstMatchingBinaryPredicate<E1, E2> implements BinaryPredicate<E1,
     private final Iterator<BinaryPredicate<E1, E2>> predicates;
 
     public FirstMatchingBinaryPredicate(Iterator<BinaryPredicate<E1, E2>> predicates) {
-        dbc.precondition(predicates != null, "cannot evaluate any of a null iterator of binary predicates");
+        dbc.precondition(predicates != null, "cannot evaluate or(...) of a null iterator of binary predicates");
         this.predicates = predicates;
     }
 

@@ -16,7 +16,7 @@ public class AllMatchingPredicate<E> implements Predicate<E> {
     private final Iterator<Predicate<E>> predicates;
 
     public AllMatchingPredicate(Iterator<Predicate<E>> predicates) {
-        dbc.precondition(predicates != null, "cannot evaluate every of a null iterator of predicates");
+        dbc.precondition(predicates != null, "cannot evaluate and(...) of a null iterator of predicates");
         this.predicates = predicates;
     }
 

@@ -4,11 +4,12 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 /**
- * Redispatching comparator for Comparables
- * @param <T>
+ * Redispatching comparator for comparables.
+ *
+ * @param <T> the comparable type
  * @author rferranti
  */
-public class ComparableComparator<T extends Comparable<T>> implements Comparator<T>, Serializable{
+public class ComparableComparator<T extends Comparable<T>> implements Comparator<T>, Serializable {
 
     private static final long serialVersionUID = 1l;
 
@@ -26,6 +27,4 @@ public class ComparableComparator<T extends Comparable<T>> implements Comparator
     public int hashCode() {
         return ComparableComparator.class.hashCode();
     }
-
-    
 }

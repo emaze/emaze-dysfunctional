@@ -18,7 +18,7 @@ public class FirstMatchingTernaryPredicate<E1, E2, E3> implements TernaryPredica
     private final Iterator<TernaryPredicate<E1, E2, E3>> predicates;
 
     public FirstMatchingTernaryPredicate(Iterator<TernaryPredicate<E1, E2, E3>> predicates) {
-        dbc.precondition(predicates != null, "cannot evaluate any of a null iterator of ternary predicates");
+        dbc.precondition(predicates != null, "cannot evaluate or(...) of a null iterator of ternary predicates");
         this.predicates = predicates;
     }
 
