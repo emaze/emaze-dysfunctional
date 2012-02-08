@@ -1,15 +1,17 @@
 package net.emaze.dysfunctional.dispatching.logic;
 
 /**
- * a Null Binary Predicate always returning false ("never" returning true )
+ * A binary predicate always returning false. ("never" returning true ).
+ *
  * @param <E1> the former type parameter
  * @param <E2> the latter type parameter
  * @author rferranti
  */
-public class BinaryNever<E1, E2> implements BinaryPredicate<E1, E2>{
+public class BinaryNever<E1, E2> implements BinaryPredicate<E1, E2> {
 
     /**
-     * yields false.
+     * Yields false.
+     *
      * @param former the former ignored element
      * @param latter the latter ignored element
      * @return false
@@ -18,5 +20,4 @@ public class BinaryNever<E1, E2> implements BinaryPredicate<E1, E2>{
     public boolean accept(E1 former, E2 latter) {
         return false;
     }
-
 }

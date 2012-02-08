@@ -8,7 +8,7 @@ package net.emaze.dysfunctional.dispatching.logic;
 public interface Proposition {
 
     /**
-     * states a proposition.
+     * States a proposition.
      *
      * @return true or false
      */

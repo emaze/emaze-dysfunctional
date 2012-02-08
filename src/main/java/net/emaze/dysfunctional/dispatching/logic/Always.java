@@ -1,14 +1,16 @@
 package net.emaze.dysfunctional.dispatching.logic;
 
 /**
- * a Null Unary Predicate always returning true
- * @param <E>
+ * A unary predicate always returning true.
+ *
+ * @param <E> the parameter type
  * @author rferranti
  */
-public class Always<E> implements Predicate<E>{
+public class Always<E> implements Predicate<E> {
 
     /**
-     * yields true.
+     * Yields true.
+     *
      * @param element the ignored element
      * @return true. always.
      */
@@ -16,5 +18,4 @@ public class Always<E> implements Predicate<E>{
     public boolean accept(E element) {
         return true;
     }
-
 }

@@ -3,8 +3,8 @@ package net.emaze.dysfunctional.dispatching.logic;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- * negates a predicate
- *  x => !predicate(x)
+ * Negates a predicate.
+ *
  * @param <T1> the first element type parameter
  * @param <T2> the second element type parameter
  * @param <T3> the third element type parameter
@@ -20,11 +20,12 @@ public class TernaryNegator<T1, T2, T3> implements TernaryPredicate<T1, T2, T3> 
     }
 
     /**
-     * tests the nested predicate and negates it
+     * Tests the nested predicate and negates it.
+     *
      * @param first
      * @param second
-     * @param third 
-     * @return true if the inner predicate returns false, false otherwhise
+     * @param third
+     * @return true if the inner predicate returns false, false otherwise
      */
     @Override
     public boolean accept(T1 first, T2 second, T3 third) {

@@ -3,6 +3,7 @@ package net.emaze.dysfunctional.dispatching.logic;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
+ * A predicate evaluating equality between objects.
  *
  * @author rferranti
  */

@@ -1,14 +1,18 @@
 package net.emaze.dysfunctional.dispatching.logic;
 
 /**
- * a Null Unary Predicate always returning false ("never" returning true ).
+ * A unary predicate always returning false. ("never" returning true ).
+ *
+ * Same as {@code Predicate<E> ignore = Dispatching.ignore(new No(), E.class);}
+ *
  * @param <E> the type parameter
  * @author rferranti
  */
-public class Never<E> implements Predicate<E>{
+public class Never<E> implements Predicate<E> {
 
     /**
-     * yields false.
+     * Yields false.
+     *
      * @param element the ignored element
      * @return false
      */
@@ -16,5 +20,4 @@ public class Never<E> implements Predicate<E>{
     public boolean accept(E element) {
         return false;
     }
-
 }

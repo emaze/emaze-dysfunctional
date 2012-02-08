@@ -3,8 +3,8 @@ package net.emaze.dysfunctional.dispatching.logic;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- * negates a predicate
- *  x => !predicate(x)
+ * Negates a predicate.
+ *
  * @param <T1> the former element type parameter
  * @param <T2> the latter element type parameter
  * @author rferranti
@@ -19,10 +19,11 @@ public class BinaryNegator<T1, T2> implements BinaryPredicate<T1, T2> {
     }
 
     /**
-     * tests the nested predicate and negates it
-     * @param former
-     * @param latter
-     * @return true if the inner predicate returns false, false otherwhise
+     * Tests the nested predicate and negates it.
+     *
+     * @param former the former parameter
+     * @param latter the latter parameter
+     * @return true if the inner predicate returns false, false otherwise
      */
     @Override
     public boolean accept(T1 former, T2 latter) {

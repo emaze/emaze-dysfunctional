@@ -1,7 +1,8 @@
 package net.emaze.dysfunctional.dispatching.logic;
 
 /**
- * a Null Ternary Predicate always returning false ("never" returning true ).
+ * A ternary predicate always returning false. ("never" returning true ).
+ *
  * @param <E1> the first type parameter
  * @param <E2> the second type parameter
  * @param <E3> the third type parameter
@@ -10,7 +11,8 @@ package net.emaze.dysfunctional.dispatching.logic;
 public class TernaryNever<E1, E2, E3> implements TernaryPredicate<E1, E2, E3> {
 
     /**
-     * yields false.
+     * Yields false.
+     *
      * @param first the first ignored element
      * @param second the second ignored element
      * @param third the third ignored element
