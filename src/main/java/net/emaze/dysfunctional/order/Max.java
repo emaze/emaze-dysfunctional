@@ -6,6 +6,7 @@ import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 
 /**
  *
+ * @param <T> 
  * @author rferranti
  */
 public class Max<T> implements BinaryDelegate<T, T, T> {

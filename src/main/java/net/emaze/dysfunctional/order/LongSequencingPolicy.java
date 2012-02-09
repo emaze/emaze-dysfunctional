@@ -2,6 +2,11 @@ package net.emaze.dysfunctional.order;
 
 import net.emaze.dysfunctional.contracts.dbc;
 
+/**
+ * A sequencing policy for longs.
+ *
+ * @author rferranti
+ */
 public class LongSequencingPolicy implements SequencingPolicy<Long> {
 
     @Override

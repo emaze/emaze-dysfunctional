@@ -3,7 +3,8 @@ package net.emaze.dysfunctional.order;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- * 
+ * A sequencing policy for doubles.
+ *
  * @author dangelocola
  */
 public class DoubleSequencingPolicy implements SequencingPolicy<Double> {

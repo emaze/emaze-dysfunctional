@@ -8,6 +8,7 @@ import net.emaze.dysfunctional.dispatching.delegates.Inet4AddressToLong;
 import net.emaze.dysfunctional.dispatching.delegates.LongToInet4Address;
 
 /**
+ * A sequencing policy for Inet4Address.
  *
  * @author rferranti
  */

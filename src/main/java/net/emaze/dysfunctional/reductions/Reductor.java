@@ -6,8 +6,9 @@ import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
- * Reduces the Iterator<E> to R
- * @param <E> 
+ * A unary delegate reducing the {@literal Iterator<E>} to {@literal R}.
+ *
+ * @param <E> the iterator element type
  * @author rferranti
  */
 public class Reductor<R, E> implements Delegate<R, Iterator<E>> {

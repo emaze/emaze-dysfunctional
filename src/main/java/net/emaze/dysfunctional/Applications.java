@@ -10,7 +10,6 @@ import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.delegates.ConsumeIntoCollection;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
-import net.emaze.dysfunctional.iterations.OneTimeIterable;
 import net.emaze.dysfunctional.iterations.TransformingIterator;
 
 /**
@@ -36,7 +35,7 @@ public class Applications {
      */
     public static <R, E> Iterator<R> transform(Iterable<E> iterable, Delegate<R, E> delegate) {
         dbc.precondition(iterable != null, "cannot call transform with a null iterable");
-        return transform(iterable.iterator(), delegate);
+        return new TransformingIterator<R, E>(iterable.iterator(), delegate);
     }
 
     /**
@@ -72,7 +71,7 @@ public class Applications {
      * @return the transformed iterator
      */
     public static <R, E> Iterator<R> transform(E[] array, Delegate<R, E> delegate) {
-        return transform(new ArrayIterator<E>(array), delegate);
+        return new TransformingIterator<R, E>(new ArrayIterator<E>(array), delegate);
     }
 
     /**
@@ -90,7 +89,7 @@ public class Applications {
      * element
      */
     public static <E> Iterator<E> tap(Iterator<E> iterator, Action<E> action) {
-        return transform(iterator, new Tapper<E>(action));
+        return new TransformingIterator<E, E>(iterator, new Tapper<E>(action));
     }
 
     /**
@@ -108,7 +107,8 @@ public class Applications {
      * element
      */
     public static <E> Iterator<E> tap(Iterable<E> iterable, Action<E> action) {
-        return transform(iterable, new Tapper<E>(action));
+        dbc.precondition(iterable != null, "cannot tap on a null iterable");
+        return new TransformingIterator<E, E>(iterable.iterator(), new Tapper<E>(action));
     }
 
     /**
@@ -126,7 +126,7 @@ public class Applications {
      * element
      */
     public static <E> Iterator<E> tap(E[] array, Action<E> action) {
-        return transform(array, new Tapper<E>(action));
+        return new TransformingIterator<E, E>(new ArrayIterator<E>(array), new Tapper<E>(action));
     }
 
     /**
@@ -168,7 +168,11 @@ public class Applications {
      * iterator
      */
     public static <E> void each(Iterator<E> iterator, Action<E> action) {
-        each(new OneTimeIterable<E>(iterator), action);
+        dbc.precondition(iterator != null, "cannot call each with a null iterator");
+        dbc.precondition(action != null, "cannot call each with a null action");
+        while (iterator.hasNext()) {
+            action.perform(iterator.next());
+        }
     }
 
     /**
@@ -186,7 +190,11 @@ public class Applications {
      * @param action the action applied to every element fetched from the array
      */
     public static <E> void each(E[] array, Action<E> action) {
-        each(new ArrayIterator<E>(array), action);
+        dbc.precondition(array != null, "cannot call each with a null array");
+        dbc.precondition(action != null, "cannot call each with a null action");
+        for (int i = 0; i != array.length; ++i) {
+            action.perform(array[i]);
+        }
     }
 
     /**
@@ -205,7 +213,9 @@ public class Applications {
      */
     public static <R, E> List<R> map(Iterable<E> iterable, Delegate<R, E> delegate) {
         dbc.precondition(iterable != null, "cannot map from a null iterable");
-        return map(iterable.iterator(), delegate);
+        final TransformingIterator<R, E> transformed = new TransformingIterator<R, E>(iterable.iterator(), delegate);
+        final Delegate<ArrayList<R>, Iterator<R>> consumer = new ConsumeIntoCollection<ArrayList<R>, R>(new ArrayListFactory<R>());
+        return consumer.perform(transformed);
     }
 
     /**
@@ -223,7 +233,9 @@ public class Applications {
      * @return a List containing the transformed elements
      */
     public static <R, E> List<R> map(Iterator<E> iterator, Delegate<R, E> delegate) {
-        return new ConsumeIntoCollection<ArrayList<R>, R>(new ArrayListFactory<R>()).perform(new TransformingIterator<R, E>(iterator, delegate));
+        final TransformingIterator<R, E> transformed = new TransformingIterator<R, E>(iterator, delegate);
+        final Delegate<ArrayList<R>, Iterator<R>> consumer = new ConsumeIntoCollection<ArrayList<R>, R>(new ArrayListFactory<R>());
+        return consumer.perform(transformed);
     }
 
     /**
@@ -241,6 +253,8 @@ public class Applications {
      * @return a List containing the transformed elements
      */
     public static <R, E> List<R> map(E[] array, Delegate<R, E> delegate) {
-        return map(new ArrayIterator<E>(array), delegate);
+        final TransformingIterator<R, E> transformed = new TransformingIterator<R, E>(new ArrayIterator<E>(array), delegate);
+        final Delegate<ArrayList<R>, Iterator<R>> consumer = new ConsumeIntoCollection<ArrayList<R>, R>(new ArrayListFactory<R>());
+        return consumer.perform(transformed);
     }
 }

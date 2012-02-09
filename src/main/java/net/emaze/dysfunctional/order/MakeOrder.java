@@ -7,6 +7,7 @@ import net.emaze.dysfunctional.tuples.Pair;
 
 /**
  *
+ * @param <T> 
  * @author rferranti
  */
 public class MakeOrder<T> implements BinaryDelegate<Pair<T,T>, T, T> {

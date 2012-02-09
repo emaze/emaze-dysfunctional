@@ -1,5 +1,11 @@
 package net.emaze.dysfunctional.order;
 
+/**
+ * A periodic sequencing policy.
+ *
+ * @author rferranti
+ * @param <T> the element type
+ */
 public class PeriodicSequencingPolicy<T> implements SequencingPolicy<T> {
 
     private final SequencingPolicy<T> inner;
@@ -21,5 +27,4 @@ public class PeriodicSequencingPolicy<T> implements SequencingPolicy<T> {
     public T prev(T element) {
         return element.equals(lower) ? upper : inner.prev(element);
     }
-    
 }

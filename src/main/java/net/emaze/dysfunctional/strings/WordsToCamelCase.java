@@ -27,7 +27,8 @@ public class WordsToCamelCase implements Delegate<String, String[]> {
         final Iterator<String> iter = new ArrayIterator<String>(words);
         final Iterator<String> head = new SingletonIterator<String>(toLower.perform(iter.next()));
         final Iterator<String> tail = new TransformingIterator<String, String>(iter, toTitle);
-        final Iterator<String> chained = new ChainIterator<String>(ArrayIterator.of(head, tail));
+        final ArrayIterator<Iterator<String>> ht = ArrayIterator.of(head, tail);
+        final Iterator<String> chained = new ChainIterator<String>(ht);
         return new JoinStrings<String>().perform(chained);
     }
 }

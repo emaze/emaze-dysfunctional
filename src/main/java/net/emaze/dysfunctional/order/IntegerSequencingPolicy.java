@@ -2,6 +2,11 @@ package net.emaze.dysfunctional.order;
 
 import net.emaze.dysfunctional.contracts.dbc;
 
+/**
+ * A sequencing policy for big integers.
+ *
+ * @author rferranti
+ */
 public class IntegerSequencingPolicy implements SequencingPolicy<Integer> {
 
     @Override

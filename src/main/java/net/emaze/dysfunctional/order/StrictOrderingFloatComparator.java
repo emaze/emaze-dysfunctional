@@ -5,27 +5,26 @@ import java.util.Comparator;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- * semantic:
- * MIN_FLOAT < negative floats < -0 < +0 < positive floats < MAX_FLOAT < every(NAN)
+ * semantic: MIN_FLOAT < negative floats < -0 < +0 < positive floats < MAX_FLOAT
+ * < every(NAN)
+ *
+ *
+ *
+ *
+ *
+
+ *
  * @author rferranti
  */
 public class StrictOrderingFloatComparator implements Comparator<Float>, Serializable {
 
     private static final long serialVersionUID = 1l;
 
-
     /**
-     * Need to compare bits to handle 0.0 == -0.0 being true
-     * compare should put -0.0 < +0.0
-     * Two NaNs are also == for compare purposes
-     * where NaN == NaN is false
-     * 
-     * Something exotic! A comparison to NaN or 0.0 vs -0.0
-     * Fortunately NaN's int is > than everything else
-     * Also negzeros bits < poszero
-     * NAN: 2143289344
-     * MAX: 2139095039
-     * NEGZERO: -2147483648
+     * Need to compare bits to handle 0.0 eq -0.0 being true. Compare should put
+     * -0.0 &lt; +0.0. Two NaNs are also equals for compare purposes where NaN
+     * eq NaN is false.
+     *
      * @param lhs
      * @param rhs
      * @return
@@ -57,6 +56,4 @@ public class StrictOrderingFloatComparator implements Comparator<Float>, Seriali
     public int hashCode() {
         return StrictOrderingFloatComparator.class.hashCode();
     }
-
-    
 }

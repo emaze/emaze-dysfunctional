@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
 import net.emaze.dysfunctional.dispatching.delegates.ConsumeIntoCollection;
 import net.emaze.dysfunctional.dispatching.delegates.ConsumeIntoOutputIterator;
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.FirstElement;
 import net.emaze.dysfunctional.dispatching.delegates.LastElement;
 import net.emaze.dysfunctional.dispatching.delegates.OneElement;
@@ -41,7 +43,8 @@ public abstract class Consumers {
      */
     public static <R extends Collection<E>, E> R all(Iterator<E> iterator, R collection) {
         dbc.precondition(collection != null, "cannot call all with a null collection");
-        return new ConsumeIntoCollection<R, E>(new ConstantProvider<R>(collection)).perform(iterator);
+        final Delegate<R, Iterator<E>> consumer = new ConsumeIntoCollection<R, E>(new ConstantProvider<R>(collection));
+        return consumer.perform(iterator);
     }
 
     /**
@@ -55,7 +58,9 @@ public abstract class Consumers {
      */
     public static <R extends Collection<E>, E> R all(Iterable<E> iterable, R collection) {
         dbc.precondition(iterable != null, "cannot call all with a null iterable");
-        return Consumers.all(iterable.iterator(), collection);
+        dbc.precondition(collection != null, "cannot call all with a null collection");
+        final Delegate<R, Iterator<E>> consumer = new ConsumeIntoCollection<R, E>(new ConstantProvider<R>(collection));
+        return consumer.perform(iterable.iterator());
     }
 
     /**
@@ -68,7 +73,9 @@ public abstract class Consumers {
      * @return the collection filled with iterator values
      */
     public static <R extends Collection<E>, E> R all(E[] array, R collection) {
-        return Consumers.all(new ArrayIterator<E>(array), collection);
+        dbc.precondition(collection != null, "cannot call all with a null collection");        
+        final Delegate<R, Iterator<E>> consumer = new ConsumeIntoCollection<R, E>(new ConstantProvider<R>(collection));
+        return consumer.perform(new ArrayIterator<E>(array));
     }
 
     /**
@@ -82,7 +89,8 @@ public abstract class Consumers {
      * @return a collection filled with iterator values
      */
     public static <E, R extends Collection<E>> R all(Iterator<E> iterator, Provider<R> provider) {
-        return new ConsumeIntoCollection<R, E>(provider).perform(iterator);
+        final Delegate<R, Iterator<E>> consumer = new ConsumeIntoCollection<R, E>(provider);
+        return consumer.perform(iterator);
     }
 
     /**
@@ -97,7 +105,8 @@ public abstract class Consumers {
      */
     public static <E, R extends Collection<E>> R all(Iterable<E> iterable, Provider<R> provider) {
         dbc.precondition(iterable != null, "cannot call all with a null iterable");
-        return Consumers.all(iterable.iterator(), provider);
+        final Delegate<R, Iterator<E>> consumer = new ConsumeIntoCollection<R, E>(provider);
+        return consumer.perform(iterable.iterator());
     }
 
     /**
@@ -111,7 +120,8 @@ public abstract class Consumers {
      * @return a collection filled with iterator values
      */
     public static <R extends Collection<E>, E> R all(E[] array, Provider<R> provider) {
-        return Consumers.all(new ArrayIterator<E>(array), provider);
+        final Delegate<R, Iterator<E>> consumer = new ConsumeIntoCollection<R, E>(provider);
+        return consumer.perform(new ArrayIterator<E>(array));
     }
 
     /**
@@ -122,7 +132,8 @@ public abstract class Consumers {
      * @return a list filled with iterator values
      */
     public static <E> List<E> all(Iterator<E> iterator) {
-        return Consumers.all(iterator, new ArrayList<E>());
+        final Delegate<ArrayList<E>, Iterator<E>> consumer = new ConsumeIntoCollection<ArrayList<E>, E>(new ArrayListFactory<E>());
+        return consumer.perform(iterator);
     }
 
     /**
@@ -133,7 +144,9 @@ public abstract class Consumers {
      * @return a list filled with iterable values
      */
     public static <E> List<E> all(Iterable<E> iterable) {
-        return Consumers.all(iterable, new ArrayList<E>());
+        dbc.precondition(iterable != null, "cannot call all with a null iterable");
+        final Delegate<ArrayList<E>, Iterator<E>> consumer = new ConsumeIntoCollection<ArrayList<E>, E>(new ArrayListFactory<E>());
+        return consumer.perform(iterable.iterator());
     }
 
     /**
@@ -144,7 +157,8 @@ public abstract class Consumers {
      * @return a list filled with array values
      */
     public static <E> List<E> all(E[] array) {
-        return Consumers.all(array, new ArrayList<E>());
+        final Delegate<ArrayList<E>, Iterator<E>> consumer = new ConsumeIntoCollection<ArrayList<E>, E>(new ArrayListFactory<E>());
+        return consumer.perform(new ArrayIterator<E>(array));
     }
 
     /**
@@ -167,7 +181,7 @@ public abstract class Consumers {
      */
     public static <E> void pipe(Iterable<E> iterable, OutputIterator<E> outputIterator) {
         dbc.precondition(iterable != null, "cannot call pipe with a null iterable");
-        pipe(iterable.iterator(), outputIterator);
+        new ConsumeIntoOutputIterator<E>(outputIterator).perform(iterable.iterator());
     }
 
     /**
@@ -178,7 +192,7 @@ public abstract class Consumers {
      * @param outputIterator the iterator that will be filled
      */
     public static <E> void pipe(E[] array, OutputIterator<E> outputIterator) {
-        pipe(new ArrayIterator<E>(array), outputIterator);
+        new ConsumeIntoOutputIterator<E>(outputIterator).perform(new ArrayIterator<E>(array));
     }
 
     /**

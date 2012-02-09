@@ -5,6 +5,7 @@ import java.util.Comparator;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
+ * A strict order comparator for doubles.
  *
  * @author rferranti
  */
@@ -13,20 +14,13 @@ public class StrictOrderingDoubleComparator implements Comparator<Double>, Seria
     private static final long serialVersionUID = 1l;
 
     /**
-     * Need to compare bits to handle 0.0 == -0.0 being true
-     * compare should put -0.0 < +0.0
-     * Two NaNs are also == for compare purposes
-     * where NaN == NaN is false
-     * 
-     * Something exotic! A comparison to NaN or 0.0 vs -0.0
-     * Fortunately NaN's long is > than everything else
-     * Also negzeros bits < poszero
-     * NAN: 9221120237041090560
-     * MAX: 9218868437227405311
-     * NEGZERO: -9223372036854775808
-     * @param lhs
-     * @param rhs
-     * @return
+     * Need to compare bits to handle 0.0 eq -0.0 being true. Compare should put
+     * -0.0 &lt; +0.0. Two NaNs are also equals for compare purposes where NaN
+     * eq NaN is false.
+     *
+     * @param lhs the left hand side comparable
+     * @param rhs the right hand side comparable
+     * @return the comparison result
      */
     @Override
     public int compare(Double lhs, Double rhs) {

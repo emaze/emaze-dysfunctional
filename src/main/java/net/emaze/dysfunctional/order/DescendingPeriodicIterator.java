@@ -3,6 +3,12 @@ package net.emaze.dysfunctional.order;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 
+/**
+ * An infinite periodic iterator yielding a descending sequence of T.
+ *
+ * @author rferranti
+ * @param <T> the element type
+ */
 public class DescendingPeriodicIterator<T> extends ReadOnlyIterator<T> {
 
     private final PeriodicSequencingPolicy<T> sequencer;

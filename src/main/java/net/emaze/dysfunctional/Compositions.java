@@ -17,6 +17,7 @@ import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 
 /**
  * compose
+ *
  * @author rferranti
  */
 public abstract class Compositions {
@@ -57,24 +58,26 @@ public abstract class Compositions {
      *
      * Given f, g, h yields f ° g ° h (f of g of h, f following g following h).
      *
-     * @param <R>
-     * @param <T3>
-     * @param <T2>
-     * @param <T1>
+     * @param <R> the first delegate result type
+     * @param <T3> the first delegate parameter type, the second delegate result
+     * type
+     * @param <T2> the second delegate parameter type, the third delegate result
+     * type
+     * @param <T1> the third delegate parameter type
      * @param f the first delegate to be composed
      * @param g the second delegate to be composed
      * @param h the third delegate to be composed
      * @return the composed delegate
      */
     public static <R, T3, T2, T1> Delegate<R, T1> compose(Delegate<R, T3> f, Delegate<T3, T2> g, Delegate<T2, T1> h) {
-        return compose(f, compose(g, h));
+        return new Composer<R, T3, T1>(f, new Composer<T3, T2, T1>(g, h));
     }
 
     /**
      * Composes a predicate with a delegate (predicate ° delegate).
      *
-     * @param <R>
-     * @param <T>
+     * @param <R> the predicate parameter type, the delegate result type
+     * @param <T> the delegate parameter type
      * @param predicate the predicate to be composed
      * @param delegate the delegate to be composed
      * @return the composed predicate
@@ -87,24 +90,25 @@ public abstract class Compositions {
      * Composes a predicate and two delegates, (predicate ° delegate1 °
      * delegate2).
      *
-     * @param <R>
-     * @param <T2>
-     * @param <T1>
+     * @param <R> the predicate parameter type, the first delegate result type
+     * @param <T2> the first delegate parameter type, the second delegate result
+     * type
+     * @param <T1> the third delegate parameter type
      * @param p the predicate to be composed
      * @param f the first delegate to be composed
      * @param g the second delegate to be composed
      * @return the composed predicate
      */
     public static <R, T2, T1> Predicate<T1> compose(Predicate<R> p, Delegate<R, T2> f, Delegate<T2, T1> g) {
-        return compose(p, compose(f, g));
+        return new TransformingPredicate<R, T1>(p, new Composer<R, T2, T1>(f, g));
     }
 
     /**
      * Composes a predicate with a binary delegate (predicate ° delegate).
      *
-     * @param <R>
-     * @param <T1>
-     * @param <T2>
+     * @param <R> the predicate parameter type
+     * @param <T1> the delegate first parameter type
+     * @param <T2> the delegate second parameter type
      * @param predicate the predicate to be composed
      * @param delegate the delegate to be composed
      * @return the composed predicate
@@ -116,10 +120,10 @@ public abstract class Compositions {
     /**
      * Composes a predicate with a ternary delegate (predicate ° delegate).
      *
-     * @param <R>
-     * @param <T1>
-     * @param <T2>
-     * @param <T3>
+     * @param <R> the predicate parameter type
+     * @param <T1> the delegate first parameter type
+     * @param <T2> the delegate second parameter type
+     * @param <T3> the delegate third parameter type
      * @param predicate the predicate to be composed
      * @param delegate the delegate to be composed
      * @return the composed predicate
@@ -131,6 +135,7 @@ public abstract class Compositions {
     /**
      * Composes an iterator of endodelegates.
      *
+     * @param <T> the delegates parameter and result type
      * @param endodelegates to be composed (e.g: f,g,h)
      * @return a delegate performing f ° g ° h
      */

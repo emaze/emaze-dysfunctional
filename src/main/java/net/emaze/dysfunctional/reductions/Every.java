@@ -5,7 +5,10 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
 /**
+ * A unary predicate yielding true if every iterator element matches the nested
+ * predicate.
  *
+ * @param <T> the iterator element type
  * @author rferranti
  */
 public class Every<T> implements Predicate<Iterator<T>> {
