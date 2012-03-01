@@ -2,10 +2,14 @@ package net.emaze.dysfunctional;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
+import net.emaze.dysfunctional.collections.HashMapFactory;
 import net.emaze.dysfunctional.consumers.ConsumeIntoCollection;
+import net.emaze.dysfunctional.consumers.ConsumeIntoMap;
 import net.emaze.dysfunctional.consumers.ConsumeIntoOutputIterator;
 import net.emaze.dysfunctional.consumers.FirstElement;
 import net.emaze.dysfunctional.consumers.LastElement;
@@ -23,6 +27,7 @@ import net.emaze.dysfunctional.filtering.Nth;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.output.OutputIterator;
+import net.emaze.dysfunctional.tuples.Pair;
 
 /**
  * all, maybeFirst, first, maybeOne, one, maybeLast, last, nth, maybeNth, at,
@@ -73,7 +78,7 @@ public abstract class Consumers {
      * @return the collection filled with iterator values
      */
     public static <R extends Collection<E>, E> R all(E[] array, R collection) {
-        dbc.precondition(collection != null, "cannot call all with a null collection");        
+        dbc.precondition(collection != null, "cannot call all with a null collection");
         final Delegate<R, Iterator<E>> consumer = new ConsumeIntoCollection<R, E>(new ConstantProvider<R>(collection));
         return consumer.perform(new ArrayIterator<E>(array));
     }
@@ -159,6 +164,141 @@ public abstract class Consumers {
     public static <E> List<E> all(E[] array) {
         final Delegate<ArrayList<E>, Iterator<E>> consumer = new ConsumeIntoCollection<ArrayList<E>, E>(new ArrayListFactory<E>());
         return consumer.perform(new ArrayIterator<E>(array));
+    }
+
+    /**
+     * Yields all elements of the iterator (in the provided map).
+     *
+     * @param <M> the returned map type
+     * @param <K> the map key type
+     * @param <V> the map value type
+     * @param iterator the iterator that will be consumed
+     * @param map the map where the iterator is consumed
+     * @return the map filled with iterator values
+     */
+    public static <M extends Map<K, V>, K, V> M dict(Iterator<Pair<K, V>> iterator, M map) {
+        dbc.precondition(map != null, "cannot call dict with a null map");
+        final Delegate<M, Iterator<Pair<K, V>>> consumer = new ConsumeIntoMap<M, K, V>(new ConstantProvider<M>(map));
+        return consumer.perform(iterator);
+    }
+
+    /**
+     * Yields all elements of the iterator (in the provided map).
+     *
+     * @param <M> the returned map type
+     * @param <K> the map key type
+     * @param <V> the map value type
+     * @param iterable the iterable that will be consumed
+     * @param map the map where the iterator is consumed
+     * @return the map filled with iterator values
+     */
+    public static <M extends Map<K, V>, K, V> M dict(Iterable<Pair<K, V>> iterable, M map) {
+        dbc.precondition(iterable != null, "cannot call dict with a null iterable");
+        dbc.precondition(map != null, "cannot call dict with a null map");
+        final Delegate<M, Iterator<Pair<K, V>>> consumer = new ConsumeIntoMap<M, K, V>(new ConstantProvider<M>(map));
+        return consumer.perform(iterable.iterator());
+    }
+
+    /**
+     * Yields all elements of the array (in the provided map).
+     *
+     * @param <M> the returned map type
+     * @param <K> the map key type
+     * @param <V> the map value type
+     * @param map the map where the iterator is consumed
+     * @param array the array that will be consumed
+     * @return the map filled with iterator values
+     */
+    public static <M extends Map<K, V>, K, V> M dict(M map, Pair<K, V>... array) {
+        dbc.precondition(map != null, "cannot call dict with a null map");
+        final Delegate<M, Iterator<Pair<K, V>>> consumer = new ConsumeIntoMap<M, K, V>(new ConstantProvider<M>(map));
+        return consumer.perform(new ArrayIterator<Pair<K, V>>(array));
+    }
+
+    /**
+     * Yields all elements of the iterator (in a map created by the provider).
+     *
+     * @param <M> the returned map type
+     * @param <K> the map key type
+     * @param <V> the map value type
+     * @param iterator the iterator that will be consumed
+     * @param provider the factory used to provide the returned map
+     * @return a map filled with iterator values
+     */
+    public static <M extends Map<K, V>, K, V> M dict(Iterator<Pair<K, V>> iterator, Provider<M> provider) {
+        final Delegate<M, Iterator<Pair<K, V>>> consumer = new ConsumeIntoMap<M, K, V>(provider);
+        return consumer.perform(iterator);
+    }
+
+    /**
+     * Yields all elements of the iterator (in a map created by the provider).
+     *
+     * @param <M> the returned map type
+     * @param <K> the map key type
+     * @param <V> the map value type
+     * @param iterable the iterable that will be consumed
+     * @param provider the factory used to provide the returned map
+     * @return a map filled with iterator values
+     */
+    public static <M extends Map<K, V>, K, V> M dict(Iterable<Pair<K, V>> iterable, Provider<M> provider) {
+        dbc.precondition(iterable != null, "cannot call dict with a null iterable");
+        final Delegate<M, Iterator<Pair<K, V>>> consumer = new ConsumeIntoMap<M, K, V>(provider);
+        return consumer.perform(iterable.iterator());
+    }
+
+    /**
+     * Yields all elements of the iterator (in a map created by the provider).
+     *
+     * @param <M> the returned map type
+     * @param <K> the map key type
+     * @param <V> the map value type
+     * @param provider the factory used to provide the returned map
+     * @param array the array that will be consumed
+     * @return a map filled with iterator values
+     */
+    public static <M extends Map<K, V>, K, V> M dict(Provider<M> provider, Pair<K, V>... array) {
+        final Delegate<M, Iterator<Pair<K, V>>> consumer = new ConsumeIntoMap<M, K, V>(provider);
+        return consumer.perform(new ArrayIterator<Pair<K, V>>(array));
+    }
+
+    /**
+     * Yields all elements of the iterator (in a map).
+     *
+     * @param <K> the map key type
+     * @param <V> the map value type
+     * @param iterator the iterator that will be consumed
+     * @return a list filled with iterator values
+     */
+    public static <K, V> Map<K, V> dict(Iterator<Pair<K, V>> iterator) {
+        final Delegate<HashMap<K, V>, Iterator<Pair<K, V>>> consumer = new ConsumeIntoMap<HashMap<K, V>, K, V>(new HashMapFactory<K, V>());
+        return consumer.perform(iterator);
+    }
+
+    /**
+     * Yields all elements of the iterable's iterator (in a map).
+     *
+     * @param <K> the map key type
+     * @param <V> the map value type
+     * @param iterable the iterable that will be consumed
+     * @return a list filled with iterable values
+     */
+    public static <K, V> Map<K, V> dict(Iterable<Pair<K, V>> iterable) {
+        dbc.precondition(iterable != null, "cannot call dict with a null iterable");
+        final Delegate<HashMap<K, V>, Iterator<Pair<K, V>>> consumer = new ConsumeIntoMap<HashMap<K, V>, K, V>(new HashMapFactory<K, V>());
+        return consumer.perform(iterable.iterator());
+    }
+
+    /**
+     * Yields all element of the array in a map.
+     *
+     * @param <K> the map key type
+     * @param <V> the map value type
+     * @param array the array that will be consumed
+     * @return a map filled with array values
+     */
+    public static <K, V> Map<K, V> dict(Pair<K, V>... array) {
+        final Delegate<HashMap<K, V>, Iterator<Pair<K, V>>> consumer = new ConsumeIntoMap<HashMap<K, V>, K, V>(new HashMapFactory<K, V>());
+        return consumer.perform(new ArrayIterator<Pair<K, V>>(array));
     }
 
     /**

@@ -1,16 +1,20 @@
 package net.emaze.dysfunctional;
 
-import net.emaze.dysfunctional.output.OutputIterator;
-import net.emaze.dysfunctional.output.StringOutputIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
+import net.emaze.dysfunctional.collections.HashMapFactory;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.options.Maybe;
+import net.emaze.dysfunctional.output.OutputIterator;
+import net.emaze.dysfunctional.output.StringOutputIterator;
 import net.emaze.dysfunctional.testing.O;
+import net.emaze.dysfunctional.tuples.Pair;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,6 +27,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     ConsumersTest.All.class,
+    ConsumersTest.Dict.class,
     ConsumersTest.Pipe.class,
     ConsumersTest.Facade.class,
     ConsumersTest.First.class,
@@ -122,6 +127,110 @@ public class ConsumersTest {
         public void cannotCallAllWithNullIterableAndACollectionProvider() {
             final Iterable<Integer> iterable = null;
             Consumers.all(iterable, new ArrayListFactory<Integer>());
+        }
+    }
+
+    public static class Dict {
+
+        @Test
+        public void canFetchDictFromIterator() {
+            final Iterator<Pair<O, O>> iterator = Iterations.iterator(Pair.of(O.ONE, O.ONE));
+            final Map<O, O> got = Consumers.dict(iterator);
+            final Map<O, O> expected = Maps.<O, O>builder().add(O.ONE, O.ONE).toMap();
+            Assert.assertEquals(expected, got);
+        }
+
+        @Test
+        public void canFetchDictFromIterable() {
+            final Iterable<Pair<O, O>> iterable = Iterations.iterable(Pair.of(O.ONE, O.ONE));
+            final Map<O, O> got = Consumers.dict(iterable);
+            final Map<O, O> expected = Maps.<O, O>builder().add(O.ONE, O.ONE).toMap();
+            Assert.assertEquals(expected, got);
+        }
+
+        @Test
+        public void canFetchDictFromArray() {
+            final Map<O, O> got = Consumers.dict(Pair.of(O.ONE, O.ONE));
+            final Map<O, O> expected = Maps.<O, O>builder().add(O.ONE, O.ONE).toMap();
+            Assert.assertEquals(expected, got);
+        }
+
+        @Test
+        public void canFetchDictFromIteratorWithMap() {
+            final Iterator<Pair<O, O>> iterator = Iterations.iterator(Pair.of(O.ONE, O.ONE));
+            final HashMap<O, O> got = Consumers.dict(iterator, new HashMap<O, O>());
+            final Map<O, O> expected = Maps.<O, O>builder().add(O.ONE, O.ONE).toMap();
+            Assert.assertEquals(expected, got);
+        }
+
+        @Test
+        public void canFetchDictFromIterableWithMap() {
+            final Iterable<Pair<O, O>> iterable = Iterations.iterable(Pair.of(O.ONE, O.ONE));
+            final HashMap<O, O> got = Consumers.dict(iterable, new HashMap<O, O>());
+            final Map<O, O> expected = Maps.<O, O>builder().add(O.ONE, O.ONE).toMap();
+            Assert.assertEquals(expected, got);
+        }
+
+        @Test
+        public void canFetchDictFromArrayWithMap() {
+            final Map<O, O> got = Consumers.dict(new HashMap<O, O>(), Pair.of(O.ONE, O.ONE));
+            final Map<O, O> expected = Maps.<O, O>builder().add(O.ONE, O.ONE).toMap();
+            Assert.assertEquals(expected, got);
+        }
+
+        @Test
+        public void canFetchDictFromIteratorWithFactory() {
+            final Iterator<Pair<O, O>> iterator = Iterations.iterator(Pair.of(O.ONE, O.ONE));
+            final HashMap<O, O> got = Consumers.dict(iterator, new HashMapFactory<O, O>());
+            final Map<O, O> expected = Maps.<O, O>builder().add(O.ONE, O.ONE).toMap();
+            Assert.assertEquals(expected, got);
+        }
+
+        @Test
+        public void canFetchDictFromIterableWithFactory() {
+            final Iterable<Pair<O, O>> iterable = Iterations.iterable(Pair.of(O.ONE, O.ONE));
+            final HashMap<O, O> got = Consumers.dict(iterable, new HashMapFactory<O, O>());
+            final Map<O, O> expected = Maps.<O, O>builder().add(O.ONE, O.ONE).toMap();
+            Assert.assertEquals(expected, got);
+        }
+
+        @Test
+        public void canFetchDictFromArrayWithFactory() {
+            final HashMap<O, O> got = Consumers.dict(new HashMapFactory<O, O>(), Pair.of(O.ONE, O.ONE));
+            final Map<O, O> expected = Maps.<O, O>builder().add(O.ONE, O.ONE).toMap();
+            Assert.assertEquals(expected, got);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallDictWithNullIterable() {
+            final Iterable<Pair<O, O>> iterable = null;
+            Consumers.dict(iterable);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallDictWithNullMap() {
+            final Map<O, O> map = null;
+            Iterable<Pair<O, O>> iterable = Iterations.iterable(Pair.of(O.ONE, O.ONE));
+            Consumers.dict(iterable, map);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallDictWithANullIterableAndACollection() {
+            final Iterable<Pair<O, O>> iterable = null;
+            Consumers.dict(iterable, new HashMap<O, O>());
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallDictWithNullCollectionProvider() {
+            final Provider<Map<O, O>> collectionProvider = null;
+            Iterable<Pair<O, O>> iterable = Iterations.iterable(Pair.of(O.ONE, O.ONE));
+            Consumers.dict(iterable, collectionProvider);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallDictWithNullIterableAndACollectionProvider() {
+            final Iterable<Pair<O, O>> iterable = null;
+            Consumers.dict(iterable, new HashMapFactory<O, O>());
         }
     }
 
