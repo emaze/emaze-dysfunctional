@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.consumers;
 
-import net.emaze.dysfunctional.dispatching.delegates.LastElement;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -11,23 +10,24 @@ import org.junit.Test;
  *
  * @author rferranti
  */
-public class StubbornConsumerTest {
+public class FirstElementTest {
+
 
     @Test(expected=IllegalArgumentException.class)
     public void consumingNullIteratorYieldsException() {
-        new LastElement<Object>().perform(null);
+        new FirstElement<Object>().perform(null);
     }
 
     @Test
-    public void yieldsLastElement(){
+    public void yieldsFirstElement(){
         List<Integer> consumable = Arrays.asList(1,2,3);
-        LastElement<Integer> consumer = new LastElement<Integer>();
+        FirstElement<Integer> consumer = new FirstElement<Integer>();
         Integer got = consumer.perform(consumable.iterator());
-        Assert.assertEquals(consumable.get(consumable.size() -1 ), got);
+        Assert.assertEquals(consumable.get(0), got);
     }
+    
     @Test(expected=IllegalArgumentException.class)
     public void consumingEmptyIteratorYieldsException(){
-        new LastElement<Object>().perform(Collections.emptyList().iterator());
+        new FirstElement<Object>().perform(Collections.emptyList().iterator());
     }
-
 }

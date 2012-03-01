@@ -1,15 +1,17 @@
 package net.emaze.dysfunctional.strings;
 
 import java.util.Iterator;
+import net.emaze.dysfunctional.consumers.ConsumeIntoOutputIterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
-import net.emaze.dysfunctional.dispatching.delegates.ConsumeIntoOutputIterator;
 import net.emaze.dysfunctional.iterations.TransformingIterator;
 import net.emaze.dysfunctional.multiplexing.InterposingIterator;
 import net.emaze.dysfunctional.output.StringOutputIterator;
 
 /**
  *
+ * @param <T> 
+ * @param <V> 
  * @author rferranti
  */
 public class InterposeStrings<T, V> implements BinaryDelegate<String, Iterator<T>, Iterator<V>> {

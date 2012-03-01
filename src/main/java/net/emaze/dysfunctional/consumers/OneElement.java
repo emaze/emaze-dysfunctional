@@ -1,7 +1,8 @@
-package net.emaze.dysfunctional.dispatching.delegates;
+package net.emaze.dysfunctional.consumers;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
  * A unary delegate consuming an iterator yielding the only element contained in

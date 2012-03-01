@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.dispatching.delegates;
+package net.emaze.dysfunctional.consumers;
 
 import java.util.Iterator;
 import junit.framework.Assert;

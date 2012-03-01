@@ -91,7 +91,7 @@ public class MaybeTest {
         final Maybe<Integer> perform = new MaybeRight<Integer, Integer>().perform(either);
         Assert.assertEquals(right, perform.value().intValue());
     }
-    
+
     @Test
     public void callingOrElseOnJustYieldsJustValue() {
         final O got = Maybe.just(O.ONE).orElse(O.ANOTHER);
@@ -103,5 +103,4 @@ public class MaybeTest {
         final O got = Maybe.<O>nothing().orElse(O.ANOTHER);
         Assert.assertEquals(O.ANOTHER, got);
     }
-
 }

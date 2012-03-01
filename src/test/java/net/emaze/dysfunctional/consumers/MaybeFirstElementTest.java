@@ -1,7 +1,8 @@
-package net.emaze.dysfunctional.options;
+package net.emaze.dysfunctional.consumers;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.Iterations;
+import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;

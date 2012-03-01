@@ -1,18 +1,17 @@
 package net.emaze.dysfunctional.consumers;
 
-import net.emaze.dysfunctional.dispatching.delegates.ConsumeIntoOutputIterator;
-import net.emaze.dysfunctional.output.StringOutputIterator;
 import java.util.Arrays;
 import java.util.List;
 import junit.framework.Assert;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import net.emaze.dysfunctional.output.StringOutputIterator;
 import org.junit.Test;
 
 /**
  *
  * @author rferranti
  */
-public class PipingConsumerTest {
+public class ConsumeIntoOutputIteratorTest {
 
     @Test
     public void testThatCanConsume() {

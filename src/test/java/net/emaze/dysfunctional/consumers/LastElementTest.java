@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.consumers;
 
-import net.emaze.dysfunctional.dispatching.delegates.FirstElement;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -11,24 +10,23 @@ import org.junit.Test;
  *
  * @author rferranti
  */
-public class GiveUpConsumerTest {
-
+public class LastElementTest {
 
     @Test(expected=IllegalArgumentException.class)
     public void consumingNullIteratorYieldsException() {
-        new FirstElement<Object>().perform(null);
+        new LastElement<Object>().perform(null);
     }
 
     @Test
-    public void yieldsFirstElement(){
+    public void yieldsLastElement(){
         List<Integer> consumable = Arrays.asList(1,2,3);
-        FirstElement<Integer> consumer = new FirstElement<Integer>();
+        LastElement<Integer> consumer = new LastElement<Integer>();
         Integer got = consumer.perform(consumable.iterator());
-        Assert.assertEquals(consumable.get(0), got);
+        Assert.assertEquals(consumable.get(consumable.size() -1 ), got);
     }
-    
     @Test(expected=IllegalArgumentException.class)
     public void consumingEmptyIteratorYieldsException(){
-        new FirstElement<Object>().perform(Collections.emptyList().iterator());
+        new LastElement<Object>().perform(Collections.emptyList().iterator());
     }
+
 }

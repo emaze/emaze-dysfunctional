@@ -1,8 +1,10 @@
-package net.emaze.dysfunctional.dispatching.delegates;
+package net.emaze.dysfunctional.consumers;
 
 import java.util.Collection;
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
 /**
  * Consumes every element from the consumable into the collection provided by
@@ -17,7 +19,7 @@ public class ConsumeIntoCollection<R extends Collection<E>, E> implements Delega
     private final Provider<R> provider;
 
     public ConsumeIntoCollection(Provider<R> provider) {
-        dbc.precondition(provider != null, "collection factory cannot be null");
+        dbc.precondition(provider != null, "collection provider cannot be null");
         this.provider = provider;
     }
 

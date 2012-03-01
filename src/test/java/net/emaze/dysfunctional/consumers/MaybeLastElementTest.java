@@ -1,8 +1,9 @@
-package net.emaze.dysfunctional.options;
+package net.emaze.dysfunctional.consumers;
 
 import java.util.Iterator;
 import junit.framework.Assert;
 import net.emaze.dysfunctional.Iterations;
+import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Test;
 
