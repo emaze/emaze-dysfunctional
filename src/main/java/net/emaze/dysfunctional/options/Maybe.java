@@ -46,6 +46,13 @@ public class Maybe<E> {
         return Either.left(nothing.provide());
     }
 
+    public E orElse(E otherwise){
+        if(hasValue){
+           return element; 
+        }
+        return otherwise;
+    }
+    
     public static <E> Maybe<E> nothing() {
         return new Maybe<E>(null, false);
     }

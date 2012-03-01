@@ -3,6 +3,7 @@ package net.emaze.dysfunctional.options;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -90,4 +91,17 @@ public class MaybeTest {
         final Maybe<Integer> perform = new MaybeRight<Integer, Integer>().perform(either);
         Assert.assertEquals(right, perform.value().intValue());
     }
+    
+    @Test
+    public void callingOrElseOnJustYieldsJustValue() {
+        final O got = Maybe.just(O.ONE).orElse(O.ANOTHER);
+        Assert.assertEquals(O.ONE, got);
+    }
+
+    @Test
+    public void callingOrElseOnNothingYieldsParameter() {
+        final O got = Maybe.<O>nothing().orElse(O.ANOTHER);
+        Assert.assertEquals(O.ANOTHER, got);
+    }
+
 }
