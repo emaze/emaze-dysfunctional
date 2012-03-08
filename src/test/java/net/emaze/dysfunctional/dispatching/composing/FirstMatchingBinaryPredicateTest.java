@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.dispatching.composing;
 
-import java.util.Iterator;
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.BinaryNever;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
@@ -17,21 +16,21 @@ public class FirstMatchingBinaryPredicateTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingWithNullIteratorYieldsException() {
-        final Iterator<BinaryPredicate<O, O>> pred = null;
+        final Iterable<BinaryPredicate<O, O>> pred = null;
         new FirstMatchingBinaryPredicate<O, O>(pred);
     }
 
     @Test
     public void usingAlwaysReturnsTrue() {
         final BinaryPredicate<O, O> always = new BinaryAlways<O, O>();
-        final FirstMatchingBinaryPredicate<O, O> pred = new FirstMatchingBinaryPredicate<O, O>(Iterations.iterator(always));
+        final FirstMatchingBinaryPredicate<O, O> pred = new FirstMatchingBinaryPredicate<O, O>(Iterations.iterable(always));
         Assert.assertTrue(pred.accept(O.IGNORED, O.IGNORED));
     }
 
     @Test
     public void usingNeverReturnsFalse() {
         final BinaryPredicate<O, O> never = new BinaryNever<O, O>();
-        final FirstMatchingBinaryPredicate<O, O> pred = new FirstMatchingBinaryPredicate<O, O>(Iterations.iterator(never));
+        final FirstMatchingBinaryPredicate<O, O> pred = new FirstMatchingBinaryPredicate<O, O>(Iterations.iterable(never));
         Assert.assertFalse(pred.accept(O.IGNORED, O.IGNORED));
     }
 }

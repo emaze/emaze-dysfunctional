@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.dispatching.composing;
 
-import java.util.Iterator;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.Never;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
@@ -17,21 +16,21 @@ public class FirstMatchingPredicateTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingWithNullIteratorYieldsException() {
-        final Iterator<Predicate<O>> pred = null;
+        final Iterable<Predicate<O>> pred = null;
         new FirstMatchingPredicate<O>(pred);
     }
 
     @Test
     public void usingAlwaysReturnsTrue() {
         final Predicate<O> always = new Always<O>();
-        final FirstMatchingPredicate<O> pred = new FirstMatchingPredicate<O>(Iterations.iterator(always));
+        final FirstMatchingPredicate<O> pred = new FirstMatchingPredicate<O>(Iterations.iterable(always));
         Assert.assertTrue(pred.accept(O.IGNORED));
     }
 
     @Test
     public void usingNeverReturnsFalse() {
         final Predicate<O> never = new Never<O>();
-        final FirstMatchingPredicate<O> pred = new FirstMatchingPredicate<O>(Iterations.iterator(never));
+        final FirstMatchingPredicate<O> pred = new FirstMatchingPredicate<O>(Iterations.iterable(never));
         Assert.assertFalse(pred.accept(O.IGNORED));
     }
 }

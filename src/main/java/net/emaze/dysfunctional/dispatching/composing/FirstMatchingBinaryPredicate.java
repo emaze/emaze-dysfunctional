@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.dispatching.composing;
 
-import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 
@@ -14,17 +13,17 @@ import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
  */
 public class FirstMatchingBinaryPredicate<E1, E2> implements BinaryPredicate<E1, E2> {
 
-    private final Iterator<BinaryPredicate<E1, E2>> predicates;
+    private final Iterable<BinaryPredicate<E1, E2>> predicates;
 
-    public FirstMatchingBinaryPredicate(Iterator<BinaryPredicate<E1, E2>> predicates) {
-        dbc.precondition(predicates != null, "cannot evaluate or(...) of a null iterator of binary predicates");
+    public FirstMatchingBinaryPredicate(Iterable<BinaryPredicate<E1, E2>> predicates) {
+        dbc.precondition(predicates != null, "cannot evaluate or(...) of a null iterable of binary predicates");
         this.predicates = predicates;
     }
 
     @Override
     public boolean accept(E1 first, E2 second) {
-        while (predicates.hasNext()) {
-            if (predicates.next().accept(first, second)) {
+        for (BinaryPredicate<E1, E2> predicate : predicates) {
+            if (predicate.accept(first, second)) {
                 return true;
             }
         }

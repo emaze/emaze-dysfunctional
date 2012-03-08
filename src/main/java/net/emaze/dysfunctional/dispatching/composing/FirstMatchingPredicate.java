@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.dispatching.composing;
 
-import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
@@ -13,17 +12,17 @@ import net.emaze.dysfunctional.dispatching.logic.Predicate;
  */
 public class FirstMatchingPredicate<E> implements Predicate<E> {
 
-    private final Iterator<Predicate<E>> predicates;
+    private final Iterable<Predicate<E>> predicates;
 
-    public FirstMatchingPredicate(Iterator<Predicate<E>> predicates) {
-        dbc.precondition(predicates != null, "cannot avaluate or(...) of a null iterator of predicates");
+    public FirstMatchingPredicate(Iterable<Predicate<E>> predicates) {
+        dbc.precondition(predicates != null, "cannot avaluate or(...) of a null iterable of predicates");
         this.predicates = predicates;
     }
 
     @Override
     public boolean accept(E element) {
-        while (predicates.hasNext()) {
-            if (predicates.next().accept(element)) {
+        for (Predicate<E> predicate : predicates) {
+            if (predicate.accept(element)) {
                 return true;
             }
         }

@@ -41,8 +41,7 @@ public abstract class Logic {
          * @return the composite predicate
          */
         public static <T> Predicate<T> and(Iterable<Predicate<T>> predicates) {
-            dbc.precondition(predicates != null, "cannot compose a null iterable of predicates");
-            return new AllMatchingPredicate<T>(predicates.iterator());
+            return new AllMatchingPredicate<T>(predicates);
         }
 
         /**
@@ -53,7 +52,7 @@ public abstract class Logic {
          * @return the composite predicate
          */
         public static <T> Predicate<T> and(Iterator<Predicate<T>> predicates) {
-            return new AllMatchingPredicate<T>(predicates);
+            return new AllMatchingPredicate<T>(Consumers.all(predicates));
         }
 
         /**
@@ -64,8 +63,7 @@ public abstract class Logic {
          * @return the composite predicate
          */
         public static <T> Predicate<T> or(Iterable<Predicate<T>> predicates) {
-            dbc.precondition(predicates != null, "cannot compose a null iterable of predicates");
-            return new FirstMatchingPredicate<T>(predicates.iterator());
+            return new FirstMatchingPredicate<T>(predicates);
         }
 
         /**
@@ -76,7 +74,7 @@ public abstract class Logic {
          * @return the composite predicate
          */
         public static <T> Predicate<T> or(Iterator<Predicate<T>> predicates) {
-            return new FirstMatchingPredicate<T>(predicates);
+            return new FirstMatchingPredicate<T>(Consumers.all(predicates));
         }
 
         /**
@@ -114,8 +112,7 @@ public abstract class Logic {
          * @return the composite predicate
          */
         public static <T1, T2> BinaryPredicate<T1, T2> and(Iterable<BinaryPredicate<T1, T2>> predicates) {
-            dbc.precondition(predicates != null, "cannot compose a null iterable of predicates");
-            return new AllMatchingBinaryPredicate<T1, T2>(predicates.iterator());
+            return new AllMatchingBinaryPredicate<T1, T2>(predicates);
         }
 
         /**
@@ -127,7 +124,7 @@ public abstract class Logic {
          * @return the composite predicate
          */
         public static <T1, T2> BinaryPredicate<T1, T2> and(Iterator<BinaryPredicate<T1, T2>> predicates) {
-            return new AllMatchingBinaryPredicate<T1, T2>(predicates);
+            return new AllMatchingBinaryPredicate<T1, T2>(Consumers.all(predicates));
         }
 
         /**
@@ -139,8 +136,7 @@ public abstract class Logic {
          * @return the composite predicate
          */
         public static <T1, T2> BinaryPredicate<T1, T2> or(Iterable<BinaryPredicate<T1, T2>> predicates) {
-            dbc.precondition(predicates != null, "cannot compose a null iterable of predicates");
-            return new FirstMatchingBinaryPredicate<T1, T2>(predicates.iterator());
+            return new FirstMatchingBinaryPredicate<T1, T2>(predicates);
         }
 
         /**
@@ -152,8 +148,7 @@ public abstract class Logic {
          * @return the composite predicate
          */
         public static <T1, T2> BinaryPredicate<T1, T2> or(Iterator<BinaryPredicate<T1, T2>> predicates) {
-            dbc.precondition(predicates != null, "cannot compose a null iterator of predicates");
-            return new FirstMatchingBinaryPredicate<T1, T2>(predicates);
+            return new FirstMatchingBinaryPredicate<T1, T2>(Consumers.all(predicates));
         }
 
         /**
@@ -194,8 +189,7 @@ public abstract class Logic {
          * @return the composite predicate
          */
         public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> and(Iterable<TernaryPredicate<T1, T2, T3>> predicates) {
-            dbc.precondition(predicates != null, "cannot compose a null iterable of predicates");
-            return new AllMatchingTernaryPredicate<T1, T2, T3>(predicates.iterator());
+            return new AllMatchingTernaryPredicate<T1, T2, T3>(predicates);
         }
 
         /**
@@ -208,7 +202,7 @@ public abstract class Logic {
          * @return the composite predicate
          */
         public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> and(Iterator<TernaryPredicate<T1, T2, T3>> predicates) {
-            return new AllMatchingTernaryPredicate<T1, T2, T3>(predicates);
+            return new AllMatchingTernaryPredicate<T1, T2, T3>(Consumers.all(predicates));
         }
 
         /**
@@ -221,8 +215,7 @@ public abstract class Logic {
          * @return the composite predicate
          */
         public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> or(Iterable<TernaryPredicate<T1, T2, T3>> predicates) {
-            dbc.precondition(predicates != null, "cannot compose a null iterable of predicates");
-            return new FirstMatchingTernaryPredicate<T1, T2, T3>(predicates.iterator());
+            return new FirstMatchingTernaryPredicate<T1, T2, T3>(predicates);
         }
 
         /**
@@ -235,7 +228,7 @@ public abstract class Logic {
          * @return the composite predicate
          */
         public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> or(Iterator<TernaryPredicate<T1, T2, T3>> predicates) {
-            return new FirstMatchingTernaryPredicate<T1, T2, T3>(predicates);
+            return new FirstMatchingTernaryPredicate<T1, T2, T3>(Consumers.all(predicates));
         }
 
         /**
