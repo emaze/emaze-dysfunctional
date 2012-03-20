@@ -39,8 +39,10 @@ public class Box<T> {
         return content.hasValue();
     }
 
-    public void unload() {
+    public Maybe<T> unload() {
+        final Maybe<T> old = content;
         content = Maybe.nothing();
+        return old;
     }
 
     public T getContent() {
