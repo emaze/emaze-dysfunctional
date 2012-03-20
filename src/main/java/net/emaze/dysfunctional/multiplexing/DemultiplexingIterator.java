@@ -23,7 +23,7 @@ public class DemultiplexingIterator<C extends Collection<T>, T> extends ReadOnly
     private Maybe<C> prefetched = Maybe.nothing();
 
     public DemultiplexingIterator(int channelSize, Iterator<T> iterator, Provider<C> channelProvider) {
-        dbc.precondition(channelSize > 0, "channels count must be > 0");
+        dbc.precondition(channelSize > 0, "channels size must be > 0");
         dbc.precondition(iterator != null, "iterator cannot be null");
         dbc.precondition(channelProvider != null, "channelProvider cannot be null");
         this.iterator = iterator;
