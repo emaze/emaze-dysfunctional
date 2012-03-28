@@ -1,9 +1,7 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
 import java.util.Iterator;
-import java.util.concurrent.atomic.AtomicLong;
 import net.emaze.dysfunctional.Iterations;
-import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,11 +15,23 @@ public class EndoDelegatesComposerTest {
 
     @Test
     public void callingYieldsComposedDelegate() {
-        final AtomicLong calls = new AtomicLong();
-        final Identity<O> identity = new Identity<O>();
-        final Iterator<Delegate<O, O>> delegates = Iterations.<Delegate<O, O>>iterator(Spies.monitor(identity, calls), Spies.monitor(identity, calls));
-        final Delegate<O, O> delegate = new EndoDelegatesComposer<O>().perform(delegates);
-        delegate.perform(O.ONE);
-        Assert.assertEquals(2, calls.get());
+        final Iterator<Delegate<String, String>> delegates = Iterations.<Delegate<String, String>>iterator(new EndoDelegate("f"), new EndoDelegate("g"));
+        final Delegate<String, String> delegate = new EndoDelegatesComposer<String>().perform(delegates);
+        final String evaluated = delegate.perform("x");
+        Assert.assertEquals("f(g(x))", evaluated);
+    }
+    
+    private static class EndoDelegate implements Delegate<String, String> {
+
+        private final String fn;
+
+        public EndoDelegate(String fn) {
+            this.fn = fn;
+        }
+        
+        @Override
+        public String perform(String argument) {
+            return String.format("%s(%s)", fn, argument);
+        }
     }
 }
