@@ -10,6 +10,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.IteratorPlucker;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
+import net.emaze.dysfunctional.multiplexing.BatchingIterator;
 import net.emaze.dysfunctional.multiplexing.ChainIterator;
 import net.emaze.dysfunctional.multiplexing.DemultiplexingIterator;
 import net.emaze.dysfunctional.multiplexing.MultiplexingIterator;
@@ -377,6 +378,96 @@ public abstract class Multiplexing {
     public static <E> Iterator<List<E>> demux(int channelSize, E... array) {
         final Provider<List<E>> channelFactory = Compositions.compose(new Vary<List<E>, ArrayList<E>>(), new ArrayListFactory<E>());
         return new DemultiplexingIterator<List<E>, E>(channelSize, new ArrayIterator<E>(array), channelFactory);
+    }
+
+    /**
+     * Demultiplexes elements from the source iterator into an iterator of
+     * channels.
+     *
+     *
+     * @param <C> the channel collection type
+     * @param <E> the element type
+     * @param maxChannelSize maximum size of the channel
+     * @param iterator the source iterator
+     * @param channelProvider a provider used to create channels
+     * @return an iterator of channels
+     */
+    public static <C extends Collection<E>, E> Iterator<C> batch(int maxChannelSize, Iterator<E> iterator, Provider<C> channelProvider) {
+        return new BatchingIterator<C, E>(maxChannelSize, iterator, channelProvider);
+    }
+
+    /**
+     * Demultiplexes elements from the source iterator into an iterator of
+     * channels.
+     *
+     * @param <E> the element type
+     * @param maxChannelSize maximum size of the channel
+     * @param iterator the source iterator
+     * @return an iterator of channels
+     */
+    public static <E> Iterator<List<E>> batch(int maxChannelSize, Iterator<E> iterator) {
+        final Provider<List<E>> channelFactory = Compositions.compose(new Vary<List<E>, ArrayList<E>>(), new ArrayListFactory<E>());
+        return new BatchingIterator<List<E>, E>(maxChannelSize, iterator, channelFactory);
+    }
+
+    /**
+     * Demultiplexes elements from the source iterable into an iterator of
+     * channels.
+     *
+     * @param <C> the channel collection type
+     * @param <E> the element type
+     * @param maxChannelSize maximum size of the channel
+     * @param iterable the source iterable
+     * @param channelProvider the provider used to create channels
+     * @return an iterator of channels
+     */
+    public static <C extends Collection<E>, E> Iterator<C> batch(int maxChannelSize, Iterable<E> iterable, Provider<C> channelProvider) {
+        dbc.precondition(iterable != null, "cannot demux a null iterable");
+        return new BatchingIterator<C, E>(maxChannelSize, iterable.iterator(), channelProvider);
+    }
+
+    /**
+     * Demultiplexes elements from the source iterable into an iterator of
+     * channels.
+     *
+     * @param <E> the element type
+     * @param maxChannelSize maximum size of the channel
+     * @param iterable the source iterable
+     * @return an iterator of channels
+     */
+    public static <E> Iterator<List<E>> batch(int maxChannelSize, Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot demux a null iterable");
+        final Provider<List<E>> channelFactory = Compositions.compose(new Vary<List<E>, ArrayList<E>>(), new ArrayListFactory<E>());
+        return new BatchingIterator<List<E>, E>(maxChannelSize, iterable.iterator(), channelFactory);
+    }
+
+    /**
+     * Demultiplexes elements from the source array into an iterator of
+     * channels.
+     *
+     * @param <C> the channel collection type
+     * @param <E> the element type
+     * @param maxChannelSize maximum size of the channel
+     * @param array the source array
+     * @param channelProvider the provider used to create channels
+     * @return an iterator of channels
+     */
+    public static <C extends Collection<E>, E> Iterator<C> batch(int maxChannelSize, Provider<C> channelProvider, E... array) {
+        return new BatchingIterator<C, E>(maxChannelSize, new ArrayIterator<E>(array), channelProvider);
+    }
+
+    /**
+     * Demultiplexes elements from the source array into an iterator of
+     * channels.
+     *
+     * @param <E> the element type
+     * @param maxChannelSize maximum size of the channel
+     * @param array the source array
+     * @return an iterator of channels
+     */
+    public static <E> Iterator<List<E>> batch(int maxChannelSize, E... array) {
+        final Provider<List<E>> channelFactory = Compositions.compose(new Vary<List<E>, ArrayList<E>>(), new ArrayListFactory<E>());
+        return new BatchingIterator<List<E>, E>(maxChannelSize, new ArrayIterator<E>(array), channelFactory);
     }
 
     /**
