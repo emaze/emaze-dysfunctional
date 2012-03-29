@@ -10,7 +10,7 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
  *
  * <pre> E.g:
  *   final Delegate<Integer, Integer> source = new Identity<Integer>();
- *   final Delegate<Number, Integer> got = Applications.compose(new Vary<Number, Integer>(), source);
+ *   final Delegate<Number, Integer> got = Compositions.compose(new Vary<Number, Integer>(), source);
  * </pre>
  *
  * @author rferranti
