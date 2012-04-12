@@ -14,11 +14,6 @@
             <distribution>repo</distribution>
         </license>
     </licenses>    
-    <parent>
-        <groupId>net.emaze</groupId>
-        <artifactId>emaze-super-pom</artifactId>
-        <version>1.8</version>
-    </parent>
     <build>
         <plugins>
             <plugin>
@@ -36,12 +31,15 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>test</scope>
             <version>4.10</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>    
     <scm>
-      <connection>scm:hg:https://hg.intranet/emaze-dysfunctional</connection>
-      <developerConnection>scm:hg:file://${basedir}</developerConnection>
+        <connection>scm:hg:https://bitbucket.org/rferranti/emaze-dysfunctional</connection>
+        <developerConnection>scm:hg:file://${basedir}</developerConnection>
     </scm>
 </project>
