@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.collections.builders;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -58,7 +59,6 @@ public class NestedMapBuilderTest {
         final Map<String, Object> mushrooms = Casts.widen(mario.get("mushrooms"));
         Assert.assertTrue(mushrooms.containsKey("mushroom"));
     }
-    
 
     @Test
     public void mergingMapIsReflectedByToMap() {
@@ -74,5 +74,33 @@ public class NestedMapBuilderTest {
         toBeMerged.put("mario", new Object());        
         Map<String, Object> built = new NestedMapBuilder<String>(factory).add("luigi", new Object()).add(toBeMerged).toMap();
         Assert.assertTrue(built.containsKey("luigi"));
-    }    
+    }
+    
+    @Test
+    public void canReturnAnUnmodifiableMap() {
+        final NestedMapBuilder<String> builder = new NestedMapBuilder<String>(factory);
+        Assert.assertNotNull(builder.toUnmodifiableMap());
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void cannotPutANewEntryOnUnmodifiableMap() {
+        final NestedMapBuilder<String> builder = new NestedMapBuilder<String>(factory);
+        final Map<String, Object> expectedToBeUnmodifiable = builder.toUnmodifiableMap();
+        expectedToBeUnmodifiable.put("key", "value");
+    }
+    
+    @Test(expected = UnsupportedOperationException.class)
+    public void cannotPutAWholeMapOnUnmodifiableMap() {
+        final NestedMapBuilder<String> builder = new NestedMapBuilder<String>(factory);
+        final Map<String, Object> expectedToBeUnmodifiable = builder.toUnmodifiableMap();
+        expectedToBeUnmodifiable.putAll(Collections.<String, Object>singletonMap("key", "value"));
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void cannotRemoveAnEntryOnUnmodifiableMap() {
+        final NestedMapBuilder<String> builder = new NestedMapBuilder<String>(factory);
+        final Map<String, Object> expectedToBeUnmodifiable = builder.
+                add("key", "value").toUnmodifiableMap();
+        expectedToBeUnmodifiable.remove("key");
+    }
 }

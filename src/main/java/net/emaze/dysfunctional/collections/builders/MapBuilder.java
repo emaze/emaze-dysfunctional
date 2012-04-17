@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.collections.builders;
 
+import java.util.Collections;
 import java.util.Map;
 import net.emaze.dysfunctional.contracts.dbc;
 
@@ -32,5 +33,9 @@ public class MapBuilder<K, V> {
 
     public Map<K, V> toMap() {
         return state;
+    }
+    
+    public Map<K, V> toUnmodifiableMap() {
+        return Collections.unmodifiableMap(state);
     }
 }

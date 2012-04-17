@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.collections.builders;
 
+import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Map;
@@ -51,6 +52,10 @@ public class NestedMapBuilder<K> {
 
     public Map<K, Object> toMap() {
         return buildee;
+    }
+    
+    public Map<K, Object> toUnmodifiableMap() {
+        return Collections.unmodifiableMap(buildee);
     }
 
     private Map<K, Object> current() {
