@@ -12,6 +12,7 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.multiplexing.BatchingIterator;
 import net.emaze.dysfunctional.multiplexing.ChainIterator;
+import net.emaze.dysfunctional.multiplexing.CyclicIterator;
 import net.emaze.dysfunctional.multiplexing.DemultiplexingIterator;
 import net.emaze.dysfunctional.multiplexing.MultiplexingIterator;
 import net.emaze.dysfunctional.multiplexing.PreciseDemultiplexingIterator;
@@ -606,5 +607,57 @@ public abstract class Multiplexing {
      */
     public static <E> Iterator<E> roundrobin(Iterator<E> first, Iterator<E> second, Iterator<E> third) {
         return new RoundRobinIterator<E>(Iterations.iterator(first, second, third));
+    }
+    
+    /**
+     * Creates an infinite iterator that issues elements from
+     * the parameter cyclicly.
+     * 
+     * @param <E> the element type
+     * @param iterator the iterator to cycle
+     * @return an iterator that cyclicly returns the elements from the argument
+     */
+    public static <E> Iterator<E> cycle(Iterator<E> iterator) {
+        return new CyclicIterator<E>(iterator);
+    }
+    
+    /**
+     * Creates an infinite iterator that issues elements from
+     * the parameter cyclicly.
+     * 
+     * @param <E> the element type
+     * @param iterable the iterable to cycle
+     * @return an iterator that cyclicly returns the elements from the argument
+     */
+    public static <E> Iterator<E> cycle(Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "iterable cannot be null");
+        return new CyclicIterator<E>(iterable.iterator());
+    }
+    
+    /**
+     * Creates an infinite iterator that issues elements from
+     * the parameter cyclicly.
+     * 
+     * @param <E> the element type
+     * @param first the first element to consider while cycling
+     * @param second the second element to consider while cycling
+     * @return an iterator that cyclicly returns the elements from the arguments
+     */
+    public static <E> Iterator<E> cycle(E first, E second) {
+        return new CyclicIterator<E>(Iterations.iterator(first, second));
+    }
+    
+    /**
+     * Creates an infinite iterator that issues elements from
+     * the parameter cyclicly.
+     * 
+     * @param <E> the element type
+     * @param first the first element to consider while cycling
+     * @param second the second element to consider while cycling
+     * @param third the third element to consider while cycling
+     * @return an iterator that cyclicly returns the elements from the arguments
+     */
+    public static <E> Iterator<E> cycle(E first, E second, E third) {
+        return new CyclicIterator<E>(Iterations.iterator(first, second, third));
     }
 }

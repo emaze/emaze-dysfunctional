@@ -27,6 +27,7 @@ import org.junit.runners.Suite;
     MultiplexingTest.Demux.class,
     MultiplexingTest.DemuxLongest.class,
     MultiplexingTest.Roundrobin.class,
+    MultiplexingTest.Cycle.class,
     MultiplexingTest.Facade.class
 })
 public class MultiplexingTest {
@@ -323,6 +324,41 @@ public class MultiplexingTest {
         public void canRoundrobinFromThreeValues() {
             final Iterator<O> rr = Multiplexing.roundrobin(AN_ITERABLE.iterator(), AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
             Assert.assertNotNull(rr);
+        }
+    }
+
+    public static class Cycle {
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCycleANullIterable() {
+            final Iterable<Iterator<O>> iterable = null;
+            Multiplexing.cycle(iterable);
+        }
+
+        @Test
+        public void canCycleFromIterable() {
+            final Iterable<O> iterable = Iterations.iterable(O.ONE);
+            final Iterator<O> cycle = Multiplexing.cycle(iterable);
+            Assert.assertNotNull(cycle);
+        }
+
+        @Test
+        public void canCycleFromIterator() {
+            final Iterator<O> iterator = Iterations.iterator(O.ONE);
+            final Iterator<O> cycle = Multiplexing.cycle(iterator);
+            Assert.assertNotNull(cycle);
+        }
+
+        @Test
+        public void canCycleFromTwoValues() {
+            final Iterator<O> cycle = Multiplexing.cycle(O.ONE, O.ANOTHER);
+            Assert.assertNotNull(cycle);
+        }
+
+        @Test
+        public void canCycleFromThreeValues() {
+            final Iterator<O> cycle = Multiplexing.cycle(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+            Assert.assertNotNull(cycle);
         }
     }
 
