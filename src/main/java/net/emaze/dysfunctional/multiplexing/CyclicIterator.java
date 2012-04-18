@@ -1,19 +1,27 @@
 package net.emaze.dysfunctional.multiplexing;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import net.emaze.dysfunctional.Consumers;
+import net.emaze.dysfunctional.collections.ArrayListFactory;
+import net.emaze.dysfunctional.consumers.ConsumeIntoCollection;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 
-public class CyclicIterator<T> extends ReadOnlyIterator<T> {
+/**
+ * A cyclic iterator. The given iterator is iterated indefinitely.
+ *
+ * @param <E> the element type
+ * @author mcodella, asturman
+ */
+public class CyclicIterator<E> extends ReadOnlyIterator<E> {
 
-    private final Iterable<T> matrix;
-    private Iterator<T> current;
+    private final Iterable<E> matrix;
+    private Iterator<E> current;
     
-    public CyclicIterator(Iterator<T> iterator) {
+    public CyclicIterator(Iterator<E> iterator) {
         dbc.precondition(iterator != null, "iterator cannot be null");
         dbc.precondition(iterator.hasNext(), "iterator cannot be empty");
-        this.matrix = Consumers.all(iterator);
+        this.matrix = new ConsumeIntoCollection<ArrayList<E>, E>(new ArrayListFactory<E>()).perform(iterator);
         this.current = matrix.iterator();
     }
     
@@ -23,7 +31,7 @@ public class CyclicIterator<T> extends ReadOnlyIterator<T> {
     }
 
     @Override
-    public T next() {
+    public E next() {
         if(current.hasNext() == false) {
             current = matrix.iterator();
         }

@@ -4,6 +4,10 @@ import junit.framework.Assert;
 import net.emaze.dysfunctional.Iterations;
 import org.junit.Test;
 
+/**
+ * 
+ * @author mcodella, asturman
+ */
 public class CyclicIteratorTest {
 
     @Test
