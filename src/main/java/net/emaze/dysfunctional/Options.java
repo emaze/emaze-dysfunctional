@@ -347,6 +347,22 @@ public abstract class Options {
         public static <T> Iterator<T> drops(Maybe<T> first, Maybe<T> second, Maybe<T> third) {
             return new TransformingIterator<T, Maybe<T>>(Iterations.iterator(first, second, third), new DropMaybe<T>());
         }
+        
+       
+        /**
+         * Conventional monad join operator. 
+         * It is used to remove one level of monadic structure, projecting its 
+         * bound argument into the outer level.
+         * @param <T> the value type parameter
+         * @param maybe the source monad
+         * @return the unwrapped monad
+         */
+        public static <T> Maybe<T> join(Maybe<Maybe<T>> maybe){
+            if(maybe.hasValue()){
+                return maybe.value();
+            }
+            return Maybe.nothing();
+        }
     }
 
     /**
@@ -447,6 +463,22 @@ public abstract class Options {
         public static <T> Iterator<Box<T>> pures(T... values) {
             return new TransformingIterator<Box<T>, T>(Iterations.iterator(values), new PureBox<T>());
         }
+
+ 
+        /**
+         * Conventional monad join operator. 
+         * It is used to remove one level of monadic structure, projecting its 
+         * bound argument into the outer level.
+         * @param <T> the value type parameter
+         * @param box the source monad
+         * @return the unwrapped monad
+         */
+        public static <T> Box<T> join(Box<Box<T>> box){
+            if(box.hasContent()){
+                return box.getContent();
+            }
+            return Box.empty();
+        }        
     }
 
     /**
