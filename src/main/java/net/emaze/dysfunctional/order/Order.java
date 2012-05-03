@@ -28,10 +28,22 @@ public enum Order {
     }
 
     public static Order of(int order) {
-        return Order.values()[order + 1];
+        return provide(order);
     }
-
+    
     public static <T> Order of(Comparator<T> comparator, T lhs, T rhs) {
-        return Order.values()[comparator.compare(lhs, rhs) + 1];
+        return provide(comparator.compare(lhs, rhs));
+    }
+    
+    private static Order provide(int index) {
+        if(index == 0) {
+            return EQ;
+        }
+        else if(index > 0) {
+            return GT;
+        }
+        else {
+            return LT;
+        }
     }
 }
