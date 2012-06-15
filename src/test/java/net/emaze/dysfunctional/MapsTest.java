@@ -50,20 +50,20 @@ public class MapsTest {
         }
 
         @Test
-        public void canCreateEmptySortedBuilder() {
-            final MapBuilder<String, Object> builder = Maps.sorted();
+        public void canCreateEmptyLinkedBuilder() {
+            final MapBuilder<String, Object> builder = Maps.linked();
             Assert.assertNotNull(builder);
         }
 
         @Test
-        public void canCreateEmptyOrderedBuilder() {
-            final MapBuilder<String, Object> builder = Maps.ordered();
+        public void canCreateEmptyTreeBuilder() {
+            final MapBuilder<String, Object> builder = Maps.tree();
             Assert.assertNotNull(builder);
         }
 
         @Test
-        public void canCreateEmptyOrderedWithComparatorBuilder() {
-            final MapBuilder<String, Object> builder = Maps.ordered(new ComparableComparator<String>());
+        public void canCreateEmptyTreeWithComparatorBuilder() {
+            final MapBuilder<String, Object> builder = Maps.tree(new ComparableComparator<String>());
             Assert.assertNotNull(builder);
         }
     }
@@ -78,26 +78,26 @@ public class MapsTest {
         }
 
         @Test
-        public void canCreateEmptyUnsortedBuilder() {
+        public void canCreateEmptyBuilder() {
             final NestedMapBuilder<String> builder = Nested.builder();
             Assert.assertNotNull(builder);
         }
 
         @Test
-        public void canCreateEmptySortedBuilder() {
-            final NestedMapBuilder<String> builder = Nested.sorted();
+        public void canCreateEmptyLinkedBuilder() {
+            final NestedMapBuilder<String> builder = Nested.linked();
             Assert.assertNotNull(builder);
         }
 
         @Test
-        public void canCreateEmptyOrderedBuilder() {
-            final NestedMapBuilder<String> builder = Nested.ordered();
+        public void canCreateEmptyTreeBuilder() {
+            final NestedMapBuilder<String> builder = Nested.tree();
             Assert.assertNotNull(builder);
         }
 
         @Test
-        public void canCreateEmptyOrderedWithComparatorBuilder() {
-            final NestedMapBuilder<String> builder = Nested.ordered(new ComparableComparator<String>());
+        public void canCreateEmptyTreeWithComparatorBuilder() {
+            final NestedMapBuilder<String> builder = Nested.tree(new ComparableComparator<String>());
             Assert.assertNotNull(builder);
         }
     }

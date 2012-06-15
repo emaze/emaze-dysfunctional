@@ -28,15 +28,15 @@ public abstract class Maps {
         return new MapBuilder<K, V>(new HashMap<K, V>());
     }
 
-    public static <K, V> MapBuilder<K, V> sorted() {
+    public static <K, V> MapBuilder<K, V> linked() {
         return new MapBuilder<K, V>(new LinkedHashMap<K, V>());
     }
 
-    public static <K, V> MapBuilder<K, V> ordered() {
+    public static <K, V> MapBuilder<K, V> tree() {
         return new MapBuilder<K, V>(new TreeMap<K, V>());
     }
 
-    public static <K, V> MapBuilder<K, V> ordered(Comparator<K> keyComp) {
+    public static <K, V> MapBuilder<K, V> tree(Comparator<K> keyComp) {
         return new MapBuilder<K, V>(new TreeMap<K, V>(keyComp));
     }
 
@@ -50,15 +50,15 @@ public abstract class Maps {
             return new NestedMapBuilder<K>(narrowed(new HashMapFactory<K, Object>()));
         }
 
-        public static <K> NestedMapBuilder<K> sorted() {
+        public static <K> NestedMapBuilder<K> linked() {
             return new NestedMapBuilder<K>(narrowed(new LinkedHashMapFactory<K, Object>()));
         }
 
-        public static <K extends Comparable<K>> NestedMapBuilder<K> ordered() {
+        public static <K extends Comparable<K>> NestedMapBuilder<K> tree() {
             return new NestedMapBuilder<K>(narrowed(new TreeMapFactory<K, Object>(new ComparableComparator<K>())));
         }
 
-        public static <K> NestedMapBuilder<K> ordered(Comparator<K> keyComp) {
+        public static <K> NestedMapBuilder<K> tree(Comparator<K> keyComp) {
             return new NestedMapBuilder<K>(narrowed(new TreeMapFactory<K, Object>(keyComp)));
         }
 

@@ -19,7 +19,7 @@ public class MapToPairsTest {
 
     @Test
     public void canTransformToAnIterator() {
-        final Map<String, String> m = Maps.<String, String>ordered().
+        final Map<String, String> m = Maps.<String, String>tree().
                 add("a", "1").
                 add("b", "2").
                 toMap();
