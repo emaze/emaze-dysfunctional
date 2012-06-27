@@ -18,39 +18,27 @@ import net.emaze.dysfunctional.reductions.Any;
  */
 public class ChainIterator<E> extends ReadOnlyIterator<E> {
 
-    private final List<Iterator<E>> iterators = new ArrayList<Iterator<E>>();
+    private final Iterator<? extends Iterator<E>> iterators;
+    private Iterator<E> current;
 
     public <T extends Iterator<E>> ChainIterator(Iterator<T> iterators) {
         dbc.precondition(iterators != null, "trying to create a ChainIterator from a null list of iterators");
-        while (iterators.hasNext()) {
-            this.iterators.add(iterators.next());
-        }
+        this.iterators = iterators;
     }
 
     @Override
     public boolean hasNext() {
-        return iterators.isEmpty() ? false : new Any<Iterator<E>>(new HasNext<Iterator<E>>()).accept(iterators.iterator());
-    }
-
-    private static <E> Maybe<Iterator<E>> currentElement(List<Iterator<E>> iterators) {
-        final Iterator<Iterator<E>> iteratorOfIterators = iterators.iterator();
-        while (iteratorOfIterators.hasNext()) {
-            final Iterator<E> iterator = iteratorOfIterators.next();
-            if (!iterator.hasNext()) {
-                iteratorOfIterators.remove();
-                continue;
-            }
-            return Maybe.just(iterator);
+        while ((current == null || !current.hasNext()) && iterators.hasNext()) {
+            current = iterators.next();
         }
-        return Maybe.nothing();
+        return current != null && current.hasNext();
     }
 
     @Override
     public E next() {
-        final Maybe<Iterator<E>> maybeElement = currentElement(iterators);
-        if (maybeElement.hasValue()) {
-            return maybeElement.value().next();
+        if (!hasNext()) {
+            throw new NoSuchElementException();
         }
-        throw new NoSuchElementException("iterator is consumed");
+        return current.next();
     }
 }
