@@ -19,7 +19,7 @@ import org.junit.Test;
 public class FilteringIteratorTest {
 
     @Test(expected = IllegalArgumentException.class)
-    public void creatingFilteringIteratorWithNullIteratoryYieldsException() {
+    public void creatingFilteringIteratorWithNullIteratorYieldsException() {
         new FilteringIterator<Object>(null, new Always<Object>());
     }
 
@@ -29,14 +29,14 @@ public class FilteringIteratorTest {
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void callingNextOnEmptyIteratoryYieldsException() {
+    public void callingNextOnEmptyIteratorYieldsException() {
         List<Integer> bucket = Collections.<Integer>emptyList();
         Iterator<Integer> iter = new FilteringIterator<Integer>(bucket.iterator(), new Always<Integer>());
         iter.next();
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void callingNextOnNeverMatchingIteratoryYieldsException() {
+    public void callingNextOnNeverMatchingIteratorYieldsException() {
         List<Integer> bucket = Arrays.asList(1, 2, 3);
         Iterator<Integer> iter = new FilteringIterator<Integer>(bucket.iterator(), new Never<Integer>());
         iter.next();
