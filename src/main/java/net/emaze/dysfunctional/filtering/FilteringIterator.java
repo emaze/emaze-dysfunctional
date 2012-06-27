@@ -36,7 +36,6 @@ public class FilteringIterator<E> implements Iterator<E> {
 
     @Override
     public E next() {
-        // TODO: test for NoSuchElementException
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
