@@ -1,8 +1,11 @@
 package net.emaze.dysfunctional.filtering;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import net.emaze.dysfunctional.options.Maybe;
+
 
 /**
  * Iterates on the iterator elements which the predicate matches
@@ -13,8 +16,7 @@ public class FilteringIterator<E> implements Iterator<E> {
 
     private final Predicate<E> filter;
     private final Iterator<E> iterator;
-    private E prefetched;
-    private boolean hasPrefetched;
+    private Maybe<E> current = Maybe.nothing();
 
     public FilteringIterator(Iterator<E> iterator, Predicate<E> filter) {
         dbc.precondition(iterator != null, "trying to create a FilteringIterator from a null iterator");
@@ -25,33 +27,23 @@ public class FilteringIterator<E> implements Iterator<E> {
 
     @Override
     public boolean hasNext() {
-        if (hasPrefetched) {
-            return true;
+        while (!current.hasValue() && iterator.hasNext()) {
+            E val = iterator.next();
+            current = filter.accept(val) ? Maybe.just(val) : Maybe.<E>nothing();
         }
-        while (true) {
-            if (!iterator.hasNext()) {
-                return false;
-            }
-            final E element = iterator.next();
-            if (filter.accept(element)) {
-                prefetched = element;
-                hasPrefetched = true;
-                return true;
-            }
-        }
+        return current.hasValue();
     }
 
     @Override
     public E next() {
-        if (hasPrefetched) {
-            hasPrefetched = false;
-            return prefetched;
+        // TODO: test for NoSuchElementException
+        if (!hasNext()) {
+            throw new NoSuchElementException();
         }
-        while (true) {
-            final E element = iterator.next();
-            if (filter.accept(element)) {
-                return element;
-            }
+        try {
+            return current.value();
+        } finally {
+            current = Maybe.nothing();
         }
     }
 
