@@ -16,7 +16,8 @@ public class FilteringIterator<E> implements Iterator<E> {
 
     private final Predicate<E> filter;
     private final Iterator<E> iterator;
-    private Maybe<E> current = Maybe.nothing();
+    private boolean currentHasValue;
+    private E current;
 
     public FilteringIterator(Iterator<E> iterator, Predicate<E> filter) {
         dbc.precondition(iterator != null, "trying to create a FilteringIterator from a null iterator");
@@ -27,11 +28,12 @@ public class FilteringIterator<E> implements Iterator<E> {
 
     @Override
     public boolean hasNext() {
-        while (!current.hasValue() && iterator.hasNext()) {
-            E val = iterator.next();
-            current = filter.accept(val) ? Maybe.just(val) : Maybe.<E>nothing();
+        while (!currentHasValue && iterator.hasNext()) {
+            final E val = iterator.next();
+            currentHasValue = filter.accept(val);
+            current = val;
         }
-        return current.hasValue();
+        return currentHasValue;
     }
 
     @Override
@@ -40,9 +42,9 @@ public class FilteringIterator<E> implements Iterator<E> {
             throw new NoSuchElementException();
         }
         try {
-            return current.value();
+            return current;
         } finally {
-            current = Maybe.nothing();
+            currentHasValue = false;
         }
     }
 

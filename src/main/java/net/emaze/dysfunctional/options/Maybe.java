@@ -57,7 +57,7 @@ public class Maybe<E> {
     private static Maybe<Object> NOTHING = new Maybe<Object>(null, false);
     
     public static <E> Maybe<E> nothing() {
-        return Casts.vary(NOTHING);
+        return (Maybe<E>) NOTHING;
     }
 
     public static <E> Maybe<E> just(E element) {
