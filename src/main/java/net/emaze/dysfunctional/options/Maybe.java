@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.options;
 
+import net.emaze.dysfunctional.Casts;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
@@ -53,8 +54,10 @@ public class Maybe<E> {
         return otherwise;
     }
     
+    private static Maybe<Object> NOTHING = new Maybe<Object>(null, false);
+    
     public static <E> Maybe<E> nothing() {
-        return new Maybe<E>(null, false);
+        return Casts.vary(NOTHING);
     }
 
     public static <E> Maybe<E> just(E element) {
