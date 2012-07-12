@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.Never;
+import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.iterations.ConstantIterator;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,7 +20,7 @@ import org.junit.Test;
 public class FilteringIteratorTest {
 
     @Test(expected = IllegalArgumentException.class)
-    public void creatingFilteringIteratorWithNullIteratoryYieldsException() {
+    public void creatingFilteringIteratorWithNullIteratorYieldsException() {
         new FilteringIterator<Object>(null, new Always<Object>());
     }
 
@@ -29,14 +30,14 @@ public class FilteringIteratorTest {
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void callingNextOnEmptyIteratoryYieldsException() {
+    public void callingNextOnEmptyIteratorYieldsException() {
         List<Integer> bucket = Collections.<Integer>emptyList();
         Iterator<Integer> iter = new FilteringIterator<Integer>(bucket.iterator(), new Always<Integer>());
         iter.next();
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void callingNextOnNeverMatchingIteratoryYieldsException() {
+    public void callingNextOnNeverMatchingIteratorYieldsException() {
         List<Integer> bucket = Arrays.asList(1, 2, 3);
         Iterator<Integer> iter = new FilteringIterator<Integer>(bucket.iterator(), new Never<Integer>());
         iter.next();
@@ -86,5 +87,27 @@ public class FilteringIteratorTest {
         iter.remove();
 
         Assert.assertEquals(Arrays.asList(2), bucket);
+    }
+
+    @Test
+    public void filterIsAppliedOncePerElement() {
+        List<Integer> bucket = Arrays.asList(1, 2);
+        SpyPredicate<Integer> spy = new SpyPredicate<Integer>();
+        Iterator<Integer> iter = new FilteringIterator<Integer>(bucket.iterator(), spy);
+        iter.hasNext();
+        iter.hasNext();
+        iter.next();
+        Assert.assertEquals(1, spy.calls);
+    }
+
+    private static class SpyPredicate<T> implements Predicate<T> {
+    
+        private int calls = 0;
+
+        @Override
+        public boolean accept(T elem) {
+            calls++;
+            return true;
+        }
     }
 }
