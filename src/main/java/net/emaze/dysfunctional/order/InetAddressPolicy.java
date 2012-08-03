@@ -6,6 +6,7 @@ import java.util.Comparator;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Inet4AddressToLong;
 import net.emaze.dysfunctional.dispatching.delegates.LongToInet4Address;
+import net.emaze.dysfunctional.options.Maybe;
 
 /**
  * A sequencing policy for Inet4Address.
@@ -19,8 +20,9 @@ public class InetAddressPolicy implements SequencingPolicy<Inet4Address>, Compar
     private static final Delegate<Long, Inet4Address> ADDRESS_TO_LONG = new Inet4AddressToLong();
 
     @Override
-    public Inet4Address next(Inet4Address element) {
-        return LONG_TO_ADDRESS.perform(ADDRESS_TO_LONG.perform(element) + 1);
+    public Maybe<Inet4Address> next(Inet4Address element) {
+        final Long longElement = ADDRESS_TO_LONG.perform(element);
+        return (longElement.equals(1>>32-1)) ? Maybe.<Inet4Address>nothing() : Maybe.just(LONG_TO_ADDRESS.perform(ADDRESS_TO_LONG.perform(element) + 1));
     }
 
     @Override

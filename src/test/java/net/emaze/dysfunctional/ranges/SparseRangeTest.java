@@ -3,6 +3,7 @@ package net.emaze.dysfunctional.ranges;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.order.Order;
 import org.junit.Assert;
 import org.junit.Test;
@@ -74,7 +75,7 @@ public class SparseRangeTest {
         @Test
         public void upperRangeAfterLastIsAfterLast() {
             SparseRange<Integer> range = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(2, 3), RangeMother.r(0, 1));
-            Assert.assertEquals(Integer.valueOf(4), range.afterLast());
+            Assert.assertEquals(Maybe.just(Integer.valueOf(4)), range.afterLast());
         }
 
         @Test

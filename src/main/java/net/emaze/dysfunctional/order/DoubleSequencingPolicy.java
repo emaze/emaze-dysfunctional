@@ -1,18 +1,20 @@
 package net.emaze.dysfunctional.order;
 
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.options.Maybe;
 
 /**
  * A sequencing policy for doubles.
+ * HACK: Double is not discrete
  *
  * @author dangelocola
  */
 public class DoubleSequencingPolicy implements SequencingPolicy<Double> {
 
     @Override
-    public Double next(Double element) {
+    public Maybe<Double> next(Double element) {
         dbc.precondition(element != null, "cannot get next of null from a DoubleSequencingPolicy");
-        return element + 1;
+        return (element + 1) < element ? Maybe.<Double>nothing() : Maybe.just(element + 1);
     }
 
     @Override

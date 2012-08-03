@@ -9,6 +9,7 @@ import net.emaze.dysfunctional.dispatching.delegates.IteratorPlucker;
 import net.emaze.dysfunctional.iterations.SingletonIterator;
 import net.emaze.dysfunctional.iterations.TransformingIterator;
 import net.emaze.dysfunctional.multiplexing.ChainIterator;
+import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 import net.emaze.dysfunctional.reductions.Any;
 import net.emaze.dysfunctional.strings.InterposeStrings;
@@ -21,6 +22,7 @@ import net.emaze.dysfunctional.strings.InterposeStrings;
 public class SparseRange<T> implements Range<T> {
 
     private final List<DenseRange<T>> ranges;
+    private final Comparator<T> comparator;
 
     public SparseRange(SequencingPolicy<T> sequencer, Comparator<T> comparator, DenseRange<T>... ranges) {
         dbc.precondition(sequencer != null, "trying to create a SparseRange<T> with a null SequencingPolicy<T>");
@@ -28,6 +30,7 @@ public class SparseRange<T> implements Range<T> {
         dbc.precondition(ranges != null, "trying to create a SparseRange<T> from null ranges");
         dbc.precondition(ranges.length != 0, "trying to create a SparseRange<T> from zero ranges");
         this.ranges = new SortedNonOverlappingRangesTransformer<T>(sequencer, comparator).perform(Arrays.asList(ranges));
+        this.comparator = comparator;
     }
 
     public SparseRange(SequencingPolicy<T> sequencer, Comparator<T> comparator, List<DenseRange<T>> ranges) {
@@ -36,6 +39,7 @@ public class SparseRange<T> implements Range<T> {
         dbc.precondition(ranges != null, "trying to create a SparseRange<T> from a null ranges");
         dbc.precondition(!ranges.isEmpty(), "trying to create a SparseRange<T> from zero ranges");
         this.ranges = new SortedNonOverlappingRangesTransformer<T>(sequencer, comparator).perform(ranges);
+        this.comparator = comparator;
     }
 
     @Override
@@ -50,14 +54,14 @@ public class SparseRange<T> implements Range<T> {
     }
 
     @Override
-    public T afterLast() {
+    public Maybe<T> afterLast() {
         return ranges.get(ranges.size() - 1).afterLast();
     }
 
     @Override
     public int compareTo(Range<T> other) {
         dbc.precondition(other != null, "Comparing (compareTo) a SparseRange<T>(%s) with null");
-        return new RangeComparator<T>().compare(this, other);
+        return new RangeComparator<T>(comparator).compare(this, other);
     }
 
     @Override

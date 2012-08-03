@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.order;
 
 import java.math.BigDecimal;
+import net.emaze.dysfunctional.options.Maybe;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,7 +14,7 @@ public class BigDecimalSequencingPolicyTest {
 
     @Test
     public void canEvaluateNext(){
-        Assert.assertEquals(BigDecimal.ONE, policy.next(BigDecimal.ZERO));
+        Assert.assertEquals(Maybe.just(BigDecimal.ONE), policy.next(BigDecimal.ZERO));
     }
     @Test
     public void canEvaluatePrev(){

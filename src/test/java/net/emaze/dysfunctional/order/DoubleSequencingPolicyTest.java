@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.order;
 
+import net.emaze.dysfunctional.options.Maybe;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,7 +13,7 @@ public class DoubleSequencingPolicyTest {
 
     @Test
     public void canEvaluateNext(){
-        Assert.assertEquals(new Double(1.), policy.next(0.));
+        Assert.assertEquals(Maybe.just(new Double(1.)), policy.next(0.));
     }
     @Test
     public void canEvaluatePrev(){

@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.order;
 
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
+import net.emaze.dysfunctional.options.Maybe;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,8 +16,8 @@ public class InetAddressPolicyTest {
     public void canPerformNextOnInetAddress() throws UnknownHostException {
         InetAddressPolicy policy = new InetAddressPolicy();
         Inet4Address current = (Inet4Address) Inet4Address.getByName("126.255.255.255");
-        Inet4Address got = policy.next(current);
-        Assert.assertEquals("127.0.0.0", got.getHostAddress());
+        Maybe<Inet4Address> got = policy.next(current);
+        Assert.assertEquals("127.0.0.0", got.value().getHostAddress());
     }
 
     @Test

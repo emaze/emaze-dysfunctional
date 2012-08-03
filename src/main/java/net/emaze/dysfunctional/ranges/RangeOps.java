@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.order.MakeOrder;
 import net.emaze.dysfunctional.order.Order;
 import net.emaze.dysfunctional.order.SequencingPolicy;
@@ -39,8 +40,13 @@ public class RangeOps {
                 }
                 final MakeOrder<T> makeOrder = new MakeOrder<T>(comparator);
                 final Pair<T, T> orderedLowerBounds = makeOrder.perform(l.first(), r.first());
-                final Pair<T, T> orderedUpperBounds = makeOrder.perform(l.afterLast(), r.afterLast());
-                intersection.add(new DenseRange<T>(sequencer, comparator, Endpoints.IncludeLeft, orderedLowerBounds.second(), orderedUpperBounds.first()));
+                final MakeOrder<Maybe<T>> makeOrderMaybe = new MakeOrder<Maybe<T>>(new NothingIsGreatestComparator<T>(comparator));
+                final Pair<Maybe<T>, Maybe<T>> orderedUpperBounds = makeOrderMaybe.perform(l.afterLast(), r.afterLast());
+                if (orderedUpperBounds.first().hasValue()) {
+                    intersection.add(new DenseRange<T>(sequencer, comparator, Endpoints.IncludeLeft, orderedLowerBounds.second(), orderedUpperBounds.first().value()));
+                } else {
+                    intersection.add(new DenseRange<T>(sequencer, comparator, orderedLowerBounds.second()));
+                }
             }
         }
         final SortedNonOverlappingRangesTransformer<T> transformer = new SortedNonOverlappingRangesTransformer<T>(sequencer, comparator);
@@ -72,8 +78,13 @@ public class RangeOps {
         if (Order.of(comparator, lhs.first(), rhs.first()) == Order.LT) {
             difference.add(new DenseRange<T>(sequencer, comparator, Endpoints.IncludeLeft, lhs.first(), rhs.first()));
         }
-        if (Order.of(comparator, lhs.afterLast(), rhs.afterLast()) == Order.GT) {
-            difference.add(new DenseRange<T>(sequencer, comparator, Endpoints.IncludeLeft, rhs.afterLast(), lhs.afterLast()));
+        final Comparator<Maybe<T>> nothingIsGreatestComparator = new NothingIsGreatestComparator<T>(comparator);
+        if (Order.of(nothingIsGreatestComparator, lhs.afterLast(), rhs.afterLast()) == Order.GT) {
+            if (lhs.afterLast().hasValue()) {
+                difference.add(new DenseRange<T>(sequencer, comparator, Endpoints.IncludeLeft, rhs.afterLast().value(), lhs.afterLast().value()));
+            } else {
+                difference.add(new DenseRange<T>(sequencer, comparator, rhs.afterLast().value()));
+            }
         }
         return difference;
     }

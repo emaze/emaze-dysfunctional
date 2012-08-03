@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.order;
 
+import net.emaze.dysfunctional.options.Maybe;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,7 +14,7 @@ public class LongSequencingPolicyTest {
 
     @Test
     public void canEvaluateNext(){
-        Assert.assertEquals(new Long(1l), policy.next(0l));
+        Assert.assertEquals(Maybe.just(new Long(1l)), policy.next(0l));
     }
     @Test
     public void canEvaluatePrev(){

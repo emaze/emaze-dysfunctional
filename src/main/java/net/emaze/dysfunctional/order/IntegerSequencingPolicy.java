@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.order;
 
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.options.Maybe;
 
 /**
  * A sequencing policy for big integers.
@@ -10,9 +11,9 @@ import net.emaze.dysfunctional.contracts.dbc;
 public class IntegerSequencingPolicy implements SequencingPolicy<Integer> {
 
     @Override
-    public Integer next(Integer element) {
+    public Maybe<Integer> next(Integer element) {
         dbc.precondition(element != null, "cannot get next of null from a IntegerSequencingPolicy");
-        return element + 1;
+        return element.equals(Integer.MAX_VALUE) ? Maybe.<Integer>nothing() : Maybe.just(element + 1);
     }
 
     @Override

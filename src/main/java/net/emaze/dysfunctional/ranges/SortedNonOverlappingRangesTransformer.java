@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.order.Max;
 import net.emaze.dysfunctional.order.Order;
 import net.emaze.dysfunctional.order.SequencingPolicy;
@@ -30,7 +31,7 @@ public class SortedNonOverlappingRangesTransformer<T> implements Delegate<List<D
 
     @Override
     public List<DenseRange<T>> perform(List<DenseRange<T>> ranges) {
-        final SortedSet<DenseRange<T>> sortedRanges = new TreeSet<DenseRange<T>>(new RangeComparator<T>());
+        final SortedSet<DenseRange<T>> sortedRanges = new TreeSet<DenseRange<T>>();
         sortedRanges.addAll(ranges);
         final List<DenseRange<T>> sortedNonOverlappingRanges = new ArrayList<DenseRange<T>>();
         final Iterator<DenseRange<T>> iter = sortedRanges.iterator();
@@ -38,7 +39,13 @@ public class SortedNonOverlappingRangesTransformer<T> implements Delegate<List<D
         while (iter.hasNext()) {
             final DenseRange<T> next = iter.next();
             if (canBeMerged(current, next)) {
-                current = new DenseRange<T>(sequencer, comparator, Endpoints.IncludeLeft, current.first(), new Max<T>(comparator).perform(current.afterLast(), next.afterLast()));
+                final Comparator<Maybe<T>> nothingIsGreatestComparator = new NothingIsGreatestComparator<T>(comparator);
+                final Maybe<T> max = new Max<Maybe<T>>(nothingIsGreatestComparator).perform(current.afterLast(), next.afterLast());
+                if (max.hasValue()) {
+                    current = new DenseRange<T>(sequencer, comparator, Endpoints.IncludeLeft, current.first(), max.value());
+                } else {
+                    current = new DenseRange<T>(sequencer, comparator, current.first());
+                }
             } else {
                 sortedNonOverlappingRanges.add(current);
                 current = next;
@@ -56,6 +63,6 @@ public class SortedNonOverlappingRangesTransformer<T> implements Delegate<List<D
      * @return true if the two ranges can be merged
      */
     private boolean canBeMerged(DenseRange<T> current, DenseRange<T> next) {
-        return Order.of(comparator, current.afterLast(), next.first()) == Order.EQ || current.overlaps(next);
+        return Order.of(new NothingIsGreatestComparator<T>(comparator), current.afterLast(), Maybe.just(next.first())) == Order.EQ || current.overlaps(next);
     }
 }

@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional.order;
 
+import net.emaze.dysfunctional.options.Maybe;
+
 /**
  * Responsibility: defines a strategy to get the next and previous of an
  * element.
@@ -9,7 +11,7 @@ package net.emaze.dysfunctional.order;
  */
 public interface SequencingPolicy<T> {
 
-    T next(T element);
+    Maybe<T> next(T element);
 
-    T prev(T prev);
+    T prev(T prev); // TODO: maybe too
 }

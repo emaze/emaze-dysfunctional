@@ -219,7 +219,7 @@ public class ZipsTest {
         }
 
         @Override
-        public Object afterLast() {
+        public Maybe<Object> afterLast() {
             return null;
         }
 

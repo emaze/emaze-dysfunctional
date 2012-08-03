@@ -28,7 +28,7 @@ public class PeriodicIterator<T> extends ReadOnlyIterator<T> {
     @Override
     public T next() {
         final T result = next;
-        next = sequencer.next(next);
+        next = sequencer.next(next).value();
         return result;
     }
 }

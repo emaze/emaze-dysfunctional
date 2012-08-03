@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional.order;
 
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.options.Maybe;
 
 /**
  * A sequencing policy for longs.
@@ -10,9 +11,9 @@ import net.emaze.dysfunctional.contracts.dbc;
 public class LongSequencingPolicy implements SequencingPolicy<Long> {
 
     @Override
-    public Long next(Long element) {
+    public Maybe<Long> next(Long element) {
         dbc.precondition(element != null, "cannot get next of null from a LongSequencingPolicy");
-        return element + 1;
+        return element.equals(Long.MAX_VALUE) ? Maybe.<Long>nothing() : Maybe.just(element + 1);
     }
 
     @Override
