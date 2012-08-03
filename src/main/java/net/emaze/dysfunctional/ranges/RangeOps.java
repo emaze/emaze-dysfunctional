@@ -88,7 +88,7 @@ public class RangeOps {
             }
         }
         if (difference.isEmpty()) {
-            difference.add(new DenseRange<T>(sequencer, comparator, lhs.first(), lhs.first()));
+            difference.add(new DenseRange<T>(sequencer, comparator, Endpoints.IncludeLeft, lhs.first(), lhs.first()));
         }
         return difference;
     }
