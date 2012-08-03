@@ -16,6 +16,7 @@ public class RangeIteratorTest {
         Iterator<Integer> iter = new RangeIterator<Integer>(RangeMother.sequencer, RangeMother.comparator, Endpoints.IncludeBoth, 0, Maybe.just(1));
         Assert.assertTrue(iter.hasNext());
     }
+
     @Test
     public void hasNoNextWhenConsumed() {
         Iterator<Integer> iter = new RangeIterator<Integer>(RangeMother.sequencer, RangeMother.comparator, Endpoints.IncludeBoth, 0, Maybe.just(1));
@@ -23,6 +24,11 @@ public class RangeIteratorTest {
         Assert.assertFalse(iter.hasNext());
     }
 
+    @Test
+    public void emptyRangeIteratorIsEmpty() {
+        Iterator<Integer> iter = new RangeIterator<Integer>(RangeMother.sequencer, RangeMother.comparator, Endpoints.IncludeBoth, 0, Maybe.just(0));
+        Assert.assertFalse(iter.hasNext());
+    }
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingRangeIterWithNullSequencingPolicyYieldsException() {

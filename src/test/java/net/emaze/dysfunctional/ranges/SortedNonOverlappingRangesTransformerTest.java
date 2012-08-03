@@ -63,7 +63,25 @@ public class SortedNonOverlappingRangesTransformerTest {
         final List<DenseRange<Integer>> expected = Arrays.asList(RangeMother.r(1, 2));
         Assert.assertEquals(expected, got);
     }
-
+    
+    @Test
+    public void canMergeSameEmptyRanges() {
+        final DenseRange<Integer> a = RangeMother.r(Endpoints.IncludeLeft, 0, 0);
+        final DenseRange<Integer> b = RangeMother.r(Endpoints.IncludeLeft, 0, 0);
+        final List<DenseRange<Integer>> got = new SortedNonOverlappingRangesTransformer<Integer>(RangeMother.sequencer, RangeMother.comparator).perform(Arrays.asList(a, b));
+        final List<DenseRange<Integer>> expected = Arrays.asList(RangeMother.r(Endpoints.IncludeLeft, 0, 0));
+        Assert.assertEquals(expected, got);
+    }
+    
+    @Test
+    public void canMergeDifferentEmptyRanges() {
+        final DenseRange<Integer> a = RangeMother.r(Endpoints.IncludeLeft, 0, 0);
+        final DenseRange<Integer> b = RangeMother.r(Endpoints.IncludeLeft, 1, 1);
+        final List<DenseRange<Integer>> got = new SortedNonOverlappingRangesTransformer<Integer>(RangeMother.sequencer, RangeMother.comparator).perform(Arrays.asList(a, b));
+        final List<DenseRange<Integer>> expected = Arrays.asList(RangeMother.r(Endpoints.IncludeLeft, 0, 0));
+        Assert.assertEquals(expected, got);
+    }
+    
     /**
      * |-|.
      *    .|-|

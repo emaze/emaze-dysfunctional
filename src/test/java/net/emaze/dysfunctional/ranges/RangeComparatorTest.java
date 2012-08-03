@@ -45,6 +45,11 @@ public class RangeComparatorTest {
         }
 
         @Override
+        public boolean isEmpty() {
+            return true;
+        }
+        
+        @Override
         public Iterator<Integer> iterator() {
             throw new UnsupportedOperationException("Not supported yet.");
         }

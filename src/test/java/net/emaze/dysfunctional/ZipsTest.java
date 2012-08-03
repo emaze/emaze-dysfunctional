@@ -229,6 +229,11 @@ public class ZipsTest {
         }
 
         @Override
+        public boolean isEmpty() {
+            return true;
+        }
+
+        @Override
         public Iterator<Object> iterator() {
             return null;
         }

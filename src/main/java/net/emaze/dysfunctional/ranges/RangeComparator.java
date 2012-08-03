@@ -22,7 +22,8 @@ public class RangeComparator<T> implements Comparator<Range<T>>, Serializable {
 
     @Override
     public int compare(Range<T> lhs, Range<T> rhs) {
-        return new CompareToBuilder().append(lhs.first(), rhs.first()).
+        return new CompareToBuilder().append(lhs.isEmpty(), rhs.isEmpty()).
+                append(lhs.first(), rhs.first()).
                 append(rhs.afterLast(), lhs.afterLast(), comparator).
                 toComparison();
     }

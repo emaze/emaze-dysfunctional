@@ -93,6 +93,9 @@ public class DenseRange<T> implements Range<T> {
             return false;
         }
         final DenseRange<T> other = (DenseRange<T>) rhs;
+        if (isEmpty()) {
+            return true;
+        }
         return new EqualsBuilder().append(this.sequencer, other.sequencer).
                 append(this.innerComparator, other.innerComparator).
                 append(this.first, other.first).
@@ -100,8 +103,17 @@ public class DenseRange<T> implements Range<T> {
                 isEquals();
     }
 
+    public boolean isEmpty() {
+        return this.afterLast.hasValue() && this.first.equals(this.afterLast.value());
+    }
+
     @Override
     public int hashCode() {
+        if (isEmpty()) {
+            return new HashCodeBuilder().append(sequencer).
+                append(innerComparator).
+                toHashCode();
+        }
         return new HashCodeBuilder().append(sequencer).
                 append(innerComparator).
                 append(first).

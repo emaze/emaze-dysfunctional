@@ -6,12 +6,14 @@ import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.IteratorPlucker;
+import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.iterations.SingletonIterator;
 import net.emaze.dysfunctional.iterations.TransformingIterator;
 import net.emaze.dysfunctional.multiplexing.ChainIterator;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 import net.emaze.dysfunctional.reductions.Any;
+import net.emaze.dysfunctional.reductions.Every;
 import net.emaze.dysfunctional.strings.InterposeStrings;
 
 /**
@@ -62,6 +64,18 @@ public class SparseRange<T> implements Range<T> {
     public int compareTo(Range<T> other) {
         dbc.precondition(other != null, "Comparing (compareTo) a SparseRange<T>(%s) with null");
         return new RangeComparator<T>(comparator).compare(this, other);
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return new Every<DenseRange<T>>(new Predicate<DenseRange<T>>() {
+
+            @Override
+            public boolean accept(DenseRange<T> element) {
+                return element.isEmpty();
+            }
+            
+        }).accept(ranges.iterator());
     }
 
     @Override

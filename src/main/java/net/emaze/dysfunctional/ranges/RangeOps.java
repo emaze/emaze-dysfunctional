@@ -87,6 +87,9 @@ public class RangeOps {
                 difference.add(new DenseRange<T>(sequencer, comparator, rhs.afterLast().value()));
             }
         }
+        if (difference.isEmpty()) {
+            difference.add(new DenseRange<T>(sequencer, comparator, lhs.first(), lhs.first()));
+        }
         return difference;
     }
 

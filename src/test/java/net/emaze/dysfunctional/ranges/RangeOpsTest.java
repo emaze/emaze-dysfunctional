@@ -38,6 +38,12 @@ public class RangeOpsTest {
         Range<Integer> rhs = r(4, 10);
         Assert.assertEquals(r(p(0, 3), p(11, 20)), RangeOps.difference(sequencer, comparator, lhs, rhs));
     }
+    
+    @Test
+    public void canPerformDifferenceOnSelf() {
+        Range<Integer> x = r(0, 20);
+        Assert.assertEquals(r(0,0), RangeOps.difference(sequencer, comparator, x, x));
+    }
 
     @Test
     @Ignore // TODO: needs support for empty range

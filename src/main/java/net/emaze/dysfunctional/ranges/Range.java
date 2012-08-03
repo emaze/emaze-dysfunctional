@@ -13,5 +13,6 @@ public interface Range<T> extends Iterable<T>, Comparable<Range<T>> {
     boolean overlaps(Range<T> rhs);
     T first();
     Maybe<T> afterLast();
+    boolean isEmpty();
     List<DenseRange<T>> densified();
 }
