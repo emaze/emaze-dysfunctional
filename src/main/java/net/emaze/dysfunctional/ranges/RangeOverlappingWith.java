@@ -7,11 +7,11 @@ import net.emaze.dysfunctional.dispatching.logic.Predicate;
  * @param <T> 
  * @author rferranti
  */
-public class RangeNotOverlappingWith<T> implements Predicate<DenseRange<T>> {
+public class RangeOverlappingWith<T> implements Predicate<DenseRange<T>> {
 
     private final Range<T> other;
 
-    public RangeNotOverlappingWith(Range<T> other) {
+    public RangeOverlappingWith(Range<T> other) {
         this.other = other;
     }
 

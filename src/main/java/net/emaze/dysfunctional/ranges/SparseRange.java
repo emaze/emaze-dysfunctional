@@ -92,7 +92,7 @@ public class SparseRange<T> implements Range<T> {
     @Override
     public boolean overlaps(final Range<T> other) {
         dbc.precondition(other != null, "checking for overlaps between a SparseRange<T> and null");
-        return new Any<DenseRange<T>>(new RangeNotOverlappingWith<T>(other)).accept(ranges.iterator());
+        return new Any<DenseRange<T>>(new RangeOverlappingWith<T>(other)).accept(ranges.iterator());
     }
 
     @Override
