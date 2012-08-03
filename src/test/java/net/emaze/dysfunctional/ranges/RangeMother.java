@@ -23,6 +23,10 @@ public class RangeMother {
     public static DenseRange<Integer> r(int lower, int upper) {
         return new DenseRange<Integer>(sequencer, comparator, lower, upper);
     }
+    
+    public static DenseRange<Integer> r(Endpoints endpoints, int lower, int upper) {
+        return new DenseRange<Integer>(sequencer, comparator, endpoints, lower, upper);
+    }
 
     public static Pair<Integer, Integer> p(int lower, int upper) {
         return Pair.of(lower, upper);

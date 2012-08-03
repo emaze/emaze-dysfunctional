@@ -32,6 +32,7 @@ public class RangeOps {
     }
 
     public static <T> Range<T> intersect(SequencingPolicy<T> sequencer, Comparator<T> comparator, Range<T> lhs, Range<T> rhs) {
+        // TODO: make O(N)
         final List<DenseRange<T>> intersection = new ArrayList<DenseRange<T>>();
         for (DenseRange<T> l : lhs.densified()) {
             for (DenseRange<T> r : rhs.densified()) {

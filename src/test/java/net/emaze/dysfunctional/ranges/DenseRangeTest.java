@@ -49,6 +49,20 @@ public class DenseRangeTest {
             DenseRange<Integer> latter = RangeMother.r(0, 2);
             Assert.assertFalse(former.equals(latter));
         }
+        
+        @Test
+        public void rangeIsEqualToEquivalentRangeWithDifferentRightEndpoint() {
+            DenseRange<Integer> former = RangeMother.r(Endpoints.IncludeBoth, 1, 2);
+            DenseRange<Integer> latter = RangeMother.r(Endpoints.IncludeLeft, 1, 3);
+            Assert.assertTrue(former.equals(latter));
+        }
+        
+        @Test
+        public void rangeIsEqualToEquivalentRangeWithDifferentLeftEndpoint() {
+            DenseRange<Integer> former = RangeMother.r(Endpoints.IncludeBoth, 1, 2);
+            DenseRange<Integer> latter = RangeMother.r(Endpoints.IncludeRight, 0, 2);
+            Assert.assertTrue(former.equals(latter));
+        }
 
         @Test
         public void rangesWithSameBoundsHaveSameOrder() {
@@ -79,6 +93,12 @@ public class DenseRangeTest {
         public void elementAfterUpperBoundIsNotContained() {
             DenseRange<Integer> range = RangeMother.r(1, 2);
             Assert.assertFalse(range.contains(3));
+        }
+        
+        @Test
+        public void upperBoundIsNotContainedIfRightOpen() {
+            DenseRange<Integer> range = RangeMother.r(Endpoints.IncludeLeft, 1, 2);
+            Assert.assertFalse(range.contains(2));
         }
     }
 
@@ -130,39 +150,5 @@ public class DenseRangeTest {
             c.compareTo(new Object());
         }   
         
-        @Test
-        public void madness() {
-            final IntegerSequencingPolicy seqPolicy = new IntegerSequencingPolicy();
-            final ComparableComparator<Integer> comparator = new ComparableComparator<Integer>();
-            DenseRange<Integer> a = new DenseRange<Integer>(seqPolicy, comparator, Endpoints.IncludeLeft, 0, 10);
-            DenseRange<Integer> b = new DenseRange<Integer>(seqPolicy, comparator, Endpoints.IncludeBoth, 10,20);
-            
-            Assert.assertFalse(a.overlaps(b));
-            
-        }
-        
-        
-        @Test
-        public void madness2() {
-            final IntegerSequencingPolicy seqPolicy = new IntegerSequencingPolicy();
-            final ComparableComparator<Integer> comparator = new ComparableComparator<Integer>();
-            DenseRange<Integer> a = new DenseRange<Integer>(seqPolicy, comparator, Endpoints.IncludeBoth, 0, 10);
-            DenseRange<Integer> b = new DenseRange<Integer>(seqPolicy, comparator, Endpoints.IncludeRight, 10, 20);
-            
-            Assert.assertFalse(a.overlaps(b));
-            
-        }
-        
-         @Test
-        public void madness3() {
-             final IntegerSequencingPolicy seqPolicy = new IntegerSequencingPolicy();
-            final ComparableComparator<Integer> comparator = new ComparableComparator<Integer>();
-            DenseRange<Integer> a = new DenseRange<Integer>(seqPolicy, comparator, Endpoints.IncludeLeft, 0, 10);
-            DenseRange<Integer> b = new DenseRange<Integer>(seqPolicy, comparator, Endpoints.IncludeRight, 10, 20);
-            final Range<Integer> union = RangeOps.union(seqPolicy, comparator, a, b);
-            System.out.println(union);
-            Assert.assertTrue(union instanceof SparseRange);
-            
-        }
     }
 }
