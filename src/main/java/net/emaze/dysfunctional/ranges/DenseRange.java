@@ -18,11 +18,18 @@ import net.emaze.dysfunctional.order.SequencingPolicy;
 public class DenseRange<T> implements Range<T> {
 
     private final SequencingPolicy<T> sequencer;
+    final T lower;
+    final T upper;
+    private final Endpoints endpoints;
     private final Comparator<T> comparator;
-    private final T lower;
-    private final T upper;
+    private final T first;
+    private final T afterLast;
 
     public DenseRange(SequencingPolicy<T> sequencer, Comparator<T> comparator, T lower, T upper) {
+        this(sequencer, comparator, Endpoints.IncludeBoth, lower, upper);
+    }
+
+    public DenseRange(SequencingPolicy<T> sequencer, Comparator<T> comparator, Endpoints endpoints, T lower, T upper) {
         dbc.precondition(sequencer != null, "trying to create a DenseRange<T> with a null SequencingPolicy<T>");
         dbc.precondition(comparator != null, "trying to create a DenseRange<T> with a null Comparator<T>");
         dbc.precondition(lower != null, "trying to create a DenseRange<T> with null lower bound");
@@ -30,24 +37,28 @@ public class DenseRange<T> implements Range<T> {
         dbc.precondition(Order.of(comparator, lower, upper) != Order.GT, "trying to create a DenseRange<T> a lower bound greater than upper bound");
         this.sequencer = sequencer;
         this.comparator = comparator;
+        this.endpoints = endpoints;
         this.lower = lower;
         this.upper = upper;
+
+        this.first = endpoints.includesLeft() ? lower : sequencer.next(lower);
+        this.afterLast = endpoints.includesRight() ? sequencer.next(upper) : upper;
     }
 
     @Override
     public boolean contains(T element) {
         dbc.precondition(element != null, "checking if null is contained in DenseRange<T>");
-        return Order.of(comparator, element, lower).isGte() && Order.of(comparator, element, upper).isLte();
+        return Order.of(comparator, element, first).isGte() && Order.of(comparator, element, afterLast).isLt();
     }
 
     @Override
-    public T lower() {
-        return lower;
+    public T first() {
+        return first;
     }
 
     @Override
-    public T upper() {
-        return upper;
+    public T afterLast() {
+        return afterLast;
     }
 
     @Override
@@ -58,7 +69,7 @@ public class DenseRange<T> implements Range<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new RangeIterator<T>(sequencer, comparator, lower, upper);
+        return new RangeIterator<T>(sequencer, comparator, endpoints, first, afterLast);
     }
 
     @Override
@@ -69,8 +80,8 @@ public class DenseRange<T> implements Range<T> {
         final DenseRange<T> other = (DenseRange<T>) rhs;
         return new EqualsBuilder().append(this.sequencer, other.sequencer).
                 append(this.comparator, other.comparator).
-                append(this.lower, other.lower).
-                append(this.upper, other.upper).
+                append(this.first, other.first).
+                append(this.afterLast, other.afterLast).
                 isEquals();
     }
 
@@ -78,14 +89,14 @@ public class DenseRange<T> implements Range<T> {
     public int hashCode() {
         return new HashCodeBuilder().append(sequencer).
                 append(comparator).
-                append(lower).
-                append(upper).
+                append(first).
+                append(afterLast).
                 toHashCode();
     }
 
     @Override
     public String toString() {
-        return String.format("%s-%s", lower, upper);
+        return endpoints.stringify(this);
     }
 
     /**
@@ -102,7 +113,7 @@ public class DenseRange<T> implements Range<T> {
         if (other instanceof DenseRange == false) {
             return other.overlaps(this);
         }
-        if (Order.of(comparator, this.lower(), other.upper()) == Order.GT || Order.of(comparator, other.lower(), this.upper()) == Order.GT) {
+        if (Order.of(comparator, this.first(), other.afterLast()).isGte() || Order.of(comparator, other.first(), this.afterLast()).isGte()) {
             return false;
         }
         return true;

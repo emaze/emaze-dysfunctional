@@ -45,13 +45,13 @@ public class SparseRange<T> implements Range<T> {
     }
 
     @Override
-    public T lower() {
-        return ranges.get(0).lower();
+    public T first() {
+        return ranges.get(0).first();
     }
 
     @Override
-    public T upper() {
-        return ranges.get(ranges.size() - 1).upper();
+    public T afterLast() {
+        return ranges.get(ranges.size() - 1).afterLast();
     }
 
     @Override

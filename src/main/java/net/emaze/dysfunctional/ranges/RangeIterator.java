@@ -20,7 +20,7 @@ public class RangeIterator<T> implements Iterator<T> {
     private T current;
     private final T upTo;
 
-    public RangeIterator(SequencingPolicy<T> policy, Comparator<T> comparator, T start, T upTo) {
+    public RangeIterator(SequencingPolicy<T> policy, Comparator<T> comparator, Endpoints endpoints, T start, T upTo) {
         dbc.precondition(policy != null, "trying to create a RangeIterator from a null policy");
         dbc.precondition(comparator != null, "trying to create a RangeIterator from a null comparator");
         dbc.precondition(start != null, "trying to create a RangeIterator from a null start");
@@ -33,7 +33,7 @@ public class RangeIterator<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        return Order.of(comparator, current, upTo).isLte();
+        return Order.of(comparator, current, upTo).isLt();
     }
 
     @Override

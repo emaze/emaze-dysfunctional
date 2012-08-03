@@ -1,4 +1,5 @@
 package net.emaze.dysfunctional.ranges;
+import net.emaze.dysfunctional.order.Order;
 
 public enum Endpoints {
 
@@ -10,18 +11,30 @@ public enum Endpoints {
         this.left = left;
         this.right = right;
     }
+    
+    public static Endpoints from(boolean left, boolean right) {
+        return left ? (right ? IncludeBoth : IncludeLeft) : (right ? IncludeRight : IncludeNone);
+    }
 
     public <T> String stringify(DenseRange<T> range){
         final String leftGlyph = left ? "[" : "(";
         final String rightGlyph = right ? "]" : ")";
-        return String.format("%s%s-%s%s", leftGlyph, range.lower(), range.upper(), rightGlyph);
+        return String.format("%s%s-%s%s", leftGlyph, range.lower, range.upper, rightGlyph);
     }
 
-    public boolean includeLeftEndpoint() {
+    public <T> boolean leftAccepts(Order o) {
+        return o.isGt() || (left && o.isEq());
+    }
+
+    public boolean rightAccepts(Order o) {
+        return o.isLt() || (right && o.isEq());
+    }
+    
+    public boolean includesLeft() {
         return left;
     }
-
-    public boolean includeRightEndpoint() {
+    
+    public boolean includesRight() {
         return right;
     }
 

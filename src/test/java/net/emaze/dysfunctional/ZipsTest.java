@@ -8,6 +8,7 @@ import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.order.ComparableComparator;
 import net.emaze.dysfunctional.order.IntegerSequencingPolicy;
 import net.emaze.dysfunctional.ranges.DenseRange;
+import net.emaze.dysfunctional.ranges.Endpoints;
 import net.emaze.dysfunctional.ranges.Range;
 import net.emaze.dysfunctional.tuples.Pair;
 import org.junit.Assert;
@@ -213,12 +214,12 @@ public class ZipsTest {
         }
 
         @Override
-        public Object lower() {
+        public Object first() {
             return null;
         }
 
         @Override
-        public Object upper() {
+        public Object afterLast() {
             return null;
         }
 

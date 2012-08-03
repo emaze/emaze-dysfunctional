@@ -1,6 +1,8 @@
 package net.emaze.dysfunctional.ranges;
 
 import java.util.Arrays;
+import net.emaze.dysfunctional.order.ComparableComparator;
+import net.emaze.dysfunctional.order.IntegerSequencingPolicy;
 import net.emaze.dysfunctional.order.Order;
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,7 +29,7 @@ public class DenseRangeTest {
 
         @Test
         public void toStringReflectsRange() {
-            Assert.assertEquals("0-10", RangeMother.r(0, 10).toString());
+            Assert.assertEquals("[0-10]", RangeMother.r(0, 10).toString());
         }
 
         @Test
@@ -126,6 +128,41 @@ public class DenseRangeTest {
         public void callingErasureWithWrongTypeYieldsException() {
             Comparable c = RangeMother.r(0, 10);
             c.compareTo(new Object());
-        }        
+        }   
+        
+        @Test
+        public void madness() {
+            final IntegerSequencingPolicy seqPolicy = new IntegerSequencingPolicy();
+            final ComparableComparator<Integer> comparator = new ComparableComparator<Integer>();
+            DenseRange<Integer> a = new DenseRange<Integer>(seqPolicy, comparator, Endpoints.IncludeLeft, 0, 10);
+            DenseRange<Integer> b = new DenseRange<Integer>(seqPolicy, comparator, Endpoints.IncludeBoth, 10,20);
+            
+            Assert.assertFalse(a.overlaps(b));
+            
+        }
+        
+        
+        @Test
+        public void madness2() {
+            final IntegerSequencingPolicy seqPolicy = new IntegerSequencingPolicy();
+            final ComparableComparator<Integer> comparator = new ComparableComparator<Integer>();
+            DenseRange<Integer> a = new DenseRange<Integer>(seqPolicy, comparator, Endpoints.IncludeBoth, 0, 10);
+            DenseRange<Integer> b = new DenseRange<Integer>(seqPolicy, comparator, Endpoints.IncludeRight, 10, 20);
+            
+            Assert.assertFalse(a.overlaps(b));
+            
+        }
+        
+         @Test
+        public void madness3() {
+             final IntegerSequencingPolicy seqPolicy = new IntegerSequencingPolicy();
+            final ComparableComparator<Integer> comparator = new ComparableComparator<Integer>();
+            DenseRange<Integer> a = new DenseRange<Integer>(seqPolicy, comparator, Endpoints.IncludeLeft, 0, 10);
+            DenseRange<Integer> b = new DenseRange<Integer>(seqPolicy, comparator, Endpoints.IncludeRight, 10, 20);
+            final Range<Integer> union = RangeOps.union(seqPolicy, comparator, a, b);
+            System.out.println(union);
+            Assert.assertTrue(union instanceof SparseRange);
+            
+        }
     }
 }

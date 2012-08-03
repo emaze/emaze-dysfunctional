@@ -38,7 +38,7 @@ public class SortedNonOverlappingRangesTransformer<T> implements Delegate<List<D
         while (iter.hasNext()) {
             final DenseRange<T> next = iter.next();
             if (canBeMerged(current, next)) {
-                current = new DenseRange<T>(sequencer, comparator, current.lower(), new Max<T>(comparator).perform(current.upper(), next.upper()));
+                current = new DenseRange<T>(sequencer, comparator, Endpoints.IncludeLeft, current.first(), new Max<T>(comparator).perform(current.afterLast(), next.afterLast()));
             } else {
                 sortedNonOverlappingRanges.add(current);
                 current = next;
@@ -56,6 +56,6 @@ public class SortedNonOverlappingRangesTransformer<T> implements Delegate<List<D
      * @return true if the two ranges can be merged
      */
     private boolean canBeMerged(DenseRange<T> current, DenseRange<T> next) {
-        return Order.of(comparator, sequencer.next(current.upper()), next.lower()) == Order.EQ || current.overlaps(next);
+        return Order.of(comparator, current.afterLast(), next.first()) == Order.EQ || current.overlaps(next);
     }
 }

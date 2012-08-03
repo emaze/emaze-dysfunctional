@@ -12,12 +12,12 @@ public class RangeIteratorTest {
 
     @Test
     public void hasNextWhenInRange() {
-        Iterator<Integer> iter = new RangeIterator<Integer>(RangeMother.sequencer, RangeMother.comparator, 0, 0);
+        Iterator<Integer> iter = new RangeIterator<Integer>(RangeMother.sequencer, RangeMother.comparator, Endpoints.IncludeBoth, 0, 1);
         Assert.assertTrue(iter.hasNext());
     }
     @Test
     public void hasNoNextWhenConsumed() {
-        Iterator<Integer> iter = new RangeIterator<Integer>(RangeMother.sequencer, RangeMother.comparator, 0, 0);
+        Iterator<Integer> iter = new RangeIterator<Integer>(RangeMother.sequencer, RangeMother.comparator, Endpoints.IncludeBoth, 0, 1);
         iter.next();
         Assert.assertFalse(iter.hasNext());
     }
@@ -25,21 +25,21 @@ public class RangeIteratorTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingRangeIterWithNullSequencingPolicyYieldsException() {
-        new RangeIterator<Integer>(null, RangeMother.comparator, 0, 1);
+        new RangeIterator<Integer>(null, RangeMother.comparator, Endpoints.IncludeBoth, 0, 1);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingRangeIterWithNullComparatorYieldsException() {
-        new RangeIterator<Integer>(RangeMother.sequencer, null, 0, 1);
+        new RangeIterator<Integer>(RangeMother.sequencer, null, Endpoints.IncludeBoth, 0, 1);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingRangeIterWithNullLowerBoundYieldsException() {
-        new RangeIterator<Integer>(RangeMother.sequencer, RangeMother.comparator, null, 1);
+        new RangeIterator<Integer>(RangeMother.sequencer, RangeMother.comparator, Endpoints.IncludeBoth, null, 1);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingRangeIterWithNullUpperBoundYieldsException() {
-        new RangeIterator<Integer>(RangeMother.sequencer, RangeMother.comparator, 0, null);
+        new RangeIterator<Integer>(RangeMother.sequencer, RangeMother.comparator, Endpoints.IncludeBoth, 0, null);
     }
 }

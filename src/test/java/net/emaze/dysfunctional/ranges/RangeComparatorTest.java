@@ -24,15 +24,15 @@ public class RangeComparatorTest {
         }
 
         @Override
-        public Integer lower() {
+        public Integer first() {
             return lower;
         }
 
         @Override
-        public Integer upper() {
+        public Integer afterLast() {
             return upper;
         }
-
+        
         @Override
         public boolean contains(Integer element) {
             throw new UnsupportedOperationException("Not supported yet.");

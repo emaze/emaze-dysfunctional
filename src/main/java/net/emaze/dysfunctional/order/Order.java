@@ -19,12 +19,24 @@ public enum Order {
         return order;
     }
 
+    public boolean isEq() {
+        return this == EQ;
+    }
+    
     public boolean isLte() {
         return this == LT || this == EQ;
     }
 
     public boolean isGte() {
         return this == GT || this == EQ;
+    }
+    
+     public boolean isLt() {
+        return this == LT;
+    }
+
+    public boolean isGt() {
+        return this == GT;
     }
 
     public static Order of(int order) {

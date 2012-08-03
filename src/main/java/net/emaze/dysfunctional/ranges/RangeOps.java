@@ -38,9 +38,9 @@ public class RangeOps {
                     continue;
                 }
                 final MakeOrder<T> makeOrder = new MakeOrder<T>(comparator);
-                final Pair<T, T> orderedLowerBounds = makeOrder.perform(l.lower(), r.lower());
-                final Pair<T, T> orderedUpperBounds = makeOrder.perform(l.upper(), r.upper());
-                intersection.add(new DenseRange<T>(sequencer, comparator, orderedLowerBounds.second(), orderedUpperBounds.first()));
+                final Pair<T, T> orderedLowerBounds = makeOrder.perform(l.first(), r.first());
+                final Pair<T, T> orderedUpperBounds = makeOrder.perform(l.afterLast(), r.afterLast());
+                intersection.add(new DenseRange<T>(sequencer, comparator, Endpoints.IncludeLeft, orderedLowerBounds.second(), orderedUpperBounds.first()));
             }
         }
         final SortedNonOverlappingRangesTransformer<T> transformer = new SortedNonOverlappingRangesTransformer<T>(sequencer, comparator);
@@ -69,11 +69,11 @@ public class RangeOps {
         }
         final List<DenseRange<T>> difference = new ArrayList<DenseRange<T>>();
         
-        if (Order.of(comparator, lhs.lower(), rhs.lower()) == Order.LT) {
-            difference.add(new DenseRange<T>(sequencer, comparator, lhs.lower(), sequencer.prev(rhs.lower())));
+        if (Order.of(comparator, lhs.first(), rhs.first()) == Order.LT) {
+            difference.add(new DenseRange<T>(sequencer, comparator, Endpoints.IncludeLeft, lhs.first(), rhs.first()));
         }
-        if (Order.of(comparator, lhs.upper(), rhs.upper()) == Order.GT) {
-            difference.add(new DenseRange<T>(sequencer, comparator, sequencer.next(rhs.upper()), lhs.upper()));
+        if (Order.of(comparator, lhs.afterLast(), rhs.afterLast()) == Order.GT) {
+            difference.add(new DenseRange<T>(sequencer, comparator, Endpoints.IncludeLeft, rhs.afterLast(), lhs.afterLast()));
         }
         return difference;
     }

@@ -22,21 +22,21 @@ public class EndpointsTest {
 
     @Test
     public void includingBothIncludesLeftEndpoint() {
-        Assert.assertTrue(Endpoints.IncludeBoth.includeLeftEndpoint());
+        Assert.assertTrue(Endpoints.IncludeBoth.includesLeft());
     }
 
     @Test
     public void includingBothIncludesRightEndpoint() {
-        Assert.assertTrue(Endpoints.IncludeBoth.includeRightEndpoint());
+        Assert.assertTrue(Endpoints.IncludeBoth.includesRight());
     }
 
     @Test
     public void excludingBothDoesntIncludRightEndpoint() {
-        Assert.assertFalse(Endpoints.IncludeNone.includeRightEndpoint());
+        Assert.assertFalse(Endpoints.IncludeNone.includesRight());
     }
 
     @Test
     public void excludingBothDoesntIncludLeftEndpoint() {
-        Assert.assertFalse(Endpoints.IncludeNone.includeLeftEndpoint());
+        Assert.assertFalse(Endpoints.IncludeNone.includesLeft());
     }
 }

@@ -68,13 +68,13 @@ public class SparseRangeTest {
         @Test
         public void lowestRangeLowerBoundIsLowerBound() {
             SparseRange<Integer> range = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(2, 3), RangeMother.r(0, 1));
-            Assert.assertEquals(Integer.valueOf(0), range.lower());
+            Assert.assertEquals(Integer.valueOf(0), range.first());
         }
 
         @Test
-        public void upperRangeUpperBoundIsUpperBound() {
+        public void upperRangeAfterLastIsAfterLast() {
             SparseRange<Integer> range = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(2, 3), RangeMother.r(0, 1));
-            Assert.assertEquals(Integer.valueOf(3), range.upper());
+            Assert.assertEquals(Integer.valueOf(4), range.afterLast());
         }
 
         @Test
@@ -86,7 +86,7 @@ public class SparseRangeTest {
         @Test
         public void toStringShowsDensifiedRanges() {
             SparseRange<Integer> sr = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(0, 1), RangeMother.r(1, 2), RangeMother.r(4, 5));
-            Assert.assertEquals("[0-2,4-5]", sr.toString());
+            Assert.assertEquals("[[0-3),[4-5]]", sr.toString());
         }
     }
 
