@@ -4,7 +4,7 @@
     <groupId>net.emaze</groupId>
     <artifactId>emaze-dysfunctional</artifactId>
     <packaging>jar</packaging>
-    <version>4.0</version>
+    <version>4.1-SNAPSHOT</version>
     <name>emaze-dysfunctional</name>
     <description>A functional library for java</description>
     <licenses>
@@ -41,6 +41,6 @@
     <scm>
         <connection>scm:hg:https://bitbucket.org/rferranti/emaze-dysfunctional</connection>
         <developerConnection>scm:hg:file://${basedir}</developerConnection>
-      <tag>4.0</tag>
+      <tag>HEAD</tag>
   </scm>
 </project>
