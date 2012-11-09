@@ -8,27 +8,21 @@ import net.emaze.dysfunctional.options.Maybe;
  *
  * @author rferranti
  */
-public class LongSequencingPolicy implements SequencingPolicy<Long> {
+public class NextLongSequencingPolicy implements SequencingPolicy<Long> {
 
     @Override
     public Maybe<Long> next(Long element) {
-        dbc.precondition(element != null, "cannot get next of null from a LongSequencingPolicy");
+        dbc.precondition(element != null, "cannot get next of null from a NextLongSequencingPolicy");
         return element.equals(Long.MAX_VALUE) ? Maybe.<Long>nothing() : Maybe.just(element + 1);
     }
 
     @Override
-    public Long prev(Long element) {
-        dbc.precondition(element != null, "cannot get prev of null from a LongSequencingPolicy");
-        return element - 1;
-    }
-
-    @Override
     public int hashCode() {
-        return LongSequencingPolicy.class.hashCode();
+        return NextLongSequencingPolicy.class.hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof LongSequencingPolicy;
+        return obj instanceof NextLongSequencingPolicy;
     }
 }

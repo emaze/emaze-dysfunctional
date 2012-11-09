@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.ranges;
 
 import java.util.Arrays;
 import net.emaze.dysfunctional.order.ComparableComparator;
-import net.emaze.dysfunctional.order.IntegerSequencingPolicy;
+import net.emaze.dysfunctional.order.NextIntegerSequencingPolicy;
 import net.emaze.dysfunctional.order.Order;
 import org.junit.Assert;
 import org.junit.Test;

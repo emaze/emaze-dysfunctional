@@ -13,7 +13,7 @@ import net.emaze.dysfunctional.options.Maybe;
  *
  * @author rferranti
  */
-public class InetAddressPolicy implements SequencingPolicy<Inet4Address>, Comparator<Inet4Address>, Serializable {
+public class NextInetAddressSequencingPolicy implements SequencingPolicy<Inet4Address>, Comparator<Inet4Address>, Serializable {
 
     private static final long serialVersionUID = 1l;
     private static final Delegate<Inet4Address, Long> LONG_TO_ADDRESS = new LongToInet4Address();
@@ -21,13 +21,11 @@ public class InetAddressPolicy implements SequencingPolicy<Inet4Address>, Compar
 
     @Override
     public Maybe<Inet4Address> next(Inet4Address element) {
-        final Long longElement = ADDRESS_TO_LONG.perform(element);
-        return (longElement.equals(1>>32-1)) ? Maybe.<Inet4Address>nothing() : Maybe.just(LONG_TO_ADDRESS.perform(ADDRESS_TO_LONG.perform(element) + 1));
-    }
-
-    @Override
-    public Inet4Address prev(Inet4Address element) {
-        return LONG_TO_ADDRESS.perform(ADDRESS_TO_LONG.perform(element) - 1);
+        final long longElement = ADDRESS_TO_LONG.perform(element);
+        if (0xffffffff == longElement) {
+            return Maybe.nothing();
+        }
+        return Maybe.just(LONG_TO_ADDRESS.perform(longElement + 1));
     }
 
     @Override
@@ -39,11 +37,11 @@ public class InetAddressPolicy implements SequencingPolicy<Inet4Address>, Compar
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof InetAddressPolicy;
+        return obj instanceof NextInetAddressSequencingPolicy;
     }
 
     @Override
     public int hashCode() {
-        return InetAddressPolicy.class.hashCode();
+        return NextInetAddressSequencingPolicy.class.hashCode();
     }
 }

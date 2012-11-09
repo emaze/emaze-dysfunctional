@@ -9,7 +9,7 @@ import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 import net.emaze.dysfunctional.iterations.TransformingIterator;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.options.MaybeIteratorTransformer;
-import net.emaze.dysfunctional.order.IntegerSequencingPolicy;
+import net.emaze.dysfunctional.order.NextIntegerSequencingPolicy;
 import net.emaze.dysfunctional.order.PeriodicIterator;
 import net.emaze.dysfunctional.order.PeriodicSequencingPolicy;
 import net.emaze.dysfunctional.reductions.Any;
@@ -31,7 +31,7 @@ public class PreciseMultiplexingIterator<E> extends ReadOnlyIterator<Maybe<E>> {
         while (transformed.hasNext()) {
             this.iterators.add(transformed.next());
         }
-        final PeriodicSequencingPolicy<Integer> period = new PeriodicSequencingPolicy<Integer>(new IntegerSequencingPolicy(), 0, this.iterators.size() - 1);
+        final PeriodicSequencingPolicy<Integer> period = new PeriodicSequencingPolicy<Integer>(new NextIntegerSequencingPolicy(), 0, this.iterators.size() - 1);
         this.indexSelector = new PeriodicIterator<Integer>(period, 0);
     }
 

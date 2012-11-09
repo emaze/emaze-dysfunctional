@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.order.ComparableComparator;
-import net.emaze.dysfunctional.order.IntegerSequencingPolicy;
+import net.emaze.dysfunctional.order.NextIntegerSequencingPolicy;
 import net.emaze.dysfunctional.ranges.DenseRange;
 import net.emaze.dysfunctional.ranges.Endpoints;
 import net.emaze.dysfunctional.ranges.Range;
@@ -134,7 +134,7 @@ public class ZipsTest {
 
     @Test
     public void canMakeAnIterableCountedWithRange() {
-        final Range<Integer> range = new DenseRange<Integer>(new IntegerSequencingPolicy(), new ComparableComparator<Integer>(), Endpoints.IncludeBoth, 1, 10);
+        final Range<Integer> range = new DenseRange<Integer>(new NextIntegerSequencingPolicy(), new ComparableComparator<Integer>(), Endpoints.IncludeBoth, 1, 10);
         final Iterable<String> bucket = Iterations.iterable("a", "b");
         final Iterator<Pair<Integer, String>> iterator = Zips.counted(bucket, range);
         final Iterator<Pair<Integer, String>> expected = Iterations.iterator(Pair.of(1, "a"), Pair.of(2, "b"));
@@ -151,7 +151,7 @@ public class ZipsTest {
 
     @Test
     public void canMakeAnIteratorCountedWithRange() {
-        final Range<Integer> range = new DenseRange<Integer>(new IntegerSequencingPolicy(), new ComparableComparator<Integer>(), Endpoints.IncludeBoth, 1, 10);
+        final Range<Integer> range = new DenseRange<Integer>(new NextIntegerSequencingPolicy(), new ComparableComparator<Integer>(), Endpoints.IncludeBoth, 1, 10);
         final Iterator<String> bucket = Iterations.iterator("a", "b");
         final Iterator<Pair<Integer, String>> iterator = Zips.counted(bucket, range);
         final Iterator<Pair<Integer, String>> expected = Iterations.iterator(Pair.of(1, "a"), Pair.of(2, "b"));
@@ -168,7 +168,7 @@ public class ZipsTest {
 
     @Test
     public void canMakeAnArrayCountedWithRange() {
-        final Range<Integer> range = new DenseRange<Integer>(new IntegerSequencingPolicy(), new ComparableComparator<Integer>(), Endpoints.IncludeBoth, 1, 10);
+        final Range<Integer> range = new DenseRange<Integer>(new NextIntegerSequencingPolicy(), new ComparableComparator<Integer>(), Endpoints.IncludeBoth, 1, 10);
         final String[] bucket = {"a", "b"};
         final Iterator<Pair<Integer, String>> iterator = Zips.counted(bucket, range);
         final Iterator<Pair<Integer, String>> expected = Iterations.iterator(Pair.of(1, "a"), Pair.of(2, "b"));

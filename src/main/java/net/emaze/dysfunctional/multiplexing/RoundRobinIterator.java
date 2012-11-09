@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.HasNext;
 import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
-import net.emaze.dysfunctional.order.IntegerSequencingPolicy;
+import net.emaze.dysfunctional.order.NextIntegerSequencingPolicy;
 import net.emaze.dysfunctional.order.PeriodicIterator;
 import net.emaze.dysfunctional.order.PeriodicSequencingPolicy;
 import net.emaze.dysfunctional.reductions.Any;
@@ -31,7 +31,7 @@ public class RoundRobinIterator<E> extends ReadOnlyIterator<E> {
         while (iterators.hasNext()) {
             this.iterators.add(iterators.next());
         }
-        final PeriodicSequencingPolicy<Integer> period = new PeriodicSequencingPolicy<Integer>(new IntegerSequencingPolicy(), 0, this.iterators.size() - 1);
+        final PeriodicSequencingPolicy<Integer> period = new PeriodicSequencingPolicy<Integer>(new NextIntegerSequencingPolicy(), 0, this.iterators.size() - 1);
         this.indexSelector = new PeriodicIterator<Integer>(period, 0);
     }
 

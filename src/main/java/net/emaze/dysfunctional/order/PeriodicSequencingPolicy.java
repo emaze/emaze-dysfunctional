@@ -24,9 +24,4 @@ public class PeriodicSequencingPolicy<T> implements SequencingPolicy<T> {
     public Maybe<T> next(T element) {
         return element.equals(upper) ? Maybe.just(lower) : inner.next(element);
     }
-
-    @Override
-    public T prev(T element) {
-        return element.equals(lower) ? upper : inner.prev(element);
-    }
 }

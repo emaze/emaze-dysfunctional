@@ -7,7 +7,7 @@ import net.emaze.dysfunctional.Applications;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.order.ComparableComparator;
-import net.emaze.dysfunctional.order.IntegerSequencingPolicy;
+import net.emaze.dysfunctional.order.NextIntegerSequencingPolicy;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 import net.emaze.dysfunctional.tuples.Pair;
 
@@ -17,7 +17,7 @@ import net.emaze.dysfunctional.tuples.Pair;
  */
 public class RangeMother {
 
-    public static final SequencingPolicy<Integer> sequencer = new IntegerSequencingPolicy();
+    public static final SequencingPolicy<Integer> sequencer = new NextIntegerSequencingPolicy();
     public static final Comparator<Integer> comparator = new ComparableComparator<Integer>();
 
     public static DenseRange<Integer> r(int lower, int upper) {
