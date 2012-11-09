@@ -11,6 +11,7 @@ import net.emaze.dysfunctional.order.ComparableComparator;
 import net.emaze.dysfunctional.order.IntegerSequencingPolicy;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 import net.emaze.dysfunctional.ranges.DenseRange;
+import net.emaze.dysfunctional.ranges.Endpoints;
 import net.emaze.dysfunctional.ranges.Range;
 import net.emaze.dysfunctional.tuples.Pair;
 
@@ -173,7 +174,7 @@ public abstract class Zips {
     public static <T> Iterator<Pair<Integer, T>> counted(Iterator<T> iterator) {
         final SequencingPolicy<Integer> sequencer = new IntegerSequencingPolicy();
         final Comparator<Integer> comparator = new ComparableComparator<Integer>();
-        final Range<Integer> range = new DenseRange<Integer>(sequencer, comparator, 0, Integer.MAX_VALUE);
+        final Range<Integer> range = new DenseRange<Integer>(sequencer, comparator, Endpoints.IncludeBoth, 0, Integer.MAX_VALUE);
         return new ZipShortestIterator<Integer, T>(range.iterator(), iterator);
     }
 
@@ -193,7 +194,7 @@ public abstract class Zips {
         dbc.precondition(iterable != null, "cannot call counted with a null iterable");
         final SequencingPolicy<Integer> sequencer = new IntegerSequencingPolicy();
         final Comparator<Integer> comparator = new ComparableComparator<Integer>();
-        final Range<Integer> range = new DenseRange<Integer>(sequencer, comparator, 0, Integer.MAX_VALUE);
+        final Range<Integer> range = new DenseRange<Integer>(sequencer, comparator, Endpoints.IncludeBoth, 0, Integer.MAX_VALUE);
         return new ZipShortestIterator<Integer, T>(range.iterator(), iterable.iterator());
     }
 
@@ -232,7 +233,7 @@ public abstract class Zips {
         dbc.precondition(array != null, "cannot call counted with a null array");
         final SequencingPolicy<Integer> sequencer = new IntegerSequencingPolicy();
         final Comparator<Integer> comparator = new ComparableComparator<Integer>();
-        final Range<Integer> range = new DenseRange<Integer>(sequencer, comparator, 0, Integer.MAX_VALUE);
+        final Range<Integer> range = new DenseRange<Integer>(sequencer, comparator, Endpoints.IncludeBoth, 0, Integer.MAX_VALUE);
         return new ZipShortestIterator<Integer, T>(range.iterator(), new ArrayIterator<T>(array));
     }
 

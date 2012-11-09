@@ -1,6 +1,5 @@
 package net.emaze.dysfunctional.ranges;
 
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -25,15 +24,6 @@ public class SparseRange<T> implements Range<T> {
 
     private final List<DenseRange<T>> ranges;
     private final Comparator<T> comparator;
-
-    public SparseRange(SequencingPolicy<T> sequencer, Comparator<T> comparator, DenseRange<T>... ranges) {
-        dbc.precondition(sequencer != null, "trying to create a SparseRange<T> with a null SequencingPolicy<T>");
-        dbc.precondition(comparator != null, "trying to create a SparseRange<T> with a null Comparator<T>");
-        dbc.precondition(ranges != null, "trying to create a SparseRange<T> from null ranges");
-        dbc.precondition(ranges.length != 0, "trying to create a SparseRange<T> from zero ranges");
-        this.ranges = new SortedNonOverlappingRangesTransformer<T>(sequencer, comparator).perform(Arrays.asList(ranges));
-        this.comparator = comparator;
-    }
 
     public SparseRange(SequencingPolicy<T> sequencer, Comparator<T> comparator, List<DenseRange<T>> ranges) {
         dbc.precondition(sequencer != null, "trying to create a SparseRange<T> with a null SequencingPolicy<T>");
@@ -69,12 +59,10 @@ public class SparseRange<T> implements Range<T> {
     @Override
     public boolean isEmpty() {
         return new Every<DenseRange<T>>(new Predicate<DenseRange<T>>() {
-
             @Override
             public boolean accept(DenseRange<T> element) {
                 return element.isEmpty();
             }
-            
         }).accept(ranges.iterator());
     }
 

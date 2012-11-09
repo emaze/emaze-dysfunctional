@@ -21,7 +21,7 @@ public class RangeMother {
     public static final Comparator<Integer> comparator = new ComparableComparator<Integer>();
 
     public static DenseRange<Integer> r(int lower, int upper) {
-        return new DenseRange<Integer>(sequencer, comparator, lower, upper);
+        return new DenseRange<Integer>(sequencer, comparator, Endpoints.IncludeBoth, lower, upper);
     }
     
     public static DenseRange<Integer> r(Endpoints endpoints, int lower, int upper) {
@@ -49,7 +49,7 @@ public class RangeMother {
 
             @Override
             public DenseRange<Integer> perform(Pair<Integer, Integer> pair) {
-                return new DenseRange<Integer>(sequencer, comparator, pair.first(), pair.second());
+                return new DenseRange<Integer>(sequencer, comparator, Endpoints.IncludeBoth, pair.first(), pair.second());
             }
         });
         return new SparseRange<Integer>(sequencer, comparator, Consumers.all(ranges));

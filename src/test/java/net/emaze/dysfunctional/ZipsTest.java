@@ -134,7 +134,7 @@ public class ZipsTest {
 
     @Test
     public void canMakeAnIterableCountedWithRange() {
-        final Range<Integer> range = new DenseRange<Integer>(new IntegerSequencingPolicy(), new ComparableComparator<Integer>(), 1, 10);
+        final Range<Integer> range = new DenseRange<Integer>(new IntegerSequencingPolicy(), new ComparableComparator<Integer>(), Endpoints.IncludeBoth, 1, 10);
         final Iterable<String> bucket = Iterations.iterable("a", "b");
         final Iterator<Pair<Integer, String>> iterator = Zips.counted(bucket, range);
         final Iterator<Pair<Integer, String>> expected = Iterations.iterator(Pair.of(1, "a"), Pair.of(2, "b"));
@@ -151,7 +151,7 @@ public class ZipsTest {
 
     @Test
     public void canMakeAnIteratorCountedWithRange() {
-        final Range<Integer> range = new DenseRange<Integer>(new IntegerSequencingPolicy(), new ComparableComparator<Integer>(), 1, 10);
+        final Range<Integer> range = new DenseRange<Integer>(new IntegerSequencingPolicy(), new ComparableComparator<Integer>(), Endpoints.IncludeBoth, 1, 10);
         final Iterator<String> bucket = Iterations.iterator("a", "b");
         final Iterator<Pair<Integer, String>> iterator = Zips.counted(bucket, range);
         final Iterator<Pair<Integer, String>> expected = Iterations.iterator(Pair.of(1, "a"), Pair.of(2, "b"));
@@ -168,7 +168,7 @@ public class ZipsTest {
 
     @Test
     public void canMakeAnArrayCountedWithRange() {
-        final Range<Integer> range = new DenseRange<Integer>(new IntegerSequencingPolicy(), new ComparableComparator<Integer>(), 1, 10);
+        final Range<Integer> range = new DenseRange<Integer>(new IntegerSequencingPolicy(), new ComparableComparator<Integer>(), Endpoints.IncludeBoth, 1, 10);
         final String[] bucket = {"a", "b"};
         final Iterator<Pair<Integer, String>> iterator = Zips.counted(bucket, range);
         final Iterator<Pair<Integer, String>> expected = Iterations.iterator(Pair.of(1, "a"), Pair.of(2, "b"));

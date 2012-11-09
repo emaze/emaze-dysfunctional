@@ -26,10 +26,6 @@ public class DenseRange<T> implements Range<T> {
     private final Comparator<Maybe<T>> comparator;
     private final T first;
     private final Maybe<T> afterLast;
-
-    public DenseRange(SequencingPolicy<T> sequencer, Comparator<T> comparator, T lower, T upper) {
-        this(sequencer, comparator, Endpoints.IncludeBoth, lower, upper);
-    }
     
     public DenseRange(SequencingPolicy<T> sequencer, Comparator<T> comparator, Endpoints endpoints, T lower, T upper) {
         dbc.precondition(sequencer != null, "trying to create a DenseRange<T> with a null SequencingPolicy<T>");
@@ -47,7 +43,7 @@ public class DenseRange<T> implements Range<T> {
         this.first = endpoints.includesLeft() ? lower : sequencer.next(lower).value();
         this.afterLast = endpoints.includesRight() ? sequencer.next(upper) : Maybe.just(upper);
     }
-    
+
     DenseRange(SequencingPolicy<T> sequencer, Comparator<T> comparator, T first) {
         this.sequencer = sequencer;
         this.innerComparator = comparator;

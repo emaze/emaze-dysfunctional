@@ -106,27 +106,27 @@ public class DenseRangeTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingDenseRangeWithNullSequencerYieldsException() {
-            new DenseRange<Integer>(null, RangeMother.comparator, 0, 1);
+            new DenseRange<Integer>(null, RangeMother.comparator, Endpoints.IncludeBoth, 0, 1);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingDenseRangeWithNullComparatorYieldsException() {
-            new DenseRange<Integer>(RangeMother.sequencer, null, 0, 1);
+            new DenseRange<Integer>(RangeMother.sequencer, null, Endpoints.IncludeBoth, 0, 1);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingDenseRangeWithNullLowerBoundYieldsException() {
-            new DenseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, null, 1);
+            new DenseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Endpoints.IncludeBoth, null, 1);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingDenseRangeWithNullUpperBoundYieldsException() {
-            new DenseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, 0, null);
+            new DenseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Endpoints.IncludeBoth, 0, null);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingDenseRangeWithUpperBoundLesserThenLowerBoundYieldsException() {
-            new DenseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, 10, 0);
+            new DenseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Endpoints.IncludeBoth, 10, 0);
         }
 
         @Test(expected = IllegalArgumentException.class)

@@ -56,37 +56,37 @@ public class SparseRangeTest {
 
         @Test
         public void canCreateSparseRangeWithUnsortedDenseRanges() {
-            SparseRange<Integer> sr = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(2, 3), RangeMother.r(0, 1));
+            SparseRange<Integer> sr = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Arrays.asList(RangeMother.r(2, 3), RangeMother.r(0, 1)));
         }
 
         @Test
         public void sameDensifiedRangeHaveSameOrder() {
-            SparseRange<Integer> former = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(0, 1), RangeMother.r(1, 2), RangeMother.r(4, 5));
-            SparseRange<Integer> latter = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(0, 2), RangeMother.r(4, 5));
+            SparseRange<Integer> former = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Arrays.asList(RangeMother.r(0, 1), RangeMother.r(1, 2), RangeMother.r(4, 5)));
+            SparseRange<Integer> latter = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Arrays.asList(RangeMother.r(0, 2), RangeMother.r(4, 5)));
             Assert.assertEquals(Order.EQ.order(), former.compareTo(latter));
         }
 
         @Test
         public void lowestRangeLowerBoundIsLowerBound() {
-            SparseRange<Integer> range = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(2, 3), RangeMother.r(0, 1));
+            SparseRange<Integer> range = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Arrays.asList(RangeMother.r(2, 3), RangeMother.r(0, 1)));
             Assert.assertEquals(Integer.valueOf(0), range.first());
         }
 
         @Test
         public void upperRangeAfterLastIsAfterLast() {
-            SparseRange<Integer> range = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(2, 3), RangeMother.r(0, 1));
+            SparseRange<Integer> range = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Arrays.asList(RangeMother.r(2, 3), RangeMother.r(0, 1)));
             Assert.assertEquals(Maybe.just(Integer.valueOf(4)), range.afterLast());
         }
 
         @Test
         public void canDensifySparseRange() {
-            SparseRange<Integer> range = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(0, 1), RangeMother.r(1, 2), RangeMother.r(4, 5));
+            SparseRange<Integer> range = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Arrays.asList(RangeMother.r(0, 1), RangeMother.r(1, 2), RangeMother.r(4, 5)));
             Assert.assertEquals(Arrays.asList(RangeMother.r(0, 2), RangeMother.r(4, 5)), range.densified());
         }
 
         @Test
         public void toStringShowsDensifiedRanges() {
-            SparseRange<Integer> sr = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, RangeMother.r(0, 1), RangeMother.r(1, 2), RangeMother.r(4, 5));
+            SparseRange<Integer> sr = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Arrays.asList(RangeMother.r(0, 1), RangeMother.r(1, 2), RangeMother.r(4, 5)));
             Assert.assertEquals("[[0-3),[4-5]]", sr.toString());
         }
     }
@@ -95,22 +95,22 @@ public class SparseRangeTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingSparseRangeWithNullSequencerYieldsException() {
-            new SparseRange<Integer>(null, RangeMother.comparator, RangeMother.r(0, 1));
+            new SparseRange<Integer>(null, RangeMother.comparator, Arrays.asList(RangeMother.r(0, 1)));
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingSparseRangeWithNullComparatorYieldsException() {
-            new SparseRange<Integer>(RangeMother.sequencer, null, RangeMother.r(0, 1));
+            new SparseRange<Integer>(RangeMother.sequencer, null, Arrays.asList(RangeMother.r(0, 1)));
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingSparseRangeWithNullRangeYieldsException() {
-            new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, (DenseRange<Integer>[]) null);
+            new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, null);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingSparseRangeWithEmptyRangeYieldsException() {
-            new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator);
+            new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Arrays.<DenseRange<Integer>>asList());
         }
 
         @Test(expected = IllegalArgumentException.class)
