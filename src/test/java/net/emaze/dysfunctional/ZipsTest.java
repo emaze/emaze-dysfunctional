@@ -8,7 +8,8 @@ import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.order.ComparableComparator;
 import net.emaze.dysfunctional.order.NextIntegerSequencingPolicy;
 import net.emaze.dysfunctional.ranges.DenseRange;
-import net.emaze.dysfunctional.ranges.Endpoints;
+import net.emaze.dysfunctional.ranges.Range.Endpoint;
+import net.emaze.dysfunctional.order.JustBeforeNothingComparator;
 import net.emaze.dysfunctional.ranges.Range;
 import net.emaze.dysfunctional.tuples.Pair;
 import org.junit.Assert;
@@ -134,7 +135,7 @@ public class ZipsTest {
 
     @Test
     public void canMakeAnIterableCountedWithRange() {
-        final Range<Integer> range = new DenseRange<Integer>(new NextIntegerSequencingPolicy(), new ComparableComparator<Integer>(), Endpoints.IncludeBoth, 1, 10);
+        final Range<Integer> range = new DenseRange<Integer>(new NextIntegerSequencingPolicy(), new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>()), Endpoint.Include, 1, Maybe.just(10), Endpoint.Include);
         final Iterable<String> bucket = Iterations.iterable("a", "b");
         final Iterator<Pair<Integer, String>> iterator = Zips.counted(bucket, range);
         final Iterator<Pair<Integer, String>> expected = Iterations.iterator(Pair.of(1, "a"), Pair.of(2, "b"));
@@ -151,7 +152,7 @@ public class ZipsTest {
 
     @Test
     public void canMakeAnIteratorCountedWithRange() {
-        final Range<Integer> range = new DenseRange<Integer>(new NextIntegerSequencingPolicy(), new ComparableComparator<Integer>(), Endpoints.IncludeBoth, 1, 10);
+        final Range<Integer> range = new DenseRange<Integer>(new NextIntegerSequencingPolicy(), new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>()), Endpoint.Include, 1, Maybe.just(10), Endpoint.Include);
         final Iterator<String> bucket = Iterations.iterator("a", "b");
         final Iterator<Pair<Integer, String>> iterator = Zips.counted(bucket, range);
         final Iterator<Pair<Integer, String>> expected = Iterations.iterator(Pair.of(1, "a"), Pair.of(2, "b"));
@@ -168,7 +169,7 @@ public class ZipsTest {
 
     @Test
     public void canMakeAnArrayCountedWithRange() {
-        final Range<Integer> range = new DenseRange<Integer>(new NextIntegerSequencingPolicy(), new ComparableComparator<Integer>(), Endpoints.IncludeBoth, 1, 10);
+        final Range<Integer> range = new DenseRange<Integer>(new NextIntegerSequencingPolicy(), new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>()), Endpoint.Include, 1, Maybe.just(10), Endpoint.Include);
         final String[] bucket = {"a", "b"};
         final Iterator<Pair<Integer, String>> iterator = Zips.counted(bucket, range);
         final Iterator<Pair<Integer, String>> expected = Iterations.iterator(Pair.of(1, "a"), Pair.of(2, "b"));
@@ -214,23 +215,18 @@ public class ZipsTest {
         }
 
         @Override
-        public Object first() {
+        public Object begin() {
             return null;
         }
 
         @Override
-        public Maybe<Object> afterLast() {
+        public Maybe<Object> end() {
             return null;
         }
 
         @Override
         public List<DenseRange<Object>> densified() {
             return null;
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return true;
         }
 
         @Override

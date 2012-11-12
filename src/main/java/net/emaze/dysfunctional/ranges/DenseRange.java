@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.ranges;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -19,68 +19,48 @@ import net.emaze.dysfunctional.order.SequencingPolicy;
 public class DenseRange<T> implements Range<T> {
 
     private final SequencingPolicy<T> sequencer;
-    final T lower;
-    final T upper;
-    private final Endpoints endpoints;
-    private final Comparator<T> innerComparator;
     private final Comparator<Maybe<T>> comparator;
-    private final T first;
-    private final Maybe<T> afterLast;
-    
-    public DenseRange(SequencingPolicy<T> sequencer, Comparator<T> comparator, Endpoints endpoints, T lower, T upper) {
+    private final T begin;
+    private final Maybe<T> end;
+
+    public DenseRange(SequencingPolicy<T> sequencer, Comparator<Maybe<T>> comparator, Endpoint left, T lower, Maybe<T> upper, Endpoint right) {
         dbc.precondition(sequencer != null, "trying to create a DenseRange<T> with a null SequencingPolicy<T>");
         dbc.precondition(comparator != null, "trying to create a DenseRange<T> with a null Comparator<T>");
         dbc.precondition(lower != null, "trying to create a DenseRange<T> with null lower bound");
         dbc.precondition(upper != null, "trying to create a DenseRange<T> with null upper bound");
-        dbc.precondition(Order.of(comparator, lower, upper) != Order.GT, "trying to create a DenseRange<T> a lower bound greater than upper bound");
+        dbc.precondition(Order.of(comparator, Maybe.just(lower), upper) != Order.GT, "trying to create a DenseRange<T> a lower bound greater than upper bound");
+        dbc.precondition(upper.hasValue() || right != Endpoint.Include, "cannot create a right inclusive range with right bound set as Nothing");
         this.sequencer = sequencer;
-        this.innerComparator = comparator;
-        this.comparator = new NothingIsGreatestComparator<T>(comparator);
-        this.endpoints = endpoints;
-        this.lower = lower;
-        this.upper = upper;
-
-        this.first = endpoints.includesLeft() ? lower : sequencer.next(lower).value();
-        this.afterLast = endpoints.includesRight() ? sequencer.next(upper) : Maybe.just(upper);
-    }
-
-    DenseRange(SequencingPolicy<T> sequencer, Comparator<T> comparator, T first) {
-        this.sequencer = sequencer;
-        this.innerComparator = comparator;
-        this.comparator = new NothingIsGreatestComparator<T>(comparator);
-        this.endpoints = Endpoints.IncludeLeft;
-        this.lower = first;
-        this.upper = null;
-
-        this.first = first;
-        this.afterLast = Maybe.nothing();
+        this.comparator = comparator;
+        this.begin = left == Endpoint.Include ? lower : sequencer.next(lower).value();
+        this.end = upper.hasValue() && right == Endpoint.Include ? sequencer.next(upper.value()) : upper;
     }
 
     @Override
     public boolean contains(T element) {
         dbc.precondition(element != null, "checking if null is contained in DenseRange<T>");
-        return Order.of(innerComparator, element, first).isGte() && Order.of(comparator, Maybe.just(element), afterLast).isLt();
+        return Order.of(comparator, Maybe.just(element), Maybe.just(begin)).isGte() && Order.of(comparator, Maybe.just(element), end).isLt();
     }
 
     @Override
-    public T first() {
-        return first;
+    public T begin() {
+        return begin;
     }
 
     @Override
-    public Maybe<T> afterLast() {
-        return afterLast;
+    public Maybe<T> end() {
+        return end;
     }
 
     @Override
     public int compareTo(Range<T> other) {
         dbc.precondition(other != null, "comparing (compareTo) a DenseRange<T> with null");
-        return new RangeComparator<T>(innerComparator).compare(this, other);
+        return new RangeComparator<T>(comparator).compare(this, other);
     }
 
     @Override
     public Iterator<T> iterator() {
-        return new RangeIterator<T>(sequencer, innerComparator, endpoints, first, afterLast);
+        return new RangeIterator<T>(sequencer, comparator, begin, end);
     }
 
     @Override
@@ -89,37 +69,32 @@ public class DenseRange<T> implements Range<T> {
             return false;
         }
         final DenseRange<T> other = (DenseRange<T>) rhs;
-        if (isEmpty()) {
-            return true;
+        final EqualsBuilder builder = new EqualsBuilder().append(this.sequencer, other.sequencer).
+                append(this.comparator, other.comparator);
+        if (!this.iterator().hasNext() && !other.iterator().hasNext()) {
+            return builder.isEquals();
         }
-        return new EqualsBuilder().append(this.sequencer, other.sequencer).
-                append(this.innerComparator, other.innerComparator).
-                append(this.first, other.first).
-                append(this.afterLast, other.afterLast).
+        return builder.
+                append(this.begin, other.begin).
+                append(this.end, other.end).
                 isEquals();
-    }
-
-    public boolean isEmpty() {
-        return this.afterLast.hasValue() && this.first.equals(this.afterLast.value());
     }
 
     @Override
     public int hashCode() {
-        if (isEmpty()) {
-            return new HashCodeBuilder().append(sequencer).
-                append(innerComparator).
-                toHashCode();
+        final HashCodeBuilder builder = new HashCodeBuilder().append(sequencer).
+                append(comparator);
+        if (!iterator().hasNext()) {
+            return builder.toHashCode();
         }
-        return new HashCodeBuilder().append(sequencer).
-                append(innerComparator).
-                append(first).
-                append(afterLast).
+        return builder.append(begin).
+                append(end).
                 toHashCode();
     }
 
     @Override
     public String toString() {
-        return endpoints.stringify(this);
+        return String.format("[%s-%s)", begin, end.hasValue() ? end.value() : "...");
     }
 
     /**
@@ -136,16 +111,11 @@ public class DenseRange<T> implements Range<T> {
         if (other instanceof DenseRange == false) {
             return other.overlaps(this);
         }
-        if (Order.of(comparator, Maybe.just(this.first()), other.afterLast()).isGte() || Order.of(comparator, Maybe.just(other.first()), this.afterLast()).isGte()) {
-            return false;
-        }
-        return true;
+        return !Order.of(comparator, Maybe.just(this.begin()), other.end()).isGte() && !Order.of(comparator, Maybe.just(other.begin()), this.end()).isGte();
     }
 
     @Override
     public List<DenseRange<T>> densified() {
-        final List<DenseRange<T>> out = new ArrayList<DenseRange<T>>();
-        out.add(this);
-        return out;
+        return Collections.singletonList(this);
     }
 }

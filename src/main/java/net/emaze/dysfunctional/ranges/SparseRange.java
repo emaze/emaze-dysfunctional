@@ -5,14 +5,12 @@ import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.IteratorPlucker;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.iterations.SingletonIterator;
 import net.emaze.dysfunctional.iterations.TransformingIterator;
 import net.emaze.dysfunctional.multiplexing.ChainIterator;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 import net.emaze.dysfunctional.reductions.Any;
-import net.emaze.dysfunctional.reductions.Every;
 import net.emaze.dysfunctional.strings.InterposeStrings;
 
 /**
@@ -23,14 +21,14 @@ import net.emaze.dysfunctional.strings.InterposeStrings;
 public class SparseRange<T> implements Range<T> {
 
     private final List<DenseRange<T>> ranges;
-    private final Comparator<T> comparator;
+    private final Comparator<Maybe<T>> comparator;
 
-    public SparseRange(SequencingPolicy<T> sequencer, Comparator<T> comparator, List<DenseRange<T>> ranges) {
+    public SparseRange(SequencingPolicy<T> sequencer, Comparator<Maybe<T>> comparator, List<DenseRange<T>> ranges) {
         dbc.precondition(sequencer != null, "trying to create a SparseRange<T> with a null SequencingPolicy<T>");
         dbc.precondition(comparator != null, "trying to create a SparseRange<T> with a null Comparator<T>");
         dbc.precondition(ranges != null, "trying to create a SparseRange<T> from a null ranges");
-        dbc.precondition(!ranges.isEmpty(), "trying to create a SparseRange<T> from zero ranges");
-        this.ranges = new SortedNonOverlappingRangesTransformer<T>(sequencer, comparator).perform(ranges);
+        this.ranges = new SortedNonOverlappingNonEmptyRangesTransformer<T>(sequencer, comparator).perform(ranges);
+        dbc.precondition(!this.ranges.isEmpty(), "trying to create a SparseRange<T> from zero non-empty ranges");
         this.comparator = comparator;
     }
 
@@ -41,29 +39,19 @@ public class SparseRange<T> implements Range<T> {
     }
 
     @Override
-    public T first() {
-        return ranges.get(0).first();
+    public T begin() {
+        return ranges.get(0).begin();
     }
 
     @Override
-    public Maybe<T> afterLast() {
-        return ranges.get(ranges.size() - 1).afterLast();
+    public Maybe<T> end() {
+        return ranges.get(ranges.size() - 1).end();
     }
 
     @Override
     public int compareTo(Range<T> other) {
         dbc.precondition(other != null, "Comparing (compareTo) a SparseRange<T>(%s) with null");
         return new RangeComparator<T>(comparator).compare(this, other);
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return new Every<DenseRange<T>>(new Predicate<DenseRange<T>>() {
-            @Override
-            public boolean accept(DenseRange<T> element) {
-                return element.isEmpty();
-            }
-        }).accept(ranges.iterator());
     }
 
     @Override
@@ -94,7 +82,7 @@ public class SparseRange<T> implements Range<T> {
     @Override
     public boolean overlaps(final Range<T> other) {
         dbc.precondition(other != null, "checking for overlaps between a SparseRange<T> and null");
-        return new Any<DenseRange<T>>(new RangeOverlappingWith<T>(other)).accept(ranges.iterator());
+        return new Any<DenseRange<T>>(new RangeOverlappingWith<DenseRange<T>, T>(other)).accept(ranges.iterator());
     }
 
     @Override

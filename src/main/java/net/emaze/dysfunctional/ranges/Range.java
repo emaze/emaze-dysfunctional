@@ -5,14 +5,23 @@ import net.emaze.dysfunctional.options.Maybe;
 
 /**
  *
- * @param <T> 
+ * @param <T>
  * @author rferranti
  */
 public interface Range<T> extends Iterable<T>, Comparable<Range<T>> {
+
+    public static enum Endpoint {
+
+        Include, Exclude
+    };
+
     boolean contains(T element);
+
     boolean overlaps(Range<T> rhs);
-    T first();
-    Maybe<T> afterLast();
-    boolean isEmpty();
+
+    T begin();
+
+    Maybe<T> end();
+
     List<DenseRange<T>> densified();
 }

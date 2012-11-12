@@ -4,10 +4,10 @@ import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
 /**
  *
- * @param <T> 
+ * @param <T>
  * @author rferranti
  */
-public class RangeOverlappingWith<T> implements Predicate<DenseRange<T>> {
+public class RangeOverlappingWith<R extends Range<T>, T> implements Predicate<R> {
 
     private final Range<T> other;
 
@@ -16,7 +16,7 @@ public class RangeOverlappingWith<T> implements Predicate<DenseRange<T>> {
     }
 
     @Override
-    public boolean accept(DenseRange<T> range) {
+    public boolean accept(R range) {
         return range.overlaps(other);
     }
 }

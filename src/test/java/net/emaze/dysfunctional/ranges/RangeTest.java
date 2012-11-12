@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import static net.emaze.dysfunctional.ranges.RangeMother.*;
-
+import net.emaze.dysfunctional.ranges.Union;
 
 /**
  *
@@ -67,7 +67,7 @@ public class RangeTest {
 
         @Test
         public void canPerformUnion() {
-            Assert.assertEquals(r(0, 20), RangeOps.union(sequencer, comparator, r(0, 10), r(11, 20)));
+            Assert.assertEquals(r(0, 20), new Union<Integer>(sequencer, comparator, emptyValue).perform(r(0, 10), r(11, 20)));
         }
 
         @Test

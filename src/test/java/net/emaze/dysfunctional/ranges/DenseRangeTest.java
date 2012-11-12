@@ -1,9 +1,9 @@
 package net.emaze.dysfunctional.ranges;
 
 import java.util.Arrays;
-import net.emaze.dysfunctional.order.ComparableComparator;
-import net.emaze.dysfunctional.order.NextIntegerSequencingPolicy;
+import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.order.Order;
+import net.emaze.dysfunctional.ranges.Range.Endpoint;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +29,7 @@ public class DenseRangeTest {
 
         @Test
         public void toStringReflectsRange() {
-            Assert.assertEquals("[0-10]", RangeMother.r(0, 10).toString());
+            Assert.assertEquals("[0-11)", RangeMother.r(0, 10).toString());
         }
 
         @Test
@@ -49,18 +49,18 @@ public class DenseRangeTest {
             DenseRange<Integer> latter = RangeMother.r(0, 2);
             Assert.assertFalse(former.equals(latter));
         }
-        
+
         @Test
         public void rangeIsEqualToEquivalentRangeWithDifferentRightEndpoint() {
-            DenseRange<Integer> former = RangeMother.r(Endpoints.IncludeBoth, 1, 2);
-            DenseRange<Integer> latter = RangeMother.r(Endpoints.IncludeLeft, 1, 3);
+            DenseRange<Integer> former = RangeMother.r(Endpoint.Include, 1, 2, Endpoint.Include);
+            DenseRange<Integer> latter = RangeMother.r(Endpoint.Include, 1, 3, Endpoint.Exclude);
             Assert.assertTrue(former.equals(latter));
         }
-        
+
         @Test
         public void rangeIsEqualToEquivalentRangeWithDifferentLeftEndpoint() {
-            DenseRange<Integer> former = RangeMother.r(Endpoints.IncludeBoth, 1, 2);
-            DenseRange<Integer> latter = RangeMother.r(Endpoints.IncludeRight, 0, 2);
+            DenseRange<Integer> former = RangeMother.r(Endpoint.Include, 1, 2, Endpoint.Include);
+            DenseRange<Integer> latter = RangeMother.r(Endpoint.Exclude, 0, 2, Endpoint.Include);
             Assert.assertTrue(former.equals(latter));
         }
 
@@ -94,10 +94,10 @@ public class DenseRangeTest {
             DenseRange<Integer> range = RangeMother.r(1, 2);
             Assert.assertFalse(range.contains(3));
         }
-        
+
         @Test
         public void upperBoundIsNotContainedIfRightOpen() {
-            DenseRange<Integer> range = RangeMother.r(Endpoints.IncludeLeft, 1, 2);
+            DenseRange<Integer> range = RangeMother.r(Endpoint.Include, 1, 2, Endpoint.Exclude);
             Assert.assertFalse(range.contains(2));
         }
     }
@@ -106,27 +106,27 @@ public class DenseRangeTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingDenseRangeWithNullSequencerYieldsException() {
-            new DenseRange<Integer>(null, RangeMother.comparator, Endpoints.IncludeBoth, 0, 1);
+            new DenseRange<Integer>(null, RangeMother.comparator, Endpoint.Include, 0, Maybe.just(1), Endpoint.Include);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingDenseRangeWithNullComparatorYieldsException() {
-            new DenseRange<Integer>(RangeMother.sequencer, null, Endpoints.IncludeBoth, 0, 1);
+            new DenseRange<Integer>(RangeMother.sequencer, null, Endpoint.Include, 0, Maybe.just(1), Endpoint.Include);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingDenseRangeWithNullLowerBoundYieldsException() {
-            new DenseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Endpoints.IncludeBoth, null, 1);
+            new DenseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Endpoint.Include, null, Maybe.just(1), Endpoint.Include);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingDenseRangeWithNullUpperBoundYieldsException() {
-            new DenseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Endpoints.IncludeBoth, 0, null);
+            new DenseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Endpoint.Include, 0, null, Endpoint.Include);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingDenseRangeWithUpperBoundLesserThenLowerBoundYieldsException() {
-            new DenseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Endpoints.IncludeBoth, 10, 0);
+            new DenseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Endpoint.Include, 10, Maybe.just(0), Endpoint.Include);
         }
 
         @Test(expected = IllegalArgumentException.class)
@@ -143,12 +143,11 @@ public class DenseRangeTest {
         public void checkingIfContainsForNullYieldsException() {
             RangeMother.r(0, 10).contains(null);
         }
-        
+
         @Test(expected = ClassCastException.class)
         public void callingErasureWithWrongTypeYieldsException() {
             Comparable c = RangeMother.r(0, 10);
             c.compareTo(new Object());
-        }   
-        
+        }
     }
 }
