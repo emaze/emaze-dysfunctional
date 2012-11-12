@@ -8,10 +8,12 @@ import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 
 /**
+ * {@code A ∪ B}.
  *
  * @author rferranti
  */
 public class Union<T> implements BinaryDelegate<Range<T>, Range<T>, Range<T>> {
+
     private final SequencingPolicy<T> sequencer;
     private final Comparator<Maybe<T>> comparator;
     private final T emptyValue;
@@ -30,5 +32,4 @@ public class Union<T> implements BinaryDelegate<Range<T>, Range<T>, Range<T>> {
         final Densify<T> densifier = new Densify<T>(sequencer, comparator);
         return new MakeRange<T>(sequencer, comparator, emptyValue).perform(densifier.perform(ranges));
     }
-
 }

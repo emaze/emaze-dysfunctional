@@ -11,8 +11,8 @@ import net.emaze.dysfunctional.order.SequencingPolicy;
 import net.emaze.dysfunctional.ranges.Range.Endpoint;
 
 /**
- * A \ B.
- * 
+ * {@code A \ B}.
+ *
  * @author rferranti
  */
 public class Difference<T> implements BinaryDelegate<Range<T>, Range<T>, Range<T>> {
@@ -31,20 +31,20 @@ public class Difference<T> implements BinaryDelegate<Range<T>, Range<T>, Range<T
     public Range<T> perform(Range<T> lhs, Range<T> rhs) {
         List<DenseRange<T>> difference = lhs.densified();
         for (DenseRange<T> r : rhs.densified()) {
-            difference = difference(sequencer, comparator, difference, r);
+            difference = difference(difference, r);
         }
         return new MakeRange<T>(sequencer, comparator, emptyValue).perform(difference);
     }
 
-    private static <T> List<DenseRange<T>> difference(SequencingPolicy<T> sequencer, Comparator<Maybe<T>> comparator, List<DenseRange<T>> lhss, DenseRange<T> rhs) {
+    private List<DenseRange<T>> difference(List<DenseRange<T>> lhss, DenseRange<T> rhs) {
         final List<DenseRange<T>> difference = new ArrayList<DenseRange<T>>();
         for (DenseRange<T> lhs : lhss) {
-            difference.addAll(difference(sequencer, comparator, lhs, rhs));
+            difference.addAll(denseDifference(lhs, rhs));
         }
         return difference;
     }
 
-    private static <T> List<DenseRange<T>> difference(SequencingPolicy<T> sequencer, Comparator<Maybe<T>> comparator, DenseRange<T> lhs, DenseRange<T> rhs) {
+    private List<DenseRange<T>> denseDifference(DenseRange<T> lhs, DenseRange<T> rhs) {
         if (!lhs.overlaps(rhs)) {
             return Collections.singletonList(lhs);
         }

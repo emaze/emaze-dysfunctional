@@ -17,8 +17,8 @@ import net.emaze.dysfunctional.order.SequencingPolicy;
 import net.emaze.dysfunctional.ranges.Range.Endpoint;
 
 /**
- * transforms a list of DenseRange to an equivalent list (possibly empty )of
- * sorted ranges with non-overlapping, non-empty ranges.
+ * Transforms a list of {@code DenseRange<T>} to an equivalent {@code List} (possibly empty) of
+ * sorted, non-overlapping, non-empty ranges.
  *
  * @param <T>
  * @author rferranti

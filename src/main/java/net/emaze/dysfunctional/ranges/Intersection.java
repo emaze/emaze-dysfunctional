@@ -11,7 +11,7 @@ import net.emaze.dysfunctional.ranges.Range.Endpoint;
 import net.emaze.dysfunctional.tuples.Pair;
 
 /**
- *
+ * {@code A ∩ B}.
  * @author rferranti
  */
 public class Intersection<T> implements BinaryDelegate<Range<T>, Range<T>, Range<T>> {

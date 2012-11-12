@@ -6,6 +6,7 @@ import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 
 /**
+ * {@code A ∆ B} = {@code (A\B) ∪ (B\A)}.
  *
  * @author rferranti
  */

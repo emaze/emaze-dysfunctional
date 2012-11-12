@@ -29,8 +29,9 @@ public class SparseRange<T> implements Range<T> {
         dbc.precondition(densified != null, "trying to create a SparseRange<T> from a null ranges");
         dbc.precondition(!densified.isEmpty(), "trying to create a SparseRange<T> from zero non-empty ranges");
         dbc.precondition(densified.size() > 1, "trying to create a SparseRange<T> when a DenseRange<T> should be created");
-        //dbc -> sorted
-        //dbc -> non overlapping
+        // We are not checking isSorted(densified) && !any(densified, isOverlapping) as it's definitely not cheap.
+        // Using MakeRange<T> (as any client code should not needing to mess with internals should) enforces SparseRange is 
+        // constructed as it should.
         this.densified = densified;
         this.comparator = comparator;
     }
