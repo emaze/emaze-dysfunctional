@@ -20,32 +20,35 @@ import net.emaze.dysfunctional.strings.InterposeStrings;
  */
 public class SparseRange<T> implements Range<T> {
 
-    private final List<DenseRange<T>> ranges;
+    private final List<DenseRange<T>> densified;
     private final Comparator<Maybe<T>> comparator;
 
-    public SparseRange(SequencingPolicy<T> sequencer, Comparator<Maybe<T>> comparator, List<DenseRange<T>> ranges) {
+    public SparseRange(SequencingPolicy<T> sequencer, Comparator<Maybe<T>> comparator, List<DenseRange<T>> densified) {
         dbc.precondition(sequencer != null, "trying to create a SparseRange<T> with a null SequencingPolicy<T>");
         dbc.precondition(comparator != null, "trying to create a SparseRange<T> with a null Comparator<T>");
-        dbc.precondition(ranges != null, "trying to create a SparseRange<T> from a null ranges");
-        this.ranges = new SortedNonOverlappingNonEmptyRangesTransformer<T>(sequencer, comparator).perform(ranges);
-        dbc.precondition(!this.ranges.isEmpty(), "trying to create a SparseRange<T> from zero non-empty ranges");
+        dbc.precondition(densified != null, "trying to create a SparseRange<T> from a null ranges");
+        dbc.precondition(!densified.isEmpty(), "trying to create a SparseRange<T> from zero non-empty ranges");
+        dbc.precondition(densified.size() > 1, "trying to create a SparseRange<T> when a DenseRange<T> should be created");
+        //dbc -> sorted
+        //dbc -> non overlapping
+        this.densified = densified;
         this.comparator = comparator;
     }
 
     @Override
     public boolean contains(final T element) {
         dbc.precondition(element != null, "checking if null is contained in SparseRange<T>");
-        return new Any<DenseRange<T>>(new RangeNotContaining<T>(element)).accept(ranges.iterator());
+        return new Any<DenseRange<T>>(new RangeNotContaining<T>(element)).accept(densified.iterator());
     }
 
     @Override
     public T begin() {
-        return ranges.get(0).begin();
+        return densified.get(0).begin();
     }
 
     @Override
     public Maybe<T> end() {
-        return ranges.get(ranges.size() - 1).end();
+        return densified.get(densified.size() - 1).end();
     }
 
     @Override
@@ -56,7 +59,7 @@ public class SparseRange<T> implements Range<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new ChainIterator<T>(new TransformingIterator<Iterator<T>, DenseRange<T>>(ranges.iterator(), new IteratorPlucker<T, DenseRange<T>>()));
+        return new ChainIterator<T>(new TransformingIterator<Iterator<T>, DenseRange<T>>(densified.iterator(), new IteratorPlucker<T, DenseRange<T>>()));
     }
 
     @Override
@@ -65,28 +68,28 @@ public class SparseRange<T> implements Range<T> {
             return false;
         }
         final SparseRange<T> other = (SparseRange<T>) rhs;
-        return this.ranges.equals(other.ranges);
+        return this.densified.equals(other.densified);
     }
 
     @Override
     public int hashCode() {
-        return ranges.hashCode();
+        return densified.hashCode();
     }
 
     @Override
     public String toString() {
-        final String interposed = new InterposeStrings<DenseRange<T>, String>().perform(ranges.iterator(), new SingletonIterator<String>(","));
+        final String interposed = new InterposeStrings<DenseRange<T>, String>().perform(densified.iterator(), new SingletonIterator<String>(","));
         return String.format("[%s]", interposed);
     }
 
     @Override
     public boolean overlaps(final Range<T> other) {
         dbc.precondition(other != null, "checking for overlaps between a SparseRange<T> and null");
-        return new Any<DenseRange<T>>(new RangeOverlappingWith<DenseRange<T>, T>(other)).accept(ranges.iterator());
+        return new Any<DenseRange<T>>(new RangeOverlappingWith<DenseRange<T>, T>(other)).accept(densified.iterator());
     }
 
     @Override
     public List<DenseRange<T>> densified() {
-        return ranges;
+        return densified;
     }
 }

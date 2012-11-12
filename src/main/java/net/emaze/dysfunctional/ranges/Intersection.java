@@ -39,8 +39,8 @@ public class Intersection<T> implements BinaryDelegate<Range<T>, Range<T>, Range
                 intersection.add(new DenseRange<T>(sequencer, comparator, Endpoint.Include, orderedLowerBounds.second().value(), orderedUpperBounds.first(), Endpoint.Exclude));
             }
         }
-        final SortedNonOverlappingNonEmptyRangesTransformer<T> transformer = new SortedNonOverlappingNonEmptyRangesTransformer<T>(sequencer, comparator);
-        return new MakeRange<T>(sequencer, comparator, emptyValue).perform(transformer.perform(intersection));
+        final Densify<T> densifier = new Densify<T>(sequencer, comparator);
+        return new MakeRange<T>(sequencer, comparator, emptyValue).perform(densifier.perform(intersection));
     }
 
 }

@@ -37,8 +37,8 @@ public class SparseRangeTest {
 
         @Test
         public void sameRangesLeadsToSameHashCode() {
-            SparseRange<Integer> former = RangeMother.r(RangeMother.p(0, 2), RangeMother.p(2, 3));
-            SparseRange<Integer> latter = RangeMother.r(RangeMother.p(0, 3));
+            SparseRange<Integer> former = RangeMother.r(RangeMother.p(0, 1), RangeMother.p(3, 5));
+            SparseRange<Integer> latter = RangeMother.r(RangeMother.p(0, 1), RangeMother.p(3, 5));
             Assert.assertEquals(former.hashCode(), latter.hashCode());
         }
 
@@ -50,7 +50,7 @@ public class SparseRangeTest {
 
         @Test
         public void canIterateSparseRange() {
-            SparseRange<Integer> sr = RangeMother.r(RangeMother.p(0, 2));
+            SparseRange<Integer> sr = RangeMother.r(RangeMother.p(0, 2), RangeMother.p(3, 5));
             Assert.assertNotNull(sr.iterator());
         }
 
@@ -68,25 +68,25 @@ public class SparseRangeTest {
 
         @Test
         public void lowestRangeLowerBoundIsLowerBound() {
-            SparseRange<Integer> range = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Arrays.asList(RangeMother.r(2, 3), RangeMother.r(0, 1)));
+            SparseRange<Integer> range = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Arrays.asList(RangeMother.r(0, 1), RangeMother.r(2, 3)));
             Assert.assertEquals(Integer.valueOf(0), range.begin());
         }
 
         @Test
         public void upperRangeAfterLastIsAfterLast() {
-            SparseRange<Integer> range = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Arrays.asList(RangeMother.r(2, 3), RangeMother.r(0, 1)));
+            SparseRange<Integer> range = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Arrays.asList(RangeMother.r(0, 1), RangeMother.r(2, 3)));
             Assert.assertEquals(Maybe.just(Integer.valueOf(4)), range.end());
         }
 
         @Test
         public void canDensifySparseRange() {
-            SparseRange<Integer> range = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Arrays.asList(RangeMother.r(0, 1), RangeMother.r(1, 2), RangeMother.r(4, 5)));
+            SparseRange<Integer> range = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Arrays.asList(RangeMother.r(0, 2), RangeMother.r(4, 5)));
             Assert.assertEquals(Arrays.asList(RangeMother.r(0, 2), RangeMother.r(4, 5)), range.densified());
         }
 
         @Test
         public void toStringShowsDensifiedRanges() {
-            SparseRange<Integer> sr = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Arrays.asList(RangeMother.r(0, 1), RangeMother.r(1, 2), RangeMother.r(4, 5)));
+            SparseRange<Integer> sr = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Arrays.asList(RangeMother.r(0, 2), RangeMother.r(4, 5)));
             Assert.assertEquals("[[0-3),[4-6)]", sr.toString());
         }
     }
@@ -153,7 +153,7 @@ public class SparseRangeTest {
 
         @Test(expected = ClassCastException.class)
         public void callingErasureWithWrongTypeYieldsException() {
-            Comparable c = RangeMother.r(RangeMother.p(0, 10));
+            Comparable c = RangeMother.r(RangeMother.p(0, 10), RangeMother.p(12, 14));
             c.compareTo(new Object());
         }
     }

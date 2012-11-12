@@ -32,7 +32,8 @@ public class Difference<T> implements BinaryDelegate<Range<T>, Range<T>, Range<T
         for (DenseRange<T> r : rhs.densified()) {
             difference = difference(sequencer, comparator, difference, r);
         }
-        return new MakeRange<T>(sequencer, comparator, emptyValue).perform(difference);
+        final Densify<T> densifier = new Densify<T>(sequencer, comparator);
+        return new MakeRange<T>(sequencer, comparator, emptyValue).perform(densifier.perform(difference));
     }
 
     private static <T> List<DenseRange<T>> difference(SequencingPolicy<T> sequencer, Comparator<Maybe<T>> comparator, List<DenseRange<T>> lhss, DenseRange<T> rhs) {
@@ -53,9 +54,6 @@ public class Difference<T> implements BinaryDelegate<Range<T>, Range<T>, Range<T
         }
         if (Order.of(comparator, lhs.end(), rhs.end()) == Order.GT) {
             difference.add(new DenseRange<T>(sequencer, comparator, Endpoint.Include, rhs.end().value(), lhs.end(), Endpoint.Exclude));
-        }
-        if (difference.isEmpty()) {
-            difference.add(new DenseRange<T>(sequencer, comparator, Endpoint.Include, lhs.begin(), Maybe.just(lhs.begin()), Endpoint.Exclude));
         }
         return difference;
     }

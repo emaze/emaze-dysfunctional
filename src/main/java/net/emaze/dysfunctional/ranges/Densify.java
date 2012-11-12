@@ -23,12 +23,12 @@ import net.emaze.dysfunctional.ranges.Range.Endpoint;
  * @param <T>
  * @author rferranti
  */
-public class SortedNonOverlappingNonEmptyRangesTransformer<T> implements Delegate<List<DenseRange<T>>, List<DenseRange<T>>> {
+public class Densify<T> implements Delegate<List<DenseRange<T>>, List<DenseRange<T>>> {
 
     private final SequencingPolicy<T> sequencer;
     private final Comparator<Maybe<T>> comparator;
 
-    public SortedNonOverlappingNonEmptyRangesTransformer(SequencingPolicy<T> sequencer, Comparator<Maybe<T>> comparator) {
+    public Densify(SequencingPolicy<T> sequencer, Comparator<Maybe<T>> comparator) {
         this.sequencer = sequencer;
         this.comparator = comparator;
     }
