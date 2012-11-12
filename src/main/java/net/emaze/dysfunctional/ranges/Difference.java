@@ -11,7 +11,8 @@ import net.emaze.dysfunctional.order.SequencingPolicy;
 import net.emaze.dysfunctional.ranges.Range.Endpoint;
 
 /**
- *
+ * A \ B.
+ * 
  * @author rferranti
  */
 public class Difference<T> implements BinaryDelegate<Range<T>, Range<T>, Range<T>> {
@@ -32,8 +33,7 @@ public class Difference<T> implements BinaryDelegate<Range<T>, Range<T>, Range<T
         for (DenseRange<T> r : rhs.densified()) {
             difference = difference(sequencer, comparator, difference, r);
         }
-        final Densify<T> densifier = new Densify<T>(sequencer, comparator);
-        return new MakeRange<T>(sequencer, comparator, emptyValue).perform(densifier.perform(difference));
+        return new MakeRange<T>(sequencer, comparator, emptyValue).perform(difference);
     }
 
     private static <T> List<DenseRange<T>> difference(SequencingPolicy<T> sequencer, Comparator<Maybe<T>> comparator, List<DenseRange<T>> lhss, DenseRange<T> rhs) {

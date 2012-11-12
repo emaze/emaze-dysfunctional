@@ -57,7 +57,14 @@ public class Densify<T> implements Delegate<List<DenseRange<T>>, List<DenseRange
     }
 
     /**
-     * |-----------| |-----| or |-----------| |--------|
+     * <code>
+     * |-----------|
+     *             |-----|
+     * </code> or
+     * <code>
+     * |-----------|
+     *            |------|
+     * </code>
      *
      * @param current the current range
      * @param next the next range
