@@ -61,25 +61,14 @@ public class Ranges<T> {
     }
 
     /**
+     * Creates a singleton Range with the passed value.
      * returns [ value, value ]
      *
-     * @param value
      * @param value
      * @return [ lower, upper ]
      */
     public Range<T> degenerate(T value) {
         return new DenseRange<T>(sequencer, comparator, Endpoint.Include, value, Maybe.just(value), Endpoint.Include);
-    }
-
-    /**
-     * returns [ value, value )
-     *
-     * @param value
-     * @param value
-     * @return [ value, value )
-     */
-    public Range<T> empty(T value) {
-        return new DenseRange<T>(sequencer, comparator, Endpoint.Include, value, Maybe.just(value), Endpoint.Exclude);
     }
 
     /**
