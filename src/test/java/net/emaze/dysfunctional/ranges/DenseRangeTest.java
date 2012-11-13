@@ -2,6 +2,9 @@ package net.emaze.dysfunctional.ranges;
 
 import java.util.Arrays;
 import net.emaze.dysfunctional.options.Maybe;
+import net.emaze.dysfunctional.order.ComparableComparator;
+import net.emaze.dysfunctional.order.JustBeforeNothingComparator;
+import net.emaze.dysfunctional.order.NextIntegerSequencingPolicy;
 import net.emaze.dysfunctional.order.Order;
 import net.emaze.dysfunctional.ranges.Range.Endpoint;
 import org.junit.Assert;
@@ -28,8 +31,29 @@ public class DenseRangeTest {
         }
 
         @Test
+        public void emptyRangesHaveSameHashcode() {
+            final DenseRange<Integer> anEmptyRange = new DenseRange<Integer>(new NextIntegerSequencingPolicy(), new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>()), Endpoint.Include, 10, Maybe.just(10), Endpoint.Exclude);
+            final DenseRange<Integer> anotherEmptyRange = new DenseRange<Integer>(new NextIntegerSequencingPolicy(), new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>()), Endpoint.Include, 0, Maybe.just(0), Endpoint.Exclude);
+            Assert.assertFalse(anEmptyRange.iterator().hasNext());
+            Assert.assertEquals(anEmptyRange.hashCode(), anotherEmptyRange.hashCode());
+        }
+
+        @Test
+        public void emptyRangesAreEquals() {
+            final DenseRange<Integer> anEmptyRange = new DenseRange<Integer>(new NextIntegerSequencingPolicy(), new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>()), Endpoint.Include, 10, Maybe.just(10), Endpoint.Exclude);
+            final DenseRange<Integer> anotherEmptyRange = new DenseRange<Integer>(new NextIntegerSequencingPolicy(), new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>()), Endpoint.Include, 0, Maybe.just(0), Endpoint.Exclude);
+            Assert.assertEquals(anEmptyRange, anotherEmptyRange);
+        }
+
+        @Test
         public void toStringReflectsRange() {
             Assert.assertEquals("[0-11)", RangeMother.r(0, 10).toString());
+        }
+
+        @Test
+        public void canToStringOnUnboundedRange() {
+            final DenseRange<Integer> unboundRange = new DenseRange<Integer>(new NextIntegerSequencingPolicy(), new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>()), Endpoint.Include, 0, Maybe.<Integer>nothing(), Endpoint.Exclude);
+            Assert.assertEquals("[0-...)", unboundRange.toString());
         }
 
         @Test
@@ -127,6 +151,11 @@ public class DenseRangeTest {
         @Test(expected = IllegalArgumentException.class)
         public void creatingDenseRangeWithUpperBoundLesserThenLowerBoundYieldsException() {
             new DenseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Endpoint.Include, 10, Maybe.just(0), Endpoint.Include);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void creatingWithNothingAsUpperValueAndIncludedUpperEndpointYieldsException() {
+            new DenseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Endpoint.Include, 10, Maybe.<Integer>nothing(), Endpoint.Include);
         }
 
         @Test(expected = IllegalArgumentException.class)
