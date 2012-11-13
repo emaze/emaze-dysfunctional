@@ -122,6 +122,12 @@ public class ApplicationsTest {
             Consumers.all(tap);
             Assert.assertEquals(O.ONE, box.getContent());
         }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void tappingNullIterableYieldsException() {
+            final Iterable<O> iterable = null;
+            Applications.tap(iterable, new Noop<O>());
+        }
     }
 
     public static class Each {
@@ -157,9 +163,33 @@ public class ApplicationsTest {
         }
 
         @Test(expected = IllegalArgumentException.class)
-        public void cannotCallEachWithNullAction() {
+        public void cannotCallEachWithNullIterator() {
+            final Iterator<Object> iterator = null;
+            Applications.each(iterator, new Noop<Object>());
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallEachWithNullArray() {
+            final Object[] array = null;
+            Applications.each(array, new Noop<Object>());
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallEachOnIterableWithNullAction() {
             final Iterable<Object> iterable = Iterations.iterable();
             Applications.each(iterable, null);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallEachOnIteratorWithNullAction() {
+            final Iterator<Object> iterator = Iterations.iterator();
+            Applications.each(iterator, null);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallEachOnArrayWithNullAction() {
+            final Object[] array = null;
+            Applications.each(array, null);
         }
     }
 
