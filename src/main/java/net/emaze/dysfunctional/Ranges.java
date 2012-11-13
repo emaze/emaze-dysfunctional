@@ -61,8 +61,7 @@ public class Ranges<T> {
     }
 
     /**
-     * Creates a singleton Range with the passed value.
-     * returns [ value, value ]
+     * Creates a singleton Range with the passed value. returns [ value, value ]
      *
      * @param value
      * @return [ lower, upper ]
@@ -184,5 +183,33 @@ public class Ranges<T> {
     public Range<T> difference(Range<T> lhs, Range<T> rhs) {
         final Difference<T> difference = new Difference<T>(sequencer, comparator, emptyValue);
         return difference.perform(lhs, rhs);
+    }
+
+    public Range<T> difference(Range<T> first, Range<T> second, Range<T> third) {
+        final Difference<T> difference = new Difference<T>(sequencer, comparator, emptyValue);
+        return difference.perform(difference.perform(first, second), third);
+    }
+
+    public Range<T> difference(Iterator<Range<T>> ranges) {
+        dbc.precondition(ranges != null, "cannot evaluate difference for a null iterator of ranges");
+        dbc.precondition(ranges.hasNext(), "cannot evaluate difference for an empty iterator of ranges");
+        final Difference<T> difference = new Difference<T>(sequencer, comparator, emptyValue);
+        return new Reductor<Range<T>, Range<T>>(difference, ranges.next()).perform(ranges);
+    }
+
+    public Range<T> difference(Iterable<Range<T>> ranges) {
+        dbc.precondition(ranges != null, "cannot evaluate difference for a null iterable of ranges");
+        dbc.precondition(ranges.iterator().hasNext(), "cannot evaluate difference for an empty iterable of ranges");
+        final Iterator<Range<T>> iterator = ranges.iterator();
+        final Difference<T> difference = new Difference<T>(sequencer, comparator, emptyValue);
+        return new Reductor<Range<T>, Range<T>>(difference, iterator.next()).perform(iterator);
+    }
+
+    public Range<T> difference(Range<T>... ranges) {
+        dbc.precondition(ranges != null, "cannot evaluate difference for a null array of ranges");
+        dbc.precondition(ranges.length != 0, "cannot evaluate difference for an empty array of ranges");
+        final Iterator<Range<T>> iterator = new ArrayIterator<Range<T>>(ranges);
+        final Difference<T> difference = new Difference<T>(sequencer, comparator, emptyValue);
+        return new Reductor<Range<T>, Range<T>>(difference, iterator.next()).perform(iterator);
     }
 }
