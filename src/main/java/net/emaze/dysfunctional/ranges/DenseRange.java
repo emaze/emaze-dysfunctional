@@ -38,7 +38,6 @@ public class DenseRange<T> implements Range<T> {
 
     @Override
     public boolean contains(T element) {
-        dbc.precondition(element != null, "checking if null is contained in DenseRange<T>");
         return Order.of(comparator, Maybe.just(element), Maybe.just(begin)).isGte() && Order.of(comparator, Maybe.just(element), end).isLt();
     }
 

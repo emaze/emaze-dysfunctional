@@ -168,11 +168,6 @@ public class DenseRangeTest {
             RangeMother.r(0, 10).compareTo(null);
         }
 
-        @Test(expected = IllegalArgumentException.class)
-        public void checkingIfContainsForNullYieldsException() {
-            RangeMother.r(0, 10).contains(null);
-        }
-
         @Test(expected = ClassCastException.class)
         public void callingErasureWithWrongTypeYieldsException() {
             Comparable c = RangeMother.r(0, 10);

@@ -38,7 +38,6 @@ public class SparseRange<T> implements Range<T> {
 
     @Override
     public boolean contains(final T element) {
-        dbc.precondition(element != null, "checking if null is contained in SparseRange<T>");
         return new Any<DenseRange<T>>(new RangeNotContaining<T>(element)).accept(densified.iterator());
     }
 
