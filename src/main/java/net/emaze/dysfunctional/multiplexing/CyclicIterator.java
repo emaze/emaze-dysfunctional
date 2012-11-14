@@ -10,7 +10,7 @@ import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
  * A cyclic iterator. The given iterator is iterated indefinitely.
  *
  * @param <E> the element type
- * @author mcodella, asturman
+ * @author mcodella, asturman, rferranti
  */
 public class CyclicIterator<E> extends ReadOnlyIterator<E> {
 
@@ -19,13 +19,12 @@ public class CyclicIterator<E> extends ReadOnlyIterator<E> {
 
     public CyclicIterator(Iterator<E> source) {
         dbc.precondition(source != null, "source iterator cannot be null");
-        dbc.precondition(source.hasNext(), "source iterator cannot be empty");
         this.source = source;
     }
 
     @Override
     public boolean hasNext() {
-        return true;
+        return source.hasNext() || !memory.isEmpty();
     }
 
     @Override
