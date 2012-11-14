@@ -20,40 +20,49 @@ import net.emaze.dysfunctional.reductions.Every;
  */
 public class RoundRobinShortestIterator<E> extends ReadOnlyIterator<E> {
 
-    private final List<Iterator<E>> iterators = new ArrayList<Iterator<E>>();
-    private final Queue<E> prefetched = new LinkedList<E>();
+    private final Iterator<? extends Iterator<E>> iterators;
+    private final List<Iterator<E>> memory = new ArrayList<Iterator<E>>();
+    private final Queue<E> prefetchedValues = new LinkedList<E>();
 
     public <T extends Iterator<E>> RoundRobinShortestIterator(Iterator<T> iterators) {
         dbc.precondition(iterators != null, "trying to create a MultiplexingIterator from a null iterator of iterators");
-        while(iterators.hasNext()){
-            this.iterators.add(iterators.next());
-        }
-        dbc.precondition(this.iterators.iterator().hasNext(), "trying to create a MultiplexingIterator from an empty iterator");
+        this.iterators = iterators;
     }
 
     @Override
     public boolean hasNext() {
-        if (prefetched.isEmpty()) {
-            tryPrefetch();
+        enforceMemoryIsFilled();
+        if (prefetchedValues.isEmpty()) {
+            prefetchValues();
         }
-        return !prefetched.isEmpty();
+        return !prefetchedValues.isEmpty();
     }
 
     @Override
     public E next() {
-        if (prefetched.isEmpty()) {
-            tryPrefetch();
+        enforceMemoryIsFilled();
+        if (prefetchedValues.isEmpty()) {
+            prefetchValues();
         }
-        return prefetched.remove();
+        return prefetchedValues.remove();
     }
 
-    private void tryPrefetch() {
-        if (!new Every<Iterator<E>>(new HasNext<Iterator<E>>()).accept(iterators.iterator())) {
+    private void enforceMemoryIsFilled() {
+        if (!memory.isEmpty()) {
             return;
         }
-        final Iterator<E> values = new TransformingIterator<E, Iterator<E>>(iterators.iterator(), new FirstElement<E>());
-        while(values.hasNext()){
-            prefetched.add(values.next());
+        while (iterators.hasNext()) {
+            memory.add(iterators.next());
+        }
+    }
+
+    private void prefetchValues() {
+        if (!new Every<Iterator<E>>(new HasNext<Iterator<E>>()).accept(memory.iterator())) {
+            return;
+        }
+        final Iterator<E> values = new TransformingIterator<E, Iterator<E>>(memory.iterator(), new FirstElement<E>());
+        while (values.hasNext()) {
+            prefetchedValues.add(values.next());
         }
     }
 }

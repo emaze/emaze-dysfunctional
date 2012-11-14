@@ -65,9 +65,10 @@ public class RoundRobinShortestIteratorTest {
             new RoundRobinShortestIterator<O>(null);
         }
 
-        @Test(expected = IllegalArgumentException.class)
-        public void creatingWithEmptyIteratorsYieldsException() {
-            new RoundRobinShortestIterator<O>(Iterations.<Iterator<O>>iterator());
+        @Test
+        public void creatingWithEmptyIteratorsYieldsEmptyIterator() {
+            Iterator<O> iterator = new RoundRobinShortestIterator<O>(Iterations.<Iterator<O>>iterator());
+            Assert.assertFalse(iterator.hasNext());
         }
     }
 }
