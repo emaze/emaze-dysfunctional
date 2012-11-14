@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional;
 
+import java.util.Iterator;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
@@ -33,6 +34,7 @@ import net.emaze.dysfunctional.dispatching.adapting.IgnoreParameter;
 import net.emaze.dysfunctional.dispatching.adapting.IgnoreSecond;
 import net.emaze.dysfunctional.dispatching.adapting.IgnoreSecondOfThree;
 import net.emaze.dysfunctional.dispatching.adapting.IgnoreThird;
+import net.emaze.dysfunctional.dispatching.adapting.IteratingProvider;
 import net.emaze.dysfunctional.dispatching.adapting.PredicateBinder;
 import net.emaze.dysfunctional.dispatching.adapting.PredicateBinderFirst;
 import net.emaze.dysfunctional.dispatching.adapting.PredicateBinderFirstOfThree;
@@ -63,6 +65,7 @@ import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.dispatching.logic.Proposition;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.options.Maybe;
 
 /**
  * curry, mcurry, rcurry, ignore, ignore1st, ignore2nd, ignore3rd, provider,
@@ -579,6 +582,16 @@ public abstract class Dispatching {
      */
     public static <R, T1, T2, T3> TernaryDelegate<R, T1, T2, T3> ignore3rd(BinaryDelegate<R, T1, T2> delegate, Class<T3> ignored) {
         return new IgnoreThird<R, T1, T2, T3>(delegate);
+    }
+
+    /**
+     * Adapts an iterator to a provider.
+     *
+     * @param adaptee the runnable to be adapted
+     * @return the adapted provider
+     */
+    public static <T> Provider<Maybe<T>> provider(Iterator<T> adaptee) {
+        return new IteratingProvider<T>(adaptee);
     }
 
     /**

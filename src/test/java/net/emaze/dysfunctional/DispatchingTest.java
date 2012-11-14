@@ -23,6 +23,7 @@ import net.emaze.dysfunctional.dispatching.logic.Proposition;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Yes;
+import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.testing.O;
 import net.emaze.dysfunctional.tuples.BinaryIdentity;
 import net.emaze.dysfunctional.tuples.Pair;
@@ -49,6 +50,12 @@ import org.junit.runners.Suite;
 public class DispatchingTest {
 
     public static class Adapting {
+
+        @Test
+        public void canAdaptIteratorToProvider() {
+            final Provider<Maybe<Integer>> adapted = Dispatching.provider(Iterations.iterator(1));
+            Assert.assertNotNull(adapted);
+        }
 
         @Test
         public void canAdaptRunnableToProvider() {
@@ -131,7 +138,6 @@ public class DispatchingTest {
         @Test
         public void canAdaptDelegateToPredicate() {
             final Predicate<O> adapted = Dispatching.predicate(new Delegate<Boolean, O>() {
-
                 @Override
                 public Boolean perform(O t) {
                     return true;
@@ -143,7 +149,6 @@ public class DispatchingTest {
         @Test
         public void canAdaptBinaryDelegateToBinaryPredicate() {
             final BinaryPredicate<O, O> adapted = Dispatching.predicate(new BinaryDelegate<Boolean, O, O>() {
-
                 @Override
                 public Boolean perform(O f, O s) {
                     return true;
@@ -155,7 +160,6 @@ public class DispatchingTest {
         @Test
         public void canAdaptTernaryDelegateToBinaryPredicate() {
             final TernaryPredicate<O, O, O> adapted = Dispatching.predicate(new TernaryDelegate<Boolean, O, O, O>() {
-
                 @Override
                 public Boolean perform(O f, O s, O t) {
                     return true;
