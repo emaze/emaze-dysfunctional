@@ -6,7 +6,6 @@ import java.util.List;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.options.Maybe;
-import net.emaze.dysfunctional.options.MaybeIterator;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -21,10 +20,10 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     MultiplexingTest.Chain.class,
     MultiplexingTest.Flatten.class,
-    MultiplexingTest.Mux.class,
-    MultiplexingTest.Muxl.class,
-    MultiplexingTest.Demux.class,
-    MultiplexingTest.DemuxLongest.class,
+    MultiplexingTest.RoundRobinShortest.class,
+    MultiplexingTest.RoundRobinLongest.class,
+    MultiplexingTest.Unchain.class,
+    MultiplexingTest.UnchainWithExactChannelSize.class,
     MultiplexingTest.Roundrobin.class,
     MultiplexingTest.Cycle.class,
     MultiplexingTest.Facade.class
@@ -103,190 +102,188 @@ public class MultiplexingTest {
         }
     }
 
-    public static class Mux {
+    public static class RoundRobinShortest {
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotMuxANullIterable() {
             final Iterable<Iterator<O>> iterable = null;
-            Multiplexing.mux(iterable);
+            Multiplexing.roundrobinShortest(iterable);
         }
 
         @Test
         public void canMuxFromIterable() {
             final Iterable<Iterator<O>> iterable = Iterations.iterable(AN_ITERABLE.iterator());
-            final Iterator<O> muxed = Multiplexing.mux(iterable);
+            final Iterator<O> muxed = Multiplexing.roundrobinShortest(iterable);
             Assert.assertNotNull(muxed);
         }
 
         @Test
         public void canMuxFromIterator() {
             final Iterable<Iterator<O>> iterable = Iterations.iterable(AN_ITERABLE.iterator());
-            final Iterator<O> muxed = Multiplexing.mux(iterable.iterator());
+            final Iterator<O> muxed = Multiplexing.roundrobinShortest(iterable.iterator());
             Assert.assertNotNull(muxed);
         }
 
         @Test
         public void canMuxTwoValues() {
-            final Iterator<O> muxed = Multiplexing.mux(AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
+            final Iterator<O> muxed = Multiplexing.roundrobinShortest(AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
             Assert.assertNotNull(muxed);
         }
 
         @Test
         public void canMuxThreeValues() {
-            final Iterator<O> muxed = Multiplexing.mux(AN_ITERABLE.iterator(), AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
+            final Iterator<O> muxed = Multiplexing.roundrobinShortest(AN_ITERABLE.iterator(), AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
             Assert.assertNotNull(muxed);
         }
     }
 
-    public static class Muxl {
+    public static class RoundRobinLongest {
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotMuxLongestANullIterable() {
             final Iterable<Iterator<O>> iterable = null;
-            Multiplexing.muxLongest(iterable);
+            Multiplexing.roundrobinLongest(iterable);
         }
 
         @Test
         public void canMuxLongestFromIterable() {
             final Iterable<Iterator<O>> iterable = Iterations.iterable(AN_ITERABLE.iterator());
-            final Iterator<Maybe<O>> muxed = Multiplexing.muxLongest(iterable);
+            final Iterator<Maybe<O>> muxed = Multiplexing.roundrobinLongest(iterable);
             Assert.assertNotNull(muxed);
         }
 
         @Test
         public void canMuxLongestFromIterator() {
             final Iterable<Iterator<O>> iterable = Iterations.iterable(AN_ITERABLE.iterator());
-            final Iterator<Maybe<O>> muxed = Multiplexing.muxLongest(iterable.iterator());
+            final Iterator<Maybe<O>> muxed = Multiplexing.roundrobinLongest(iterable.iterator());
             Assert.assertNotNull(muxed);
         }
 
         @Test
         public void canMuxLongestFromTwoValues() {
-            final Iterator<Maybe<O>> muxed = Multiplexing.muxLongest(AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
+            final Iterator<Maybe<O>> muxed = Multiplexing.roundrobinLongest(AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
             Assert.assertNotNull(muxed);
         }
 
         @Test
         public void canMuxLongestFromThreeValues() {
-            final Iterator<Maybe<O>> muxed = Multiplexing.muxLongest(AN_ITERABLE.iterator(), AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
+            final Iterator<Maybe<O>> muxed = Multiplexing.roundrobinLongest(AN_ITERABLE.iterator(), AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
             Assert.assertNotNull(muxed);
         }
     }
 
-    public static class Demux {
+    public static class Unchain {
 
         @Test(expected = IllegalArgumentException.class)
-        public void cannotDemuxANullIterable() {
+        public void cannotUnchainANullIterable() {
             final Iterable<Iterator<O>> iterable = null;
-            Multiplexing.demux(1, iterable);
+            Multiplexing.unchain(1, iterable);
         }
 
         @Test(expected = IllegalArgumentException.class)
-        public void cannotDemuxNullIterableUsingProvider() {
+        public void cannotUnchainNullIterableUsingProvider() {
             final Provider<ArrayList<O>> provider = new ArrayListFactory<O>();
             final Iterable<O> iterable = null;
-            Multiplexing.demux(1, iterable, provider);
+            Multiplexing.unchain(1, iterable, provider);
         }
 
         @Test
-        public void canDemuxFromIterable() {
-            Iterator<List<O>> demux = Multiplexing.demux(1, AN_ITERABLE);
+        public void canUnchainFromIterable() {
+            Iterator<List<O>> demux = Multiplexing.unchain(1, AN_ITERABLE);
             Assert.assertNotNull(demux);
         }
 
         @Test
-        public void canDemuxFromIterator() {
-            Iterator<List<O>> demux = Multiplexing.demux(1, AN_ITERABLE.iterator());
+        public void canUnchainFromIterator() {
+            Iterator<List<O>> demux = Multiplexing.unchain(1, AN_ITERABLE.iterator());
             Assert.assertNotNull(demux);
         }
 
         @Test
-        public void canDemuxFromIteratorUsingProvider() {
+        public void canUnchainFromIteratorUsingProvider() {
             Provider<ArrayList<O>> provider = new ArrayListFactory<O>();
-            Iterator<ArrayList<O>> demux = Multiplexing.demux(1, AN_ITERABLE.iterator(), provider);
+            Iterator<ArrayList<O>> demux = Multiplexing.unchain(1, AN_ITERABLE.iterator(), provider);
             Assert.assertNotNull(demux);
         }
 
         @Test
-        public void canDemuxFromIterableUsingProvider() {
+        public void canUnchainFromIterableUsingProvider() {
             Provider<ArrayList<O>> provider = new ArrayListFactory<O>();
-            Iterator<ArrayList<O>> demux = Multiplexing.demux(1, AN_ITERABLE, provider);
+            Iterator<ArrayList<O>> demux = Multiplexing.unchain(1, AN_ITERABLE, provider);
             Assert.assertNotNull(demux);
         }
 
         @Test
-        public void canDemuxFromArrayUsingProvider() {
+        public void canUnchainFromArrayUsingProvider() {
             Provider<ArrayList<O>> provider = new ArrayListFactory<O>();
-            Iterator<ArrayList<O>> demux = Multiplexing.demux(1, provider, O.ONE, O.ANOTHER);
+            Iterator<ArrayList<O>> demux = Multiplexing.unchain(1, provider, O.ONE, O.ANOTHER);
             Assert.assertNotNull(demux);
         }
 
         @Test
-        public void canDemuxTwoValues() {
-            Iterator<List<O>> demux = Multiplexing.demux(1, O.IGNORED, O.IGNORED);
+        public void canUnchainTwoValues() {
+            Iterator<List<O>> demux = Multiplexing.unchain(1, O.IGNORED, O.IGNORED);
             Assert.assertNotNull(demux);
         }
 
         @Test
-        public void canDemuxThreeValues() {
-            Iterator<List<O>> demux = Multiplexing.demux(1, O.IGNORED, O.IGNORED, O.IGNORED);
+        public void canUnchainThreeValues() {
+            Iterator<List<O>> demux = Multiplexing.unchain(1, O.IGNORED, O.IGNORED, O.IGNORED);
             Assert.assertNotNull(demux);
         }
     }
 
-    public static class DemuxLongest {
+    public static class UnchainWithExactChannelSize {
 
         @Test(expected = IllegalArgumentException.class)
-        public void cannotDemuxlANullIterable() {
-            final Iterable<Maybe<O>> iterable = null;
-            Multiplexing.demuxLongest(1, iterable);
+        public void cannotUnchainANullIterable() {
+            final Iterable<O> iterable = null;
+            Multiplexing.unchainWithExactChannelSize(1, iterable);
         }
 
         @Test(expected = IllegalArgumentException.class)
-        public void cannotDemuxlANullIterableWithProvider() {
+        public void cannotUnchainANullIterableWithProvider() {
             Provider<ArrayList<Maybe<O>>> provider = new ArrayListFactory<Maybe<O>>();
-            final Iterable<Maybe<O>> iterable = null;
-            Multiplexing.demuxLongest(1, iterable, provider);
+            final Iterable<O> iterable = null;
+            Multiplexing.unchainWithExactChannelSize(1, iterable, provider);
         }
 
         @Test
-        public void canDemuxLongestFromIterable() {
-            MaybeIterator<O> maybeIter = new MaybeIterator<O>(AN_ITERABLE.iterator());
-            Iterator<List<Maybe<O>>> demuxl = Multiplexing.demuxLongest(1, Iterations.oneTime(maybeIter));
+        public void canUnchainFromIterable() {
+            Iterator<List<Maybe<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, AN_ITERABLE.iterator());
             Assert.assertNotNull(demuxl);
         }
 
         @Test
-        public void canDemuxLongestFromIterator() {
-            Iterator<List<Maybe<O>>> demuxl = Multiplexing.demuxLongest(1, new MaybeIterator<O>(AN_ITERABLE.iterator()));
+        public void canUnchainFromIterator() {
+            Iterator<List<Maybe<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, AN_ITERABLE.iterator());
             Assert.assertNotNull(demuxl);
         }
 
         @Test
-        public void canDemuxLongestFromArray() {
-            Iterator<List<Maybe<O>>> demuxl = Multiplexing.demuxLongest(1, Maybe.just(O.IGNORED), Maybe.<O>nothing());
+        public void canUnchainFromArray() {
+            Iterator<List<Maybe<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, O.IGNORED);
             Assert.assertNotNull(demuxl);
         }
 
         @Test
-        public void canDemuxLongestFromIterableWithProvider() {
+        public void canUnchainFromIterableWithProvider() {
             Provider<ArrayList<Maybe<O>>> provider = new ArrayListFactory<Maybe<O>>();
-            MaybeIterator<O> maybeIter = new MaybeIterator<O>(AN_ITERABLE.iterator());
-            Iterator<ArrayList<Maybe<O>>> demuxl = Multiplexing.demuxLongest(1, Iterations.oneTime(maybeIter), provider);
+            Iterator<ArrayList<Maybe<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, AN_ITERABLE.iterator(), provider);
             Assert.assertNotNull(demuxl);
         }
 
         @Test
-        public void canDemuxLongestFromIteratorWithProvider() {
+        public void canUnchainFromIteratorWithProvider() {
             Provider<ArrayList<Maybe<O>>> provider = new ArrayListFactory<Maybe<O>>();
-            Iterator<ArrayList<Maybe<O>>> demuxl = Multiplexing.demuxLongest(1, new MaybeIterator<O>(AN_ITERABLE.iterator()), provider);
+            Iterator<ArrayList<Maybe<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, AN_ITERABLE.iterator(), provider);
             Assert.assertNotNull(demuxl);
         }
 
         @Test
-        public void canDemuxLongestFromArrayWithProvider() {
+        public void canUnchainFromArrayWithProvider() {
             Provider<ArrayList<Maybe<O>>> provider = new ArrayListFactory<Maybe<O>>();
-            Iterator<ArrayList<Maybe<O>>> demuxl = Multiplexing.demuxLongest(1, provider, Maybe.just(O.IGNORED), Maybe.<O>nothing());
+            Iterator<ArrayList<Maybe<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, provider, O.IGNORED);
             Assert.assertNotNull(demuxl);
         }
     }

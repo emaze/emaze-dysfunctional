@@ -17,16 +17,16 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-    PreciseMultiplexingIteratorTest.Functions.class,
-    PreciseMultiplexingIteratorTest.Degenerations.class
+    RoundRobinLongestIteratorTest.Functions.class,
+    RoundRobinLongestIteratorTest.Degenerations.class
 })
-public class PreciseMultiplexingIteratorTest {
+public class RoundRobinLongestIteratorTest {
 
     public static class Degenerations {
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCreateMultiplexingIteratorWithNullIterators() {
-            new PreciseMultiplexingIterator<Object>(null);
+            new RoundRobinLongestIterator<Object>(null);
         }
     }
 
@@ -37,15 +37,15 @@ public class PreciseMultiplexingIteratorTest {
             Iterator<Integer> first = Arrays.<Integer>asList().iterator();
             Iterator<Integer> second = Arrays.<Integer>asList().iterator();
             Iterator<Iterator<Integer>> firstAndSecond = Arrays.asList(first, second).iterator();
-            Assert.assertFalse(new PreciseMultiplexingIterator<Integer>(firstAndSecond).hasNext());
+            Assert.assertFalse(new RoundRobinLongestIterator<Integer>(firstAndSecond).hasNext());
         }
 
         @Test
-        public void canConsumeMultiplexingIterator() {
+        public void canConsumeIterator() {
             Iterator<Integer> odds = Arrays.asList(1, 3).iterator();
             Iterator<Integer> evens = Arrays.asList(2, 4).iterator();
             Iterator<Iterator<Integer>> oddsAndEvens = Arrays.asList(odds, evens).iterator();
-            PreciseMultiplexingIterator<Integer> iter = new PreciseMultiplexingIterator<Integer>(oddsAndEvens);
+            RoundRobinLongestIterator<Integer> iter = new RoundRobinLongestIterator<Integer>(oddsAndEvens);
             List<Maybe<Integer>> got = Consumers.all(iter);
             List<Maybe<Integer>> expected = Arrays.asList(Maybe.just(1), Maybe.just(2), Maybe.just(3), Maybe.just(4));
             Assert.assertEquals(expected, got);

@@ -18,23 +18,23 @@ import net.emaze.dysfunctional.options.Box;
 public class BatchingIterator<C extends Collection<T>, T> extends ReadOnlyIterator<C> {
 
     private final Iterator<T> iterator;
-    private final int maxChannelSize;
+    private final int batchSize;
     private final Provider<C> channelProvider;
     private final Box<C> prefetched = Box.empty();
 
-    public BatchingIterator(int maxChannelSize, Iterator<T> iterator, Provider<C> channelProvider) {
-        dbc.precondition(maxChannelSize > 0, "max channel size must be > 0");
+    public BatchingIterator(int batchSize, Iterator<T> iterator, Provider<C> channelProvider) {
+        dbc.precondition(batchSize > 0, "max channel size must be > 0");
         dbc.precondition(iterator != null, "iterator cannot be null");
         dbc.precondition(channelProvider != null, "channelProvider cannot be null");
         this.iterator = iterator;
-        this.maxChannelSize = maxChannelSize;
+        this.batchSize = batchSize;
         this.channelProvider = channelProvider;
     }
 
     @Override
     public boolean hasNext() {
         if (prefetched.isEmpty()) {
-            prefetched.setContent(prefetch(iterator, maxChannelSize));
+            prefetched.setContent(prefetch(iterator, batchSize));
         }
         return prefetched.getContent().size() != 0;
     }
@@ -42,7 +42,7 @@ public class BatchingIterator<C extends Collection<T>, T> extends ReadOnlyIterat
     @Override
     public C next() {
         if (prefetched.isEmpty()) {
-            prefetched.setContent(prefetch(iterator, maxChannelSize));
+            prefetched.setContent(prefetch(iterator, batchSize));
         }
         if (prefetched.getContent().size() == 0) {
             throw new NoSuchElementException();

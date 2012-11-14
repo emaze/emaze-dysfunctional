@@ -20,12 +20,12 @@ import net.emaze.dysfunctional.reductions.Any;
  * @param <E> the iterator element type
  * @author rferranti
  */
-public class PreciseMultiplexingIterator<E> extends ReadOnlyIterator<Maybe<E>> {
+public class RoundRobinLongestIterator<E> extends ReadOnlyIterator<Maybe<E>> {
 
     private final List<Iterator<Maybe<E>>> iterators = new ArrayList<Iterator<Maybe<E>>>();
     private final PeriodicIterator<Integer> indexSelector;
 
-    public <T extends Iterator<E>> PreciseMultiplexingIterator(Iterator<T> iterators) {
+    public <T extends Iterator<E>> RoundRobinLongestIterator(Iterator<T> iterators) {
         dbc.precondition(iterators != null, "trying to create a PreciseMultiplexingIterator from a null iterator of iterators");
         final Iterator<Iterator<Maybe<E>>> transformed = new TransformingIterator<Iterator<Maybe<E>>, T>(iterators, new MaybeIteratorTransformer<T, E>());
         while (transformed.hasNext()) {

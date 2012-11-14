@@ -18,12 +18,12 @@ import net.emaze.dysfunctional.reductions.Every;
  * @param <E>
  * @author rferranti
  */
-public class MultiplexingIterator<E> extends ReadOnlyIterator<E> {
+public class RoundRobinShortestIterator<E> extends ReadOnlyIterator<E> {
 
     private final List<Iterator<E>> iterators = new ArrayList<Iterator<E>>();
     private final Queue<E> prefetched = new LinkedList<E>();
 
-    public <T extends Iterator<E>> MultiplexingIterator(Iterator<T> iterators) {
+    public <T extends Iterator<E>> RoundRobinShortestIterator(Iterator<T> iterators) {
         dbc.precondition(iterators != null, "trying to create a MultiplexingIterator from a null iterator of iterators");
         while(iterators.hasNext()){
             this.iterators.add(iterators.next());

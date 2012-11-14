@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import net.emaze.dysfunctional.Consumers;
+import net.emaze.dysfunctional.Iterations;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,6 +18,14 @@ public class RoundRobinIteratorTest {
     @Test(expected = IllegalArgumentException.class)
     public void creatingWithNullArrayYieldsException() {
         new RoundRobinIterator<Object>(null);
+    }
+
+    @Test
+    public void consumingIteratorYieldsElementsInOrder() {
+        Iterator<Integer> former = Iterations.iterator(1, 3);
+        Iterator<Integer> latter = Iterations.iterator(2, 4);
+        Iterator<Integer> iter = new RoundRobinIterator<Integer>(Iterations.iterator(former, latter));
+        Assert.assertEquals(Arrays.asList(1, 2, 3, 4), Consumers.all(iter));
     }
 
     @Test
