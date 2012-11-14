@@ -1,16 +1,12 @@
 package net.emaze.dysfunctional.multiplexing;
 
-import java.util.ArrayList;
+import java.util.Deque;
 import java.util.Iterator;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.HasNext;
 import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
-import net.emaze.dysfunctional.order.NextIntegerSequencingPolicy;
-import net.emaze.dysfunctional.order.PeriodicIterator;
-import net.emaze.dysfunctional.order.PeriodicSequencingPolicy;
-import net.emaze.dysfunctional.reductions.Any;
+import net.emaze.dysfunctional.options.Box;
 
 /**
  * longest multiplexing
@@ -23,40 +19,48 @@ import net.emaze.dysfunctional.reductions.Any;
  */
 public class RoundRobinIterator<E> extends ReadOnlyIterator<E> {
 
-    private final List<Iterator<E>> iterators = new ArrayList<Iterator<E>>();
-    private final PeriodicIterator<Integer> indexSelector;
+    private final Iterator<? extends Iterator<E>> iterators;
+    private final Deque<Iterator<E>> memory = new LinkedList<Iterator<E>>();
+    private final Box<Iterator<E>> prefetched = Box.empty();
 
     public <T extends Iterator<E>> RoundRobinIterator(Iterator<T> iterators) {
         dbc.precondition(iterators != null, "trying to create a RoundRobinIterator from a null iterator of iterators");
-        while (iterators.hasNext()) {
-            this.iterators.add(iterators.next());
-        }
-        final PeriodicSequencingPolicy<Integer> period = new PeriodicSequencingPolicy<Integer>(new NextIntegerSequencingPolicy(), 0, this.iterators.size() - 1);
-        this.indexSelector = new PeriodicIterator<Integer>(period, 0);
+        this.iterators = iterators;
     }
 
     @Override
     public boolean hasNext() {
-        return !empty();
+        prefetchedAndMemorizeNonEmpty();
+        return prefetched.hasContent();
     }
 
     @Override
     public E next() {
-        if (empty()) {
-            throw new NoSuchElementException("iterator is consumed");
+        prefetchedAndMemorizeNonEmpty();
+        if (!prefetched.hasContent()) {
+            throw new NoSuchElementException();
         }
-        return firstNonEmpty().next();
+        return prefetched.unload().value().next();
     }
 
-    private boolean empty() {
-        return !new Any<Iterator<E>>(new HasNext<Iterator<E>>()).accept(iterators.iterator());
-    }
-
-    private Iterator<E> firstNonEmpty() {
-        while (true) {
-            final Iterator<E> currentIter = iterators.get(indexSelector.next());
-            if (currentIter.hasNext()) {
-                return currentIter;
+    private void prefetchedAndMemorizeNonEmpty() {
+        if (prefetched.hasContent()) {
+            return;
+        }
+        while (iterators.hasNext()) {
+            final Iterator<E> candidate = iterators.next();
+            if (candidate.hasNext()) {
+                prefetched.setContent(candidate);
+                memory.push(candidate);
+                return;
+            }
+        }
+        while (!memory.isEmpty()) {
+            Iterator<E> candidate = memory.removeLast();
+            if (candidate.hasNext()) {
+                prefetched.setContent(candidate);
+                memory.push(candidate);
+                return;
             }
         }
     }
