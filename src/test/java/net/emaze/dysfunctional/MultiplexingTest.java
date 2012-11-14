@@ -250,7 +250,7 @@ public class MultiplexingTest {
 
         @Test
         public void canUnchainFromIterable() {
-            Iterator<List<Maybe<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, AN_ITERABLE.iterator());
+            Iterator<List<Maybe<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, AN_ITERABLE);
             Assert.assertNotNull(demuxl);
         }
 
@@ -269,7 +269,7 @@ public class MultiplexingTest {
         @Test
         public void canUnchainFromIterableWithProvider() {
             Provider<ArrayList<Maybe<O>>> provider = new ArrayListFactory<Maybe<O>>();
-            Iterator<ArrayList<Maybe<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, AN_ITERABLE.iterator(), provider);
+            Iterator<ArrayList<Maybe<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, AN_ITERABLE, provider);
             Assert.assertNotNull(demuxl);
         }
 

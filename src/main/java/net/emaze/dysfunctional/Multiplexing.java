@@ -347,7 +347,7 @@ public abstract class Multiplexing {
      * @return an iterator containing multiplexed elements
      */
     public static <E, I extends Iterator<E>> Iterator<E> roundrobinShortest(Iterable<I> iterable) {
-        dbc.precondition(iterable != null, "cannot chain a null iterable");
+        dbc.precondition(iterable != null, "cannot roundrobinShortest a null iterable");
         final Iterator<I> iterator = iterable.iterator();
         return new RoundRobinShortestIterator<E>(iterator);
     }
@@ -418,7 +418,7 @@ public abstract class Multiplexing {
      * @return an iterator containing multiplexed elements
      */
     public static <E, I extends Iterator<E>> Iterator<Maybe<E>> roundrobinLongest(Iterable<I> iterable) {
-        dbc.precondition(iterable != null, "cannot muxLongest a null iterable");
+        dbc.precondition(iterable != null, "cannot roundrobinLongest a null iterable");
         final Iterator<I> iterator = iterable.iterator();
         return new RoundRobinLongestIterator<E>(iterator);
     }
@@ -479,7 +479,7 @@ public abstract class Multiplexing {
      * @return an iterator that cyclicly returns the elements from the argument
      */
     public static <E> Iterator<E> cycle(Iterable<E> iterable) {
-        dbc.precondition(iterable != null, "iterable cannot be null");
+        dbc.precondition(iterable != null, "cannot cycle a null iterable");
         return new CyclicIterator<E>(iterable.iterator());
     }
 
@@ -554,7 +554,7 @@ public abstract class Multiplexing {
      * @return an iterator of channels
      */
     public static <C extends Collection<E>, E> Iterator<C> unchain(int channelSize, Iterable<E> iterable, Provider<C> channelProvider) {
-        dbc.precondition(iterable != null, "cannot demux a null iterable");
+        dbc.precondition(iterable != null, "cannot unchain a null iterable");
         final ConstantProvider<Maybe<Integer>> channelsSizesProvider = new ConstantProvider<Maybe<Integer>>(Maybe.just(channelSize));
         final Iterator<E> iterator = iterable.iterator();
         return new UnchainIterator<C, E>(channelsSizesProvider, iterator, channelProvider);
@@ -570,7 +570,7 @@ public abstract class Multiplexing {
      * @return an iterator of channels
      */
     public static <E> Iterator<List<E>> unchain(int channelSize, Iterable<E> iterable) {
-        dbc.precondition(iterable != null, "cannot demux a null iterable");
+        dbc.precondition(iterable != null, "cannot unchain a null iterable");
         final ConstantProvider<Maybe<Integer>> channelsSizesProvider = new ConstantProvider<Maybe<Integer>>(Maybe.just(channelSize));
         final Provider<List<E>> channelFactory = Compositions.compose(new Vary<List<E>, ArrayList<E>>(), new ArrayListFactory<E>());
         final Iterator<E> iterator = iterable.iterator();
@@ -653,7 +653,7 @@ public abstract class Multiplexing {
      * @return an iterator of channels
      */
     public static <C extends Collection<Maybe<E>>, E> Iterator<C> unchainWithExactChannelSize(int channelSize, Iterable<E> iterable, Provider<C> channelProvider) {
-        dbc.precondition(iterable != null, "cannot demuxLongest a null iterable");
+        dbc.precondition(iterable != null, "cannot unchainWithExactChannelSize a null iterable");
         final ConstantProvider<Maybe<Integer>> channelsSizesProvider = new ConstantProvider<Maybe<Integer>>(Maybe.just(channelSize));
         return new UnchainWithExactChannelSizeIterator<C, E>(channelsSizesProvider, iterable.iterator(), channelProvider);
     }
@@ -668,7 +668,7 @@ public abstract class Multiplexing {
      * @return an iterator of channels
      */
     public static <E> Iterator<List<Maybe<E>>> unchainWithExactChannelSize(int channelSize, Iterable<E> iterable) {
-        dbc.precondition(iterable != null, "cannot demuxLongest a null iterable");
+        dbc.precondition(iterable != null, "cannot unchainWithExactChannelSize a null iterable");
         final ConstantProvider<Maybe<Integer>> channelsSizesProvider = new ConstantProvider<Maybe<Integer>>(Maybe.just(channelSize));
         final Provider<List<Maybe<E>>> channelFactory = Compositions.compose(new Vary<List<Maybe<E>>, ArrayList<Maybe<E>>>(), new ArrayListFactory<Maybe<E>>());
         return new UnchainWithExactChannelSizeIterator<List<Maybe<E>>, E>(channelsSizesProvider, iterable.iterator(), channelFactory);
