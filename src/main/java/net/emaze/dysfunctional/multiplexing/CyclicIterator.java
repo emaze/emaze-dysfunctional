@@ -1,9 +1,8 @@
 package net.emaze.dysfunctional.multiplexing;
 
-import java.util.ArrayList;
+import java.util.Deque;
 import java.util.Iterator;
-import net.emaze.dysfunctional.collections.ArrayListFactory;
-import net.emaze.dysfunctional.consumers.ConsumeIntoCollection;
+import java.util.LinkedList;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 
@@ -15,16 +14,15 @@ import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
  */
 public class CyclicIterator<E> extends ReadOnlyIterator<E> {
 
-    private final Iterable<E> matrix;
-    private Iterator<E> current;
-    
-    public CyclicIterator(Iterator<E> iterator) {
-        dbc.precondition(iterator != null, "iterator cannot be null");
-        dbc.precondition(iterator.hasNext(), "iterator cannot be empty");
-        this.matrix = new ConsumeIntoCollection<ArrayList<E>, E>(new ArrayListFactory<E>()).perform(iterator);
-        this.current = matrix.iterator();
+    private final Deque<E> memory = new LinkedList<E>();
+    private Iterator<E> source;
+
+    public CyclicIterator(Iterator<E> source) {
+        dbc.precondition(source != null, "source iterator cannot be null");
+        dbc.precondition(source.hasNext(), "source iterator cannot be empty");
+        this.source = source;
     }
-    
+
     @Override
     public boolean hasNext() {
         return true;
@@ -32,9 +30,8 @@ public class CyclicIterator<E> extends ReadOnlyIterator<E> {
 
     @Override
     public E next() {
-        if(current.hasNext() == false) {
-            current = matrix.iterator();
-        }
-        return current.next();
+        final E value = source.hasNext() ? source.next() : memory.removeLast();
+        memory.push(value);
+        return value;
     }
 }
