@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
@@ -26,6 +27,7 @@ import org.junit.runners.Suite;
     MultiplexingTest.UnchainWithExactChannelSize.class,
     MultiplexingTest.Roundrobin.class,
     MultiplexingTest.Cycle.class,
+    MultiplexingTest.Batch.class,
     MultiplexingTest.Facade.class
 })
 public class MultiplexingTest {
@@ -355,6 +357,63 @@ public class MultiplexingTest {
         public void canCycleFromThreeValues() {
             final Iterator<O> cycle = Multiplexing.cycle(O.ONE, O.ANOTHER, O.YET_ANOTHER);
             Assert.assertNotNull(cycle);
+        }
+    }
+
+    public static class Batch {
+
+        @Test
+        public void canBatchAnIterator() {
+            final Iterator<O> source = Iterations.iterator(O.ONE);
+            final Iterator<List<O>> got = Multiplexing.batch(1, source);
+            Assert.assertEquals(Arrays.asList(Arrays.asList(O.ONE)), Consumers.all(got));
+        }
+
+        @Test
+        public void canBatchAnIterable() {
+            final Iterable<O> source = Iterations.iterable(O.ONE);
+            final Iterator<List<O>> got = Multiplexing.batch(1, source);
+            Assert.assertEquals(Arrays.asList(Arrays.asList(O.ONE)), Consumers.all(got));
+        }
+
+        @Test
+        public void canBatchAnArray() {
+            final O[] source = new O[]{O.ONE};
+            final Iterator<List<O>> got = Multiplexing.batch(1, source);
+            Assert.assertEquals(Arrays.asList(Arrays.asList(O.ONE)), Consumers.all(got));
+        }
+
+        @Test
+        public void canBatchAnIteratorWithChannelProvider() {
+            final Iterator<O> source = Iterations.iterator(O.ONE);
+            final Iterator<ArrayList<O>> got = Multiplexing.batch(1, source, new ArrayListFactory<O>());
+            Assert.assertEquals(Arrays.asList(Arrays.asList(O.ONE)), Consumers.all(got));
+        }
+
+        @Test
+        public void canBatchAnIterableWithChannelProvider() {
+            final Iterable<O> source = Iterations.iterable(O.ONE);
+            final Iterator<ArrayList<O>> got = Multiplexing.batch(1, source, new ArrayListFactory<O>());
+            Assert.assertEquals(Arrays.asList(Arrays.asList(O.ONE)), Consumers.all(got));
+        }
+
+        @Test
+        public void canBatchAnArrayWithChannelProvider() {
+            final O[] source = new O[]{O.ONE};
+            final Iterator<ArrayList<O>> got = Multiplexing.batch(1, source, new ArrayListFactory<O>());
+            Assert.assertEquals(Arrays.asList(Arrays.asList(O.ONE)), Consumers.all(got));
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void callingBatchWithNullIterableYieldsException() {
+            final Iterable<O> iterable = null;
+            Multiplexing.batch(1, iterable);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void callingBatchWithProviderWithNullIterableYieldsException() {
+            final Iterable<O> iterable = null;
+            Multiplexing.batch(1, iterable, new ArrayListFactory<O>());
         }
     }
 

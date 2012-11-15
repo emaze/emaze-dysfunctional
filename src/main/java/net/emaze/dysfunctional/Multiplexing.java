@@ -15,11 +15,11 @@ import net.emaze.dysfunctional.iterations.TransformingIterator;
 import net.emaze.dysfunctional.multiplexing.BatchingIterator;
 import net.emaze.dysfunctional.multiplexing.ChainIterator;
 import net.emaze.dysfunctional.multiplexing.CyclicIterator;
-import net.emaze.dysfunctional.multiplexing.UnchainIterator;
-import net.emaze.dysfunctional.multiplexing.UnchainWithExactChannelSizeIterator;
 import net.emaze.dysfunctional.multiplexing.RoundRobinIterator;
 import net.emaze.dysfunctional.multiplexing.RoundRobinLongestIterator;
 import net.emaze.dysfunctional.multiplexing.RoundRobinShortestIterator;
+import net.emaze.dysfunctional.multiplexing.UnchainIterator;
+import net.emaze.dysfunctional.multiplexing.UnchainWithExactChannelSizeIterator;
 import net.emaze.dysfunctional.options.Maybe;
 
 /**
@@ -232,7 +232,7 @@ public abstract class Multiplexing {
      * @param channelProvider the provider used to create channels
      * @return an iterator of channels
      */
-    public static <C extends Collection<E>, E> Iterator<C> batch(int batchSize, Provider<C> channelProvider, E... array) {
+    public static <C extends Collection<E>, E> Iterator<C> batch(int batchSize, E[] array, Provider<C> channelProvider) {
         return new BatchingIterator<C, E>(batchSize, new ArrayIterator<E>(array), channelProvider);
     }
 
@@ -245,7 +245,7 @@ public abstract class Multiplexing {
      * @param array the source array
      * @return an iterator of channels
      */
-    public static <E> Iterator<List<E>> batch(int batchSize, E... array) {
+    public static <E> Iterator<List<E>> batch(int batchSize, E[] array) {
         final Provider<List<E>> channelFactory = Compositions.compose(new Vary<List<E>, ArrayList<E>>(), new ArrayListFactory<E>());
         return new BatchingIterator<List<E>, E>(batchSize, new ArrayIterator<E>(array), channelFactory);
     }

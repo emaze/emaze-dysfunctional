@@ -188,7 +188,7 @@ public class ApplicationsTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallEachOnArrayWithNullAction() {
-            final Object[] array = null;
+            final Object[] array = new Object[]{};
             Applications.each(array, null);
         }
     }

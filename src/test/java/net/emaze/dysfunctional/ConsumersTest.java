@@ -112,6 +112,18 @@ public class ConsumersTest {
         }
 
         @Test(expected = IllegalArgumentException.class)
+        public void cannotCallForIteratorAllWithNullCollection() {
+            final List<Integer> collection = null;
+            Consumers.all(Arrays.asList(1, 2).iterator(), collection);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallForArrayAllWithNullCollection() {
+            final List<Integer> collection = null;
+            Consumers.all(new Integer[]{1, 2}, collection);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
         public void cannotCallAllWithANullIterableAndACollection() {
             final Iterable<Integer> iterable = null;
             Consumers.all(iterable, new ArrayList<Integer>());
@@ -212,6 +224,19 @@ public class ConsumersTest {
             final Map<O, O> map = null;
             Iterable<Pair<O, O>> iterable = Iterations.iterable(Pair.of(O.ONE, O.ONE));
             Consumers.dict(iterable, map);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallDictForIteratorWithNullMap() {
+            final Map<O, O> map = null;
+            Iterator<Pair<O, O>> iterator = Iterations.iterator(Pair.of(O.ONE, O.ONE));
+            Consumers.dict(iterator, map);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotCallDictForArrayWithNullMap() {
+            final Map<O, O> map = null;
+            Consumers.dict(map, Pair.of(O.ONE, O.ONE));
         }
 
         @Test(expected = IllegalArgumentException.class)

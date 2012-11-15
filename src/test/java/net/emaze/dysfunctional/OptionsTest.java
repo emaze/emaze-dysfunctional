@@ -27,6 +27,7 @@ import org.junit.runners.Suite;
     OptionsTest.LiftAndDrop.class,
     OptionsTest.Facade.class,
     OptionsTest.LeftAndRight.class,
+    OptionsTest.Joins.class,
     OptionsTest.Pures.class
 })
 public class OptionsTest {
@@ -436,6 +437,45 @@ public class OptionsTest {
         public void canEvaluateEitherPuresOfManyElements() {
             final Iterator<Either<String, Integer>> pures = Options.Eithers.pures(1, 2, 3, 4);
             Assert.assertNotNull(pures);
+        }
+    }
+
+    public static class Joins {
+
+        @Test
+        public void joiningEmptyMaybeYieldsNothing() {
+            final Maybe<Maybe<O>> source = Maybe.nothing();
+            Assert.assertEquals(Maybe.<O>nothing(), Options.Maybes.join(source));
+        }
+
+        @Test
+        public void joiningNonEmptyInnerMaybeYieldsJustContent() {
+            final Maybe<Maybe<O>> source = Maybe.just(Maybe.just(O.ONE));
+            Assert.assertEquals(Maybe.just(O.ONE), Options.Maybes.join(source));
+        }
+
+        @Test
+        public void joiningEmptyInnerMaybeYieldsNothing() {
+            final Maybe<Maybe<O>> source = Maybe.just(Maybe.<O>nothing());
+            Assert.assertEquals(Maybe.<O>nothing(), Options.Maybes.join(source));
+        }
+
+        @Test
+        public void joiningEmptyBoxYieldsNothing() {
+            final Box<Box<O>> source = Box.empty();
+            Assert.assertEquals(Box.<O>empty(), Options.Boxes.join(source));
+        }
+
+        @Test
+        public void joiningNonEmptyInnerBoxYieldsJustContent() {
+            final Box<Box<O>> source = Box.of(Box.of(O.ONE));
+            Assert.assertEquals(Box.of(O.ONE), Options.Boxes.join(source));
+        }
+
+        @Test
+        public void joiningEmptyInnerBoxYieldsNothing() {
+            final Box<Box<O>> source = Box.of(Box.<O>empty());
+            Assert.assertEquals(Box.<O>empty(), Options.Boxes.join(source));
         }
     }
 
