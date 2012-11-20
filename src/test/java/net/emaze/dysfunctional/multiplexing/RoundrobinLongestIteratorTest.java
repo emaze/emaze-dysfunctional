@@ -20,16 +20,16 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-    RoundRobinLongestIteratorTest.Functions.class,
-    RoundRobinLongestIteratorTest.Degenerations.class
+    RoundrobinLongestIteratorTest.Functions.class,
+    RoundrobinLongestIteratorTest.Degenerations.class
 })
-public class RoundRobinLongestIteratorTest {
+public class RoundrobinLongestIteratorTest {
 
     public static class Degenerations {
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCreateMultiplexingIteratorWithNullIterators() {
-            new RoundRobinLongestIterator<Object>(null);
+            new RoundrobinLongestIterator<Object>(null);
         }
     }
 
@@ -40,7 +40,7 @@ public class RoundRobinLongestIteratorTest {
             Iterator<Integer> first = Arrays.<Integer>asList().iterator();
             Iterator<Integer> second = Arrays.<Integer>asList().iterator();
             Iterator<Iterator<Integer>> firstAndSecond = Arrays.asList(first, second).iterator();
-            Assert.assertFalse(new RoundRobinLongestIterator<Integer>(firstAndSecond).hasNext());
+            Assert.assertFalse(new RoundrobinLongestIterator<Integer>(firstAndSecond).hasNext());
         }
 
         @Test
@@ -48,7 +48,7 @@ public class RoundRobinLongestIteratorTest {
             Iterator<Integer> odds = Arrays.asList(1, 3).iterator();
             Iterator<Integer> evens = Arrays.asList(2, 4).iterator();
             Iterator<Iterator<Integer>> oddsAndEvens = Arrays.asList(odds, evens).iterator();
-            RoundRobinLongestIterator<Integer> iter = new RoundRobinLongestIterator<Integer>(oddsAndEvens);
+            RoundrobinLongestIterator<Integer> iter = new RoundrobinLongestIterator<Integer>(oddsAndEvens);
             List<Maybe<Integer>> got = Consumers.all(iter);
             List<Maybe<Integer>> expected = Arrays.asList(Maybe.just(1), Maybe.just(2), Maybe.just(3), Maybe.just(4));
             Assert.assertEquals(expected, got);
@@ -59,7 +59,7 @@ public class RoundRobinLongestIteratorTest {
             Iterator<Integer> odds = Arrays.asList(1, 3, 5).iterator();
             Iterator<Integer> evens = Arrays.asList(2, 4).iterator();
             Iterator<Iterator<Integer>> oddsAndEvens = Arrays.asList(odds, evens).iterator();
-            RoundRobinLongestIterator<Integer> iter = new RoundRobinLongestIterator<Integer>(oddsAndEvens);
+            RoundrobinLongestIterator<Integer> iter = new RoundrobinLongestIterator<Integer>(oddsAndEvens);
             List<Maybe<Integer>> got = Consumers.all(iter);
             List<Maybe<Integer>> expected = Arrays.asList(Maybe.just(1), Maybe.just(2), Maybe.just(3), Maybe.just(4), Maybe.just(5), Maybe.<Integer>nothing());
             Assert.assertEquals(expected, got);
@@ -70,26 +70,26 @@ public class RoundRobinLongestIteratorTest {
             final Iterator<Integer> odds = Arrays.asList(1, 3, 5).iterator();
             final Iterator<Integer> evens = Arrays.<Integer>asList().iterator();
             final Iterator<Iterator<Integer>> oddsAndEvens = Arrays.asList(odds, evens, evens, evens).iterator();
-            final RoundRobinLongestIterator<Integer> iter = new RoundRobinLongestIterator<Integer>(oddsAndEvens);
+            final RoundrobinLongestIterator<Integer> iter = new RoundrobinLongestIterator<Integer>(oddsAndEvens);
             final int size = Consumers.all(iter).size();
             Assert.assertEquals(12, size);
         }
 
         @Test
         public void creatingWithEmptyIteratorOfIteratorsYieldsEmptyIterator() {
-            RoundRobinLongestIterator<O> iterator = new RoundRobinLongestIterator<O>(Iterations.<Iterator<O>>iterator());
+            RoundrobinLongestIterator<O> iterator = new RoundrobinLongestIterator<O>(Iterations.<Iterator<O>>iterator());
             Assert.assertFalse(iterator.hasNext());
         }
 
         @Test(expected = NoSuchElementException.class)
         public void callingNextOnEmptyIteratorYieldsException() {
-            RoundRobinLongestIterator<O> iterator = new RoundRobinLongestIterator<O>(Iterations.<Iterator<O>>iterator());
+            RoundrobinLongestIterator<O> iterator = new RoundrobinLongestIterator<O>(Iterations.<Iterator<O>>iterator());
             iterator.next();
         }
 
         @Test(expected = NoSuchElementException.class)
         public void callingNextAfterBoundsYieldsException() {
-            RoundRobinLongestIterator<O> iterator = new RoundRobinLongestIterator<O>(Iterations.iterator(Iterations.iterator(O.ONE)));
+            RoundrobinLongestIterator<O> iterator = new RoundrobinLongestIterator<O>(Iterations.iterator(Iterations.iterator(O.ONE)));
             iterator.next();
             iterator.next();
         }

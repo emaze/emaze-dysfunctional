@@ -17,13 +17,13 @@ import net.emaze.dysfunctional.options.Box;
  * @param <E> the iterator element type
  * @author rferranti
  */
-public class RoundRobinIterator<E> extends ReadOnlyIterator<E> {
+public class RoundrobinIterator<E> extends ReadOnlyIterator<E> {
 
     private final Iterator<? extends Iterator<E>> iterators;
     private final Deque<Iterator<E>> memory = new LinkedList<Iterator<E>>();
     private final Box<Iterator<E>> prefetched = Box.empty();
 
-    public <T extends Iterator<E>> RoundRobinIterator(Iterator<T> iterators) {
+    public <T extends Iterator<E>> RoundrobinIterator(Iterator<T> iterators) {
         dbc.precondition(iterators != null, "trying to create a RoundRobinIterator from a null iterator of iterators");
         this.iterators = iterators;
     }

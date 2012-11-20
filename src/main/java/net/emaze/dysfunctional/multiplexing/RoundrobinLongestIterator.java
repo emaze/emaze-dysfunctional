@@ -15,14 +15,14 @@ import net.emaze.dysfunctional.options.Maybe;
  * @param <E> the iterator element type
  * @author rferranti
  */
-public class RoundRobinLongestIterator<E> extends ReadOnlyIterator<Maybe<E>> {
+public class RoundrobinLongestIterator<E> extends ReadOnlyIterator<Maybe<E>> {
 
     private final Iterator<? extends Iterator<E>> iterators;
     private final Deque<Iterator<E>> memory = new LinkedList<Iterator<E>>();
     private final Box<Iterator<E>> prefetched = Box.empty();
     private int fetchedCounter;
 
-    public <T extends Iterator<E>> RoundRobinLongestIterator(Iterator<T> iterators) {
+    public <T extends Iterator<E>> RoundrobinLongestIterator(Iterator<T> iterators) {
         dbc.precondition(iterators != null, "trying to create a RoundRobinLongestIterator from a null iterator of iterators");
         this.iterators = iterators;
     }

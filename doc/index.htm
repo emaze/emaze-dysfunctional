@@ -249,7 +249,7 @@ Applications.each(Iterations.iterator(1,2) new Action&lt;Integer&gt;(){
             <span class="function">ignore1st</span>
             <span class="function">ignore2nd</span>
             <span class="function">ignore3rd</span>
-            <span class="description">Increase arity of function objects, adding ignored args</span>
+            <span class="description">Increase arity of function objects (ignoring args)</span>
             <code>Dispatching.ignore(new ConstantProvider&lt;String&gt;("a"), Long.class);<span class="result">&rarr; Delegate&lt;String, Long&gt;</span></code>
         </p>
         <p>
@@ -416,7 +416,7 @@ Consumers.at(2, Iterations.iterator("a","b","c")); <span class="result">&rarr; "
     <div class="step slide" data-x="-3000" data-y="1600" data-scale="1">
         <q>Groups</q>
         <p>
-            <span class="function">group</span>
+            <span class="function">groupBy</span>
             <span class="description">Groups elements by the key obtained applying the given Delegate</span>
             <code>Groups.groupBy(Iterations.iterator("Tree","Sun","Tea"), new FirstChar()); <span class="result">&rarr; Map&lt;String, List&lt;String&gt;&gt; {"T":["Tree","Tea"], "S":["Sun"]}</span></code>
         </p>
@@ -489,15 +489,9 @@ Consumers.at(2, Iterations.iterator("a","b","c")); <span class="result">&rarr; "
             <span class="function">chain</span>
             <span class="description">Iterates in sequence on multiple streams</span>
             <code>Multiplexing.chain(Iterations.iterator(1,2), Iterations.iterator(3,4)); 
+<span class="result">&rarr; Iterator&lt;Integer&gt; yielding [1, 2, 3, 4]</span>
+Multiplexing.flatten(Iterations.iterable(1,2), Iterations.iterable(3,4)); 
 <span class="result">&rarr; Iterator&lt;Integer&gt; yielding [1, 2, 3, 4]</span></code>
-        </p>
-        <p>
-            <span class="function">mux, muxLongest</span>
-            <span class="description">Multiplexes multiple streams</span>
-            <code>Multiplexing.mux(Iterations.iterator(1,2,3), Iterations.iterator(9,8)); 
-<span class="result">&rarr; Iterator&lt;Integer&gt; yielding [1, 9, 2, 8]</span>
-Multiplexing.muxLongest(Iterations.iterator(1,2), Iterations.iterator(9)); 
-<span class="result">&rarr; Iterator&lt;Integer&gt; yielding [Maybe.just(1), Maybe.just(9), Maybe.just(2), Maybe.nothing()]</span></code>
         </p>
         <p>
             <span class="function">batch</span>
@@ -505,18 +499,39 @@ Multiplexing.muxLongest(Iterations.iterator(1,2), Iterations.iterator(9));
             <code>Multiplexing.batch(2, Iterations.iterator(1,2,3,4,5)); 
 <span class="result">&rarr; Iterator&lt;List&lt;Integer&gt;&gt; yielding [[1, 2], [3, 4], [5]]</span></code>
         </p>
-<!-- TODO: rename methods more clearly
         <p>
-            <span class="function">demux, demuxLongest</span>
-            <span class="description">TODO: explain</span>
-            <code>asd</code>
+            <span class="function">cycle</span>
+            <span class="description">Creates a circular iterator from a finite one.</span>
+            <code>Multiplexing.cycle(Iterations.iterator(1,2))
+<span class="result">&rarr; Iterator&lt;Integer&gt; yielding [1, 2, 1, 2, ...]</span></code>
         </p>
+   </div>
+
+   <div  class="step slide" data-x="1000" data-y="-2400" data-scale="1">
+        <q>Multiplexing (more)</q>
         <p>
             <span class="function">roundrobin</span>
-            <span class="description">TODO: explain</span>
-            <code>asd</code>
+            <span class="function">roundrobinShortest</span>
+            <span class="function">roundrobinLongest</span>
+            <span class="description">Multiplexes multiple streams</span>
+            <code>Multiplexing.roundrobin(Iterations.iterator(1,2,3), Iterations.iterator(9,8));
+            <span class="result">&rarr; Iterator&lt;Integer&gt; yielding [1, 9, 2, 8, 3]</span>
+Multiplexing.roundrobinShortest(Iterations.iterator(1,2,3), Iterations.iterator(9,8));
+            <span class="result">&rarr; Iterator&lt;Integer&gt; yielding [1, 9, 2, 8]</span>
+Multiplexing.roundrobinLongest(Iterations.iterator(1,2), Iterations.iterator(9));
+            <span class="result">&rarr; Iterator&lt;Maybe&lt;Integer&gt;&gt; yielding [Maybe.just(1), Maybe.just(9), Maybe.just(2), Maybe.nothing()]</span>
+</code>
         </p>
--->
+        <p>
+            <span class="function">unchain</span>
+            <span class="function">unchainWithExactChannelSize</span>
+            <span class="description">Demultiplexes multiple streams (by channel size)</span>
+            <code>Multiplexing.unchain(2, Iterations.iterator(1,2,3,4,5));
+            <span class="result">&rarr; Iterator&lt;List&lt;Integer&gt;&gt; yielding [[1, 2], [3, 4]]</span>
+Multiplexing.unchainWithExactChannelSize(2, Iterations.iterator(1,2,3,4,5));
+            <span class="result">&rarr; Iterator&lt;List&lt;Maybe&lt;Integer&gt;&gt;&gt; yielding [[Just 1, Just 2], [Just 3, Just 4], [Just 5, Nothing]]</span>
+</code>
+        </p>
     </div>
 
     <div class="step slide" data-x="3000" data-y="-1600" data-scale="1">
@@ -659,6 +674,34 @@ Comparing.ordered(2, 1, new ComparableComparator&lt;Integer&gt;());<span class="
         </p>
 
     </div>
+    <div class="step slide" data-x="-3500" data-y="0" data-scale="1">
+        <q>Searches</q>
+        <p>
+            <span class="function">search</span>
+            <span class="function">find</span>
+            <span class="description">TODO: explain</span>
+            <code>TODO</span>&rarr; TODO</span></code>
+        </p>
+        <p>
+            <span class="function">searchFirst</span>
+            <span class="function">findFirst</span>
+            <span class="description">TODO: explain</span>
+            <code>TODO</span>&rarr; TODO</span></code>
+        </p>
+        <p>
+            <span class="function">searchOne</span>
+            <span class="function">findOne</span>
+            <span class="description">TODO: explain</span>
+            <code>TODO</span>&rarr; TODO</span></code>
+        </p>
+        <p>
+            <span class="function">searchLast</span>
+            <span class="function">findLast</span>
+            <span class="description">TODO: explain</span>
+            <code>TODO</span>&rarr; TODO</span></code>
+        </p>
+    </div>
+
 </div>
 
 <div class="hint">

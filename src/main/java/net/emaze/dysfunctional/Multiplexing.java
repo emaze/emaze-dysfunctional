@@ -15,9 +15,9 @@ import net.emaze.dysfunctional.iterations.TransformingIterator;
 import net.emaze.dysfunctional.multiplexing.BatchingIterator;
 import net.emaze.dysfunctional.multiplexing.ChainIterator;
 import net.emaze.dysfunctional.multiplexing.CyclicIterator;
-import net.emaze.dysfunctional.multiplexing.RoundRobinIterator;
-import net.emaze.dysfunctional.multiplexing.RoundRobinLongestIterator;
-import net.emaze.dysfunctional.multiplexing.RoundRobinShortestIterator;
+import net.emaze.dysfunctional.multiplexing.RoundrobinIterator;
+import net.emaze.dysfunctional.multiplexing.RoundrobinLongestIterator;
+import net.emaze.dysfunctional.multiplexing.RoundrobinShortestIterator;
 import net.emaze.dysfunctional.multiplexing.UnchainIterator;
 import net.emaze.dysfunctional.multiplexing.UnchainWithExactChannelSizeIterator;
 import net.emaze.dysfunctional.options.Maybe;
@@ -263,7 +263,7 @@ public abstract class Multiplexing {
      * @return an iterator yielding multiplexed elements
      */
     public static <E, I extends Iterator<E>> Iterator<E> roundrobin(Iterator<I> iterators) {
-        return new RoundRobinIterator<E>(iterators);
+        return new RoundrobinIterator<E>(iterators);
     }
 
     /**
@@ -280,7 +280,7 @@ public abstract class Multiplexing {
      */
     public static <E, I extends Iterator<E>> Iterator<E> roundrobin(Iterable<I> iterable) {
         dbc.precondition(iterable != null, "cannot roundrobin a null iterable");
-        return new RoundRobinIterator<E>(iterable.iterator());
+        return new RoundrobinIterator<E>(iterable.iterator());
     }
 
     /**
@@ -296,7 +296,7 @@ public abstract class Multiplexing {
      * @return an iterator yielding multiplexed elements
      */
     public static <E> Iterator<E> roundrobin(Iterator<E> first, Iterator<E> second) {
-        return new RoundRobinIterator<E>(ArrayIterator.of(first, second));
+        return new RoundrobinIterator<E>(ArrayIterator.of(first, second));
     }
 
     /**
@@ -313,7 +313,7 @@ public abstract class Multiplexing {
      * @return an iterator yielding multiplexed elements
      */
     public static <E> Iterator<E> roundrobin(Iterator<E> first, Iterator<E> second, Iterator<E> third) {
-        return new RoundRobinIterator<E>(ArrayIterator.of(first, second, third));
+        return new RoundrobinIterator<E>(ArrayIterator.of(first, second, third));
     }
 
     /**
@@ -330,7 +330,7 @@ public abstract class Multiplexing {
      * @return an iterator containing multiplexed elements
      */
     public static <E, I extends Iterator<E>> Iterator<E> roundrobinShortest(Iterator<I> iterators) {
-        return new RoundRobinShortestIterator<E>(iterators);
+        return new RoundrobinShortestIterator<E>(iterators);
     }
 
     /**
@@ -349,7 +349,7 @@ public abstract class Multiplexing {
     public static <E, I extends Iterator<E>> Iterator<E> roundrobinShortest(Iterable<I> iterable) {
         dbc.precondition(iterable != null, "cannot roundrobinShortest a null iterable");
         final Iterator<I> iterator = iterable.iterator();
-        return new RoundRobinShortestIterator<E>(iterator);
+        return new RoundrobinShortestIterator<E>(iterator);
     }
 
     /**
@@ -367,7 +367,7 @@ public abstract class Multiplexing {
      */
     public static <E> Iterator<E> roundrobinShortest(Iterator<E> first, Iterator<E> second) {
         final Iterator<Iterator<E>> iterator = ArrayIterator.of(first, second);
-        return new RoundRobinShortestIterator<E>(iterator);
+        return new RoundrobinShortestIterator<E>(iterator);
     }
 
     /**
@@ -386,7 +386,7 @@ public abstract class Multiplexing {
      */
     public static <E> Iterator<E> roundrobinShortest(Iterator<E> first, Iterator<E> second, Iterator<E> third) {
         final ArrayIterator<Iterator<E>> iterator = ArrayIterator.of(first, second, third);
-        return new RoundRobinShortestIterator<E>(iterator);
+        return new RoundrobinShortestIterator<E>(iterator);
     }
 
     /**
@@ -402,7 +402,7 @@ public abstract class Multiplexing {
      * @return an iterator containing multiplexed elements
      */
     public static <E, I extends Iterator<E>> Iterator<Maybe<E>> roundrobinLongest(Iterator<I> iterators) {
-        return new RoundRobinLongestIterator<E>(iterators);
+        return new RoundrobinLongestIterator<E>(iterators);
     }
 
     /**
@@ -420,7 +420,7 @@ public abstract class Multiplexing {
     public static <E, I extends Iterator<E>> Iterator<Maybe<E>> roundrobinLongest(Iterable<I> iterable) {
         dbc.precondition(iterable != null, "cannot roundrobinLongest a null iterable");
         final Iterator<I> iterator = iterable.iterator();
-        return new RoundRobinLongestIterator<E>(iterator);
+        return new RoundrobinLongestIterator<E>(iterator);
     }
 
     /**
@@ -437,7 +437,7 @@ public abstract class Multiplexing {
      */
     public static <E> Iterator<Maybe<E>> roundrobinLongest(Iterator<E> first, Iterator<E> second) {
         final Iterator<Iterator<E>> iterator = ArrayIterator.of(first, second);
-        return new RoundRobinLongestIterator<E>(iterator);
+        return new RoundrobinLongestIterator<E>(iterator);
     }
 
     /**
@@ -455,7 +455,7 @@ public abstract class Multiplexing {
      */
     public static <E> Iterator<Maybe<E>> roundrobinLongest(Iterator<E> first, Iterator<E> second, Iterator<E> third) {
         final Iterator<Iterator<E>> iterator = ArrayIterator.of(first, second, third);
-        return new RoundRobinLongestIterator<E>(iterator);
+        return new RoundrobinLongestIterator<E>(iterator);
     }
 
     /**
