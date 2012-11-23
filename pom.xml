@@ -7,6 +7,7 @@
     <version>5.0-SNAPSHOT</version>
     <name>emaze-dysfunctional</name>
     <description>A functional library for java</description>
+    <url>http://www.dysfunctional-lib.net</url>
     <licenses>
         <license>
             <name>Simplified BSD License</name>
@@ -41,6 +42,7 @@
     <scm>
         <connection>scm:hg:https://bitbucket.org/rferranti/emaze-dysfunctional</connection>
         <developerConnection>scm:hg:file://${basedir}</developerConnection>
-      <tag>HEAD</tag>
-  </scm>
+        <url>https://bitbucket.org/rferranti/emaze-dysfunctional</url>
+        <tag>HEAD</tag>
+    </scm>
 </project>
