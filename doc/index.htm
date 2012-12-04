@@ -478,7 +478,11 @@ Consumers.at(2, Iterations.iterator("a","b","c")); <span class="result">&rarr; "
             <span class="description">Open up a fixed-size window of Maybes on an iterator</span>
             <code>Windowing.centered(3, Iterations.iterator(1,2)); <span class="result">&rarr; Iterator&lt;List&lt;Maybe&lt;Integer&gt;&gt;&gt; yielding [[nothing, just 1, just 2], [just 1, just 2, nothing]]</span></code>
         </p>
-
+        <p>
+            <span class="function">trails</span>
+            <span class="description">Yields element and its predecessors in a fixed-size window</span>
+            <code>Windowing.trails(3, Iterations.iterator(1,2)); <span class="result">&rarr; Iterator&lt;List&lt;Maybe&lt;Integer&gt;&gt;&gt; yielding [[nothing, nothing, just 1], [nothing, just 1, just 2]]</span></code>
+        </p>
     </div>
 
 <!-- facades right -->

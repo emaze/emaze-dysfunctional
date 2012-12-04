@@ -3,8 +3,10 @@ package net.emaze.dysfunctional;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Queue;
 import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
+import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.testing.O;
@@ -45,6 +47,18 @@ public class WindowingTest {
     }
 
     @Test
+    public void canCreateTrailsFromIterator() {
+        final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+        Assert.assertNotNull(Windowing.trails(3, iterator));
+    }
+
+    @Test
+    public void canCreateTrailsFromIteratorUsingDelegate() {
+        final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+        Windowing.trails(3, iterator, new Identity<Queue<Maybe<O>>>());
+    }
+
+    @Test
     public void canCreateWindowFromIterable() {
         final Iterable<O> iterable = Iterations.iterable(O.ONE, O.ANOTHER, O.YET_ANOTHER);
         Assert.assertNotNull(Windowing.window(3, iterable));
@@ -66,6 +80,18 @@ public class WindowingTest {
     public void canCreateCenteredWindowFromIterableUsingProvider() {
         final Iterable<O> iterable = Iterations.iterable(O.ONE, O.ANOTHER, O.YET_ANOTHER);
         Windowing.centered(3, iterable, LIST_MAYBE_FACTORY);
+    }
+
+    @Test
+    public void canCreateTrailsFromIterable() {
+        final Iterable<O> iterable = Iterations.iterable(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+        Assert.assertNotNull(Windowing.trails(3, iterable));
+    }
+
+    @Test
+    public void canCreateTrailsFromIterableUsingDelegate() {
+        final Iterable<O> iterable = Iterations.iterable(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+        Windowing.trails(3, iterable, new Identity<Queue<Maybe<O>>>());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -90,6 +116,18 @@ public class WindowingTest {
     public void creatingCenteredWindowUsingProviderWithNullIterableYieldsException() {
         final Iterable<O> iterable = null;
         Windowing.centered(3, iterable, LIST_MAYBE_FACTORY);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void creatingTrailsWithNullIterableYieldsException() {
+        final Iterable<O> iterable = null;
+        Windowing.trails(3, iterable);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void creatingTrailsUsingDelegateWithNullIterableYieldsException() {
+        final Iterable<O> iterable = null;
+        Windowing.trails(3, iterable, new Identity<Queue<Maybe<O>>>());
     }
 
     @Test

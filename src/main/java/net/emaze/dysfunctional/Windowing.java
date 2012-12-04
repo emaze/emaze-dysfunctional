@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Queue;
 import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.windows.CenteredWindowIterator;
 import net.emaze.dysfunctional.windows.PreciseWindowIterator;
+import net.emaze.dysfunctional.windows.TrailsIterator;
 
 /**
  * window, centered.
@@ -149,5 +153,83 @@ public abstract class Windowing {
     public static <W extends Collection<Maybe<T>>, T> Iterator<W> centered(int windowSize, Iterable<T> iterable, Provider<W> provider) {
         dbc.precondition(iterable != null, "cannot create a centered window iterator from a null iterable");
         return new CenteredWindowIterator<W, T>(iterable.iterator(), windowSize, provider);
+    }
+
+    /**
+     * Adapts an iterator to an iterator showing predecessors of the contained
+     * elements. This iterator always yields an alias to the same queue, beware
+     * of aliasing problems. e.g:
+     * <code>
+     * iterator: [1,2,3,4], trailSize: 3 ->
+     * [[Nothing, Nothing, Just 1],[Nothing Just 1, Just 2], [Just 1, Just 2, Just 3], [Just 2, Just 3, Just 4]]
+     * </code>
+     *
+     * @param <T> the adapted iterator element type
+     * @param trailSize the trail size
+     * @param iterator the iterator to be adapted
+     * @return
+     */
+    public static <T> Iterator<Queue<Maybe<T>>> trails(int trailSize, Iterator<T> iterator) {
+        return new TrailsIterator<Queue<Maybe<T>>, T>(iterator, trailSize, new Identity<Queue<Maybe<T>>>());
+    }
+
+    /**
+     * Adapts an iterator to an iterator showing predecessors of the contained
+     * elements. Copy semantics of the internal queue yielded is controlled by
+     * the copy delegate. e.g:
+     * <code>
+     * iterator: [1,2,3,4], trailSize: 3 ->
+     * [[Nothing, Nothing, Just 1],[Nothing Just 1, Just 2], [Just 1, Just 2, Just 3], [Just 2, Just 3, Just 4]]
+     * </code>
+     *
+     * @param <W> the window type
+     * @param <T> the adapted iterator element type
+     * @param trailSize the trail size
+     * @param iterator the iterator to be adapted
+     * @param copy copy semantics for the internal queue
+     * @return the adapted iterator
+     */
+    public static <W extends Collection<?>, T> Iterator<W> trails(int trailSize, Iterator<T> iterator, Delegate<W, Queue<Maybe<T>>> copy) {
+        return new TrailsIterator<W, T>(iterator, trailSize, copy);
+    }
+
+    /**
+     * Adapts an iterator to an iterator showing predecessors of the contained
+     * elements. This iterator always yields an alias to the same queue, beware
+     * of aliasing problems. e.g:
+     * <code>
+     * iterable: [1,2,3,4], trailSize: 3 ->
+     * [[Nothing, Nothing, Just 1],[Nothing Just 1, Just 2], [Just 1, Just 2, Just 3], [Just 2, Just 3, Just 4]]
+     * </code>
+     *
+     * @param <T> the adapted iterator element type
+     * @param trailSize the trail size
+     * @param iterable the iterable to be adapted
+     * @return the adapted iterator
+     */
+    public static <T> Iterator<Queue<Maybe<T>>> trails(int trailSize, Iterable<T> iterable) {
+        dbc.precondition(iterable != null, "cannot create a trails iterator from a null iterable");
+        return new TrailsIterator<Queue<Maybe<T>>, T>(iterable.iterator(), trailSize, new Identity<Queue<Maybe<T>>>());
+    }
+
+    /**
+     * Adapts an iterator to an iterator showing predecessors of the contained
+     * elements. Copy semantics of the internal queue yielded is controlled by
+     * the copy delegate. e.g:
+     * <code>
+     * iterable: [1,2,3,4], trailSize: 3 ->
+     * [[Nothing, Nothing, Just 1],[Nothing Just 1, Just 2], [Just 1, Just 2, Just 3], [Just 2, Just 3, Just 4]]
+     * </code>
+     *
+     * @param <W> the window type
+     * @param <T> the adapted iterator element type
+     * @param trailSize the trail size
+     * @param iterable the iterable to be adapted
+     * @param copy copy semantics for the internal queue
+     * @return the adapted iterator
+     */
+    public static <W extends Collection<?>, T> Iterator<W> trails(int trailSize, Iterable<T> iterable, Delegate<W, Queue<Maybe<T>>> copy) {
+        dbc.precondition(iterable != null, "cannot create a trails iterator from a null iterable");
+        return new TrailsIterator<W, T>(iterable.iterator(), trailSize, copy);
     }
 }
