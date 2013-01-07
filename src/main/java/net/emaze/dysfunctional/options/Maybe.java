@@ -1,10 +1,13 @@
 package net.emaze.dysfunctional.options;
 
+import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
+import net.emaze.dysfunctional.iterations.EmptyIterator;
+import net.emaze.dysfunctional.iterations.SingletonIterator;
 
 /**
  * Holds an optional value.
@@ -12,7 +15,7 @@ import net.emaze.dysfunctional.hashing.HashCodeBuilder;
  * @param <E> the value type
  * @author rferranti
  */
-public class Maybe<E> {
+public class Maybe<E> implements Iterable<E> {
 
     private final E element;
     private final boolean hasValue;
@@ -46,15 +49,21 @@ public class Maybe<E> {
         return Either.left(nothing.provide());
     }
 
-    public E orElse(E otherwise){
-        if(hasValue){
-           return element; 
+    public E orElse(E otherwise) {
+        if (hasValue) {
+            return element;
         }
         return otherwise;
     }
-    
+
+    public Maybe<E> orElse(Maybe<E> otherwise) {
+        if (hasValue) {
+            return this;
+        }
+        return otherwise;
+    }
     private static Maybe<Object> NOTHING = new Maybe<Object>(null, false);
-    
+
     public static <E> Maybe<E> nothing() {
         return (Maybe<E>) NOTHING;
     }
@@ -87,5 +96,13 @@ public class Maybe<E> {
             return "Nothing";
         }
         return String.format("Just %s", element);
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        if (!hasValue) {
+            return new EmptyIterator<E>();
+        }
+        return new SingletonIterator<E>(element);
     }
 }
