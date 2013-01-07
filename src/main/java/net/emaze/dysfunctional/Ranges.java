@@ -34,10 +34,33 @@ public class Ranges<T> {
         this.emptyValue = emptyValue;
     }
 
-    public Range<T> of(Endpoint left, T lower, T upper, Endpoint right) {
-        return new DenseRange<T>(sequencer, comparator, left, lower, Maybe.just(upper), right);
+    public Range<T> of(Endpoint left, T lower, Maybe<T> upper, Endpoint right) {
+        return new DenseRange<T>(sequencer, comparator, left, lower, upper, right);
     }
 
+    /**
+     * returns [ lower, upper )
+     *
+     * @param lower
+     * @param upper
+     * @return [lower, upper)
+     */
+    public Range<T> rightHalfOpen(T lower, Maybe<T> upper) {
+        return new DenseRange<T>(sequencer, comparator, Endpoint.Include, lower, upper, Endpoint.Include);
+    }
+    
+
+    /**
+     * returns ( lower, upper ]
+     *
+     * @param lower
+     * @param upper
+     * @return (lower, upper]
+     */
+    public Range<T> leftHalfOpen(T lower, T upper) {
+        return new DenseRange<T>(sequencer, comparator, Endpoint.Exclude, lower, Maybe.just(upper), Endpoint.Include);
+    }
+    
     /**
      * returns ( lower, upper )
      *

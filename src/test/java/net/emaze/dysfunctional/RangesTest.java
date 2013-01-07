@@ -8,6 +8,7 @@ import net.emaze.dysfunctional.RangesTest.RangeIntersectTest;
 import net.emaze.dysfunctional.RangesTest.RangeSymmetricDifferenceTest;
 import net.emaze.dysfunctional.RangesTest.RangeUnionTest;
 import net.emaze.dysfunctional.RangesTest.RangesCreationTest;
+import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.order.ComparableComparator;
 import net.emaze.dysfunctional.order.NextIntegerSequencingPolicy;
 import net.emaze.dysfunctional.ranges.Range;
@@ -83,7 +84,7 @@ public class RangesTest {
         @Test
         public void canCreateRange() {
             final Ranges<Integer> ranges = new Ranges<Integer>(new ComparableComparator<Integer>(), new NextIntegerSequencingPolicy(), 0);
-            final Range<Integer> range = ranges.of(Endpoint.Include, 0, 2, Endpoint.Include);
+            final Range<Integer> range = ranges.of(Endpoint.Include, 0, Maybe.just(2), Endpoint.Include);
             Assert.assertEquals(Arrays.asList(0, 1, 2), Consumers.all(range));
         }
     }
