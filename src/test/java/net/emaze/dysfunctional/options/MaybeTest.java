@@ -103,4 +103,14 @@ public class MaybeTest {
         final O got = Maybe.<O>nothing().orElse(O.ANOTHER);
         Assert.assertEquals(O.ANOTHER, got);
     }
+
+    @Test
+    public void nothingYieldsEmptyIterator() {
+        Assert.assertFalse(Maybe.nothing().iterator().hasNext());
+    }
+
+    @Test
+    public void justYieldsSingletonIterator() {
+        Assert.assertTrue(Maybe.just(O.ONE).iterator().hasNext());
+    }
 }
