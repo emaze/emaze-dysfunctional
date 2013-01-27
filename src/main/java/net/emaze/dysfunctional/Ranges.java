@@ -46,7 +46,7 @@ public class Ranges<T> {
      * @return [lower, upper)
      */
     public Range<T> rightHalfOpen(T lower, Maybe<T> upper) {
-        return new DenseRange<T>(sequencer, comparator, Endpoint.Include, lower, upper, Endpoint.Include);
+        return new DenseRange<T>(sequencer, comparator, Endpoint.Include, lower, upper, Endpoint.Exclude);
     }
     
 
