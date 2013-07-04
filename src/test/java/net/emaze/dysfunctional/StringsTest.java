@@ -16,6 +16,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     StringsTest.Join.class,
     StringsTest.Interpose.class,
+    StringsTest.Repeat.class,
     StringsTest.Facade.class
 })
 public class StringsTest {
@@ -142,6 +143,42 @@ public class StringsTest {
         @Test(expected = IllegalArgumentException.class)
         public void interposingNullSeparatorsYieldsException() {
             Strings.interpose(Arrays.<String>asList().iterator(), (Iterator<String>) null);
+        }
+    }
+
+    public static class Repeat {
+
+        @Test
+        public void canRepeatAChar() {
+            final String got = Strings.repeat(' ', 3);
+            Assert.assertEquals("   ", got);
+        }
+
+        @Test
+        public void canRepeatAString() {
+            final String got = Strings.repeat("Na", 3);
+            Assert.assertEquals("NaNaNa", got);
+        }
+
+        @Test
+        public void canRepeatAnEmptyString() {
+            final String got = Strings.repeat("", 3);
+            Assert.assertEquals("", got);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void nullSourceYieldsExcpetion() {
+            Strings.repeat(null, 2);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void negativeTimesYieldsExceptionWithString() {
+            Strings.repeat("A", -1);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void negativeTimesYieldsExceptionWithChar() {
+            Strings.repeat('A', -1);
         }
     }
 

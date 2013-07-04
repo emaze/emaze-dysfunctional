@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
@@ -141,5 +142,40 @@ public abstract class Strings {
      */
     public static <T, V> String interpose(Iterator<T> values, V separator) {
         return new InterposeStrings<T, V>().perform(values, new ConstantIterator<V>(separator));
+    }
+
+    /**
+     * Creates a String by repeating the source char.
+     *
+     * @param source the source char
+     * @param times times the source char will be repeated
+     * @return the resulting string
+     */
+    public static String repeat(char source, int times) {
+        dbc.precondition(times > 0, "times must be a positive number");
+        final char[] array = new char[times];
+        Arrays.fill(array, source);
+        return new String(array);
+    }
+
+    /**
+     * Creates a String by repeating the source string.
+     *
+     * @param source the source String
+     * @param times times the source String will be repeated
+     * @return the resulting string
+     */
+    public static String repeat(String source, int times) {
+        dbc.precondition(source != null, "cannot repeat a null source");
+        dbc.precondition(times > 0, "times must be a positive number");
+        final int srcLen = source.length();
+        final long longLen = times * (long) srcLen;
+        final int len = (int) longLen;
+        dbc.precondition(longLen == len, "resulting String would be too long");
+        final char[] array = new char[len];
+        for (int i = 0; i != times; ++i) {
+            source.getChars(0, srcLen, array, i * srcLen);
+        }
+        return new String(array);
     }
 }
