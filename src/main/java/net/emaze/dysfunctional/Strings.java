@@ -152,7 +152,7 @@ public abstract class Strings {
      * @return the resulting string
      */
     public static String repeat(char source, int times) {
-        dbc.precondition(times > 0, "times must be a positive number");
+        dbc.precondition(times > -1, "times must be non negative");
         final char[] array = new char[times];
         Arrays.fill(array, source);
         return new String(array);
@@ -167,7 +167,7 @@ public abstract class Strings {
      */
     public static String repeat(String source, int times) {
         dbc.precondition(source != null, "cannot repeat a null source");
-        dbc.precondition(times > 0, "times must be a positive number");
+        dbc.precondition(times > -1, "times must be non negative");
         final int srcLen = source.length();
         final long longLen = times * (long) srcLen;
         final int len = (int) longLen;
