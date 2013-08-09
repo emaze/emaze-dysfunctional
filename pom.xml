@@ -47,24 +47,39 @@
     </scm>
     <developers>
         <developer>
-          <id>rferranti</id>
-          <name>Roberto Ferranti</name>
-          <email>roberto.ferranti+dys@gmail.com</email>
+            <id>rferranti</id>
+            <name>Roberto Ferranti</name>
+            <email>roberto.ferranti+dys@gmail.com</email>
         </developer>
         <developer>
-          <id>fdegrassi</id>
-          <name>Francesco Degrassi</name>
-          <email>fdegrassi+dys@gmail.com</email>
+            <id>fdegrassi</id>
+            <name>Francesco Degrassi</name>
+            <email>fdegrassi+dys@gmail.com</email>
         </developer>
         <developer>
-          <id>caligin</id>
-          <name>Fulvio Meden</name>
-          <email>caligin35@yahoo.it</email>
+            <id>caligin</id>
+            <name>Fulvio Meden</name>
+            <email>caligin35@yahoo.it</email>
         </developer>
         <developer>
-          <id>sbaruzza</id>
-          <name>Simone Baruzza</name>
-          <email>simone.baruzza+dys@gmail.com</email>
+            <id>sbaruzza</id>
+            <name>Simone Baruzza</name>
+            <email>simone.baruzza+dys@gmail.com</email>
+        </developer>
+        <developer>
+            <id>dangelocola</id>
+            <name>Davide Angelocola</name>
+            <email>davide.angelocola+dys@gmail.com</email>
+        </developer>
+        <developer>
+            <id>epellizon</id>
+            <name>Enrico Pellizon</name>
+            <email>enrico.pelizzon+dys@gmail.com</email>
+        </developer>        
+        <developer>
+            <id>sleghissa</id>
+            <name>Simon Leghissa</name>
+            <email>leghissasimon+dys@gmail.com</email>
         </developer>
     </developers>
 </project>
