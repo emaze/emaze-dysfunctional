@@ -35,6 +35,12 @@ public class Either<LT, RT> {
         return Either.right(withRight.perform(right.value()));
     }
 
+    public <T> T fold(Delegate<T, LT> withLeft, Delegate<T, RT> withRight) {
+        dbc.precondition(withLeft != null, "cannot fold an either with a null left delegate");
+        dbc.precondition(withRight != null, "cannot fold an either with a null right delegate");
+        return left.fmap(withLeft).orElse(right.fmap(withRight)).value();
+    }
+
     public Maybe<RT> maybe() {
         return right;
     }
