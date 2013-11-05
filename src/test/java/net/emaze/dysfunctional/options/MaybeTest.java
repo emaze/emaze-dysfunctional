@@ -51,6 +51,27 @@ public class MaybeTest {
     }
 
     @Test
+    public void foldWithJustYieldsDelegateResult() {
+        final Integer expected = 1;
+        final Integer got = Maybe.just(expected).fold(null, new Identity<Integer>());
+        Assert.assertEquals(expected, got);
+    }
+
+    @Test
+    public void foldWithNothingYieldsProviderResult() {
+        final Maybe<Integer> source = Maybe.nothing();
+        final Integer expected = 1;
+        final Integer got = source.fold(new ConstantProvider<Integer>(expected), new Identity<Integer>());
+        Assert.assertEquals(expected, got);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void foldWithNullDelegateYieldsException() {
+        final Delegate<?, Integer> delegate = null;
+        Maybe.just(1).fold(null, delegate);
+    }
+
+    @Test
     public void maybeAndUnidentifiedObjectAreNotEquals() {
         Assert.assertFalse(Maybe.just(1).equals(new Object()));
     }

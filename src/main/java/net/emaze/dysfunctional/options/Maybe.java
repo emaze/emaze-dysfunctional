@@ -42,6 +42,11 @@ public class Maybe<E> implements Iterable<E> {
         return Maybe.nothing();
     }
 
+    public <T> T fold(Provider<T> ifNothing, Delegate<T, E> ifJust) {
+        dbc.precondition(ifJust != null, "cannot perform fold with a null delegate");
+        return hasValue ? ifJust.perform(element) : ifNothing.provide();
+    }
+
     public <T> Either<T, E> either(Provider<T> nothing) {
         if (hasValue) {
             return Either.right(element);
