@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.IteratorPlucker;
-import net.emaze.dysfunctional.iterations.SingletonIterator;
+import net.emaze.dysfunctional.iterations.ConstantIterator;
 import net.emaze.dysfunctional.iterations.TransformingIterator;
 import net.emaze.dysfunctional.multiplexing.ChainIterator;
 import net.emaze.dysfunctional.options.Maybe;
@@ -78,7 +78,7 @@ public class SparseRange<T> implements Range<T> {
 
     @Override
     public String toString() {
-        final String interposed = new InterposeStrings<DenseRange<T>, String>().perform(densified.iterator(), new SingletonIterator<String>(","));
+        final String interposed = new InterposeStrings<DenseRange<T>, String>().perform(densified.iterator(), new ConstantIterator<String>(","));
         return String.format("[%s]", interposed);
     }
 

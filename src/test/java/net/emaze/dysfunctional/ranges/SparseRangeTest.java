@@ -86,8 +86,8 @@ public class SparseRangeTest {
 
         @Test
         public void toStringShowsDensifiedRanges() {
-            SparseRange<Integer> sr = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Arrays.asList(RangeMother.r(0, 2), RangeMother.r(4, 5)));
-            Assert.assertEquals("[[0-3),[4-6)]", sr.toString());
+            SparseRange<Integer> sr = new SparseRange<Integer>(RangeMother.sequencer, RangeMother.comparator, Arrays.asList(RangeMother.r(0, 2), RangeMother.r(4, 5), RangeMother.r(6, 7)));
+            Assert.assertEquals("[[0-3),[4-6),[6-8)]", sr.toString());
         }
     }
 
