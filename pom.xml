@@ -81,5 +81,10 @@
             <name>Simon Leghissa</name>
             <email>leghissasimon+dys@gmail.com</email>
         </developer>
+        <developer>
+            <id>mrocchi</id>
+            <name>Mauro Rocchi</name>
+            <email>maurocchi+dys@gmail.com</email>
+        </developer>
     </developers>
 </project>
