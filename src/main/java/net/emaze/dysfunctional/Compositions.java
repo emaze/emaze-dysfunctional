@@ -5,11 +5,13 @@ import net.emaze.dysfunctional.dispatching.TransformingBinaryPredicate;
 import net.emaze.dysfunctional.dispatching.TransformingPredicate;
 import net.emaze.dysfunctional.dispatching.TransformingProvider;
 import net.emaze.dysfunctional.dispatching.TransformingTernaryPredicate;
+import net.emaze.dysfunctional.dispatching.delegates.BinaryComposer;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 import net.emaze.dysfunctional.dispatching.delegates.Composer;
 import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.EndoDelegatesComposer;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import net.emaze.dysfunctional.dispatching.delegates.TernaryComposer;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
@@ -51,6 +53,36 @@ public abstract class Compositions {
      */
     public static <R, T2, T1> Delegate<R, T1> compose(Delegate<R, T2> f, Delegate<T2, T1> g) {
         return new Composer<R, T2, T1>(f, g);
+    }
+
+    /**
+     * Composes a delegate with a binary delegate.
+     *
+     * @param <R> unary return type
+     * @param <T1> unary parameter type and binary return type
+     * @param <T2> the first binary parameter type
+     * @param <T3> the second binary parameter type
+     * @param unary the delegate to be composed
+     * @param binary the binary delegate to be composed
+     * @return the composed binary delegate
+     */
+    public static <R, T1, T2, T3> BinaryDelegate<R, T2, T3> compose(Delegate<R, T1> unary, BinaryDelegate<T1, T2, T3> binary) {
+        return new BinaryComposer<R, T1, T2, T3>(unary, binary);
+    }
+
+    /**
+     * Composes a delegate with a ternary delegate.
+     *
+     * @param <R> unary return type
+     * @param <T1> unary parameter type and ternary return type
+     * @param <T2> the first ternary parameter type
+     * @param <T3> the second ternary parameter type
+     * @param <T4> the third ternary parameter type
+     * @param unary the unary delegate to be composed
+     * @param ternary the ternary delegate to be composed
+     */
+    public static <R, T1, T2, T3, T4> TernaryDelegate<R, T2, T3, T4> compose(Delegate<R, T1> unary, TernaryDelegate<T1, T2, T3, T4> ternary) {
+        return new TernaryComposer<R, T1, T2, T3, T4>(unary, ternary);
     }
 
     /**
