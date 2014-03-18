@@ -5,16 +5,16 @@ import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class OnlyOnceProviderTest {
+public class MemoizingProviderTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingWithNullProviderYieldsException() {
-        new OnlyOnceProvider<O>(null);
+        new MemoizingProvider<O>(null);
     }
 
     @Test
     public void canObtainProvidedElement() {
-        final Provider<O> provider = new OnlyOnceProvider<O>(new ConstantProvider<O>(O.ONE));
+        final Provider<O> provider = new MemoizingProvider<O>(new ConstantProvider<O>(O.ONE));
         final O got = provider.provide();
         Assert.assertEquals(O.ONE, got);
     }
@@ -22,7 +22,7 @@ public class OnlyOnceProviderTest {
     @Test
     public void canInvokeProviderOnlyOnce() {
         final AtomicInteger count = new AtomicInteger(1);
-        final Provider<Integer> provider = new OnlyOnceProvider<Integer>(new Provider<Integer>() {
+        final Provider<Integer> provider = new MemoizingProvider<Integer>(new Provider<Integer>() {
             @Override
             public Integer provide() {
                 return count.getAndIncrement();
@@ -36,7 +36,7 @@ public class OnlyOnceProviderTest {
     @Test
     public void canInvokeProviderOnlyOnceWhenInnerYieldsNull() {
         final AtomicInteger count = new AtomicInteger(0);
-        final Provider<Integer> provider = new OnlyOnceProvider<Integer>(new Provider<Integer>() {
+        final Provider<Integer> provider = new MemoizingProvider<Integer>(new Provider<Integer>() {
             @Override
             public Integer provide() {
                 count.getAndIncrement();
