@@ -11,7 +11,8 @@ import net.emaze.dysfunctional.contracts.dbc;
 public class OnlyOnceProvider<T> implements Provider<T> {
 
     private final Provider<T> provider;
-    private T value = null;
+    private T value;
+    private boolean isNotEvaluated = true;
 
     public OnlyOnceProvider(Provider<T> provider) {
         dbc.precondition(provider != null, "Cannot create an only once provider with a null provider");
@@ -20,8 +21,9 @@ public class OnlyOnceProvider<T> implements Provider<T> {
 
     @Override
     public T provide() {
-        if (value == null) {
+        if (isNotEvaluated) {
             value = provider.provide();
+            isNotEvaluated = false;
         }
         return value;
     }

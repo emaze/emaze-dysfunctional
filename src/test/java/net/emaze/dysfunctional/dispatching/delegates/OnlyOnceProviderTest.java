@@ -32,4 +32,19 @@ public class OnlyOnceProviderTest {
         final int got = provider.provide();
         Assert.assertEquals(1, got);
     }
+
+    @Test
+    public void canInvokeProviderOnlyOnceWhenInnerYieldsNull() {
+        final AtomicInteger count = new AtomicInteger(0);
+        final Provider<Integer> provider = new OnlyOnceProvider<Integer>(new Provider<Integer>() {
+            @Override
+            public Integer provide() {
+                count.getAndIncrement();
+                return null;
+            }
+        });
+        provider.provide();
+        provider.provide();
+        Assert.assertEquals(1, count.get());
+    }
 }
