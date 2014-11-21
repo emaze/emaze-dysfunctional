@@ -14,12 +14,48 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    StringsTest.Concat.class,
     StringsTest.Join.class,
     StringsTest.Interpose.class,
     StringsTest.Repeat.class,
     StringsTest.Facade.class
 })
 public class StringsTest {
+
+    public static class Concat {
+
+        @Test
+        public void canConcatIterable() {
+            final Iterable<String> values = Arrays.asList("1", "2", "3", "4");
+            final String output = Strings.concat(values);
+            Assert.assertEquals("1234", output);
+        }
+
+        @Test
+        public void canConcatArray() {
+            final String output = Strings.concat("1", "2", "3", "4");
+            Assert.assertEquals("1234", output);
+        }
+
+        @Test
+        public void canConcatEmptyIterator() {
+            final Iterator<String> values = Arrays.<String>asList().iterator();
+            final String output = Strings.concat(values);
+            Assert.assertEquals("", output);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotConcatANullIterator() {
+            final Iterator<String> nullIterator = null;
+            Strings.concat(nullIterator);
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotConcatANullIterable() {
+            final Iterable<String> nullIterable = null;
+            Strings.concat(nullIterable);
+        }
+    }
 
     public static class Join {
 

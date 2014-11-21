@@ -5,19 +5,50 @@ import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.iterations.ConstantIterator;
+import net.emaze.dysfunctional.strings.ConcatStrings;
 import net.emaze.dysfunctional.strings.InterposeStrings;
 import net.emaze.dysfunctional.strings.JoinStrings;
 
 /**
- * join, interpose.
+ * concat, join, interpose, repeat.
  *
  * @author rferranti
  */
 public abstract class Strings {
 
     /**
-     * Joins an array of T into a String. E.g:
-     * <code>[1,2,3] -> "123"</code>
+     * Concatenate an array of Strings into a single String. E.g: <code>["1","2","3"] -> "123"</code>
+     *
+     * @param array the array to be concatenated
+     * @return the resulting string
+     */
+    public static String concat(String... array) {
+        return new ConcatStrings().perform(new ArrayIterator<String>(array));
+    }
+
+    /**
+     * Concatenate an iterable of Strings into a single String. E.g: <code>["1","2","3"] -> "123"</code>
+     *
+     * @param iterable the iterable to be concatenated
+     * @return the resulting string
+     */
+    public static String concat(Iterable<String> iterable) {
+        dbc.precondition(iterable != null, "cannot concat a null iterable");
+        return new ConcatStrings().perform(iterable.iterator());
+    }
+
+    /**
+     * Concatenate an iterator of Strings into a single String. E.g: <code>["1","2","3"] -> "123"</code>
+     *
+     * @param iterator the iterator to be concatenated
+     * @return the resulting string
+     */
+    public static String concat(Iterator<String> iterator) {
+        return new ConcatStrings().perform(iterator);
+    }
+
+    /**
+     * Joins an array of T into a String. E.g: <code>[1,2,3] -> "123"</code>
      *
      * @param <T> the array element type
      * @param array the array to be joined
@@ -28,8 +59,7 @@ public abstract class Strings {
     }
 
     /**
-     * Joins an iterable of T into a String. E.g:
-     * <code>[1,2,3] -> "123"</code>
+     * Joins an iterable of T into a String. E.g: <code>[1,2,3] -> "123"</code>
      *
      * @param <T> the iterable element type
      * @param iterable the iterable to be joined
@@ -41,8 +71,7 @@ public abstract class Strings {
     }
 
     /**
-     * Joins an iterator of T into a String. E.g:
-     * <code>[1,2,3] -> "123"</code>
+     * Joins an iterator of T into a String. E.g: <code>[1,2,3] -> "123"</code>
      *
      * @param <T> the iterator element type
      * @param iterator the iterator to be joined
@@ -53,8 +82,7 @@ public abstract class Strings {
     }
 
     /**
-     * Creates a string by interposing stringified values from the source array
-     * with values from the separators. E.g:
+     * Creates a string by interposing stringified values from the source array with values from the separators. E.g:
      * <code>interpose([1,2,3,4,5], ["-", ","]) -> "1-2,3-4,5"</code>
      *
      * @param <T> the array element type
@@ -68,8 +96,7 @@ public abstract class Strings {
     }
 
     /**
-     * Creates a string by interposing stringified values from the source
-     * iterable with values from the separators. E.g:
+     * Creates a string by interposing stringified values from the source iterable with values from the separators. E.g:
      * <code>interpose([1,2,3,4,5], ["-", ","]) -> "1-2,3-4,5"</code>
      *
      * @param <T> the iterable element type
@@ -84,8 +111,7 @@ public abstract class Strings {
     }
 
     /**
-     * Creates a string by interposing stringified values from the source
-     * iterator with values from the separators. E.g:
+     * Creates a string by interposing stringified values from the source iterator with values from the separators. E.g:
      * <code>interpose([1,2,3,4,5], ["-", ","]) -> "1-2,3-4,5"</code>
      *
      * @param <T> the a element type
@@ -99,8 +125,7 @@ public abstract class Strings {
     }
 
     /**
-     * Creates a string by interposing stringified values from the source array
-     * with the separator. E.g:
+     * Creates a string by interposing stringified values from the source array with the separator. E.g:
      * <code>interpose([1,2,3], "-") -> "1-2-3"</code>
      *
      * @param <T> the iterable element type
@@ -114,8 +139,7 @@ public abstract class Strings {
     }
 
     /**
-     * Creates a string by interposing stringified values from the source
-     * iterable with the separator. E.g:
+     * Creates a string by interposing stringified values from the source iterable with the separator. E.g:
      * <code>interpose([1,2,3], "-") -> "1-2-3"</code>
      *
      * @param <T> the iterable element type
@@ -130,8 +154,7 @@ public abstract class Strings {
     }
 
     /**
-     * Creates a string by interposing stringified values from the source
-     * iterator with the separator. E.g:
+     * Creates a string by interposing stringified values from the source iterator with the separator. E.g:
      * <code>interpose([1,2,3], "-") -> "1-2-3"</code>
      *
      * @param <T> the iterable element type
