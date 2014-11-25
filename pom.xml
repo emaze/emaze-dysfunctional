@@ -40,9 +40,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>    
     <scm>
-        <connection>scm:hg:https://bitbucket.org/rferranti/emaze-dysfunctional</connection>
+        <connection>scm:hg:https://bitbucket.org/emaze/emaze-dysfunctional</connection>
         <developerConnection>scm:hg:file://${basedir}</developerConnection>
-        <url>https://bitbucket.org/rferranti/emaze-dysfunctional</url>
+        <url>https://bitbucket.org/emaze/emaze-dysfunctional</url>
         <tag>HEAD</tag>
     </scm>
     <developers>
