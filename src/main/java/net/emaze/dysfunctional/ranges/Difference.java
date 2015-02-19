@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.order.Order;
 import net.emaze.dysfunctional.order.SequencingPolicy;
@@ -15,7 +15,7 @@ import net.emaze.dysfunctional.ranges.Range.Endpoint;
  *
  * @author rferranti
  */
-public class Difference<T> implements BiFunction<Range<T>, Range<T>, Range<T>> {
+public class Difference<T> implements BinaryOperator<Range<T>> {
 
     private final SequencingPolicy<T> sequencer;
     private final Comparator<Maybe<T>> comparator;

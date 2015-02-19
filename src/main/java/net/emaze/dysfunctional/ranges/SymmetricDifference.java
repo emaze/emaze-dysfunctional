@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.ranges;
 
 import java.util.Comparator;
-import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 
@@ -10,7 +10,7 @@ import net.emaze.dysfunctional.order.SequencingPolicy;
  *
  * @author rferranti
  */
-public class SymmetricDifference<T> implements BiFunction<Range<T>, Range<T>, Range<T>> {
+public class SymmetricDifference<T> implements BinaryOperator<Range<T>> {
 
     private final Union<T> union;
     private final Difference<T> diff;

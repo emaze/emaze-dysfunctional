@@ -1,15 +1,15 @@
 package net.emaze.dysfunctional.order;
 
 import java.util.Comparator;
+import java.util.function.BinaryOperator;
 import net.emaze.dysfunctional.contracts.dbc;
-import java.util.function.BiFunction;
 
 /**
  *
  * @param <T> 
  * @author rferranti
  */
-public class Min<T> implements BiFunction<T, T, T> {
+public class Min<T> implements BinaryOperator<T> {
 
     private final Comparator<T> comparator;
 

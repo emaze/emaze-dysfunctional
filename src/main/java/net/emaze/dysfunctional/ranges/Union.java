@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.ranges;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 
@@ -12,7 +12,7 @@ import net.emaze.dysfunctional.order.SequencingPolicy;
  *
  * @author rferranti
  */
-public class Union<T> implements BiFunction<Range<T>, Range<T>, Range<T>> {
+public class Union<T> implements BinaryOperator<Range<T>> {
 
     private final SequencingPolicy<T> sequencer;
     private final Comparator<Maybe<T>> comparator;
