@@ -11,14 +11,14 @@ public class PureMaybeTest {
 
     @Test
     public void callingWithNullYieldsJustNull() {
-        final Maybe<Object> got = new PureMaybe<Object>().perform(null);
+        final Maybe<Object> got = new PureMaybe<Object>().apply(null);
         Assert.assertEquals(Maybe.just(null), got);
     }
 
     @Test
     public void callingPerformWithSomethingYieldsJustSomething() {
         final Object source = new Object();
-        final Maybe<Object> got = new PureMaybe<Object>().perform(source);
+        final Maybe<Object> got = new PureMaybe<Object>().apply(source);
         Assert.assertEquals(Maybe.just(source), got);
     }
 }

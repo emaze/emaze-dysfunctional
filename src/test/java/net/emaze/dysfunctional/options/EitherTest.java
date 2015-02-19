@@ -64,7 +64,7 @@ public class EitherTest {
             final Integer rightValue = 1;
             final Either<Object, Integer> either = new Either<Object, Integer>(Maybe.nothing(), Maybe.just(rightValue));
             final Box<Integer> box = new Box<Integer>();
-            either.fmap(new Identity<Object>(), Spies.spy1st(new ConstantDelegate<Object, Integer>(null), box));
+            either.fmap(new Identity<Object>(), Spies.spy1st(new ConstantDelegate<>(null), box));
             Assert.assertEquals(rightValue, box.getContent());
         }
 
@@ -73,7 +73,7 @@ public class EitherTest {
             final Integer leftValue = 1;
             final Either<Integer, Object> either = new Either<Integer, Object>(Maybe.just(leftValue), Maybe.nothing());
             final Box<Integer> box = new Box<Integer>();
-            either.fmap(Spies.spy1st(new ConstantDelegate<Object, Integer>(null), box), new Identity<Object>());
+            either.fmap(Spies.spy1st(new ConstantDelegate<>(null), box), new Identity<Object>());
             Assert.assertEquals(leftValue, box.getContent());
         }
 
@@ -82,7 +82,7 @@ public class EitherTest {
             final Integer rightValue = 1;
             final Either<Object, Integer> either = new Either<Object, Integer>(Maybe.nothing(), Maybe.just(rightValue));
             final Box<Integer> box = new Box<Integer>();
-            either.fold(new Identity<Object>(), Spies.spy1st(new ConstantDelegate<Object, Integer>(null), box));
+            either.fold(new Identity<Object>(), Spies.spy1st(new ConstantDelegate<>(null), box));
             Assert.assertEquals(rightValue, box.getContent());
         }
 
@@ -91,7 +91,7 @@ public class EitherTest {
             final Integer leftValue = 1;
             final Either<Integer, Object> either = new Either<Integer, Object>(Maybe.just(leftValue), Maybe.nothing());
             final Box<Integer> box = new Box<Integer>();
-            either.fold(Spies.spy1st(new ConstantDelegate<Object, Integer>(null), box), new Identity<Object>());
+            either.fold(Spies.spy1st(new ConstantDelegate<>(null), box), new Identity<Object>());
             Assert.assertEquals(leftValue, box.getContent());
         }
 

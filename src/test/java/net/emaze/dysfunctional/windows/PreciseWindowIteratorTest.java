@@ -23,7 +23,7 @@ import org.junit.Test;
  */
 public class PreciseWindowIteratorTest {
 
-    private static Provider<List<O>> LIST_FACTORY = Compositions.compose(new Vary<List<O>, ArrayList<O>>(), new ArrayListFactory<O>());
+    private static Provider<List<O>> LIST_FACTORY = Compositions.compose(new Vary<ArrayList<O>, List<O>>(), new ArrayListFactory<O>());
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingPreciseWindowIteratorWithNullIteratorYieldsException() {

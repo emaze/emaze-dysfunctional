@@ -3,15 +3,16 @@ package net.emaze.dysfunctional.reductions;
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 
 /**
  * A unary delegate reducing the {@literal Iterator<E>} to {@literal R}.
  *
  * @param <E> the iterator element type
+ * @param <R> the result element type
  * @author rferranti
  */
-public class Reductor<R, E> implements Delegate<R, Iterator<E>> {
+public class Reductor<E, R> implements Function<Iterator<E>, R> {
 
     private final BinaryDelegate<R, R, E> delegate;
     private final R init;
@@ -23,7 +24,7 @@ public class Reductor<R, E> implements Delegate<R, Iterator<E>> {
     }
 
     @Override
-    public R perform(Iterator<E> iterator) {
+    public R apply(Iterator<E> iterator) {
         dbc.precondition(iterator != null, "consuming a null iterator");
         R current = init;
         while (iterator.hasNext()) {

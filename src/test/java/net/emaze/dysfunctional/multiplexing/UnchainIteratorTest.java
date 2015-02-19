@@ -28,7 +28,7 @@ import org.junit.runners.Suite;
 })
 public class UnchainIteratorTest {
 
-    final static Provider<List<Integer>> LIST_FACTORY = Compositions.compose(new Vary<List<Integer>, ArrayList<Integer>>(), new ArrayListFactory<Integer>());
+    final static Provider<List<Integer>> LIST_FACTORY = Compositions.compose(new Vary<ArrayList<Integer>, List<Integer>>(), new ArrayListFactory<Integer>());
     final static Provider<Maybe<Integer>> SIZE_IS_ALWAYS_1 = new ConstantProvider<Maybe<Integer>>(Maybe.just(1));
     final static Provider<Maybe<Integer>> SIZE_IS_ALWAYS_2 = new ConstantProvider<Maybe<Integer>>(Maybe.just(2));
 

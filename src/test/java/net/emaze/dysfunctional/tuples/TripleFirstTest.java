@@ -11,13 +11,13 @@ public class TripleFirstTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void fetchingFromNullTripleYieldsException() {
-        new TripleFirst<Object, Object, Object>().perform(null);
+        new TripleFirst<Object, Object, Object>().apply(null);
     }
 
     @Test
     public void fetchesTheFirstElement() {
         final Triple<Integer, Integer, Integer> pair = Triple.of(1, 2, 3);
-        int got = new TripleFirst<Integer, Integer, Integer>().perform(pair);
+        int got = new TripleFirst<Integer, Integer, Integer>().apply(pair);
         Assert.assertEquals(1, got);
     }
 }

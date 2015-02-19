@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
 /**
@@ -17,13 +17,13 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
  * @param <K> the map key type
  * @param <V> the map value type
  */
-public class GroupBy<M extends Map<K, C>, C extends Collection<V>, K, V> implements Delegate<M, Iterator<V>> {
+public class GroupBy<M extends Map<K, C>, C extends Collection<V>, K, V> implements Function<Iterator<V>, M> {
 
-    private final Delegate<K, V> grouper;
+    private final Function<V, K> grouper;
     private final Provider<C> collectionProvider;
     private final Provider<M> mapProvider;
 
-    public GroupBy(Delegate<K, V> grouper, Provider<C> collectionProvider, Provider<M> mapProvider) {
+    public GroupBy(Function<V, K> grouper, Provider<C> collectionProvider, Provider<M> mapProvider) {
         dbc.precondition(grouper != null, "cannot group with a null grouper");
         dbc.precondition(collectionProvider != null, "cannot group with a null collectionProvider");
         dbc.precondition(mapProvider != null, "cannot group with a null mapProvider");
@@ -33,12 +33,12 @@ public class GroupBy<M extends Map<K, C>, C extends Collection<V>, K, V> impleme
     }
 
     @Override
-    public M perform(Iterator<V> groupies) {
+    public M apply(Iterator<V> groupies) {
         dbc.precondition(groupies != null, "cannot group with a null iterator");
         final M grouped = mapProvider.provide();
         while (groupies.hasNext()) {
             final V groupie = groupies.next();
-            final K group = grouper.perform(groupie);
+            final K group = grouper.apply(groupie);
             if (!grouped.containsKey(group)) {
                 grouped.put(group, collectionProvider.provide());
             }

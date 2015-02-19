@@ -2,14 +2,14 @@ package net.emaze.dysfunctional.collections;
 
 import java.util.Collection;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 
 /**
  * An endodelegate adding element to a collection.
  * @param <T> the element type
  * @author rferranti
  */
-public class CollectionAdder<T> implements Delegate<T, T> {
+public class CollectionAdder<T> implements Function<T, T> {
 
     private final Collection<T> collection;
 
@@ -19,7 +19,7 @@ public class CollectionAdder<T> implements Delegate<T, T> {
     }
 
     @Override
-    public T perform(T element) {
+    public T apply(T element) {
         collection.add(element);
         return element;
     }

@@ -32,7 +32,7 @@ public class CapturingDelegateTest {
         final Box<O> result = Box.empty();
         final Box<O> param = Box.empty();
         final CapturingDelegate<O, O> capturer = new CapturingDelegate<O, O>(new Identity<O>(), result, param);
-        capturer.perform(O.ONE);
+        capturer.apply(O.ONE);
         Assert.assertEquals(O.ONE, param.getContent());
     }
 
@@ -41,7 +41,7 @@ public class CapturingDelegateTest {
         final Box<O> result = Box.empty();
         final Box<O> param = Box.empty();
         final CapturingDelegate<O, O> capturer = new CapturingDelegate<O, O>(new Identity<O>(), result, param);
-        capturer.perform(O.ONE);
+        capturer.apply(O.ONE);
         Assert.assertEquals(O.ONE, result.getContent());
     }
 }

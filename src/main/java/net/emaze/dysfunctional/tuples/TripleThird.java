@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 
 /**
  * Fetches the third element out of a triple.
@@ -10,10 +10,10 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
  * @param <T3> the third element type
  * @author rferranti
  */
-public class TripleThird<T1, T2, T3> implements Delegate<T3, Triple<T1, T2, T3>> {
+public class TripleThird<T1, T2, T3> implements Function<Triple<T1, T2, T3>, T3> {
 
     @Override
-    public T3 perform(Triple<T1, T2, T3> triple) {
+    public T3 apply(Triple<T1, T2, T3> triple) {
         dbc.precondition(triple != null, "cannot fetch third from a null triple");
         return triple.third();
     }

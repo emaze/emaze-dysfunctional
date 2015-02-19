@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.options;
 
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 
 /**
  * Pointed.pure() implementation of the {@literal Box<T>} functor.
@@ -8,10 +8,10 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
  * @author rferranti
  * @param <T> the box value type
  */
-public class PureBox<T> implements Delegate<Box<T>, T> {
+public class PureBox<T> implements Function<T, Box<T>> {
 
     @Override
-    public Box<T> perform(T value) {
+    public Box<T> apply(T value) {
         return Box.of(value);
     }
 }

@@ -16,18 +16,18 @@ public class LongToInet4AddressTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void transformingNullYieldsException() {
-        transformer.perform(null);
+        transformer.apply(null);
     }
 
     @Test
     public void canTransformAnAddress() throws UnknownHostException {
-        final Inet4Address got = transformer.perform(0x7f000001L);
+        final Inet4Address got = transformer.apply(0x7f000001L);
         Assert.assertEquals(InetAddress.getByName("127.0.0.1"), got);
     }
 
     @Test
     public void canTransformNegativeBytes() throws UnknownHostException {
-        final Inet4Address got = transformer.perform(0xffffffffL);
+        final Inet4Address got = transformer.apply(0xffffffffL);
         Assert.assertEquals(InetAddress.getByName("255.255.255.255"), got);
     }
 }

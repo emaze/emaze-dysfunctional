@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.actions.Action;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 
 /**
  * Applies an action to an element and returns the (possibly modified) element.
@@ -10,7 +10,7 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
  * @author rferranti
  * @param <T> the parameter type
  */
-public class Tapper<T> implements Delegate<T, T> {
+public class Tapper<T> implements Function<T, T> {
 
     private final Action<T> action;
 
@@ -20,7 +20,7 @@ public class Tapper<T> implements Delegate<T, T> {
     }
 
     @Override
-    public T perform(T t) {
+    public T apply(T t) {
         action.perform(t);
         return t;
     }

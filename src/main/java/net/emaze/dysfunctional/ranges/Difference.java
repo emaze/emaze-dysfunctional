@@ -33,7 +33,7 @@ public class Difference<T> implements BinaryDelegate<Range<T>, Range<T>, Range<T
         for (DenseRange<T> r : rhs.densified()) {
             difference = difference(difference, r);
         }
-        return new MakeRange<T>(sequencer, comparator, emptyValue).perform(difference);
+        return new MakeRange<T>(sequencer, comparator, emptyValue).apply(difference);
     }
 
     private List<DenseRange<T>> difference(List<DenseRange<T>> lhss, DenseRange<T> rhs) {

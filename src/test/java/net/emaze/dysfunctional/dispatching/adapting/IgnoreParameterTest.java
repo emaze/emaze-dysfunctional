@@ -14,7 +14,7 @@ public class IgnoreParameterTest {
     
     @Test
     public void callingTheAdapterYieldsAdaptedResult(){
-        final O got = new IgnoreParameter<O, O>(new ConstantProvider<O>(O.ONE)).perform(O.ANOTHER);
+        final O got = new IgnoreParameter<O, O>(new ConstantProvider<O>(O.ONE)).apply(O.ANOTHER);
         Assert.assertEquals(O.ONE, got);
     }
 }

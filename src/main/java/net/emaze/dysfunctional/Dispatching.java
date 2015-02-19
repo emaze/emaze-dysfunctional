@@ -58,7 +58,7 @@ import net.emaze.dysfunctional.dispatching.adapting.TernaryDelegateToTernaryActi
 import net.emaze.dysfunctional.dispatching.adapting.TernaryDelegateToTernaryPredicate;
 import net.emaze.dysfunctional.dispatching.adapting.TernaryPredicateToTernaryDelegate;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
@@ -156,42 +156,42 @@ public abstract class Dispatching {
     /**
      * Partial application of the parameter to a delegate.
      *
-     * @param <R> the delegate return type
      * @param <T> the delegate parameter type
+     * @param <R> the delegate return type
      * @param delegate the delegate to be curried
      * @param value the value to be curried
      * @return the curried provider
      */
-    public static <R, T> Provider<R> curry(Delegate<R, T> delegate, T value) {
-        return new Binder<R, T>(delegate, value);
+    public static <T, R> Provider<R> curry(Function<T, R> delegate, T value) {
+        return new Binder<>(delegate, value);
     }
 
     /**
      * Partial application of the first parameter to a binary delegate.
      *
-     * @param <R> the delegate return type
      * @param <T1> the delegate first parameter type
      * @param <T2> the delegate second parameter type
+     * @param <R> the delegate return type
      * @param delegate the delegate to be curried
      * @param first the value to be curried as first parameter
      * @return the curried delegate
      */
-    public static <R, T1, T2> Delegate<R, T2> curry(BinaryDelegate<R, T1, T2> delegate, T1 first) {
-        return new BinderFirst<R, T1, T2>(delegate, first);
+    public static <T1, T2, R> Function<T2, R> curry(BinaryDelegate<R, T1, T2> delegate, T1 first) {
+        return new BinderFirst<>(delegate, first);
     }
 
     /**
      * Partial application of the first parameter to a ternary delegate.
      *
-     * @param <R> the delegate return type
      * @param <T1> the delegate first parameter type
      * @param <T2> the delegate second parameter type
      * @param <T3> the delegate third parameter type
+     * @param <R> the delegate return type
      * @param delegate the delegate to be curried
      * @param first the value to be curried as first parameter
      * @return the curried binary delegate
      */
-    public static <R, T1, T2, T3> BinaryDelegate<R, T2, T3> curry(TernaryDelegate<R, T1, T2, T3> delegate, T1 first) {
+    public static <T1, T2, T3, R> BinaryDelegate<R, T2, T3> curry(TernaryDelegate<R, T1, T2, T3> delegate, T1 first) {
         return new BinderFirstOfThree<R, T1, T2, T3>(delegate, first);
     }
 
@@ -302,15 +302,15 @@ public abstract class Dispatching {
      * Partial application of the last (rightmost) parameter to a binary
      * delegate.
      *
-     * @param <R> the delegate return type
      * @param <T1> the delegate first parameter type
      * @param <T2> the delegate second parameter type
+     * @param <R> the delegate return type
      * @param delegate the delegate to be curried
      * @param second the value to be curried as second parameter
      * @return the curried delegate
      */
-    public static <R, T1, T2> Delegate<R, T1> rcurry(BinaryDelegate<R, T1, T2> delegate, T2 second) {
-        return new BinderSecond<R, T1, T2>(delegate, second);
+    public static <T1, T2, R> Function<T1, R> rcurry(BinaryDelegate<R, T1, T2> delegate, T2 second) {
+        return new BinderSecond<>(delegate, second);
     }
 
     /**
@@ -498,14 +498,14 @@ public abstract class Dispatching {
     /**
      * Adapts a provider to a delegate by ignoring the passed parameter.
      *
-     * @param <R> the adapted delegate result type
      * @param <T> the adapted delegate parameter type
+     * @param <R> the adapted delegate result type
      * @param provider the provider to be adapted
      * @param ignored the adapted delegate ignored parameter type class
      * @return the adapted delegate
      */
-    public static <R, T> Delegate<R, T> ignore(Provider<R> provider, Class<T> ignored) {
-        return new IgnoreParameter<R, T>(provider);
+    public static <T, R> Function<T, R> ignore(Provider<R> provider, Class<T> ignored) {
+        return new IgnoreParameter<>(provider);
     }
 
     /**
@@ -518,8 +518,8 @@ public abstract class Dispatching {
      * @param ignored the adapted delegate ignored parameter type class
      * @return the adapted delegate
      */
-    public static <R, T1, T2> BinaryDelegate<R, T1, T2> ignore1st(Delegate<R, T2> delegate, Class<T1> ignored) {
-        return new IgnoreFirst<R, T1, T2>(delegate);
+    public static <T1, T2, R> BinaryDelegate<R, T1, T2> ignore1st(Function<T2, R> delegate, Class<T1> ignored) {
+        return new IgnoreFirst<>(delegate);
     }
 
     /**
@@ -541,15 +541,15 @@ public abstract class Dispatching {
     /**
      * Adapts a delegate to a binary delegate by ignoring the second parameter.
      *
-     * @param <R> the adapted delegate result type
      * @param <T1> the adapted delegate first parameter type
      * @param <T2> the adapted delegate second parameter type
+     * @param <R> the adapted delegate result type
      * @param delegate the delegate to be adapted
      * @param ignored the adapted delegate ignored parameter type class
      * @return the adapted delegate
      */
-    public static <R, T1, T2> BinaryDelegate<R, T1, T2> ignore2nd(Delegate<R, T1> delegate, Class<T2> ignored) {
-        return new IgnoreSecond<R, T1, T2>(delegate);
+    public static <T1, T2, R> BinaryDelegate<R, T1, T2> ignore2nd(Function<T1, R> delegate, Class<T2> ignored) {
+        return new IgnoreSecond<>(delegate);
     }
 
     /**
@@ -621,7 +621,7 @@ public abstract class Dispatching {
      * @param adaptee the action to be adapted
      * @return the adapted delegate
      */
-    public static <T> Delegate<Void, T> delegate(Action<T> adaptee) {
+    public static <T> Function<T, Void> delegate(Action<T> adaptee) {
         return new ActionToDelegate<T>(adaptee);
     }
 
@@ -657,7 +657,7 @@ public abstract class Dispatching {
      * @param adaptee the predicate to be adapted
      * @return the adapted delegate
      */
-    public static <T> Delegate<Boolean, T> delegate(Predicate<T> adaptee) {
+    public static <T> Function<T, Boolean> delegate(Predicate<T> adaptee) {
         return new PredicateToDelegate<T>(adaptee);
     }
 
@@ -700,13 +700,13 @@ public abstract class Dispatching {
     /**
      * Adapts a delegate to an action.
      *
-     * @param <R> the delegate return type
      * @param <T> the delegate parameter type
+     * @param <R> the delegate return type
      * @param delegate the delegate to be adapted
      * @return the adapted action
      */
-    public static <R, T> Action<T> action(Delegate<R, T> delegate) {
-        return new DelegateToAction<R, T>(delegate);
+    public static <T, R> Action<T> action(Function<T, R> delegate) {
+        return new DelegateToAction<>(delegate);
     }
 
     /**
@@ -753,7 +753,7 @@ public abstract class Dispatching {
      * @param delegate the delegate to be adapted
      * @return the adapted predicate
      */
-    public static <T> Predicate<T> predicate(Delegate<Boolean, T> delegate) {
+    public static <T> Predicate<T> predicate(Function<T, Boolean> delegate) {
         return new DelegateToPredicate<T>(delegate);
     }
 

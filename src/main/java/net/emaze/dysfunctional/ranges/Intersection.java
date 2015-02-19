@@ -39,7 +39,7 @@ public class Intersection<T> implements BinaryDelegate<Range<T>, Range<T>, Range
                 intersection.add(new DenseRange<T>(sequencer, comparator, Endpoint.Include, orderedLowerBounds.second().value(), orderedUpperBounds.first(), Endpoint.Exclude));
             }
         }
-        return new MakeRange<T>(sequencer, comparator, emptyValue).perform(intersection);
+        return new MakeRange<T>(sequencer, comparator, emptyValue).apply(intersection);
     }
 
 }

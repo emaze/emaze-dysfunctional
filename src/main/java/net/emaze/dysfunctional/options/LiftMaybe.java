@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.options;
 
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 
 /**
  * Transforms a T to a Maybe monadic value yielding nothing(T) for nulls and
@@ -11,10 +11,10 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
  *
  * @author rferranti
  */
-public class LiftMaybe<T> implements Delegate<Maybe<T>, T> {
+public class LiftMaybe<T> implements Function<T, Maybe<T>> {
 
     @Override
-    public Maybe<T> perform(T valueOrNull) {
+    public Maybe<T> apply(T valueOrNull) {
         if (valueOrNull == null) {
             return Maybe.nothing();
         }

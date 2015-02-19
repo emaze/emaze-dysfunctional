@@ -19,7 +19,7 @@ import net.emaze.dysfunctional.consumers.MaybeOneElement;
 import net.emaze.dysfunctional.consumers.OneElement;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.filtering.AtIndex;
 import net.emaze.dysfunctional.filtering.FilteringIterator;
@@ -48,8 +48,8 @@ public abstract class Consumers {
      */
     public static <R extends Collection<E>, E> R all(Iterator<E> iterator, R collection) {
         dbc.precondition(collection != null, "cannot call all with a null collection");
-        final Delegate<R, Iterator<E>> consumer = new ConsumeIntoCollection<R, E>(new ConstantProvider<R>(collection));
-        return consumer.perform(iterator);
+        final Function<Iterator<E>, R> consumer = new ConsumeIntoCollection<>(new ConstantProvider<R>(collection));
+        return consumer.apply(iterator);
     }
 
     /**
@@ -64,8 +64,8 @@ public abstract class Consumers {
     public static <R extends Collection<E>, E> R all(Iterable<E> iterable, R collection) {
         dbc.precondition(iterable != null, "cannot call all with a null iterable");
         dbc.precondition(collection != null, "cannot call all with a null collection");
-        final Delegate<R, Iterator<E>> consumer = new ConsumeIntoCollection<R, E>(new ConstantProvider<R>(collection));
-        return consumer.perform(iterable.iterator());
+        final Function<Iterator<E>, R> consumer = new ConsumeIntoCollection<>(new ConstantProvider<R>(collection));
+        return consumer.apply(iterable.iterator());
     }
 
     /**
@@ -79,8 +79,8 @@ public abstract class Consumers {
      */
     public static <R extends Collection<E>, E> R all(E[] array, R collection) {
         dbc.precondition(collection != null, "cannot call all with a null collection");
-        final Delegate<R, Iterator<E>> consumer = new ConsumeIntoCollection<R, E>(new ConstantProvider<R>(collection));
-        return consumer.perform(new ArrayIterator<E>(array));
+        final Function<Iterator<E>, R> consumer = new ConsumeIntoCollection<>(new ConstantProvider<R>(collection));
+        return consumer.apply(new ArrayIterator<>(array));
     }
 
     /**
@@ -94,8 +94,8 @@ public abstract class Consumers {
      * @return a collection filled with iterator values
      */
     public static <E, R extends Collection<E>> R all(Iterator<E> iterator, Provider<R> provider) {
-        final Delegate<R, Iterator<E>> consumer = new ConsumeIntoCollection<R, E>(provider);
-        return consumer.perform(iterator);
+        final Function<Iterator<E>, R> consumer = new ConsumeIntoCollection<>(provider);
+        return consumer.apply(iterator);
     }
 
     /**
@@ -110,8 +110,8 @@ public abstract class Consumers {
      */
     public static <E, R extends Collection<E>> R all(Iterable<E> iterable, Provider<R> provider) {
         dbc.precondition(iterable != null, "cannot call all with a null iterable");
-        final Delegate<R, Iterator<E>> consumer = new ConsumeIntoCollection<R, E>(provider);
-        return consumer.perform(iterable.iterator());
+        final Function<Iterator<E>, R> consumer = new ConsumeIntoCollection<>(provider);
+        return consumer.apply(iterable.iterator());
     }
 
     /**
@@ -125,8 +125,8 @@ public abstract class Consumers {
      * @return a collection filled with iterator values
      */
     public static <R extends Collection<E>, E> R all(E[] array, Provider<R> provider) {
-        final Delegate<R, Iterator<E>> consumer = new ConsumeIntoCollection<R, E>(provider);
-        return consumer.perform(new ArrayIterator<E>(array));
+        final Function<Iterator<E>, R> consumer = new ConsumeIntoCollection<>(provider);
+        return consumer.apply(new ArrayIterator<>(array));
     }
 
     /**
@@ -137,8 +137,8 @@ public abstract class Consumers {
      * @return a list filled with iterator values
      */
     public static <E> List<E> all(Iterator<E> iterator) {
-        final Delegate<ArrayList<E>, Iterator<E>> consumer = new ConsumeIntoCollection<ArrayList<E>, E>(new ArrayListFactory<E>());
-        return consumer.perform(iterator);
+        final Function<Iterator<E>, ArrayList<E>> consumer = new ConsumeIntoCollection<>(new ArrayListFactory<E>());
+        return consumer.apply(iterator);
     }
 
     /**
@@ -150,8 +150,8 @@ public abstract class Consumers {
      */
     public static <E> List<E> all(Iterable<E> iterable) {
         dbc.precondition(iterable != null, "cannot call all with a null iterable");
-        final Delegate<ArrayList<E>, Iterator<E>> consumer = new ConsumeIntoCollection<ArrayList<E>, E>(new ArrayListFactory<E>());
-        return consumer.perform(iterable.iterator());
+        final Function<Iterator<E>, ArrayList<E>> consumer = new ConsumeIntoCollection<>(new ArrayListFactory<E>());
+        return consumer.apply(iterable.iterator());
     }
 
     /**
@@ -162,8 +162,8 @@ public abstract class Consumers {
      * @return a list filled with array values
      */
     public static <E> List<E> all(E[] array) {
-        final Delegate<ArrayList<E>, Iterator<E>> consumer = new ConsumeIntoCollection<ArrayList<E>, E>(new ArrayListFactory<E>());
-        return consumer.perform(new ArrayIterator<E>(array));
+        final Function<Iterator<E>, ArrayList<E>> consumer = new ConsumeIntoCollection<>(new ArrayListFactory<E>());
+        return consumer.apply(new ArrayIterator<>(array));
     }
 
     /**
@@ -178,8 +178,8 @@ public abstract class Consumers {
      */
     public static <M extends Map<K, V>, K, V> M dict(Iterator<Pair<K, V>> iterator, M map) {
         dbc.precondition(map != null, "cannot call dict with a null map");
-        final Delegate<M, Iterator<Pair<K, V>>> consumer = new ConsumeIntoMap<M, K, V>(new ConstantProvider<M>(map));
-        return consumer.perform(iterator);
+        final Function<Iterator<Pair<K, V>>, M> consumer = new ConsumeIntoMap<>(new ConstantProvider<M>(map));
+        return consumer.apply(iterator);
     }
 
     /**
@@ -195,8 +195,8 @@ public abstract class Consumers {
     public static <M extends Map<K, V>, K, V> M dict(Iterable<Pair<K, V>> iterable, M map) {
         dbc.precondition(iterable != null, "cannot call dict with a null iterable");
         dbc.precondition(map != null, "cannot call dict with a null map");
-        final Delegate<M, Iterator<Pair<K, V>>> consumer = new ConsumeIntoMap<M, K, V>(new ConstantProvider<M>(map));
-        return consumer.perform(iterable.iterator());
+        final Function<Iterator<Pair<K, V>>, M> consumer = new ConsumeIntoMap<>(new ConstantProvider<M>(map));
+        return consumer.apply(iterable.iterator());
     }
 
     /**
@@ -211,8 +211,8 @@ public abstract class Consumers {
      */
     public static <M extends Map<K, V>, K, V> M dict(M map, Pair<K, V>... array) {
         dbc.precondition(map != null, "cannot call dict with a null map");
-        final Delegate<M, Iterator<Pair<K, V>>> consumer = new ConsumeIntoMap<M, K, V>(new ConstantProvider<M>(map));
-        return consumer.perform(new ArrayIterator<Pair<K, V>>(array));
+        final Function<Iterator<Pair<K, V>>, M> consumer = new ConsumeIntoMap<>(new ConstantProvider<M>(map));
+        return consumer.apply(new ArrayIterator<>(array));
     }
 
     /**
@@ -226,8 +226,8 @@ public abstract class Consumers {
      * @return a map filled with iterator values
      */
     public static <M extends Map<K, V>, K, V> M dict(Iterator<Pair<K, V>> iterator, Provider<M> provider) {
-        final Delegate<M, Iterator<Pair<K, V>>> consumer = new ConsumeIntoMap<M, K, V>(provider);
-        return consumer.perform(iterator);
+        final Function<Iterator<Pair<K, V>>, M> consumer = new ConsumeIntoMap<>(provider);
+        return consumer.apply(iterator);
     }
 
     /**
@@ -242,8 +242,8 @@ public abstract class Consumers {
      */
     public static <M extends Map<K, V>, K, V> M dict(Iterable<Pair<K, V>> iterable, Provider<M> provider) {
         dbc.precondition(iterable != null, "cannot call dict with a null iterable");
-        final Delegate<M, Iterator<Pair<K, V>>> consumer = new ConsumeIntoMap<M, K, V>(provider);
-        return consumer.perform(iterable.iterator());
+        final Function<Iterator<Pair<K, V>>, M> consumer = new ConsumeIntoMap<>(provider);
+        return consumer.apply(iterable.iterator());
     }
 
     /**
@@ -257,8 +257,8 @@ public abstract class Consumers {
      * @return a map filled with iterator values
      */
     public static <M extends Map<K, V>, K, V> M dict(Provider<M> provider, Pair<K, V>... array) {
-        final Delegate<M, Iterator<Pair<K, V>>> consumer = new ConsumeIntoMap<M, K, V>(provider);
-        return consumer.perform(new ArrayIterator<Pair<K, V>>(array));
+        final Function<Iterator<Pair<K, V>>, M> consumer = new ConsumeIntoMap<>(provider);
+        return consumer.apply(new ArrayIterator<>(array));
     }
 
     /**
@@ -270,8 +270,8 @@ public abstract class Consumers {
      * @return a list filled with iterator values
      */
     public static <K, V> Map<K, V> dict(Iterator<Pair<K, V>> iterator) {
-        final Delegate<HashMap<K, V>, Iterator<Pair<K, V>>> consumer = new ConsumeIntoMap<HashMap<K, V>, K, V>(new HashMapFactory<K, V>());
-        return consumer.perform(iterator);
+        final Function<Iterator<Pair<K, V>>, HashMap<K, V>> consumer = new ConsumeIntoMap<>(new HashMapFactory<K, V>());
+        return consumer.apply(iterator);
     }
 
     /**
@@ -284,8 +284,8 @@ public abstract class Consumers {
      */
     public static <K, V> Map<K, V> dict(Iterable<Pair<K, V>> iterable) {
         dbc.precondition(iterable != null, "cannot call dict with a null iterable");
-        final Delegate<HashMap<K, V>, Iterator<Pair<K, V>>> consumer = new ConsumeIntoMap<HashMap<K, V>, K, V>(new HashMapFactory<K, V>());
-        return consumer.perform(iterable.iterator());
+        final Function<Iterator<Pair<K, V>>, HashMap<K, V>> consumer = new ConsumeIntoMap<>(new HashMapFactory<K, V>());
+        return consumer.apply(iterable.iterator());
     }
 
     /**
@@ -297,8 +297,8 @@ public abstract class Consumers {
      * @return a map filled with array values
      */
     public static <K, V> Map<K, V> dict(Pair<K, V>... array) {
-        final Delegate<HashMap<K, V>, Iterator<Pair<K, V>>> consumer = new ConsumeIntoMap<HashMap<K, V>, K, V>(new HashMapFactory<K, V>());
-        return consumer.perform(new ArrayIterator<Pair<K, V>>(array));
+        final Function<Iterator<Pair<K, V>>, HashMap<K, V>> consumer = new ConsumeIntoMap<>(new HashMapFactory<K, V>());
+        return consumer.apply(new ArrayIterator<>(array));
     }
 
     /**
@@ -309,7 +309,7 @@ public abstract class Consumers {
      * @param outputIterator the iterator that will be filled
      */
     public static <E> void pipe(Iterator<E> iterator, OutputIterator<E> outputIterator) {
-        new ConsumeIntoOutputIterator<E>(outputIterator).perform(iterator);
+        new ConsumeIntoOutputIterator<>(outputIterator).apply(iterator);
     }
 
     /**
@@ -321,7 +321,7 @@ public abstract class Consumers {
      */
     public static <E> void pipe(Iterable<E> iterable, OutputIterator<E> outputIterator) {
         dbc.precondition(iterable != null, "cannot call pipe with a null iterable");
-        new ConsumeIntoOutputIterator<E>(outputIterator).perform(iterable.iterator());
+        new ConsumeIntoOutputIterator<>(outputIterator).apply(iterable.iterator());
     }
 
     /**
@@ -332,7 +332,7 @@ public abstract class Consumers {
      * @param outputIterator the iterator that will be filled
      */
     public static <E> void pipe(E[] array, OutputIterator<E> outputIterator) {
-        new ConsumeIntoOutputIterator<E>(outputIterator).perform(new ArrayIterator<E>(array));
+        new ConsumeIntoOutputIterator<>(outputIterator).apply(new ArrayIterator<>(array));
     }
 
     /**
@@ -344,7 +344,7 @@ public abstract class Consumers {
      */
     public static <E> Maybe<E> maybeFirst(Iterable<E> iterable) {
         dbc.precondition(iterable != null, "cannot call maybeFirst with a null iterable");
-        return new MaybeFirstElement<E>().perform(iterable.iterator());
+        return new MaybeFirstElement<E>().apply(iterable.iterator());
     }
 
     /**
@@ -355,7 +355,7 @@ public abstract class Consumers {
      * @return just the first element or nothing
      */
     public static <E> Maybe<E> maybeFirst(Iterator<E> iterator) {
-        return new MaybeFirstElement<E>().perform(iterator);
+        return new MaybeFirstElement<E>().apply(iterator);
     }
 
     /**
@@ -366,7 +366,7 @@ public abstract class Consumers {
      * @return just the first element or nothing
      */
     public static <E> Maybe<E> maybeFirst(E[] array) {
-        return new MaybeFirstElement<E>().perform(new ArrayIterator<E>(array));
+        return new MaybeFirstElement<E>().apply(new ArrayIterator<>(array));
     }
 
     /**
@@ -378,7 +378,7 @@ public abstract class Consumers {
      * @return the found element
      */
     public static <E> E first(Iterator<E> iterator) {
-        return new FirstElement<E>().perform(iterator);
+        return new FirstElement<E>().apply(iterator);
     }
 
     /**
@@ -391,7 +391,7 @@ public abstract class Consumers {
      */
     public static <E> E first(Iterable<E> iterable) {
         dbc.precondition(iterable != null, "cannot call first with a null iterable");
-        return new FirstElement<E>().perform(iterable.iterator());
+        return new FirstElement<E>().apply(iterable.iterator());
     }
 
     /**
@@ -403,7 +403,7 @@ public abstract class Consumers {
      * @return the found element
      */
     public static <E> E first(E[] array) {
-        return new FirstElement<E>().perform(new ArrayIterator<E>(array));
+        return new FirstElement<E>().apply(new ArrayIterator<>(array));
     }
 
     /**
@@ -416,7 +416,7 @@ public abstract class Consumers {
      * @return just the element or nothing
      */
     public static <E> Maybe<E> maybeOne(Iterator<E> iterator) {
-        return new MaybeOneElement<E>().perform(iterator);
+        return new MaybeOneElement<E>().apply(iterator);
     }
 
     /**
@@ -430,7 +430,7 @@ public abstract class Consumers {
      */
     public static <E> Maybe<E> maybeOne(Iterable<E> iterable) {
         dbc.precondition(iterable != null, "cannot call maybeOne with a null iterable");
-        return new MaybeOneElement<E>().perform(iterable.iterator());
+        return new MaybeOneElement<E>().apply(iterable.iterator());
     }
 
     /**
@@ -443,7 +443,7 @@ public abstract class Consumers {
      * @return just the element or nothing
      */
     public static <E> Maybe<E> maybeOne(E[] array) {
-        return new MaybeOneElement<E>().perform(new ArrayIterator<E>(array));
+        return new MaybeOneElement<E>().apply(new ArrayIterator<>(array));
     }
 
     /**
@@ -456,7 +456,7 @@ public abstract class Consumers {
      * @return the found element
      */
     public static <E> E one(Iterator<E> iterator) {
-        return new OneElement<E>().perform(iterator);
+        return new OneElement<E>().apply(iterator);
     }
 
     /**
@@ -470,7 +470,7 @@ public abstract class Consumers {
      */
     public static <E> E one(Iterable<E> iterable) {
         dbc.precondition(iterable != null, "cannot call one with a null iterable");
-        return new OneElement<E>().perform(iterable.iterator());
+        return new OneElement<E>().apply(iterable.iterator());
     }
 
     /**
@@ -483,7 +483,7 @@ public abstract class Consumers {
      * @return the found element
      */
     public static <E> E one(E[] array) {
-        return new OneElement<E>().perform(new ArrayIterator<E>(array));
+        return new OneElement<E>().apply(new ArrayIterator<>(array));
     }
 
     /**
@@ -494,7 +494,7 @@ public abstract class Consumers {
      * @return the last element or nothing
      */
     public static <E> Maybe<E> maybeLast(Iterator<E> iterator) {
-        return new MaybeLastElement<E>().perform(iterator);
+        return new MaybeLastElement<E>().apply(iterator);
     }
 
     /**
@@ -506,7 +506,7 @@ public abstract class Consumers {
      */
     public static <E> Maybe<E> maybeLast(Iterable<E> iterable) {
         dbc.precondition(iterable != null, "cannot call maybeLast with a null iterable");
-        return new MaybeLastElement<E>().perform(iterable.iterator());
+        return new MaybeLastElement<E>().apply(iterable.iterator());
     }
 
     /**
@@ -517,7 +517,7 @@ public abstract class Consumers {
      * @return the last element or nothing
      */
     public static <E> Maybe<E> maybeLast(E[] array) {
-        return new MaybeLastElement<E>().perform(new ArrayIterator<E>(array));
+        return new MaybeLastElement<E>().apply(new ArrayIterator<>(array));
     }
 
     /**
@@ -529,7 +529,7 @@ public abstract class Consumers {
      * @return the last element
      */
     public static <E> E last(Iterator<E> iterator) {
-        return new LastElement<E>().perform(iterator);
+        return new LastElement<E>().apply(iterator);
     }
 
     /**
@@ -542,7 +542,7 @@ public abstract class Consumers {
      */
     public static <E> E last(Iterable<E> iterable) {
         dbc.precondition(iterable != null, "cannot call last with a null iterable");
-        return new LastElement<E>().perform(iterable.iterator());
+        return new LastElement<E>().apply(iterable.iterator());
     }
 
     /**
@@ -554,7 +554,7 @@ public abstract class Consumers {
      * @return the last element
      */
     public static <E> E last(E[] array) {
-        return new LastElement<E>().perform(new ArrayIterator<E>(array));
+        return new LastElement<E>().apply(new ArrayIterator<>(array));
     }
 
     /**
@@ -567,7 +567,7 @@ public abstract class Consumers {
      */
     public static <E> E nth(long count, Iterator<E> iterator) {
         final Iterator<E> filtered = new FilteringIterator<E>(iterator, new Nth<E>(count));
-        return new FirstElement<E>().perform(filtered);
+        return new FirstElement<E>().apply(filtered);
     }
 
     /**
@@ -581,7 +581,7 @@ public abstract class Consumers {
     public static <E> E nth(long count, Iterable<E> iterable) {
         dbc.precondition(iterable != null, "cannot call nth with a null iterable");
         final Iterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), new Nth<E>(count));
-        return new FirstElement<E>().perform(filtered);
+        return new FirstElement<E>().apply(filtered);
     }
 
     /**
@@ -594,7 +594,7 @@ public abstract class Consumers {
      */
     public static <E> E nth(long count, E[] array) {
         final Iterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), new Nth<E>(count));
-        return new FirstElement<E>().perform(filtered);
+        return new FirstElement<E>().apply(filtered);
     }
 
     /**
@@ -607,7 +607,7 @@ public abstract class Consumers {
      */
     public static <E> Maybe<E> maybeNth(long count, Iterator<E> iterator) {
         final Iterator<E> filtered = new FilteringIterator<E>(iterator, new Nth<E>(count));
-        return new MaybeFirstElement<E>().perform(filtered);
+        return new MaybeFirstElement<E>().apply(filtered);
     }
 
     /**
@@ -621,7 +621,7 @@ public abstract class Consumers {
     public static <E> Maybe<E> maybeNth(long count, Iterable<E> iterable) {
         dbc.precondition(iterable != null, "cannot call maybeNth with a null iterable");
         final Iterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), new Nth<E>(count));
-        return new MaybeFirstElement<E>().perform(filtered);
+        return new MaybeFirstElement<E>().apply(filtered);
     }
 
     /**
@@ -634,7 +634,7 @@ public abstract class Consumers {
      */
     public static <E> Maybe<E> maybeNth(long count, E[] array) {
         final Iterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), new Nth<E>(count));
-        return new MaybeFirstElement<E>().perform(filtered);
+        return new MaybeFirstElement<E>().apply(filtered);
     }
 
     /**
@@ -647,7 +647,7 @@ public abstract class Consumers {
      */
     public static <E> E at(long index, Iterator<E> iterator) {
         final Iterator<E> filtered = new FilteringIterator<E>(iterator, new AtIndex<E>(index));
-        return new FirstElement<E>().perform(filtered);
+        return new FirstElement<E>().apply(filtered);
     }
 
     /**
@@ -661,7 +661,7 @@ public abstract class Consumers {
     public static <E> E at(long index, Iterable<E> iterable) {
         dbc.precondition(iterable != null, "cannot call at with a null iterable");
         final Iterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), new AtIndex<E>(index));
-        return new FirstElement<E>().perform(filtered);
+        return new FirstElement<E>().apply(filtered);
     }
 
     /**
@@ -674,7 +674,7 @@ public abstract class Consumers {
      */
     public static <E> E at(long index, E[] array) {
         final Iterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), new AtIndex<E>(index));
-        return new FirstElement<E>().perform(filtered);
+        return new FirstElement<E>().apply(filtered);
     }
 
     /**
@@ -687,7 +687,7 @@ public abstract class Consumers {
      */
     public static <E> Maybe<E> maybeAt(long index, Iterator<E> iterator) {
         final Iterator<E> filtered = new FilteringIterator<E>(iterator, new AtIndex<E>(index));
-        return new MaybeFirstElement<E>().perform(filtered);
+        return new MaybeFirstElement<E>().apply(filtered);
     }
 
     /**
@@ -701,7 +701,7 @@ public abstract class Consumers {
     public static <E> Maybe<E> maybeAt(long index, Iterable<E> iterable) {
         dbc.precondition(iterable != null, "cannot call maybeAt with a null iterable");
         final Iterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), new AtIndex<E>(index));
-        return new MaybeFirstElement<E>().perform(filtered);
+        return new MaybeFirstElement<E>().apply(filtered);
     }
 
     /**
@@ -714,6 +714,6 @@ public abstract class Consumers {
      */
     public static <E> Maybe<E> maybeAt(long index, E[] array) {
         final Iterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), new AtIndex<E>(index));
-        return new MaybeFirstElement<E>().perform(filtered);
+        return new MaybeFirstElement<E>().apply(filtered);
     }
 }

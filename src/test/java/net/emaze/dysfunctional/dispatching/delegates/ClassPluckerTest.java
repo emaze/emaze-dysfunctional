@@ -12,12 +12,12 @@ public class ClassPluckerTest {
 
     @Test(expected=IllegalArgumentException.class)
     public void pluckingClassFromNullYieldsException() {
-        new ClassPlucker<Object>().perform(null);
+        new ClassPlucker<Object>().apply(null);
     }
 
     @Test
     public void canPluckClass() {
-        final Class<?> got = new ClassPlucker<Object>().perform(new Object());
+        final Class<?> got = new ClassPlucker<Object>().apply(new Object());
         Assert.assertEquals(Object.class, got);
     }
 

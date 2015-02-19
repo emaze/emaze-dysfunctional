@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.Spies;
@@ -22,8 +22,8 @@ public class PredicateToDelegateTest {
     
     @Test// you probably expect this (expected = ClassCastException.class)
     public void passingWrongTypeToErasureJustForwardsToTheNestedAction() {
-        Delegate d = new PredicateToDelegate<O>(new Always<O>());
-        d.perform(new Object());
+        Function d = new PredicateToDelegate<O>(new Always<O>());
+        d.apply(new Object());
     }
     
     @Test
@@ -31,14 +31,14 @@ public class PredicateToDelegateTest {
         final Box<O> param = Box.empty();
         final Predicate<O> spy = Spies.spy1st(new Always<O>(), param);
         final PredicateToDelegate<O> adapted = new PredicateToDelegate<O>(spy);
-        adapted.perform(O.ONE);
+        adapted.apply(O.ONE);
         Assert.assertEquals(O.ONE, param.getContent());
     }
 
     @Test
     public void adapterCorrectlyReturnsResultToAdapted() {
         final PredicateToDelegate<O> adapted = new PredicateToDelegate<O>(new Always<O>());
-        boolean got = adapted.perform(O.IGNORED);
+        boolean got = adapted.apply(O.IGNORED);
         Assert.assertEquals(true, got);
     }
 }

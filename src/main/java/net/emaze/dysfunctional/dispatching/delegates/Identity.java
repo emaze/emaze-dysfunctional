@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
+import java.util.function.Function;
+
 /**
  * A unary delegate yielding the passed parameter.
  *
@@ -8,7 +10,7 @@ package net.emaze.dysfunctional.dispatching.delegates;
  * @param <T> the parameter and result type
  * @author rferranti
  */
-public class Identity<T> implements Delegate<T, T> {
+public class Identity<T> implements Function<T, T> {
 
     /**
      * Yields the passed parameter.
@@ -17,7 +19,7 @@ public class Identity<T> implements Delegate<T, T> {
      * @return the given element
      */
     @Override
-    public T perform(T element) {
+    public T apply(T element) {
         return element;
     }
 }

@@ -3,7 +3,7 @@ package net.emaze.dysfunctional;
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.interceptions.BinaryInterceptor;
 import net.emaze.dysfunctional.interceptions.BinaryInterceptorChain;
@@ -16,6 +16,7 @@ import net.emaze.dysfunctional.iterations.SingletonIterator;
 
 /**
  * intercept.
+ *
  * @author rferranti
  */
 public abstract class Interceptors {
@@ -23,32 +24,32 @@ public abstract class Interceptors {
     /**
      * Creates an interceptor chain.
      *
-     * @param <R> the delegate result type
      * @param <T> the delegate parameter type
+     * @param <R> the delegate result type
      * @param innermost the delegate to be intercepted
      * @param interceptor the interceptor
      * @return the resulting delegate
      */
-    public static <R, T> Delegate<R, T> intercept(Delegate<R, T> innermost, Interceptor<T> interceptor) {
+    public static <T, R> Function<T, R> intercept(Function<T, R> innermost, Interceptor<T> interceptor) {
         dbc.precondition(interceptor != null, "cannot create an interceptor chain with a null interceptor");
-        return new InterceptorChain<R, T>(innermost, new SingletonIterator<Interceptor<T>>(interceptor));
+        return new InterceptorChain<>(innermost, new SingletonIterator<Interceptor<T>>(interceptor));
     }
 
     /**
      * Creates an interceptor chain.
      *
-     * @param <R> the delegate result type
      * @param <T> the delegate parameter type
+     * @param <R> the delegate result type
      * @param innermost the delegate to be intercepted
      * @param first the first interceptor
      * @param second the second interceptor
      * @return the resulting delegate
      */
-    public static <R, T> Delegate<R, T> intercept(Delegate<R, T> innermost, Interceptor<T> first, Interceptor<T> second) {
+    public static <T, R> Function<T, R> intercept(Function<T, R> innermost, Interceptor<T> first, Interceptor<T> second) {
         dbc.precondition(first != null, "cannot create an interceptor chain with a null interceptor");
         dbc.precondition(second != null, "cannot create an interceptor chain with a null interceptor");
         final ArrayIterator<Interceptor<T>> interceptors = ArrayIterator.of(first, second);
-        return new InterceptorChain<R, T>(innermost, interceptors);
+        return new InterceptorChain<>(innermost, interceptors);
     }
 
     /**
@@ -62,54 +63,54 @@ public abstract class Interceptors {
      * @param third the third interceptor
      * @return the resulting delegate
      */
-    public static <R, T> Delegate<R, T> intercept(Delegate<R, T> innermost, Interceptor<T> first, Interceptor<T> second, Interceptor<T> third) {
+    public static <T, R> Function<T, R> intercept(Function<T, R> innermost, Interceptor<T> first, Interceptor<T> second, Interceptor<T> third) {
         dbc.precondition(first != null, "cannot create an interceptor chain with a null interceptor");
         dbc.precondition(second != null, "cannot create an interceptor chain with a null interceptor");
         dbc.precondition(third != null, "cannot create an interceptor chain with a null interceptor");
         final ArrayIterator<Interceptor<T>> interceptors = ArrayIterator.of(first, second, third);
-        return new InterceptorChain<R, T>(innermost, interceptors);
+        return new InterceptorChain<>(innermost, interceptors);
     }
 
     /**
      * Creates an interceptor chain.
      *
-     * @param <R> the delegate result type
      * @param <T> the delegate parameter type
+     * @param <R> the delegate result type
      * @param <I> the interceptor type
      * @param innermost the delegate to be intercepted
      * @param interceptors an iterable of interceptor
      * @return the resulting delegate
      */
-    public static <R, T, I extends Interceptor<T>> Delegate<R, T> intercept(Delegate<R, T> innermost, Iterable<I> interceptors) {
+    public static <T, R, I extends Interceptor<T>> Function<T, R> intercept(Function<T, R> innermost, Iterable<I> interceptors) {
         dbc.precondition(interceptors != null, "cannot create an interceptor chain with a null iterable of interceptors");
-        return new InterceptorChain<R, T>(innermost, interceptors.iterator());
+        return new InterceptorChain<>(innermost, interceptors.iterator());
     }
 
     /**
      * Creates an interceptor chain.
      *
-     * @param <R> the delegate result type
      * @param <T> the delegate parameter type
+     * @param <R> the delegate result type
      * @param <I> the interceptor type
      * @param innermost the delegate to be intercepted
      * @param interceptors an iterator of interceptor
      * @return the resulting delegate
      */
-    public static <R, T, I extends Interceptor<T>> Delegate<R, T> intercept(Delegate<R, T> innermost, Iterator<I> interceptors) {
-        return new InterceptorChain<R, T>(innermost, interceptors);
+    public static <T, R, I extends Interceptor<T>> Function<T, R> intercept(Function<T, R> innermost, Iterator<I> interceptors) {
+        return new InterceptorChain<>(innermost, interceptors);
     }
 
     /**
      * Creates an interceptor chain.
      *
-     * @param <R> the delegate result type
      * @param <T> the delegate parameter type
+     * @param <R> the delegate result type
      * @param innermost the delegate to be intercepted
      * @param interceptors an array of interceptor
      * @return the resulting delegate
      */
-    public static <R, T> Delegate<R, T> intercept(Delegate<R, T> innermost, Interceptor<T>... interceptors) {
-        return new InterceptorChain<R, T>(innermost, new ArrayIterator<Interceptor<T>>(interceptors));
+    public static <T, R> Function<T, R> intercept(Function<T, R> innermost, Interceptor<T>... interceptors) {
+        return new InterceptorChain<>(innermost, new ArrayIterator<Interceptor<T>>(interceptors));
     }
 
     /**

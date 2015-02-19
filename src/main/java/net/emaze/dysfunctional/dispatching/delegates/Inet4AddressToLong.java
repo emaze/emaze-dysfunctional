@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
+import java.util.function.Function;
 import java.net.Inet4Address;
 import net.emaze.dysfunctional.contracts.dbc;
 
@@ -10,10 +11,10 @@ import net.emaze.dysfunctional.contracts.dbc;
  *
  * @author rferranti
  */
-public class Inet4AddressToLong implements Delegate<Long, Inet4Address> {
+public class Inet4AddressToLong implements Function<Inet4Address, Long> {
 
     @Override
-    public Long perform(Inet4Address address) {
+    public Long apply(Inet4Address address) {
         dbc.precondition(address != null, "cannot transform a null Inet4Address to Long");
         final byte[] octets = address.getAddress();
         long longAddress = 0;

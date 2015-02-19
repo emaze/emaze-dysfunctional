@@ -24,44 +24,44 @@ public abstract class Reductions {
     /**
      * Reduces an iterator of elements using the passed delegate.
      *
-     * @param <R> the result type parameter
      * @param <E> the element type parameter
+     * @param <R> the result type parameter
      * @param iterator the iterator to be consumed
      * @param delegate the reduction delegate
      * @param init the initial value for reductions
      * @return the reduced value
      */
-    public static <R, E> R reduce(Iterator<E> iterator, BinaryDelegate<R, R, E> delegate, R init) {
-        return new Reductor<R, E>(delegate, init).perform(iterator);
+    public static <E, R> R reduce(Iterator<E> iterator, BinaryDelegate<R, R, E> delegate, R init) {
+        return new Reductor<>(delegate, init).apply(iterator);
     }
 
     /**
      * Reduces an iterator of elements using the passed delegate.
      *
-     * @param <R> the result type parameter
      * @param <E> the element type parameter
+     * @param <R> the result type parameter
      * @param iterable the iterable to be consumed
      * @param delegate the reduction delegate
      * @param init the initial value for reductions
      * @return the reduced value
      */
-    public static <R, E> R reduce(Iterable<E> iterable, BinaryDelegate<R, R, E> delegate, R init) {
+    public static <E, R> R reduce(Iterable<E> iterable, BinaryDelegate<R, R, E> delegate, R init) {
         dbc.precondition(iterable != null, "cannot call reduce with a null iterable");
-        return new Reductor<R, E>(delegate, init).perform(iterable.iterator());
+        return new Reductor<>(delegate, init).apply(iterable.iterator());
     }
 
     /**
      * Reduces an array of elements using the passed delegate.
      *
-     * @param <R> the result type parameter
      * @param <E> the element type parameter
+     * @param <R> the result type parameter
      * @param array the array to be consumed
      * @param delegate the reduction delegate
      * @param init the initial value for reductions
      * @return the reduced value
      */
-    public static <R, E> R reduce(E[] array, BinaryDelegate<R, R, E> delegate, R init) {
-        return new Reductor<R, E>(delegate, init).perform(new ArrayIterator<E>(array));
+    public static <E, R> R reduce(E[] array, BinaryDelegate<R, R, E> delegate, R init) {
+        return new Reductor<>(delegate, init).apply(new ArrayIterator<E>(array));
     }
 
     /**

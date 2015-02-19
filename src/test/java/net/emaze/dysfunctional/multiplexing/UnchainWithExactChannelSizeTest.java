@@ -27,7 +27,7 @@ import org.junit.runners.Suite;
 })
 public class UnchainWithExactChannelSizeTest {
 
-    final static Provider<List<Maybe<Integer>>> MAYBE_INTEGER_LIST_FACTORY = Compositions.compose(new Vary<List<Maybe<Integer>>, ArrayList<Maybe<Integer>>>(), new ArrayListFactory<Maybe<Integer>>());
+    final static Provider<List<Maybe<Integer>>> MAYBE_INTEGER_LIST_FACTORY = Compositions.compose(new Vary<ArrayList<Maybe<Integer>>, List<Maybe<Integer>>>(), new ArrayListFactory<Maybe<Integer>>());
 
     public static class Functions {
 

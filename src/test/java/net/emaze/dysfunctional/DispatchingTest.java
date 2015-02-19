@@ -9,7 +9,7 @@ import net.emaze.dysfunctional.dispatching.actions.Slacker;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
@@ -83,7 +83,7 @@ public class DispatchingTest {
 
         @Test
         public void canAdaptActionToDelegate() {
-            final Delegate<Void, O> adapted = Dispatching.delegate(new Noop<O>());
+            final Function<O, Void> adapted = Dispatching.delegate(new Noop<O>());
             Assert.assertNotNull(adapted);
         }
 
@@ -101,7 +101,7 @@ public class DispatchingTest {
 
         @Test
         public void canAdaptPredicateToDelegate() {
-            final Delegate<Boolean, O> adapted = Dispatching.delegate(new Always<O>());
+            final Function<O, Boolean> adapted = Dispatching.delegate(new Always<O>());
             Assert.assertNotNull(adapted);
         }
 
@@ -137,9 +137,9 @@ public class DispatchingTest {
 
         @Test
         public void canAdaptDelegateToPredicate() {
-            final Predicate<O> adapted = Dispatching.predicate(new Delegate<Boolean, O>() {
+            final Predicate<O> adapted = Dispatching.predicate(new Function<O, Boolean>() {
                 @Override
-                public Boolean perform(O t) {
+                public Boolean apply(O t) {
                     return true;
                 }
             });
@@ -179,13 +179,13 @@ public class DispatchingTest {
 
         @Test
         public void canCurryBinaryDelegate() {
-            final Delegate<Pair<O, O>, O> adapted = Dispatching.curry(new BinaryIdentity<O, O>(), O.ONE);
+            final Function<O, Pair<O, O>> adapted = Dispatching.curry(new BinaryIdentity<O, O>(), O.ONE);
             Assert.assertNotNull(adapted);
         }
 
         @Test
         public void canRightCurryBinaryDelegate() {
-            final Delegate<Pair<O, O>, O> adapted = Dispatching.rcurry(new BinaryIdentity<O, O>(), O.ONE);
+            final Function<O, Pair<O, O>> adapted = Dispatching.rcurry(new BinaryIdentity<O, O>(), O.ONE);
             Assert.assertNotNull(adapted);
         }
 
@@ -302,7 +302,7 @@ public class DispatchingTest {
 
         @Test
         public void canIgnoreParameterForProvider() {
-            final Delegate<O, O> ignoring = Dispatching.ignore(new ConstantProvider<O>(O.ONE), O.class);
+            final Function<O, O> ignoring = Dispatching.ignore(new ConstantProvider<O>(O.ONE), O.class);
             Assert.assertNotNull(ignoring);
         }
 

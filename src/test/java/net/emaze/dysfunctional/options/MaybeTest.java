@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.options;
 
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -46,7 +46,7 @@ public class MaybeTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void fmapWithNullDelegateYieldsException() {
-        final Delegate<?, Integer> delegate = null;
+        final Function<Integer, ?> delegate = null;
         Maybe.just(1).fmap(delegate);
     }
 
@@ -67,7 +67,7 @@ public class MaybeTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void foldWithNullDelegateYieldsException() {
-        final Delegate<?, Integer> delegate = null;
+        final Function<Integer, ?> delegate = null;
         Maybe.just(1).fold(null, delegate);
     }
 
@@ -100,7 +100,7 @@ public class MaybeTest {
     public void transformingNothingToEitherYieldsLeft() {
         final int marker = 0;
         final Either<Integer, Object> either = Maybe.nothing().either(new ConstantProvider<Integer>(marker));
-        final Maybe<Integer> perform = new MaybeLeft<Integer, Object>().perform(either);
+        final Maybe<Integer> perform = new MaybeLeft<Integer, Object>().apply(either);
         Assert.assertEquals(marker, perform.value().intValue());
     }
 
@@ -109,7 +109,7 @@ public class MaybeTest {
         final int left = 0;
         final int right = 1;
         final Either<Integer, Integer> either = Maybe.just(right).either(new ConstantProvider<Integer>(left));
-        final Maybe<Integer> perform = new MaybeRight<Integer, Integer>().perform(either);
+        final Maybe<Integer> perform = new MaybeRight<Integer, Integer>().apply(either);
         Assert.assertEquals(right, perform.value().intValue());
     }
 

@@ -2,27 +2,27 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.actions.Action;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 
 /**
  * Adapts a delegate to an action. Adapting is performed by ignoring result of
  * the adapted delegate.
  *
- * @param <R> the adapted delegate result type
  * @param <T> the adapted delegate parameter type
+ * @param <R> the adapted delegate result type
  * @author rferranti
  */
-public class DelegateToAction<R, T> implements Action<T> {
+public class DelegateToAction<T, R> implements Action<T> {
 
-    private final Delegate<R, T> adapted;
+    private final Function<T, R> adapted;
 
-    public DelegateToAction(Delegate<R, T> adaptee) {
+    public DelegateToAction(Function<T, R> adaptee) {
         dbc.precondition(adaptee != null, "cannot adapt a null delegate to action");
         this.adapted = adaptee;
     }
 
     @Override
     public void perform(T value) {
-        adapted.perform(value);
+        adapted.apply(value);
     }
 }

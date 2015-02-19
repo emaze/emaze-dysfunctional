@@ -12,7 +12,7 @@ import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.collections.HashMapFactory;
 import net.emaze.dysfunctional.collections.HashSetFactory;
 import net.emaze.dysfunctional.collections.LinkedHashMapFactory;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.logic.Always;
@@ -215,7 +215,7 @@ public class GroupsTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void indexByWithNullIteratorYieldsException() {
-            final Delegate<O, O> delegate = new Identity<O>();
+            final Function<O, O> delegate = new Identity<O>();
             final Provider<HashMap<O, O>> mapProvider = new HashMapFactory<O, O>();
             final Iterator<O> nullIterator = null;
             Groups.indexBy(nullIterator, delegate, mapProvider);
@@ -223,7 +223,7 @@ public class GroupsTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void indexByUsingProviderWithNullIterableYieldsException() {
-            final Delegate<O, O> delegate = new Identity<O>();
+            final Function<O, O> delegate = new Identity<O>();
             final Provider<HashMap<O, O>> mapProvider = new HashMapFactory<O, O>();
             final Iterable<O> nullIterable = null;
             Groups.indexBy(nullIterable, delegate, mapProvider);
@@ -231,7 +231,7 @@ public class GroupsTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void indexByWithNullIterableYieldsException() {
-            final Delegate<O, O> delegate = new Identity<O>();
+            final Function<O, O> delegate = new Identity<O>();
             final Iterable<O> nullIterable = null;
             Groups.indexBy(nullIterable, delegate);
         }
@@ -246,7 +246,7 @@ public class GroupsTest {
         @Test(expected = IllegalArgumentException.class)
         public void indexByWithNullProvideYieldsException() {
             final Iterator<O> iterator = Iterations.iterator();
-            final Delegate<O, O> delegate = new Identity<O>();
+            final Function<O, O> delegate = new Identity<O>();
             final Provider<HashMap<O, O>> nullProvider = null;
             Groups.indexBy(iterator, delegate, nullProvider);
         }
@@ -254,7 +254,7 @@ public class GroupsTest {
         @Test
         public void everyElementFromIteratorIsIndexed() {
             final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER);
-            final Delegate<O, O> delegate = new Identity<O>();
+            final Function<O, O> delegate = new Identity<O>();
             final Provider<LinkedHashMap<O, O>> provider = new LinkedHashMapFactory<O, O>();
             final Map<O, O> indexed = Groups.indexBy(iterator, delegate, provider);
             Assert.assertEquals(Arrays.asList(O.ONE, O.ANOTHER), new ArrayList<O>(indexed.values()));
@@ -263,7 +263,7 @@ public class GroupsTest {
         @Test
         public void canIndexUsingIterable() {
             final Iterable<O> iterable = Iterations.iterable(O.ONE, O.ANOTHER);
-            final Delegate<O, O> delegate = new Identity<O>();
+            final Function<O, O> delegate = new Identity<O>();
             final Map<O, O> indexed = Groups.indexBy(iterable, delegate);
             Assert.assertNotNull(indexed);
         }
@@ -271,7 +271,7 @@ public class GroupsTest {
         @Test
         public void canIndexUsingIterator() {
             final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER);
-            final Delegate<O, O> delegate = new Identity<O>();
+            final Function<O, O> delegate = new Identity<O>();
             final Map<O, O> indexed = Groups.indexBy(iterator, delegate);
             Assert.assertNotNull(indexed);
         }
@@ -279,7 +279,7 @@ public class GroupsTest {
         @Test
         public void canIndexUsingArray() {
             final O[] array = {O.ONE, O.ANOTHER};
-            final Delegate<O, O> delegate = new Identity<O>();
+            final Function<O, O> delegate = new Identity<O>();
             final Map<O, O> indexed = Groups.indexBy(array, delegate);
             Assert.assertNotNull(indexed);
         }
@@ -287,7 +287,7 @@ public class GroupsTest {
         @Test
         public void canIndexUsingIterableAndProvider() {
             final Iterable<O> iterable = Iterations.iterable(O.ONE, O.ANOTHER);
-            final Delegate<O, O> delegate = new Identity<O>();
+            final Function<O, O> delegate = new Identity<O>();
             final Provider<LinkedHashMap<O, O>> provider = new LinkedHashMapFactory<O, O>();
             final Map<O, O> indexed = Groups.indexBy(iterable, delegate, provider);
             Assert.assertNotNull(indexed);
@@ -296,7 +296,7 @@ public class GroupsTest {
         @Test
         public void canIndexUsingIteratorAndProvider() {
             final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER);
-            final Delegate<O, O> delegate = new Identity<O>();
+            final Function<O, O> delegate = new Identity<O>();
             final Provider<LinkedHashMap<O, O>> provider = new LinkedHashMapFactory<O, O>();
             final Map<O, O> indexed = Groups.indexBy(iterator, delegate, provider);
             Assert.assertNotNull(indexed);
@@ -305,7 +305,7 @@ public class GroupsTest {
         @Test
         public void canIndexUsingArrayAndProvider() {
             final O[] array = {O.ONE, O.ANOTHER};
-            final Delegate<O, O> delegate = new Identity<O>();
+            final Function<O, O> delegate = new Identity<O>();
             final Provider<LinkedHashMap<O, O>> provider = new LinkedHashMapFactory<O, O>();
             final Map<O, O> indexed = Groups.indexBy(array, delegate, provider);
             Assert.assertNotNull(indexed);

@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.consumers;
 import java.util.Iterator;
 import java.util.Map;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.tuples.Pair;
 
@@ -11,12 +11,12 @@ import net.emaze.dysfunctional.tuples.Pair;
  * Consumes every pair from the consumable into the map provided by the
  * provider.
  *
- * @param <M> the map type parameter
  * @param <K> the map key type parameter
  * @param <V> the map value type parameter
+ * @param <M> the map type parameter
  * @author rferranti
  */
-public class ConsumeIntoMap<M extends Map<K, V>, K, V> implements Delegate<M, Iterator<Pair<K, V>>> {
+public class ConsumeIntoMap<K, V, M extends Map<K, V>> implements Function<Iterator<Pair<K, V>>, M> {
 
     private final Provider<M> provider;
 
@@ -26,7 +26,7 @@ public class ConsumeIntoMap<M extends Map<K, V>, K, V> implements Delegate<M, It
     }
 
     @Override
-    public M perform(Iterator<Pair<K, V>> consumable) {
+    public M apply(Iterator<Pair<K, V>> consumable) {
         dbc.precondition(consumable != null, "consuming a null iterator");
         final M out = provider.provide();
         while (consumable.hasNext()) {

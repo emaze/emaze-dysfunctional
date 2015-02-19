@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.logic.Negator;
 import net.emaze.dysfunctional.filtering.FilteringIterator;
 import net.emaze.dysfunctional.options.Maybe;
@@ -23,7 +23,7 @@ import net.emaze.dysfunctional.ranges.Range.Endpoint;
  * @param <T>
  * @author rferranti
  */
-public class Densify<T> implements Delegate<List<DenseRange<T>>, List<DenseRange<T>>> {
+public class Densify<T> implements Function<List<DenseRange<T>>, List<DenseRange<T>>> {
 
     private final SequencingPolicy<T> sequencer;
     private final Comparator<Maybe<T>> comparator;
@@ -34,7 +34,7 @@ public class Densify<T> implements Delegate<List<DenseRange<T>>, List<DenseRange
     }
 
     @Override
-    public List<DenseRange<T>> perform(List<DenseRange<T>> ranges) {
+    public List<DenseRange<T>> apply(List<DenseRange<T>> ranges) {
         final SortedSet<DenseRange<T>> sortedRanges = new TreeSet<DenseRange<T>>(ranges);
         final List<DenseRange<T>> sortedNonOverlappingRanges = new ArrayList<DenseRange<T>>();
         final Iterator<DenseRange<T>> nonEmptyRanges = new FilteringIterator<DenseRange<T>>(sortedRanges.iterator(), new Negator<DenseRange<T>>(new RangeIsEmpty<DenseRange<T>, T>()));

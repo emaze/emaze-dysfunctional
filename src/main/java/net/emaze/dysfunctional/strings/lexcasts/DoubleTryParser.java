@@ -1,16 +1,16 @@
 package net.emaze.dysfunctional.strings.lexcasts;
 
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.options.Maybe;
 
 /**
  *
  * @author rferranti
  */
-public class DoubleTryParser implements Delegate<Maybe<Double>, String> {
+public class DoubleTryParser implements Function<String, Maybe<Double>> {
 
     @Override
-    public Maybe<Double> perform(String parsee) {
+    public Maybe<Double> apply(String parsee) {
         if (parsee == null) {
             return Maybe.nothing();
         }

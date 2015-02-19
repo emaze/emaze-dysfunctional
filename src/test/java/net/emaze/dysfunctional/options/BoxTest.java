@@ -88,7 +88,7 @@ public class BoxTest {
     @Test
     public void fmappingAnEmptyBoxYieldsEmptyBox() {
         final Box<O> box = Box.empty();
-        final Box<Integer> mapped = box.fmap(new ConstantDelegate<Integer, O>(1));
+        final Box<Integer> mapped = box.fmap(new ConstantDelegate<>(1));
         Assert.assertEquals(mapped, Box.<Integer>empty());
     }
 

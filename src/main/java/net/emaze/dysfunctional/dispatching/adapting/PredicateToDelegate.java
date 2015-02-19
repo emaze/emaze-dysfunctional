@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
 /**
@@ -10,7 +10,7 @@ import net.emaze.dysfunctional.dispatching.logic.Predicate;
  * @param <T> the adapted predicate parameter type
  * @author rferranti
  */
-public class PredicateToDelegate<T> implements Delegate<Boolean, T> {
+public class PredicateToDelegate<T> implements Function<T, Boolean> {
 
     private final Predicate<T> adapted;
 
@@ -20,7 +20,7 @@ public class PredicateToDelegate<T> implements Delegate<Boolean, T> {
     }
 
     @Override
-    public Boolean perform(T value) {
+    public Boolean apply(T value) {
         return adapted.accept(value);
     }
 }

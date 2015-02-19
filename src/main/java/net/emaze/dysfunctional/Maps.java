@@ -62,8 +62,8 @@ public abstract class Maps {
             return new NestedMapBuilder<K>(narrowed(new TreeMapFactory<K, Object>(keyComp)));
         }
 
-        private static <M extends Map<K, Object>, K> Provider<Map<K, Object>> narrowed(Provider<M> provider) {
-            return Compositions.compose(new Vary<Map<K, Object>, M>(), provider);
+        private static <K, M extends Map<K, Object>> Provider<Map<K, Object>> narrowed(Provider<M> provider) {
+            return Compositions.compose(new Vary<M, Map<K, Object>>(), provider);
         }
     }
 }

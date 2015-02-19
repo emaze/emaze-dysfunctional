@@ -11,18 +11,18 @@ public class FromJustTest {
 
     @Test(expected=IllegalStateException.class)
     public void transformingNothingYieldsException() {
-        new FromJust<Object>().perform(Maybe.nothing());
+        new FromJust<Object>().apply(Maybe.nothing());
     }
     
     @Test
     public void canFetchValueFromJust() {
         Maybe<Integer> maybeInt = Maybe.just(1);
-        int got = new FromJust<Integer>().perform(maybeInt);
+        int got = new FromJust<Integer>().apply(maybeInt);
         Assert.assertEquals(1, got);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void fetchingFromNullYieldsException() {
-        new FromJust<Object>().perform(null);
+        new FromJust<Object>().apply(null);
     }
 }

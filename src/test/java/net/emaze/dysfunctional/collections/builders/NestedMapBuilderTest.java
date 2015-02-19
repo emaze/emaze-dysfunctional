@@ -14,7 +14,7 @@ import org.junit.Test;
 
 public class NestedMapBuilderTest {
 
-    private final Provider<Map<String, Object>> factory = Compositions.compose(new Vary<Map<String, Object>, LinkedHashMap<String, Object>>(), new LinkedHashMapFactory<String, Object>());
+    private final Provider<Map<String, Object>> factory = Compositions.compose(new Vary<LinkedHashMap<String, Object>, Map<String, Object>>(), new LinkedHashMapFactory<String, Object>());
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingWithNullProviderYieldsException() {

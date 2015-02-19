@@ -20,7 +20,7 @@ public class CollectionAdderTest {
     @Test
     public void canAddToCollection() {
         final List<O> bucket = new ArrayList<O>();
-        new CollectionAdder<O>(bucket).perform(O.ONE);
+        new CollectionAdder<O>(bucket).apply(O.ONE);
         Assert.assertEquals(1, bucket.size());
     }
 }

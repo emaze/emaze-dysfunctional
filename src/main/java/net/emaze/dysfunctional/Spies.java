@@ -5,7 +5,7 @@ import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
@@ -70,15 +70,15 @@ public abstract class Spies {
     /**
      * Proxies a delegate spying for result and parameter.
      *
-     * @param <R> the delegate result type
      * @param <T> the delegate parameter type
+     * @param <R> the delegate result type
      * @param delegate the delegate to be spied
      * @param result a box that will be containing spied result
      * @param param a box that will be containing spied param
      * @return the proxied delegate
      */
-    public static <R, T> Delegate<R, T> spy(Delegate<R, T> delegate, Box<R> result, Box<T> param) {
-        return new CapturingDelegate<R, T>(delegate, result, param);
+    public static <T, R> Function<T, R> spy(Function<T, R> delegate, Box<R> result, Box<T> param) {
+        return new CapturingDelegate<>(delegate, result, param);
     }
 
     /**
@@ -313,7 +313,7 @@ public abstract class Spies {
      * @param result a box that will be containing spied result
      * @return the proxied delegate
      */
-    public static <R, T> Delegate<R, T> spyRes(Delegate<R, T> delegate, Box<R> result) {
+    public static <R, T> Function<T, R> spyRes(Function<T, R> delegate, Box<R> result) {
         return spy(delegate, result, Box.<T>empty());
     }
 
@@ -326,7 +326,7 @@ public abstract class Spies {
      * @param param a box that will be containing spied parameter
      * @return the proxied delegate
      */
-    public static <R, T> Delegate<R, T> spy1st(Delegate<R, T> delegate, Box<T> param) {
+    public static <R, T> Function<T, R> spy1st(Function<T, R> delegate, Box<T> param) {
         return spy(delegate, Box.<R>empty(), param);
     }
 
@@ -544,14 +544,14 @@ public abstract class Spies {
     /**
      * Monitors calls to a delegate.
      *
-     * @param <R> the delegate result type
      * @param <T> the delegate parameter type
+     * @param <R> the delegate result type
      * @param delegate the delegate that will be monitored
      * @param calls a value holder accumulating calls
      * @return the proxied delegate
      */
-    public static <R, T> Delegate<R, T> monitor(Delegate<R, T> delegate, AtomicLong calls) {
-        return new MonitoringDelegate<R, T>(delegate, calls);
+    public static <T, R> Function<T, R> monitor(Function<T, R> delegate, AtomicLong calls) {
+        return new MonitoringDelegate<>(delegate, calls);
     }
 
     /**

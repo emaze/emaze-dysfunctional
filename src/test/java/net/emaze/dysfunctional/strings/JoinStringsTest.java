@@ -10,13 +10,13 @@ public class JoinStringsTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void joiningNullIteratorYieldsException() {
-        new JoinStrings<O>().perform(null);
+        new JoinStrings<O>().apply(null);
     }
 
     @Test
     public void canJoinMultipleStrings() {
         final Iterator<String> iterator = Iterations.iterator("1", "2");
-        final String got = new JoinStrings<String>().perform(iterator);
+        final String got = new JoinStrings<String>().apply(iterator);
         Assert.assertEquals("12", got);
     }
 }

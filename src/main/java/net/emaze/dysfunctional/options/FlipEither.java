@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.options;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 
 /**
  * Flips an either.
@@ -10,10 +10,10 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
  * @param <LT> the source either left type parameter
  * @param <RT> the source either right type parameter
  */
-public class FlipEither<LT, RT> implements Delegate<Either<RT, LT>, Either<LT, RT>> {
+public class FlipEither<LT, RT> implements Function<Either<LT, RT>, Either<RT, LT>> {
 
     @Override
-    public Either<RT, LT> perform(Either<LT, RT> either) {
+    public Either<RT, LT> apply(Either<LT, RT> either) {
         dbc.precondition(either != null, "cannot flip a null either");
         return either.flip();
     }

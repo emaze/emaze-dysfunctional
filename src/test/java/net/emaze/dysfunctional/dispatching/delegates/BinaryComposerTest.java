@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
+import java.util.function.Function;
 import junit.framework.Assert;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Test;
@@ -8,9 +9,9 @@ public class BinaryComposerTest {
 
     @Test
     public void canComposeDelegateWithBinaryDelegate() {
-        final BinaryComposer<O, O, O, O> composer = new BinaryComposer<O, O, O, O>(new Delegate<O, O>() {
+        final BinaryComposer<O, O, O, O> composer = new BinaryComposer<O, O, O, O>(new Function<O, O>() {
             @Override
-            public O perform(O o) {
+            public O apply(O o) {
                 return new O(o.toString() + " is composed");
             }
         }, new BinaryDelegate<O, O, O>() {

@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.spying;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.options.Box;
 
 /**
@@ -11,13 +11,13 @@ import net.emaze.dysfunctional.options.Box;
  * @param <R> the result type
  * @param <T> the parameter type
  */
-public class CapturingDelegate<R, T> implements Delegate<R, T> {
+public class CapturingDelegate<T, R> implements Function<T, R> {
 
-    private final Delegate<R, T> nested;
+    private final Function<T, R> nested;
     private final Box<R> result;
     private final Box<T> param;
 
-    public CapturingDelegate(Delegate<R, T> nested, Box<R> result, Box<T> param) {
+    public CapturingDelegate(Function<T, R> nested, Box<R> result, Box<T> param) {
         dbc.precondition(nested != null, "cannot capture from a null delegate");
         dbc.precondition(result != null, "cannot capture with a null result box");
         dbc.precondition(param != null, "cannot capture with a null param box");
@@ -27,9 +27,9 @@ public class CapturingDelegate<R, T> implements Delegate<R, T> {
     }
 
     @Override
-    public R perform(T value) {
+    public R apply(T value) {
         param.setContent(value);
-        final R got = nested.perform(value);
+        final R got = nested.apply(value);
         result.setContent(got);
         return got;
     }

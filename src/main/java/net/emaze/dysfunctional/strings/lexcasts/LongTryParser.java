@@ -1,14 +1,14 @@
 package net.emaze.dysfunctional.strings.lexcasts;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.options.Maybe;
 
 /**
  *
  * @author rferranti
  */
-public class LongTryParser implements Delegate<Maybe<Long>, String> {
+public class LongTryParser implements Function<String, Maybe<Long>> {
 
     private final int radix;
 
@@ -19,7 +19,7 @@ public class LongTryParser implements Delegate<Maybe<Long>, String> {
     }
 
     @Override
-    public Maybe<Long> perform(String parsee) {
+    public Maybe<Long> apply(String parsee) {
         try {
             return Maybe.just(Long.parseLong(parsee, radix));
         } catch (NumberFormatException ex) {

@@ -9,7 +9,7 @@ public class PureBoxTest {
     @Test
     public void pureYieldsBoxWithContent() {
         final O value = O.ONE;
-        final Box<O> got = new PureBox<O>().perform(value);
+        final Box<O> got = new PureBox<O>().apply(value);
         Assert.assertEquals(Box.of(value), got);
     }
 }

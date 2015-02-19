@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.options;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 
 /**
  * Performs fmap on a {@literal Box<T>}.
@@ -10,17 +10,17 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
  * @param <T> the source box type parameter
  * @author rferranti
  */
-public class FmapBox<R, T> implements Delegate<Box<R>, Box<T>> {
+public class FmapBox<T, R> implements Function<Box<T>, Box<R>> {
 
-    private final Delegate<R, T> delegate;
+    private final Function<T, R> delegate;
 
-    public FmapBox(Delegate<R, T> delegate) {
+    public FmapBox(Function<T, R> delegate) {
         dbc.precondition(delegate != null, "cannot create FmapBox with a null delegate");
         this.delegate = delegate;
     }
 
     @Override
-    public Box<R> perform(Box<T> from) {
+    public Box<R> apply(Box<T> from) {
         dbc.precondition(from != null, "cannot fmap a null box");
         return from.fmap(delegate);
     }

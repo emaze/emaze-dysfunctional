@@ -1,23 +1,23 @@
 package net.emaze.dysfunctional.options;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 
 /**
  * Performs fmap on an {@literal Either<LT, RT>}
  *
- * @param <LR> the left result type parameter
- * @param <RR> the right result type parameter
  * @param <RT> the right source type parameter
  * @param <LT> the left source type parameter
+ * @param <LR> the left result type parameter
+ * @param <RR> the right result type parameter
  * @author rferranti
  */
-public class FmapEither<LR, RR, LT, RT> implements Delegate<Either<LR, RR>, Either<LT, RT>> {
+public class FmapEither<LT, RT, LR, RR> implements Function<Either<LT, RT>, Either<LR, RR>> {
 
-    private final Delegate<LR, LT> left;
-    private final Delegate<RR, RT> right;
+    private final Function<LT, LR> left;
+    private final Function<RT, RR> right;
 
-    public FmapEither(Delegate<LR, LT> left, Delegate<RR, RT> right) {
+    public FmapEither(Function<LT, LR> left, Function<RT, RR> right) {
         dbc.precondition(left != null, "cannot create FmapEither with a null left delegate");
         dbc.precondition(right != null, "cannot create FmapEither with a null right delegate");
         this.left = left;
@@ -25,7 +25,7 @@ public class FmapEither<LR, RR, LT, RT> implements Delegate<Either<LR, RR>, Eith
     }
 
     @Override
-    public Either<LR, RR> perform(Either<LT, RT> from) {
+    public Either<LR, RR> apply(Either<LT, RT> from) {
         dbc.precondition(from != null, "cannot fmap a null either");
         return from.fmap(left, right);
     }

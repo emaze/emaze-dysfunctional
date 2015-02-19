@@ -15,12 +15,12 @@ public class MaybeIteratorTransformerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void trasformingNullYieldsException() {
-        new MaybeIteratorTransformer<Iterator<String>, String>().perform(null);
+        new MaybeIteratorTransformer<Iterator<String>, String>().apply(null);
     }
 
     @Test
     public void canTransformNonNullIterator() {
-        MaybeIterator<String> got = new MaybeIteratorTransformer<Iterator<String>, String>().perform(new ConstantIterator<String>("a"));
+        MaybeIterator<String> got = new MaybeIteratorTransformer<Iterator<String>, String>().apply(new ConstantIterator<String>("a"));
         Assert.assertNotNull(got);
     }
 }

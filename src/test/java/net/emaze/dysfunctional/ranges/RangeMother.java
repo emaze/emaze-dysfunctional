@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import net.emaze.dysfunctional.Consumers;
 import net.emaze.dysfunctional.Applications;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.order.ComparableComparator;
@@ -49,12 +49,7 @@ public class RangeMother {
     }
 
     private static SparseRange<Integer> sparse(Iterator<Pair<Integer, Integer>> pairs) {
-        final Iterator<DenseRange<Integer>> ranges = Applications.transform(pairs, new Delegate<DenseRange<Integer>, Pair<Integer, Integer>>() {
-            @Override
-            public DenseRange<Integer> perform(Pair<Integer, Integer> pair) {
-                return new DenseRange<Integer>(sequencer, comparator, Endpoint.Include, pair.first(), Maybe.just(pair.second()), Endpoint.Include);
-            }
-        });
+        final Iterator<DenseRange<Integer>> ranges = Applications.transform(pairs, pair -> new DenseRange<Integer>(sequencer, comparator, Endpoint.Include, pair.first(), Maybe.just(pair.second()), Endpoint.Include));
         return new SparseRange<Integer>(sequencer, comparator, Consumers.all(ranges));
     }
 }

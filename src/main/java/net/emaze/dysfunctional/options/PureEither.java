@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.options;
 
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 
 /**
  * Pointed.pure() implementation of the {@literal Either<LT,RT>} Bifunctor.
@@ -9,10 +9,10 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
  * @param <LT> the right type
  * @param <RT> the left type
  */
-public class PureEither<LT, RT> implements Delegate<Either<LT, RT>, RT> {
+public class PureEither<LT, RT> implements Function<RT, Either<LT, RT>> {
 
     @Override
-    public Either<LT, RT> perform(RT value) {
+    public Either<LT, RT> apply(RT value) {
         return Either.right(value);
     }
 }

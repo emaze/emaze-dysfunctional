@@ -11,13 +11,13 @@ public class PairSecondTest {
 
     @Test(expected=IllegalArgumentException.class)
     public void fetchingFromNullPairYieldsException() {
-        new PairSecond<Object, Object>().perform(null);
+        new PairSecond<Object, Object>().apply(null);
     }
     
     @Test
     public void fetchesTheSecondElement() {
         final Pair<Integer, Integer> pair = Pair.of(1, 2);
-        int got = new PairSecond<Integer, Integer>().perform(pair);
+        int got = new PairSecond<Integer, Integer>().apply(pair);
         Assert.assertEquals(2,got);
     }
 

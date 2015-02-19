@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
+import java.util.function.Function;
 import java.util.Iterator;
 import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.testing.O;
@@ -10,18 +11,18 @@ public class EndoDelegatesComposerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void callingWithNullIteratorYieldsException() {
-        new EndoDelegatesComposer<O>().perform(null);
+        new EndoDelegatesComposer<O>().apply(null);
     }
 
     @Test
     public void callingYieldsComposedDelegate() {
-        final Iterator<Delegate<String, String>> delegates = Iterations.<Delegate<String, String>>iterator(new EndoDelegate("f"), new EndoDelegate("g"));
-        final Delegate<String, String> delegate = new EndoDelegatesComposer<String>().perform(delegates);
-        final String evaluated = delegate.perform("x");
+        final Iterator<Function<String, String>> delegates = Iterations.<Function<String, String>>iterator(new EndoDelegate("f"), new EndoDelegate("g"));
+        final Function<String, String> delegate = new EndoDelegatesComposer<String>().apply(delegates);
+        final String evaluated = delegate.apply("x");
         Assert.assertEquals("f(g(x))", evaluated);
     }
     
-    private static class EndoDelegate implements Delegate<String, String> {
+    private static class EndoDelegate implements Function<String, String> {
 
         private final String fn;
 
@@ -30,7 +31,7 @@ public class EndoDelegatesComposerTest {
         }
         
         @Override
-        public String perform(String argument) {
+        public String apply(String argument) {
             return String.format("%s(%s)", fn, argument);
         }
     }

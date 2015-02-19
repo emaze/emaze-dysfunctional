@@ -22,7 +22,7 @@ import org.junit.Assert;
  */
 public class CenteredWindowIteratorTest {
 
-    private static Provider<List<Maybe<O>>> LIST_FACTORY = Compositions.compose(new Vary<List<Maybe<O>>, ArrayList<Maybe<O>>>(), new ArrayListFactory<Maybe<O>>());
+    private static Provider<List<Maybe<O>>> LIST_FACTORY = Compositions.compose(new Vary<ArrayList<Maybe<O>>, List<Maybe<O>>>(), new ArrayListFactory<Maybe<O>>());
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingCenteredWindowIteratorWithNullIteratorYieldsException() {

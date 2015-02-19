@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.collections;
 
 import java.util.Map.Entry;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.tuples.Pair;
 
 /**
@@ -12,10 +12,10 @@ import net.emaze.dysfunctional.tuples.Pair;
  * @param <K> the key type
  * @param <V> the value type
  */
-public class EntryToPair<K, V> implements Delegate<Pair<K, V>, Entry<K, V>> {
+public class EntryToPair<K, V> implements Function<Entry<K, V>, Pair<K, V>> {
 
     @Override
-    public Pair<K, V> perform(Entry<K, V> entry) {
+    public Pair<K, V> apply(Entry<K, V> entry) {
         dbc.precondition(entry != null, "canno transform a null entry to a pair");
         return Pair.of(entry.getKey(), entry.getValue());
     }

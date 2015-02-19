@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
+import java.util.function.Function;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
@@ -15,9 +16,9 @@ import net.emaze.dysfunctional.contracts.dbc;
 public class BinaryComposer<R, T1, T2, T3> implements BinaryDelegate<R, T2, T3> {
 
     private final BinaryDelegate<T1, T2, T3> binary;
-    private final Delegate<R, T1> unary;
+    private final Function<T1, R> unary;
 
-    public BinaryComposer(Delegate<R, T1> unary, BinaryDelegate<T1, T2, T3> binary) {
+    public BinaryComposer(Function<T1, R> unary, BinaryDelegate<T1, T2, T3> binary) {
         dbc.precondition(unary != null, "cannot compose a null unary delegate");
         dbc.precondition(binary != null, "cannot compose a null binary delegate");
         this.unary = unary;
@@ -26,6 +27,6 @@ public class BinaryComposer<R, T1, T2, T3> implements BinaryDelegate<R, T2, T3> 
 
     @Override
     public R perform(T2 first, T3 second) {
-        return unary.perform(binary.perform(first, second));
+        return unary.apply(binary.perform(first, second));
     }
 }

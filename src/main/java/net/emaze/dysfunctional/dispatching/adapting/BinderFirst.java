@@ -2,18 +2,18 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 
 /**
  * Binary to unary delegate adapter. Adapting is performed by currying the first
  * parameter of the adapted binary delegate.
  *
- * @param <R> the adapted delegate result type
  * @param <T> the adapted delegate former element type
  * @param <U> the adapted delegate latter element type
+ * @param <R> the adapted delegate result type
  * @author rferranti
  */
-public class BinderFirst<R, T, U> implements Delegate<R, U> {
+public class BinderFirst<T, U, R> implements Function<U, R> {
 
     private final BinaryDelegate<R, T, U> adapted;
     private final T first;
@@ -25,7 +25,7 @@ public class BinderFirst<R, T, U> implements Delegate<R, U> {
     }
 
     @Override
-    public R perform(U second) {
+    public R apply(U second) {
         return adapted.perform(first, second);
     }
 }

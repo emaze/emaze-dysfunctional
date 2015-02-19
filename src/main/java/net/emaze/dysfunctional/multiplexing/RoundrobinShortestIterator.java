@@ -60,7 +60,7 @@ public class RoundrobinShortestIterator<E> extends ReadOnlyIterator<E> {
         if (!new Every<Iterator<E>>(new HasNext<Iterator<E>>()).accept(memory.iterator())) {
             return;
         }
-        final Iterator<E> values = new TransformingIterator<E, Iterator<E>>(memory.iterator(), new FirstElement<E>());
+        final Iterator<E> values = new TransformingIterator<>(memory.iterator(), new FirstElement<>());
         while (values.hasNext()) {
             prefetchedValues.add(values.next());
         }

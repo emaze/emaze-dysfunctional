@@ -1,19 +1,19 @@
 package net.emaze.dysfunctional.tuples;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 
 /**
- * 
+ *
  * @author rferranti
  * @param <T1>
  * @param <T2>
- * @param <T3> 
+ * @param <T3>
  */
-public class TripleRotateRight<T1, T2, T3> implements Delegate<Triple<T3, T1, T2>, Triple<T1, T2, T3>> {
+public class TripleRotateRight<T1, T2, T3> implements Function<Triple<T1, T2, T3>, Triple<T3, T1, T2>> {
 
     @Override
-    public Triple<T3, T1, T2> perform(Triple<T1, T2, T3> triple) {
+    public Triple<T3, T1, T2> apply(Triple<T1, T2, T3> triple) {
         dbc.precondition(triple != null, "cannot rotate right a null triple");
         return Triple.of(triple.third(), triple.first(), triple.second());
     }

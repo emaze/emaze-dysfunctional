@@ -3,18 +3,18 @@ package net.emaze.dysfunctional.consumers;
 import java.util.Collection;
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
 /**
  * Consumes every element from the consumable into the collection provided by
  * the provider.
  *
- * @param <R> the collection type parameter
  * @param <E> the collection element type parameter
+ * @param <R> the collection type parameter
  * @author rferranti
  */
-public class ConsumeIntoCollection<R extends Collection<E>, E> implements Delegate<R, Iterator<E>> {
+public class ConsumeIntoCollection<E, R extends Collection<E>> implements Function<Iterator<E>, R> {
 
     private final Provider<R> provider;
 
@@ -24,7 +24,7 @@ public class ConsumeIntoCollection<R extends Collection<E>, E> implements Delega
     }
 
     @Override
-    public R perform(Iterator<E> consumable) {
+    public R apply(Iterator<E> consumable) {
         dbc.precondition(consumable != null, "consuming a null iterator");
         final R out = provider.provide();
         while (consumable.hasNext()) {

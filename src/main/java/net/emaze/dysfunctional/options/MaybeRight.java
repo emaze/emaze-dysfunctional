@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.options;
 
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 
 /**
  *
@@ -8,10 +8,10 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
  * @param <L> the either left type parameter
  * @param <R> the either right type parameter
  */
-public class MaybeRight<L, R> implements Delegate<Maybe<R>, Either<L, R>> {
+public class MaybeRight<L, R> implements Function<Either<L, R>, Maybe<R>> {
 
     @Override
-    public Maybe<R> perform(Either<L, R> either) {
+    public Maybe<R> apply(Either<L, R> either) {
         return either.maybe();
     }
 }

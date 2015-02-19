@@ -2,7 +2,7 @@ package net.emaze.dysfunctional;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.filtering.FilteringIterator;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.iterations.SingletonIterator;
@@ -41,7 +41,7 @@ public abstract class Options {
          * @return the resulting maybe
          */
         public static <T> Maybe<T> pure(T value) {
-            return new PureMaybe<T>().perform(value);
+            return new PureMaybe<T>().apply(value);
         }
 
         /**
@@ -54,7 +54,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<Maybe<T>> pures(Iterator<T> values) {
-            return new TransformingIterator<Maybe<T>, T>(values, new PureMaybe<T>());
+            return new TransformingIterator<>(values, new PureMaybe<T>());
         }
 
         /**
@@ -68,25 +68,24 @@ public abstract class Options {
          */
         public static <T> Iterator<Maybe<T>> pures(Iterable<T> values) {
             dbc.precondition(values != null, "cannot perform pures on a null iterable");
-            return new TransformingIterator<Maybe<T>, T>(values.iterator(), new PureMaybe<T>());
+            return new TransformingIterator<>(values.iterator(), new PureMaybe<T>());
         }
 
         /**
          * Creates a singleton iterator yielding pure() Maybe<T> monadic value
-         * of the passed value. E.g:
-         * <code>Maybes.pures(1) -> [Just 1]</code>
+         * of the passed value. E.g: <code>Maybes.pures(1) -> [Just 1]</code>
          *
          * @param <T> the element type
          * @param value the source value
          * @return the resulting iterator
          */
         public static <T> Iterator<Maybe<T>> pures(T value) {
-            return new TransformingIterator<Maybe<T>, T>(new SingletonIterator<T>(value), new PureMaybe<T>());
+            return new TransformingIterator<>(new SingletonIterator<T>(value), new PureMaybe<T>());
         }
 
         /**
-         * Creates an iterator yielding pure() Maybe<T> monadic value of
-         * the passed values. E.g:
+         * Creates an iterator yielding pure() Maybe<T> monadic value of the
+         * passed values. E.g:
          * <code>Maybes.pures(1, 2) -> [Just 1, Just 2]</code>
          *
          * @param <T> the elements type
@@ -95,12 +94,12 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<Maybe<T>> pures(T first, T second) {
-            return new TransformingIterator<Maybe<T>, T>(Iterations.iterator(first, second), new PureMaybe<T>());
+            return new TransformingIterator<>(Iterations.iterator(first, second), new PureMaybe<T>());
         }
 
         /**
-         * Creates an iterator yielding pure() Maybe<T> monadic value of
-         * the passed values. E.g:
+         * Creates an iterator yielding pure() Maybe<T> monadic value of the
+         * passed values. E.g:
          * <code>Maybes.pures(1, 2, 3) -> [Just 1, Just 2, Just 3]</code>
          *
          * @param <T> the elements type
@@ -110,7 +109,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<Maybe<T>> pures(T first, T second, T third) {
-            return new TransformingIterator<Maybe<T>, T>(Iterations.iterator(first, second, third), new PureMaybe<T>());
+            return new TransformingIterator<>(Iterations.iterator(first, second, third), new PureMaybe<T>());
         }
 
         /**
@@ -123,7 +122,7 @@ public abstract class Options {
          * @return the resulting array
          */
         public static <T> Iterator<Maybe<T>> pures(T... values) {
-            return new TransformingIterator<Maybe<T>, T>(Iterations.iterator(values), new PureMaybe<T>());
+            return new TransformingIterator<>(Iterations.iterator(values), new PureMaybe<T>());
         }
 
         /**
@@ -137,7 +136,7 @@ public abstract class Options {
          */
         public static <T> Iterator<T> justs(Iterator<Maybe<T>> maybes) {
             final Iterator<Maybe<T>> justs = new FilteringIterator<Maybe<T>>(maybes, new IsJust<T>());
-            return new TransformingIterator<T, Maybe<T>>(justs, new FromJust<T>());
+            return new TransformingIterator<>(justs, new FromJust<T>());
         }
 
         /**
@@ -152,13 +151,12 @@ public abstract class Options {
         public static <T> Iterator<T> justs(Iterable<Maybe<T>> maybes) {
             dbc.precondition(maybes != null, "cannot perform justs on a null iterable of Maybes");
             final Iterator<Maybe<T>> justs = new FilteringIterator<Maybe<T>>(maybes.iterator(), new IsJust<T>());
-            return new TransformingIterator<T, Maybe<T>>(justs, new FromJust<T>());
+            return new TransformingIterator<>(justs, new FromJust<T>());
         }
 
         /**
          * Filters nothings out of an array of Maybe T, returning an Iterator of
-         * T. E.g:
-         * <code>Maybes.justs([Nothing, Just null]) -> [null]</code>
+         * T. E.g: <code>Maybes.justs([Nothing, Just null]) -> [null]</code>
          *
          * @param <T> the Maybe type parameter
          * @param first the first element
@@ -168,7 +166,7 @@ public abstract class Options {
         public static <T> Iterator<T> justs(Maybe<T> first, Maybe<T> second) {
             final Iterator<Maybe<T>> iterator = Iterations.iterator(first, second);
             final Iterator<Maybe<T>> justs = Filtering.filter(iterator, new IsJust<T>());
-            return new TransformingIterator<T, Maybe<T>>(justs, new FromJust<T>());
+            return new TransformingIterator<>(justs, new FromJust<T>());
         }
 
         /**
@@ -185,7 +183,7 @@ public abstract class Options {
         public static <T> Iterator<T> justs(Maybe<T> first, Maybe<T> second, Maybe<T> third) {
             final Iterator<Maybe<T>> iterator = Iterations.iterator(first, second, third);
             final Iterator<Maybe<T>> justs = Filtering.filter(iterator, new IsJust<T>());
-            return new TransformingIterator<T, Maybe<T>>(justs, new FromJust<T>());
+            return new TransformingIterator<>(justs, new FromJust<T>());
         }
 
         /**
@@ -197,19 +195,19 @@ public abstract class Options {
          * @return a Maybe
          */
         public static <T> Maybe<T> lift(T value) {
-            return new LiftMaybe<T>().perform(value);
+            return new LiftMaybe<T>().apply(value);
         }
 
         /**
          * Transforms a delegate to another working on maybe monadic values.
          *
-         * @param <R> the delegate return type
          * @param <T> the delegate parameter type
+         * @param <R> the delegate return type
          * @param delegate the delegate to be lifted
          * @return the transformed delegate
          */
-        public static <R, T> Delegate<Maybe<R>, Maybe<T>> lift(Delegate<R, T> delegate) {
-            return new FmapMaybe<R, T>(delegate);
+        public static <T, R> Function<Maybe<T>, Maybe<R>> lift(Function<T, R> delegate) {
+            return new FmapMaybe<>(delegate);
         }
 
         /**
@@ -223,7 +221,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<Maybe<T>> lifts(Iterator<T> iterator) {
-            return new TransformingIterator<Maybe<T>, T>(iterator, new LiftMaybe<T>());
+            return new TransformingIterator<>(iterator, new LiftMaybe<T>());
         }
 
         /**
@@ -238,14 +236,13 @@ public abstract class Options {
          */
         public static <T> Iterator<Maybe<T>> lifts(Iterable<T> iterable) {
             dbc.precondition(iterable != null, "cannot perform lifts on a null iterable");
-            return new TransformingIterator<Maybe<T>, T>(iterable.iterator(), new LiftMaybe<T>());
+            return new TransformingIterator<>(iterable.iterator(), new LiftMaybe<T>());
         }
 
         /**
          * Creates an iterator transforming passed values to Maybe.nothing when
          * the source element is null, to Maybe.just(sourceValue) otherwise.
-         * E.g:
-         * <code>Maybes.lift(null, 1) -> [Nothing, Just 1]</code>
+         * E.g: <code>Maybes.lift(null, 1) -> [Nothing, Just 1]</code>
          *
          * @param <T> the value type
          * @param first the first element
@@ -254,7 +251,7 @@ public abstract class Options {
          */
         public static <T> Iterator<Maybe<T>> lifts(T first, T second) {
             final Iterator<T> iterator = Iterations.iterator(first, second);
-            return new TransformingIterator<Maybe<T>, T>(iterator, new LiftMaybe<T>());
+            return new TransformingIterator<>(iterator, new LiftMaybe<T>());
         }
 
         /**
@@ -271,13 +268,12 @@ public abstract class Options {
          */
         public static <T> Iterator<Maybe<T>> lifts(T first, T second, T third) {
             final Iterator<T> iterator = Iterations.iterator(first, second, third);
-            return new TransformingIterator<Maybe<T>, T>(iterator, new LiftMaybe<T>());
+            return new TransformingIterator<>(iterator, new LiftMaybe<T>());
         }
 
         /**
          * Transforms a Maybe.nothing to null, a Maybe.just to the wrapped
-         * value. E.g:
-         * <code>Maybes.drop(Just 1) -> 1</code>
+         * value. E.g: <code>Maybes.drop(Just 1) -> 1</code>
          * <code>Maybes.drop(Nothing) -> null</code>
          *
          * @param <T> the value type parameter
@@ -285,7 +281,7 @@ public abstract class Options {
          * @return null or a value
          */
         public static <T> T drop(Maybe<T> maybe) {
-            return new DropMaybe<T>().perform(maybe);
+            return new DropMaybe<T>().apply(maybe);
         }
 
         /**
@@ -299,7 +295,7 @@ public abstract class Options {
          * @return an iterator of T
          */
         public static <T> Iterator<T> drops(Iterator<Maybe<T>> iterator) {
-            return new TransformingIterator<T, Maybe<T>>(iterator, new DropMaybe<T>());
+            return new TransformingIterator<>(iterator, new DropMaybe<T>());
         }
 
         /**
@@ -314,14 +310,13 @@ public abstract class Options {
          */
         public static <T> Iterator<T> drops(Iterable<Maybe<T>> iterable) {
             dbc.precondition(iterable != null, "cannot perform drops on a null iterable");
-            return new TransformingIterator<T, Maybe<T>>(iterable.iterator(), new DropMaybe<T>());
+            return new TransformingIterator<>(iterable.iterator(), new DropMaybe<T>());
         }
 
         /**
          * Creates an iterator transformed passed elements such as the become
          * null when the source element is Nothing, the wrapped value otherwise.
-         * E.g:
-         * <code>Maybes.drops([Just null, Just 3]) -> [null, 3]</code>
+         * E.g: <code>Maybes.drops([Just null, Just 3]) -> [null, 3]</code>
          *
          * @param <T> the value type parameter
          * @param first the first maybe
@@ -329,14 +324,13 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<T> drops(Maybe<T> first, Maybe<T> second) {
-            return new TransformingIterator<T, Maybe<T>>(Iterations.iterator(first, second), new DropMaybe<T>());
+            return new TransformingIterator<>(Iterations.iterator(first, second), new DropMaybe<T>());
         }
 
         /**
          * Creates an iterator transformed passed elements such as the become
          * null when the source element is Nothing, the wrapped value otherwise.
-         * E.g:
-         * <code>Maybes.drops([Just null, Just 3]) -> [null, 3]</code>
+         * E.g: <code>Maybes.drops([Just null, Just 3]) -> [null, 3]</code>
          *
          * @param <T> the value type parameter
          * @param first the first maybe
@@ -345,20 +339,20 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<T> drops(Maybe<T> first, Maybe<T> second, Maybe<T> third) {
-            return new TransformingIterator<T, Maybe<T>>(Iterations.iterator(first, second, third), new DropMaybe<T>());
+            return new TransformingIterator<>(Iterations.iterator(first, second, third), new DropMaybe<T>());
         }
-        
-       
+
         /**
-         * Conventional monad join operator. 
-         * It is used to remove one level of monadic structure, projecting its 
-         * bound argument into the outer level.
+         * Conventional monad join operator. It is used to remove one level of
+         * monadic structure, projecting its bound argument into the outer
+         * level.
+         *
          * @param <T> the value type parameter
          * @param maybe the source monad
          * @return the unwrapped monad
          */
-        public static <T> Maybe<T> join(Maybe<Maybe<T>> maybe){
-            if(maybe.hasValue()){
+        public static <T> Maybe<T> join(Maybe<Maybe<T>> maybe) {
+            if (maybe.hasValue()) {
                 return maybe.value();
             }
             return Maybe.nothing();
@@ -379,7 +373,7 @@ public abstract class Options {
          * @return the resulting box
          */
         public static <T> Box<T> pure(T value) {
-            return new PureBox<T>().perform(value);
+            return new PureBox<T>().apply(value);
         }
 
         /**
@@ -392,7 +386,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<Box<T>> pures(Iterator<T> values) {
-            return new TransformingIterator<Box<T>, T>(values, new PureBox<T>());
+            return new TransformingIterator<>(values, new PureBox<T>());
         }
 
         /**
@@ -406,20 +400,19 @@ public abstract class Options {
          */
         public static <T> Iterator<Box<T>> pures(Iterable<T> values) {
             dbc.precondition(values != null, "cannot perform pures on a null iterable");
-            return new TransformingIterator<Box<T>, T>(values.iterator(), new PureBox<T>());
+            return new TransformingIterator<>(values.iterator(), new PureBox<T>());
         }
 
         /**
          * Creates a singleton iterator yielding pure() Box<T> monadic value of
-         * the passed value. E.g:
-         * <code>Boxes.pures(1) -> [Box 1]</code>
+         * the passed value. E.g: <code>Boxes.pures(1) -> [Box 1]</code>
          *
          * @param <T> the element type
          * @param value the source value
          * @return the resulting iterator
          */
         public static <T> Iterator<Box<T>> pures(T value) {
-            return new TransformingIterator<Box<T>, T>(new SingletonIterator<T>(value), new PureBox<T>());
+            return new TransformingIterator<>(new SingletonIterator<T>(value), new PureBox<T>());
         }
 
         /**
@@ -433,7 +426,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<Box<T>> pures(T first, T second) {
-            return new TransformingIterator<Box<T>, T>(Iterations.iterator(first, second), new PureBox<T>());
+            return new TransformingIterator<>(Iterations.iterator(first, second), new PureBox<T>());
         }
 
         /**
@@ -448,7 +441,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<Box<T>> pures(T first, T second, T third) {
-            return new TransformingIterator<Box<T>, T>(Iterations.iterator(first, second, third), new PureBox<T>());
+            return new TransformingIterator<>(Iterations.iterator(first, second, third), new PureBox<T>());
         }
 
         /**
@@ -461,24 +454,24 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<Box<T>> pures(T... values) {
-            return new TransformingIterator<Box<T>, T>(Iterations.iterator(values), new PureBox<T>());
+            return new TransformingIterator<>(Iterations.iterator(values), new PureBox<T>());
         }
 
- 
         /**
-         * Conventional monad join operator. 
-         * It is used to remove one level of monadic structure, projecting its 
-         * bound argument into the outer level.
+         * Conventional monad join operator. It is used to remove one level of
+         * monadic structure, projecting its bound argument into the outer
+         * level.
+         *
          * @param <T> the value type parameter
          * @param box the source monad
          * @return the unwrapped monad
          */
-        public static <T> Box<T> join(Box<Box<T>> box){
-            if(box.hasContent()){
+        public static <T> Box<T> join(Box<Box<T>> box) {
+            if (box.hasContent()) {
                 return box.getContent();
             }
             return Box.empty();
-        }        
+        }
     }
 
     /**
@@ -496,7 +489,7 @@ public abstract class Options {
          * @return the resulting either
          */
         public static <LT, RT> Either<LT, RT> pure(RT value) {
-            return new PureEither<LT, RT>().perform(value);
+            return new PureEither<LT, RT>().apply(value);
         }
 
         /**
@@ -510,7 +503,7 @@ public abstract class Options {
          * @return the resulting either
          */
         public static <LT, RT> Either<LT, RT> pure(Class<LT> leftClass, RT value) {
-            return new PureEither<LT, RT>().perform(value);
+            return new PureEither<LT, RT>().apply(value);
         }
 
         /**
@@ -524,7 +517,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <LT, RT> Iterator<Either<LT, RT>> pures(Iterator<RT> values) {
-            return new TransformingIterator<Either<LT, RT>, RT>(values, new PureEither<LT, RT>());
+            return new TransformingIterator<>(values, new PureEither<LT, RT>());
         }
 
         /**
@@ -539,7 +532,7 @@ public abstract class Options {
          */
         public static <LT, RT> Iterator<Either<LT, RT>> pures(Iterable<RT> values) {
             dbc.precondition(values != null, "cannot perform pures on a null iterable");
-            return new TransformingIterator<Either<LT, RT>, RT>(values.iterator(), new PureEither<LT, RT>());
+            return new TransformingIterator<>(values.iterator(), new PureEither<LT, RT>());
         }
 
         /**
@@ -553,7 +546,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <LT, RT> Iterator<Either<LT, RT>> pures(RT value) {
-            return new TransformingIterator<Either<LT, RT>, RT>(new SingletonIterator<RT>(value), new PureEither<LT, RT>());
+            return new TransformingIterator<>(new SingletonIterator<RT>(value), new PureEither<LT, RT>());
         }
 
         /**
@@ -568,7 +561,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <LT, RT> Iterator<Either<LT, RT>> pures(RT first, RT second) {
-            return new TransformingIterator<Either<LT, RT>, RT>(Iterations.iterator(first, second), new PureEither<LT, RT>());
+            return new TransformingIterator<>(Iterations.iterator(first, second), new PureEither<LT, RT>());
         }
 
         /**
@@ -584,7 +577,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <LT, RT> Iterator<Either<LT, RT>> pures(RT first, RT second, RT third) {
-            return new TransformingIterator<Either<LT, RT>, RT>(Iterations.iterator(first, second, third), new PureEither<LT, RT>());
+            return new TransformingIterator<>(Iterations.iterator(first, second, third), new PureEither<LT, RT>());
         }
 
         /**
@@ -598,7 +591,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <LT, RT> Iterator<Either<LT, RT>> pures(RT... values) {
-            return new TransformingIterator<Either<LT, RT>, RT>(ArrayIterator.of(values), new PureEither<LT, RT>());
+            return new TransformingIterator<>(ArrayIterator.of(values), new PureEither<LT, RT>());
         }
 
         /**
@@ -613,9 +606,9 @@ public abstract class Options {
          */
         public static <LT, RT> Iterator<LT> lefts(Iterator<Either<LT, RT>> eithers) {
             dbc.precondition(eithers != null, "can not fetch lefts from a null iterator");
-            final Iterator<Maybe<LT>> maybes = new TransformingIterator<Maybe<LT>, Either<LT, RT>>(eithers, new MaybeLeft<LT, RT>());
+            final Iterator<Maybe<LT>> maybes = new TransformingIterator<>(eithers, new MaybeLeft<LT, RT>());
             final Iterator<Maybe<LT>> justs = new FilteringIterator<Maybe<LT>>(maybes, new IsJust<LT>());
-            return new TransformingIterator<LT, Maybe<LT>>(justs, new FromJust<LT>());
+            return new TransformingIterator<>(justs, new FromJust<LT>());
         }
 
         /**
@@ -630,9 +623,9 @@ public abstract class Options {
          */
         public static <LT, RT> Iterator<LT> lefts(Iterable<Either<LT, RT>> eithers) {
             dbc.precondition(eithers != null, "can not fetch lefts from a null iterable");
-            final Iterator<Maybe<LT>> maybes = new TransformingIterator<Maybe<LT>, Either<LT, RT>>(eithers.iterator(), new MaybeLeft<LT, RT>());
+            final Iterator<Maybe<LT>> maybes = new TransformingIterator<>(eithers.iterator(), new MaybeLeft<LT, RT>());
             final Iterator<Maybe<LT>> justs = new FilteringIterator<Maybe<LT>>(maybes, new IsJust<LT>());
-            return new TransformingIterator<LT, Maybe<LT>>(justs, new FromJust<LT>());
+            return new TransformingIterator<>(justs, new FromJust<LT>());
         }
 
         /**
@@ -647,9 +640,9 @@ public abstract class Options {
          */
         public static <LT, RT> Iterator<RT> rights(Iterator<Either<LT, RT>> eithers) {
             dbc.precondition(eithers != null, "can not fetch rights from a null iterator");
-            final Iterator<Maybe<RT>> maybes = new TransformingIterator<Maybe<RT>, Either<LT, RT>>(eithers, new MaybeRight<LT, RT>());
+            final Iterator<Maybe<RT>> maybes = new TransformingIterator<>(eithers, new MaybeRight<LT, RT>());
             final Iterator<Maybe<RT>> justs = new FilteringIterator<Maybe<RT>>(maybes, new IsJust<RT>());
-            return new TransformingIterator<RT, Maybe<RT>>(justs, new FromJust<RT>());
+            return new TransformingIterator<>(justs, new FromJust<RT>());
         }
 
         /**
@@ -664,9 +657,9 @@ public abstract class Options {
          */
         public static <LT, RT> Iterator<RT> rights(Iterable<Either<LT, RT>> eithers) {
             dbc.precondition(eithers != null, "can not fetch rights from a null iterator");
-            final Iterator<Maybe<RT>> maybes = new TransformingIterator<Maybe<RT>, Either<LT, RT>>(eithers.iterator(), new MaybeRight<LT, RT>());
+            final Iterator<Maybe<RT>> maybes = new TransformingIterator<>(eithers.iterator(), new MaybeRight<LT, RT>());
             final Iterator<Maybe<RT>> justs = new FilteringIterator<Maybe<RT>>(maybes, new IsJust<RT>());
-            return new TransformingIterator<RT, Maybe<RT>>(justs, new FromJust<RT>());
+            return new TransformingIterator<>(justs, new FromJust<RT>());
         }
     }
 }

@@ -1,10 +1,10 @@
 package net.emaze.dysfunctional;
 
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
@@ -34,14 +34,14 @@ public abstract class Tuples {
     /**
      * Adapts a binary delegate to a delegate accepting a pair.
      *
-     * @param <R> the delegate return type
      * @param <T> the delegate first parameter type
      * @param <U> the delegate second parameter type
+     * @param <R> the delegate return type
      * @param delegate the delegate to be adapted
      * @return the adapted delegate
      */
-    public static <R, T, U> Delegate<R, Pair<T, U>> tupled(BinaryDelegate<R, T, U> delegate) {
-        return new BinaryToUnaryDelegate<R, T, U>(delegate);
+    public static <T, U, R> Function<Pair<T, U>, R> tupled(BinaryDelegate<R, T, U> delegate) {
+        return new BinaryToUnaryDelegate<T, U, R>(delegate);
     }
 
     /**
@@ -71,15 +71,15 @@ public abstract class Tuples {
     /**
      * Adapts a ternary delegate to a delegate accepting a triple.
      *
-     * @param <R> the delegate return type
      * @param <T> the delegate first parameter type
      * @param <U> the delegate second parameter type
      * @param <V> the delegate third parameter type
+     * @param <R> the delegate return type
      * @param delegate the delegate to be adapted
      * @return the adapted delegate
      */
-    public static <R, T, U, V> Delegate<R, Triple<T, U, V>> tupled(TernaryDelegate<R, T, U, V> delegate) {
-        return new TernaryToUnaryDelegate<R, T, U, V>(delegate);
+    public static <T, U, V, R> Function<Triple<T, U, V>, R> tupled(TernaryDelegate<R, T, U, V> delegate) {
+        return new TernaryToUnaryDelegate<>(delegate);
     }
 
     /**
@@ -122,7 +122,7 @@ public abstract class Tuples {
          * @param delegate the delegate to be adapted
          * @return the adapted delegate
          */
-        public static <R, T, U> BinaryDelegate<R, T, U> untupled(Delegate<R, Pair<T, U>> delegate) {
+        public static <R, T, U> BinaryDelegate<R, T, U> untupled(Function<Pair<T, U>, R> delegate) {
             return new UnaryToBinaryDelegate<R, T, U>(delegate);
         }
 
@@ -166,7 +166,7 @@ public abstract class Tuples {
          * @param delegate the delegate to be adapted
          * @return the adapted delegate
          */
-        public static <R, T, U, V> TernaryDelegate<R, T, U, V> untupled(Delegate<R, Triple<T, U, V>> delegate) {
+        public static <R, T, U, V> TernaryDelegate<R, T, U, V> untupled(Function<Triple<T, U, V>, R> delegate) {
             return new UnaryToTernaryDelegate<R, T, U, V>(delegate);
         }
 

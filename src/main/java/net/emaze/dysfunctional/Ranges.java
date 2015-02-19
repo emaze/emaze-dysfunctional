@@ -118,7 +118,7 @@ public class Ranges<T> {
         dbc.precondition(ranges != null, "cannot evaluate union for a null iterator of ranges");
         dbc.precondition(ranges.hasNext(), "cannot evaluate union for an empty iterator of ranges");
         final Union<T> union = new Union<T>(sequencer, comparator, emptyValue);
-        return new Reductor<Range<T>, Range<T>>(union, ranges.next()).perform(ranges);
+        return new Reductor<Range<T>, Range<T>>(union, ranges.next()).apply(ranges);
     }
 
     public Range<T> union(Iterable<Range<T>> ranges) {
@@ -126,7 +126,7 @@ public class Ranges<T> {
         dbc.precondition(ranges.iterator().hasNext(), "cannot evaluate union for an empty iterable of ranges");
         final Iterator<Range<T>> iterator = ranges.iterator();
         final Union<T> union = new Union<T>(sequencer, comparator, emptyValue);
-        return new Reductor<Range<T>, Range<T>>(union, iterator.next()).perform(iterator);
+        return new Reductor<Range<T>, Range<T>>(union, iterator.next()).apply(iterator);
     }
 
     public Range<T> union(Range<T>... ranges) {
@@ -134,7 +134,7 @@ public class Ranges<T> {
         dbc.precondition(ranges.length != 0, "cannot evaluate union for an empty array of ranges");
         final Iterator<Range<T>> iterator = new ArrayIterator<Range<T>>(ranges);
         final Union<T> union = new Union<T>(sequencer, comparator, emptyValue);
-        return new Reductor<Range<T>, Range<T>>(union, iterator.next()).perform(iterator);
+        return new Reductor<Range<T>, Range<T>>(union, iterator.next()).apply(iterator);
     }
 
     public Range<T> intersect(Range<T> lhs, Range<T> rhs) {
@@ -151,7 +151,7 @@ public class Ranges<T> {
         dbc.precondition(ranges != null, "cannot intersection a null iterator of ranges");
         dbc.precondition(ranges.hasNext(), "cannot intersection an empty iterator of ranges");
         final Intersection<T> intersection = new Intersection<T>(sequencer, comparator, emptyValue);
-        return new Reductor<Range<T>, Range<T>>(intersection, ranges.next()).perform(ranges);
+        return new Reductor<Range<T>, Range<T>>(intersection, ranges.next()).apply(ranges);
     }
 
     public Range<T> intersect(Iterable<Range<T>> ranges) {
@@ -159,7 +159,7 @@ public class Ranges<T> {
         dbc.precondition(ranges.iterator().hasNext(), "cannot intersect an empty iterable of ranges");
         final Intersection<T> intersection = new Intersection<T>(sequencer, comparator, emptyValue);
         final Iterator<Range<T>> iterator = ranges.iterator();
-        return new Reductor<Range<T>, Range<T>>(intersection, iterator.next()).perform(iterator);
+        return new Reductor<Range<T>, Range<T>>(intersection, iterator.next()).apply(iterator);
     }
 
     public Range<T> intersect(Range<T>... ranges) {
@@ -167,7 +167,7 @@ public class Ranges<T> {
         dbc.precondition(ranges.length != 0, "cannot intersect an empty array of ranges");
         final Intersection<T> intersection = new Intersection<T>(sequencer, comparator, emptyValue);
         final Iterator<Range<T>> iterator = new ArrayIterator<Range<T>>(ranges);
-        return new Reductor<Range<T>, Range<T>>(intersection, iterator.next()).perform(iterator);
+        return new Reductor<Range<T>, Range<T>>(intersection, iterator.next()).apply(iterator);
     }
 
     public Range<T> symmetricDifference(Range<T> lhs, Range<T> rhs) {
@@ -184,7 +184,7 @@ public class Ranges<T> {
         dbc.precondition(ranges != null, "cannot evaluate symmetric difference for a null iterator of ranges");
         dbc.precondition(ranges.hasNext(), "cannot evaluate symmetric difference for an empty iterator of ranges");
         final SymmetricDifference<T> symmetricDifference = new SymmetricDifference<T>(sequencer, comparator, emptyValue);
-        return new Reductor<Range<T>, Range<T>>(symmetricDifference, ranges.next()).perform(ranges);
+        return new Reductor<Range<T>, Range<T>>(symmetricDifference, ranges.next()).apply(ranges);
     }
 
     public Range<T> symmetricDifference(Iterable<Range<T>> ranges) {
@@ -192,7 +192,7 @@ public class Ranges<T> {
         dbc.precondition(ranges.iterator().hasNext(), "cannot evaluate symmetric difference for an empty iterable of ranges");
         final Iterator<Range<T>> iterator = ranges.iterator();
         final SymmetricDifference<T> symmetricDifference = new SymmetricDifference<T>(sequencer, comparator, emptyValue);
-        return new Reductor<Range<T>, Range<T>>(symmetricDifference, iterator.next()).perform(iterator);
+        return new Reductor<Range<T>, Range<T>>(symmetricDifference, iterator.next()).apply(iterator);
     }
 
     public Range<T> symmetricDifference(Range<T>... ranges) {
@@ -200,7 +200,7 @@ public class Ranges<T> {
         dbc.precondition(ranges.length != 0, "cannot evaluate symmetric difference for an empty array of ranges");
         final Iterator<Range<T>> iterator = new ArrayIterator<Range<T>>(ranges);
         final SymmetricDifference<T> symmetricDifference = new SymmetricDifference<T>(sequencer, comparator, emptyValue);
-        return new Reductor<Range<T>, Range<T>>(symmetricDifference, iterator.next()).perform(iterator);
+        return new Reductor<Range<T>, Range<T>>(symmetricDifference, iterator.next()).apply(iterator);
     }
 
     public Range<T> difference(Range<T> lhs, Range<T> rhs) {
@@ -217,7 +217,7 @@ public class Ranges<T> {
         dbc.precondition(ranges != null, "cannot evaluate difference for a null iterator of ranges");
         dbc.precondition(ranges.hasNext(), "cannot evaluate difference for an empty iterator of ranges");
         final Difference<T> difference = new Difference<T>(sequencer, comparator, emptyValue);
-        return new Reductor<Range<T>, Range<T>>(difference, ranges.next()).perform(ranges);
+        return new Reductor<Range<T>, Range<T>>(difference, ranges.next()).apply(ranges);
     }
 
     public Range<T> difference(Iterable<Range<T>> ranges) {
@@ -225,7 +225,7 @@ public class Ranges<T> {
         dbc.precondition(ranges.iterator().hasNext(), "cannot evaluate difference for an empty iterable of ranges");
         final Iterator<Range<T>> iterator = ranges.iterator();
         final Difference<T> difference = new Difference<T>(sequencer, comparator, emptyValue);
-        return new Reductor<Range<T>, Range<T>>(difference, iterator.next()).perform(iterator);
+        return new Reductor<Range<T>, Range<T>>(difference, iterator.next()).apply(iterator);
     }
 
     public Range<T> difference(Range<T>... ranges) {
@@ -233,6 +233,6 @@ public class Ranges<T> {
         dbc.precondition(ranges.length != 0, "cannot evaluate difference for an empty array of ranges");
         final Iterator<Range<T>> iterator = new ArrayIterator<Range<T>>(ranges);
         final Difference<T> difference = new Difference<T>(sequencer, comparator, emptyValue);
-        return new Reductor<Range<T>, Range<T>>(difference, iterator.next()).perform(iterator);
+        return new Reductor<Range<T>, Range<T>>(difference, iterator.next()).apply(iterator);
     }
 }

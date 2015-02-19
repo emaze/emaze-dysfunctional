@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.spying;
 
 import java.util.concurrent.atomic.AtomicLong;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -26,8 +26,8 @@ public class MonitoringDelegateTest {
     @Test
     public void callingIncrementsTheAtomicLong() {
         final AtomicLong state = new AtomicLong();
-        final Delegate<O, O> spy = new MonitoringDelegate<O, O>(new Identity<O>(), state);
-        spy.perform(O.ONE);
+        final Function<O, O> spy = new MonitoringDelegate<O, O>(new Identity<O>(), state);
+        spy.apply(O.ONE);
         Assert.assertEquals(1l, state.get());
     }
 }

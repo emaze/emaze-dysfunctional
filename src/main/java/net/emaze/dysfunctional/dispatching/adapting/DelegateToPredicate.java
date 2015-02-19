@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
 /**
@@ -12,15 +12,15 @@ import net.emaze.dysfunctional.dispatching.logic.Predicate;
  */
 public class DelegateToPredicate<T> implements Predicate<T> {
 
-    private final Delegate<Boolean, T> adapted;
+    private final Function<T, Boolean> adapted;
 
-    public DelegateToPredicate(Delegate<Boolean, T> adaptee) {
+    public DelegateToPredicate(Function<T, Boolean> adaptee) {
         dbc.precondition(adaptee != null, "cannot adapt a null delegate to predicate");
         this.adapted = adaptee;
     }
 
     @Override
     public boolean accept(T value) {
-        return adapted.perform(value);
+        return adapted.apply(value);
     }
 }

@@ -10,7 +10,7 @@ import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
@@ -55,21 +55,21 @@ public class SpiesTest {
         public void canSpyADelegate() {
             final Box<O> result = new Box<O>();
             final Box<O> param = new Box<O>();
-            final Delegate<O, O> spied = Spies.spy(new Identity<O>(), result, param);
+            final Function<O, O> spied = Spies.spy(new Identity<O>(), result, param);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpyResultOfDelegate() {
             final Box<O> result = new Box<O>();
-            final Delegate<O, O> spied = Spies.spyRes(new Identity<O>(), result);
+            final Function<O, O> spied = Spies.spyRes(new Identity<O>(), result);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpyFirstOfDelegate() {
             final Box<O> param = new Box<O>();
-            final Delegate<O, O> spied = Spies.spy1st(new Identity<O>(), param);
+            final Function<O, O> spied = Spies.spy1st(new Identity<O>(), param);
             Assert.assertNotNull(spied);
         }
 
@@ -341,7 +341,7 @@ public class SpiesTest {
 
         @Test
         public void canMonitorADelegate() {
-            final Delegate<O, O> monitor = Spies.monitor(new Identity<O>(), accumulator);
+            final Function<O, O> monitor = Spies.monitor(new Identity<O>(), accumulator);
             Assert.assertNotNull(monitor);
         }
 

@@ -19,8 +19,8 @@ import org.junit.Test;
  */
 public class WindowingTest {
 
-    private final Provider<List<O>> LIST_FACTORY = Compositions.compose(new Vary<List<O>, ArrayList<O>>(), new ArrayListFactory<O>());
-    private final Provider<List<Maybe<O>>> LIST_MAYBE_FACTORY = Compositions.compose(new Vary<List<Maybe<O>>, ArrayList<Maybe<O>>>(), new ArrayListFactory<Maybe<O>>());
+    private final Provider<List<O>> LIST_FACTORY = Compositions.compose(new Vary<ArrayList<O>, List<O>>(), new ArrayListFactory<O>());
+    private final Provider<List<Maybe<O>>> LIST_MAYBE_FACTORY = Compositions.compose(new Vary<ArrayList<Maybe<O>>, List<Maybe<O>>>(), new ArrayListFactory<Maybe<O>>());
 
     @Test
     public void canCreateWindowFromIterator() {

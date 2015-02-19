@@ -14,7 +14,7 @@ public class MapToPairsTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void transformingNullMapYieldsException() {
-        new MapToPairs<O, O>().perform(null);
+        new MapToPairs<O, O>().apply(null);
     }
 
     @Test
@@ -23,7 +23,7 @@ public class MapToPairsTest {
                 add("a", "1").
                 add("b", "2").
                 toMap();
-        final Iterator<Pair<String, String>> got = new MapToPairs<String, String>().perform(m);
+        final Iterator<Pair<String, String>> got = new MapToPairs<String, String>().apply(m);
         Assert.assertEquals(Arrays.asList(Pair.of("a", "1"), Pair.of("b", "2")), Consumers.all(got));
     }
 }

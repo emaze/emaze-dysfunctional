@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.dispatching.actions.Action;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.options.Box;
@@ -23,7 +23,7 @@ public class DelegateToActionTest {
     @Test
     public void adapterCorrectlyPassesParamToAdapted() {
         final Box<O> param = Box.empty();
-        final Delegate<O, O> spy = Spies.spy1st(new Identity<O>(), param);
+        final Function<O, O> spy = Spies.spy1st(new Identity<O>(), param);
         final Action<O> adapted = new DelegateToAction<O, O>(spy);
         adapted.perform(O.ONE);
         Assert.assertEquals(O.ONE, param.getContent());

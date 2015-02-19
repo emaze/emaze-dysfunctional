@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.tuples;
 
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -18,9 +18,9 @@ public class TernaryToUnaryDelegateTest {
 
     @Test
     public void canAdapt() {
-        final Delegate<Triple<O, O, O>, Triple<O, O, O>> delegate = new TernaryToUnaryDelegate<Triple<O, O, O>, O, O, O>(new TernaryIdentity<O, O, O>());
+        final Function<Triple<O, O, O>, Triple<O, O, O>> delegate = new TernaryToUnaryDelegate<>(new TernaryIdentity<>());
         final Triple<O, O, O> expected = Triple.of(O.ONE, O.ANOTHER, O.ANOTHER);
-        final Triple<O, O, O> got = delegate.perform(expected);
+        final Triple<O, O, O> got = delegate.apply(expected);
         Assert.assertEquals(expected, got);
     }
 }

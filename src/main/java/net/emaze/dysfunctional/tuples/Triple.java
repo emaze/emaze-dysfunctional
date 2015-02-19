@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
@@ -37,11 +37,11 @@ public class Triple<T1, T2, T3> {
         return t;
     }
 
-    public <R1, R2, R3> Triple<R1, R2, R3> fmap(Delegate<R1, T1> withFirst, Delegate<R2, T2> withSecond, Delegate<R3, T3> withThird) {
+    public <R1, R2, R3> Triple<R1, R2, R3> fmap(Function<T1, R1> withFirst, Function<T2, R2> withSecond, Function<T3, R3> withThird) {
         dbc.precondition(withFirst != null, "cannot fmap on triple with a null first delegate");
         dbc.precondition(withSecond != null, "cannot fmap on triple with a null second delegate");
         dbc.precondition(withThird != null, "cannot fmap on triple with a null second delegate");
-        return Triple.of(withFirst.perform(f), withSecond.perform(s), withThird.perform(t));
+        return Triple.of(withFirst.apply(f), withSecond.apply(s), withThird.apply(t));
     }
 
     @Override

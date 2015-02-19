@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.strings;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.iterations.SingletonIterator;
 import net.emaze.dysfunctional.iterations.TransformingIterator;
@@ -12,7 +12,7 @@ import net.emaze.dysfunctional.iterations.TransformingIterator;
  *
  * @author rferranti
  */
-public class WordsToUpperSnakeCase implements Delegate<String, String[]> {
+public class WordsToUpperSnakeCase implements Function<String[], String> {
 
     private final ToUpperCase toUpper = new ToUpperCase();
     private final String snakeGlyph;
@@ -23,7 +23,7 @@ public class WordsToUpperSnakeCase implements Delegate<String, String[]> {
     }
 
     @Override
-    public String perform(String[] words) {
+    public String apply(String[] words) {
         dbc.precondition(words != null, "cannot upperSnakeCase a null array of words");
         final Iterator<String> values = new TransformingIterator<String, String>(new ArrayIterator<String>(words), toUpper);
         return new InterposeStrings<String, String>().perform(values, new SingletonIterator<String>(snakeGlyph));

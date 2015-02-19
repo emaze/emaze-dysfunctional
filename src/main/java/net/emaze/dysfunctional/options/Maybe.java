@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.options;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
@@ -34,17 +34,17 @@ public class Maybe<E> implements Iterable<E> {
         return element;
     }
 
-    public <T> Maybe<T> fmap(Delegate<T, E> delegate) {
+    public <T> Maybe<T> fmap(Function<E, T> delegate) {
         dbc.precondition(delegate != null, "cannot perform fmap with a null delegate");
         if (hasValue) {
-            return Maybe.just(delegate.perform(element));
+            return Maybe.just(delegate.apply(element));
         }
         return Maybe.nothing();
     }
 
-    public <T> T fold(Provider<T> ifNothing, Delegate<T, E> ifJust) {
+    public <T> T fold(Provider<T> ifNothing, Function<E, T> ifJust) {
         dbc.precondition(ifJust != null, "cannot perform fold with a null delegate");
-        return hasValue ? ifJust.perform(element) : ifNothing.provide();
+        return hasValue ? ifJust.apply(element) : ifNothing.provide();
     }
 
     public <T> Either<T, E> either(Provider<T> nothing) {

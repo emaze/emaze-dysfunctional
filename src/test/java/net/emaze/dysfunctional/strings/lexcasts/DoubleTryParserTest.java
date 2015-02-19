@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.strings.lexcasts;
 
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.options.Maybe;
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,25 +13,25 @@ public class DoubleTryParserTest {
     
     @Test(expected = ClassCastException.class)
     public void passingNonStringToErasureYieldsException() {
-        Delegate d = new DoubleTryParser();
-        d.perform(new Object());
+        Function d = new DoubleTryParser();
+        d.apply(new Object());
     }        
 
     @Test
     public void parsingNullStringYieldsNothing() {
-        final Maybe<Double> got = new DoubleTryParser().perform(null);
+        final Maybe<Double> got = new DoubleTryParser().apply(null);
         Assert.assertFalse(got.hasValue());
     }
 
     @Test
     public void parsingInvalidStringYieldsNothing() {
-        final Maybe<Double> got = new DoubleTryParser().perform("A");
+        final Maybe<Double> got = new DoubleTryParser().apply("A");
         Assert.assertFalse(got.hasValue());
     }
 
     @Test
     public void parsingValidStringYieldsJustValue() {
-        final Maybe<Double> got = new DoubleTryParser().perform("1.");
+        final Maybe<Double> got = new DoubleTryParser().apply("1.");
         Assert.assertEquals(Maybe.just(1d), got);
     }
 }

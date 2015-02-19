@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.actions.Action;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 
 /**
  * Adapts an action to a delegate. Adapter result type is Void and always yields
@@ -11,7 +11,7 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
  * @param <T> the adapted action parameter type
  * @author rferranti
  */
-public class ActionToDelegate<T> implements Delegate<Void, T> {
+public class ActionToDelegate<T> implements Function<T, Void> {
 
     private final Action<T> adapted;
 
@@ -21,7 +21,7 @@ public class ActionToDelegate<T> implements Delegate<Void, T> {
     }
 
     @Override
-    public Void perform(T value) {
+    public Void apply(T value) {
         adapted.perform(value);
         return null;
     }

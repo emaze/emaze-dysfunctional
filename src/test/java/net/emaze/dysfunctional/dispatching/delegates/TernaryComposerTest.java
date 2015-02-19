@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
+import java.util.function.Function;
 import junit.framework.Assert;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Test;
@@ -8,9 +9,9 @@ public class TernaryComposerTest {
 
     @Test
     public void canComposeDelegateWithTernaryDelegate() {
-        final TernaryComposer<O, O, O, O, O> composer = new TernaryComposer<O, O, O, O, O>(new Delegate<O, O>() {
+        final TernaryComposer<O, O, O, O, O> composer = new TernaryComposer<O, O, O, O, O>(new Function<O, O>() {
             @Override
-            public O perform(O o) {
+            public O apply(O o) {
                 return new O(o.toString() + " is composed");
             }
         }, new TernaryDelegate<O, O, O, O>() {

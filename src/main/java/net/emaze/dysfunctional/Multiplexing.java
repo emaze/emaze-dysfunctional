@@ -35,13 +35,13 @@ public abstract class Multiplexing {
      * flatten([1,2], [3,4]) -> [1,2,3,4]
      * </code>
      *
-     * @param <E> the iterable element type
      * @param <I> the iterable type
+     * @param <E> the iterable element type
      * @param iterables the iterator of iterables to be flattened
      * @return the flattened iterator
      */
-    public static <E, I extends Iterable<E>> Iterator<E> flatten(Iterator<I> iterables) {
-        return new ChainIterator<E>(new TransformingIterator<Iterator<E>, I>(iterables, new IteratorPlucker<E, I>()));
+    public static <I extends Iterable<E>, E> Iterator<E> flatten(Iterator<I> iterables) {
+        return new ChainIterator<>(new TransformingIterator<>(iterables, new IteratorPlucker<>()));
     }
 
     /**
@@ -50,15 +50,15 @@ public abstract class Multiplexing {
      * flatten([1,2], [3,4]) -> [1,2,3,4]
      * </code>
      *
-     * @param <E> the iterable element type
      * @param <I> the iterable type
+     * @param <E> the iterable element type
      * @param iterables the iterable of iterables to be flattened
      * @return the flattened iterator
      */
-    public static <E, I extends Iterable<E>> Iterator<E> flatten(Iterable<I> iterables) {
+    public static <I extends Iterable<E>, E> Iterator<E> flatten(Iterable<I> iterables) {
         dbc.precondition(iterables != null, "cannot flatten a null iterable");
         final Iterator<I> iterator = iterables.iterator();
-        return new ChainIterator<E>(new TransformingIterator<Iterator<E>, I>(iterator, new IteratorPlucker<E, I>()));
+        return new ChainIterator<>(new TransformingIterator<>(iterator, new IteratorPlucker<>()));
     }
 
     /**
@@ -75,7 +75,7 @@ public abstract class Multiplexing {
      */
     public static <E, I extends Iterable<E>> Iterator<E> flatten(I first, I second) {
         final Iterator<I> iterator = ArrayIterator.of(first, second);
-        return new ChainIterator<E>(new TransformingIterator<Iterator<E>, I>(iterator, new IteratorPlucker<E, I>()));
+        return new ChainIterator<>(new TransformingIterator<>(iterator, new IteratorPlucker<>()));
     }
 
     /**
@@ -93,7 +93,7 @@ public abstract class Multiplexing {
      */
     public static <E, I extends Iterable<E>> Iterator<E> flatten(I first, I second, I third) {
         final Iterator<I> iterator = ArrayIterator.of(first, second, third);
-        return new ChainIterator<E>(new TransformingIterator<Iterator<E>, I>(iterator, new IteratorPlucker<E, I>()));
+        return new ChainIterator<>(new TransformingIterator<>(iterator, new IteratorPlucker<>()));
     }
 
     /**
@@ -108,7 +108,7 @@ public abstract class Multiplexing {
      * @return the flattened iterator
      */
     public static <E, I extends Iterator<E>> Iterator<E> chain(Iterator<I> iterators) {
-        return new ChainIterator<E>(iterators);
+        return new ChainIterator<>(iterators);
     }
 
     /**
@@ -124,7 +124,7 @@ public abstract class Multiplexing {
      */
     public static <E, I extends Iterator<E>> Iterator<E> chain(Iterable<I> iterable) {
         dbc.precondition(iterable != null, "cannot chain a null iterable");
-        return new ChainIterator<E>(iterable.iterator());
+        return new ChainIterator<>(iterable.iterator());
     }
 
     /**
@@ -140,7 +140,7 @@ public abstract class Multiplexing {
      * @return the flattened iterator
      */
     public static <E, I extends Iterator<E>> Iterator<E> chain(I first, I second) {
-        return new ChainIterator<E>(ArrayIterator.of(first, second));
+        return new ChainIterator<>(ArrayIterator.of(first, second));
     }
 
     /**
@@ -157,7 +157,7 @@ public abstract class Multiplexing {
      * @return the flattened iterator
      */
     public static <E, I extends Iterator<E>> Iterator<E> chain(I first, I second, I third) {
-        return new ChainIterator<E>(ArrayIterator.of(first, second, third));
+        return new ChainIterator<>(ArrayIterator.of(first, second, third));
     }
 
     /**
@@ -186,7 +186,7 @@ public abstract class Multiplexing {
      * @return an iterator of channels
      */
     public static <E> Iterator<List<E>> batch(int batchSize, Iterator<E> iterator) {
-        final Provider<List<E>> channelFactory = Compositions.compose(new Vary<List<E>, ArrayList<E>>(), new ArrayListFactory<E>());
+        final Provider<List<E>> channelFactory = Compositions.compose(new Vary<ArrayList<E>, List<E>>(), new ArrayListFactory<E>());
         return new BatchingIterator<List<E>, E>(batchSize, iterator, channelFactory);
     }
 
@@ -217,7 +217,7 @@ public abstract class Multiplexing {
      */
     public static <E> Iterator<List<E>> batch(int batchSize, Iterable<E> iterable) {
         dbc.precondition(iterable != null, "cannot batch a null iterable");
-        final Provider<List<E>> channelFactory = Compositions.compose(new Vary<List<E>, ArrayList<E>>(), new ArrayListFactory<E>());
+        final Provider<List<E>> channelFactory = Compositions.compose(new Vary<ArrayList<E>, List<E>>(), new ArrayListFactory<E>());
         return new BatchingIterator<List<E>, E>(batchSize, iterable.iterator(), channelFactory);
     }
 
@@ -246,7 +246,7 @@ public abstract class Multiplexing {
      * @return an iterator of channels
      */
     public static <E> Iterator<List<E>> batch(int batchSize, E[] array) {
-        final Provider<List<E>> channelFactory = Compositions.compose(new Vary<List<E>, ArrayList<E>>(), new ArrayListFactory<E>());
+        final Provider<List<E>> channelFactory = Compositions.compose(new Vary<ArrayList<E>, List<E>>(), new ArrayListFactory<E>());
         return new BatchingIterator<List<E>, E>(batchSize, new ArrayIterator<E>(array), channelFactory);
     }
 
@@ -538,7 +538,7 @@ public abstract class Multiplexing {
      */
     public static <E> Iterator<List<E>> unchain(int channelSize, Iterator<E> iterator) {
         final ConstantProvider<Maybe<Integer>> channelsSizesProvider = new ConstantProvider<Maybe<Integer>>(Maybe.just(channelSize));
-        final Provider<List<E>> channelFactory = Compositions.compose(new Vary<List<E>, ArrayList<E>>(), new ArrayListFactory<E>());
+        final Provider<List<E>> channelFactory = Compositions.compose(new Vary<ArrayList<E>, List<E>>(), new ArrayListFactory<E>());
         return new UnchainIterator<List<E>, E>(channelsSizesProvider, iterator, channelFactory);
     }
 
@@ -572,7 +572,7 @@ public abstract class Multiplexing {
     public static <E> Iterator<List<E>> unchain(int channelSize, Iterable<E> iterable) {
         dbc.precondition(iterable != null, "cannot unchain a null iterable");
         final ConstantProvider<Maybe<Integer>> channelsSizesProvider = new ConstantProvider<Maybe<Integer>>(Maybe.just(channelSize));
-        final Provider<List<E>> channelFactory = Compositions.compose(new Vary<List<E>, ArrayList<E>>(), new ArrayListFactory<E>());
+        final Provider<List<E>> channelFactory = Compositions.compose(new Vary<ArrayList<E>, List<E>>(), new ArrayListFactory<E>());
         final Iterator<E> iterator = iterable.iterator();
         return new UnchainIterator<List<E>, E>(channelsSizesProvider, iterator, channelFactory);
     }
@@ -605,7 +605,7 @@ public abstract class Multiplexing {
      */
     public static <E> Iterator<List<E>> unchain(int channelSize, E... array) {
         final ConstantProvider<Maybe<Integer>> channelsSizesProvider = new ConstantProvider<Maybe<Integer>>(Maybe.just(channelSize));
-        final Provider<List<E>> channelFactory = Compositions.compose(new Vary<List<E>, ArrayList<E>>(), new ArrayListFactory<E>());
+        final Provider<List<E>> channelFactory = Compositions.compose(new Vary<ArrayList<E>, List<E>>(), new ArrayListFactory<E>());
         final ArrayIterator<E> iterator = new ArrayIterator<E>(array);
         return new UnchainIterator<List<E>, E>(channelsSizesProvider, iterator, channelFactory);
     }
@@ -637,7 +637,7 @@ public abstract class Multiplexing {
      */
     public static <E> Iterator<List<Maybe<E>>> unchainWithExactChannelSize(int channelSize, Iterator<E> iterator) {
         final ConstantProvider<Maybe<Integer>> channelsSizesProvider = new ConstantProvider<Maybe<Integer>>(Maybe.just(channelSize));
-        final Provider<List<Maybe<E>>> channelFactory = Compositions.compose(new Vary<List<Maybe<E>>, ArrayList<Maybe<E>>>(), new ArrayListFactory<Maybe<E>>());
+        final Provider<List<Maybe<E>>> channelFactory = Compositions.compose(new Vary<ArrayList<Maybe<E>>, List<Maybe<E>>>(), new ArrayListFactory<Maybe<E>>());
         return new UnchainWithExactChannelSizeIterator<List<Maybe<E>>, E>(channelsSizesProvider, iterator, channelFactory);
     }
 
@@ -670,7 +670,7 @@ public abstract class Multiplexing {
     public static <E> Iterator<List<Maybe<E>>> unchainWithExactChannelSize(int channelSize, Iterable<E> iterable) {
         dbc.precondition(iterable != null, "cannot unchainWithExactChannelSize a null iterable");
         final ConstantProvider<Maybe<Integer>> channelsSizesProvider = new ConstantProvider<Maybe<Integer>>(Maybe.just(channelSize));
-        final Provider<List<Maybe<E>>> channelFactory = Compositions.compose(new Vary<List<Maybe<E>>, ArrayList<Maybe<E>>>(), new ArrayListFactory<Maybe<E>>());
+        final Provider<List<Maybe<E>>> channelFactory = Compositions.compose(new Vary<ArrayList<Maybe<E>>, List<Maybe<E>>>(), new ArrayListFactory<Maybe<E>>());
         return new UnchainWithExactChannelSizeIterator<List<Maybe<E>>, E>(channelsSizesProvider, iterable.iterator(), channelFactory);
     }
 
@@ -701,7 +701,7 @@ public abstract class Multiplexing {
      */
     public static <E> Iterator<List<Maybe<E>>> unchainWithExactChannelSize(int channelSize, E... array) {
         final ConstantProvider<Maybe<Integer>> channelsSizesProvider = new ConstantProvider<Maybe<Integer>>(Maybe.just(channelSize));
-        final Provider<List<Maybe<E>>> channelFactory = Compositions.compose(new Vary<List<Maybe<E>>, ArrayList<Maybe<E>>>(), new ArrayListFactory<Maybe<E>>());
+        final Provider<List<Maybe<E>>> channelFactory = Compositions.compose(new Vary<ArrayList<Maybe<E>>, List<Maybe<E>>>(), new ArrayListFactory<Maybe<E>>());
         return new UnchainWithExactChannelSizeIterator<List<Maybe<E>>, E>(channelsSizesProvider, new ArrayIterator<E>(array), channelFactory);
     }
 }

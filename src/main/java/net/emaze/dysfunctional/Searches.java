@@ -14,7 +14,7 @@ import net.emaze.dysfunctional.consumers.MaybeOneElement;
 import net.emaze.dysfunctional.consumers.OneElement;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.filtering.FilteringIterator;
@@ -37,9 +37,9 @@ public abstract class Searches {
      * @return a list containing matching elements
      */
     public static <E> List<E> search(Iterator<E> iterator, Predicate<E> predicate) {
-        final Delegate<ArrayList<E>, Iterator<E>> consumer = new ConsumeIntoCollection<ArrayList<E>, E>(new ArrayListFactory<E>());
+        final Function<Iterator<E>, ArrayList<E>> consumer = new ConsumeIntoCollection<>(new ArrayListFactory<E>());
         final FilteringIterator<E> filtered = new FilteringIterator<E>(iterator, predicate);
-        return consumer.perform(filtered);
+        return consumer.apply(filtered);
     }
 
     /**
@@ -54,9 +54,9 @@ public abstract class Searches {
      * @return the passed collection, filled with matching elements
      */
     public static <C extends Collection<E>, E> C search(Iterator<E> iterator, C collection, Predicate<E> predicate) {
-        final Delegate<C, Iterator<E>> consumer = new ConsumeIntoCollection<C, E>(new ConstantProvider<C>(collection));
+        final Function<Iterator<E>, C> consumer = new ConsumeIntoCollection<>(new ConstantProvider<C>(collection));
         final FilteringIterator<E> filtered = new FilteringIterator<E>(iterator, predicate);
-        return consumer.perform(filtered);
+        return consumer.apply(filtered);
     }
 
     /**
@@ -72,9 +72,9 @@ public abstract class Searches {
      * matching elements
      */
     public static <C extends Collection<E>, E> C search(Iterator<E> iterator, Provider<C> provider, Predicate<E> predicate) {
-        final Delegate<C, Iterator<E>> consumer = new ConsumeIntoCollection<C, E>(provider);
+        final Function<Iterator<E>, C> consumer = new ConsumeIntoCollection<>(provider);
         final FilteringIterator<E> filtered = new FilteringIterator<E>(iterator, predicate);
-        return consumer.perform(filtered);
+        return consumer.apply(filtered);
     }
 
     /**
@@ -87,9 +87,9 @@ public abstract class Searches {
      */
     public static <E> List<E> search(Iterable<E> iterable, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot search a null iterable");
-        final Delegate<ArrayList<E>, Iterator<E>> consumer = new ConsumeIntoCollection<ArrayList<E>, E>(new ArrayListFactory<E>());
+        final Function<Iterator<E>, ArrayList<E>> consumer = new ConsumeIntoCollection<>(new ArrayListFactory<E>());
         final FilteringIterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), predicate);
-        return consumer.perform(filtered);
+        return consumer.apply(filtered);
     }
 
     /**
@@ -105,9 +105,9 @@ public abstract class Searches {
      */
     public static <C extends Collection<E>, E> C search(Iterable<E> iterable, C collection, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot search a null iterable");
-        final Delegate<C, Iterator<E>> consumer = new ConsumeIntoCollection<C, E>(new ConstantProvider<C>(collection));
+        final Function<Iterator<E>, C> consumer = new ConsumeIntoCollection<>(new ConstantProvider<C>(collection));
         final FilteringIterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), predicate);
-        return consumer.perform(filtered);
+        return consumer.apply(filtered);
     }
 
     /**
@@ -124,9 +124,9 @@ public abstract class Searches {
      */
     public static <C extends Collection<E>, E> C search(Iterable<E> iterable, Provider<C> provider, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot search a null iterable");
-        final Delegate<C, Iterator<E>> consumer = new ConsumeIntoCollection<C, E>(provider);
+        final Function<Iterator<E>, C> consumer = new ConsumeIntoCollection<>(provider);
         final FilteringIterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), predicate);
-        return consumer.perform(filtered);
+        return consumer.apply(filtered);
     }
 
     /**
@@ -139,9 +139,9 @@ public abstract class Searches {
      * @return a list containing matching elements
      */
     public static <E> List<E> search(E[] array, Predicate<E> predicate) {
-        final Delegate<ArrayList<E>, Iterator<E>> consumer = new ConsumeIntoCollection<ArrayList<E>, E>(new ArrayListFactory<E>());
+        final Function<Iterator<E>, ArrayList<E>> consumer = new ConsumeIntoCollection<>(new ArrayListFactory<E>());
         final FilteringIterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), predicate);
-        return consumer.perform(filtered);
+        return consumer.apply(filtered);
     }
 
     /**
@@ -156,9 +156,9 @@ public abstract class Searches {
      * @return the passed collection, filled with matching elements
      */
     public static <C extends Collection<E>, E> C search(E[] array, C collection, Predicate<E> predicate) {
-        final Delegate<C, Iterator<E>> consumer = new ConsumeIntoCollection<C, E>(new ConstantProvider<C>(collection));
+        final Function<Iterator<E>, C> consumer = new ConsumeIntoCollection<>(new ConstantProvider<C>(collection));
         final FilteringIterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), predicate);
-        return consumer.perform(filtered);
+        return consumer.apply(filtered);
     }
 
     /**
@@ -174,9 +174,9 @@ public abstract class Searches {
      * matching elements
      */
     public static <C extends Collection<E>, E> C search(E[] array, Provider<C> provider, Predicate<E> predicate) {
-        final Delegate<C, Iterator<E>> consumer = new ConsumeIntoCollection<C, E>(provider);
+        final Function<Iterator<E>, C> consumer = new ConsumeIntoCollection<>(provider);
         final FilteringIterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), predicate);
-        return consumer.perform(filtered);
+        return consumer.apply(filtered);
     }
 
     /**
@@ -190,9 +190,9 @@ public abstract class Searches {
      * @return a list containing matching elements
      */
     public static <E> List<E> find(Iterator<E> iterator, Predicate<E> predicate) {
-        final Delegate<ArrayList<E>, Iterator<E>> consumer = new ConsumeIntoCollection<ArrayList<E>, E>(new ArrayListFactory<E>());
+        final Function<Iterator<E>, ArrayList<E>> consumer = new ConsumeIntoCollection<>(new ArrayListFactory<E>());
         final FilteringIterator<E> filtered = new FilteringIterator<E>(iterator, predicate);
-        final ArrayList<E> found = consumer.perform(filtered);
+        final ArrayList<E> found = consumer.apply(filtered);
         dbc.precondition(!found.isEmpty(), "no element matched");
         return found;
     }
@@ -211,9 +211,9 @@ public abstract class Searches {
      * @return the passed collection, filled with matching elements
      */
     public static <C extends Collection<E>, E> C find(Iterator<E> iterator, C collection, Predicate<E> predicate) {
-        final Delegate<C, Iterator<E>> consumer = new ConsumeIntoCollection<C, E>(new ConstantProvider<C>(collection));
+        final Function<Iterator<E>, C> consumer = new ConsumeIntoCollection<>(new ConstantProvider<C>(collection));
         final FilteringIterator<E> filtered = new FilteringIterator<E>(iterator, predicate);
-        C found = consumer.perform(filtered);
+        C found = consumer.apply(filtered);
         dbc.precondition(!found.isEmpty(), "no element matched");
         return found;
     }
@@ -233,9 +233,9 @@ public abstract class Searches {
      * matching elements
      */
     public static <C extends Collection<E>, E> C find(Iterator<E> iterator, Provider<C> provider, Predicate<E> predicate) {
-        final Delegate<C, Iterator<E>> consumer = new ConsumeIntoCollection<C, E>(provider);
+        final Function<Iterator<E>, C> consumer = new ConsumeIntoCollection<>(provider);
         final FilteringIterator<E> filtered = new FilteringIterator<E>(iterator, predicate);
-        final C found = consumer.perform(filtered);
+        final C found = consumer.apply(filtered);
         dbc.precondition(!found.isEmpty(), "no element matched");
         return found;
     }
@@ -252,9 +252,9 @@ public abstract class Searches {
      */
     public static <E> List<E> find(Iterable<E> iterable, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot search a null iterable");
-        final Delegate<ArrayList<E>, Iterator<E>> consumer = new ConsumeIntoCollection<ArrayList<E>, E>(new ArrayListFactory<E>());
+        final Function<Iterator<E>, ArrayList<E>> consumer = new ConsumeIntoCollection<>(new ArrayListFactory<E>());
         final FilteringIterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), predicate);
-        final ArrayList<E> found = consumer.perform(filtered);
+        final ArrayList<E> found = consumer.apply(filtered);
         dbc.precondition(!found.isEmpty(), "no element matched");
         return found;
     }
@@ -274,9 +274,9 @@ public abstract class Searches {
      */
     public static <C extends Collection<E>, E> C find(Iterable<E> iterable, C collection, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot search a null iterable");
-        final Delegate<C, Iterator<E>> consumer = new ConsumeIntoCollection<C, E>(new ConstantProvider<C>(collection));
+        final Function<Iterator<E>, C> consumer = new ConsumeIntoCollection<>(new ConstantProvider<C>(collection));
         final FilteringIterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), predicate);
-        final C found = consumer.perform(filtered);
+        final C found = consumer.apply(filtered);
         dbc.precondition(!found.isEmpty(), "no element matched");
         return found;
     }
@@ -297,9 +297,9 @@ public abstract class Searches {
      */
     public static <C extends Collection<E>, E> C find(Iterable<E> iterable, Provider<C> provider, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot search a null iterable");
-        final Delegate<C, Iterator<E>> consumer = new ConsumeIntoCollection<C, E>(provider);
+        final Function<Iterator<E>, C> consumer = new ConsumeIntoCollection<>(provider);
         final FilteringIterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), predicate);
-        final C found = consumer.perform(filtered);
+        final C found = consumer.apply(filtered);
         dbc.precondition(!found.isEmpty(), "no element matched");
         return found;
     }
@@ -315,9 +315,9 @@ public abstract class Searches {
      * @return a list containing matching elements
      */
     public static <E> List<E> find(E[] array, Predicate<E> predicate) {
-        final Delegate<ArrayList<E>, Iterator<E>> consumer = new ConsumeIntoCollection<ArrayList<E>, E>(new ArrayListFactory<E>());
+        final Function<Iterator<E>, ArrayList<E>> consumer = new ConsumeIntoCollection<>(new ArrayListFactory<E>());
         final FilteringIterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), predicate);
-        final ArrayList<E> found = consumer.perform(filtered);
+        final ArrayList<E> found = consumer.apply(filtered);
         dbc.precondition(!found.isEmpty(), "no element matched");
         return found;
     }
@@ -336,9 +336,9 @@ public abstract class Searches {
      * @return the passed collection, filled with matching elements
      */
     public static <C extends Collection<E>, E> C find(E[] array, C collection, Predicate<E> predicate) {
-        final Delegate<C, Iterator<E>> consumer = new ConsumeIntoCollection<C, E>(new ConstantProvider<C>(collection));
+        final Function<Iterator<E>, C> consumer = new ConsumeIntoCollection<>(new ConstantProvider<C>(collection));
         final FilteringIterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), predicate);
-        final C found = consumer.perform(filtered);
+        final C found = consumer.apply(filtered);
         dbc.precondition(!found.isEmpty(), "no element matched");
         return found;
     }
@@ -358,9 +358,9 @@ public abstract class Searches {
      * matching elements
      */
     public static <C extends Collection<E>, E> C find(E[] array, Provider<C> provider, Predicate<E> predicate) {
-        final Delegate<C, Iterator<E>> consumer = new ConsumeIntoCollection<C, E>(provider);
+        final Function<Iterator<E>, C> consumer = new ConsumeIntoCollection<>(provider);
         final FilteringIterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), predicate);
-        final C found = consumer.perform(filtered);
+        final C found = consumer.apply(filtered);
         dbc.precondition(!found.isEmpty(), "no element matched");
         return found;
     }
@@ -376,7 +376,7 @@ public abstract class Searches {
      */
     public static <E> Maybe<E> searchFirst(E[] array, Predicate<E> predicate) {
         final FilteringIterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), predicate);
-        return new MaybeFirstElement<E>().perform(filtered);
+        return new MaybeFirstElement<E>().apply(filtered);
     }
 
     /**
@@ -390,7 +390,7 @@ public abstract class Searches {
      */
     public static <E> Maybe<E> searchFirst(Iterator<E> iterator, Predicate<E> predicate) {
         final Iterator<E> filtered = new FilteringIterator<E>(iterator, predicate);
-        return new MaybeFirstElement<E>().perform(filtered);
+        return new MaybeFirstElement<E>().apply(filtered);
     }
 
     /**
@@ -405,7 +405,7 @@ public abstract class Searches {
     public static <E> Maybe<E> searchFirst(Iterable<E> iterable, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot searchFirst with a null iterable");
         final Iterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), predicate);
-        return new MaybeFirstElement<E>().perform(filtered);
+        return new MaybeFirstElement<E>().apply(filtered);
     }
 
     /**
@@ -419,7 +419,7 @@ public abstract class Searches {
      */
     public static <E> E findFirst(Iterator<E> iterator, Predicate<E> predicate) {
         final Iterator<E> filtered = new FilteringIterator<E>(iterator, predicate);
-        return new FirstElement<E>().perform(filtered);
+        return new FirstElement<E>().apply(filtered);
     }
 
     /**
@@ -434,7 +434,7 @@ public abstract class Searches {
     public static <E> E findFirst(Iterable<E> iterable, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot findFirst with a null iterable");
         final Iterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), predicate);
-        return new FirstElement<E>().perform(filtered);
+        return new FirstElement<E>().apply(filtered);
     }
 
     /**
@@ -448,7 +448,7 @@ public abstract class Searches {
      */
     public static <E> E findFirst(E[] array, Predicate<E> predicate) {
         final Iterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), predicate);
-        return new FirstElement<E>().perform(filtered);
+        return new FirstElement<E>().apply(filtered);
     }
 
     /**
@@ -463,7 +463,7 @@ public abstract class Searches {
      */
     public static <E> Maybe<E> searchOne(Iterator<E> iterator, Predicate<E> predicate) {
         final Iterator<E> filtered = new FilteringIterator<E>(iterator, predicate);
-        return new MaybeOneElement<E>().perform(filtered);
+        return new MaybeOneElement<E>().apply(filtered);
     }
 
     /**
@@ -479,7 +479,7 @@ public abstract class Searches {
     public static <E> Maybe<E> searchOne(Iterable<E> iterable, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot searchOne with a null iterable");
         final Iterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), predicate);
-        return new MaybeOneElement<E>().perform(filtered);
+        return new MaybeOneElement<E>().apply(filtered);
     }
 
     /**
@@ -494,7 +494,7 @@ public abstract class Searches {
      */
     public static <E> Maybe<E> searchOne(E[] array, Predicate<E> predicate) {
         final Iterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), predicate);
-        return new MaybeOneElement<E>().perform(filtered);
+        return new MaybeOneElement<E>().apply(filtered);
     }
 
     /**
@@ -509,7 +509,7 @@ public abstract class Searches {
      */
     public static <E> E findOne(Iterator<E> iterator, Predicate<E> predicate) {
         final Iterator<E> filtered = new FilteringIterator<E>(iterator, predicate);
-        return new OneElement<E>().perform(filtered);
+        return new OneElement<E>().apply(filtered);
     }
 
     /**
@@ -525,7 +525,7 @@ public abstract class Searches {
     public static <E> E findOne(Iterable<E> iterable, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot findOne with a null iterable");
         final Iterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), predicate);
-        return new OneElement<E>().perform(filtered);
+        return new OneElement<E>().apply(filtered);
     }
 
     /**
@@ -540,7 +540,7 @@ public abstract class Searches {
      */
     public static <E> E findOne(E[] array, Predicate<E> predicate) {
         final Iterator<E> filtered = Filtering.filter(new ArrayIterator<E>(array), predicate);
-        return new OneElement<E>().perform(filtered);
+        return new OneElement<E>().apply(filtered);
     }
 
     /**
@@ -554,7 +554,7 @@ public abstract class Searches {
      */
     public static <E> Maybe<E> searchLast(Iterator<E> iterator, Predicate<E> predicate) {
         final Iterator<E> filtered = new FilteringIterator<E>(iterator, predicate);
-        return new MaybeLastElement<E>().perform(filtered);
+        return new MaybeLastElement<E>().apply(filtered);
     }
 
     /**
@@ -569,7 +569,7 @@ public abstract class Searches {
     public static <E> Maybe<E> searchLast(Iterable<E> iterable, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot searchLast with a null iterable");
         final Iterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), predicate);
-        return new MaybeLastElement<E>().perform(filtered);
+        return new MaybeLastElement<E>().apply(filtered);
     }
 
     /**
@@ -583,7 +583,7 @@ public abstract class Searches {
      */
     public static <E> Maybe<E> searchLast(E[] array, Predicate<E> predicate) {
         final Iterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), predicate);
-        return new MaybeLastElement<E>().perform(filtered);
+        return new MaybeLastElement<E>().apply(filtered);
     }
 
     /**
@@ -597,7 +597,7 @@ public abstract class Searches {
      */
     public static <E> E findLast(Iterator<E> iterator, Predicate<E> predicate) {
         final Iterator<E> filtered = new FilteringIterator<E>(iterator, predicate);
-        return new LastElement<E>().perform(filtered);
+        return new LastElement<E>().apply(filtered);
     }
 
     /**
@@ -612,7 +612,7 @@ public abstract class Searches {
     public static <E> E findLast(Iterable<E> iterable, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot searchLast with a null iterable");
         final Iterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), predicate);
-        return new LastElement<E>().perform(filtered);
+        return new LastElement<E>().apply(filtered);
     }
 
     /**
@@ -626,6 +626,6 @@ public abstract class Searches {
      */
     public static <E> E findLast(E[] array, Predicate<E> predicate) {
         final Iterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), predicate);
-        return new LastElement<E>().perform(filtered);
+        return new LastElement<E>().apply(filtered);
     }
 }

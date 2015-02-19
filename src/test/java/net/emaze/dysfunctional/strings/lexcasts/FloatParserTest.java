@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.strings.lexcasts;
 
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,23 +12,23 @@ public class FloatParserTest {
 
     @Test(expected=IllegalArgumentException.class)
     public void parsingNullStringYieldsException() {
-        new FloatParser().perform(null);
+        new FloatParser().apply(null);
     }
     
     @Test(expected=NumberFormatException.class)
     public void parsingInvalidStringYieldsException() {
-        new FloatParser().perform("A");
+        new FloatParser().apply("A");
     }
     
     @Test(expected = ClassCastException.class)
     public void passingNonStringToErasureYieldsException() {
-        Delegate d = new FloatParser();
-        d.perform(new Object());
+        Function d = new FloatParser();
+        d.apply(new Object());
     }        
     
     @Test
     public void parsingValidStringYieldsValue() {
-        final Float got = new FloatParser().perform("1.");
+        final Float got = new FloatParser().apply("1.");
         Assert.assertEquals(Float.valueOf(1), got);
     }
 }

@@ -22,41 +22,41 @@ import org.junit.Test;
  */
 public class PartitionByTest {
 
-    private final Provider<List<O>> LIST_FACTORY = Compositions.compose(new Vary<List<O>, ArrayList<O>>(), new ArrayListFactory<O>());
+    private final Provider<List<O>> LIST_FACTORY = Compositions.compose(new Vary<ArrayList<O>, List<O>>(), new ArrayListFactory<O>());
     private final Predicate<O> PARTITIONER = new Always<O>();
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingPartitionByWithNullPartitionerYieldsException() {
-        new PartitionBy<List<O>, List<O>, O>(null, LIST_FACTORY, LIST_FACTORY);
+        new PartitionBy<>(null, LIST_FACTORY, LIST_FACTORY);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingPartitionByWithNullAcceptedCollectionProviderYieldsException() {
-        new PartitionBy<List<O>, List<O>, O>(PARTITIONER, null, LIST_FACTORY);
+        new PartitionBy<>(PARTITIONER, null, LIST_FACTORY);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingPartitionByWithNullRejectedCollectionProviderYieldsException() {
-        new PartitionBy<List<O>, List<O>, O>(PARTITIONER, LIST_FACTORY, null);
+        new PartitionBy<>(PARTITIONER, LIST_FACTORY, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void partitioningNullIteratorYieldsException() {
-        final PartitionBy<List<O>, List<O>, O> partitionBy = new PartitionBy<List<O>, List<O>, O>(PARTITIONER, LIST_FACTORY, LIST_FACTORY);
-        partitionBy.perform(null);
+        final PartitionBy<O, List<O>, List<O>> partitionBy = new PartitionBy<>(PARTITIONER, LIST_FACTORY, LIST_FACTORY);
+        partitionBy.apply(null);
     }
 
     @Test
     public void acceptedValuesAreInFirstCollection() {
-        final PartitionBy<List<O>, List<O>, O> partitionBy = new PartitionBy<List<O>, List<O>, O>(PARTITIONER, LIST_FACTORY, LIST_FACTORY);
-        final Pair<List<O>, List<O>> got = partitionBy.perform(Iterations.iterator(O.ONE));
+        final PartitionBy<O, List<O>, List<O>> partitionBy = new PartitionBy<>(PARTITIONER, LIST_FACTORY, LIST_FACTORY);
+        final Pair<List<O>, List<O>> got = partitionBy.apply(Iterations.iterator(O.ONE));
         Assert.assertEquals(Arrays.asList(O.ONE), got.first());
     }
 
     @Test
     public void rejectedValuesAreInSecondCollection() {
-        final PartitionBy<List<O>, List<O>, O> partitionBy = new PartitionBy<List<O>, List<O>, O>(new Never<O>(), LIST_FACTORY, LIST_FACTORY);
-        final Pair<List<O>, List<O>> got = partitionBy.perform(Iterations.iterator(O.ONE));
+        final PartitionBy<O, List<O>, List<O>> partitionBy = new PartitionBy<>(new Never<O>(), LIST_FACTORY, LIST_FACTORY);
+        final Pair<List<O>, List<O>> got = partitionBy.apply(Iterations.iterator(O.ONE));
         Assert.assertEquals(Arrays.asList(O.ONE), got.second());
     }
 }

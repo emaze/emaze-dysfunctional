@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional;
 
 import java.util.Iterator;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
@@ -17,14 +17,14 @@ public class CompositionsTest {
 
     @Test
     public void canComposeTwoDelegates() {
-        final Delegate<O, O> composed = Compositions.compose(new Identity<O>(), new Identity<O>());
+        final Function<O, O> composed = Compositions.compose(new Identity<O>(), new Identity<O>());
         Assert.assertNotNull(composed);
     }
 
     @Test
     public void canComposeThreeDelegates() {
         final Identity<O> i = new Identity<O>();
-        final Delegate<O, O> composed = Compositions.compose(i, i, i);
+        final Function<O, O> composed = Compositions.compose(i, i, i);
         Assert.assertNotNull(composed);
     }
 
@@ -55,8 +55,8 @@ public class CompositionsTest {
 
     @Test
     public void canComposeEndoDelegates() {
-        final Iterator<Delegate<O, O>> delegates = Iterations.<Delegate<O, O>>iterator(new Identity<O>(), new Identity<O>());
-        final Delegate<O, O> composed = Compositions.compose(delegates);
+        final Iterator<Function<O, O>> delegates = Iterations.<Function<O, O>>iterator(new Identity<O>(), new Identity<O>());
+        final Function<O, O> composed = Compositions.compose(delegates);
         Assert.assertNotNull(composed);
     }
 

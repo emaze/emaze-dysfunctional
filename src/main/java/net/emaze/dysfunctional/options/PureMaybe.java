@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.options;
 
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 
 /**
  * Pointed.pure() implementation of the {@literal Maybe<T>} functor.
@@ -8,10 +8,10 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
  * @author rferranti
  * @param <T> the value type
  */
-public class PureMaybe<T> implements Delegate<Maybe<T>, T> {
+public class PureMaybe<T> implements Function<T, Maybe<T>> {
 
     @Override
-    public Maybe<T> perform(T value) {
+    public Maybe<T> apply(T value) {
         return Maybe.just(value);
     }
 }

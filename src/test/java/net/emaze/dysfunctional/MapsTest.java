@@ -27,6 +27,7 @@ import org.junit.runners.Suite;
 public class MapsTest {
 
     private static final Map<String, Object> A_MAP = new HashMap<String, Object>();
+    private static final Provider<Map<String, Object>> PROVIDER = Compositions.compose(new Vary<HashMap<String, Object>, Map<String, Object>>(), new HashMapFactory<String, Object>());
 
     public static class Builder {
 
@@ -38,8 +39,7 @@ public class MapsTest {
 
         @Test
         public void canCreateBuilderFromProvider() {
-            final Provider<Map<String, Object>> provider = Compositions.compose(new Vary<Map<String, Object>, HashMap<String, Object>>(), new HashMapFactory<String, Object>());
-            final MapBuilder<String, Object> builder = Maps.from(provider);
+            final MapBuilder<String, Object> builder = Maps.from(PROVIDER);
             Assert.assertNotNull(builder);
         }
 
@@ -72,8 +72,7 @@ public class MapsTest {
 
         @Test
         public void canCreateBuilderFromProvider() {
-            final Provider<Map<String, Object>> provider = Compositions.compose(new Vary<Map<String, Object>, HashMap<String, Object>>(), new HashMapFactory<String, Object>());
-            final NestedMapBuilder<String> builder = Nested.from(provider);
+            final NestedMapBuilder<String> builder = Nested.from(PROVIDER);
             Assert.assertNotNull(builder);
         }
 

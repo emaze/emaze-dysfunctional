@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.ranges;
 
 import java.util.Comparator;
 import java.util.List;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 import net.emaze.dysfunctional.ranges.Range.Endpoint;
@@ -11,7 +11,7 @@ import net.emaze.dysfunctional.ranges.Range.Endpoint;
  *
  * @author rferranti
  */
-public class MakeRange<T> implements Delegate<Range<T>, List<DenseRange<T>>> {
+public class MakeRange<T> implements Function<List<DenseRange<T>>, Range<T>> {
 
     private final SequencingPolicy<T> sequencer;
     private final Comparator<Maybe<T>> comparator;
@@ -24,7 +24,7 @@ public class MakeRange<T> implements Delegate<Range<T>, List<DenseRange<T>>> {
     }
 
     @Override
-    public Range<T> perform(List<DenseRange<T>> wannaBeRange) {
+    public Range<T> apply(List<DenseRange<T>> wannaBeRange) {
         if (wannaBeRange.isEmpty()) {
             return empty;
         }

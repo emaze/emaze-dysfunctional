@@ -51,7 +51,7 @@ public class TransformingIteratorTest {
     @Test
     public void nextTransformsElement() {
         List<Integer> bucket = Arrays.asList(1);
-        TransformingIterator<String, Integer> t = new TransformingIterator<String, Integer>(bucket.iterator(), new ToStringTransformer<Integer>());
+        TransformingIterator<Integer, String> t = new TransformingIterator<>(bucket.iterator(), new ToStringTransformer<Integer>());
         Assert.assertEquals("1", t.next());
     }
 }

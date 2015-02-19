@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.casts;
 
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 
 /**
  * Casts a value.
@@ -9,18 +9,18 @@ import net.emaze.dysfunctional.dispatching.delegates.Delegate;
  * controvariant types.
  *
  * <pre> E.g:
- *   final Delegate<Integer, Integer> source = new Identity<Integer>();
- *   final Delegate<Number, Integer> got = Compositions.compose(new Vary<Number, Integer>(), source);
+   final Function<Integer, Integer> source = new Identity<Integer>();
+   final Function<Integer, Number> got = Compositions.compose(new Vary<Number, Integer>(), source);
  * </pre>
  *
  * @author rferranti
- * @param <R> the result type
  * @param <T> the source type
+ * @param <R> the result type
  */
-public class Vary<R, T> implements Delegate<R, T> {
+public class Vary<T, R> implements Function<T, R> {
 
     @Override
-    public R perform(T value) {
+    public R apply(T value) {
         return (R) value;
     }
 }

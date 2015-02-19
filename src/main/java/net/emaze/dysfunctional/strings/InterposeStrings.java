@@ -21,10 +21,10 @@ public class InterposeStrings<T, V> implements BinaryDelegate<String, Iterator<T
         dbc.precondition(values != null, "calling interpose with a null values");
         dbc.precondition(separators != null, "calling interpose with a null separators");
         final Iterator<String> input = new InterposingIterator<String>(
-                new TransformingIterator<String, T>(values, new ToStringTransformer<T>()),
-                new TransformingIterator<String, V>(separators, new ToStringTransformer<V>()));
+                new TransformingIterator<>(values, new ToStringTransformer<T>()),
+                new TransformingIterator<>(separators, new ToStringTransformer<V>()));
         final StringOutputIterator output = new StringOutputIterator();
         final ConsumeIntoOutputIterator<String> pipe = new ConsumeIntoOutputIterator<String>(output);
-        return pipe.perform(input).toString();
+        return pipe.apply(input).toString();
     }
 }

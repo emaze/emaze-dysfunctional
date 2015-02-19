@@ -15,6 +15,6 @@ public class TimeStrategyToDateProvider implements Provider<Date> {
 
     @Override
     public Date provide() {
-        return new TimeToDate().perform(timeStrategy.currentTime());
+        return new TimeToDate().apply(timeStrategy.currentTime());
     }
 }

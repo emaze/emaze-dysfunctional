@@ -1,16 +1,16 @@
 package net.emaze.dysfunctional.strings;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 
 /**
  *
  * @author rferranti
  */
-public class ToUpperCase implements Delegate<String, String>{
+public class ToUpperCase implements Function<String, String>{
 
     @Override
-    public String perform(String str) {
+    public String apply(String str) {
         dbc.precondition(str != null, "cannot uppercase a null string");
         return str.toUpperCase();
     }

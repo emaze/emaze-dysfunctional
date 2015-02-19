@@ -14,7 +14,7 @@ public class ComposerTest {
     @Test
     public void canComposeTwoDelegates() {
         Composer<Integer, Integer, Integer> c = new Composer<Integer, Integer, Integer>(new Identity<Integer>(), new Identity<Integer>());
-        Assert.assertEquals(1, (int)c.perform(1));
+        Assert.assertEquals(1, (int)c.apply(1));
     }
     
     @Test(expected=IllegalArgumentException.class)

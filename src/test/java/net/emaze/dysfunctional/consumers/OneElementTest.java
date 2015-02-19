@@ -11,25 +11,25 @@ public class OneElementTest {
     @Test(expected = IllegalArgumentException.class)
     public void consuminNullIteratorYieldsException() {
         final Iterator<O> iterator = null;
-        new OneElement<O>().perform(iterator);
+        new OneElement<O>().apply(iterator);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void consuminEmptyIteratorYieldsException() {
         final Iterator<O> iterator = Iterations.iterator();
-        new OneElement<O>().perform(iterator);
+        new OneElement<O>().apply(iterator);
     }
 
     @Test(expected = IllegalStateException.class)
     public void consuminIteratorWithMoreThanOneElementYieldsException() {
         final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER);
-        new OneElement<O>().perform(iterator);
+        new OneElement<O>().apply(iterator);
     }
 
     @Test
     public void consuminIteratorWithOneElementYieldsTheElement() {
         final Iterator<String> iterator = Iterations.iterator("the only element");
-        final String got = new OneElement<String>().perform(iterator);
+        final String got = new OneElement<String>().apply(iterator);
         Assert.assertEquals("the only element", got);
     }
 }

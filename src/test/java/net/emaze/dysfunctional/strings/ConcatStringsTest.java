@@ -14,13 +14,13 @@ public class ConcatStringsTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void concatNullIteratorYieldsException() {
-        new ConcatStrings().perform(null);
+        new ConcatStrings().apply(null);
     }
 
     @Test
     public void canConcatMultipleStrings() {
         final Iterator<String> iterator = Iterations.iterator("1", "2");
-        final String got = new ConcatStrings().perform(iterator);
+        final String got = new ConcatStrings().apply(iterator);
         Assert.assertEquals("12", got);
     }
 }

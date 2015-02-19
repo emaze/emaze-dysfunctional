@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.options;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
@@ -26,16 +26,16 @@ public class Either<LT, RT> {
         this.right = right;
     }
 
-    public <LR, RR> Either<LR, RR> fmap(Delegate<LR, LT> withLeft, Delegate<RR, RT> withRight) {
+    public <LR, RR> Either<LR, RR> fmap(Function<LT, LR> withLeft, Function<RT, RR> withRight) {
         dbc.precondition(withLeft != null, "cannot fmap an either with a null left delegate");
         dbc.precondition(withRight != null, "cannot fmap an either with a null right delegate");
         if (left.hasValue()) {
-            return Either.left(withLeft.perform(left.value()));
+            return Either.left(withLeft.apply(left.value()));
         }
-        return Either.right(withRight.perform(right.value()));
+        return Either.right(withRight.apply(right.value()));
     }
 
-    public <T> T fold(Delegate<T, LT> withLeft, Delegate<T, RT> withRight) {
+    public <T> T fold(Function<LT, T> withLeft, Function<RT, T> withRight) {
         dbc.precondition(withLeft != null, "cannot fold an either with a null left delegate");
         dbc.precondition(withRight != null, "cannot fold an either with a null right delegate");
         return left.fmap(withLeft).orElse(right.fmap(withRight)).value();

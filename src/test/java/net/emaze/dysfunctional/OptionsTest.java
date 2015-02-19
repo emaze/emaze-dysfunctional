@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.options.Either;
@@ -150,8 +150,8 @@ public class OptionsTest {
 
         @Test
         public void canLiftDelegate() {
-            Delegate<Integer, Integer> delegate = new Identity<Integer>();
-            Delegate<Maybe<Integer>, Maybe<Integer>> lifted = Options.Maybes.lift(delegate);
+            Function<Integer, Integer> delegate = new Identity<Integer>();
+            Function<Maybe<Integer>, Maybe<Integer>> lifted = Options.Maybes.lift(delegate);
             Assert.assertNotNull(lifted);
         }
 

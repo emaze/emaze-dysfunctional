@@ -26,14 +26,14 @@ public class IndexByTest {
     @Test(expected = IllegalArgumentException.class)
     public void callingWithNullIteratorYieldsException() {
         IndexBy<HashMap<O, O>, O, O> indexBy = new IndexBy<HashMap<O, O>, O, O>(new Identity<O>(), new HashMapFactory<O, O>());
-        indexBy.perform(null);
+        indexBy.apply(null);
     }
 
     @Test
     public void resultingMapContainsIndexedValues() {
         final IndexBy<LinkedHashMap<O, O>, O, O> indexBy = new IndexBy<LinkedHashMap<O, O>, O, O>(new Identity<O>(), new LinkedHashMapFactory<O, O>());
         final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER);
-        final LinkedHashMap<O, O> indexed = indexBy.perform(iterator);
+        final LinkedHashMap<O, O> indexed = indexBy.apply(iterator);
 
         final LinkedHashMap<O, O> expected = new LinkedHashMap<O, O>();
         expected.put(O.ONE, O.ONE);

@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
 /**
@@ -14,9 +14,9 @@ import net.emaze.dysfunctional.dispatching.logic.Predicate;
 public class TransformingPredicate<R, T> implements Predicate<T> {
 
     private final Predicate<R> predicate;
-    private final Delegate<R, T> delegate;
+    private final Function<T, R> delegate;
 
-    public TransformingPredicate(Predicate<R> predicate, Delegate<R, T> delegate) {
+    public TransformingPredicate(Predicate<R> predicate, Function<T, R> delegate) {
         dbc.precondition(predicate != null, "cannot compose delegate with a null predicate");
         dbc.precondition(delegate != null, "cannot compose predicate with a null delegate");
         this.predicate = predicate;
@@ -25,6 +25,6 @@ public class TransformingPredicate<R, T> implements Predicate<T> {
 
     @Override
     public boolean accept(T element) {
-        return predicate.accept(delegate.perform(element));
+        return predicate.accept(delegate.apply(element));
     }
 }

@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional;
 
 import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
@@ -34,37 +34,37 @@ public class InterceptorsTest {
 
         @Test
         public void canInterceptOne() {
-            final Delegate<O, O> intercepted = Interceptors.intercept(new Identity<O>(), INTERCEPTOR);
+            final Function<O, O> intercepted = Interceptors.intercept(new Identity<O>(), INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptTwo() {
-            Delegate<O, O> intercepted = Interceptors.intercept(new Identity<O>(), INTERCEPTOR, INTERCEPTOR);
+            Function<O, O> intercepted = Interceptors.intercept(new Identity<O>(), INTERCEPTOR, INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptThree() {
-            Delegate<O, O> intercepted = Interceptors.intercept(new Identity<O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
+            Function<O, O> intercepted = Interceptors.intercept(new Identity<O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptMany() {
-            Delegate<O, O> intercepted = Interceptors.intercept(new Identity<O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
+            Function<O, O> intercepted = Interceptors.intercept(new Identity<O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptIterator() {
-            Delegate<O, O> intercepted = Interceptors.intercept(new Identity<O>(), Iterations.iterator(INTERCEPTOR));
+            Function<O, O> intercepted = Interceptors.intercept(new Identity<O>(), Iterations.iterator(INTERCEPTOR));
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptIterable() {
-            Delegate<O, O> intercepted = Interceptors.intercept(new Identity<O>(), Iterations.iterable(INTERCEPTOR));
+            Function<O, O> intercepted = Interceptors.intercept(new Identity<O>(), Iterations.iterable(INTERCEPTOR));
             Assert.assertNotNull(intercepted);
         }
 

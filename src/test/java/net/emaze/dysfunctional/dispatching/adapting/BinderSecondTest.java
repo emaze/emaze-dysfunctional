@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,8 +17,8 @@ public class BinderSecondTest {
 
     @Test
     public void secondParamIsCorrectlyBound() {
-        final Delegate<String,String> delegate = new BinderSecond<String, String, String>(new ConcatenateString(), "bound");
-        final String got = delegate.perform("passed");
+        final Function<String, String> delegate = new BinderSecond<String, String, String>(new ConcatenateString(), "bound");
+        final String got = delegate.apply("passed");
         Assert.assertEquals("passedbound", got);
     }
 

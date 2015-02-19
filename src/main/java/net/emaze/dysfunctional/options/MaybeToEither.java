@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.options;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 
 /**
@@ -12,7 +12,7 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
  * @param <L> the either left type parameter
  * @param <R> the either right type parameter
  */
-public class MaybeToEither<L, R> implements Delegate<Either<L, R>, Maybe<R>> {
+public class MaybeToEither<L, R> implements Function<Maybe<R>, Either<L, R>> {
 
     private final Provider<L> leftTypeProvider;
 
@@ -22,7 +22,7 @@ public class MaybeToEither<L, R> implements Delegate<Either<L, R>, Maybe<R>> {
     }
 
     @Override
-    public Either<L, R> perform(Maybe<R> maybe) {
+    public Either<L, R> apply(Maybe<R> maybe) {
         dbc.precondition(maybe != null, "cannot transform a null maybe to an either");
         return maybe.either(leftTypeProvider);
     }

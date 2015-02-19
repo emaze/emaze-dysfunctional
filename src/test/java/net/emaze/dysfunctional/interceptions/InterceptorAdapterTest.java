@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.interceptions;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,8 +26,8 @@ public class InterceptorAdapterTest {
     @Test
     public void beforeAndAfterAreCalled() {
         List<Integer> bucket = new ArrayList<Integer>();
-        Delegate<String, String> delegate = new InterceptorAdapter<String, String>(new BucketFillingInterceptor(bucket), new Identity<String>());
-        delegate.perform("useless_param");
+        Function<String, String> delegate = new InterceptorAdapter<String, String>(new BucketFillingInterceptor(bucket), new Identity<String>());
+        delegate.apply("useless_param");
         Assert.assertEquals(2, bucket.size());
 
     }
@@ -35,15 +35,15 @@ public class InterceptorAdapterTest {
     @Test
     public void beforeAndAfterAreCalledInCaseOfException() {
         List<Integer> bucket = new ArrayList<Integer>();
-        Delegate<String, String> delegate = new InterceptorAdapter<String, String>(new BucketFillingInterceptor(bucket), new Delegate<String, String>() {
+        Function<String, String> delegate = new InterceptorAdapter<String, String>(new BucketFillingInterceptor(bucket), new Function<String, String>() {
 
             @Override
-            public String perform(String t) {
+            public String apply(String t) {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
         });
         try {
-            delegate.perform("useless_param");
+            delegate.apply("useless_param");
             Assert.fail("delegate is supposed to throw UnsupportedOperationException");
         }catch(UnsupportedOperationException ex){
             Assert.assertEquals(2, bucket.size());

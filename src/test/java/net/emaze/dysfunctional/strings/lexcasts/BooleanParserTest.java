@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.strings.lexcasts;
 
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -8,29 +8,29 @@ public class BooleanParserTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void parsingNullStringYieldsException() {
-        new BooleanParser().perform(null);
+        new BooleanParser().apply(null);
     }
 
     @Test(expected = RuntimeException.class)
     public void parsingInvalidStringYieldsException() {
-        new BooleanParser().perform("A");
+        new BooleanParser().apply("A");
     }
     
     @Test(expected = ClassCastException.class)
     public void passingNonStringToErasureYieldsException() {
-        Delegate d = new BooleanParser();
-        d.perform(new Object());
+        Function d = new BooleanParser();
+        d.apply(new Object());
     }        
 
     @Test
     public void parsingValidTrueStringYieldsTrue() {
-        final boolean got = new BooleanParser().perform("true");
+        final boolean got = new BooleanParser().apply("true");
         Assert.assertTrue(got);
     }
 
     @Test
     public void parsingValidFalseStringYieldsFalse() {
-        final boolean got = new BooleanParser().perform("false");
+        final boolean got = new BooleanParser().apply("false");
         Assert.assertFalse(got);
     }    
 }

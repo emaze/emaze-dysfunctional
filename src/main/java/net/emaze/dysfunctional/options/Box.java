@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.options;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
@@ -25,7 +25,7 @@ public class Box<T> {
         return new Box<E>();
     }
 
-    public <R> Box<R> fmap(Delegate<R, T> delegate) {
+    public <R> Box<R> fmap(Function<T, R> delegate) {
         dbc.precondition(delegate != null, "cannot perform fmap with a null delegate");
         final Maybe<R> m = content.fmap(delegate);
         return m.hasValue() ? Box.of(m.value()) : Box.<R>empty();
