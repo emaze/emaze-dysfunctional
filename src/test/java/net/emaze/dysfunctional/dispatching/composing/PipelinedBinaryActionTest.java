@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.dispatching.composing;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
+import java.util.function.BiConsumer;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,13 +21,13 @@ public class PipelinedBinaryActionTest {
     @Test
     public void actionsAreCalledInOrder() {
         final List<String> bucket = new ArrayList<String>();
-        final List<BinaryAction<String, String>> actions = Arrays.<BinaryAction<String, String>>asList(new BucketFillingBinaryAction<String>(bucket, "former"), new BucketFillingBinaryAction<String>(bucket, "latter"));
+        final List<BiConsumer<String, String>> actions = Arrays.<BiConsumer<String, String>>asList(new BucketFillingBinaryAction<String>(bucket, "former"), new BucketFillingBinaryAction<String>(bucket, "latter"));
         final PipelinedBinaryAction<String, String> pipeline = new PipelinedBinaryAction<String, String>(actions);
-        pipeline.perform("ignored_value", "ignored_value");
+        pipeline.accept("ignored_value", "ignored_value");
         Assert.assertEquals(Arrays.asList("former", "latter"), bucket);
     }
 
-    public static class BucketFillingBinaryAction<T> implements BinaryAction<T, T> {
+    public static class BucketFillingBinaryAction<T> implements BiConsumer<T, T> {
 
         private final List<T> bucket;
         private final T elementToAdd;
@@ -38,7 +38,7 @@ public class PipelinedBinaryActionTest {
         }
 
         @Override
-        public void perform(T former, T latter) {
+        public void accept(T former, T latter) {
             bucket.add(elementToAdd);
         }
     }

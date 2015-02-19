@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.spying;
 
 import java.util.concurrent.atomic.AtomicLong;
-import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
+import java.util.function.BiConsumer;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -26,8 +26,8 @@ public class BinaryMonitoringActionTest {
     @Test
     public void callingIncrementsTheAtomicLong() {
         final AtomicLong state = new AtomicLong();
-        final BinaryAction<O, O> spy = new BinaryMonitoringAction<O, O>(new BinaryNoop<O, O>(), state);
-        spy.perform(O.ONE, O.ONE);
+        final BiConsumer<O, O> spy = new BinaryMonitoringAction<O, O>(new BinaryNoop<O, O>(), state);
+        spy.accept(O.ONE, O.ONE);
         Assert.assertEquals(1l, state.get());
     }
 }

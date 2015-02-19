@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
 import java.util.function.Consumer;
-import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
+import java.util.function.BiConsumer;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.options.Box;
@@ -23,7 +23,7 @@ public class BinaryToUnaryActionTest {
     @Test
     public void adaptingPassesFirstValueOfPairAsFirstParameter() {
         final Box<O> box = Box.empty();
-        final BinaryAction<O, O> spy = Spies.spy1st(new BinaryNoop<O, O>(), box);
+        final BiConsumer<O, O> spy = Spies.spy1st(new BinaryNoop<O, O>(), box);
         final Consumer<Pair<O, O>> action = new BinaryToUnaryAction<O, O>(spy);
         action.accept(Pair.of(O.ONE, O.IGNORED));
         Assert.assertEquals(O.ONE, box.getContent());
@@ -31,7 +31,7 @@ public class BinaryToUnaryActionTest {
     @Test
     public void adaptingPassesSecondValueOfPairAsSecondParameter() {
         final Box<O> box = Box.empty();
-        final BinaryAction<O, O> spy = Spies.spy2nd(new BinaryNoop<O, O>(), box);
+        final BiConsumer<O, O> spy = Spies.spy2nd(new BinaryNoop<O, O>(), box);
         final Consumer<Pair<O, O>> action = new BinaryToUnaryAction<O, O>(spy);
         action.accept(Pair.of(O.IGNORED, O.ONE));
         Assert.assertEquals(O.ONE, box.getContent());

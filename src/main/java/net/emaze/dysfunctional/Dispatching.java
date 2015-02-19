@@ -1,13 +1,13 @@
 package net.emaze.dysfunctional;
 
 import java.util.Iterator;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.adapting.*;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
@@ -44,7 +44,7 @@ public abstract class Dispatching {
      * @param first the value to be curried as first parameter
      * @return the curried unary action
      */
-    public static <T1, T2> Consumer<T2> curry(BinaryAction<T1, T2> action, T1 first) {
+    public static <T1, T2> Consumer<T2> curry(BiConsumer<T1, T2> action, T1 first) {
         return new ActionBinderFirst<T1, T2>(action, first);
     }
 
@@ -58,7 +58,7 @@ public abstract class Dispatching {
      * @param first the value to be curried
      * @return the curried binary action
      */
-    public static <T1, T2, T3> BinaryAction<T2, T3> curry(TernaryAction<T1, T2, T3> action, T1 first) {
+    public static <T1, T2, T3> BiConsumer<T2, T3> curry(TernaryAction<T1, T2, T3> action, T1 first) {
         return new ActionBinderFirstOfThree<T1, T2, T3>(action, first);
     }
 
@@ -153,7 +153,7 @@ public abstract class Dispatching {
      * @param second the value to be curried as second parameter
      * @return the curried binary action
      */
-    public static <T1, T2, T3> BinaryAction<T1, T3> mcurry(TernaryAction<T1, T2, T3> action, T2 second) {
+    public static <T1, T2, T3> BiConsumer<T1, T3> mcurry(TernaryAction<T1, T2, T3> action, T2 second) {
         return new ActionBinderSecondOfThree<T1, T2, T3>(action, second);
     }
 
@@ -197,7 +197,7 @@ public abstract class Dispatching {
      * @param second the value to be curried as second parameter
      * @return the curried action
      */
-    public static <T1, T2> Consumer<T1> rcurry(BinaryAction<T1, T2> action, T2 second) {
+    public static <T1, T2> Consumer<T1> rcurry(BiConsumer<T1, T2> action, T2 second) {
         return new ActionBinderSecond<T1, T2>(action, second);
     }
 
@@ -212,7 +212,7 @@ public abstract class Dispatching {
      * @param third the value to be curried as third parameter
      * @return the curried binary action
      */
-    public static <T1, T2, T3> BinaryAction<T1, T2> rcurry(TernaryAction<T1, T2, T3> action, T3 third) {
+    public static <T1, T2, T3> BiConsumer<T1, T2> rcurry(TernaryAction<T1, T2, T3> action, T3 third) {
         return new ActionBinderThird<T1, T2, T3>(action, third);
     }
 
@@ -381,7 +381,7 @@ public abstract class Dispatching {
      * @param ignored the adapted action ignored parameter type class
      * @return the adapted binary action
      */
-    public static <T1, T2> BinaryAction<T1, T2> ignore1st(Consumer<T2> action, Class<T1> ignored) {
+    public static <T1, T2> BiConsumer<T1, T2> ignore1st(Consumer<T2> action, Class<T1> ignored) {
         return new ActionIgnoreFirst<T1, T2>(action);
     }
 
@@ -396,7 +396,7 @@ public abstract class Dispatching {
      * @param ignored the adapted action ignored parameter type class
      * @return the adapted ternary action
      */
-    public static <T1, T2, T3> TernaryAction<T1, T2, T3> ignore1st(BinaryAction<T2, T3> action, Class<T1> ignored) {
+    public static <T1, T2, T3> TernaryAction<T1, T2, T3> ignore1st(BiConsumer<T2, T3> action, Class<T1> ignored) {
         return new ActionIgnoreFirstOfThree<T1, T2, T3>(action);
     }
 
@@ -409,7 +409,7 @@ public abstract class Dispatching {
      * @param ignored the adapted action ignored parameter type class
      * @return the adapted binary action
      */
-    public static <T1, T2> BinaryAction<T1, T2> ignore2nd(Consumer<T1> action, Class<T2> ignored) {
+    public static <T1, T2> BiConsumer<T1, T2> ignore2nd(Consumer<T1> action, Class<T2> ignored) {
         return new ActionIgnoreSecond<T1, T2>(action);
     }
 
@@ -424,7 +424,7 @@ public abstract class Dispatching {
      * @param ignored the adapted action ignored parameter type class
      * @return the adapted ternary action
      */
-    public static <T1, T2, T3> TernaryAction<T1, T2, T3> ignore2nd(BinaryAction<T1, T3> action, Class<T2> ignored) {
+    public static <T1, T2, T3> TernaryAction<T1, T2, T3> ignore2nd(BiConsumer<T1, T3> action, Class<T2> ignored) {
         return new ActionIgnoreSecondOfThree<T1, T2, T3>(action);
     }
 
@@ -439,7 +439,7 @@ public abstract class Dispatching {
      * @param ignored the adapted action ignored parameter type class
      * @return the adapted ternary action
      */
-    public static <T1, T2, T3> TernaryAction<T1, T2, T3> ignore3rd(BinaryAction<T1, T2> action, Class<T3> ignored) {
+    public static <T1, T2, T3> TernaryAction<T1, T2, T3> ignore3rd(BiConsumer<T1, T2> action, Class<T3> ignored) {
         return new ActionIgnoreThird<T1, T2, T3>(action);
     }
 
@@ -581,7 +581,7 @@ public abstract class Dispatching {
      * @param adaptee the action to be adapted
      * @return the adapted delegate
      */
-    public static <T1, T2> BiFunction<T1, T2, Void> delegate(BinaryAction<T1, T2> adaptee) {
+    public static <T1, T2> BiFunction<T1, T2, Void> delegate(BiConsumer<T1, T2> adaptee) {
         return new BinaryActionToBinaryDelegate<T1, T2>(adaptee);
     }
 
@@ -666,7 +666,7 @@ public abstract class Dispatching {
      * @param delegate the delegate to be adapted
      * @return the adapted action
      */
-    public static <T1, T2, R> BinaryAction<T1, T2> action(BiFunction<T1, T2, R> delegate) {
+    public static <T1, T2, R> BiConsumer<T1, T2> action(BiFunction<T1, T2, R> delegate) {
         return new BinaryDelegateToBinaryAction<>(delegate);
     }
 

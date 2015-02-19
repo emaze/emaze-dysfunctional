@@ -24,7 +24,7 @@ public class ActionBinderSecondOfThreeTest {
         final Box<O> param2 = Box.empty();
         final TernaryAction<O, O, O> spy = Spies.spy2nd(new TernaryNoop<O, O, O>(), param2);
         final ActionBinderSecondOfThree<O, O, O> adapted = new ActionBinderSecondOfThree<O, O, O>(spy, O.ONE);
-        adapted.perform(O.ANOTHER, O.ANOTHER);
+        adapted.accept(O.ANOTHER, O.ANOTHER);
         Assert.assertEquals(param2.getContent(), O.ONE);
     }
 }

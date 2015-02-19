@@ -1,14 +1,14 @@
 package net.emaze.dysfunctional.time;
 
 import java.util.concurrent.TimeUnit;
-import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
+import java.util.function.BiConsumer;
 import net.emaze.dysfunctional.tuples.Pair;
 
 /**
  *
  * @author rferranti
  */
-public class SleepAtLeast implements BinaryAction<Long, TimeUnit> {
+public class SleepAtLeast implements BiConsumer<Long, TimeUnit> {
 
     private final TimeStrategy time;
 
@@ -17,7 +17,7 @@ public class SleepAtLeast implements BinaryAction<Long, TimeUnit> {
     }
 
     @Override
-    public void perform(Long duration, TimeUnit unit) {
+    public void accept(Long duration, TimeUnit unit) {
         Pair<Long, TimeUnit> slept = sleep(duration, unit);
         long elapsedInStrategyUnit = slept.first();
         while (elapsedInStrategyUnit < slept.second().convert(duration, unit)) {

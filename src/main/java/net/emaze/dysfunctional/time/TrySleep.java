@@ -1,13 +1,13 @@
 package net.emaze.dysfunctional.time;
 
 import java.util.concurrent.TimeUnit;
-import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
+import java.util.function.BiConsumer;
 
 /**
  *
  * @author rferranti
  */
-public class TrySleep implements BinaryAction<Long, TimeUnit> {
+public class TrySleep implements BiConsumer<Long, TimeUnit> {
 
     private final TimeStrategy time;
 
@@ -16,7 +16,7 @@ public class TrySleep implements BinaryAction<Long, TimeUnit> {
     }
 
     @Override
-    public void perform(Long duration, TimeUnit unit) {
+    public void accept(Long duration, TimeUnit unit) {
         try {
             time.sleep(duration, unit);
         } catch (SleepInterruptedException ex) {

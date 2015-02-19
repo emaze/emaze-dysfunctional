@@ -24,7 +24,7 @@ public class ActionIgnoreSecondTest {
         final Box<O> param = Box.empty();
         final Consumer<O> spy = Spies.spy(new Noop<O>(), param);
         final ActionIgnoreSecond<O, O> adapted = new ActionIgnoreSecond<O, O>(spy);
-        adapted.perform(O.ONE, O.IGNORED);
+        adapted.accept(O.ONE, O.IGNORED);
         Assert.assertEquals(param.getContent(), O.ONE);
     }
 }

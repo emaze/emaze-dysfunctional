@@ -32,7 +32,7 @@ public class BinaryCapturingActionTest {
         final Box<O> first = Box.empty();
         final Box<O> second = Box.empty();
         final BinaryCapturingAction<O, O> capturer = new BinaryCapturingAction<O, O>(new BinaryNoop<O, O>(), first, second);
-        capturer.perform(O.ONE, O.ANOTHER);
+        capturer.accept(O.ONE, O.ANOTHER);
         Assert.assertEquals(O.ONE, first.getContent());
     }
 
@@ -41,7 +41,7 @@ public class BinaryCapturingActionTest {
         final Box<O> first = Box.empty();
         final Box<O> second = Box.empty();
         final BinaryCapturingAction<O, O> capturer = new BinaryCapturingAction<O, O>(new BinaryNoop<O, O>(), first, second);
-        capturer.perform(O.ONE, O.ANOTHER);
+        capturer.accept(O.ONE, O.ANOTHER);
         Assert.assertEquals(O.ANOTHER, second.getContent());
     }
 }

@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
+import java.util.function.BiConsumer;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 
 /**
@@ -15,15 +15,15 @@ import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
  */
 public class ActionIgnoreSecondOfThree<T1, T2, T3> implements TernaryAction<T1, T2, T3> {
 
-    private final BinaryAction<T1, T3> adapted;
+    private final BiConsumer<T1, T3> adapted;
 
-    public ActionIgnoreSecondOfThree(BinaryAction<T1, T3> adaptee) {
+    public ActionIgnoreSecondOfThree(BiConsumer<T1, T3> adaptee) {
         dbc.precondition(adaptee != null, "cannot ignore second parameter of a null action");
         this.adapted = adaptee;
     }
 
     @Override
     public void perform(T1 first, T2 second, T3 third) {
-        adapted.perform(first, third);
+        adapted.accept(first, third);
     }
 }

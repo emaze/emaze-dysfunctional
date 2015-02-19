@@ -1,8 +1,8 @@
 package net.emaze.dysfunctional;
 
 import java.util.Iterator;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.composing.PipelinedAction;
 import net.emaze.dysfunctional.dispatching.composing.PipelinedBinaryAction;
@@ -56,7 +56,7 @@ public abstract class Pipelines {
          * @param actions the iterable to be transformed
          * @return the pipelined action
          */
-        public static <T1, T2> BinaryAction<T1, T2> pipeline(Iterable<BinaryAction<T1, T2>> actions) {
+        public static <T1, T2> BiConsumer<T1, T2> pipeline(Iterable<BiConsumer<T1, T2>> actions) {
             return new PipelinedBinaryAction<T1, T2>(actions);
         }
 
@@ -68,7 +68,7 @@ public abstract class Pipelines {
          * @param actions the iterator to be transformed
          * @return the pipelined action
          */
-        public static <T1, T2> BinaryAction<T1, T2> pipeline(Iterator<BinaryAction<T1, T2>> actions) {
+        public static <T1, T2> BiConsumer<T1, T2> pipeline(Iterator<BiConsumer<T1, T2>> actions) {
             return new PipelinedBinaryAction<T1, T2>(Consumers.all(actions));
         }
     }
@@ -160,7 +160,7 @@ public abstract class Pipelines {
      * @param action the action to be transformed
      * @return the pipelined action
      */
-    public static <T1, T2> BinaryAction<T1, T2> pipeline(BinaryAction<T1, T2> action) {
+    public static <T1, T2> BiConsumer<T1, T2> pipeline(BiConsumer<T1, T2> action) {
         return new PipelinedBinaryAction<T1, T2>(Iterations.iterable(action));
     }
 
@@ -173,7 +173,7 @@ public abstract class Pipelines {
      * @param latter the latter action
      * @return the pipelined action
      */
-    public static <T1, T2> BinaryAction<T1, T2> pipeline(BinaryAction<T1, T2> former, BinaryAction<T1, T2> latter) {
+    public static <T1, T2> BiConsumer<T1, T2> pipeline(BiConsumer<T1, T2> former, BiConsumer<T1, T2> latter) {
         return new PipelinedBinaryAction<T1, T2>(Iterations.iterable(former, latter));
     }
 
@@ -187,7 +187,7 @@ public abstract class Pipelines {
      * @param third the third action
      * @return the pipelined action
      */
-    public static <T1, T2> BinaryAction<T1, T2> pipeline(BinaryAction<T1, T2> first, BinaryAction<T1, T2> second, BinaryAction<T1, T2> third) {
+    public static <T1, T2> BiConsumer<T1, T2> pipeline(BiConsumer<T1, T2> first, BiConsumer<T1, T2> second, BiConsumer<T1, T2> third) {
         return new PipelinedBinaryAction<T1, T2>(Iterations.iterable(first, second, third));
     }
 
@@ -199,7 +199,7 @@ public abstract class Pipelines {
      * @param actions the array of actions to be transformed
      * @return the pipelined action
      */
-    public static <T1, T2> BinaryAction<T1, T2> pipeline(BinaryAction<T1, T2>... actions) {
+    public static <T1, T2> BiConsumer<T1, T2> pipeline(BiConsumer<T1, T2>... actions) {
         return new PipelinedBinaryAction<T1, T2>(Iterations.iterable(actions));
     }
 

@@ -1,13 +1,13 @@
 package net.emaze.dysfunctional;
 
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.Proposition;
@@ -160,7 +160,7 @@ public abstract class Spies {
      * @param param2 a box that will be containing the second spied parameter
      * @return the proxied action
      */
-    public static <T1, T2> BinaryAction<T1, T2> spy(BinaryAction<T1, T2> action, Box<T1> param1, Box<T2> param2) {
+    public static <T1, T2> BiConsumer<T1, T2> spy(BiConsumer<T1, T2> action, Box<T1> param1, Box<T2> param2) {
         return new BinaryCapturingAction<T1, T2>(action, param1, param2);
     }
 
@@ -359,7 +359,7 @@ public abstract class Spies {
      * @param param1 a box that will be containing the first spied parameter
      * @return the proxied action
      */
-    public static <T1, T2> BinaryAction<T1, T2> spy1st(BinaryAction<T1, T2> action, Box<T1> param1) {
+    public static <T1, T2> BiConsumer<T1, T2> spy1st(BiConsumer<T1, T2> action, Box<T1> param1) {
         return spy(action, param1, Box.<T2>empty());
     }
 
@@ -372,7 +372,7 @@ public abstract class Spies {
      * @param param2 a box that will be containing the second spied parameter
      * @return the proxied action
      */
-    public static <T1, T2> BinaryAction<T1, T2> spy2nd(BinaryAction<T1, T2> action, Box<T2> param2) {
+    public static <T1, T2> BiConsumer<T1, T2> spy2nd(BiConsumer<T1, T2> action, Box<T2> param2) {
         return spy(action, Box.<T1>empty(), param2);
     }
 
@@ -587,7 +587,7 @@ public abstract class Spies {
      * @param calls a value holder accumulating calls
      * @return the proxied action
      */
-    public static <T1, T2> BinaryAction<T1, T2> monitor(BinaryAction<T1, T2> action, AtomicLong calls) {
+    public static <T1, T2> BiConsumer<T1, T2> monitor(BiConsumer<T1, T2> action, AtomicLong calls) {
         return new BinaryMonitoringAction<T1, T2>(action, calls);
     }
 

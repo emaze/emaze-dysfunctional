@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import java.util.concurrent.atomic.AtomicLong;
 import net.emaze.dysfunctional.Spies;
-import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
+import java.util.function.BiConsumer;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
 import java.util.function.BiFunction;
 import net.emaze.dysfunctional.options.Box;
@@ -24,7 +24,7 @@ public class BinaryActionToBinaryDelegateTest {
     @Test
     public void callingAdapterCallsAdapted() {
         final AtomicLong calls = new AtomicLong();
-        final BinaryAction<O, O> adaptee = Spies.monitor(new BinaryNoop<O, O>(), calls);
+        final BiConsumer<O, O> adaptee = Spies.monitor(new BinaryNoop<O, O>(), calls);
         final BiFunction<O, O, Void> del = new BinaryActionToBinaryDelegate<>(adaptee);
         del.apply(O.ONE, O.ANOTHER);
 
@@ -34,7 +34,7 @@ public class BinaryActionToBinaryDelegateTest {
     @Test
     public void callingAdapterPassesFirstArgument() {
         final Box<O> param1 = Box.empty();
-        final BinaryAction<O, O> adaptee = Spies.spy1st(new BinaryNoop<O, O>(), param1);
+        final BiConsumer<O, O> adaptee = Spies.spy1st(new BinaryNoop<O, O>(), param1);
         final BiFunction<O, O, Void> del = new BinaryActionToBinaryDelegate<>(adaptee);
         del.apply(O.ONE, O.ANOTHER);
 
@@ -44,7 +44,7 @@ public class BinaryActionToBinaryDelegateTest {
     @Test
     public void callingAdapterPassesSecondArgument() {
         final Box<O> param2 = Box.empty();
-        final BinaryAction<O, O> adaptee = Spies.spy2nd(new BinaryNoop<O, O>(), param2);
+        final BiConsumer<O, O> adaptee = Spies.spy2nd(new BinaryNoop<O, O>(), param2);
         final BiFunction<O, O, Void> del = new BinaryActionToBinaryDelegate<>(adaptee);
         del.apply(O.ONE, O.ANOTHER);
 

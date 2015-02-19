@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.spying;
 
 import java.util.concurrent.atomic.AtomicLong;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
+import java.util.function.BiConsumer;
 
 /**
  * Proxies a binary action monitoring its calls.
@@ -11,12 +11,12 @@ import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
  * @param <T1> the first parameter type
  * @param <T2> the second parameter type
  */
-public class BinaryMonitoringAction<T1, T2> implements BinaryAction<T1, T2> {
+public class BinaryMonitoringAction<T1, T2> implements BiConsumer<T1, T2> {
 
-    private final BinaryAction<T1, T2> nested;
+    private final BiConsumer<T1, T2> nested;
     private final AtomicLong calls;
 
-    public BinaryMonitoringAction(BinaryAction<T1, T2> nested, AtomicLong calls) {
+    public BinaryMonitoringAction(BiConsumer<T1, T2> nested, AtomicLong calls) {
         dbc.precondition(nested != null, "cannot monitor a null action");
         dbc.precondition(calls != null, "cannot monitor with a null AtomicLong");
         this.nested = nested;
@@ -24,8 +24,8 @@ public class BinaryMonitoringAction<T1, T2> implements BinaryAction<T1, T2> {
     }
 
     @Override
-    public void perform(T1 former, T2 latter) {
+    public void accept(T1 former, T2 latter) {
         calls.incrementAndGet();
-        nested.perform(former, latter);
+        nested.accept(former, latter);
     }
 }

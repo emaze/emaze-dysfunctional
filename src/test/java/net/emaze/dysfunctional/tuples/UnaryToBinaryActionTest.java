@@ -24,7 +24,7 @@ public class UnaryToBinaryActionTest {
         final Box<Pair<O,O>> box = Box.empty();
         final Consumer<Pair<O, O>> action = Spies.spy(new Noop<Pair<O, O>>(), box);
         final UnaryToBinaryAction<O, O> adapted = new UnaryToBinaryAction<O, O>(action);
-        adapted.perform(O.ONE, O.ANOTHER);
+        adapted.accept(O.ONE, O.ANOTHER);
         Assert.assertEquals(Pair.of(O.ONE, O.ANOTHER), box.getContent());
     }
 }

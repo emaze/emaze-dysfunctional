@@ -1,11 +1,11 @@
 package net.emaze.dysfunctional;
 
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
@@ -51,7 +51,7 @@ public abstract class Tuples {
      * @param action the action to be adapted
      * @return the adapted action
      */
-    public static <T, U> Consumer<Pair<T, U>> tupled(BinaryAction<T, U> action) {
+    public static <T, U> Consumer<Pair<T, U>> tupled(BiConsumer<T, U> action) {
         return new BinaryToUnaryAction<T, U>(action);
     }
 
@@ -133,7 +133,7 @@ public abstract class Tuples {
          * @param action the action to be adapted
          * @return the adapted action
          */
-        public static <T, U> BinaryAction<T, U> untupled(Consumer<Pair<T, U>> action) {
+        public static <T, U> BiConsumer<T, U> untupled(Consumer<Pair<T, U>> action) {
             return new UnaryToBinaryAction<T, U>(action);
         }
     }

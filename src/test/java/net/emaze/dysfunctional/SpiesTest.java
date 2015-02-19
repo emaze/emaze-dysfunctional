@@ -2,7 +2,7 @@ package net.emaze.dysfunctional;
 
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
-import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
+import java.util.function.BiConsumer;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.dispatching.actions.Slacker;
@@ -256,21 +256,21 @@ public class SpiesTest {
         public void canSpyBinaryAction() {
             final Box<O> param1 = new Box<O>();
             final Box<O> param2 = new Box<O>();
-            final BinaryAction<O, O> spied = Spies.spy(new BinaryNoop<O, O>(), param1, param2);
+            final BiConsumer<O, O> spied = Spies.spy(new BinaryNoop<O, O>(), param1, param2);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpyFirstParmaOfBinaryAction() {
             final Box<O> param1 = new Box<O>();
-            final BinaryAction<O, O> spied = Spies.spy1st(new BinaryNoop<O, O>(), param1);
+            final BiConsumer<O, O> spied = Spies.spy1st(new BinaryNoop<O, O>(), param1);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpySecondParmaOfBinaryAction() {
             final Box<O> param2 = new Box<O>();
-            final BinaryAction<O, O> spied = Spies.spy2nd(new BinaryNoop<O, O>(), param2);
+            final BiConsumer<O, O> spied = Spies.spy2nd(new BinaryNoop<O, O>(), param2);
             Assert.assertNotNull(spied);
         }
 
@@ -353,7 +353,7 @@ public class SpiesTest {
 
         @Test
         public void canMonitorABinaryAction() {
-            final BinaryAction<O, O> monitor = Spies.monitor(new BinaryNoop<O, O>(), accumulator);
+            final BiConsumer<O, O> monitor = Spies.monitor(new BinaryNoop<O, O>(), accumulator);
             Assert.assertNotNull(monitor);
         }
 

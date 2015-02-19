@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
-import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
+import java.util.function.BiConsumer;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.options.Box;
@@ -23,7 +23,7 @@ public class ActionIgnoreThirdTest {
     public void canIgnoreThirdParameter() {
         final Box<O> param1 = Box.empty();
         final Box<O> param2 = Box.empty();
-        final BinaryAction<O, O> spy = Spies.spy(new BinaryNoop<O, O>(), param1, param2);
+        final BiConsumer<O, O> spy = Spies.spy(new BinaryNoop<O, O>(), param1, param2);
         final ActionIgnoreThird<O, O, O> adapted = new ActionIgnoreThird<O, O, O>(spy);
         adapted.perform(O.ONE, O.ANOTHER, O.IGNORED);
         Assert.assertTrue(param1.getContent().equals(O.ONE) && param2.getContent().equals(O.ANOTHER));

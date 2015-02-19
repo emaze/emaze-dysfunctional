@@ -24,7 +24,7 @@ public class ActionBinderFirstOfThreeTest {
         final Box<O> param1 = Box.empty();
         final TernaryAction<O, O, O> spy = Spies.spy1st(new TernaryNoop<O, O, O>(), param1);
         final ActionBinderFirstOfThree<O, O, O> adapted = new ActionBinderFirstOfThree<O, O, O>(spy, O.ONE);
-        adapted.perform(O.ANOTHER, O.ANOTHER);
+        adapted.accept(O.ANOTHER, O.ANOTHER);
         Assert.assertEquals(O.ONE, param1.getContent());
     }
 }

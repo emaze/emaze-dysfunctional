@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Consumer;
-import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
+import java.util.function.BiConsumer;
 
 /**
  * Binary to unary action adapter. Adapting is performed by currying the
@@ -14,10 +14,10 @@ import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
  */
 public class ActionBinderSecond<T1, T2> implements Consumer<T1> {
 
-    private final BinaryAction<T1, T2> adapted;
+    private final BiConsumer<T1, T2> adapted;
     private final T2 second;
 
-    public ActionBinderSecond(BinaryAction<T1, T2> adaptee, T2 second) {
+    public ActionBinderSecond(BiConsumer<T1, T2> adaptee, T2 second) {
         dbc.precondition(adaptee != null, "cannot bind second parameter of a null binary action");
         this.adapted = adaptee;
         this.second = second;
@@ -25,6 +25,6 @@ public class ActionBinderSecond<T1, T2> implements Consumer<T1> {
 
     @Override
     public void accept(T1 first) {
-        adapted.perform(first, second);
+        adapted.accept(first, second);
     }
 }

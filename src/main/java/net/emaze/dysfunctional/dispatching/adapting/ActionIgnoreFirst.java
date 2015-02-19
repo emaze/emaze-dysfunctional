@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Consumer;
-import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
+import java.util.function.BiConsumer;
 
 /**
  * Adapts an action to a binary action. Adapting is performed by ignoring the
@@ -12,7 +12,7 @@ import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
  * @param <T2> the adapter second parameter type
  * @author rferranti
  */
-public class ActionIgnoreFirst<T1, T2> implements BinaryAction<T1, T2> {
+public class ActionIgnoreFirst<T1, T2> implements BiConsumer<T1, T2> {
 
     private final Consumer<T2> adapted;
 
@@ -22,7 +22,7 @@ public class ActionIgnoreFirst<T1, T2> implements BinaryAction<T1, T2> {
     }
 
     @Override
-    public void perform(T1 first, T2 second) {
+    public void accept(T1 first, T2 second) {
         adapted.accept(second);
     }
 }

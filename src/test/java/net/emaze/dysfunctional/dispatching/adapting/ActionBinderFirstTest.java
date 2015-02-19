@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
-import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
+import java.util.function.BiConsumer;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.options.Box;
@@ -22,7 +22,7 @@ public class ActionBinderFirstTest {
     @Test
     public void canBindFirstParameter() {
         final Box<O> param1 = Box.empty();
-        final BinaryAction<O, O> spy = Spies.spy1st(new BinaryNoop<O, O>(), param1);
+        final BiConsumer<O, O> spy = Spies.spy1st(new BinaryNoop<O, O>(), param1);
         final ActionBinderFirst<O, O> adapted = new ActionBinderFirst<O, O>(spy, O.ONE);
         adapted.accept(O.ANOTHER);
         Assert.assertEquals(O.ONE, param1.getContent());

@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional;
 
 import java.util.function.Consumer;
-import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
+import java.util.function.BiConsumer;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
@@ -125,7 +125,7 @@ public class DispatchingTest {
 
         @Test
         public void canAdaptBinaryDelegateToBinaryAction() {
-            final BinaryAction<O, O> adapted = Dispatching.action(new FirstParam<O, O>());
+            final BiConsumer<O, O> adapted = Dispatching.action(new FirstParam<O, O>());
             Assert.assertNotNull(adapted);
         }
 
@@ -225,19 +225,19 @@ public class DispatchingTest {
 
         @Test
         public void canCurryTernaryAction() {
-            final BinaryAction<O, O> adapted = Dispatching.curry(new TernaryNoop<O, O, O>(), O.ONE);
+            final BiConsumer<O, O> adapted = Dispatching.curry(new TernaryNoop<O, O, O>(), O.ONE);
             Assert.assertNotNull(adapted);
         }
 
         @Test
         public void canMidCurryTernaryAction() {
-            final BinaryAction<O, O> adapted = Dispatching.mcurry(new TernaryNoop<O, O, O>(), O.ONE);
+            final BiConsumer<O, O> adapted = Dispatching.mcurry(new TernaryNoop<O, O, O>(), O.ONE);
             Assert.assertNotNull(adapted);
         }
 
         @Test
         public void canRightCurryTernaryAction() {
-            final BinaryAction<O, O> adapted = Dispatching.rcurry(new TernaryNoop<O, O, O>(), O.ONE);
+            final BiConsumer<O, O> adapted = Dispatching.rcurry(new TernaryNoop<O, O, O>(), O.ONE);
             Assert.assertNotNull(adapted);
         }
     }
@@ -333,7 +333,7 @@ public class DispatchingTest {
 
         @Test
         public void canIgnoreFirstForActions() {
-            final BinaryAction<O, O> ignoring = Dispatching.ignore1st(new Noop<O>(), O.class);
+            final BiConsumer<O, O> ignoring = Dispatching.ignore1st(new Noop<O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
@@ -345,7 +345,7 @@ public class DispatchingTest {
 
         @Test
         public void canIgnoreSecondForActions() {
-            final BinaryAction<O, O> ignoring = Dispatching.ignore2nd(new Noop<O>(), O.class);
+            final BiConsumer<O, O> ignoring = Dispatching.ignore2nd(new Noop<O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 

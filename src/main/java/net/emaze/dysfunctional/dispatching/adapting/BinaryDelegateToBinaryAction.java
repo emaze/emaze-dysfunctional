@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
 /**
@@ -13,7 +13,7 @@ import java.util.function.BiFunction;
  * @param <T2> the adapted delegate second parameter type
  * @param <R> the adapted delegate result type
  */
-public class BinaryDelegateToBinaryAction<T1, T2, R> implements BinaryAction<T1, T2> {
+public class BinaryDelegateToBinaryAction<T1, T2, R> implements BiConsumer<T1, T2> {
 
     private final BiFunction<T1, T2, R> adapted;
 
@@ -23,7 +23,7 @@ public class BinaryDelegateToBinaryAction<T1, T2, R> implements BinaryAction<T1,
     }
 
     @Override
-    public void perform(T1 first, T2 second) {
+    public void accept(T1 first, T2 second) {
         adapted.apply(first, second);
     }
 }
