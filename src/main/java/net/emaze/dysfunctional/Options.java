@@ -363,7 +363,7 @@ public abstract class Options {
          * @return the resulting box
          */
         public static <T> Box<T> pure(T value) {
-            return new PureBox<T>().apply(value);
+            return Box.of(value);
         }
 
         /**
@@ -376,7 +376,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<Box<T>> pures(Iterator<T> values) {
-            return new TransformingIterator<>(values, new PureBox<T>());
+            return new TransformingIterator<>(values, Box::of);
         }
 
         /**
@@ -390,7 +390,7 @@ public abstract class Options {
          */
         public static <T> Iterator<Box<T>> pures(Iterable<T> values) {
             dbc.precondition(values != null, "cannot perform pures on a null iterable");
-            return new TransformingIterator<>(values.iterator(), new PureBox<T>());
+            return new TransformingIterator<>(values.iterator(), Box::of);
         }
 
         /**
@@ -402,7 +402,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<Box<T>> pures(T value) {
-            return new TransformingIterator<>(new SingletonIterator<T>(value), new PureBox<T>());
+            return new TransformingIterator<>(new SingletonIterator<T>(value), Box::of);
         }
 
         /**
@@ -415,7 +415,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<Box<T>> pures(T first, T second) {
-            return new TransformingIterator<>(Iterations.iterator(first, second), new PureBox<T>());
+            return new TransformingIterator<>(Iterations.iterator(first, second), Box::of);
         }
 
         /**
@@ -430,7 +430,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<Box<T>> pures(T first, T second, T third) {
-            return new TransformingIterator<>(Iterations.iterator(first, second, third), new PureBox<T>());
+            return new TransformingIterator<>(Iterations.iterator(first, second, third), Box::of);
         }
 
         /**
@@ -443,7 +443,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<Box<T>> pures(T... values) {
-            return new TransformingIterator<>(Iterations.iterator(values), new PureBox<T>());
+            return new TransformingIterator<>(Iterations.iterator(values), Box::of);
         }
 
         /**
