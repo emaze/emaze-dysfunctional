@@ -6,7 +6,7 @@ import junit.framework.Assert;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.BinaryNever;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
+import java.util.function.BiPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Never;
 import java.util.function.Predicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
@@ -92,49 +92,49 @@ public class LogicTest {
 
         @Test
         public void canComposeIteratorOfBinaryPredicatesWithAnd() {
-            final Iterable<BinaryPredicate<O, O>> preds = Iterations.iterable(new BinaryAlways<O, O>(), new BinaryNever<O, O>());
-            Assert.assertFalse(Logic.Binary.and(preds.iterator()).accept(O.IGNORED, O.IGNORED));
+            final Iterable<BiPredicate<O, O>> preds = Iterations.iterable(new BinaryAlways<O, O>(), new BinaryNever<O, O>());
+            Assert.assertFalse(Logic.Binary.and(preds.iterator()).test(O.IGNORED, O.IGNORED));
         }
 
         @Test
         public void canComposeIterableOfBinaryPredicatesWithAnd() {
-            final Iterable<BinaryPredicate<O, O>> preds = Iterations.iterable(new BinaryAlways<O, O>(), new BinaryNever<O, O>());
-            Assert.assertFalse(Logic.Binary.and(preds).accept(O.IGNORED, O.IGNORED));
+            final Iterable<BiPredicate<O, O>> preds = Iterations.iterable(new BinaryAlways<O, O>(), new BinaryNever<O, O>());
+            Assert.assertFalse(Logic.Binary.and(preds).test(O.IGNORED, O.IGNORED));
         }
 
         @Test
         public void canComposeIteratorOfBinaryPredicatesWithOr() {
-            final Iterable<BinaryPredicate<O, O>> preds = Iterations.iterable(new BinaryAlways<O, O>(), new BinaryNever<O, O>());
-            Assert.assertTrue(Logic.Binary.or(preds.iterator()).accept(O.IGNORED, O.IGNORED));
+            final Iterable<BiPredicate<O, O>> preds = Iterations.iterable(new BinaryAlways<O, O>(), new BinaryNever<O, O>());
+            Assert.assertTrue(Logic.Binary.or(preds.iterator()).test(O.IGNORED, O.IGNORED));
         }
 
         @Test
         public void canComposeIterableOfBinaryPredicatesWithOr() {
-            final Iterable<BinaryPredicate<O, O>> preds = Iterations.iterable(new BinaryAlways<O, O>(), new BinaryNever<O, O>());
-            Assert.assertTrue(Logic.Binary.or(preds).accept(O.IGNORED, O.IGNORED));
+            final Iterable<BiPredicate<O, O>> preds = Iterations.iterable(new BinaryAlways<O, O>(), new BinaryNever<O, O>());
+            Assert.assertTrue(Logic.Binary.or(preds).test(O.IGNORED, O.IGNORED));
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingNullIteratorOfBinaryPredicatesWithAndYieldsException() {
-            final Iterator<BinaryPredicate<O, O>> preds = null;
+            final Iterator<BiPredicate<O, O>> preds = null;
             Logic.Binary.and(preds);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingNullIterableOfBinaryPredicatesWithAndYieldsException() {
-            final Iterable<BinaryPredicate<O, O>> preds = null;
+            final Iterable<BiPredicate<O, O>> preds = null;
             Logic.Binary.and(preds);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingNullIteratorOfBinaryPredicatesWithOrYieldsException() {
-            final Iterator<BinaryPredicate<O, O>> preds = null;
+            final Iterator<BiPredicate<O, O>> preds = null;
             Logic.Binary.or(preds);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingNullIterableOfBinaryPredicatesWithOrYieldsException() {
-            final Iterable<BinaryPredicate<O, O>> preds = null;
+            final Iterable<BiPredicate<O, O>> preds = null;
             Logic.Binary.or(preds);
         }
     }
@@ -210,18 +210,18 @@ public class LogicTest {
 
         @Test
         public void canComposeTwoBinaryPredicates() {
-            Assert.assertFalse(Logic.and(new BinaryAlways<O, O>(), new BinaryNever<O, O>()).accept(O.IGNORED, O.IGNORED));
+            Assert.assertFalse(Logic.and(new BinaryAlways<O, O>(), new BinaryNever<O, O>()).test(O.IGNORED, O.IGNORED));
         }
 
         @Test
         public void canComposeThreeBinaryPredicates() {
-            Assert.assertFalse(Logic.and(new BinaryAlways<O, O>(), new BinaryNever<O, O>(), new BinaryNever<O, O>()).accept(O.IGNORED, O.IGNORED));
+            Assert.assertFalse(Logic.and(new BinaryAlways<O, O>(), new BinaryNever<O, O>(), new BinaryNever<O, O>()).test(O.IGNORED, O.IGNORED));
         }
 
         @Test
         public void canComposeManyBinaryPredicates() {
             final BinaryNever<O, O> never = new BinaryNever<O, O>();
-            Assert.assertFalse(Logic.and(new BinaryAlways<O, O>(), never, never, never).accept(O.IGNORED, O.IGNORED));
+            Assert.assertFalse(Logic.and(new BinaryAlways<O, O>(), never, never, never).test(O.IGNORED, O.IGNORED));
         }
 
         @Test
@@ -261,18 +261,18 @@ public class LogicTest {
 
         @Test
         public void canComposeTwoBinaryPredicates() {
-            Assert.assertTrue(Logic.or(new BinaryAlways<O, O>(), new BinaryNever<O, O>()).accept(O.IGNORED, O.IGNORED));
+            Assert.assertTrue(Logic.or(new BinaryAlways<O, O>(), new BinaryNever<O, O>()).test(O.IGNORED, O.IGNORED));
         }
 
         @Test
         public void canComposeThreeBinaryPredicates() {
-            Assert.assertTrue(Logic.or(new BinaryAlways<O, O>(), new BinaryAlways<O, O>(), new BinaryNever<O, O>()).accept(O.IGNORED, O.IGNORED));
+            Assert.assertTrue(Logic.or(new BinaryAlways<O, O>(), new BinaryAlways<O, O>(), new BinaryNever<O, O>()).test(O.IGNORED, O.IGNORED));
         }
 
         @Test
         public void canComposeManyBinaryPredicates() {
             final BinaryNever<O, O> never = new BinaryNever<O, O>();
-            Assert.assertTrue(Logic.or(new BinaryAlways<O, O>(), new BinaryAlways<O, O>(), never, never).accept(O.IGNORED, O.IGNORED));
+            Assert.assertTrue(Logic.or(new BinaryAlways<O, O>(), new BinaryAlways<O, O>(), never, never).test(O.IGNORED, O.IGNORED));
         }
 
         @Test
@@ -326,31 +326,31 @@ public class LogicTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void composingTwoBinaryPredicatesYieldsExceptionWhenFormerIsNull() {
-            final BinaryPredicate<O, O> pred = null;
+            final BiPredicate<O, O> pred = null;
             Logic.and(pred, new BinaryAlways<O, O>());
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingTwoBinaryPredicatesYieldsExceptionWhenLatterIsNull() {
-            final BinaryPredicate<O, O> pred = null;
+            final BiPredicate<O, O> pred = null;
             Logic.and(new BinaryAlways<O, O>(), pred);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingThreeBinaryPredicatesYieldsExceptionWhenFirstIsNull() {
-            final BinaryPredicate<O, O> pred = null;
+            final BiPredicate<O, O> pred = null;
             Logic.and(pred, new BinaryAlways<O, O>(), new BinaryAlways<O, O>());
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingThreeBinaryPredicatesYieldsExceptionWhenSecondIsNull() {
-            final BinaryPredicate<O, O> pred = null;
+            final BiPredicate<O, O> pred = null;
             Logic.and(new BinaryAlways<O, O>(), pred, new BinaryAlways<O, O>());
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingThreeBinaryPredicatesYieldsExceptionWhenThirdIsNull() {
-            final BinaryPredicate<O, O> pred = null;
+            final BiPredicate<O, O> pred = null;
             Logic.and(new BinaryAlways<O, O>(), new BinaryAlways<O, O>(), pred);
         }
 
@@ -392,7 +392,7 @@ public class LogicTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void composingManyBinaryPredicatesYieldsExceptionWhenArrayIsNull() {
-            final BinaryPredicate<O, O>[] pred = null;
+            final BiPredicate<O, O>[] pred = null;
             Logic.and(pred);
         }
 
@@ -437,31 +437,31 @@ public class LogicTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void composingTwoBinaryPredicatesYieldsExceptionWhenFormerIsNull() {
-            final BinaryPredicate<O, O> pred = null;
+            final BiPredicate<O, O> pred = null;
             Logic.or(pred, new BinaryAlways<O, O>());
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingTwoBinaryPredicatesYieldsExceptionWhenLatterIsNull() {
-            final BinaryPredicate<O, O> pred = null;
+            final BiPredicate<O, O> pred = null;
             Logic.or(new BinaryAlways<O, O>(), pred);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingThreeBinaryPredicatesYieldsExceptionWhenFirstIsNull() {
-            final BinaryPredicate<O, O> pred = null;
+            final BiPredicate<O, O> pred = null;
             Logic.or(pred, new BinaryAlways<O, O>(), new BinaryAlways<O, O>());
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingThreeBinaryPredicatesYieldsExceptionWhenSecondIsNull() {
-            final BinaryPredicate<O, O> pred = null;
+            final BiPredicate<O, O> pred = null;
             Logic.or(new BinaryAlways<O, O>(), pred, new BinaryAlways<O, O>());
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingThreeBinaryPredicatesYieldsExceptionWhenThirdIsNull() {
-            final BinaryPredicate<O, O> pred = null;
+            final BiPredicate<O, O> pred = null;
             Logic.or(new BinaryAlways<O, O>(), new BinaryAlways<O, O>(), pred);
         }
 
@@ -503,7 +503,7 @@ public class LogicTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void composingManyBinaryPredicatesYieldsExceptionWhenArrayIsNull() {
-            final BinaryPredicate<O, O>[] pred = null;
+            final BiPredicate<O, O>[] pred = null;
             Logic.or(pred);
         }
 
@@ -524,8 +524,8 @@ public class LogicTest {
 
         @Test
         public void canNegateBinaryPredicate() {
-            final BinaryPredicate<O, O> negated = Logic.not(new BinaryAlways<O, O>());
-            Assert.assertFalse(negated.accept(null, null));
+            final BiPredicate<O, O> negated = Logic.not(new BinaryAlways<O, O>());
+            Assert.assertFalse(negated.test(null, null));
         }
 
         @Test
@@ -542,7 +542,7 @@ public class LogicTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void negatingBinaryNullPredicateYieldsException() {
-            final BinaryPredicate<O, O> pred = null;
+            final BiPredicate<O, O> pred = null;
             Logic.not(pred);
         }
 

@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.options.Box;
@@ -23,7 +23,7 @@ public class PredicateBinderSecondTest {
     @Test
     public void canBindSecondParameter() {
         final Box<O> param2 = Box.empty();
-        final BinaryPredicate<O, O> spy = Spies.spy2nd(new BinaryAlways<O, O>(), param2);
+        final BiPredicate<O, O> spy = Spies.spy2nd(new BinaryAlways<O, O>(), param2);
         final Predicate<O> adapted = new PredicateBinderSecond<O, O>(spy, O.ONE);
         adapted.test(O.ANOTHER);
         Assert.assertEquals(O.ONE, param2.getContent());

@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
+import java.util.function.BiPredicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 
 /**
@@ -15,15 +15,15 @@ import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
  */
 public class PredicateIgnoreSecondOfThree<T1, T2, T3> implements TernaryPredicate<T1, T2, T3> {
 
-    private final BinaryPredicate<T1, T3> adapted;
+    private final BiPredicate<T1, T3> adapted;
 
-    public PredicateIgnoreSecondOfThree(BinaryPredicate<T1, T3> adaptee) {
+    public PredicateIgnoreSecondOfThree(BiPredicate<T1, T3> adaptee) {
         dbc.precondition(adaptee != null, "cannot ignore second parameter of a null binary predicate");
         this.adapted = adaptee;
     }
 
     @Override
     public boolean accept(T1 first, T2 second, T3 third) {
-        return adapted.accept(first, third);
+        return adapted.test(first, third);
     }
 }

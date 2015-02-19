@@ -2,67 +2,15 @@ package net.emaze.dysfunctional;
 
 import java.util.Iterator;
 import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
-import net.emaze.dysfunctional.dispatching.adapting.ActionBinder;
-import net.emaze.dysfunctional.dispatching.adapting.ActionBinderFirst;
-import net.emaze.dysfunctional.dispatching.adapting.ActionBinderFirstOfThree;
-import net.emaze.dysfunctional.dispatching.adapting.ActionBinderSecond;
-import net.emaze.dysfunctional.dispatching.adapting.ActionBinderSecondOfThree;
-import net.emaze.dysfunctional.dispatching.adapting.ActionBinderThird;
-import net.emaze.dysfunctional.dispatching.adapting.ActionIgnoreFirst;
-import net.emaze.dysfunctional.dispatching.adapting.ActionIgnoreFirstOfThree;
-import net.emaze.dysfunctional.dispatching.adapting.ActionIgnoreSecond;
-import net.emaze.dysfunctional.dispatching.adapting.ActionIgnoreSecondOfThree;
-import net.emaze.dysfunctional.dispatching.adapting.ActionIgnoreThird;
-import net.emaze.dysfunctional.dispatching.adapting.ActionToDelegate;
-import net.emaze.dysfunctional.dispatching.adapting.BinaryActionToBinaryDelegate;
-import net.emaze.dysfunctional.dispatching.adapting.BinaryDelegateToBinaryAction;
-import net.emaze.dysfunctional.dispatching.adapting.BinaryDelegateToBinaryPredicate;
-import net.emaze.dysfunctional.dispatching.adapting.BinaryPredicateToBinaryDelegate;
-import net.emaze.dysfunctional.dispatching.adapting.Binder;
-import net.emaze.dysfunctional.dispatching.adapting.BinderFirst;
-import net.emaze.dysfunctional.dispatching.adapting.BinderFirstOfThree;
-import net.emaze.dysfunctional.dispatching.adapting.BinderSecond;
-import net.emaze.dysfunctional.dispatching.adapting.BinderSecondOfThree;
-import net.emaze.dysfunctional.dispatching.adapting.BinderThird;
-import net.emaze.dysfunctional.dispatching.adapting.DelegateToAction;
-import net.emaze.dysfunctional.dispatching.adapting.DelegateToPredicate;
-import net.emaze.dysfunctional.dispatching.adapting.IgnoreFirst;
-import net.emaze.dysfunctional.dispatching.adapting.IgnoreFirstOfThree;
-import net.emaze.dysfunctional.dispatching.adapting.IgnoreParameter;
-import net.emaze.dysfunctional.dispatching.adapting.IgnoreSecond;
-import net.emaze.dysfunctional.dispatching.adapting.IgnoreSecondOfThree;
-import net.emaze.dysfunctional.dispatching.adapting.IgnoreThird;
-import net.emaze.dysfunctional.dispatching.adapting.IteratingProvider;
-import net.emaze.dysfunctional.dispatching.adapting.PredicateBinder;
-import net.emaze.dysfunctional.dispatching.adapting.PredicateBinderFirst;
-import net.emaze.dysfunctional.dispatching.adapting.PredicateBinderFirstOfThree;
-import net.emaze.dysfunctional.dispatching.adapting.PredicateBinderSecond;
-import net.emaze.dysfunctional.dispatching.adapting.PredicateBinderSecondOfThree;
-import net.emaze.dysfunctional.dispatching.adapting.PredicateBinderThird;
-import net.emaze.dysfunctional.dispatching.adapting.PredicateIgnoreFirst;
-import net.emaze.dysfunctional.dispatching.adapting.PredicateIgnoreFirstOfThree;
-import net.emaze.dysfunctional.dispatching.adapting.PredicateIgnoreSecond;
-import net.emaze.dysfunctional.dispatching.adapting.PredicateIgnoreSecondOfThree;
-import net.emaze.dysfunctional.dispatching.adapting.PredicateIgnoreThird;
-import net.emaze.dysfunctional.dispatching.adapting.PredicateToDelegate;
-import net.emaze.dysfunctional.dispatching.adapting.PropositionIgnoreParameter;
-import net.emaze.dysfunctional.dispatching.adapting.PropositionToProvider;
-import net.emaze.dysfunctional.dispatching.adapting.ProviderToProposition;
-import net.emaze.dysfunctional.dispatching.adapting.ProviderToRunnable;
-import net.emaze.dysfunctional.dispatching.adapting.RunnableIgnoreParameter;
-import net.emaze.dysfunctional.dispatching.adapting.RunnableToProvider;
-import net.emaze.dysfunctional.dispatching.adapting.TernaryActionToTernaryDelegate;
-import net.emaze.dysfunctional.dispatching.adapting.TernaryDelegateToTernaryAction;
-import net.emaze.dysfunctional.dispatching.adapting.TernaryDelegateToTernaryPredicate;
-import net.emaze.dysfunctional.dispatching.adapting.TernaryPredicateToTernaryDelegate;
+import net.emaze.dysfunctional.dispatching.adapting.*;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Proposition;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 import net.emaze.dysfunctional.options.Maybe;
@@ -135,7 +83,7 @@ public abstract class Dispatching {
      * @param first the value to be curried as first parameter
      * @return the curried predicate
      */
-    public static <T1, T2> Predicate<T2> curry(BinaryPredicate<T1, T2> predicate, T1 first) {
+    public static <T1, T2> Predicate<T2> curry(BiPredicate<T1, T2> predicate, T1 first) {
         return new PredicateBinderFirst<T1, T2>(predicate, first);
     }
 
@@ -149,7 +97,7 @@ public abstract class Dispatching {
      * @param first the value to be curried as first parameter
      * @return the curried binary predicate
      */
-    public static <T1, T2, T3> BinaryPredicate<T2, T3> curry(TernaryPredicate<T1, T2, T3> predicate, T1 first) {
+    public static <T1, T2, T3> BiPredicate<T2, T3> curry(TernaryPredicate<T1, T2, T3> predicate, T1 first) {
         return new PredicateBinderFirstOfThree<T1, T2, T3>(predicate, first);
     }
 
@@ -236,7 +184,7 @@ public abstract class Dispatching {
      * @param second the value to be curried as second parameter
      * @return the curried binary predicate
      */
-    public static <T1, T2, T3> BinaryPredicate<T1, T3> mcurry(TernaryPredicate<T1, T2, T3> predicate, T2 second) {
+    public static <T1, T2, T3> BiPredicate<T1, T3> mcurry(TernaryPredicate<T1, T2, T3> predicate, T2 second) {
         return new PredicateBinderSecondOfThree<T1, T2, T3>(predicate, second);
     }
 
@@ -279,7 +227,7 @@ public abstract class Dispatching {
      * @return the curried predicate
      *
      */
-    public static <T1, T2> Predicate<T1> rcurry(BinaryPredicate<T1, T2> predicate, T2 second) {
+    public static <T1, T2> Predicate<T1> rcurry(BiPredicate<T1, T2> predicate, T2 second) {
         return new PredicateBinderSecond<T1, T2>(predicate, second);
     }
 
@@ -294,7 +242,7 @@ public abstract class Dispatching {
      * @param third the value to be curried as third parameter
      * @return the curried binary predicate
      */
-    public static <T1, T2, T3> BinaryPredicate<T1, T2> rcurry(TernaryPredicate<T1, T2, T3> predicate, T3 third) {
+    public static <T1, T2, T3> BiPredicate<T1, T2> rcurry(TernaryPredicate<T1, T2, T3> predicate, T3 third) {
         return new PredicateBinderThird<T1, T2, T3>(predicate, third);
     }
 
@@ -350,7 +298,7 @@ public abstract class Dispatching {
      * @param ignored the adapted predicate ignored parameter type class
      * @return the adapted binary predicate
      */
-    public static <T1, T2> BinaryPredicate<T1, T2> ignore1st(Predicate<T2> predicate, Class<T1> ignored) {
+    public static <T1, T2> BiPredicate<T1, T2> ignore1st(Predicate<T2> predicate, Class<T1> ignored) {
         return new PredicateIgnoreFirst<T1, T2>(predicate);
     }
 
@@ -365,7 +313,7 @@ public abstract class Dispatching {
      * @param ignored the adapted predicate ignored parameter type class
      * @return the adapted ternary predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> ignore1st(BinaryPredicate<T2, T3> predicate, Class<T1> ignored) {
+    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> ignore1st(BiPredicate<T2, T3> predicate, Class<T1> ignored) {
         return new PredicateIgnoreFirstOfThree<T1, T2, T3>(predicate);
     }
 
@@ -378,7 +326,7 @@ public abstract class Dispatching {
      * @param ignored the adapted predicate ignored parameter type class
      * @return the adapted binary predicate
      */
-    public static <T1, T2> BinaryPredicate<T1, T2> ignore2nd(Predicate<T1> predicate, Class<T2> ignored) {
+    public static <T1, T2> BiPredicate<T1, T2> ignore2nd(Predicate<T1> predicate, Class<T2> ignored) {
         return new PredicateIgnoreSecond<T1, T2>(predicate);
     }
 
@@ -393,7 +341,7 @@ public abstract class Dispatching {
      * @param ignored the adapted predicate ignored parameter type class
      * @return the adapted ternary predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> ignore2nd(BinaryPredicate<T1, T3> predicate, Class<T2> ignored) {
+    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> ignore2nd(BiPredicate<T1, T3> predicate, Class<T2> ignored) {
         return new PredicateIgnoreSecondOfThree<T1, T2, T3>(predicate);
     }
 
@@ -408,7 +356,7 @@ public abstract class Dispatching {
      * @param ignored the adapted predicate ignored parameter type class
      * @return the adapted ternary predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> ignore3rd(BinaryPredicate<T1, T2> predicate, Class<T3> ignored) {
+    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> ignore3rd(BiPredicate<T1, T2> predicate, Class<T3> ignored) {
         return new PredicateIgnoreThird<T1, T2, T3>(predicate);
     }
 
@@ -669,7 +617,7 @@ public abstract class Dispatching {
      * @param adaptee the predicate to be adapted
      * @return the adapted delegate
      */
-    public static <T1, T2> BiFunction<T1, T2, Boolean> delegate(BinaryPredicate<T1, T2> adaptee) {
+    public static <T1, T2> BiFunction<T1, T2, Boolean> delegate(BiPredicate<T1, T2> adaptee) {
         return new BinaryPredicateToBinaryDelegate<T1, T2>(adaptee);
     }
 
@@ -765,7 +713,7 @@ public abstract class Dispatching {
      * @param delegate the delegate to be adapted
      * @return the adapted predicate
      */
-    public static <T1, T2> BinaryPredicate<T1, T2> predicate(BiFunction<T1, T2, Boolean> delegate) {
+    public static <T1, T2> BiPredicate<T1, T2> predicate(BiFunction<T1, T2, Boolean> delegate) {
         return new BinaryDelegateToBinaryPredicate<>(delegate);
     }
 

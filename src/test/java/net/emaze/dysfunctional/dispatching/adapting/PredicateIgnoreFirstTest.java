@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.dispatching.logic.Always;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.options.Box;
@@ -24,8 +24,8 @@ public class PredicateIgnoreFirstTest {
     public void canBindFirstParameter() {
         final Box<O> param = Box.empty();
         final Predicate<O> spy = Spies.spy1st(new Always<O>(), param);
-        final BinaryPredicate<O, O> adapted = new PredicateIgnoreFirst<O, O>(spy);
-        adapted.accept(O.IGNORED, O.ONE);
+        final BiPredicate<O, O> adapted = new PredicateIgnoreFirst<O, O>(spy);
+        adapted.test(O.IGNORED, O.ONE);
         Assert.assertEquals(O.ONE, param.getContent());
     }
 }

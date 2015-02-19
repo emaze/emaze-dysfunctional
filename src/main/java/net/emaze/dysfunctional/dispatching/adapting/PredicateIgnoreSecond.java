@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 /**
@@ -12,7 +12,7 @@ import java.util.function.Predicate;
  * @param <T2> the adapted predicate second parameter type
  * @author rferranti
  */
-public class PredicateIgnoreSecond<T1, T2> implements BinaryPredicate<T1, T2> {
+public class PredicateIgnoreSecond<T1, T2> implements BiPredicate<T1, T2> {
 
     private final Predicate<T1> adapted;
 
@@ -22,7 +22,7 @@ public class PredicateIgnoreSecond<T1, T2> implements BinaryPredicate<T1, T2> {
     }
 
     @Override
-    public boolean accept(T1 first, T2 second) {
+    public boolean test(T1 first, T2 second) {
         return adapted.test(first);
     }
 }

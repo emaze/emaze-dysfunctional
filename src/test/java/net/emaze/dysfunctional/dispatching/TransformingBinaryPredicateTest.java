@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching;
 
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
 import net.emaze.dysfunctional.dispatching.logic.Always;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
+import java.util.function.BiPredicate;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -25,8 +25,8 @@ public class TransformingBinaryPredicateTest {
 
     @Test
     public void canComposePredicateAndDelegate() {
-        final BinaryPredicate<O, O> composed = new TransformingBinaryPredicate<O, O, O>(new Always<O>(), new FirstParam<O, O>());
-        final boolean got = composed.accept(O.IGNORED, O.IGNORED);
+        final BiPredicate<O, O> composed = new TransformingBinaryPredicate<O, O, O>(new Always<O>(), new FirstParam<O, O>());
+        final boolean got = composed.test(O.IGNORED, O.IGNORED);
         Assert.assertEquals(true, got);
     }
 }

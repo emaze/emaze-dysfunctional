@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 /**
@@ -14,10 +14,10 @@ import java.util.function.Predicate;
  */
 public class PredicateBinderFirst<T1, T2> implements Predicate<T2> {
 
-    private final BinaryPredicate<T1, T2> adapted;
+    private final BiPredicate<T1, T2> adapted;
     private final T1 first;
 
-    public PredicateBinderFirst(BinaryPredicate<T1, T2> adaptee, T1 first) {
+    public PredicateBinderFirst(BiPredicate<T1, T2> adaptee, T1 first) {
         dbc.precondition(adaptee != null, "cannot bind first parameter of a null binary predicate");
         this.adapted = adaptee;
         this.first = first;
@@ -25,6 +25,6 @@ public class PredicateBinderFirst<T1, T2> implements Predicate<T2> {
 
     @Override
     public boolean test(T2 second) {
-        return adapted.accept(first, second);
+        return adapted.test(first, second);
     }
 }

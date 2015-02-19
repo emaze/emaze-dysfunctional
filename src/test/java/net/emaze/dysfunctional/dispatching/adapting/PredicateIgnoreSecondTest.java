@@ -24,7 +24,7 @@ public class PredicateIgnoreSecondTest {
         final Box<O> param = Box.empty();
         final Predicate<O> spy = Spies.spy1st(new Always<O>(), param);
         final PredicateIgnoreSecond<O, O> adapted = new PredicateIgnoreSecond<O, O>(spy);
-        adapted.accept(O.ONE, O.IGNORED);
+        adapted.test(O.ONE, O.IGNORED);
         Assert.assertEquals(O.ONE, param.getContent());
     }
 }

@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.BiFunction;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
+import java.util.function.BiPredicate;
 
 /**
  * Adapts a binary delegate with Boolean result type to a binary Predicate.
@@ -11,7 +11,7 @@ import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
  * @param <T2> the adapted delegate second parameter type
  * @author rferranti
  */
-public class BinaryDelegateToBinaryPredicate<T1, T2> implements BinaryPredicate<T1, T2> {
+public class BinaryDelegateToBinaryPredicate<T1, T2> implements BiPredicate<T1, T2> {
 
     private final BiFunction<T1, T2, Boolean> adapted;
 
@@ -21,7 +21,7 @@ public class BinaryDelegateToBinaryPredicate<T1, T2> implements BinaryPredicate<
     }
 
     @Override
-    public boolean accept(T1 first, T2 second) {
+    public boolean test(T1 first, T2 second) {
         return adapted.apply(first, second);
     }
 }

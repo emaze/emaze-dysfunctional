@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.composing;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
+import java.util.function.BiPredicate;
 
 /**
  * A composite binary predicate yielding true when every predicate match (no
@@ -11,19 +11,19 @@ import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
  * @param <E2> the predicates second parameter type
  * @author rferranti
  */
-public class AllMatchingBinaryPredicate<E1, E2> implements BinaryPredicate<E1, E2> {
+public class AllMatchingBinaryPredicate<E1, E2> implements BiPredicate<E1, E2> {
 
-    private final Iterable<BinaryPredicate<E1, E2>> predicates;
+    private final Iterable<BiPredicate<E1, E2>> predicates;
 
-    public AllMatchingBinaryPredicate(Iterable<BinaryPredicate<E1, E2>> predicates) {
+    public AllMatchingBinaryPredicate(Iterable<BiPredicate<E1, E2>> predicates) {
         dbc.precondition(predicates != null, "cannot evaluate and(...) of a null iterable of binary predicates");
         this.predicates = predicates;
     }
 
     @Override
-    public boolean accept(E1 former, E2 latter) {
-        for (BinaryPredicate<E1, E2> predicate : predicates) {
-            if (!predicate.accept(former, latter)) {
+    public boolean test(E1 former, E2 latter) {
+        for (BiPredicate<E1, E2> predicate : predicates) {
+            if (!predicate.test(former, latter)) {
                 return false;
             }
         }

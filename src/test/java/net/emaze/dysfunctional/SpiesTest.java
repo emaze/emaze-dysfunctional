@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 import net.emaze.dysfunctional.dispatching.logic.Proposition;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
@@ -175,28 +175,28 @@ public class SpiesTest {
             final Box<Boolean> result = new Box<Boolean>();
             final Box<O> param1 = new Box<O>();
             final Box<O> param2 = new Box<O>();
-            final BinaryPredicate<O, O> spied = Spies.spy(new BinaryAlways<O, O>(), result, param1, param2);
+            final BiPredicate<O, O> spied = Spies.spy(new BinaryAlways<O, O>(), result, param1, param2);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpyResultOfBinaryPredicate() {
             final Box<Boolean> result = new Box<Boolean>();
-            final BinaryPredicate<O, O> spied = Spies.spyRes(new BinaryAlways<O, O>(), result);
+            final BiPredicate<O, O> spied = Spies.spyRes(new BinaryAlways<O, O>(), result);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpyFirstParamOfBinaryPredicate() {
             final Box<O> param1 = new Box<O>();
-            final BinaryPredicate<O, O> spied = Spies.spy1st(new BinaryAlways<O, O>(), param1);
+            final BiPredicate<O, O> spied = Spies.spy1st(new BinaryAlways<O, O>(), param1);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpySecondParamOfBinaryPredicate() {
             final Box<O> param2 = new Box<O>();
-            final BinaryPredicate<O, O> spied = Spies.spy2nd(new BinaryAlways<O, O>(), param2);
+            final BiPredicate<O, O> spied = Spies.spy2nd(new BinaryAlways<O, O>(), param2);
             Assert.assertNotNull(spied);
         }
 
@@ -365,7 +365,7 @@ public class SpiesTest {
 
         @Test
         public void canMonitorABinaryPredicate() {
-            final BinaryPredicate<O, O> monitor = Spies.monitor(new BinaryAlways<O, O>(), accumulator);
+            final BiPredicate<O, O> monitor = Spies.monitor(new BinaryAlways<O, O>(), accumulator);
             Assert.assertNotNull(monitor);
         }
 

@@ -17,7 +17,7 @@ import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 import net.emaze.dysfunctional.dispatching.logic.Proposition;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
@@ -148,7 +148,7 @@ public class DispatchingTest {
 
         @Test
         public void canAdaptBinaryDelegateToBinaryPredicate() {
-            final BinaryPredicate<O, O> adapted = Dispatching.predicate((f, s) -> true);
+            final BiPredicate<O, O> adapted = Dispatching.predicate((f, s) -> true);
             Assert.assertNotNull(adapted);
         }
 
@@ -264,19 +264,19 @@ public class DispatchingTest {
 
         @Test
         public void canCurryTernaryDelegate() {
-            final BinaryPredicate<O, O> adapted = Dispatching.curry(new TernaryAlways<O, O, O>(), O.ONE);
+            final BiPredicate<O, O> adapted = Dispatching.curry(new TernaryAlways<O, O, O>(), O.ONE);
             Assert.assertNotNull(adapted);
         }
 
         @Test
         public void canMidCurryTernaryDelegate() {
-            final BinaryPredicate<O, O> adapted = Dispatching.mcurry(new TernaryAlways<O, O, O>(), O.ONE);
+            final BiPredicate<O, O> adapted = Dispatching.mcurry(new TernaryAlways<O, O, O>(), O.ONE);
             Assert.assertNotNull(adapted);
         }
 
         @Test
         public void canRightCurryTernaryDelegate() {
-            final BinaryPredicate<O, O> adapted = Dispatching.rcurry(new TernaryAlways<O, O, O>(), O.ONE);
+            final BiPredicate<O, O> adapted = Dispatching.rcurry(new TernaryAlways<O, O, O>(), O.ONE);
             Assert.assertNotNull(adapted);
         }
     }
@@ -303,7 +303,7 @@ public class DispatchingTest {
 
         @Test
         public void canIgnoreFirstForPredicates() {
-            final BinaryPredicate<O, O> ignoring = Dispatching.ignore1st(new Always<O>(), O.class);
+            final BiPredicate<O, O> ignoring = Dispatching.ignore1st(new Always<O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
@@ -315,7 +315,7 @@ public class DispatchingTest {
 
         @Test
         public void canIgnoreSecondForPredicates() {
-            final BinaryPredicate<O, O> ignoring = Dispatching.ignore2nd(new Always<O>(), O.class);
+            final BiPredicate<O, O> ignoring = Dispatching.ignore2nd(new Always<O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 

@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.dispatching.logic;
 
+import java.util.function.BiPredicate;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
@@ -9,11 +10,11 @@ import net.emaze.dysfunctional.contracts.dbc;
  * @param <T2> the latter element type parameter
  * @author rferranti
  */
-public class BinaryNegator<T1, T2> implements BinaryPredicate<T1, T2> {
+public class BinaryNegator<T1, T2> implements BiPredicate<T1, T2> {
 
-    private final BinaryPredicate<T1, T2> predicate;
+    private final BiPredicate<T1, T2> predicate;
 
-    public BinaryNegator(BinaryPredicate<T1, T2> predicate) {
+    public BinaryNegator(BiPredicate<T1, T2> predicate) {
         dbc.precondition(predicate != null, "cannot negate a null binary predicate");
         this.predicate = predicate;
     }
@@ -26,7 +27,7 @@ public class BinaryNegator<T1, T2> implements BinaryPredicate<T1, T2> {
      * @return true if the inner predicate returns false, false otherwise
      */
     @Override
-    public boolean accept(T1 former, T2 latter) {
-        return !predicate.accept(former, latter);
+    public boolean test(T1 former, T2 latter) {
+        return !predicate.test(former, latter);
     }
 }

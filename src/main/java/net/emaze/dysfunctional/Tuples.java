@@ -1,28 +1,15 @@
 package net.emaze.dysfunctional;
 
 import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
-import net.emaze.dysfunctional.tuples.BinaryToUnaryAction;
-import net.emaze.dysfunctional.tuples.BinaryToUnaryDelegate;
-import net.emaze.dysfunctional.tuples.BinaryToUnaryPredicate;
-import net.emaze.dysfunctional.tuples.Pair;
-import net.emaze.dysfunctional.tuples.TernaryToUnaryAction;
-import net.emaze.dysfunctional.tuples.TernaryToUnaryDelegate;
-import net.emaze.dysfunctional.tuples.TernaryToUnaryPredicate;
-import net.emaze.dysfunctional.tuples.Triple;
-import net.emaze.dysfunctional.tuples.UnaryToBinaryAction;
-import net.emaze.dysfunctional.tuples.UnaryToBinaryDelegate;
-import net.emaze.dysfunctional.tuples.UnaryToBinaryPredicate;
-import net.emaze.dysfunctional.tuples.UnaryToTernaryAction;
-import net.emaze.dysfunctional.tuples.UnaryToTernaryDelegate;
-import net.emaze.dysfunctional.tuples.UnaryToTernaryPredicate;
+import net.emaze.dysfunctional.tuples.*;
 
 /**
  * tupled.
@@ -52,7 +39,7 @@ public abstract class Tuples {
      * @param predicate the predicate to be adapted
      * @return the adapted predicate
      */
-    public static <T, U> Predicate<Pair<T, U>> tupled(BinaryPredicate<T, U> predicate) {
+    public static <T, U> Predicate<Pair<T, U>> tupled(BiPredicate<T, U> predicate) {
         return new BinaryToUnaryPredicate<T, U>(predicate);
     }
 
@@ -134,7 +121,7 @@ public abstract class Tuples {
          * @param predicate the predicate to be adapted
          * @return the adapted predicate
          */
-        public static <T, U> BinaryPredicate<T, U> untupled(Predicate<Pair<T, U>> predicate) {
+        public static <T, U> BiPredicate<T, U> untupled(Predicate<Pair<T, U>> predicate) {
             return new UnaryToBinaryPredicate<T, U>(predicate);
         }
 

@@ -2,6 +2,7 @@ package net.emaze.dysfunctional;
 
 import java.util.Iterator;
 import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -14,7 +15,6 @@ import net.emaze.dysfunctional.dispatching.delegates.Composer;
 import net.emaze.dysfunctional.dispatching.delegates.EndoDelegatesComposer;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryComposer;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 
 /**
@@ -146,7 +146,7 @@ public abstract class Compositions {
      * @param delegate the delegate to be composed
      * @return the composed predicate
      */
-    public static <R, T1, T2> BinaryPredicate<T1, T2> compose(Predicate<R> predicate, BiFunction<T1, T2, R> delegate) {
+    public static <R, T1, T2> BiPredicate<T1, T2> compose(Predicate<R> predicate, BiFunction<T1, T2, R> delegate) {
         return new TransformingBinaryPredicate<R, T1, T2>(predicate, delegate);
     }
 

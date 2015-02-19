@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 /**
@@ -10,7 +10,7 @@ import java.util.function.Predicate;
  * @param <T2> the latter type parameter
  * @author rferranti
  */
-public class UnaryToBinaryPredicate<T1, T2> implements BinaryPredicate<T1, T2> {
+public class UnaryToBinaryPredicate<T1, T2> implements BiPredicate<T1, T2> {
 
     private final Predicate<Pair<T1, T2>> predicate;
 
@@ -20,7 +20,7 @@ public class UnaryToBinaryPredicate<T1, T2> implements BinaryPredicate<T1, T2> {
     }
 
     @Override
-    public boolean accept(T1 first, T2 second) {
+    public boolean test(T1 first, T2 second) {
         return predicate.test(Pair.of(first, second));
     }
 }

@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
+import java.util.function.BiPredicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 import net.emaze.dysfunctional.Spies;
@@ -24,8 +24,8 @@ public class PredicateBinderSecondOfThreeTest {
     public void canBindSecondParameter() {
         final Box<O> param2 = Box.empty();
         final TernaryPredicate<O, O, O> spy = Spies.spy2nd(new TernaryAlways<O, O, O>(), param2);
-        final BinaryPredicate<O, O> adapted = new PredicateBinderSecondOfThree<O, O, O>(spy, O.ONE);
-        adapted.accept(O.ANOTHER, O.ANOTHER);
+        final BiPredicate<O, O> adapted = new PredicateBinderSecondOfThree<O, O, O>(spy, O.ONE);
+        adapted.test(O.ANOTHER, O.ANOTHER);
         Assert.assertEquals(O.ONE, param2.getContent());
     }
 }

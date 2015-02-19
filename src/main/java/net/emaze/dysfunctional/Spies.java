@@ -2,6 +2,7 @@ package net.emaze.dysfunctional;
 
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -9,32 +10,9 @@ import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Proposition;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
-import net.emaze.dysfunctional.dispatching.spying.BinaryCapturingAction;
-import net.emaze.dysfunctional.dispatching.spying.BinaryCapturingDelegate;
-import net.emaze.dysfunctional.dispatching.spying.BinaryCapturingPredicate;
-import net.emaze.dysfunctional.dispatching.spying.BinaryMonitoringAction;
-import net.emaze.dysfunctional.dispatching.spying.BinaryMonitoringDelegate;
-import net.emaze.dysfunctional.dispatching.spying.BinaryMonitoringPredicate;
-import net.emaze.dysfunctional.dispatching.spying.CapturingAction;
-import net.emaze.dysfunctional.dispatching.spying.CapturingDelegate;
-import net.emaze.dysfunctional.dispatching.spying.CapturingPredicate;
-import net.emaze.dysfunctional.dispatching.spying.CapturingProposition;
-import net.emaze.dysfunctional.dispatching.spying.CapturingProvider;
-import net.emaze.dysfunctional.dispatching.spying.MonitoringAction;
-import net.emaze.dysfunctional.dispatching.spying.MonitoringDelegate;
-import net.emaze.dysfunctional.dispatching.spying.MonitoringPredicate;
-import net.emaze.dysfunctional.dispatching.spying.MonitoringProposition;
-import net.emaze.dysfunctional.dispatching.spying.MonitoringProvider;
-import net.emaze.dysfunctional.dispatching.spying.MonitoringRunnable;
-import net.emaze.dysfunctional.dispatching.spying.TernaryCapturingAction;
-import net.emaze.dysfunctional.dispatching.spying.TernaryCapturingDelegate;
-import net.emaze.dysfunctional.dispatching.spying.TernaryCapturingPredicate;
-import net.emaze.dysfunctional.dispatching.spying.TernaryMonitoringAction;
-import net.emaze.dysfunctional.dispatching.spying.TernaryMonitoringDelegate;
-import net.emaze.dysfunctional.dispatching.spying.TernaryMonitoringPredicate;
+import net.emaze.dysfunctional.dispatching.spying.*;
 import net.emaze.dysfunctional.options.Box;
 
 /**
@@ -139,7 +117,7 @@ public abstract class Spies {
      * @param param2 a box that will be containing the second spied parameter
      * @return the proxied predicate
      */
-    public static <T1, T2> BinaryPredicate<T1, T2> spy(BinaryPredicate<T1, T2> predicate, Box<Boolean> result, Box<T1> param1, Box<T2> param2) {
+    public static <T1, T2> BiPredicate<T1, T2> spy(BiPredicate<T1, T2> predicate, Box<Boolean> result, Box<T1> param1, Box<T2> param2) {
         return new BinaryCapturingPredicate<T1, T2>(predicate, result, param1, param2);
     }
 
@@ -475,7 +453,7 @@ public abstract class Spies {
      * @param result a box that will be containing spied result
      * @return the proxied predicate
      */
-    public static <T1, T2> BinaryPredicate<T1, T2> spyRes(BinaryPredicate<T1, T2> predicate, Box<Boolean> result) {
+    public static <T1, T2> BiPredicate<T1, T2> spyRes(BiPredicate<T1, T2> predicate, Box<Boolean> result) {
         return spy(predicate, result, Box.<T1>empty(), Box.<T2>empty());
     }
 
@@ -488,7 +466,7 @@ public abstract class Spies {
      * @param param1 a box that will be containing the first spied parameter
      * @return the proxied predicate
      */
-    public static <T1, T2> BinaryPredicate<T1, T2> spy1st(BinaryPredicate<T1, T2> predicate, Box<T1> param1) {
+    public static <T1, T2> BiPredicate<T1, T2> spy1st(BiPredicate<T1, T2> predicate, Box<T1> param1) {
         return spy(predicate, Box.<Boolean>empty(), param1, Box.<T2>empty());
     }
 
@@ -501,7 +479,7 @@ public abstract class Spies {
      * @param param2 a box that will be containing the second spied parameter
      * @return the proxied predicate
      */
-    public static <T1, T2> BinaryPredicate<T1, T2> spy2nd(BinaryPredicate<T1, T2> predicate, Box<T2> param2) {
+    public static <T1, T2> BiPredicate<T1, T2> spy2nd(BiPredicate<T1, T2> predicate, Box<T2> param2) {
         return spy(predicate, Box.<Boolean>empty(), Box.<T1>empty(), param2);
     }
 
@@ -636,7 +614,7 @@ public abstract class Spies {
      * @param calls a value holder accumulating calls
      * @return the proxied predicate
      */
-    public static <T1, T2> BinaryPredicate<T1, T2> monitor(BinaryPredicate<T1, T2> predicate, AtomicLong calls) {
+    public static <T1, T2> BiPredicate<T1, T2> monitor(BiPredicate<T1, T2> predicate, AtomicLong calls) {
         return new BinaryMonitoringPredicate<T1, T2>(predicate, calls);
     }
 

@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import java.util.function.BiFunction;
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
+import java.util.function.BiPredicate;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
@@ -29,7 +29,7 @@ public class BinaryPredicateToBinaryDelegateTest {
     @Test
     public void adapterCorrectlyPassesFirstParamToAdapted() {
         final Box<O> param1 = Box.empty();
-        final BinaryPredicate<O, O> spy = Spies.spy1st(new BinaryAlways<O, O>(), param1);
+        final BiPredicate<O, O> spy = Spies.spy1st(new BinaryAlways<O, O>(), param1);
         final BinaryPredicateToBinaryDelegate<O, O> adapted = new BinaryPredicateToBinaryDelegate<O, O>(spy);
         adapted.apply(O.ONE, O.ANOTHER);
         Assert.assertEquals(O.ONE, param1.getContent());
@@ -38,7 +38,7 @@ public class BinaryPredicateToBinaryDelegateTest {
     @Test
     public void adapterCorrectlyPassesSecondParamToAdapted() {
         final Box<O> param2 = Box.empty();
-        final BinaryPredicate<O, O> spy = Spies.spy2nd(new BinaryAlways<O, O>(), param2);
+        final BiPredicate<O, O> spy = Spies.spy2nd(new BinaryAlways<O, O>(), param2);
         final BinaryPredicateToBinaryDelegate<O, O> adapted = new BinaryPredicateToBinaryDelegate<O, O>(spy);
         adapted.apply(O.ONE, O.ANOTHER);
         Assert.assertEquals(O.ANOTHER, param2.getContent());

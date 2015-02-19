@@ -6,7 +6,7 @@ import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.dispatching.logic.Always;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 import net.emaze.dysfunctional.testing.O;
@@ -43,7 +43,7 @@ public class CompositionsTest {
 
     @Test
     public void canComposePredicatesAndBinaryDelegates() {
-        final BinaryPredicate<O, O> composed = Compositions.compose(new Always<O>(), new FirstParam<O, O>());
+        final BiPredicate<O, O> composed = Compositions.compose(new Always<O>(), new FirstParam<O, O>());
         Assert.assertNotNull(composed);
     }
 
