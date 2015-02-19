@@ -7,7 +7,7 @@ import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
 import net.emaze.dysfunctional.dispatching.actions.Slacker;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import java.util.function.Function;
 import java.util.function.BiFunction;
@@ -53,19 +53,19 @@ public class DispatchingTest {
 
         @Test
         public void canAdaptIteratorToProvider() {
-            final Provider<Maybe<Integer>> adapted = Dispatching.provider(Iterations.iterator(1));
+            final Supplier<Maybe<Integer>> adapted = Dispatching.provider(Iterations.iterator(1));
             Assert.assertNotNull(adapted);
         }
 
         @Test
         public void canAdaptRunnableToProvider() {
-            final Provider<Void> adapted = Dispatching.provider(new Slacker());
+            final Supplier<Void> adapted = Dispatching.provider(new Slacker());
             Assert.assertNotNull(adapted);
         }
 
         @Test
         public void canAdaptPropositionToProvider() {
-            final Provider<Boolean> adapted = Dispatching.provider(new Yes());
+            final Supplier<Boolean> adapted = Dispatching.provider(new Yes());
             Assert.assertNotNull(adapted);
         }
 
@@ -168,7 +168,7 @@ public class DispatchingTest {
 
         @Test
         public void canCurryDelegate() {
-            final Provider<O> adapted = Dispatching.curry(new Identity<O>(), O.ONE);
+            final Supplier<O> adapted = Dispatching.curry(new Identity<O>(), O.ONE);
             Assert.assertNotNull(adapted);
         }
 

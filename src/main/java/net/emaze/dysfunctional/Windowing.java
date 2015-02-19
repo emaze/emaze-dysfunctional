@@ -5,12 +5,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Queue;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.contracts.dbc;
-import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.windows.CenteredWindowIterator;
 import net.emaze.dysfunctional.windows.PreciseWindowIterator;
@@ -34,7 +34,7 @@ public abstract class Windowing {
      * @return the window iterator
      */
     public static <T> Iterator<List<T>> window(int windowSize, Iterator<T> iterator) {
-        final Provider<List<T>> factory = Compositions.compose(new Vary<ArrayList<T>, List<T>>(), new ArrayListFactory<T>());
+        final Supplier<List<T>> factory = Compositions.compose(new Vary<ArrayList<T>, List<T>>(), new ArrayListFactory<T>());
         return new PreciseWindowIterator<List<T>, T>(iterator, windowSize, factory);
     }
 
@@ -50,7 +50,7 @@ public abstract class Windowing {
      */
     public static <T> Iterator<List<T>> window(int windowSize, Iterable<T> iterable) {
         dbc.precondition(iterable != null, "cannot create a window iterator from a null iterable");
-        final Provider<List<T>> factory = Compositions.compose(new Vary<ArrayList<T>, List<T>>(), new ArrayListFactory<T>());
+        final Supplier<List<T>> factory = Compositions.compose(new Vary<ArrayList<T>, List<T>>(), new ArrayListFactory<T>());
         return new PreciseWindowIterator<List<T>, T>(iterable.iterator(), windowSize, factory);
     }
 
@@ -66,7 +66,7 @@ public abstract class Windowing {
      * @param provider the provider providing the window collection
      * @return the window iterator
      */
-    public static <W extends Collection<T>, T> Iterator<W> window(int windowSize, Iterator<T> iterator, Provider<W> provider) {
+    public static <W extends Collection<T>, T> Iterator<W> window(int windowSize, Iterator<T> iterator, Supplier<W> provider) {
         return new PreciseWindowIterator<W, T>(iterator, windowSize, provider);
     }
 
@@ -82,7 +82,7 @@ public abstract class Windowing {
      * @param provider the provider providing the window collection
      * @return the window iterator
      */
-    public static <W extends Collection<T>, T> Iterator<W> window(int windowSize, Iterable<T> iterable, Provider<W> provider) {
+    public static <W extends Collection<T>, T> Iterator<W> window(int windowSize, Iterable<T> iterable, Supplier<W> provider) {
         dbc.precondition(iterable != null, "cannot create a window iterator from a null iterable");
         return new PreciseWindowIterator<W, T>(iterable.iterator(), windowSize, provider);
     }
@@ -99,7 +99,7 @@ public abstract class Windowing {
      * @return the window iterator
      */
     public static <T> Iterator<List<Maybe<T>>> centered(int windowSize, Iterator<T> iterator) {
-        final Provider<List<Maybe<T>>> factory = Compositions.compose(new Vary<ArrayList<Maybe<T>>, List<Maybe<T>>>(), new ArrayListFactory<Maybe<T>>());
+        final Supplier<List<Maybe<T>>> factory = Compositions.compose(new Vary<ArrayList<Maybe<T>>, List<Maybe<T>>>(), new ArrayListFactory<Maybe<T>>());
         return new CenteredWindowIterator<List<Maybe<T>>, T>(iterator, windowSize, factory);
     }
 
@@ -116,7 +116,7 @@ public abstract class Windowing {
      */
     public static <T> Iterator<List<Maybe<T>>> centered(int windowSize, Iterable<T> iterable) {
         dbc.precondition(iterable != null, "cannot create a centered window iterator from a null iterable");
-        final Provider<List<Maybe<T>>> factory = Compositions.compose(new Vary<ArrayList<Maybe<T>>, List<Maybe<T>>>(), new ArrayListFactory<Maybe<T>>());
+        final Supplier<List<Maybe<T>>> factory = Compositions.compose(new Vary<ArrayList<Maybe<T>>, List<Maybe<T>>>(), new ArrayListFactory<Maybe<T>>());
         return new CenteredWindowIterator<List<Maybe<T>>, T>(iterable.iterator(), windowSize, factory);
     }
 
@@ -133,7 +133,7 @@ public abstract class Windowing {
      * @param provider the provider providing the window collection
      * @return the window iterator
      */
-    public static <W extends Collection<Maybe<T>>, T> Iterator<W> centered(int windowSize, Iterator<T> iterator, Provider<W> provider) {
+    public static <W extends Collection<Maybe<T>>, T> Iterator<W> centered(int windowSize, Iterator<T> iterator, Supplier<W> provider) {
         return new CenteredWindowIterator<W, T>(iterator, windowSize, provider);
     }
 
@@ -150,7 +150,7 @@ public abstract class Windowing {
      * @param provider the provider providing the window collection
      * @return the window iterator
      */
-    public static <W extends Collection<Maybe<T>>, T> Iterator<W> centered(int windowSize, Iterable<T> iterable, Provider<W> provider) {
+    public static <W extends Collection<Maybe<T>>, T> Iterator<W> centered(int windowSize, Iterable<T> iterable, Supplier<W> provider) {
         dbc.precondition(iterable != null, "cannot create a centered window iterator from a null iterable");
         return new CenteredWindowIterator<W, T>(iterable.iterator(), windowSize, provider);
     }

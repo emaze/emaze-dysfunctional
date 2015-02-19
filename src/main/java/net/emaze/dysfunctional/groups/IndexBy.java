@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Map;
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 
 /**
  * A unary delegate indexing elements from an iterator. Indexing key is provided
@@ -18,9 +18,9 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
 public class IndexBy<M extends Map<K, V>, K, V> implements Function<Iterator<V>, M> {
 
     private final Function<V, K> grouper;
-    private final Provider<M> mapProvider;
+    private final Supplier<M> mapProvider;
 
-    public IndexBy(Function<V, K> grouper, Provider<M> mapProvider) {
+    public IndexBy(Function<V, K> grouper, Supplier<M> mapProvider) {
         dbc.precondition(grouper != null, "cannot index with a null grouper");
         dbc.precondition(mapProvider != null, "cannot index with a null mapProvider");
         this.grouper = grouper;
@@ -30,7 +30,7 @@ public class IndexBy<M extends Map<K, V>, K, V> implements Function<Iterator<V>,
     @Override
     public M apply(Iterator<V> groupies) {
         dbc.precondition(groupies != null, "cannot index with a null iterator");
-        final M grouped = mapProvider.provide();
+        final M grouped = mapProvider.get();
         while (groupies.hasNext()) {
             final V groupie = groupies.next();
             final K group = grouper.apply(groupie);

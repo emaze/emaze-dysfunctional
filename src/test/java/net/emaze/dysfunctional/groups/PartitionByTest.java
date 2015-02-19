@@ -6,7 +6,7 @@ import java.util.List;
 import net.emaze.dysfunctional.Compositions;
 import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.Never;
 import java.util.function.Predicate;
@@ -22,7 +22,7 @@ import org.junit.Test;
  */
 public class PartitionByTest {
 
-    private final Provider<List<O>> LIST_FACTORY = Compositions.compose(new Vary<ArrayList<O>, List<O>>(), new ArrayListFactory<O>());
+    private final Supplier<List<O>> LIST_FACTORY = Compositions.compose(new Vary<ArrayList<O>, List<O>>(), new ArrayListFactory<O>());
     private final Predicate<O> PARTITIONER = new Always<O>();
 
     @Test(expected = IllegalArgumentException.class)

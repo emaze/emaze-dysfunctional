@@ -9,7 +9,7 @@ import net.emaze.dysfunctional.Compositions;
 import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.Consumers;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.testing.O;
@@ -22,7 +22,7 @@ import org.junit.Assert;
  */
 public class CenteredWindowIteratorTest {
 
-    private static Provider<List<Maybe<O>>> LIST_FACTORY = Compositions.compose(new Vary<ArrayList<Maybe<O>>, List<Maybe<O>>>(), new ArrayListFactory<Maybe<O>>());
+    private static Supplier<List<Maybe<O>>> LIST_FACTORY = Compositions.compose(new Vary<ArrayList<Maybe<O>>, List<Maybe<O>>>(), new ArrayListFactory<Maybe<O>>());
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingCenteredWindowIteratorWithNullIteratorYieldsException() {

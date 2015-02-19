@@ -5,7 +5,7 @@
 package net.emaze.dysfunctional.dispatching.spying;
 
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -30,8 +30,8 @@ public class CapturingProviderTest {
     @Test
     public void callingCapturesTheResult() {
         final Box<O> result = Box.empty();
-        final Provider<O> spy = new CapturingProvider<O>(new ConstantProvider<O>(O.ONE), result);
-        spy.provide();
+        final Supplier<O> spy = new CapturingProvider<O>(new ConstantProvider<O>(O.ONE), result);
+        spy.get();
         Assert.assertEquals(Box.of(O.ONE), result);
     }
 }

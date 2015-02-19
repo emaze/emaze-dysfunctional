@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.Iterations;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -19,10 +19,10 @@ public class IteratingProviderTest {
     @Test
     public void callingProviderYieldsIteratorElementsInOrder() {
         final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER);
-        final Provider<Maybe<O>> provider = new IteratingProvider<O>(iterator);
+        final Supplier<Maybe<O>> provider = new IteratingProvider<O>(iterator);
 
         final List<Maybe<O>> expected = Arrays.asList(Maybe.just(O.ONE), Maybe.just(O.ANOTHER), Maybe.<O>nothing());
-        Assert.assertEquals(expected, Arrays.asList(provider.provide(), provider.provide(), provider.provide()));
+        Assert.assertEquals(expected, Arrays.asList(provider.get(), provider.get(), provider.get()));
     }
 
     @Test(expected = IllegalArgumentException.class)

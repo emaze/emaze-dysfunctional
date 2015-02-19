@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.options;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 
 /**
  * Transforms a maybe mapping Maybe.nothing to Either.left(leftTypeProvider())
@@ -14,9 +14,9 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
  */
 public class MaybeToEither<L, R> implements Function<Maybe<R>, Either<L, R>> {
 
-    private final Provider<L> leftTypeProvider;
+    private final Supplier<L> leftTypeProvider;
 
-    public MaybeToEither(Provider<L> leftTypeProvider) {
+    public MaybeToEither(Supplier<L> leftTypeProvider) {
         dbc.precondition(leftTypeProvider != null, "cannot create MaybeToEither with a null left type provider");
         this.leftTypeProvider = leftTypeProvider;
     }

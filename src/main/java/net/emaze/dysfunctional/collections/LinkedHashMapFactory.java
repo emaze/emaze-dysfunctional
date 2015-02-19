@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.collections;
 
 import java.util.LinkedHashMap;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 
 /**
  * Creates an empty LinkedHashMap.
@@ -10,10 +10,10 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
  * @param <V> the LinkedHashMap value type parameter
  * @author rferranti
  */
-public class LinkedHashMapFactory<K, V> implements Provider<LinkedHashMap<K, V>> {
+public class LinkedHashMapFactory<K, V> implements Supplier<LinkedHashMap<K, V>> {
 
     @Override
-    public LinkedHashMap<K, V> provide() {
+    public LinkedHashMap<K, V> get() {
         return new LinkedHashMap<K, V>();
     }
 }

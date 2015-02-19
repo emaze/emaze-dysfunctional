@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.collections.HashMapFactory;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.groups.GroupBy;
 import net.emaze.dysfunctional.groups.IndexBy;
 import net.emaze.dysfunctional.groups.PartitionBy;
@@ -37,7 +37,7 @@ public abstract class Groups {
      * @return a map containing grouped values
      */
     public static <K, V> Map<K, List<V>> groupBy(Iterator<V> groupies, Function<V, K> grouper) {
-        final Provider<List<V>> provider = Compositions.compose(new Vary<ArrayList<V>, List<V>>(), new ArrayListFactory<V>());
+        final Supplier<List<V>> provider = Compositions.compose(new Vary<ArrayList<V>, List<V>>(), new ArrayListFactory<V>());
         return new GroupBy<>(grouper, provider, new HashMapFactory<>()).apply(groupies);
     }
 
@@ -54,7 +54,7 @@ public abstract class Groups {
      * @param collectionProvider the values collection provider
      * @return a map containing grouped values
      */
-    public static <K, V, C extends Collection<V>> Map<K, C> groupBy(Iterator<V> groupies, Function<V, K> grouper, Provider<C> collectionProvider) {
+    public static <K, V, C extends Collection<V>> Map<K, C> groupBy(Iterator<V> groupies, Function<V, K> grouper, Supplier<C> collectionProvider) {
         return new GroupBy<>(grouper, collectionProvider, new HashMapFactory<>()).apply(groupies);
     }
 
@@ -73,7 +73,7 @@ public abstract class Groups {
      * @param mapProvider the map collection provider
      * @return a map containing grouped values
      */
-    public static <K, V, C extends Collection<V>, M extends Map<K, C>> Map<K, C> groupBy(Iterator<V> groupies, Function<V, K> grouper, Provider<C> collectionProvider, Provider<M> mapProvider) {
+    public static <K, V, C extends Collection<V>, M extends Map<K, C>> Map<K, C> groupBy(Iterator<V> groupies, Function<V, K> grouper, Supplier<C> collectionProvider, Supplier<M> mapProvider) {
         return new GroupBy<>(grouper, collectionProvider, mapProvider).apply(groupies);
     }
 
@@ -90,7 +90,7 @@ public abstract class Groups {
      */
     public static <K, V> Map<K, List<V>> groupBy(Iterable<V> groupies, Function<V, K> grouper) {
         dbc.precondition(groupies != null, "cannot group a null iterable");
-        final Provider<List<V>> provider = Compositions.compose(new Vary<ArrayList<V>, List<V>>(), new ArrayListFactory<V>());
+        final Supplier<List<V>> provider = Compositions.compose(new Vary<ArrayList<V>, List<V>>(), new ArrayListFactory<V>());
         return new GroupBy<>(grouper, provider, new HashMapFactory<>()).apply(groupies.iterator());
     }
 
@@ -107,7 +107,7 @@ public abstract class Groups {
      * @param collectionProvider the values collection provider
      * @return a map containing grouped values
      */
-    public static <K, V, C extends Collection<V>> Map<K, C> groupBy(Iterable<V> groupies, Function<V, K> grouper, Provider<C> collectionProvider) {
+    public static <K, V, C extends Collection<V>> Map<K, C> groupBy(Iterable<V> groupies, Function<V, K> grouper, Supplier<C> collectionProvider) {
         dbc.precondition(groupies != null, "cannot group a null iterable");
         return new GroupBy<>(grouper, collectionProvider, new HashMapFactory<>()).apply(groupies.iterator());
     }
@@ -127,7 +127,7 @@ public abstract class Groups {
      * @param mapProvider the map collection provider
      * @return a map containing grouped values
      */
-    public static <K, V, C extends Collection<V>, M extends Map<K, C>> Map<K, C> groupBy(Iterable<V> groupies, Function<V, K> grouper, Provider<C> collectionProvider, Provider<M> mapProvider) {
+    public static <K, V, C extends Collection<V>, M extends Map<K, C>> Map<K, C> groupBy(Iterable<V> groupies, Function<V, K> grouper, Supplier<C> collectionProvider, Supplier<M> mapProvider) {
         dbc.precondition(groupies != null, "cannot group a null iterable");
         return new GroupBy<>(grouper, collectionProvider, mapProvider).apply(groupies.iterator());
     }
@@ -144,7 +144,7 @@ public abstract class Groups {
      * @return a map containing grouped values
      */
     public static <K, V> Map<K, List<V>> groupBy(V[] groupies, Function<V, K> grouper) {
-        final Provider<List<V>> provider = Compositions.compose(new Vary<ArrayList<V>, List<V>>(), new ArrayListFactory<V>());
+        final Supplier<List<V>> provider = Compositions.compose(new Vary<ArrayList<V>, List<V>>(), new ArrayListFactory<V>());
         return new GroupBy<>(grouper, provider, new HashMapFactory<>()).apply(new ArrayIterator<>(groupies));
     }
 
@@ -161,7 +161,7 @@ public abstract class Groups {
      * @param collectionProvider the values collection provider
      * @return a map containing grouped values
      */
-    public static <K, V, C extends Collection<V>> Map<K, C> groupBy(V[] groupies, Function<V, K> grouper, Provider<C> collectionProvider) {
+    public static <K, V, C extends Collection<V>> Map<K, C> groupBy(V[] groupies, Function<V, K> grouper, Supplier<C> collectionProvider) {
         return new GroupBy<>(grouper, collectionProvider, new HashMapFactory<>()).apply(new ArrayIterator<>(groupies));
     }
 
@@ -180,7 +180,7 @@ public abstract class Groups {
      * @param mapProvider the map collection provider
      * @return a map containing grouped values
      */
-    public static <K, V, C extends Collection<V>, M extends Map<K, C>> Map<K, C> groupBy(V[] groupies, Function<V, K> grouper, Provider<C> collectionProvider, Provider<M> mapProvider) {
+    public static <K, V, C extends Collection<V>, M extends Map<K, C>> Map<K, C> groupBy(V[] groupies, Function<V, K> grouper, Supplier<C> collectionProvider, Supplier<M> mapProvider) {
         return new GroupBy<>(grouper, collectionProvider, mapProvider).apply(new ArrayIterator<>(groupies));
     }
 
@@ -196,7 +196,7 @@ public abstract class Groups {
      * @return the two partitioned collections in a pair.
      */
     public static <T> Pair<List<T>, List<T>> partition(Iterator<T> values, Predicate<T> partitioner) {
-        final Provider<List<T>> provider = Compositions.compose(new Vary<ArrayList<T>, List<T>>(), new ArrayListFactory<T>());
+        final Supplier<List<T>> provider = Compositions.compose(new Vary<ArrayList<T>, List<T>>(), new ArrayListFactory<T>());
         return new PartitionBy<>(partitioner, provider, provider).apply(values);
     }
 
@@ -214,7 +214,7 @@ public abstract class Groups {
      * elements collection
      * @return the two partitioned collections in a pair.
      */
-    public static <T, C extends Collection<T>> Pair<C, C> partition(Iterator<T> values, Predicate<T> partitioner, Provider<C> collectionsProvider) {
+    public static <T, C extends Collection<T>> Pair<C, C> partition(Iterator<T> values, Predicate<T> partitioner, Supplier<C> collectionsProvider) {
         return new PartitionBy<>(partitioner, collectionsProvider, collectionsProvider).apply(values);
     }
 
@@ -235,7 +235,7 @@ public abstract class Groups {
      * refused elements collection
      * @return the two partitioned collections in a pair.
      */
-    public static <T, CA extends Collection<T>, CR extends Collection<T>> Pair<CA, CR> partition(Iterator<T> values, Predicate<T> partitioner, Provider<CA> acceptedCollectionProvider, Provider<CR> refusedCollectionProvider) {
+    public static <T, CA extends Collection<T>, CR extends Collection<T>> Pair<CA, CR> partition(Iterator<T> values, Predicate<T> partitioner, Supplier<CA> acceptedCollectionProvider, Supplier<CR> refusedCollectionProvider) {
         return new PartitionBy<>(partitioner, acceptedCollectionProvider, refusedCollectionProvider).apply(values);
     }
 
@@ -252,7 +252,7 @@ public abstract class Groups {
      */
     public static <T> Pair<List<T>, List<T>> partition(Iterable<T> values, Predicate<T> partitioner) {
         dbc.precondition(values != null, "cannot partition a null iterable");
-        final Provider<List<T>> provider = Compositions.compose(new Vary<ArrayList<T>, List<T>>(), new ArrayListFactory<T>());
+        final Supplier<List<T>> provider = Compositions.compose(new Vary<ArrayList<T>, List<T>>(), new ArrayListFactory<T>());
         return new PartitionBy<>(partitioner, provider, provider).apply(values.iterator());
     }
 
@@ -270,7 +270,7 @@ public abstract class Groups {
      * elements collection
      * @return the two partitioned collections in a pair.
      */
-    public static <T, C extends Collection<T>> Pair<C, C> partition(Iterable<T> values, Predicate<T> partitioner, Provider<C> collectionsProvider) {
+    public static <T, C extends Collection<T>> Pair<C, C> partition(Iterable<T> values, Predicate<T> partitioner, Supplier<C> collectionsProvider) {
         dbc.precondition(values != null, "cannot partition a null iterable");
         return new PartitionBy<>(partitioner, collectionsProvider, collectionsProvider).apply(values.iterator());
     }
@@ -292,7 +292,7 @@ public abstract class Groups {
      * refused elements collection
      * @return the two partitioned collections in a pair.
      */
-    public static <T, CA extends Collection<T>, CR extends Collection<T>> Pair<CA, CR> partition(Iterable<T> values, Predicate<T> partitioner, Provider<CA> acceptedCollectionProvider, Provider<CR> refusedCollectionProvider) {
+    public static <T, CA extends Collection<T>, CR extends Collection<T>> Pair<CA, CR> partition(Iterable<T> values, Predicate<T> partitioner, Supplier<CA> acceptedCollectionProvider, Supplier<CR> refusedCollectionProvider) {
         dbc.precondition(values != null, "cannot partition a null iterable");
         return new PartitionBy<>(partitioner, acceptedCollectionProvider, refusedCollectionProvider).apply(values.iterator());
     }
@@ -309,7 +309,7 @@ public abstract class Groups {
      * @return the two partitioned collections in a pair.
      */
     public static <T> Pair<List<T>, List<T>> partition(T[] values, Predicate<T> partitioner) {
-        final Provider<List<T>> provider = Compositions.compose(new Vary<ArrayList<T>, List<T>>(), new ArrayListFactory<T>());
+        final Supplier<List<T>> provider = Compositions.compose(new Vary<ArrayList<T>, List<T>>(), new ArrayListFactory<T>());
         return new PartitionBy<>(partitioner, provider, provider).apply(new ArrayIterator<>(values));
     }
 
@@ -327,7 +327,7 @@ public abstract class Groups {
      * elements collection
      * @return the two partitioned collections in a pair.
      */
-    public static <T, C extends Collection<T>> Pair<C, C> partition(T[] values, Predicate<T> partitioner, Provider<C> collectionsProvider) {
+    public static <T, C extends Collection<T>> Pair<C, C> partition(T[] values, Predicate<T> partitioner, Supplier<C> collectionsProvider) {
         return new PartitionBy<>(partitioner, collectionsProvider, collectionsProvider).apply(new ArrayIterator<>(values));
     }
 
@@ -348,7 +348,7 @@ public abstract class Groups {
      * refused elements collection
      * @return the two partitioned collections in a pair.
      */
-    public static <T, CA extends Collection<T>, CR extends Collection<T>> Pair<CA, CR> partition(T[] values, Predicate<T> partitioner, Provider<CA> acceptedCollectionProvider, Provider<CR> refusedCollectionProvider) {
+    public static <T, CA extends Collection<T>, CR extends Collection<T>> Pair<CA, CR> partition(T[] values, Predicate<T> partitioner, Supplier<CA> acceptedCollectionProvider, Supplier<CR> refusedCollectionProvider) {
         return new PartitionBy<>(partitioner, acceptedCollectionProvider, refusedCollectionProvider).apply(new ArrayIterator<>(values));
     }
 
@@ -364,7 +364,7 @@ public abstract class Groups {
      * @param mapProvider a provider used to create the resulting map
      * @return indexed elements in a map
      */
-    public static <K, V, M extends Map<K, V>> Map<K, V> indexBy(Iterable<V> groupies, Function<V, K> indexer, Provider<M> mapProvider) {
+    public static <K, V, M extends Map<K, V>> Map<K, V> indexBy(Iterable<V> groupies, Function<V, K> indexer, Supplier<M> mapProvider) {
         dbc.precondition(groupies != null, "cannot index from a null iterable");
         return new IndexBy<>(indexer, mapProvider).apply(groupies.iterator());
     }
@@ -396,7 +396,7 @@ public abstract class Groups {
      * @param mapProvider a provider used to create the resulting map
      * @return indexed elements in a map
      */
-    public static <K, V, M extends Map<K, V>> Map<K, V> indexBy(Iterator<V> groupies, Function<V, K> indexer, Provider<M> mapProvider) {
+    public static <K, V, M extends Map<K, V>> Map<K, V> indexBy(Iterator<V> groupies, Function<V, K> indexer, Supplier<M> mapProvider) {
         return new IndexBy<>(indexer, mapProvider).apply(groupies);
     }
 
@@ -426,7 +426,7 @@ public abstract class Groups {
      * @param mapProvider a provider used to create the resulting map
      * @return indexed elements in a map
      */
-    public static <K, V, M extends Map<K, V>> Map<K, V> indexBy(V[] groupies, Function<V, K> indexer, Provider<M> mapProvider) {
+    public static <K, V, M extends Map<K, V>> Map<K, V> indexBy(V[] groupies, Function<V, K> indexer, Supplier<M> mapProvider) {
         return new IndexBy<>(indexer, mapProvider).apply(new ArrayIterator<>(groupies));
     }
 

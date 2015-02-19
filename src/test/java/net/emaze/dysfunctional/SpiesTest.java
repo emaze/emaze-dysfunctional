@@ -14,7 +14,7 @@ import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
@@ -47,7 +47,7 @@ public class SpiesTest {
         @Test
         public void canSpyAProvider() {
             final Box<O> result = new Box<O>();
-            final Provider<O> spied = Spies.spy(new ConstantProvider<O>(O.ONE), result);
+            final Supplier<O> spied = Spies.spy(new ConstantProvider<O>(O.ONE), result);
             Assert.assertNotNull(spied);
         }
 
@@ -323,7 +323,7 @@ public class SpiesTest {
 
         @Test
         public void canMonitorAProvider() {
-            final Provider<O> monitor = Spies.monitor(new ConstantProvider<O>(O.ONE), accumulator);
+            final Supplier<O> monitor = Spies.monitor(new ConstantProvider<O>(O.ONE), accumulator);
             Assert.assertNotNull(monitor);
         }
 

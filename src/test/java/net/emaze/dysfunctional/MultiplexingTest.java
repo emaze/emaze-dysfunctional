@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -184,7 +184,7 @@ public class MultiplexingTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotUnchainNullIterableUsingProvider() {
-            final Provider<ArrayList<O>> provider = new ArrayListFactory<O>();
+            final Supplier<ArrayList<O>> provider = new ArrayListFactory<O>();
             final Iterable<O> iterable = null;
             Multiplexing.unchain(1, iterable, provider);
         }
@@ -203,21 +203,21 @@ public class MultiplexingTest {
 
         @Test
         public void canUnchainFromIteratorUsingProvider() {
-            Provider<ArrayList<O>> provider = new ArrayListFactory<O>();
+            Supplier<ArrayList<O>> provider = new ArrayListFactory<O>();
             Iterator<ArrayList<O>> demux = Multiplexing.unchain(1, AN_ITERABLE.iterator(), provider);
             Assert.assertNotNull(demux);
         }
 
         @Test
         public void canUnchainFromIterableUsingProvider() {
-            Provider<ArrayList<O>> provider = new ArrayListFactory<O>();
+            Supplier<ArrayList<O>> provider = new ArrayListFactory<O>();
             Iterator<ArrayList<O>> demux = Multiplexing.unchain(1, AN_ITERABLE, provider);
             Assert.assertNotNull(demux);
         }
 
         @Test
         public void canUnchainFromArrayUsingProvider() {
-            Provider<ArrayList<O>> provider = new ArrayListFactory<O>();
+            Supplier<ArrayList<O>> provider = new ArrayListFactory<O>();
             Iterator<ArrayList<O>> demux = Multiplexing.unchain(1, provider, O.ONE, O.ANOTHER);
             Assert.assertNotNull(demux);
         }
@@ -245,7 +245,7 @@ public class MultiplexingTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotUnchainANullIterableWithProvider() {
-            Provider<ArrayList<Maybe<O>>> provider = new ArrayListFactory<Maybe<O>>();
+            Supplier<ArrayList<Maybe<O>>> provider = new ArrayListFactory<Maybe<O>>();
             final Iterable<O> iterable = null;
             Multiplexing.unchainWithExactChannelSize(1, iterable, provider);
         }
@@ -270,21 +270,21 @@ public class MultiplexingTest {
 
         @Test
         public void canUnchainFromIterableWithProvider() {
-            Provider<ArrayList<Maybe<O>>> provider = new ArrayListFactory<Maybe<O>>();
+            Supplier<ArrayList<Maybe<O>>> provider = new ArrayListFactory<Maybe<O>>();
             Iterator<ArrayList<Maybe<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, AN_ITERABLE, provider);
             Assert.assertNotNull(demuxl);
         }
 
         @Test
         public void canUnchainFromIteratorWithProvider() {
-            Provider<ArrayList<Maybe<O>>> provider = new ArrayListFactory<Maybe<O>>();
+            Supplier<ArrayList<Maybe<O>>> provider = new ArrayListFactory<Maybe<O>>();
             Iterator<ArrayList<Maybe<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, AN_ITERABLE.iterator(), provider);
             Assert.assertNotNull(demuxl);
         }
 
         @Test
         public void canUnchainFromArrayWithProvider() {
-            Provider<ArrayList<Maybe<O>>> provider = new ArrayListFactory<Maybe<O>>();
+            Supplier<ArrayList<Maybe<O>>> provider = new ArrayListFactory<Maybe<O>>();
             Iterator<ArrayList<Maybe<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, provider, O.IGNORED);
             Assert.assertNotNull(demuxl);
         }

@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.HashMapFactory;
 import net.emaze.dysfunctional.collections.LinkedHashMapFactory;
 import net.emaze.dysfunctional.collections.TreeMapFactory;
 import net.emaze.dysfunctional.collections.builders.MapBuilder;
 import net.emaze.dysfunctional.collections.builders.NestedMapBuilder;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.order.ComparableComparator;
 
 public abstract class Maps {
@@ -20,8 +20,8 @@ public abstract class Maps {
         return new MapBuilder<K, V>(map);
     }
 
-    public static <K, V> MapBuilder<K, V> from(Provider<Map<K, V>> provider) {
-        return new MapBuilder<K, V>(provider.provide());
+    public static <K, V> MapBuilder<K, V> from(Supplier<Map<K, V>> provider) {
+        return new MapBuilder<K, V>(provider.get());
     }
 
     public static <K, V> MapBuilder<K, V> builder() {
@@ -42,7 +42,7 @@ public abstract class Maps {
 
     public abstract static class Nested {
 
-        public static <K> NestedMapBuilder<K> from(Provider<Map<K, Object>> provider) {
+        public static <K> NestedMapBuilder<K> from(Supplier<Map<K, Object>> provider) {
             return new NestedMapBuilder<K>(provider);
         }
 
@@ -62,7 +62,7 @@ public abstract class Maps {
             return new NestedMapBuilder<K>(narrowed(new TreeMapFactory<K, Object>(keyComp)));
         }
 
-        private static <K, M extends Map<K, Object>> Provider<Map<K, Object>> narrowed(Provider<M> provider) {
+        private static <K, M extends Map<K, Object>> Supplier<Map<K, Object>> narrowed(Supplier<M> provider) {
             return Compositions.compose(new Vary<M, Map<K, Object>>(), provider);
         }
     }

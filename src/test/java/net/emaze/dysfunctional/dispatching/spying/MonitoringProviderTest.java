@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.spying;
 
 import java.util.concurrent.atomic.AtomicLong;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,8 +26,8 @@ public class MonitoringProviderTest {
     @Test
     public void callingIncrementsTheAtomicLong() {
         final AtomicLong state = new AtomicLong();
-        final Provider<O> spy = new MonitoringProvider<O>(new ConstantProvider<O>(O.ONE), state);
-        spy.provide();
+        final Supplier<O> spy = new MonitoringProvider<O>(new ConstantProvider<O>(O.ONE), state);
+        spy.get();
         Assert.assertEquals(1l, state.get());
     }
 }

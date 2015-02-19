@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 
 /**
  * Unary to nullary delegate adapter. Adapting is performed by currying the
@@ -12,7 +12,7 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
  * @param <R> the adapted delegate result type
  * @author rferranti
  */
-public class Binder<T, R> implements Provider<R> {
+public class Binder<T, R> implements Supplier<R> {
 
     private final Function<T, R> adapted;
     private final T only;
@@ -24,7 +24,7 @@ public class Binder<T, R> implements Provider<R> {
     }
 
     @Override
-    public R provide() {
+    public R get() {
         return adapted.apply(only);
     }
 }

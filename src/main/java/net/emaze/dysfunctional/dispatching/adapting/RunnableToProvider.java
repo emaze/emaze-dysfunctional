@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 
 /**
  * Adapts a runnable to a provider. Adapter result type is Void and always
@@ -9,7 +9,7 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
  *
  * @author rferranti
  */
-public class RunnableToProvider implements Provider<Void> {
+public class RunnableToProvider implements Supplier<Void> {
 
     private final Runnable adapted;
 
@@ -19,7 +19,7 @@ public class RunnableToProvider implements Provider<Void> {
     }
 
     @Override
-    public Void provide() {
+    public Void get() {
         adapted.run();
         return null;
     }

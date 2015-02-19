@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import org.junit.Test;
 import org.junit.Assert;
@@ -19,8 +19,8 @@ public class BinderTest {
 
     @Test
     public void paramIsCorrectlyBound() {
-        final Provider<String> provider = new Binder<String, String>(new Identity<String>(), "bound");
-        final String got = provider.provide();
+        final Supplier<String> provider = new Binder<String, String>(new Identity<String>(), "bound");
+        final String got = provider.get();
         Assert.assertEquals("bound", got);
     }
 

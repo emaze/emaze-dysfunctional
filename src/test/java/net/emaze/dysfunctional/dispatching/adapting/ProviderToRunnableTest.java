@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -16,10 +16,10 @@ public class ProviderToRunnableTest {
     @Test
     public void callingRunnableCallsTheAdaptedProvider() {
         final Box<Boolean> called = Box.empty();
-        new ProviderToRunnable(new Provider<O>() {
+        new ProviderToRunnable(new Supplier<O>() {
 
             @Override
-            public O provide() {
+            public O get() {
                 called.setContent(Boolean.TRUE);
                 return O.IGNORED;
             }

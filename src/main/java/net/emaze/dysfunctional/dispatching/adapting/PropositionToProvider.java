@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.dispatching.logic.Proposition;
 
 /**
@@ -9,7 +9,7 @@ import net.emaze.dysfunctional.dispatching.logic.Proposition;
  *
  * @author rferranti
  */
-public class PropositionToProvider implements Provider<Boolean> {
+public class PropositionToProvider implements Supplier<Boolean> {
 
     private final Proposition adapted;
 
@@ -19,7 +19,7 @@ public class PropositionToProvider implements Provider<Boolean> {
     }
 
     @Override
-    public Boolean provide() {
+    public Boolean get() {
         return adapted.state();
     }
 }

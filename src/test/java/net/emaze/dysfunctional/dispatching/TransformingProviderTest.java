@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching;
 
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -25,8 +25,8 @@ public class TransformingProviderTest {
     
     @Test
     public void canTransformProvidedElement() {
-        final Provider<O> provider = new TransformingProvider<O, O>(new Identity<O>(), new ConstantProvider<O>(O.ONE));
-        final O got = provider.provide();
+        final Supplier<O> provider = new TransformingProvider<O, O>(new Identity<O>(), new ConstantProvider<O>(O.ONE));
+        final O got = provider.get();
         Assert.assertEquals(O.ONE, got);
     }
 }

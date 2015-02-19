@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.spying;
 
 import java.util.concurrent.atomic.AtomicLong;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 
 /**
  * Proxies a provider monitoring its calls.
@@ -10,12 +10,12 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
  * @author rferranti
  * @param <R> the result type
  */
-public class MonitoringProvider<R> implements Provider<R> {
+public class MonitoringProvider<R> implements Supplier<R> {
 
-    private final Provider<R> nested;
+    private final Supplier<R> nested;
     private final AtomicLong calls;
 
-    public MonitoringProvider(Provider<R> nested, AtomicLong calls) {
+    public MonitoringProvider(Supplier<R> nested, AtomicLong calls) {
         dbc.precondition(nested != null, "cannot monitor a null provider");
         dbc.precondition(calls != null, "cannot monitor with a null AtomicLong");
         this.nested = nested;
@@ -23,8 +23,8 @@ public class MonitoringProvider<R> implements Provider<R> {
     }
 
     @Override
-    public R provide() {
+    public R get() {
         calls.incrementAndGet();
-        return nested.provide();
+        return nested.get();
     }
 }

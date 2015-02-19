@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.dispatching.TransformingBinaryPredicate;
 import net.emaze.dysfunctional.dispatching.TransformingPredicate;
 import net.emaze.dysfunctional.dispatching.TransformingProvider;
@@ -11,7 +12,6 @@ import net.emaze.dysfunctional.dispatching.TransformingTernaryPredicate;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryComposer;
 import net.emaze.dysfunctional.dispatching.delegates.Composer;
 import net.emaze.dysfunctional.dispatching.delegates.EndoDelegatesComposer;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryComposer;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
@@ -35,7 +35,7 @@ public abstract class Compositions {
      * @param g the provider to be composed
      * @return the composed provider
      */
-    public static <T, R> Provider<R> compose(final Function<T, R> f, final Provider<T> g) {
+    public static <T, R> Supplier<R> compose(final Function<T, R> f, final Supplier<T> g) {
         return new TransformingProvider<>(f, g);
     }
 

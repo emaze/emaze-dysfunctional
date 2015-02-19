@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 
 /**
  * Adapts a provider as a runnable. Adapting is performed by ignoring result of
@@ -11,15 +11,15 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
  */
 public class ProviderToRunnable implements Runnable {
 
-    private final Provider<?> adapted;
+    private final Supplier<?> adapted;
 
-    public ProviderToRunnable(Provider<?> adaptee) {
+    public ProviderToRunnable(Supplier<?> adaptee) {
         dbc.precondition(adaptee != null, "cannot adapt a null provider to runnable");
         this.adapted = adaptee;
     }
 
     @Override
     public void run() {
-        adapted.provide();
+        adapted.get();
     }
 }

@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 import net.emaze.dysfunctional.options.Maybe;
 
@@ -18,11 +18,11 @@ public class CenteredWindowIterator<W extends Collection<Maybe<T>>, T> extends R
 
     private final Iterator<T> iter;
     private final int windowSize;
-    private final Provider<W> provider;
+    private final Supplier<W> provider;
     private final LinkedList<Maybe<T>> window = new LinkedList<Maybe<T>>();
     private boolean freshIterator = true;
 
-    public CenteredWindowIterator(Iterator<T> iter, int windowSize, Provider<W> provider) {
+    public CenteredWindowIterator(Iterator<T> iter, int windowSize, Supplier<W> provider) {
         dbc.precondition(iter != null, "cannot create a CenteredWindowIterator with a null iterator");
         dbc.precondition(windowSize > 2, "cannot create a CenteredWindowIterator with a non positive or 1 window size");
         dbc.precondition(windowSize % 2 == 1, "cannot create a CenteredWindowIterator with an even windowSize");
@@ -52,7 +52,7 @@ public class CenteredWindowIterator<W extends Collection<Maybe<T>>, T> extends R
         }
         freshIterator = false;
         fillWindow();
-        final W collection = provider.provide();
+        final W collection = provider.get();
         collection.addAll(window);
         return collection;
     }

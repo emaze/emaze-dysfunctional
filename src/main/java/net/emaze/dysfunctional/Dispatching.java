@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
@@ -60,7 +61,6 @@ import net.emaze.dysfunctional.dispatching.adapting.TernaryActionToTernaryDelega
 import net.emaze.dysfunctional.dispatching.adapting.TernaryDelegateToTernaryAction;
 import net.emaze.dysfunctional.dispatching.adapting.TernaryDelegateToTernaryPredicate;
 import net.emaze.dysfunctional.dispatching.adapting.TernaryPredicateToTernaryDelegate;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Proposition;
@@ -162,7 +162,7 @@ public abstract class Dispatching {
      * @param value the value to be curried
      * @return the curried provider
      */
-    public static <T, R> Provider<R> curry(Function<T, R> delegate, T value) {
+    public static <T, R> Supplier<R> curry(Function<T, R> delegate, T value) {
         return new Binder<>(delegate, value);
     }
 
@@ -504,7 +504,7 @@ public abstract class Dispatching {
      * @param ignored the adapted delegate ignored parameter type class
      * @return the adapted delegate
      */
-    public static <T, R> Function<T, R> ignore(Provider<R> provider, Class<T> ignored) {
+    public static <T, R> Function<T, R> ignore(Supplier<R> provider, Class<T> ignored) {
         return new IgnoreParameter<>(provider);
     }
 
@@ -590,7 +590,7 @@ public abstract class Dispatching {
      * @param adaptee the runnable to be adapted
      * @return the adapted provider
      */
-    public static <T> Provider<Maybe<T>> provider(Iterator<T> adaptee) {
+    public static <T> Supplier<Maybe<T>> provider(Iterator<T> adaptee) {
         return new IteratingProvider<T>(adaptee);
     }
 
@@ -600,7 +600,7 @@ public abstract class Dispatching {
      * @param adaptee the runnable to be adapted
      * @return the adapted provider
      */
-    public static Provider<Void> provider(Runnable adaptee) {
+    public static Supplier<Void> provider(Runnable adaptee) {
         return new RunnableToProvider(adaptee);
     }
 
@@ -610,7 +610,7 @@ public abstract class Dispatching {
      * @param adaptee the proposition to be adapted
      * @return the adapted provider
      */
-    public static Provider<Boolean> provider(Proposition adaptee) {
+    public static Supplier<Boolean> provider(Proposition adaptee) {
         return new PropositionToProvider(adaptee);
     }
 
@@ -693,7 +693,7 @@ public abstract class Dispatching {
      * @param provider the provider to be adapted
      * @return the adapted runnable
      */
-    public static <T> Runnable runnable(Provider<T> provider) {
+    public static <T> Runnable runnable(Supplier<T> provider) {
         return new ProviderToRunnable(provider);
     }
 
@@ -742,7 +742,7 @@ public abstract class Dispatching {
      * @param provider the provider to be adapted
      * @return the adapted proposition
      */
-    public static Proposition proposition(Provider<Boolean> provider) {
+    public static Proposition proposition(Supplier<Boolean> provider) {
         return new ProviderToProposition(provider);
     }
 

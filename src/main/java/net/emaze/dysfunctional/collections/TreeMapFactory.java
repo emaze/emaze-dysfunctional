@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.collections;
 import java.util.Comparator;
 import java.util.TreeMap;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 
 /**
  * Creates an empty TreeMap.
@@ -11,7 +11,7 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
  * @param <V> the TreeMap value type parameter
  * @author rferranti
  */
-public class TreeMapFactory<K, V> implements Provider<TreeMap<K, V>> {
+public class TreeMapFactory<K, V> implements Supplier<TreeMap<K, V>> {
 
     private final Comparator<K> comparator;
 
@@ -21,7 +21,7 @@ public class TreeMapFactory<K, V> implements Provider<TreeMap<K, V>> {
     }
     
     @Override
-    public TreeMap<K, V> provide() {
+    public TreeMap<K, V> get() {
         return new TreeMap<K, V>(comparator);
     }
 }

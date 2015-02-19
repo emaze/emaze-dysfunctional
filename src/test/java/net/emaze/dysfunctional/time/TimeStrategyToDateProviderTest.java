@@ -13,7 +13,7 @@ public class TimeStrategyToDateProviderTest {
 
     @Test
     public void canAdapt() {
-        new TimeStrategyToDateProvider(new StubTimeStrategy()).provide();
+        new TimeStrategyToDateProvider(new StubTimeStrategy()).get();
     }
 
     private static class StubTimeStrategy implements TimeStrategy {

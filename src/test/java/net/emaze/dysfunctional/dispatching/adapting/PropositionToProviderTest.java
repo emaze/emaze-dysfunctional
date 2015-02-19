@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.dispatching.logic.Yes;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,7 +14,7 @@ public class PropositionToProviderTest {
     @Test
     public void callingThePropositionYieldsProviderResult() {
         final Boolean expected = Boolean.TRUE;
-        final Provider<Boolean> provider = new PropositionToProvider(new Yes());
-        Assert.assertEquals(expected, provider.provide());
+        final Supplier<Boolean> provider = new PropositionToProvider(new Yes());
+        Assert.assertEquals(expected, provider.get());
     }
 }

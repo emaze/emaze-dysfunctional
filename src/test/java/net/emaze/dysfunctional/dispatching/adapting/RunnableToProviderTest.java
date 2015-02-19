@@ -21,7 +21,7 @@ public class RunnableToProviderTest {
             public void run() {
                 called.setContent(Boolean.TRUE);
             }
-        }).provide();
+        }).get();
         Assert.assertTrue(called.getContent());
     }
 }

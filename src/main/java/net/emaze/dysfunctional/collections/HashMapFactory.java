@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.collections;
 
 import java.util.HashMap;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 
 /**
  * Creates an empty HashMap.
@@ -10,10 +10,10 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
  * @param <V> the value type
  * @author rferranti
  */
-public class HashMapFactory<K, V> implements Provider<HashMap<K, V>> {
+public class HashMapFactory<K, V> implements Supplier<HashMap<K, V>> {
 
     @Override
-    public HashMap<K, V> provide() {
+    public HashMap<K, V> get() {
         return new HashMap<K, V>();
     }
 }

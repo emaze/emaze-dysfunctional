@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.collections.HashMapFactory;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.output.OutputIterator;
 import net.emaze.dysfunctional.output.StringOutputIterator;
@@ -131,7 +131,7 @@ public class ConsumersTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallAllWithNullCollectionProvider() {
-            final Provider<List<Integer>> collectionProvider = null;
+            final Supplier<List<Integer>> collectionProvider = null;
             Consumers.all(Arrays.asList(1, 2), collectionProvider);
         }
 
@@ -247,7 +247,7 @@ public class ConsumersTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallDictWithNullCollectionProvider() {
-            final Provider<Map<O, O>> collectionProvider = null;
+            final Supplier<Map<O, O>> collectionProvider = null;
             Iterable<Pair<O, O>> iterable = Iterations.iterable(Pair.of(O.ONE, O.ONE));
             Consumers.dict(iterable, collectionProvider);
         }

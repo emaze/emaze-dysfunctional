@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Map;
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.tuples.Pair;
 
 /**
@@ -18,9 +18,9 @@ import net.emaze.dysfunctional.tuples.Pair;
  */
 public class ConsumeIntoMap<K, V, M extends Map<K, V>> implements Function<Iterator<Pair<K, V>>, M> {
 
-    private final Provider<M> provider;
+    private final Supplier<M> provider;
 
-    public ConsumeIntoMap(Provider<M> provider) {
+    public ConsumeIntoMap(Supplier<M> provider) {
         dbc.precondition(provider != null, "collection provider cannot be null");
         this.provider = provider;
     }
@@ -28,7 +28,7 @@ public class ConsumeIntoMap<K, V, M extends Map<K, V>> implements Function<Itera
     @Override
     public M apply(Iterator<Pair<K, V>> consumable) {
         dbc.precondition(consumable != null, "consuming a null iterator");
-        final M out = provider.provide();
+        final M out = provider.get();
         while (consumable.hasNext()) {
             final Pair<K, V> pair = consumable.next();
             out.put(pair.first(), pair.second());

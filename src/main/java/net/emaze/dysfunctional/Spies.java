@@ -4,10 +4,10 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Proposition;
@@ -63,7 +63,7 @@ public abstract class Spies {
      * @param result a box that will be containing spied result
      * @return the proxied provider
      */
-    public static <R> Provider<R> spy(Provider<R> provider, Box<R> result) {
+    public static <R> Supplier<R> spy(Supplier<R> provider, Box<R> result) {
         return new CapturingProvider<R>(provider, result);
     }
 
@@ -585,7 +585,7 @@ public abstract class Spies {
      * @param calls a value holder accumulating calls
      * @return the proxied provider
      */
-    public static <R> Provider<R> monitor(Provider<R> provider, AtomicLong calls) {
+    public static <R> Supplier<R> monitor(Supplier<R> provider, AtomicLong calls) {
         return new MonitoringProvider<R>(provider, calls);
     }
 

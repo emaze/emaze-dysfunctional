@@ -10,7 +10,7 @@ import net.emaze.dysfunctional.Compositions;
 import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.options.Maybe;
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,9 +28,9 @@ import org.junit.runners.Suite;
 })
 public class UnchainIteratorTest {
 
-    final static Provider<List<Integer>> LIST_FACTORY = Compositions.compose(new Vary<ArrayList<Integer>, List<Integer>>(), new ArrayListFactory<Integer>());
-    final static Provider<Maybe<Integer>> SIZE_IS_ALWAYS_1 = new ConstantProvider<Maybe<Integer>>(Maybe.just(1));
-    final static Provider<Maybe<Integer>> SIZE_IS_ALWAYS_2 = new ConstantProvider<Maybe<Integer>>(Maybe.just(2));
+    final static Supplier<List<Integer>> LIST_FACTORY = Compositions.compose(new Vary<ArrayList<Integer>, List<Integer>>(), new ArrayListFactory<Integer>());
+    final static Supplier<Maybe<Integer>> SIZE_IS_ALWAYS_1 = new ConstantProvider<Maybe<Integer>>(Maybe.just(1));
+    final static Supplier<Maybe<Integer>> SIZE_IS_ALWAYS_2 = new ConstantProvider<Maybe<Integer>>(Maybe.just(2));
 
     public static class Functions {
 

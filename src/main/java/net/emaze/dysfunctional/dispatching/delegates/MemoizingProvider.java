@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
@@ -8,21 +9,21 @@ import net.emaze.dysfunctional.contracts.dbc;
  *
  * @param <T> the provider parameter type
  */
-public class MemoizingProvider<T> implements Provider<T> {
+public class MemoizingProvider<T> implements Supplier<T> {
 
-    private final Provider<T> provider;
+    private final Supplier<T> provider;
     private T value;
     private boolean isNotEvaluated = true;
 
-    public MemoizingProvider(Provider<T> provider) {
+    public MemoizingProvider(Supplier<T> provider) {
         dbc.precondition(provider != null, "Cannot create an only once provider with a null provider");
         this.provider = provider;
     }
 
     @Override
-    public T provide() {
+    public T get() {
         if (isNotEvaluated) {
-            value = provider.provide();
+            value = provider.get();
             isNotEvaluated = false;
         }
         return value;

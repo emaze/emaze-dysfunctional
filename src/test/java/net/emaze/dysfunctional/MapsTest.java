@@ -7,7 +7,7 @@ import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.HashMapFactory;
 import net.emaze.dysfunctional.collections.builders.MapBuilder;
 import net.emaze.dysfunctional.collections.builders.NestedMapBuilder;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.order.ComparableComparator;
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,7 +27,7 @@ import org.junit.runners.Suite;
 public class MapsTest {
 
     private static final Map<String, Object> A_MAP = new HashMap<String, Object>();
-    private static final Provider<Map<String, Object>> PROVIDER = Compositions.compose(new Vary<HashMap<String, Object>, Map<String, Object>>(), new HashMapFactory<String, Object>());
+    private static final Supplier<Map<String, Object>> PROVIDER = Compositions.compose(new Vary<HashMap<String, Object>, Map<String, Object>>(), new HashMapFactory<String, Object>());
 
     public static class Builder {
 

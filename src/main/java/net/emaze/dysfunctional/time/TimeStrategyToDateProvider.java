@@ -2,9 +2,9 @@ package net.emaze.dysfunctional.time;
 
 import java.util.Date;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 
-public class TimeStrategyToDateProvider implements Provider<Date> {
+public class TimeStrategyToDateProvider implements Supplier<Date> {
 
     private TimeStrategy timeStrategy;
 
@@ -14,7 +14,7 @@ public class TimeStrategyToDateProvider implements Provider<Date> {
     }
 
     @Override
-    public Date provide() {
+    public Date get() {
         return new TimeToDate().apply(timeStrategy.currentTime());
     }
 }

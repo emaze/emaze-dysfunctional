@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 
 /**
  * Adapts a provider to a delegate. Adapting is performed by ignoring the
@@ -14,15 +14,15 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
  */
 public class IgnoreParameter<T, R> implements Function<T, R> {
 
-    private final Provider<R> adapted;
+    private final Supplier<R> adapted;
 
-    public IgnoreParameter(Provider<R> adaptee) {
+    public IgnoreParameter(Supplier<R> adaptee) {
         dbc.precondition(adaptee != null, "cannot ignore parameter of a null provider");
         this.adapted = adaptee;
     }
 
     @Override
     public R apply(T parameter) {
-        return adapted.provide();
+        return adapted.get();
     }
 }

@@ -9,7 +9,7 @@ import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.options.Maybe;
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,7 +27,7 @@ import org.junit.runners.Suite;
 })
 public class UnchainWithExactChannelSizeTest {
 
-    final static Provider<List<Maybe<Integer>>> MAYBE_INTEGER_LIST_FACTORY = Compositions.compose(new Vary<ArrayList<Maybe<Integer>>, List<Maybe<Integer>>>(), new ArrayListFactory<Maybe<Integer>>());
+    final static Supplier<List<Maybe<Integer>>> MAYBE_INTEGER_LIST_FACTORY = Compositions.compose(new Vary<ArrayList<Maybe<Integer>>, List<Maybe<Integer>>>(), new ArrayListFactory<Maybe<Integer>>());
 
     public static class Functions {
 

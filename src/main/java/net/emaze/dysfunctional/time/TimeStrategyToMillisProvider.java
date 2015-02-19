@@ -2,10 +2,10 @@ package net.emaze.dysfunctional.time;
 
 import java.util.concurrent.TimeUnit;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.tuples.Pair;
 
-public class TimeStrategyToMillisProvider implements Provider<Long> {
+public class TimeStrategyToMillisProvider implements Supplier<Long> {
 
     private final TimeStrategy timeStrategy;
 
@@ -15,7 +15,7 @@ public class TimeStrategyToMillisProvider implements Provider<Long> {
     }
 
     @Override
-    public Long provide() {
+    public Long get() {
         final Pair<Long, TimeUnit> currentTime = timeStrategy.currentTime();
         return TimeUnit.MILLISECONDS.convert(currentTime.first(), currentTime.second());
     }

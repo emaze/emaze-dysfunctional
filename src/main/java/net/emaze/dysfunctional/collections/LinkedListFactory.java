@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.collections;
 
 import java.util.LinkedList;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 
 /**
  * Creates an empty LinkedList.
@@ -9,10 +9,10 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
  * @param <E> the LinkedList element type parameter
  * @author rferranti
  */
-public class LinkedListFactory<E> implements Provider<LinkedList<E>> {
+public class LinkedListFactory<E> implements Supplier<LinkedList<E>> {
 
     @Override
-    public LinkedList<E> provide() {
+    public LinkedList<E> get() {
         return new LinkedList<E>();
     }
 }

@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.consumers.ConsumeIntoCollection;
 import net.emaze.dysfunctional.consumers.FirstElement;
@@ -16,7 +17,6 @@ import net.emaze.dysfunctional.consumers.MaybeOneElement;
 import net.emaze.dysfunctional.consumers.OneElement;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.filtering.FilteringIterator;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.options.Maybe;
@@ -71,7 +71,7 @@ public abstract class Searches {
      * @return the collection provided by the passed provider, filled with
      * matching elements
      */
-    public static <C extends Collection<E>, E> C search(Iterator<E> iterator, Provider<C> provider, Predicate<E> predicate) {
+    public static <C extends Collection<E>, E> C search(Iterator<E> iterator, Supplier<C> provider, Predicate<E> predicate) {
         final Function<Iterator<E>, C> consumer = new ConsumeIntoCollection<>(provider);
         final FilteringIterator<E> filtered = new FilteringIterator<E>(iterator, predicate);
         return consumer.apply(filtered);
@@ -122,7 +122,7 @@ public abstract class Searches {
      * @return the collection provided by the passed provider, filled with
      * matching elements
      */
-    public static <C extends Collection<E>, E> C search(Iterable<E> iterable, Provider<C> provider, Predicate<E> predicate) {
+    public static <C extends Collection<E>, E> C search(Iterable<E> iterable, Supplier<C> provider, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot search a null iterable");
         final Function<Iterator<E>, C> consumer = new ConsumeIntoCollection<>(provider);
         final FilteringIterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), predicate);
@@ -173,7 +173,7 @@ public abstract class Searches {
      * @return the collection provided by the passed provider, filled with
      * matching elements
      */
-    public static <C extends Collection<E>, E> C search(E[] array, Provider<C> provider, Predicate<E> predicate) {
+    public static <C extends Collection<E>, E> C search(E[] array, Supplier<C> provider, Predicate<E> predicate) {
         final Function<Iterator<E>, C> consumer = new ConsumeIntoCollection<>(provider);
         final FilteringIterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), predicate);
         return consumer.apply(filtered);
@@ -232,7 +232,7 @@ public abstract class Searches {
      * @return the collection provided by the passed provider, filled with
      * matching elements
      */
-    public static <C extends Collection<E>, E> C find(Iterator<E> iterator, Provider<C> provider, Predicate<E> predicate) {
+    public static <C extends Collection<E>, E> C find(Iterator<E> iterator, Supplier<C> provider, Predicate<E> predicate) {
         final Function<Iterator<E>, C> consumer = new ConsumeIntoCollection<>(provider);
         final FilteringIterator<E> filtered = new FilteringIterator<E>(iterator, predicate);
         final C found = consumer.apply(filtered);
@@ -295,7 +295,7 @@ public abstract class Searches {
      * @return the collection provided by the passed provider, filled with
      * matching elements
      */
-    public static <C extends Collection<E>, E> C find(Iterable<E> iterable, Provider<C> provider, Predicate<E> predicate) {
+    public static <C extends Collection<E>, E> C find(Iterable<E> iterable, Supplier<C> provider, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot search a null iterable");
         final Function<Iterator<E>, C> consumer = new ConsumeIntoCollection<>(provider);
         final FilteringIterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), predicate);
@@ -357,7 +357,7 @@ public abstract class Searches {
      * @return the collection provided by the passed provider, filled with
      * matching elements
      */
-    public static <C extends Collection<E>, E> C find(E[] array, Provider<C> provider, Predicate<E> predicate) {
+    public static <C extends Collection<E>, E> C find(E[] array, Supplier<C> provider, Predicate<E> predicate) {
         final Function<Iterator<E>, C> consumer = new ConsumeIntoCollection<>(provider);
         final FilteringIterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), predicate);
         final C found = consumer.apply(filtered);
