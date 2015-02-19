@@ -6,7 +6,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Supplier;
 import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 import java.util.Optional;
-import net.emaze.dysfunctional.options.MaybeIterator;
+import net.emaze.dysfunctional.options.OptionalIterator;
 
 /**
  * squared
@@ -25,7 +25,7 @@ public class UnchainWithExactChannelSizeIterator<C extends Collection<Optional<T
         dbc.precondition(channelsSizesProvider != null, "cannot build a UnchainWithExactChannelSizeIterator with channelsSizesProvider < 1");
         dbc.precondition(iterator != null, "cannot build a UnchainWithExactChannelSizeIterator with a null iterator");
         dbc.precondition(channelProvider != null, "cannot build a UnchainWithExactChannelSizeIterator with a null channelProvider");
-        this.iterator = new MaybeIterator<T>(iterator);
+        this.iterator = new OptionalIterator<T>(iterator);
         this.channelsSizesProvider = channelsSizesProvider;
         this.channelProvider = channelProvider;
     }
