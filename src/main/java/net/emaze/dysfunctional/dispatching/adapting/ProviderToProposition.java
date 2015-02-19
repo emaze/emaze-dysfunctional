@@ -2,14 +2,14 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Supplier;
-import net.emaze.dysfunctional.dispatching.logic.Proposition;
+import java.util.function.BooleanSupplier;
 
 /**
  * Adapts a provider with Boolean result type to a proposition.
  *
  * @author rferranti
  */
-public class ProviderToProposition implements Proposition {
+public class ProviderToProposition implements BooleanSupplier {
 
     private final Supplier<Boolean> adapted;
 
@@ -19,7 +19,7 @@ public class ProviderToProposition implements Proposition {
     }
 
     @Override
-    public boolean state() {
+    public boolean getAsBoolean() {
         return adapted.get();
     }
 }

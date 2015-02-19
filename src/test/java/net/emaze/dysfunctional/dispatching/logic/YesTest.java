@@ -7,6 +7,6 @@ public class YesTest {
 
     @Test
     public void yesJustReturnsTrue() {
-        Assert.assertTrue(new Yes().state());
+        Assert.assertTrue(new Yes().getAsBoolean());
     }
 }

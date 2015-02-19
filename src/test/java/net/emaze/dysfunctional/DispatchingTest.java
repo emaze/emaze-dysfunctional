@@ -19,7 +19,7 @@ import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
-import net.emaze.dysfunctional.dispatching.logic.Proposition;
+import java.util.function.BooleanSupplier;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Yes;
@@ -77,7 +77,7 @@ public class DispatchingTest {
 
         @Test
         public void canAdaptProviderToProposition() {
-            final Proposition adapted = Dispatching.proposition(new ConstantProvider<Boolean>(Boolean.TRUE));
+            final BooleanSupplier adapted = Dispatching.proposition(new ConstantProvider<Boolean>(Boolean.TRUE));
             Assert.assertNotNull(adapted);
         }
 
@@ -246,7 +246,7 @@ public class DispatchingTest {
 
         @Test
         public void canCurryPredicate() {
-            final Proposition adapted = Dispatching.curry(new Always<O>(), O.ONE);
+            final BooleanSupplier adapted = Dispatching.curry(new Always<O>(), O.ONE);
             Assert.assertNotNull(adapted);
         }
 

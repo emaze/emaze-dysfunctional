@@ -4,13 +4,13 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
-import net.emaze.dysfunctional.dispatching.logic.Proposition;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 import net.emaze.dysfunctional.dispatching.spying.*;
 import net.emaze.dysfunctional.options.Box;
@@ -29,7 +29,7 @@ public abstract class Spies {
      * @param result a box that will be containing spied result
      * @return the proxied proposition
      */
-    public static Proposition spy(Proposition proposition, Box<Boolean> result) {
+    public static BooleanSupplier spy(BooleanSupplier proposition, Box<Boolean> result) {
         return new CapturingProposition(proposition, result);
     }
 
@@ -551,7 +551,7 @@ public abstract class Spies {
      * @param calls a value holder accumulating calls
      * @return the proxied proposition
      */
-    public static Proposition monitor(Proposition proposition, AtomicLong calls) {
+    public static BooleanSupplier monitor(BooleanSupplier proposition, AtomicLong calls) {
         return new MonitoringProposition(proposition, calls);
     }
 

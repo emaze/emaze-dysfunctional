@@ -7,6 +7,6 @@ public class NoTest {
 
     @Test
     public void noJustReturnsFalse() {
-        Assert.assertFalse(new No().state());
+        Assert.assertFalse(new No().getAsBoolean());
     }
 }

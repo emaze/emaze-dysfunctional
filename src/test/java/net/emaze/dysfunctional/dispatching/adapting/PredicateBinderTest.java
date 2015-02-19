@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import java.util.function.Predicate;
-import net.emaze.dysfunctional.dispatching.logic.Proposition;
+import java.util.function.BooleanSupplier;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
@@ -20,8 +20,8 @@ public class PredicateBinderTest {
     public void callingTheBinderPassesBoundParameter() {
         final Box<O> param = Box.empty();
         final Predicate<O> spy = Spies.spy1st(new Always<O>(), param);
-        final Proposition proposition = new PredicateBinder<O>(spy, O.ONE);
-        proposition.state();
+        final BooleanSupplier proposition = new PredicateBinder<O>(spy, O.ONE);
+        proposition.getAsBoolean();
         Assert.assertEquals(O.ONE, param.getContent());
     }
 
@@ -29,8 +29,8 @@ public class PredicateBinderTest {
     public void callingTheBinderYieldsPredicateResult() {
         final Box<Boolean> result = Box.empty();
         final Predicate<O> spy = Spies.spyRes(new Always<O>(), result);
-        final Proposition proposition = new PredicateBinder<O>(spy, O.ONE);
-        proposition.state();
+        final BooleanSupplier proposition = new PredicateBinder<O>(spy, O.ONE);
+        proposition.getAsBoolean();
         Assert.assertEquals(Boolean.TRUE, result.getContent());
     }
 }

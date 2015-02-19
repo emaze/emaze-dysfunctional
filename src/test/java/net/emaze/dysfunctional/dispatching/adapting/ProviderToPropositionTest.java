@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
-import net.emaze.dysfunctional.dispatching.logic.Proposition;
+import java.util.function.BooleanSupplier;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ public class ProviderToPropositionTest {
     @Test
     public void callingThePropositionYieldsProviderResult() {
         final Boolean expected = Boolean.TRUE;
-        final Proposition proposition = new ProviderToProposition(new ConstantProvider<Boolean>(expected));
-        Assert.assertEquals(expected, proposition.state());
+        final BooleanSupplier proposition = new ProviderToProposition(new ConstantProvider<Boolean>(expected));
+        Assert.assertEquals(expected, proposition.getAsBoolean());
     }
 }

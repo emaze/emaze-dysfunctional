@@ -20,7 +20,7 @@ import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
-import net.emaze.dysfunctional.dispatching.logic.Proposition;
+import java.util.function.BooleanSupplier;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Yes;
@@ -144,7 +144,7 @@ public class SpiesTest {
         @Test
         public void canSpyAProposition() {
             final Box<Boolean> result = new Box<Boolean>();
-            final Proposition spied = Spies.spy(new Yes(), result);
+            final BooleanSupplier spied = Spies.spy(new Yes(), result);
             Assert.assertNotNull(spied);
         }
 
@@ -329,7 +329,7 @@ public class SpiesTest {
 
         @Test
         public void canMonitorAProposition() {
-            final Proposition monitor = Spies.monitor(new Yes(), accumulator);
+            final BooleanSupplier monitor = Spies.monitor(new Yes(), accumulator);
             Assert.assertNotNull(monitor);
         }
 

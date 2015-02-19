@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.dispatching.spying;
 
-import net.emaze.dysfunctional.dispatching.logic.Proposition;
+import java.util.function.BooleanSupplier;
 import net.emaze.dysfunctional.dispatching.logic.Yes;
 import net.emaze.dysfunctional.options.Box;
 import org.junit.Assert;
@@ -25,8 +25,8 @@ public class CapturingPropositionTest {
     @Test
     public void callingCapturesTheResult() {
         final Box<Boolean> result = Box.empty();
-        final Proposition spy = new CapturingProposition(new Yes(), result);
-        spy.state();
+        final BooleanSupplier spy = new CapturingProposition(new Yes(), result);
+        spy.getAsBoolean();
         Assert.assertEquals(Box.of(true), result);
     }
 }

@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -11,7 +12,6 @@ import java.util.function.Supplier;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.adapting.*;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
-import net.emaze.dysfunctional.dispatching.logic.Proposition;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 import net.emaze.dysfunctional.options.Maybe;
 
@@ -70,7 +70,7 @@ public abstract class Dispatching {
      * @param value the value to be curried
      * @return the curried proposition
      */
-    public static <T> Proposition curry(Predicate<T> predicate, T value) {
+    public static <T> BooleanSupplier curry(Predicate<T> predicate, T value) {
         return new PredicateBinder<T>(predicate, value);
     }
 
@@ -285,7 +285,7 @@ public abstract class Dispatching {
      * @param ignored the adapted predicate parameter type class
      * @return the adapted predicate
      */
-    public static <T> Predicate<T> ignore(Proposition proposition, Class<T> ignored) {
+    public static <T> Predicate<T> ignore(BooleanSupplier proposition, Class<T> ignored) {
         return new PropositionIgnoreParameter<T>(proposition);
     }
 
@@ -558,7 +558,7 @@ public abstract class Dispatching {
      * @param adaptee the proposition to be adapted
      * @return the adapted provider
      */
-    public static Supplier<Boolean> provider(Proposition adaptee) {
+    public static Supplier<Boolean> provider(BooleanSupplier adaptee) {
         return new PropositionToProvider(adaptee);
     }
 
@@ -690,7 +690,7 @@ public abstract class Dispatching {
      * @param provider the provider to be adapted
      * @return the adapted proposition
      */
-    public static Proposition proposition(Supplier<Boolean> provider) {
+    public static BooleanSupplier proposition(Supplier<Boolean> provider) {
         return new ProviderToProposition(provider);
     }
 

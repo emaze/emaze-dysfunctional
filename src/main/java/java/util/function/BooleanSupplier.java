@@ -1,16 +1,16 @@
-package net.emaze.dysfunctional.dispatching.logic;
+package java.util.function;
 
 /**
  * A nullary functor returning a boolean
  *
  * @author rferranti
  */
-public interface Proposition {
+public interface BooleanSupplier {
 
     /**
      * States a proposition.
      *
      * @return true or false
      */
-    boolean state();
+    boolean getAsBoolean();
 }

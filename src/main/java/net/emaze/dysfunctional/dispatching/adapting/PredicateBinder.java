@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.Proposition;
+import java.util.function.BooleanSupplier;
 import java.util.function.Predicate;
 
 /**
@@ -11,7 +11,7 @@ import java.util.function.Predicate;
  * @param <T> the adapted predicate parameter type
  * @author rferranti
  */
-public class PredicateBinder<T> implements Proposition {
+public class PredicateBinder<T> implements BooleanSupplier {
 
     private final Predicate<T> adapted;
     private final T parameter;
@@ -23,7 +23,7 @@ public class PredicateBinder<T> implements Proposition {
     }
 
     @Override
-    public boolean state() {
+    public boolean getAsBoolean() {
         return adapted.test(parameter);
     }
 }

@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Predicate;
-import net.emaze.dysfunctional.dispatching.logic.Proposition;
+import java.util.function.BooleanSupplier;
 
 /**
  * Adapts a proposition to a predicate. Adapting is performed by ignoring the
@@ -13,15 +13,15 @@ import net.emaze.dysfunctional.dispatching.logic.Proposition;
  */
 public class PropositionIgnoreParameter<T> implements Predicate<T> {
 
-    private final Proposition adapted;
+    private final BooleanSupplier adapted;
 
-    public PropositionIgnoreParameter(Proposition adaptee) {
+    public PropositionIgnoreParameter(BooleanSupplier adaptee) {
         dbc.precondition(adaptee != null, "cannot ignore parameter of a null proposition");
         this.adapted = adaptee;
     }
 
     @Override
     public boolean test(T parameter) {
-        return adapted.state();
+        return adapted.getAsBoolean();
     }
 }

@@ -1,11 +1,13 @@
 package net.emaze.dysfunctional.dispatching.logic;
 
+import java.util.function.BooleanSupplier;
+
 /**
  * We can.
  *
  * @author rferranti
  */
-public class Yes implements Proposition {
+public class Yes implements BooleanSupplier {
 
     /**
      * Yields true.
@@ -13,7 +15,7 @@ public class Yes implements Proposition {
      * @return true
      */
     @Override
-    public boolean state() {
+    public boolean getAsBoolean() {
         return true;
     }
 }
