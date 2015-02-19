@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional;
 
 import java.util.concurrent.atomic.AtomicLong;
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
@@ -241,14 +241,14 @@ public class SpiesTest {
         @Test
         public void canSpyAnAction() {
             final Box<O> param = new Box<O>();
-            final Action<O> spied = Spies.spy(new Noop<O>(), param);
+            final Consumer<O> spied = Spies.spy(new Noop<O>(), param);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpyParamOfAnAction() {
             final Box<O> param = new Box<O>();
-            final Action<O> spied = Spies.spy1st(new Noop<O>(), param);
+            final Consumer<O> spied = Spies.spy1st(new Noop<O>(), param);
             Assert.assertNotNull(spied);
         }
 
@@ -335,7 +335,7 @@ public class SpiesTest {
 
         @Test
         public void canMonitorAnAction() {
-            final Action<O> monitor = Spies.monitor(new Noop<O>(), accumulator);
+            final Consumer<O> monitor = Spies.monitor(new Noop<O>(), accumulator);
             Assert.assertNotNull(monitor);
         }
 

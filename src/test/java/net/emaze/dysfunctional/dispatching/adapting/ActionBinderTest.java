@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.options.Box;
@@ -18,7 +18,7 @@ public class ActionBinderTest {
     @Test
     public void callingTheAdapterCallsAdaptedWithBoundParameter() {
         final Box<O> param = Box.empty();
-        final Action<O> spy = Spies.spy1st(new Noop<O>(), param);
+        final Consumer<O> spy = Spies.spy1st(new Noop<O>(), param);
         final Runnable runnable = new ActionBinder<O>(spy, O.ONE);
         runnable.run();
         Assert.assertEquals(O.ONE, param.getContent());

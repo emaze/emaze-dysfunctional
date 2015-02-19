@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -13,16 +13,16 @@ import java.util.function.Function;
  */
 public class ActionToDelegate<T> implements Function<T, Void> {
 
-    private final Action<T> adapted;
+    private final Consumer<T> adapted;
 
-    public ActionToDelegate(Action<T> adaptee) {
+    public ActionToDelegate(Consumer<T> adaptee) {
         dbc.precondition(adaptee != null, "cannot adapt a null action to a delegate");
         this.adapted = adaptee;
     }
 
     @Override
     public Void apply(T value) {
-        adapted.perform(value);
+        adapted.accept(value);
         return null;
     }
 }

@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.tuples;
 
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.options.Box;
@@ -22,7 +22,7 @@ public class UnaryToBinaryActionTest {
     @Test
     public void canAdapt() {
         final Box<Pair<O,O>> box = Box.empty();
-        final Action<Pair<O, O>> action = Spies.spy(new Noop<Pair<O, O>>(), box);
+        final Consumer<Pair<O, O>> action = Spies.spy(new Noop<Pair<O, O>>(), box);
         final UnaryToBinaryAction<O, O> adapted = new UnaryToBinaryAction<O, O>(action);
         adapted.perform(O.ONE, O.ANOTHER);
         Assert.assertEquals(Pair.of(O.ONE, O.ANOTHER), box.getContent());

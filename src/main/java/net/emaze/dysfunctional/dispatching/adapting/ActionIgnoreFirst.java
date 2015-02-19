@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 
 /**
@@ -14,15 +14,15 @@ import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
  */
 public class ActionIgnoreFirst<T1, T2> implements BinaryAction<T1, T2> {
 
-    private final Action<T2> adapted;
+    private final Consumer<T2> adapted;
 
-    public ActionIgnoreFirst(Action<T2> adaptee) {
+    public ActionIgnoreFirst(Consumer<T2> adaptee) {
         dbc.precondition(adaptee != null, "cannot ignore first parameter of a null action");
         this.adapted = adaptee;
     }
 
     @Override
     public void perform(T1 first, T2 second) {
-        adapted.perform(second);
+        adapted.accept(second);
     }
 }

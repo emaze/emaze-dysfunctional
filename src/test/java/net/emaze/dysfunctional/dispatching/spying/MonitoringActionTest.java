@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.spying;
 
 import java.util.concurrent.atomic.AtomicLong;
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -26,8 +26,8 @@ public class MonitoringActionTest {
     @Test
     public void callingIncrementsTheAtomicLong() {
         final AtomicLong state = new AtomicLong();
-        final Action<O> spy = new MonitoringAction<O>(new Noop<O>(), state);
-        spy.perform(O.ONE);
+        final Consumer<O> spy = new MonitoringAction<O>(new Noop<O>(), state);
+        spy.accept(O.ONE);
         Assert.assertEquals(1l, state.get());
     }
 }

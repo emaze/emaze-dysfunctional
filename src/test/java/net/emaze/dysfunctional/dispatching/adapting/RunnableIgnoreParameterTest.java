@@ -21,7 +21,7 @@ public class RunnableIgnoreParameterTest {
             public void run() {
                 param.setContent(Boolean.TRUE);
             }
-        }).perform(O.IGNORED);
+        }).accept(O.IGNORED);
         Assert.assertEquals(Boolean.TRUE, param.getContent());
     }
 }

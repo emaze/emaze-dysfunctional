@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.spying;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import net.emaze.dysfunctional.options.Box;
 
 /**
@@ -10,12 +10,12 @@ import net.emaze.dysfunctional.options.Box;
  * @author rferranti
  * @param <T> the parameter type
  */
-public class CapturingAction<T> implements Action<T> {
+public class CapturingAction<T> implements Consumer<T> {
 
-    private final Action<T> nested;
+    private final Consumer<T> nested;
     private final Box<T> param;
 
-    public CapturingAction(Action<T> nested, Box<T> param) {
+    public CapturingAction(Consumer<T> nested, Box<T> param) {
         dbc.precondition(nested != null, "cannot capture from a null action");
         dbc.precondition(param != null, "cannot capture with a null param box");
         this.nested = nested;
@@ -23,8 +23,8 @@ public class CapturingAction<T> implements Action<T> {
     }
 
     @Override
-    public void perform(T value) {
+    public void accept(T value) {
         param.setContent(value);
-        nested.perform(value);
+        nested.accept(value);
     }
 }

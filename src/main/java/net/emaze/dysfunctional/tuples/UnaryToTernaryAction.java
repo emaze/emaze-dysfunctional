@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 
 /**
@@ -14,15 +14,15 @@ import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
  */
 public class UnaryToTernaryAction<T1, T2, T3> implements TernaryAction<T1, T2, T3> {
 
-    private final Action< Triple<T1, T2, T3>> action;
+    private final Consumer< Triple<T1, T2, T3>> action;
 
-    public UnaryToTernaryAction(Action<Triple<T1, T2, T3>> action) {
+    public UnaryToTernaryAction(Consumer<Triple<T1, T2, T3>> action) {
         dbc.precondition(action != null, "cannot create a UnaryToTernaryAction with a null Action");
         this.action = action;
     }
 
     @Override
     public void perform(T1 first, T2 second, T3 third) {
-        action.perform(Triple.of(first, second, third));
+        action.accept(Triple.of(first, second, third));
     }
 }

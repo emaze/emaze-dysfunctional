@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.dispatching.composing;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,13 +21,13 @@ public class PipelinedActionTest {
     @Test
     public void actionsAreCalledInOrder() {
         final List<String> bucket = new ArrayList<String>();
-        final List<Action<String>> actions = Arrays.<Action<String>>asList(new BucketFillingAction<String>(bucket, "former"), new BucketFillingAction<String>(bucket, "latter"));
+        final List<Consumer<String>> actions = Arrays.<Consumer<String>>asList(new BucketFillingAction<String>(bucket, "former"), new BucketFillingAction<String>(bucket, "latter"));
         final PipelinedAction<String> pipeline = new PipelinedAction<String>(actions);
-        pipeline.perform("ignored_value");
+        pipeline.accept("ignored_value");
         Assert.assertEquals(Arrays.asList("former", "latter"), bucket);
     }
 
-    public static class BucketFillingAction<T> implements Action<T> {
+    public static class BucketFillingAction<T> implements Consumer<T> {
 
         private final List<T> bucket;
         private final T elementToAdd;
@@ -38,7 +38,7 @@ public class PipelinedActionTest {
         }
 
         @Override
-        public void perform(T element) {
+        public void accept(T element) {
             bucket.add(elementToAdd);
         }
     }

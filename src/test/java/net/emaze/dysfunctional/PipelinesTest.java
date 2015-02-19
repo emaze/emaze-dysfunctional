@@ -2,7 +2,7 @@ package net.emaze.dysfunctional;
 
 import java.util.Iterator;
 import junit.framework.Assert;
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
@@ -36,15 +36,15 @@ public class PipelinesTest {
 
         @Test
         public void canCreatePipelineFromAnIterable() {
-            final Iterable<Action<O>> iterable = Iterations.<Action<O>>iterable(new Noop<O>());
-            final Action<O> pipeline = Pipelines.Unary.pipeline(iterable);
+            final Iterable<Consumer<O>> iterable = Iterations.<Consumer<O>>iterable(new Noop<O>());
+            final Consumer<O> pipeline = Pipelines.Unary.pipeline(iterable);
             Assert.assertNotNull(pipeline);
         }
 
         @Test
         public void canCreatePipelineFromAnIterator() {
-            final Iterator<Action<O>> iterator = Iterations.<Action<O>>iterator(new Noop<O>());
-            final Action<O> pipeline = Pipelines.Unary.pipeline(iterator);
+            final Iterator<Consumer<O>> iterator = Iterations.<Consumer<O>>iterator(new Noop<O>());
+            final Consumer<O> pipeline = Pipelines.Unary.pipeline(iterator);
             Assert.assertNotNull(pipeline);
         }
     }
@@ -88,28 +88,28 @@ public class PipelinesTest {
         @Test
         public void canCreatePipelineFromAnAction() {
             final Noop<O> noop = new Noop<O>();
-            final Action<O> pipeline = Pipelines.pipeline(noop);
+            final Consumer<O> pipeline = Pipelines.pipeline(noop);
             Assert.assertNotNull(pipeline);
         }
 
         @Test
         public void canCreatePipelineFromTwoActions() {
             final Noop<O> noop = new Noop<O>();
-            final Action<O> pipeline = Pipelines.pipeline(noop, noop);
+            final Consumer<O> pipeline = Pipelines.pipeline(noop, noop);
             Assert.assertNotNull(pipeline);
         }
 
         @Test
         public void canCreatePipelineFromThreeActions() {
             final Noop<O> noop = new Noop<O>();
-            final Action<O> pipeline = Pipelines.pipeline(noop, noop, noop);
+            final Consumer<O> pipeline = Pipelines.pipeline(noop, noop, noop);
             Assert.assertNotNull(pipeline);
         }
 
         @Test
         public void canCreatePipelineFromManyActions() {
             final Noop<O> noop = new Noop<O>();
-            final Action<O> pipeline = Pipelines.pipeline(noop, noop, noop, noop);
+            final Consumer<O> pipeline = Pipelines.pipeline(noop, noop, noop, noop);
             Assert.assertNotNull(pipeline);
         }
 

@@ -3,10 +3,10 @@ package net.emaze.dysfunctional;
 import java.util.Iterator;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.adapting.*;
@@ -31,7 +31,7 @@ public abstract class Dispatching {
      * @param value the value to be curried
      * @return the curried runnable
      */
-    public static <T> Runnable curry(Action<T> action, T value) {
+    public static <T> Runnable curry(Consumer<T> action, T value) {
         return new ActionBinder<T>(action, value);
     }
 
@@ -44,7 +44,7 @@ public abstract class Dispatching {
      * @param first the value to be curried as first parameter
      * @return the curried unary action
      */
-    public static <T1, T2> Action<T2> curry(BinaryAction<T1, T2> action, T1 first) {
+    public static <T1, T2> Consumer<T2> curry(BinaryAction<T1, T2> action, T1 first) {
         return new ActionBinderFirst<T1, T2>(action, first);
     }
 
@@ -197,7 +197,7 @@ public abstract class Dispatching {
      * @param second the value to be curried as second parameter
      * @return the curried action
      */
-    public static <T1, T2> Action<T1> rcurry(BinaryAction<T1, T2> action, T2 second) {
+    public static <T1, T2> Consumer<T1> rcurry(BinaryAction<T1, T2> action, T2 second) {
         return new ActionBinderSecond<T1, T2>(action, second);
     }
 
@@ -368,7 +368,7 @@ public abstract class Dispatching {
      * @param ignored the adapted action ignored parameter type class
      * @return the adapted action
      */
-    public static <T> Action<T> ignore(Runnable runnable, Class<T> ignored) {
+    public static <T> Consumer<T> ignore(Runnable runnable, Class<T> ignored) {
         return new RunnableIgnoreParameter<T>(runnable);
     }
 
@@ -381,7 +381,7 @@ public abstract class Dispatching {
      * @param ignored the adapted action ignored parameter type class
      * @return the adapted binary action
      */
-    public static <T1, T2> BinaryAction<T1, T2> ignore1st(Action<T2> action, Class<T1> ignored) {
+    public static <T1, T2> BinaryAction<T1, T2> ignore1st(Consumer<T2> action, Class<T1> ignored) {
         return new ActionIgnoreFirst<T1, T2>(action);
     }
 
@@ -409,7 +409,7 @@ public abstract class Dispatching {
      * @param ignored the adapted action ignored parameter type class
      * @return the adapted binary action
      */
-    public static <T1, T2> BinaryAction<T1, T2> ignore2nd(Action<T1> action, Class<T2> ignored) {
+    public static <T1, T2> BinaryAction<T1, T2> ignore2nd(Consumer<T1> action, Class<T2> ignored) {
         return new ActionIgnoreSecond<T1, T2>(action);
     }
 
@@ -569,7 +569,7 @@ public abstract class Dispatching {
      * @param adaptee the action to be adapted
      * @return the adapted delegate
      */
-    public static <T> Function<T, Void> delegate(Action<T> adaptee) {
+    public static <T> Function<T, Void> delegate(Consumer<T> adaptee) {
         return new ActionToDelegate<T>(adaptee);
     }
 
@@ -653,7 +653,7 @@ public abstract class Dispatching {
      * @param delegate the delegate to be adapted
      * @return the adapted action
      */
-    public static <T, R> Action<T> action(Function<T, R> delegate) {
+    public static <T, R> Consumer<T> action(Function<T, R> delegate) {
         return new DelegateToAction<>(delegate);
     }
 

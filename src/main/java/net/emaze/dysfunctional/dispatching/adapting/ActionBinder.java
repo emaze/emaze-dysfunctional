@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 
 /**
  * Unary to nullary action adapter. Adapting is performed by currying the
@@ -12,10 +12,10 @@ import net.emaze.dysfunctional.dispatching.actions.Action;
  */
 public class ActionBinder<T> implements Runnable {
 
-    private final Action<T> adapted;
+    private final Consumer<T> adapted;
     private final T only;
 
-    public ActionBinder(Action<T> adaptee, T only) {
+    public ActionBinder(Consumer<T> adaptee, T only) {
         dbc.precondition(adaptee != null, "cannot bind parameter of a null action");
         this.adapted = adaptee;
         this.only = only;
@@ -23,6 +23,6 @@ public class ActionBinder<T> implements Runnable {
 
     @Override
     public void run() {
-        adapted.perform(only);
+        adapted.accept(only);
     }
 }

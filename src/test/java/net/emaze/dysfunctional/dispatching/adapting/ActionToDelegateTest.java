@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.Spies;
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import java.util.function.Function;
 import net.emaze.dysfunctional.options.Box;
@@ -29,7 +29,7 @@ public class ActionToDelegateTest {
     @Test
     public void callingAdapterCallsAdapted() {
         final Box<Object> box = new Box<Object>();
-        final Action<Object> adaptee = Spies.spy(new Noop<Object>(), box);
+        final Consumer<Object> adaptee = Spies.spy(new Noop<Object>(), box);
         final Function<Object, Void> del = new ActionToDelegate<Object>(adaptee);
         final Object anObject = new Object();
         del.apply(anObject);

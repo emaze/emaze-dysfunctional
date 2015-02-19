@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional;
 
 import java.util.Iterator;
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.composing.PipelinedAction;
@@ -27,7 +27,7 @@ public abstract class Pipelines {
          * @param actions the iterable to be transformed
          * @return the pipelined action
          */
-        public static <T> Action<T> pipeline(Iterable<Action<T>> actions) {
+        public static <T> Consumer<T> pipeline(Iterable<Consumer<T>> actions) {
             return new PipelinedAction<T>(actions);
         }
 
@@ -38,7 +38,7 @@ public abstract class Pipelines {
          * @param actions the iterator to be transformed
          * @return the pipelined action
          */
-        public static <T> Action<T> pipeline(Iterator<Action<T>> actions) {
+        public static <T> Consumer<T> pipeline(Iterator<Consumer<T>> actions) {
             return new PipelinedAction<T>(Consumers.all(actions));
         }
     }
@@ -112,7 +112,7 @@ public abstract class Pipelines {
      * @param action the action to be transformed
      * @return the pipelined action
      */
-    public static <T> Action<T> pipeline(Action<T> action) {
+    public static <T> Consumer<T> pipeline(Consumer<T> action) {
         return new PipelinedAction<T>(Iterations.iterable(action));
     }
 
@@ -124,7 +124,7 @@ public abstract class Pipelines {
      * @param latter the latter action
      * @return the pipelined action
      */
-    public static <T> Action<T> pipeline(Action<T> former, Action<T> latter) {
+    public static <T> Consumer<T> pipeline(Consumer<T> former, Consumer<T> latter) {
         return new PipelinedAction<T>(Iterations.iterable(former, latter));
     }
 
@@ -137,7 +137,7 @@ public abstract class Pipelines {
      * @param third the third action
      * @return the pipelined action
      */
-    public static <T> Action<T> pipeline(Action<T> first, Action<T> second, Action<T> third) {
+    public static <T> Consumer<T> pipeline(Consumer<T> first, Consumer<T> second, Consumer<T> third) {
         return new PipelinedAction<T>(Iterations.iterable(first, second, third));
     }
 
@@ -148,7 +148,7 @@ public abstract class Pipelines {
      * @param actions the array of actions to be transformed
      * @return the pipelined action
      */
-    public static <T> Action<T> pipeline(Action<T>... actions) {
+    public static <T> Consumer<T> pipeline(Consumer<T>... actions) {
         return new PipelinedAction<T>(Iterations.iterable(actions));
     }
 

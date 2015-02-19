@@ -10,7 +10,7 @@ public class NoopTest {
 
     @Test
     public void canDoNothingWithNull() {
-        new Noop<Object>().perform(null);
+        new Noop<Object>().accept(null);
     }
 
 }

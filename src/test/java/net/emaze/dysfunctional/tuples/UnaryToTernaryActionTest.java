@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.tuples;
 
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.options.Box;
@@ -22,7 +22,7 @@ public class UnaryToTernaryActionTest {
     @Test
     public void canAdapt() {
         final Box<Triple<O, O, O>> box = Box.empty();
-        final Action<Triple<O, O, O>> action = Spies.spy(new Noop<Triple<O, O, O>>(), box);
+        final Consumer<Triple<O, O, O>> action = Spies.spy(new Noop<Triple<O, O, O>>(), box);
         final UnaryToTernaryAction<O, O, O> adapted = new UnaryToTernaryAction<O, O, O>(action);
         adapted.perform(O.ONE, O.ANOTHER, O.YET_ANOTHER);
         Assert.assertEquals(Triple.of(O.ONE, O.ANOTHER, O.YET_ANOTHER), box.getContent());

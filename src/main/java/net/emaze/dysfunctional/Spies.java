@@ -3,10 +3,10 @@ package net.emaze.dysfunctional;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
@@ -146,7 +146,7 @@ public abstract class Spies {
      * @param param a box that will be containing the spied parameter
      * @return the proxied action
      */
-    public static <T> Action<T> spy(Action<T> action, Box<T> param) {
+    public static <T> Consumer<T> spy(Consumer<T> action, Box<T> param) {
         return new CapturingAction<T>(action, param);
     }
 
@@ -384,7 +384,7 @@ public abstract class Spies {
      * @param param a box that will be containing the spied parameter
      * @return the proxied action
      */
-    public static <T> Action<T> spy1st(Action<T> action, Box<T> param) {
+    public static <T> Consumer<T> spy1st(Consumer<T> action, Box<T> param) {
         return spy(action, param);
     }
 
@@ -515,7 +515,7 @@ public abstract class Spies {
      * @param calls a value holder accumulating calls
      * @return the proxied action
      */
-    public static <T> Action<T> monitor(Action<T> action, AtomicLong calls) {
+    public static <T> Consumer<T> monitor(Consumer<T> action, AtomicLong calls) {
         return new MonitoringAction<T>(action, calls);
     }
 

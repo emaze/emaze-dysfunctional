@@ -3,12 +3,12 @@ package net.emaze.dysfunctional;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.consumers.ConsumeIntoCollection;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.Tapper;
-import net.emaze.dysfunctional.dispatching.actions.Action;
-import java.util.function.Function;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.iterations.TransformingIterator;
 
@@ -88,7 +88,7 @@ public abstract class Applications {
      * @return an iterator that when consumed applies a side effect to every
      * element
      */
-    public static <E> Iterator<E> tap(Iterator<E> iterator, Action<E> action) {
+    public static <E> Iterator<E> tap(Iterator<E> iterator, Consumer<E> action) {
         return new TransformingIterator<E, E>(iterator, new Tapper<E>(action));
     }
 
@@ -106,7 +106,7 @@ public abstract class Applications {
      * @return an iterator that when consumed applies a side effect to every
      * element
      */
-    public static <E> Iterator<E> tap(Iterable<E> iterable, Action<E> action) {
+    public static <E> Iterator<E> tap(Iterable<E> iterable, Consumer<E> action) {
         dbc.precondition(iterable != null, "cannot tap on a null iterable");
         return new TransformingIterator<E, E>(iterable.iterator(), new Tapper<E>(action));
     }
@@ -125,7 +125,7 @@ public abstract class Applications {
      * @return an iterator that when consumed applies a side effect to every
      * element
      */
-    public static <E> Iterator<E> tap(E[] array, Action<E> action) {
+    public static <E> Iterator<E> tap(E[] array, Consumer<E> action) {
         return new TransformingIterator<E, E>(new ArrayIterator<E>(array), new Tapper<E>(action));
     }
 
@@ -144,11 +144,11 @@ public abstract class Applications {
      * @param action the action applied to every element fetched from the
      * iterable
      */
-    public static <E> void each(Iterable<E> iterable, Action<E> action) {
+    public static <E> void each(Iterable<E> iterable, Consumer<E> action) {
         dbc.precondition(iterable != null, "cannot call each with a null iterable");
         dbc.precondition(action != null, "cannot call each with a null action");
         for (E element : iterable) {
-            action.perform(element);
+            action.accept(element);
         }
     }
 
@@ -167,11 +167,11 @@ public abstract class Applications {
      * @param action the action applied to every element fetched from the
      * iterator
      */
-    public static <E> void each(Iterator<E> iterator, Action<E> action) {
+    public static <E> void each(Iterator<E> iterator, Consumer<E> action) {
         dbc.precondition(iterator != null, "cannot call each with a null iterator");
         dbc.precondition(action != null, "cannot call each with a null action");
         while (iterator.hasNext()) {
-            action.perform(iterator.next());
+            action.accept(iterator.next());
         }
     }
 
@@ -189,11 +189,11 @@ public abstract class Applications {
      * @param array the array where elements are fetched from
      * @param action the action applied to every element fetched from the array
      */
-    public static <E> void each(E[] array, Action<E> action) {
+    public static <E> void each(E[] array, Consumer<E> action) {
         dbc.precondition(array != null, "cannot call each with a null array");
         dbc.precondition(action != null, "cannot call each with a null action");
         for (int i = 0; i != array.length; ++i) {
-            action.perform(array[i]);
+            action.accept(array[i]);
         }
     }
 

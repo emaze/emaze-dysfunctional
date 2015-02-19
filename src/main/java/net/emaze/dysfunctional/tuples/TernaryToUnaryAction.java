@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 
 
@@ -12,7 +12,7 @@ import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
  * @param <T3> the third type parameter
  * @author rferranti
  */
-public class TernaryToUnaryAction<T1, T2, T3> implements Action<Triple<T1, T2, T3>> {
+public class TernaryToUnaryAction<T1, T2, T3> implements Consumer<Triple<T1, T2, T3>> {
 
     private final TernaryAction<T1, T2, T3> action;
 
@@ -22,7 +22,7 @@ public class TernaryToUnaryAction<T1, T2, T3> implements Action<Triple<T1, T2, T
     }
 
     @Override
-    public void perform(Triple<T1, T2, T3> triple) {
+    public void accept(Triple<T1, T2, T3> triple) {
         action.perform(triple.first(), triple.second(), triple.third());
     }
 }

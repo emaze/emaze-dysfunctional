@@ -2,7 +2,7 @@ package net.emaze.dysfunctional;
 
 import net.emaze.dysfunctional.Tuples.Pairs;
 import net.emaze.dysfunctional.Tuples.Triples;
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
@@ -67,7 +67,7 @@ public class TuplesTest {
 
         @Test
         public void canAdaptAction() {
-            final Action<Pair<O, O>> action = new Noop<Pair<O, O>>();
+            final Consumer<Pair<O, O>> action = new Noop<Pair<O, O>>();
             Assert.assertNotNull(Tuples.Pairs.untupled(action));
         }
 
@@ -88,7 +88,7 @@ public class TuplesTest {
 
         @Test
         public void canAdaptAction() {
-            final Action<Triple<O, O, O>> action = new Noop<Triple<O, O, O>>();
+            final Consumer<Triple<O, O, O>> action = new Noop<Triple<O, O, O>>();
             Assert.assertNotNull(Tuples.Triples.untupled(action));
         }
 

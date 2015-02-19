@@ -24,7 +24,7 @@ public class ActionBinderFirstTest {
         final Box<O> param1 = Box.empty();
         final BinaryAction<O, O> spy = Spies.spy1st(new BinaryNoop<O, O>(), param1);
         final ActionBinderFirst<O, O> adapted = new ActionBinderFirst<O, O>(spy, O.ONE);
-        adapted.perform(O.ANOTHER);
+        adapted.accept(O.ANOTHER);
         Assert.assertEquals(O.ONE, param1.getContent());
     }
 }

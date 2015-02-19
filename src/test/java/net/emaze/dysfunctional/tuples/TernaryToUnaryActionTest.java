@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.tuples;
 
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
 import net.emaze.dysfunctional.Spies;
@@ -24,8 +24,8 @@ public class TernaryToUnaryActionTest {
     public void adaptingPassesFirstValueOfPairAsFirstParameter() {
         final Box<O> box = Box.empty();
         final TernaryAction<O, O, O> spy = Spies.spy1st(new TernaryNoop<O, O, O>(), box);
-        final Action<Triple<O, O, O>> action = new TernaryToUnaryAction<O, O, O>(spy);
-        action.perform(Triple.of(O.ONE, O.IGNORED, O.IGNORED));
+        final Consumer<Triple<O, O, O>> action = new TernaryToUnaryAction<O, O, O>(spy);
+        action.accept(Triple.of(O.ONE, O.IGNORED, O.IGNORED));
         Assert.assertEquals(O.ONE, box.getContent());
     }
 
@@ -33,8 +33,8 @@ public class TernaryToUnaryActionTest {
     public void adaptingPassesSecondValueOfPairAsSecondParameter() {
         final Box<O> box = Box.empty();
         final TernaryAction<O, O, O> spy = Spies.spy2nd(new TernaryNoop<O, O, O>(), box);
-        final Action<Triple<O, O, O>> action = new TernaryToUnaryAction<O, O, O>(spy);
-        action.perform(Triple.of(O.IGNORED, O.ONE, O.IGNORED));
+        final Consumer<Triple<O, O, O>> action = new TernaryToUnaryAction<O, O, O>(spy);
+        action.accept(Triple.of(O.IGNORED, O.ONE, O.IGNORED));
         Assert.assertEquals(O.ONE, box.getContent());
     }
 
@@ -42,8 +42,8 @@ public class TernaryToUnaryActionTest {
     public void adaptingPassesThirdValueOfPairAsThirdParameter() {
         final Box<O> box = Box.empty();
         final TernaryAction<O, O, O> spy = Spies.spy3rd(new TernaryNoop<O, O, O>(), box);
-        final Action<Triple<O, O, O>> action = new TernaryToUnaryAction<O, O, O>(spy);
-        action.perform(Triple.of(O.IGNORED, O.IGNORED, O.ONE));
+        final Consumer<Triple<O, O, O>> action = new TernaryToUnaryAction<O, O, O>(spy);
+        action.accept(Triple.of(O.IGNORED, O.IGNORED, O.ONE));
         Assert.assertEquals(O.ONE, box.getContent());
     }
 }

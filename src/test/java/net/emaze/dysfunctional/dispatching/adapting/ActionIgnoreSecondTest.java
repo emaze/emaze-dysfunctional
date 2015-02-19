@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.options.Box;
@@ -22,7 +22,7 @@ public class ActionIgnoreSecondTest {
     @Test
     public void canIgnoreSecondParameter() {
         final Box<O> param = Box.empty();
-        final Action<O> spy = Spies.spy(new Noop<O>(), param);
+        final Consumer<O> spy = Spies.spy(new Noop<O>(), param);
         final ActionIgnoreSecond<O, O> adapted = new ActionIgnoreSecond<O, O>(spy);
         adapted.perform(O.ONE, O.IGNORED);
         Assert.assertEquals(param.getContent(), O.ONE);

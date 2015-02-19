@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 
 /**
@@ -12,7 +12,7 @@ import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
  * @param <T2> the adapted action latter element Type
  * @author rferranti
  */
-public class ActionBinderFirst<T1, T2> implements Action<T2> {
+public class ActionBinderFirst<T1, T2> implements Consumer<T2> {
 
     private final BinaryAction<T1, T2> adapted;
     private final T1 first;
@@ -24,7 +24,7 @@ public class ActionBinderFirst<T1, T2> implements Action<T2> {
     }
 
     @Override
-    public void perform(T2 second) {
+    public void accept(T2 second) {
         adapted.perform(first, second);
     }
 }

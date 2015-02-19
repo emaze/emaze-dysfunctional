@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -12,7 +12,7 @@ import java.util.function.Function;
  * @param <R> the adapted delegate result type
  * @author rferranti
  */
-public class DelegateToAction<T, R> implements Action<T> {
+public class DelegateToAction<T, R> implements Consumer<T> {
 
     private final Function<T, R> adapted;
 
@@ -22,7 +22,7 @@ public class DelegateToAction<T, R> implements Action<T> {
     }
 
     @Override
-    public void perform(T value) {
+    public void accept(T value) {
         adapted.apply(value);
     }
 }

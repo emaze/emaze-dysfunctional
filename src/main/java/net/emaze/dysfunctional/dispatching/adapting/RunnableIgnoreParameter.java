@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 
 /**
  * Adapts a runnable as an action. Adapting is performed by ignoring parameter
@@ -10,7 +10,7 @@ import net.emaze.dysfunctional.dispatching.actions.Action;
  * @param <T> the adapter parameter type
  * @author rferranti
  */
-public class RunnableIgnoreParameter<T> implements Action<T> {
+public class RunnableIgnoreParameter<T> implements Consumer<T> {
 
     private final Runnable adapted;
 
@@ -20,7 +20,7 @@ public class RunnableIgnoreParameter<T> implements Action<T> {
     }
 
     @Override
-    public void perform(T parameter) {
+    public void accept(T parameter) {
         adapted.run();
     }
 }

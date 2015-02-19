@@ -2,9 +2,9 @@ package net.emaze.dysfunctional;
 
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
@@ -51,7 +51,7 @@ public abstract class Tuples {
      * @param action the action to be adapted
      * @return the adapted action
      */
-    public static <T, U> Action<Pair<T, U>> tupled(BinaryAction<T, U> action) {
+    public static <T, U> Consumer<Pair<T, U>> tupled(BinaryAction<T, U> action) {
         return new BinaryToUnaryAction<T, U>(action);
     }
 
@@ -91,7 +91,7 @@ public abstract class Tuples {
      * @param action the action to be adapted
      * @return the adatped action
      */
-    public static <T, U, V> Action<Triple<T, U, V>> tupled(TernaryAction<T, U, V> action) {
+    public static <T, U, V> Consumer<Triple<T, U, V>> tupled(TernaryAction<T, U, V> action) {
         return new TernaryToUnaryAction<T, U, V>(action);
     }
 
@@ -133,7 +133,7 @@ public abstract class Tuples {
          * @param action the action to be adapted
          * @return the adapted action
          */
-        public static <T, U> BinaryAction<T, U> untupled(Action<Pair<T, U>> action) {
+        public static <T, U> BinaryAction<T, U> untupled(Consumer<Pair<T, U>> action) {
             return new UnaryToBinaryAction<T, U>(action);
         }
     }
@@ -179,7 +179,7 @@ public abstract class Tuples {
          * @param action the action to be adapted
          * @return the adatped action
          */
-        public static <T, U, V> TernaryAction<T, U, V> untupled(Action<Triple<T, U, V>> action) {
+        public static <T, U, V> TernaryAction<T, U, V> untupled(Consumer<Triple<T, U, V>> action) {
             return new UnaryToTernaryAction<T, U, V>(action);
         }
     }

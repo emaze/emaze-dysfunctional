@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional;
 
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
@@ -119,7 +119,7 @@ public class DispatchingTest {
 
         @Test
         public void canAdaptDelegateToAction() {
-            final Action<O> adapted = Dispatching.action(new Identity<O>());
+            final Consumer<O> adapted = Dispatching.action(new Identity<O>());
             Assert.assertNotNull(adapted);
         }
 
@@ -213,13 +213,13 @@ public class DispatchingTest {
 
         @Test
         public void canCurryBinaryAction() {
-            final Action<O> adapted = Dispatching.curry(new BinaryNoop<O, O>(), O.ONE);
+            final Consumer<O> adapted = Dispatching.curry(new BinaryNoop<O, O>(), O.ONE);
             Assert.assertNotNull(adapted);
         }
 
         @Test
         public void canRightCurryBinaryAction() {
-            final Action<O> adapted = Dispatching.rcurry(new BinaryNoop<O, O>(), O.ONE);
+            final Consumer<O> adapted = Dispatching.rcurry(new BinaryNoop<O, O>(), O.ONE);
             Assert.assertNotNull(adapted);
         }
 
@@ -291,7 +291,7 @@ public class DispatchingTest {
 
         @Test
         public void canIgnoreParameterForRunnable() {
-            final Action<O> ignoring = Dispatching.ignore(new Slacker(), O.class);
+            final Consumer<O> ignoring = Dispatching.ignore(new Slacker(), O.class);
             Assert.assertNotNull(ignoring);
         }
 

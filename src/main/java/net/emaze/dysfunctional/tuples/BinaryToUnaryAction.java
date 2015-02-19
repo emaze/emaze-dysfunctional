@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 
 /**
@@ -11,7 +11,7 @@ import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
  * @param <T2> the latter type parameter
  * @author rferranti
  */
-public class BinaryToUnaryAction<T1, T2> implements Action<Pair<T1, T2>> {
+public class BinaryToUnaryAction<T1, T2> implements Consumer<Pair<T1, T2>> {
 
     private final BinaryAction<T1, T2> action;
 
@@ -21,7 +21,7 @@ public class BinaryToUnaryAction<T1, T2> implements Action<Pair<T1, T2>> {
     }
 
     @Override
-    public void perform(Pair<T1, T2> pair) {
+    public void accept(Pair<T1, T2> pair) {
         action.perform(pair.first(), pair.second());
     }
 }

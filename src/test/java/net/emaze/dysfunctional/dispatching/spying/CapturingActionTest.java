@@ -26,7 +26,7 @@ public class CapturingActionTest {
     public void parametersAreCaptured() {
         final Box<O> param = Box.empty();
         final CapturingAction<O> capturer = new CapturingAction<O>(new Noop<O>(), param);
-        capturer.perform(O.ONE);
+        capturer.accept(O.ONE);
         Assert.assertEquals(O.ONE, param.getContent());
     }
 }

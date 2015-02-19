@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 
 /**
@@ -14,15 +14,15 @@ import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
  */
 public class UnaryToBinaryAction<T1, T2> implements BinaryAction<T1, T2> {
 
-    private final Action<Pair<T1, T2>> action;
+    private final Consumer<Pair<T1, T2>> action;
 
-    public UnaryToBinaryAction(Action<Pair<T1, T2>> action) {
+    public UnaryToBinaryAction(Consumer<Pair<T1, T2>> action) {
         dbc.precondition(action != null, "cannot create a UnaryToBinaryAction with a null Action");
         this.action = action;
     }
 
     @Override
     public void perform(T1 first, T2 second) {
-        action.perform(Pair.of(first, second));
+        action.accept(Pair.of(first, second));
     }
 }

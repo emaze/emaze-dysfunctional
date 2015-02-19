@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import junit.framework.Assert;
-import net.emaze.dysfunctional.dispatching.actions.Action;
+import java.util.function.Consumer;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.options.Box;
@@ -135,7 +135,7 @@ public class ApplicationsTest {
         @Test
         public void eachPerformsActionForEachElementInIterable() {
             final AtomicLong calls = new AtomicLong();
-            final Action<Object> counter = Spies.monitor(new Noop<Object>(), calls);
+            final Consumer<Object> counter = Spies.monitor(new Noop<Object>(), calls);
             Applications.each(Arrays.asList(new Object(), new Object()), counter);
             Assert.assertEquals(2l, calls.get());
         }
@@ -143,7 +143,7 @@ public class ApplicationsTest {
         @Test
         public void canUseEeachWithIterators() {
             final AtomicLong calls = new AtomicLong();
-            final Action<Object> counter = Spies.monitor(new Noop<Object>(), calls);
+            final Consumer<Object> counter = Spies.monitor(new Noop<Object>(), calls);
             Applications.each(Arrays.asList(new Object(), new Object()).iterator(), counter);
             Assert.assertEquals(2l, calls.get());
         }
@@ -151,7 +151,7 @@ public class ApplicationsTest {
         @Test
         public void canUseAnyWithArrays() {
             final AtomicLong calls = new AtomicLong();
-            final Action<Object> counter = Spies.monitor(new Noop<Object>(), calls);
+            final Consumer<Object> counter = Spies.monitor(new Noop<Object>(), calls);
             Applications.each(new Object[]{new Object(), new Object()}, counter);
             Assert.assertEquals(2l, calls.get());
         }
