@@ -628,6 +628,20 @@ public abstract class Options {
         }
 
         /**
+         * Transforms an either to a optional containing just() right type or
+         * nothing().
+         *
+         * @param <L> the left type
+         * @param <R> the right type
+         * @param either
+         * @return the optional representation of the either
+         */
+        public static <L, R> Optional<R> right(Either<L, R> either) {
+            dbc.precondition(either != null, "cannot transform a null either to an optional");
+            return either.optional();
+        }
+
+        /**
          * Creates an iterator yielding only right wrapped values from an
          * iterator of Either. E.g:
          * <code>Eithers.rights([Right 1, Left 2, Right 3, Left 4]) -> [1, 3]</code>
