@@ -1,26 +1,26 @@
 package net.emaze.dysfunctional;
 
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.function.Consumer;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.dispatching.actions.Slacker;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
-import java.util.function.BiFunction;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
-import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
-import java.util.function.Supplier;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
-import java.util.function.BiPredicate;
-import java.util.function.Predicate;
-import java.util.function.BooleanSupplier;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Yes;
@@ -55,21 +55,21 @@ public class SpiesTest {
         public void canSpyADelegate() {
             final Box<O> result = new Box<O>();
             final Box<O> param = new Box<O>();
-            final Function<O, O> spied = Spies.spy(new Identity<O>(), result, param);
+            final Function<O, O> spied = Spies.spy(UnaryOperator.identity(), result, param);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpyResultOfDelegate() {
             final Box<O> result = new Box<O>();
-            final Function<O, O> spied = Spies.spyRes(new Identity<O>(), result);
+            final Function<O, O> spied = Spies.spyRes(UnaryOperator.identity(), result);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpyFirstOfDelegate() {
             final Box<O> param = new Box<O>();
-            final Function<O, O> spied = Spies.spy1st(new Identity<O>(), param);
+            final Function<O, O> spied = Spies.spy1st(UnaryOperator.identity(), param);
             Assert.assertNotNull(spied);
         }
 
@@ -341,7 +341,7 @@ public class SpiesTest {
 
         @Test
         public void canMonitorADelegate() {
-            final Function<O, O> monitor = Spies.monitor(new Identity<O>(), accumulator);
+            final Function<O, O> monitor = Spies.monitor(UnaryOperator.identity(), accumulator);
             Assert.assertNotNull(monitor);
         }
 

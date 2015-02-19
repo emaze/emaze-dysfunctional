@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.options;
 
+import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantDelegate;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -95,7 +95,7 @@ public class BoxTest {
     @Test
     public void fmappingLoadedBoxYieldsEmptyBox() {
         final Box<Integer> box = Box.of(1);
-        final Box<Integer> mapped = box.fmap(new Identity<Integer>());
+        final Box<Integer> mapped = box.fmap(UnaryOperator.identity());
         Assert.assertEquals(mapped, box);
     }
 

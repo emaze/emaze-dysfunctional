@@ -3,11 +3,10 @@ package net.emaze.dysfunctional;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Queue;
+import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
-import java.util.function.Supplier;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -55,7 +54,7 @@ public class WindowingTest {
     @Test
     public void canCreateTrailsFromIteratorUsingDelegate() {
         final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER, O.YET_ANOTHER);
-        Windowing.trails(3, iterator, new Identity<Queue<Maybe<O>>>());
+        Windowing.trails(3, iterator, UnaryOperator.identity());
     }
 
     @Test
@@ -91,7 +90,7 @@ public class WindowingTest {
     @Test
     public void canCreateTrailsFromIterableUsingDelegate() {
         final Iterable<O> iterable = Iterations.iterable(O.ONE, O.ANOTHER, O.YET_ANOTHER);
-        Windowing.trails(3, iterable, new Identity<Queue<Maybe<O>>>());
+        Windowing.trails(3, iterable, UnaryOperator.identity());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -127,7 +126,7 @@ public class WindowingTest {
     @Test(expected = IllegalArgumentException.class)
     public void creatingTrailsUsingDelegateWithNullIterableYieldsException() {
         final Iterable<O> iterable = null;
-        Windowing.trails(3, iterable, new Identity<Queue<Maybe<O>>>());
+        Windowing.trails(3, iterable, UnaryOperator.identity());
     }
 
     @Test

@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
+import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantDelegate;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -58,34 +58,34 @@ public class TripleTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void fmapWithNullFirstDelegateYieldsException() {
-        Triple.of(O.ONE, O.ONE, O.ONE).fmap(null, new Identity<O>(), new Identity<O>());
+        Triple.of(O.ONE, O.ONE, O.ONE).fmap(null, UnaryOperator.identity(), UnaryOperator.identity());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void fmapWithNullSecondDelegateYieldsException() {
-        Triple.of(O.ONE, O.ONE, O.ONE).fmap(new Identity<O>(), null, new Identity<O>());
+        Triple.of(O.ONE, O.ONE, O.ONE).fmap(UnaryOperator.identity(), null, UnaryOperator.identity());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void fmapWithNullThirdDelegateYieldsException() {
-        Triple.of(O.ONE, O.ONE, O.ONE).fmap(new Identity<O>(), new Identity<O>(), null);
+        Triple.of(O.ONE, O.ONE, O.ONE).fmap(UnaryOperator.identity(), UnaryOperator.identity(), null);
     }
 
     @Test
     public void firstDelegateOfFmapTransformsFirstType() {
-        final Triple<O, O, O> mapped = Triple.of(O.ONE, O.ONE, O.ONE).fmap(new ConstantDelegate<O, O>(O.ANOTHER), new Identity<O>(), new Identity<O>());
+        final Triple<O, O, O> mapped = Triple.of(O.ONE, O.ONE, O.ONE).fmap(new ConstantDelegate<O, O>(O.ANOTHER), UnaryOperator.identity(), UnaryOperator.identity());
         Assert.assertEquals(O.ANOTHER, mapped.first());
     }
 
     @Test
     public void secondDelegateOfFmapTransformsSecondType() {
-        final Triple<O, O, O> mapped = Triple.of(O.ONE, O.ONE, O.ONE).fmap(new Identity<O>(), new ConstantDelegate<O, O>(O.ANOTHER), new Identity<O>());
+        final Triple<O, O, O> mapped = Triple.of(O.ONE, O.ONE, O.ONE).fmap(UnaryOperator.identity(), new ConstantDelegate<O, O>(O.ANOTHER), UnaryOperator.identity());
         Assert.assertEquals(O.ANOTHER, mapped.second());
     }
 
     @Test
     public void thirdDelegateOfFmapTransformsThirdType() {
-        final Triple<O, O, O> mapped = Triple.of(O.ONE, O.ONE, O.ONE).fmap(new Identity<O>(), new Identity<O>(), new ConstantDelegate<O, O>(O.ANOTHER));
+        final Triple<O, O, O> mapped = Triple.of(O.ONE, O.ONE, O.ONE).fmap(UnaryOperator.identity(), UnaryOperator.identity(), new ConstantDelegate<O, O>(O.ANOTHER));
         Assert.assertEquals(O.ANOTHER, mapped.third());
     }
 }

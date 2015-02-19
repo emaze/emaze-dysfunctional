@@ -1,8 +1,8 @@
 package net.emaze.dysfunctional.options;
 
-import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
 import java.util.function.Function;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import java.util.function.UnaryOperator;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,14 +33,14 @@ public class MaybeTest {
     @Test
     public void fmapWithJustYieldsJustDelegateResult() {
         final Maybe<Integer> expected = Maybe.just(1);
-        final Maybe<Integer> got = expected.fmap(new Identity<Integer>());
+        final Maybe<Integer> got = expected.fmap(UnaryOperator.identity());
         Assert.assertEquals(expected, got);
     }
 
     @Test
     public void fmapWithJustNothingYieldsNothing() {
         final Maybe<Integer> source = Maybe.nothing();
-        final Maybe<Integer> got = source.fmap(new Identity<Integer>());
+        final Maybe<Integer> got = source.fmap(UnaryOperator.identity());
         Assert.assertFalse(got.hasValue());
     }
 
@@ -53,7 +53,7 @@ public class MaybeTest {
     @Test
     public void foldWithJustYieldsDelegateResult() {
         final Integer expected = 1;
-        final Integer got = Maybe.just(expected).fold(null, new Identity<Integer>());
+        final Integer got = Maybe.just(expected).fold(null, UnaryOperator.identity());
         Assert.assertEquals(expected, got);
     }
 
@@ -61,7 +61,7 @@ public class MaybeTest {
     public void foldWithNothingYieldsProviderResult() {
         final Maybe<Integer> source = Maybe.nothing();
         final Integer expected = 1;
-        final Integer got = source.fold(new ConstantProvider<Integer>(expected), new Identity<Integer>());
+        final Integer got = source.fold(new ConstantProvider<Integer>(expected), UnaryOperator.identity());
         Assert.assertEquals(expected, got);
     }
 

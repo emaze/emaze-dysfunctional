@@ -1,8 +1,8 @@
 package net.emaze.dysfunctional.dispatching;
 
-import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,7 +15,7 @@ public class TransformingProviderTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingWithNullProviderYieldsException() {
-        new TransformingProvider<O, O>(new Identity<O>(), null);
+        new TransformingProvider<O, O>(UnaryOperator.identity(), null);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -25,7 +25,7 @@ public class TransformingProviderTest {
     
     @Test
     public void canTransformProvidedElement() {
-        final Supplier<O> provider = new TransformingProvider<O, O>(new Identity<O>(), new ConstantProvider<O>(O.ONE));
+        final Supplier<O> provider = new TransformingProvider<O, O>(UnaryOperator.identity(), new ConstantProvider<O>(O.ONE));
         final O got = provider.get();
         Assert.assertEquals(O.ONE, got);
     }

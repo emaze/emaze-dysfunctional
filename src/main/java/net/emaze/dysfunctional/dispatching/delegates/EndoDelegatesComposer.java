@@ -1,7 +1,8 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
-import java.util.function.Function;
 import java.util.Iterator;
+import java.util.function.Function;
+import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
@@ -15,7 +16,7 @@ public class EndoDelegatesComposer<T> implements Function<Iterator<Function<T, T
     @Override
     public Function<T, T> apply(Iterator<Function<T, T>> endoDelegates) {
         dbc.precondition(endoDelegates != null, "cannot compose a null iterator of endoDelegates");
-        Function<T, T> current = new Identity<T>();
+        Function<T, T> current = UnaryOperator.identity();
         while (endoDelegates.hasNext()) {
             current = new Composer<T, T, T>(current, endoDelegates.next());
         }

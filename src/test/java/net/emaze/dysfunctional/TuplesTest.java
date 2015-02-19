@@ -1,13 +1,13 @@
 package net.emaze.dysfunctional;
 
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.Tuples.Pairs;
 import net.emaze.dysfunctional.Tuples.Triples;
-import java.util.function.Consumer;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
-import java.util.function.Predicate;
 import net.emaze.dysfunctional.testing.O;
 import net.emaze.dysfunctional.tuples.BinaryIdentity;
 import net.emaze.dysfunctional.tuples.Pair;
@@ -79,7 +79,7 @@ public class TuplesTest {
 
         @Test
         public void canAdaptDelegate() {
-            final Identity<Pair<O, O>> delegate = new Identity<Pair<O, O>>();
+            final UnaryOperator<Pair<O, O>> delegate = UnaryOperator.identity();
             Assert.assertNotNull(Tuples.Pairs.untupled(delegate));
         }
     }
@@ -100,7 +100,7 @@ public class TuplesTest {
 
         @Test
         public void canAdaptDelegate() {
-            final Identity<Triple<O, O, O>> delegate = new Identity<Triple<O, O, O>>();
+            final UnaryOperator<Triple<O, O, O>> delegate = UnaryOperator.identity();
             Assert.assertNotNull(Tuples.Triples.untupled(delegate));
         }
     }

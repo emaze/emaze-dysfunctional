@@ -1,8 +1,8 @@
 package net.emaze.dysfunctional.options;
 
+import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantDelegate;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -64,7 +64,7 @@ public class EitherTest {
             final Integer rightValue = 1;
             final Either<Object, Integer> either = new Either<Object, Integer>(Maybe.nothing(), Maybe.just(rightValue));
             final Box<Integer> box = new Box<Integer>();
-            either.fmap(new Identity<Object>(), Spies.spy1st(new ConstantDelegate<>(null), box));
+            either.fmap(UnaryOperator.identity(), Spies.spy1st(new ConstantDelegate<>(null), box));
             Assert.assertEquals(rightValue, box.getContent());
         }
 
@@ -73,7 +73,7 @@ public class EitherTest {
             final Integer leftValue = 1;
             final Either<Integer, Object> either = new Either<Integer, Object>(Maybe.just(leftValue), Maybe.nothing());
             final Box<Integer> box = new Box<Integer>();
-            either.fmap(Spies.spy1st(new ConstantDelegate<>(null), box), new Identity<Object>());
+            either.fmap(Spies.spy1st(new ConstantDelegate<>(null), box), UnaryOperator.identity());
             Assert.assertEquals(leftValue, box.getContent());
         }
 
@@ -82,7 +82,7 @@ public class EitherTest {
             final Integer rightValue = 1;
             final Either<Object, Integer> either = new Either<Object, Integer>(Maybe.nothing(), Maybe.just(rightValue));
             final Box<Integer> box = new Box<Integer>();
-            either.fold(new Identity<Object>(), Spies.spy1st(new ConstantDelegate<>(null), box));
+            either.fold(UnaryOperator.identity(), Spies.spy1st(new ConstantDelegate<>(null), box));
             Assert.assertEquals(rightValue, box.getContent());
         }
 
@@ -91,7 +91,7 @@ public class EitherTest {
             final Integer leftValue = 1;
             final Either<Integer, Object> either = new Either<Integer, Object>(Maybe.just(leftValue), Maybe.nothing());
             final Box<Integer> box = new Box<Integer>();
-            either.fold(Spies.spy1st(new ConstantDelegate<>(null), box), new Identity<Object>());
+            either.fold(Spies.spy1st(new ConstantDelegate<>(null), box), UnaryOperator.identity());
             Assert.assertEquals(leftValue, box.getContent());
         }
 
@@ -144,13 +144,13 @@ public class EitherTest {
         @Test(expected = IllegalArgumentException.class)
         public void fmapWithNullLeftDelegateYieldsException() {
             final Either<O, O> either = Either.right(O.ONE);
-            either.fmap(null, new Identity<O>());
+            either.fmap(null, UnaryOperator.identity());
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void fmapWithNullRightDelegateYieldsException() {
             final Either<O, O> either = Either.right(O.ONE);
-            either.fmap(new Identity<O>(), null);
+            either.fmap(UnaryOperator.identity(), null);
         }
     }
 }

@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.interceptions;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import java.util.function.UnaryOperator;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ public class InterceptorAdapterTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingAdapterWithNullAdapteeYieldsException() {
-        new InterceptorAdapter<Object, Object>(null, new Identity<Object>());
+        new InterceptorAdapter<Object, Object>(null, UnaryOperator.identity());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -26,7 +26,7 @@ public class InterceptorAdapterTest {
     @Test
     public void beforeAndAfterAreCalled() {
         List<Integer> bucket = new ArrayList<Integer>();
-        Function<String, String> delegate = new InterceptorAdapter<String, String>(new BucketFillingInterceptor(bucket), new Identity<String>());
+        Function<String, String> delegate = new InterceptorAdapter<String, String>(new BucketFillingInterceptor(bucket), UnaryOperator.identity());
         delegate.apply("useless_param");
         Assert.assertEquals(2, bucket.size());
 

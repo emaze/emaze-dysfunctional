@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import java.util.function.Function;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
@@ -22,7 +22,7 @@ public class IgnoreSecondTest {
     @Test
     public void canIgnoreSecondParameter() {
         final Box<O> param = Box.empty();
-        final Function<O, O> spy = Spies.spy1st(new Identity<O>(), param);        
+        final Function<O, O> spy = Spies.spy1st(UnaryOperator.identity(), param);        
         final IgnoreSecond<O, O, O> adapted = new IgnoreSecond<O, O, O>(spy);
         adapted.apply(O.ONE, O.IGNORED);
         Assert.assertEquals(param.getContent(), O.ONE);

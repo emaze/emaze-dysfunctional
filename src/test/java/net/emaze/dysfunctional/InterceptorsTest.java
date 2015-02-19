@@ -2,9 +2,9 @@ package net.emaze.dysfunctional;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.interceptions.BinaryInterceptor;
 import net.emaze.dysfunctional.interceptions.Interceptor;
@@ -34,80 +34,80 @@ public class InterceptorsTest {
 
         @Test
         public void canInterceptOne() {
-            final Function<O, O> intercepted = Interceptors.intercept(new Identity<O>(), INTERCEPTOR);
+            final Function<O, O> intercepted = Interceptors.intercept(UnaryOperator.identity(), INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptTwo() {
-            Function<O, O> intercepted = Interceptors.intercept(new Identity<O>(), INTERCEPTOR, INTERCEPTOR);
+            Function<O, O> intercepted = Interceptors.intercept(UnaryOperator.identity(), INTERCEPTOR, INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptThree() {
-            Function<O, O> intercepted = Interceptors.intercept(new Identity<O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
+            Function<O, O> intercepted = Interceptors.intercept(UnaryOperator.identity(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptMany() {
-            Function<O, O> intercepted = Interceptors.intercept(new Identity<O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
+            Function<O, O> intercepted = Interceptors.intercept(UnaryOperator.identity(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptIterator() {
-            Function<O, O> intercepted = Interceptors.intercept(new Identity<O>(), Iterations.iterator(INTERCEPTOR));
+            Function<O, O> intercepted = Interceptors.intercept(UnaryOperator.identity(), Iterations.iterator(INTERCEPTOR));
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptIterable() {
-            Function<O, O> intercepted = Interceptors.intercept(new Identity<O>(), Iterations.iterable(INTERCEPTOR));
+            Function<O, O> intercepted = Interceptors.intercept(UnaryOperator.identity(), Iterations.iterable(INTERCEPTOR));
             Assert.assertNotNull(intercepted);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void interceptingNullIterableYieldsException() {
             final Iterable<NullInterceptor<O>> iterable = null;
-            Interceptors.intercept(new Identity<O>(), iterable);
+            Interceptors.intercept(UnaryOperator.identity(), iterable);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void interceptingWithNullInterceptorYieldsException() {
             final Interceptor<O> nullInterceptor = null;
-            Interceptors.intercept(new Identity<O>(), nullInterceptor);
+            Interceptors.intercept(UnaryOperator.identity(), nullInterceptor);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void interceptingWithFormerNullInterceptorYieldsException() {
             final Interceptor<O> nullInterceptor = null;
-            Interceptors.intercept(new Identity<O>(), nullInterceptor, INTERCEPTOR);
+            Interceptors.intercept(UnaryOperator.identity(), nullInterceptor, INTERCEPTOR);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void interceptingWithLatterNullInterceptorYieldsException() {
             final Interceptor<O> nullInterceptor = null;
-            Interceptors.intercept(new Identity<O>(), INTERCEPTOR, nullInterceptor);
+            Interceptors.intercept(UnaryOperator.identity(), INTERCEPTOR, nullInterceptor);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void interceptingWithFirstNullInterceptorYieldsException() {
             final Interceptor<O> nullInterceptor = null;
-            Interceptors.intercept(new Identity<O>(), nullInterceptor, INTERCEPTOR, INTERCEPTOR);
+            Interceptors.intercept(UnaryOperator.identity(), nullInterceptor, INTERCEPTOR, INTERCEPTOR);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void interceptingWithSecondNullInterceptorYieldsException() {
             final Interceptor<O> nullInterceptor = null;
-            Interceptors.intercept(new Identity<O>(), INTERCEPTOR, nullInterceptor, INTERCEPTOR);
+            Interceptors.intercept(UnaryOperator.identity(), INTERCEPTOR, nullInterceptor, INTERCEPTOR);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void interceptingWithThirdNullInterceptorYieldsException() {
             final Interceptor<O> nullInterceptor = null;
-            Interceptors.intercept(new Identity<O>(), INTERCEPTOR, INTERCEPTOR, nullInterceptor);
+            Interceptors.intercept(UnaryOperator.identity(), INTERCEPTOR, INTERCEPTOR, nullInterceptor);
         }
     }
 

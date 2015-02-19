@@ -1,15 +1,15 @@
 package net.emaze.dysfunctional.tuples;
 
-import net.emaze.dysfunctional.dispatching.delegates.ConstantDelegate;
 import java.util.function.Function;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import java.util.function.UnaryOperator;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantDelegate;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class FmapTripleTest {
 
-    private static final Function<O, O> ID = new Identity<O>();
+    private static final Function<O, O> ID = UnaryOperator.identity();
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingWithNullFirstDelegateYieldsException() {

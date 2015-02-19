@@ -5,12 +5,12 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
-import junit.framework.Assert;
 import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -34,28 +34,28 @@ public class ApplicationsTest {
         @Test
         public void canTransformAnIterable() {
             final Iterable<Integer> source = Arrays.asList(1, 2, 3);
-            final Iterator<Integer> got = Applications.transform(source, new Identity<Integer>());
+            final Iterator<Integer> got = Applications.transform(source, UnaryOperator.identity());
             Assert.assertEquals(source, Consumers.all(got));
         }
 
         @Test
         public void canTransformAnIterator() {
             final Iterable<Integer> source = Arrays.asList(1, 2, 3);
-            final Iterator<Integer> got = Applications.transform(source.iterator(), new Identity<Integer>());
+            final Iterator<Integer> got = Applications.transform(source.iterator(), UnaryOperator.identity());
             Assert.assertEquals(source, Consumers.all(got));
         }
 
         @Test
         public void canTransformAnArray() {
             final Integer[] source = new Integer[]{1, 2, 3};
-            final Iterator<Integer> got = Applications.transform(source, new Identity<Integer>());
+            final Iterator<Integer> got = Applications.transform(source, UnaryOperator.identity());
             Assert.assertEquals(Arrays.asList(source), Consumers.all(got));
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallTransformWithNullIterable() {
             final Iterable<Object> iterable = null;
-            Applications.transform(iterable, new Identity<Object>());
+            Applications.transform(iterable, UnaryOperator.identity());
         }
 
         @Test(expected = IllegalArgumentException.class)
@@ -69,27 +69,27 @@ public class ApplicationsTest {
         @Test(expected = IllegalArgumentException.class)
         public void mappingNullIterableYieldsException() {
             final Iterable<Integer> source = null;
-            Applications.map(source, new Identity<Integer>());
+            Applications.map(source, UnaryOperator.identity());
         }
 
         @Test
         public void canMapAnIterable() {
             final List<Integer> source = Arrays.asList(1, 2, 3);
-            final List<Integer> got = Applications.map(source, new Identity<Integer>());
+            final List<Integer> got = Applications.map(source, UnaryOperator.identity());
             Assert.assertEquals(source, got);
         }
 
         @Test
         public void canMapAnIterator() {
             final List<Integer> source = Arrays.asList(1, 2, 3);
-            final List<Integer> got = Applications.map(source.iterator(), new Identity<Integer>());
+            final List<Integer> got = Applications.map(source.iterator(), UnaryOperator.identity());
             Assert.assertEquals(source, got);
         }
 
         @Test
         public void canMapAnArray() {
             final Integer[] source = new Integer[]{1, 2, 3};
-            final List<Integer> got = Applications.map(source, new Identity<Integer>());
+            final List<Integer> got = Applications.map(source, UnaryOperator.identity());
             Assert.assertEquals(Arrays.asList(source), got);
         }
     }

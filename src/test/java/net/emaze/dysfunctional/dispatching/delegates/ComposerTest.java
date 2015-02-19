@@ -1,7 +1,6 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
-import net.emaze.dysfunctional.dispatching.delegates.Composer;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import java.util.function.UnaryOperator;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,17 +12,17 @@ public class ComposerTest {
 
     @Test
     public void canComposeTwoDelegates() {
-        Composer<Integer, Integer, Integer> c = new Composer<Integer, Integer, Integer>(new Identity<Integer>(), new Identity<Integer>());
+        Composer<Integer, Integer, Integer> c = new Composer<Integer, Integer, Integer>(UnaryOperator.identity(), UnaryOperator.identity());
         Assert.assertEquals(1, (int)c.apply(1));
     }
     
     @Test(expected=IllegalArgumentException.class)
     public void composingWithNullFormerDelegateYieldsException() {
-        new Composer<Integer, Integer, Integer>(null, new Identity<Integer>());
+        new Composer<Integer, Integer, Integer>(null, UnaryOperator.identity());
     }
 
     @Test(expected=IllegalArgumentException.class)
     public void composingWithNullLatterDelegateYieldsException() {
-        new Composer<Integer, Integer, Integer>(new Identity<Integer>(), null);
+        new Composer<Integer, Integer, Integer>(UnaryOperator.identity(), null);
     }
 }

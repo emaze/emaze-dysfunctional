@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -25,7 +25,7 @@ public class InterceptorChainTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingChainWithNullChaingYieldsException() {
-        final Function<O, O> firstParam = new Identity<O>();
+        final Function<O, O> firstParam = UnaryOperator.identity();
         new InterceptorChain<O, O>(firstParam, null);
     }
 

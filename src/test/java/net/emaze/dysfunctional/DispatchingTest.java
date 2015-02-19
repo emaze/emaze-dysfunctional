@@ -1,25 +1,25 @@
 package net.emaze.dysfunctional;
 
-import java.util.function.Consumer;
 import java.util.function.BiConsumer;
-import net.emaze.dysfunctional.dispatching.actions.Noop;
-import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
+import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.dispatching.actions.Slacker;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
-import java.util.function.Supplier;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
-import java.util.function.Function;
-import java.util.function.BiFunction;
+import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
-import java.util.function.BiPredicate;
-import java.util.function.Predicate;
-import java.util.function.BooleanSupplier;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Yes;
@@ -119,7 +119,7 @@ public class DispatchingTest {
 
         @Test
         public void canAdaptDelegateToAction() {
-            final Consumer<O> adapted = Dispatching.action(new Identity<O>());
+            final Consumer<O> adapted = Dispatching.action(UnaryOperator.identity());
             Assert.assertNotNull(adapted);
         }
 
@@ -168,7 +168,7 @@ public class DispatchingTest {
 
         @Test
         public void canCurryDelegate() {
-            final Supplier<O> adapted = Dispatching.curry(new Identity<O>(), O.ONE);
+            final Supplier<O> adapted = Dispatching.curry(UnaryOperator.identity(), O.ONE);
             Assert.assertNotNull(adapted);
         }
 
@@ -363,7 +363,7 @@ public class DispatchingTest {
 
         @Test
         public void canIgnoreFirstForDelegates() {
-            final BiFunction<O, O, O> ignoring = Dispatching.ignore1st(new Identity<O>(), O.class);
+            final BiFunction<O, O, O> ignoring = Dispatching.ignore1st(UnaryOperator.identity(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
@@ -375,7 +375,7 @@ public class DispatchingTest {
 
         @Test
         public void canIgnoreSecondForDelegates() {
-            final BiFunction<O, O, O> ignoring = Dispatching.ignore2nd(new Identity<O>(), O.class);
+            final BiFunction<O, O, O> ignoring = Dispatching.ignore2nd(UnaryOperator.identity(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
