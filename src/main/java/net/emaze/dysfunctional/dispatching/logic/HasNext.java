@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.dispatching.logic;
 
+import java.util.function.Predicate;
 import java.util.Iterator;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Iterator;
 public class HasNext<I extends Iterator<?>> implements Predicate<I> {
 
     @Override
-    public boolean accept(I iterator) {
+    public boolean test(I iterator) {
         return iterator.hasNext();
     }
 }

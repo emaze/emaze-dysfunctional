@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 
 /**
  * Composes a predicate with a delegate (predicate ° delegate).
@@ -24,7 +24,7 @@ public class TransformingPredicate<R, T> implements Predicate<T> {
     }
 
     @Override
-    public boolean accept(T element) {
-        return predicate.accept(delegate.apply(element));
+    public boolean test(T element) {
+        return predicate.test(delegate.apply(element));
     }
 }

@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.ranges;
 
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 
 /**
  *
@@ -9,7 +9,7 @@ import net.emaze.dysfunctional.dispatching.logic.Predicate;
 public class RangeIsEmpty<R extends Range<T>, T> implements Predicate<R> {
 
     @Override
-    public boolean accept(R element) {
+    public boolean test(R element) {
         return !element.iterator().hasNext();
     }
 }

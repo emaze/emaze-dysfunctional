@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.dispatching.logic.Yes;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -17,7 +17,7 @@ public class PropositionIgnoreParameterTest {
     public void callingThePredicateYieldsPropositionResult() {
         final Boolean expected = Boolean.TRUE;
         final Predicate<O> predicate = new PropositionIgnoreParameter<O>(new Yes());
-        Assert.assertEquals(expected, predicate.accept(O.IGNORED));
+        Assert.assertEquals(expected, predicate.test(O.IGNORED));
     }
 
 }

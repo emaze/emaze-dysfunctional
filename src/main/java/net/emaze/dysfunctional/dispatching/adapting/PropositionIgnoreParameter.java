@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.dispatching.logic.Proposition;
 
 /**
@@ -21,7 +21,7 @@ public class PropositionIgnoreParameter<T> implements Predicate<T> {
     }
 
     @Override
-    public boolean accept(T parameter) {
+    public boolean test(T parameter) {
         return adapted.state();
     }
 }

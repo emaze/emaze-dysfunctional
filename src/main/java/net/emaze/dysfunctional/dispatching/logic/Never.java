@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional.dispatching.logic;
 
+import java.util.function.Predicate;
+
 /**
  * A unary predicate always returning false. ("never" returning true ).
  *
@@ -17,7 +19,7 @@ public class Never<E> implements Predicate<E> {
      * @return false
      */
     @Override
-    public boolean accept(E element) {
+    public boolean test(E element) {
         return false;
     }
 }

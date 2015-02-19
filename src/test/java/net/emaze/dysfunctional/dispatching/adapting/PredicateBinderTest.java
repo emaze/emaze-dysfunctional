@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.dispatching.logic.Always;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.dispatching.logic.Proposition;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.options.Box;

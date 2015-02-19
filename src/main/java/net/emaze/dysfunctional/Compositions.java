@@ -1,20 +1,20 @@
 package net.emaze.dysfunctional;
 
 import java.util.Iterator;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.dispatching.TransformingBinaryPredicate;
 import net.emaze.dysfunctional.dispatching.TransformingPredicate;
 import net.emaze.dysfunctional.dispatching.TransformingProvider;
 import net.emaze.dysfunctional.dispatching.TransformingTernaryPredicate;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryComposer;
-import java.util.function.BiFunction;
 import net.emaze.dysfunctional.dispatching.delegates.Composer;
-import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.EndoDelegatesComposer;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryComposer;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 
 /**

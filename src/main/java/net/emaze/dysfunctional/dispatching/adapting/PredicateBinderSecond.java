@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 
 /**
  * Binary to unary predicate adapter. Adapting is performed by currying the
@@ -24,7 +24,7 @@ public class PredicateBinderSecond<T1, T2> implements Predicate<T1> {
     }
 
     @Override
-    public boolean accept(T1 first) {
+    public boolean test(T1 first) {
         return adapted.accept(first, second);
     }
 }

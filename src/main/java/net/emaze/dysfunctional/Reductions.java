@@ -2,9 +2,9 @@ package net.emaze.dysfunctional;
 
 import java.util.Comparator;
 import java.util.Iterator;
-import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.BiFunction;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
+import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.order.ComparableComparator;
 import net.emaze.dysfunctional.order.Max;
@@ -77,7 +77,7 @@ public abstract class Reductions {
      */
     public static <E> boolean any(Iterable<E> iterable, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot call any with a null iterable");
-        return new Any<E>(predicate).accept(iterable.iterator());
+        return new Any<E>(predicate).test(iterable.iterator());
     }
 
     /**
@@ -92,7 +92,7 @@ public abstract class Reductions {
      * first positive match)
      */
     public static <E> boolean any(Iterator<E> iterator, Predicate<E> predicate) {
-        return new Any<E>(predicate).accept(iterator);
+        return new Any<E>(predicate).test(iterator);
     }
 
     /**
@@ -107,7 +107,7 @@ public abstract class Reductions {
      * first positive match)
      */
     public static <E> boolean any(E[] array, Predicate<E> predicate) {
-        return new Any<E>(predicate).accept(new ArrayIterator<E>(array));
+        return new Any<E>(predicate).test(new ArrayIterator<E>(array));
     }
 
     /**
@@ -122,7 +122,7 @@ public abstract class Reductions {
      */
     public static <E> boolean every(Iterable<E> iterable, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot call every with a null iterable");
-        return new Every<E>(predicate).accept(iterable.iterator());
+        return new Every<E>(predicate).test(iterable.iterator());
     }
 
     /**
@@ -136,7 +136,7 @@ public abstract class Reductions {
      * @return true if EVERY predicate application yields true
      */
     public static <E> boolean every(Iterator<E> iterator, Predicate<E> predicate) {
-        return new Every<E>(predicate).accept(iterator);
+        return new Every<E>(predicate).test(iterator);
     }
 
     /**
@@ -150,7 +150,7 @@ public abstract class Reductions {
      * @return true if EVERY predicate application yields true
      */
     public static <E> boolean every(E[] array, Predicate<E> predicate) {
-        return new Every<E>(predicate).accept(new ArrayIterator<E>(array));
+        return new Every<E>(predicate).test(new ArrayIterator<E>(array));
     }
 
     /**

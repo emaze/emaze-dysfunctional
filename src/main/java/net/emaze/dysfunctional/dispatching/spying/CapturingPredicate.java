@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.spying;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.options.Box;
 
 /**
@@ -26,9 +26,9 @@ public class CapturingPredicate<T> implements Predicate<T> {
     }
 
     @Override
-    public boolean accept(T value) {
+    public boolean test(T value) {
         param.setContent(value);
-        final boolean got = nested.accept(value);
+        final boolean got = nested.test(value);
         result.setContent(got);
         return got;
     }

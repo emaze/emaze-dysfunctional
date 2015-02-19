@@ -5,7 +5,7 @@ import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.tuples.Pair;
 
 /**
@@ -39,7 +39,7 @@ public class PartitionBy<T, CA extends Collection<T>, CR extends Collection<T>> 
         final CR refused = rejectedCollectionProvider.provide();
         while (values.hasNext()) {
             final T value = values.next();
-            final Collection<T> collection = partitioner.accept(value) ? accepted : refused;
+            final Collection<T> collection = partitioner.test(value) ? accepted : refused;
             collection.add(value);
         }
         return Pair.of(accepted, refused);

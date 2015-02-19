@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.dispatching.logic;
 
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
@@ -24,7 +25,7 @@ public class Negator<T> implements Predicate<T> {
      * @return true if the inner predicate returns false, false otherwise
      */
     @Override
-    public boolean accept(T element) {
-        return !predicate.accept(element);
+    public boolean test(T element) {
+        return !predicate.test(element);
     }
 }

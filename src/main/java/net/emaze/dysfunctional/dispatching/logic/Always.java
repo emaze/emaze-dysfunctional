@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional.dispatching.logic;
 
+import java.util.function.Predicate;
+
 /**
  * A unary predicate always returning true.
  *
@@ -15,7 +17,7 @@ public class Always<E> implements Predicate<E> {
      * @return true. always.
      */
     @Override
-    public boolean accept(E element) {
+    public boolean test(E element) {
         return true;
     }
 }

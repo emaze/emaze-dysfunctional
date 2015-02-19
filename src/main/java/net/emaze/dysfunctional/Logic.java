@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional;
 
 import java.util.Iterator;
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.composing.AllMatchingBinaryPredicate;
 import net.emaze.dysfunctional.dispatching.composing.AllMatchingPredicate;
@@ -15,7 +16,6 @@ import net.emaze.dysfunctional.dispatching.logic.BinaryNever;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Negator;
 import net.emaze.dysfunctional.dispatching.logic.Never;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.TernaryNegator;
 import net.emaze.dysfunctional.dispatching.logic.TernaryNever;

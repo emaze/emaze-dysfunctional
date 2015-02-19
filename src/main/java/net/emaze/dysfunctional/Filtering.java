@@ -1,8 +1,8 @@
 package net.emaze.dysfunctional;
 
 import java.util.Iterator;
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.filtering.AtMostMemoryIterator;
 import net.emaze.dysfunctional.filtering.DropWhile;
 import net.emaze.dysfunctional.filtering.FilteringIterator;

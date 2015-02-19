@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional.dispatching.logic;
 
+import java.util.function.Predicate;
+
 /**
  * A unary predicate evaluating if passed element is true.
  *
@@ -11,7 +13,7 @@ package net.emaze.dysfunctional.dispatching.logic;
 public class IsTrue implements Predicate<Boolean> {
 
     @Override
-    public boolean accept(Boolean element) {
+    public boolean test(Boolean element) {
         return element;
     }
 }

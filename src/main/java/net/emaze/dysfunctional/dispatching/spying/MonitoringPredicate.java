@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.spying;
 
 import java.util.concurrent.atomic.AtomicLong;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 
 /**
  * Proxies a predicate monitoring its calls.
@@ -23,8 +23,8 @@ public class MonitoringPredicate<T> implements Predicate<T> {
     }
 
     @Override
-    public boolean accept(T value) {
+    public boolean test(T value) {
         calls.incrementAndGet();
-        return nested.accept(value);
+        return nested.test(value);
     }
 }

@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 
 /**
@@ -21,7 +21,7 @@ public class TernaryToUnaryPredicate<T1, T2, T3> implements Predicate<Triple<T1,
     }
 
     @Override
-    public boolean accept(Triple<T1, T2, T3> triple) {
+    public boolean test(Triple<T1, T2, T3> triple) {
         return predicate.accept(triple.first(), triple.second(), triple.third());
     }
 }

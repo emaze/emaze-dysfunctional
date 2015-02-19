@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.composing;
 
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.Never;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -24,13 +24,13 @@ public class FirstMatchingPredicateTest {
     public void usingAlwaysReturnsTrue() {
         final Predicate<O> always = new Always<O>();
         final FirstMatchingPredicate<O> pred = new FirstMatchingPredicate<O>(Iterations.iterable(always));
-        Assert.assertTrue(pred.accept(O.IGNORED));
+        Assert.assertTrue(pred.test(O.IGNORED));
     }
 
     @Test
     public void usingNeverReturnsFalse() {
         final Predicate<O> never = new Never<O>();
         final FirstMatchingPredicate<O> pred = new FirstMatchingPredicate<O>(Iterations.iterable(never));
-        Assert.assertFalse(pred.accept(O.IGNORED));
+        Assert.assertFalse(pred.test(O.IGNORED));
     }
 }

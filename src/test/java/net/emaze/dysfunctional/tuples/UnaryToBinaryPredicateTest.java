@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
 import net.emaze.dysfunctional.dispatching.logic.Always;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;

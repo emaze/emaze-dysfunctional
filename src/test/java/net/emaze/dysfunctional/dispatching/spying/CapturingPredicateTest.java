@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.spying;
 
 import net.emaze.dysfunctional.dispatching.logic.Always;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -33,7 +33,7 @@ public class CapturingPredicateTest {
         final Box<Boolean> result = Box.empty();
         final Box<O> param = Box.empty();
         final Predicate<O> pred = new CapturingPredicate<O>(new Always<O>(), result, param);
-        pred.accept(O.ONE);
+        pred.test(O.ONE);
         Assert.assertEquals(true, result.getContent());
     }
 
@@ -42,7 +42,7 @@ public class CapturingPredicateTest {
         final Box<Boolean> result = Box.empty();
         final Box<O> param = Box.empty();
         final Predicate<O> pred = new CapturingPredicate<O>(new Always<O>(), result, param);
-        pred.accept(O.ONE);
+        pred.test(O.ONE);
         Assert.assertEquals(O.ONE, param.getContent());
     }
 }

@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 
 /**
@@ -28,6 +28,6 @@ public class TransformingTernaryPredicate<R, T1, T2, T3> implements TernaryPredi
 
     @Override
     public boolean accept(T1 first, T2 second, T3 third) {
-        return predicate.accept(delegate.perform(first, second, third));
+        return predicate.test(delegate.perform(first, second, third));
     }
 }

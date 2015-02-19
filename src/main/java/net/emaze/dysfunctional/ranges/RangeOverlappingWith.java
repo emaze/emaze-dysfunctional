@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.ranges;
 
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 
 /**
  *
@@ -16,7 +16,7 @@ public class RangeOverlappingWith<R extends Range<T>, T> implements Predicate<R>
     }
 
     @Override
-    public boolean accept(R range) {
+    public boolean test(R range) {
         return range.overlaps(other);
     }
 }

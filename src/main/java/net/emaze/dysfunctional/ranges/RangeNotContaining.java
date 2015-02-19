@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.ranges;
 
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 
 /**
  *
@@ -16,7 +16,7 @@ public class RangeNotContaining<T> implements Predicate<DenseRange<T>>{
     }
 
     @Override
-    public boolean accept(DenseRange<T> range) {
+    public boolean test(DenseRange<T> range) {
         return range.contains(element);
     }
 

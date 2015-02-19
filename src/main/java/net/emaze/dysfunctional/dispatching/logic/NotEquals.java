@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.dispatching.logic;
 
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
@@ -25,7 +26,7 @@ public class NotEquals<T> implements Predicate<T> {
      * @return false if objects are equals. true otherwise
      */
     @Override
-    public boolean accept(T rhs) {
+    public boolean test(T rhs) {
         return !lhs.equals(rhs);
     }
 }

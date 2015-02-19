@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 
 /**
  * Adapts a delegate with Boolean result type to a predicate.
@@ -20,7 +20,7 @@ public class DelegateToPredicate<T> implements Predicate<T> {
     }
 
     @Override
-    public boolean accept(T value) {
+    public boolean test(T value) {
         return adapted.apply(value);
     }
 }

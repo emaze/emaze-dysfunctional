@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.composing;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 
 /**
  * A composite unary predicate yielding true when the first predicate matches
@@ -20,9 +20,9 @@ public class FirstMatchingPredicate<E> implements Predicate<E> {
     }
 
     @Override
-    public boolean accept(E element) {
+    public boolean test(E element) {
         for (Predicate<E> predicate : predicates) {
-            if (predicate.accept(element)) {
+            if (predicate.test(element)) {
                 return true;
             }
         }

@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.numbers;
 
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.numbers.policies.ModulusPolicy;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -28,7 +28,7 @@ public class IsOddTest {
             }
         }, zero);
 
-        Assert.assertTrue(odd.accept(O.ONE));
+        Assert.assertTrue(odd.test(O.ONE));
     }
 
     @Test
@@ -42,6 +42,6 @@ public class IsOddTest {
             }
         }, zero);
 
-        Assert.assertFalse(odd.accept(O.ONE));
+        Assert.assertFalse(odd.test(O.ONE));
     }
 }

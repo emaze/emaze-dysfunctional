@@ -8,7 +8,7 @@ import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.BinaryNever;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Never;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.TernaryNever;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
@@ -42,25 +42,25 @@ public class LogicTest {
         @Test
         public void canComposeIteratorOfPredicatesWithAnd() {
             final Iterable<Predicate<O>> preds = Iterations.iterable(new Always<O>(), new Never<O>());
-            Assert.assertFalse(Logic.Unary.and(preds.iterator()).accept(O.IGNORED));
+            Assert.assertFalse(Logic.Unary.and(preds.iterator()).test(O.IGNORED));
         }
 
         @Test
         public void canComposeIterableOfPredicatesWithAnd() {
             final Iterable<Predicate<O>> preds = Iterations.iterable(new Always<O>(), new Never<O>());
-            Assert.assertFalse(Logic.Unary.and(preds).accept(O.IGNORED));
+            Assert.assertFalse(Logic.Unary.and(preds).test(O.IGNORED));
         }
 
         @Test
         public void canComposeIteratorOfPredicatesWithOr() {
             final Iterable<Predicate<O>> preds = Iterations.iterable(new Always<O>(), new Never<O>());
-            Assert.assertTrue(Logic.Unary.or(preds.iterator()).accept(O.IGNORED));
+            Assert.assertTrue(Logic.Unary.or(preds.iterator()).test(O.IGNORED));
         }
 
         @Test
         public void canComposeIterableOfPredicatesWithOr() {
             final Iterable<Predicate<O>> preds = Iterations.iterable(new Always<O>(), new Never<O>());
-            Assert.assertTrue(Logic.Unary.or(preds).accept(O.IGNORED));
+            Assert.assertTrue(Logic.Unary.or(preds).test(O.IGNORED));
         }
 
         @Test(expected = IllegalArgumentException.class)
@@ -194,18 +194,18 @@ public class LogicTest {
 
         @Test
         public void canComposeTwoPredicates() {
-            Assert.assertFalse(Logic.and(new Always<O>(), new Never<O>()).accept(O.IGNORED));
+            Assert.assertFalse(Logic.and(new Always<O>(), new Never<O>()).test(O.IGNORED));
         }
 
         @Test
         public void canComposeThreePredicates() {
-            Assert.assertFalse(Logic.and(new Always<O>(), new Never<O>(), new Never<O>()).accept(O.IGNORED));
+            Assert.assertFalse(Logic.and(new Always<O>(), new Never<O>(), new Never<O>()).test(O.IGNORED));
         }
 
         @Test
         public void canComposeManyPredicates() {
             final Never<O> never = new Never<O>();
-            Assert.assertFalse(Logic.and(new Always<O>(), never, never, never).accept(O.IGNORED));
+            Assert.assertFalse(Logic.and(new Always<O>(), never, never, never).test(O.IGNORED));
         }
 
         @Test
@@ -245,18 +245,18 @@ public class LogicTest {
 
         @Test
         public void canComposeTwoPredicates() {
-            Assert.assertTrue(Logic.or(new Always<O>(), new Never<O>()).accept(O.IGNORED));
+            Assert.assertTrue(Logic.or(new Always<O>(), new Never<O>()).test(O.IGNORED));
         }
 
         @Test
         public void canComposeThreePredicates() {
-            Assert.assertTrue(Logic.or(new Always<O>(), new Always<O>(), new Never<O>()).accept(O.IGNORED));
+            Assert.assertTrue(Logic.or(new Always<O>(), new Always<O>(), new Never<O>()).test(O.IGNORED));
         }
 
         @Test
         public void canComposeManyPredicates() {
             final Never<O> never = new Never<O>();
-            Assert.assertTrue(Logic.or(new Always<O>(), new Always<O>(), never, never).accept(O.IGNORED));
+            Assert.assertTrue(Logic.or(new Always<O>(), new Always<O>(), never, never).test(O.IGNORED));
         }
 
         @Test
@@ -519,7 +519,7 @@ public class LogicTest {
         @Test
         public void canNegatePredicate() {
             final Predicate<O> negated = Logic.not(new Always<O>());
-            Assert.assertFalse(negated.accept(null));
+            Assert.assertFalse(negated.test(null));
         }
 
         @Test

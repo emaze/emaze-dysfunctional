@@ -17,27 +17,27 @@ public class EveryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void callingWithNullIteratorYieldsException() {
-        new Every<O>(new Always<O>()).accept(null);
+        new Every<O>(new Always<O>()).test(null);
     }
 
     @Test
     public void callingWithAnElementYieldingFalseYieldsFalse() {
         final Iterator<O> iterator = Iterations.iterator(O.ONE);
-        final boolean got = new Every<O>(new Never<O>()).accept(iterator);
+        final boolean got = new Every<O>(new Never<O>()).test(iterator);
         Assert.assertFalse(got);
     }
 
     @Test
     public void callingWithEveryElementYieldingTrueYieldsTrue() {
         final Iterator<O> iterator = Iterations.iterator(O.ONE);
-        final boolean got = new Every<O>(new Always<O>()).accept(iterator);
+        final boolean got = new Every<O>(new Always<O>()).test(iterator);
         Assert.assertTrue(got);
     }
 
     @Test
     public void callingWithEmptyIteratorYieldsTrue() {
         final Iterator<O> iterator = Iterations.iterator();
-        final boolean got = new Every<O>(new Never<O>()).accept(iterator);
+        final boolean got = new Every<O>(new Never<O>()).test(iterator);
         Assert.assertTrue(got);
     }
 }

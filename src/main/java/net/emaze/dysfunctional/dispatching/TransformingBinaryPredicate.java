@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.dispatching;
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.BiFunction;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 
 /**
  * Composes a predicate with a binary delegate (predicate ° delegate).
@@ -27,6 +27,6 @@ public class TransformingBinaryPredicate<R, T1, T2> implements BinaryPredicate<T
 
     @Override
     public boolean accept(T1 first, T2 second) {
-        return predicate.accept(delegate.apply(first, second));
+        return predicate.test(delegate.apply(first, second));
     }
 }

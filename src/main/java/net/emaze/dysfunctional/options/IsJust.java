@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.options;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 
 /**
  * Unary Predicate matching Maybe.just elements.
@@ -12,7 +12,7 @@ import net.emaze.dysfunctional.dispatching.logic.Predicate;
 public class IsJust<T> implements Predicate<Maybe<T>> {
 
     @Override
-    public boolean accept(Maybe<T> element) {
+    public boolean test(Maybe<T> element) {
         dbc.precondition(element != null, "testing IsJust against null");
         return element.hasValue();
     }

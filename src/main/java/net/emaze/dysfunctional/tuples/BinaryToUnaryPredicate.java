@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.tuples;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 
 /**
  * Adapts a binary predicate to a predicate handling pairs.
@@ -20,7 +20,7 @@ public class BinaryToUnaryPredicate<T1, T2> implements Predicate<Pair<T1, T2>> {
     }
 
     @Override
-    public boolean accept(Pair<T1, T2> pair) {
+    public boolean test(Pair<T1, T2> pair) {
         return predicate.accept(pair.first(), pair.second());
     }
 }
