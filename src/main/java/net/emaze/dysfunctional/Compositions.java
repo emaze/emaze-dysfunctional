@@ -6,6 +6,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.dispatching.TransformingBinaryPredicate;
 import net.emaze.dysfunctional.dispatching.TransformingPredicate;
 import net.emaze.dysfunctional.dispatching.TransformingProvider;
@@ -172,7 +173,7 @@ public abstract class Compositions {
      * @param endodelegates to be composed (e.g: f,g,h)
      * @return a delegate performing f ° g ° h
      */
-    public static <T> Function<T, T> compose(Iterator<Function<T, T>> endodelegates) {
+    public static <T> UnaryOperator<T> compose(Iterator<Function<T, T>> endodelegates) {
         return new EndoDelegatesComposer<T>().apply(endodelegates);
     }
 }

@@ -1,13 +1,13 @@
 package net.emaze.dysfunctional.strings;
 
+import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.contracts.dbc;
-import java.util.function.Function;
 
 /**
  *
  * @author rferranti
  */
-public class ToTitleCase implements Function<String, String> {
+public class ToTitleCase implements UnaryOperator<String> {
 
     @Override
     public String apply(String word) {

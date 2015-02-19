@@ -1,8 +1,8 @@
 package net.emaze.dysfunctional.collections;
 
 import java.util.Collection;
+import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.contracts.dbc;
-import java.util.function.Function;
 
 /**
  * An endodelegate adding all elements from a collection to a collection.
@@ -10,7 +10,7 @@ import java.util.function.Function;
  * @param <E> the element type parameter
  * @author rferranti
  */
-public class CollectionAllAdder<C extends Collection<E>, E> implements Function<C, C> {
+public class CollectionAllAdder<C extends Collection<E>, E> implements UnaryOperator<C> {
 
     private final Collection<E> collection;
 

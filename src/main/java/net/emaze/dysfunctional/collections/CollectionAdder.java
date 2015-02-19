@@ -1,15 +1,15 @@
 package net.emaze.dysfunctional.collections;
 
 import java.util.Collection;
+import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.contracts.dbc;
-import java.util.function.Function;
 
 /**
  * An endodelegate adding element to a collection.
  * @param <T> the element type
  * @author rferranti
  */
-public class CollectionAdder<T> implements Function<T, T> {
+public class CollectionAdder<T> implements UnaryOperator<T> {
 
     private final Collection<T> collection;
 

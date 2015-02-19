@@ -1,8 +1,8 @@
 package net.emaze.dysfunctional.dispatching;
 
-import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Consumer;
-import java.util.function.Function;
+import java.util.function.UnaryOperator;
+import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  * Applies an action to an element and returns the (possibly modified) element.
@@ -10,7 +10,7 @@ import java.util.function.Function;
  * @author rferranti
  * @param <T> the parameter type
  */
-public class Tapper<T> implements Function<T, T> {
+public class Tapper<T> implements UnaryOperator<T> {
 
     private final Consumer<T> action;
 

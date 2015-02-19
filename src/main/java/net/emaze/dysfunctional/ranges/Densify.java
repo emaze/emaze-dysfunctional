@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.function.Function;
+import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.dispatching.logic.Negator;
 import net.emaze.dysfunctional.filtering.FilteringIterator;
 import net.emaze.dysfunctional.options.Maybe;
@@ -23,7 +23,7 @@ import net.emaze.dysfunctional.ranges.Range.Endpoint;
  * @param <T>
  * @author rferranti
  */
-public class Densify<T> implements Function<List<DenseRange<T>>, List<DenseRange<T>>> {
+public class Densify<T> implements UnaryOperator<List<DenseRange<T>>> {
 
     private final SequencingPolicy<T> sequencer;
     private final Comparator<Maybe<T>> comparator;
