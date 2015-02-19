@@ -8,7 +8,6 @@ import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.iterations.SingletonIterator;
 import net.emaze.dysfunctional.iterations.TransformingIterator;
 import net.emaze.dysfunctional.options.Box;
-import net.emaze.dysfunctional.options.DropMaybe;
 import net.emaze.dysfunctional.options.Either;
 import net.emaze.dysfunctional.options.FmapMaybe;
 import net.emaze.dysfunctional.options.FromJust;
@@ -277,11 +276,12 @@ public abstract class Options {
          * <code>Maybes.drop(Nothing) -> null</code>
          *
          * @param <T> the get type parameter
-         * @param maybe the maybe to be dropped
+         * @param optional the optional to be dropped
          * @return null or a get
          */
-        public static <T> T drop(Optional<T> maybe) {
-            return new DropMaybe<T>().apply(maybe);
+        public static <T> T drop(Optional<T> optional) {
+            dbc.precondition(optional != null, "cannot drop a null optional");
+            return optional.orElse(null);
         }
 
         /**
@@ -295,7 +295,7 @@ public abstract class Options {
          * @return an iterator of T
          */
         public static <T> Iterator<T> drops(Iterator<Optional<T>> iterator) {
-            return new TransformingIterator<>(iterator, new DropMaybe<T>());
+            return new TransformingIterator<>(iterator, Maybes::drop);
         }
 
         /**
@@ -310,7 +310,7 @@ public abstract class Options {
          */
         public static <T> Iterator<T> drops(Iterable<Optional<T>> iterable) {
             dbc.precondition(iterable != null, "cannot perform drops on a null iterable");
-            return new TransformingIterator<>(iterable.iterator(), new DropMaybe<T>());
+            return new TransformingIterator<>(iterable.iterator(), Maybes::drop);
         }
 
         /**
@@ -324,7 +324,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<T> drops(Optional<T> first, Optional<T> second) {
-            return new TransformingIterator<>(Iterations.iterator(first, second), new DropMaybe<T>());
+            return new TransformingIterator<>(Iterations.iterator(first, second), Maybes::drop);
         }
 
         /**
@@ -339,7 +339,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<T> drops(Optional<T> first, Optional<T> second, Optional<T> third) {
-            return new TransformingIterator<>(Iterations.iterator(first, second, third), new DropMaybe<T>());
+            return new TransformingIterator<>(Iterations.iterator(first, second, third), Maybes::drop);
         }
 
         /**
