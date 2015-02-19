@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,7 +19,7 @@ import org.junit.Test;
 public class WindowingTest {
 
     private final Supplier<List<O>> LIST_FACTORY = Compositions.compose(new Vary<ArrayList<O>, List<O>>(), new ArrayListFactory<O>());
-    private final Supplier<List<Maybe<O>>> LIST_MAYBE_FACTORY = Compositions.compose(new Vary<ArrayList<Maybe<O>>, List<Maybe<O>>>(), new ArrayListFactory<Maybe<O>>());
+    private final Supplier<List<Optional<O>>> LIST_MAYBE_FACTORY = Compositions.compose(new Vary<ArrayList<Optional<O>>, List<Optional<O>>>(), new ArrayListFactory<Optional<O>>());
 
     @Test
     public void canCreateWindowFromIterator() {

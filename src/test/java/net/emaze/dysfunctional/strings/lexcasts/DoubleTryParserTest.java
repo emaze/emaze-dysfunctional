@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.strings.lexcasts;
 
 import java.util.function.Function;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,19 +19,19 @@ public class DoubleTryParserTest {
 
     @Test
     public void parsingNullStringYieldsNothing() {
-        final Maybe<Double> got = new DoubleTryParser().apply(null);
-        Assert.assertFalse(got.hasValue());
+        final Optional<Double> got = new DoubleTryParser().apply(null);
+        Assert.assertFalse(got.isPresent());
     }
 
     @Test
     public void parsingInvalidStringYieldsNothing() {
-        final Maybe<Double> got = new DoubleTryParser().apply("A");
-        Assert.assertFalse(got.hasValue());
+        final Optional<Double> got = new DoubleTryParser().apply("A");
+        Assert.assertFalse(got.isPresent());
     }
 
     @Test
     public void parsingValidStringYieldsJustValue() {
-        final Maybe<Double> got = new DoubleTryParser().apply("1.");
-        Assert.assertEquals(Maybe.just(1d), got);
+        final Optional<Double> got = new DoubleTryParser().apply("1.");
+        Assert.assertEquals(Optional.of(1d), got);
     }
 }

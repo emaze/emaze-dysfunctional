@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.options;
 
+import java.util.Optional;
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
@@ -11,7 +12,7 @@ import java.util.function.Function;
  * @param <E> the iterator element type
  * @param <I> the iterator type
  */
-public class MaybeIteratorTransformer<I extends Iterator<E>, E> implements Function<I, Iterator<Maybe<E>>> {
+public class MaybeIteratorTransformer<I extends Iterator<E>, E> implements Function<I, Iterator<Optional<E>>> {
 
     @Override
     public MaybeIterator<E> apply(I iterator) {

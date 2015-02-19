@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import java.util.function.Supplier;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -150,26 +150,26 @@ public class MultiplexingTest {
         @Test
         public void canMuxLongestFromIterable() {
             final Iterable<Iterator<O>> iterable = Iterations.iterable(AN_ITERABLE.iterator());
-            final Iterator<Maybe<O>> muxed = Multiplexing.roundrobinLongest(iterable);
+            final Iterator<Optional<O>> muxed = Multiplexing.roundrobinLongest(iterable);
             Assert.assertNotNull(muxed);
         }
 
         @Test
         public void canMuxLongestFromIterator() {
             final Iterable<Iterator<O>> iterable = Iterations.iterable(AN_ITERABLE.iterator());
-            final Iterator<Maybe<O>> muxed = Multiplexing.roundrobinLongest(iterable.iterator());
+            final Iterator<Optional<O>> muxed = Multiplexing.roundrobinLongest(iterable.iterator());
             Assert.assertNotNull(muxed);
         }
 
         @Test
         public void canMuxLongestFromTwoValues() {
-            final Iterator<Maybe<O>> muxed = Multiplexing.roundrobinLongest(AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
+            final Iterator<Optional<O>> muxed = Multiplexing.roundrobinLongest(AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
             Assert.assertNotNull(muxed);
         }
 
         @Test
         public void canMuxLongestFromThreeValues() {
-            final Iterator<Maybe<O>> muxed = Multiplexing.roundrobinLongest(AN_ITERABLE.iterator(), AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
+            final Iterator<Optional<O>> muxed = Multiplexing.roundrobinLongest(AN_ITERABLE.iterator(), AN_ITERABLE.iterator(), AN_ITERABLE.iterator());
             Assert.assertNotNull(muxed);
         }
     }
@@ -245,47 +245,47 @@ public class MultiplexingTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotUnchainANullIterableWithProvider() {
-            Supplier<ArrayList<Maybe<O>>> provider = new ArrayListFactory<Maybe<O>>();
+            Supplier<ArrayList<Optional<O>>> provider = new ArrayListFactory<Optional<O>>();
             final Iterable<O> iterable = null;
             Multiplexing.unchainWithExactChannelSize(1, iterable, provider);
         }
 
         @Test
         public void canUnchainFromIterable() {
-            Iterator<List<Maybe<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, AN_ITERABLE);
+            Iterator<List<Optional<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, AN_ITERABLE);
             Assert.assertNotNull(demuxl);
         }
 
         @Test
         public void canUnchainFromIterator() {
-            Iterator<List<Maybe<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, AN_ITERABLE.iterator());
+            Iterator<List<Optional<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, AN_ITERABLE.iterator());
             Assert.assertNotNull(demuxl);
         }
 
         @Test
         public void canUnchainFromArray() {
-            Iterator<List<Maybe<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, O.IGNORED);
+            Iterator<List<Optional<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, O.IGNORED);
             Assert.assertNotNull(demuxl);
         }
 
         @Test
         public void canUnchainFromIterableWithProvider() {
-            Supplier<ArrayList<Maybe<O>>> provider = new ArrayListFactory<Maybe<O>>();
-            Iterator<ArrayList<Maybe<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, AN_ITERABLE, provider);
+            Supplier<ArrayList<Optional<O>>> provider = new ArrayListFactory<Optional<O>>();
+            Iterator<ArrayList<Optional<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, AN_ITERABLE, provider);
             Assert.assertNotNull(demuxl);
         }
 
         @Test
         public void canUnchainFromIteratorWithProvider() {
-            Supplier<ArrayList<Maybe<O>>> provider = new ArrayListFactory<Maybe<O>>();
-            Iterator<ArrayList<Maybe<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, AN_ITERABLE.iterator(), provider);
+            Supplier<ArrayList<Optional<O>>> provider = new ArrayListFactory<Optional<O>>();
+            Iterator<ArrayList<Optional<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, AN_ITERABLE.iterator(), provider);
             Assert.assertNotNull(demuxl);
         }
 
         @Test
         public void canUnchainFromArrayWithProvider() {
-            Supplier<ArrayList<Maybe<O>>> provider = new ArrayListFactory<Maybe<O>>();
-            Iterator<ArrayList<Maybe<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, provider, O.IGNORED);
+            Supplier<ArrayList<Optional<O>>> provider = new ArrayListFactory<Optional<O>>();
+            Iterator<ArrayList<Optional<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, provider, O.IGNORED);
             Assert.assertNotNull(demuxl);
         }
     }

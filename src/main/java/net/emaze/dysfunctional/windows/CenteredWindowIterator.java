@@ -7,19 +7,19 @@ import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Supplier;
 import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 
 /**
  * [1,2,3,4,5], 3 -> (-,1,2), (1,2,3), (2,3,4), (3,4,5), (4,5,-)
  * @param <T>
  * @author rferranti
  */
-public class CenteredWindowIterator<W extends Collection<Maybe<T>>, T> extends ReadOnlyIterator<W> {
+public class CenteredWindowIterator<W extends Collection<Optional<T>>, T> extends ReadOnlyIterator<W> {
 
     private final Iterator<T> iter;
     private final int windowSize;
     private final Supplier<W> provider;
-    private final LinkedList<Maybe<T>> window = new LinkedList<Maybe<T>>();
+    private final LinkedList<Optional<T>> window = new LinkedList<Optional<T>>();
     private boolean freshIterator = true;
 
     public CenteredWindowIterator(Iterator<T> iter, int windowSize, Supplier<W> provider) {
@@ -31,7 +31,7 @@ public class CenteredWindowIterator<W extends Collection<Maybe<T>>, T> extends R
         this.windowSize = windowSize;
         this.provider = provider;
         for (int i = 0; i != windowSize / 2; ++i) {
-            window.add(Maybe.<T>nothing());
+            window.add(Optional.<T>empty());
         }
     }
 
@@ -59,24 +59,24 @@ public class CenteredWindowIterator<W extends Collection<Maybe<T>>, T> extends R
 
     private boolean isConsumed() {
         if (freshIterator) {
-            return !center().hasValue();
+            return !center().isPresent();
         }
-        return !nextOfCenter().hasValue();
+        return !nextOfCenter().isPresent();
     }
 
-    private Maybe<T> nextOfCenter() {
+    private Optional<T> nextOfCenter() {
         return window.get(windowSize / 2 + 1);
     }
 
-    private Maybe<T> center() {
+    private Optional<T> center() {
         return window.get(windowSize / 2);
     }
 
     private void fillWindow() {
         while (window.size() != windowSize) {
-            final Maybe<T> maybe = iter.hasNext()
-                    ? Maybe.just(iter.next())
-                    : Maybe.<T>nothing();
+            final Optional<T> maybe = iter.hasNext()
+                    ? Optional.of(iter.next())
+                    : Optional.<T>empty();
             window.add(maybe);
         }
     }

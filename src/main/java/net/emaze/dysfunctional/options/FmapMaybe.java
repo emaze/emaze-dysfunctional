@@ -1,16 +1,17 @@
 package net.emaze.dysfunctional.options;
 
+import java.util.Optional;
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
 
 /**
- * Performs fmap on a {@literal Maybe<T>}.
+ * Performs map on a {@literal Optional<T>}.
  *
  * @param <T> the resulting maybe type parameter
  * @param <R> the source maybe type parameter
  * @author rferranti
  */
-public class FmapMaybe<T, R> implements Function<Maybe<T>, Maybe<R>> {
+public class FmapMaybe<T, R> implements Function<Optional<T>, Optional<R>> {
 
     private final Function<T, R> delegate;
 
@@ -20,8 +21,8 @@ public class FmapMaybe<T, R> implements Function<Maybe<T>, Maybe<R>> {
     }
 
     @Override
-    public Maybe<R> apply(Maybe<T> from) {
+    public Optional<R> apply(Optional<T> from) {
         dbc.precondition(from != null, "cannot fmap a null maybe");
-        return from.fmap(delegate);
+        return from.map(delegate);
     }
 }

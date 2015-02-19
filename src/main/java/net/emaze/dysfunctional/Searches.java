@@ -19,7 +19,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
 import net.emaze.dysfunctional.filtering.FilteringIterator;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 
 /**
  *
@@ -374,7 +374,7 @@ public abstract class Searches {
      * @param predicate the predicate to be applied to each element
      * @return just the element found or nothing
      */
-    public static <E> Maybe<E> searchFirst(E[] array, Predicate<E> predicate) {
+    public static <E> Optional<E> searchFirst(E[] array, Predicate<E> predicate) {
         final FilteringIterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), predicate);
         return new MaybeFirstElement<E>().apply(filtered);
     }
@@ -388,7 +388,7 @@ public abstract class Searches {
      * @param predicate the predicate to be applied to each element
      * @return just the element found or nothing
      */
-    public static <E> Maybe<E> searchFirst(Iterator<E> iterator, Predicate<E> predicate) {
+    public static <E> Optional<E> searchFirst(Iterator<E> iterator, Predicate<E> predicate) {
         final Iterator<E> filtered = new FilteringIterator<E>(iterator, predicate);
         return new MaybeFirstElement<E>().apply(filtered);
     }
@@ -402,7 +402,7 @@ public abstract class Searches {
      * @param predicate the predicate to be applied to each element
      * @return just the element found or nothing
      */
-    public static <E> Maybe<E> searchFirst(Iterable<E> iterable, Predicate<E> predicate) {
+    public static <E> Optional<E> searchFirst(Iterable<E> iterable, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot searchFirst with a null iterable");
         final Iterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), predicate);
         return new MaybeFirstElement<E>().apply(filtered);
@@ -461,7 +461,7 @@ public abstract class Searches {
      * @throws IllegalStateException if more than one element is found
      * @return just the element found or nothing
      */
-    public static <E> Maybe<E> searchOne(Iterator<E> iterator, Predicate<E> predicate) {
+    public static <E> Optional<E> searchOne(Iterator<E> iterator, Predicate<E> predicate) {
         final Iterator<E> filtered = new FilteringIterator<E>(iterator, predicate);
         return new MaybeOneElement<E>().apply(filtered);
     }
@@ -476,7 +476,7 @@ public abstract class Searches {
      * @throws IllegalStateException if more than one element is found
      * @return just the element found or nothing
      */
-    public static <E> Maybe<E> searchOne(Iterable<E> iterable, Predicate<E> predicate) {
+    public static <E> Optional<E> searchOne(Iterable<E> iterable, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot searchOne with a null iterable");
         final Iterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), predicate);
         return new MaybeOneElement<E>().apply(filtered);
@@ -492,7 +492,7 @@ public abstract class Searches {
      * @throws IllegalStateException if more than one element is found
      * @return just the element found or nothing
      */
-    public static <E> Maybe<E> searchOne(E[] array, Predicate<E> predicate) {
+    public static <E> Optional<E> searchOne(E[] array, Predicate<E> predicate) {
         final Iterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), predicate);
         return new MaybeOneElement<E>().apply(filtered);
     }
@@ -552,7 +552,7 @@ public abstract class Searches {
      * @param predicate the predicate to be applied to each element
      * @return just the last element found or nothing
      */
-    public static <E> Maybe<E> searchLast(Iterator<E> iterator, Predicate<E> predicate) {
+    public static <E> Optional<E> searchLast(Iterator<E> iterator, Predicate<E> predicate) {
         final Iterator<E> filtered = new FilteringIterator<E>(iterator, predicate);
         return new MaybeLastElement<E>().apply(filtered);
     }
@@ -566,7 +566,7 @@ public abstract class Searches {
      * @param predicate the predicate to be applied to each element
      * @return just the last element found or nothing
      */
-    public static <E> Maybe<E> searchLast(Iterable<E> iterable, Predicate<E> predicate) {
+    public static <E> Optional<E> searchLast(Iterable<E> iterable, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot searchLast with a null iterable");
         final Iterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), predicate);
         return new MaybeLastElement<E>().apply(filtered);
@@ -581,7 +581,7 @@ public abstract class Searches {
      * @param predicate the predicate to be applied to each element
      * @return just the last element found or nothing
      */
-    public static <E> Maybe<E> searchLast(E[] array, Predicate<E> predicate) {
+    public static <E> Optional<E> searchLast(E[] array, Predicate<E> predicate) {
         final Iterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), predicate);
         return new MaybeLastElement<E>().apply(filtered);
     }

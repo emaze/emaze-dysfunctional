@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.options;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,14 +13,14 @@ public class IsJustTest {
 
     @Test
     public void justMatches() {
-        Predicate<Maybe<Integer>> p = new IsJust<Integer>();
-        Assert.assertTrue(p.test(Maybe.just(1)));
+        Predicate<Optional<Integer>> p = new IsJust<Integer>();
+        Assert.assertTrue(p.test(Optional.of(1)));
     }
 
     @Test
     public void nothingIsNotJust() {
-        Predicate<Maybe<Integer>> p = new IsJust<Integer>();
-        Assert.assertFalse(p.test(Maybe.<Integer>nothing()));
+        Predicate<Optional<Integer>> p = new IsJust<Integer>();
+        Assert.assertFalse(p.test(Optional.<Integer>empty()));
     }
 
     @Test(expected = IllegalArgumentException.class)

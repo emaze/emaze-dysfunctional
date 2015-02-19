@@ -2,13 +2,13 @@ package net.emaze.dysfunctional.strings.lexcasts;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 
 /**
  *
  * @author rferranti
  */
-public class ByteTryParser implements Function<String, Maybe<Byte>> {
+public class ByteTryParser implements Function<String, Optional<Byte>> {
 
     private final int radix;
 
@@ -19,11 +19,11 @@ public class ByteTryParser implements Function<String, Maybe<Byte>> {
     }
 
     @Override
-    public Maybe<Byte> apply(String parsee) {
+    public Optional<Byte> apply(String parsee) {
         try {
-            return Maybe.just(Byte.parseByte(parsee, radix));
+            return Optional.of(Byte.parseByte(parsee, radix));
         } catch (NumberFormatException ex) {
-            return Maybe.nothing();
+            return Optional.empty();
         }
     }
 }

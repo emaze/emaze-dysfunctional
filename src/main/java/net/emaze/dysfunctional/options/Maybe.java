@@ -1,9 +1,10 @@
 package net.emaze.dysfunctional.options;
 
 import java.util.Iterator;
-import net.emaze.dysfunctional.contracts.dbc;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 import net.emaze.dysfunctional.iterations.EmptyIterator;
@@ -59,6 +60,13 @@ public class Maybe<E> implements Iterable<E> {
             return element;
         }
         return otherwise;
+    }
+
+    public Optional<E> optional() {
+        if (hasValue) {
+            return Optional.ofNullable(element);
+        }
+        return Optional.empty();
     }
 
     public Maybe<E> orElse(Maybe<E> otherwise) {

@@ -6,7 +6,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.convolutions.ZipLongestIterator;
 import net.emaze.dysfunctional.convolutions.ZipShortestIterator;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import net.emaze.dysfunctional.order.ComparableComparator;
 import net.emaze.dysfunctional.order.JustBeforeNothingComparator;
 import net.emaze.dysfunctional.order.NextIntegerSequencingPolicy;
@@ -81,13 +81,13 @@ public abstract class Zips {
 
     /**
      * Transforms two iterables to an iterator of tuples, containing
-     * Maybe.just(elements) of both iterables occurring at the same position. If
-     * the iterables are of uneven length, missing values are filled-in with
-     * Maybe.nothing(). Iteration continues until the longest iterable is
-     * exhausted. E.g:
-     * <code>
-     * Zip.longest([1,2],['a','b','c']) -> [(just 1,just 'a'),(just 2 ,just 'b'), (nothing ,just 'c')]
-     * </code>
+ Optional.of(elements) of both iterables occurring at the same position. If
+ the iterables are of uneven length, missing values are filled-in with
+ Optional.empty(). Iteration continues until the longest iterable is
+ exhausted. E.g:
+ <code>
+     * Zip.longest([1,2],['a','b','c']) -> [(of 1,of 'a'),(of 2 ,of 'b'), (empty ,of 'c')]
+ </code>
      *
      * @param <T1> the former element type parameter
      * @param <T2> the latter element type parameter
@@ -95,7 +95,7 @@ public abstract class Zips {
      * @param latter the latter iterable
      * @return the resulting longest convolved iterator
      */
-    public static <T1, T2> Iterator<Pair<Maybe<T1>, Maybe<T2>>> longest(Iterable<T1> former, Iterable<T2> latter) {
+    public static <T1, T2> Iterator<Pair<Optional<T1>, Optional<T2>>> longest(Iterable<T1> former, Iterable<T2> latter) {
         dbc.precondition(former != null, "cannot call longest with a null former iterable");
         dbc.precondition(latter != null, "cannot call longest with a null latter iterable");
         return new ZipLongestIterator<T1, T2>(former.iterator(), latter.iterator());
@@ -103,13 +103,13 @@ public abstract class Zips {
 
     /**
      * Transforms two iterators to an iterator of tuples, containing
-     * Maybe.just(elements) of both iterators occurring at the same position. If
-     * the iterables are of uneven length, missing values are filled-in with
-     * Maybe.nothing(). Iteration continues until the longest iterable is
-     * exhausted. E.g:
-     * <code>
-     * Zip.longest([1,2],['a','b','c']) -> [(just 1,just 'a'),(just 2 ,just 'b'), (nothing ,just 'c')]
-     * </code>
+ Optional.of(elements) of both iterators occurring at the same position. If
+ the iterables are of uneven length, missing values are filled-in with
+ Optional.empty(). Iteration continues until the longest iterable is
+ exhausted. E.g:
+ <code>
+     * Zip.longest([1,2],['a','b','c']) -> [(of 1,of 'a'),(of 2 ,of 'b'), (empty ,of 'c')]
+ </code>
      *
      * @param <T1> the former element type parameter
      * @param <T2> the latter element type parameter
@@ -117,19 +117,19 @@ public abstract class Zips {
      * @param latter the latter iterator
      * @return the resulting longest convolved iterator
      */
-    public static <T1, T2> Iterator<Pair<Maybe<T1>, Maybe<T2>>> longest(Iterator<T1> former, Iterator<T2> latter) {
+    public static <T1, T2> Iterator<Pair<Optional<T1>, Optional<T2>>> longest(Iterator<T1> former, Iterator<T2> latter) {
         return new ZipLongestIterator<T1, T2>(former, latter);
     }
 
     /**
      * Transforms two arrays to an iterator of tuples, containing
-     * Maybe.just(elements) of both arrays occurring at the same position. If
-     * the iterables are of uneven length, missing values are filled-in with
-     * Maybe.nothing(). Iteration continues until the longest iterable is
-     * exhausted. E.g:
-     * <code>
-     * Zip.longest([1,2],['a','b','c']) -> [(just 1,just 'a'),(just 2 ,just 'b'), (nothing ,just 'c')]
-     * </code>
+ Optional.of(elements) of both arrays occurring at the same position. If
+ the iterables are of uneven length, missing values are filled-in with
+ Optional.empty(). Iteration continues until the longest iterable is
+ exhausted. E.g:
+ <code>
+     * Zip.longest([1,2],['a','b','c']) -> [(of 1,of 'a'),(of 2 ,of 'b'), (empty ,of 'c')]
+ </code>
      *
      * @param <T1> the former element type parameter
      * @param <T2> the latter element type parameter
@@ -137,7 +137,7 @@ public abstract class Zips {
      * @param latter the latter array
      * @return the resulting longest convolved iterator
      */
-    public static <T1, T2> Iterator<Pair<Maybe<T1>, Maybe<T2>>> longest(T1[] former, T2[] latter) {
+    public static <T1, T2> Iterator<Pair<Optional<T1>, Optional<T2>>> longest(T1[] former, T2[] latter) {
         return new ZipLongestIterator<T1, T2>(new ArrayIterator<T1>(former), new ArrayIterator<T2>(latter));
     }
 
@@ -174,8 +174,8 @@ public abstract class Zips {
      */
     public static <T> Iterator<Pair<Integer, T>> counted(Iterator<T> iterator) {
         final SequencingPolicy<Integer> sequencer = new NextIntegerSequencingPolicy();
-        final Comparator<Maybe<Integer>> comparator = new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>());
-        final Range<Integer> range = new DenseRange<Integer>(sequencer, comparator, Endpoint.Include, 0, Maybe.just(Integer.MAX_VALUE), Endpoint.Include);
+        final Comparator<Optional<Integer>> comparator = new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>());
+        final Range<Integer> range = new DenseRange<Integer>(sequencer, comparator, Endpoint.Include, 0, Optional.of(Integer.MAX_VALUE), Endpoint.Include);
         return new ZipShortestIterator<Integer, T>(range.iterator(), iterator);
     }
 
@@ -194,8 +194,8 @@ public abstract class Zips {
     public static <T> Iterator<Pair<Integer, T>> counted(Iterable<T> iterable) {
         dbc.precondition(iterable != null, "cannot call counted with a null iterable");
         final SequencingPolicy<Integer> sequencer = new NextIntegerSequencingPolicy();
-        final Comparator<Maybe<Integer>> comparator = new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>());
-        final Range<Integer> range = new DenseRange<Integer>(sequencer, comparator, Endpoint.Include, 0, Maybe.just(Integer.MAX_VALUE), Endpoint.Include);
+        final Comparator<Optional<Integer>> comparator = new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>());
+        final Range<Integer> range = new DenseRange<Integer>(sequencer, comparator, Endpoint.Include, 0, Optional.of(Integer.MAX_VALUE), Endpoint.Include);
         return new ZipShortestIterator<Integer, T>(range.iterator(), iterable.iterator());
     }
 
@@ -233,8 +233,8 @@ public abstract class Zips {
     public static <T> Iterator<Pair<Integer, T>> counted(T... array) {
         dbc.precondition(array != null, "cannot call counted with a null array");
         final SequencingPolicy<Integer> sequencer = new NextIntegerSequencingPolicy();
-        final Comparator<Maybe<Integer>> comparator = new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>());
-        final Range<Integer> range = new DenseRange<Integer>(sequencer, comparator, Endpoint.Include, 0, Maybe.just(Integer.MAX_VALUE), Endpoint.Include);
+        final Comparator<Optional<Integer>> comparator = new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>());
+        final Range<Integer> range = new DenseRange<Integer>(sequencer, comparator, Endpoint.Include, 0, Optional.of(Integer.MAX_VALUE), Endpoint.Include);
         return new ZipShortestIterator<Integer, T>(range.iterator(), new ArrayIterator<T>(array));
     }
 

@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.options;
 
+import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,13 +17,13 @@ public class DropMaybeTest {
 
     @Test
     public void callingPerformWithNothingYieldsNull() {
-        Object got = new DropMaybe<Object>().apply(Maybe.nothing());
+        Object got = new DropMaybe<Object>().apply(Optional.empty());
         Assert.assertNull(got);
     }
 
     @Test
     public void callingPerformWithJustSomethingYieldsSomething() {
-        Object got = new DropMaybe<Object>().apply(Maybe.just(new Object()));
+        Object got = new DropMaybe<Object>().apply(Optional.of(new Object()));
         Assert.assertNotNull(got);
     }
 }

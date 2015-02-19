@@ -1,23 +1,24 @@
 package net.emaze.dysfunctional.options;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * Transforms a T to a Maybe monadic value yielding nothing(T) for nulls and
- * just(T) otherwise.
+ * Transforms a T to a Optional monadic get yielding empty(T) for nulls and
+ of(T) otherwise.
  *
  * Note this is not the wrapping delegate you usually want, look @ PureMaybe.
  * Adjoint functor of DropMaybe.
  *
  * @author rferranti
  */
-public class LiftMaybe<T> implements Function<T, Maybe<T>> {
+public class LiftMaybe<T> implements Function<T, Optional<T>> {
 
     @Override
-    public Maybe<T> apply(T valueOrNull) {
+    public Optional<T> apply(T valueOrNull) {
         if (valueOrNull == null) {
-            return Maybe.nothing();
+            return Optional.empty();
         }
-        return Maybe.just(valueOrNull);
+        return Optional.of(valueOrNull);
     }
 }

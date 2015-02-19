@@ -1,12 +1,13 @@
 package net.emaze.dysfunctional.options;
 
-import net.emaze.dysfunctional.contracts.dbc;
+import java.util.Optional;
 import java.util.function.Function;
+import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
 /**
- * Either type represents values with two possibilities. A value of type
+ * Either type represents values with two possibilities. A get of type
  * {@literal Either<Left,Right>} is either Left or Right.
  *
  * @author rferranti
@@ -15,13 +16,13 @@ import net.emaze.dysfunctional.hashing.HashCodeBuilder;
  */
 public class Either<LT, RT> {
 
-    private final Maybe<LT> left;
-    private final Maybe<RT> right;
+    private final Optional<LT> left;
+    private final Optional<RT> right;
 
-    public Either(Maybe<LT> left, Maybe<RT> right) {
+    public Either(Optional<LT> left, Optional<RT> right) {
         dbc.precondition(left != null, "cannot create Either with null left");
         dbc.precondition(right != null, "cannot create Either with null right");
-        dbc.precondition(left.hasValue() != right.hasValue(), "Either left or right must have a value");
+        dbc.precondition(left.isPresent() != right.isPresent(), "Either left or right must have a value");
         this.left = left;
         this.right = right;
     }
@@ -29,19 +30,22 @@ public class Either<LT, RT> {
     public <LR, RR> Either<LR, RR> fmap(Function<LT, LR> withLeft, Function<RT, RR> withRight) {
         dbc.precondition(withLeft != null, "cannot fmap an either with a null left delegate");
         dbc.precondition(withRight != null, "cannot fmap an either with a null right delegate");
-        if (left.hasValue()) {
-            return Either.left(withLeft.apply(left.value()));
+        if (left.isPresent()) {
+            return Either.left(withLeft.apply(left.get()));
         }
-        return Either.right(withRight.apply(right.value()));
+        return Either.right(withRight.apply(right.get()));
     }
 
     public <T> T fold(Function<LT, T> withLeft, Function<RT, T> withRight) {
         dbc.precondition(withLeft != null, "cannot fold an either with a null left delegate");
         dbc.precondition(withRight != null, "cannot fold an either with a null right delegate");
-        return left.fmap(withLeft).orElse(right.fmap(withRight)).value();
+        if (left.isPresent()) {
+            return withLeft.apply(left.get());
+        }
+        return withRight.apply(right.get());
     }
 
-    public Maybe<RT> maybe() {
+    public Optional<RT> maybe() {
         return right;
     }
 
@@ -67,17 +71,19 @@ public class Either<LT, RT> {
 
     @Override
     public String toString() {
-        if (left.hasValue()) {
-            return String.format("Left %s", left.value());
+        if (left.isPresent()) {
+            return String.format("Left %s", left.get());
         }
-        return String.format("Right %s", right.value());
+        return String.format("Right %s", right.get());
     }
 
     public static <T1, T2> Either<T1, T2> left(T1 left) {
-        return new Either<T1, T2>(Maybe.just(left), Maybe.<T2>nothing());
+        dbc.precondition(left != null, "cannot create Either with null left value");
+        return new Either<>(Optional.of(left), Optional.<T2>empty());
     }
 
     public static <T1, T2> Either<T1, T2> right(T2 right) {
-        return new Either<T1, T2>(Maybe.<T1>nothing(), Maybe.just(right));
+        dbc.precondition(right != null, "cannot create Either with null right value");
+        return new Either<>(Optional.<T1>empty(), Optional.of(right));
     }
 }

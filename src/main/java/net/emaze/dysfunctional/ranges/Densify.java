@@ -10,7 +10,7 @@ import java.util.TreeSet;
 import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.dispatching.logic.Negator;
 import net.emaze.dysfunctional.filtering.FilteringIterator;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import net.emaze.dysfunctional.order.Max;
 import net.emaze.dysfunctional.order.Order;
 import net.emaze.dysfunctional.order.SequencingPolicy;
@@ -26,9 +26,9 @@ import net.emaze.dysfunctional.ranges.Range.Endpoint;
 public class Densify<T> implements UnaryOperator<List<DenseRange<T>>> {
 
     private final SequencingPolicy<T> sequencer;
-    private final Comparator<Maybe<T>> comparator;
+    private final Comparator<Optional<T>> comparator;
 
-    public Densify(SequencingPolicy<T> sequencer, Comparator<Maybe<T>> comparator) {
+    public Densify(SequencingPolicy<T> sequencer, Comparator<Optional<T>> comparator) {
         this.sequencer = sequencer;
         this.comparator = comparator;
     }
@@ -45,7 +45,7 @@ public class Densify<T> implements UnaryOperator<List<DenseRange<T>>> {
         while (nonEmptyRanges.hasNext()) {
             final DenseRange<T> next = nonEmptyRanges.next();
             if (canBeMerged(current, next)) {
-                final Maybe<T> max = new Max<Maybe<T>>(comparator).apply(current.end(), next.end());
+                final Optional<T> max = new Max<Optional<T>>(comparator).apply(current.end(), next.end());
                 current = new DenseRange<T>(sequencer, comparator, Endpoint.Include, current.begin(), max, Endpoint.Exclude);
             } else {
                 sortedNonOverlappingRanges.add(current);
@@ -71,6 +71,6 @@ public class Densify<T> implements UnaryOperator<List<DenseRange<T>>> {
      * @return true if the two ranges can be merged
      */
     private boolean canBeMerged(DenseRange<T> current, DenseRange<T> next) {
-        return Order.of(comparator, current.end(), Maybe.just(next.begin())) == Order.EQ || current.overlaps(next);
+        return Order.of(comparator, current.end(), Optional.of(next.begin())) == Order.EQ || current.overlaps(next);
     }
 }

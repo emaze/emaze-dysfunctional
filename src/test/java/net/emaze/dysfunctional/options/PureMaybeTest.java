@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.options;
 
+import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -9,16 +10,15 @@ import org.junit.Test;
  */
 public class PureMaybeTest {
 
-    @Test
+    @Test(expected = NullPointerException.class)
     public void callingWithNullYieldsJustNull() {
-        final Maybe<Object> got = new PureMaybe<Object>().apply(null);
-        Assert.assertEquals(Maybe.just(null), got);
+        new PureMaybe<>().apply(null);
     }
 
     @Test
     public void callingPerformWithSomethingYieldsJustSomething() {
         final Object source = new Object();
-        final Maybe<Object> got = new PureMaybe<Object>().apply(source);
-        Assert.assertEquals(Maybe.just(source), got);
+        final Optional<Object> got = new PureMaybe<>().apply(source);
+        Assert.assertEquals(Optional.of(source), got);
     }
 }

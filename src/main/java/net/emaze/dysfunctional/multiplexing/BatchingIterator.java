@@ -47,7 +47,7 @@ public class BatchingIterator<C extends Collection<T>, T> extends ReadOnlyIterat
         if (prefetched.getContent().size() == 0) {
             throw new NoSuchElementException();
         }
-        return prefetched.unload().value();
+        return prefetched.unload().get();
     }
 
     private C prefetch(Iterator<T> iter, int size) {

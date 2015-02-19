@@ -13,7 +13,7 @@ import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.adapting.*;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 
 /**
  * curry, mcurry, rcurry, ignore, ignore1st, ignore2nd, ignore3rd, provider,
@@ -538,7 +538,7 @@ public abstract class Dispatching {
      * @param adaptee the runnable to be adapted
      * @return the adapted provider
      */
-    public static <T> Supplier<Maybe<T>> provider(Iterator<T> adaptee) {
+    public static <T> Supplier<Optional<T>> provider(Iterator<T> adaptee) {
         return new IteratingProvider<T>(adaptee);
     }
 

@@ -1,19 +1,20 @@
 package net.emaze.dysfunctional.options;
 
-import net.emaze.dysfunctional.contracts.dbc;
+import java.util.Optional;
 import java.util.function.Function;
+import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- * Unary Function transforming a just(T) to T.
+ * Unary function transforming a of(T) to T.
  *
  * @param <T> the maybe type parameter, the resulting type
  * @author dangelocola, rferranti
  */
-public class FromJust<T> implements Function<Maybe<T>, T> {
+public class FromJust<T> implements Function<Optional<T>, T> {
 
     @Override
-    public T apply(Maybe<T> element) {
+    public T apply(Optional<T> element) {
         dbc.precondition(element != null, "performing FromJust against null");
-        return element.value();
+        return element.get();
     }
 }

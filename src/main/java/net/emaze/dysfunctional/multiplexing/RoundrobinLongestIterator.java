@@ -7,15 +7,15 @@ import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 import net.emaze.dysfunctional.options.Box;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 
 /**
- * squared: [1,2] [a,b,c] -> just(1),just(a),just(2),just(b),nothing,just(c)
+ * squared: [1,2] [a,b,c] -> of(1),of(a),of(2),of(b),empty,of(c)
  *
  * @param <E> the iterator element type
  * @author rferranti
  */
-public class RoundrobinLongestIterator<E> extends ReadOnlyIterator<Maybe<E>> {
+public class RoundrobinLongestIterator<E> extends ReadOnlyIterator<Optional<E>> {
 
     private final Iterator<? extends Iterator<E>> iterators;
     private final Deque<Iterator<E>> memory = new LinkedList<Iterator<E>>();
@@ -38,14 +38,14 @@ public class RoundrobinLongestIterator<E> extends ReadOnlyIterator<Maybe<E>> {
     }
 
     @Override
-    public Maybe<E> next() {
+    public Optional<E> next() {
         prefetchAndMemorize();
         if (empty()) {
             throw new NoSuchElementException();
         }
         ++fetchedCounter;
-        final Iterator<E> current = prefetched.unload().value();
-        return current.hasNext() ? Maybe.just(current.next()) : Maybe.<E>nothing();
+        final Iterator<E> current = prefetched.unload().get();
+        return current.hasNext() ? Optional.of(current.next()) : Optional.<E>empty();
     }
 
     private void prefetchAndMemorize() {

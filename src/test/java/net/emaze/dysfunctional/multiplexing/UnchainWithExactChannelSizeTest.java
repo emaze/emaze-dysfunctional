@@ -10,7 +10,7 @@ import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
 import java.util.function.Supplier;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,23 +27,23 @@ import org.junit.runners.Suite;
 })
 public class UnchainWithExactChannelSizeTest {
 
-    final static Supplier<List<Maybe<Integer>>> MAYBE_INTEGER_LIST_FACTORY = Compositions.compose(new Vary<ArrayList<Maybe<Integer>>, List<Maybe<Integer>>>(), new ArrayListFactory<Maybe<Integer>>());
+    final static Supplier<List<Optional<Integer>>> MAYBE_INTEGER_LIST_FACTORY = Compositions.compose(new Vary<ArrayList<Optional<Integer>>, List<Optional<Integer>>>(), new ArrayListFactory<Optional<Integer>>());
 
     public static class Functions {
 
         @Test
         public void consumeWithTwoChannelsYieldsTwoChannels() {
             final Iterator<Integer> iter = Iterations.iterator(1, 2);
-            final ConstantProvider<Maybe<Integer>> channelSizeIsAlways2 = new ConstantProvider<Maybe<Integer>>(Maybe.just(2));
-            final UnchainWithExactChannelSizeIterator<List<Maybe<Integer>>, Integer> demu = new UnchainWithExactChannelSizeIterator<List<Maybe<Integer>>, Integer>(channelSizeIsAlways2, iter, MAYBE_INTEGER_LIST_FACTORY);
-            Assert.assertEquals(Arrays.asList(Maybe.just(1), Maybe.just(2)), demu.next());
+            final ConstantProvider<Optional<Integer>> channelSizeIsAlways2 = new ConstantProvider<Optional<Integer>>(Optional.of(2));
+            final UnchainWithExactChannelSizeIterator<List<Optional<Integer>>, Integer> demu = new UnchainWithExactChannelSizeIterator<List<Optional<Integer>>, Integer>(channelSizeIsAlways2, iter, MAYBE_INTEGER_LIST_FACTORY);
+            Assert.assertEquals(Arrays.asList(Optional.of(1), Optional.of(2)), demu.next());
         }
 
         @Test
         public void emptyIteratorHasNoNext() {
             final Iterator<Integer> iter = Iterations.iterator();
-            final ConstantProvider<Maybe<Integer>> channelSizeIsAlways2 = new ConstantProvider<Maybe<Integer>>(Maybe.just(2));
-            final UnchainWithExactChannelSizeIterator<List<Maybe<Integer>>, Integer> demu = new UnchainWithExactChannelSizeIterator<List<Maybe<Integer>>, Integer>(channelSizeIsAlways2, iter, MAYBE_INTEGER_LIST_FACTORY);
+            final ConstantProvider<Optional<Integer>> channelSizeIsAlways2 = new ConstantProvider<Optional<Integer>>(Optional.of(2));
+            final UnchainWithExactChannelSizeIterator<List<Optional<Integer>>, Integer> demu = new UnchainWithExactChannelSizeIterator<List<Optional<Integer>>, Integer>(channelSizeIsAlways2, iter, MAYBE_INTEGER_LIST_FACTORY);
             Assert.assertFalse(demu.hasNext());
         }
     }
@@ -52,19 +52,19 @@ public class UnchainWithExactChannelSizeTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingIteratorWithNullIteratorYieldsException() {
-            new UnchainWithExactChannelSizeIterator<List<Maybe<Integer>>, Integer>(new ConstantProvider<Maybe<Integer>>(Maybe.just(2)), null, MAYBE_INTEGER_LIST_FACTORY);
+            new UnchainWithExactChannelSizeIterator<List<Optional<Integer>>, Integer>(new ConstantProvider<Optional<Integer>>(Optional.of(2)), null, MAYBE_INTEGER_LIST_FACTORY);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingIteratorWithNullChannelsSizesProviderYieldsException() {
             Iterator<Integer> iter = Iterations.iterator(1);
-            new UnchainWithExactChannelSizeIterator<List<Maybe<Integer>>, Integer>(null, iter, MAYBE_INTEGER_LIST_FACTORY);
+            new UnchainWithExactChannelSizeIterator<List<Optional<Integer>>, Integer>(null, iter, MAYBE_INTEGER_LIST_FACTORY);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingIteratorWithNullProviderYieldsException() {
             Iterator<Integer> iter = Iterations.iterator(1);
-            new UnchainWithExactChannelSizeIterator<List<Maybe<Integer>>, Integer>(new ConstantProvider<Maybe<Integer>>(Maybe.just(2)), iter, null);
+            new UnchainWithExactChannelSizeIterator<List<Optional<Integer>>, Integer>(new ConstantProvider<Optional<Integer>>(Optional.of(2)), iter, null);
         }
     }
 }

@@ -100,8 +100,7 @@ public class MaybeTest {
     public void transformingNothingToEitherYieldsLeft() {
         final int marker = 0;
         final Either<Integer, Object> either = Maybe.nothing().either(new ConstantProvider<Integer>(marker));
-        final Maybe<Integer> perform = new MaybeLeft<Integer, Object>().apply(either);
-        Assert.assertEquals(marker, perform.value().intValue());
+        Assert.assertEquals(Either.left(marker), either);
     }
 
     @Test
@@ -109,8 +108,7 @@ public class MaybeTest {
         final int left = 0;
         final int right = 1;
         final Either<Integer, Integer> either = Maybe.just(right).either(new ConstantProvider<Integer>(left));
-        final Maybe<Integer> perform = new MaybeRight<Integer, Integer>().apply(either);
-        Assert.assertEquals(right, perform.value().intValue());
+        Assert.assertEquals(Either.<Integer, Integer>right(right), either);
     }
 
     @Test

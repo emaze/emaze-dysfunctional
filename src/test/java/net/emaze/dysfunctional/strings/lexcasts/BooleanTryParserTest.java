@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.strings.lexcasts;
 
 import java.util.function.Function;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -9,14 +9,14 @@ public class BooleanTryParserTest {
 
     @Test
     public void parsingNullStringYieldsNothing() {
-        final Maybe<Boolean> got = new BooleanTryParser().apply(null);
-        Assert.assertFalse(got.hasValue());
+        final Optional<Boolean> got = new BooleanTryParser().apply(null);
+        Assert.assertFalse(got.isPresent());
     }
 
     @Test
     public void parsingInvalidStringYieldsNothing() {
-        final Maybe<Boolean> got = new BooleanTryParser().apply("A");
-        Assert.assertFalse(got.hasValue());
+        final Optional<Boolean> got = new BooleanTryParser().apply("A");
+        Assert.assertFalse(got.isPresent());
     }
 
     @Test(expected = ClassCastException.class)
@@ -27,13 +27,13 @@ public class BooleanTryParserTest {
     
     @Test
     public void parsingValidTrueStringYieldsTrue() {
-        final Maybe<Boolean> got = new BooleanTryParser().apply("true");
-        Assert.assertEquals(Maybe.just(true), got);
+        final Optional<Boolean> got = new BooleanTryParser().apply("true");
+        Assert.assertEquals(Optional.of(true), got);
     }
 
     @Test
     public void parsingValidFalseStringYieldsFalse() {
-        final Maybe<Boolean> got = new BooleanTryParser().apply("false");
-        Assert.assertEquals(Maybe.just(false), got);
+        final Optional<Boolean> got = new BooleanTryParser().apply("false");
+        Assert.assertEquals(Optional.of(false), got);
     }
 }

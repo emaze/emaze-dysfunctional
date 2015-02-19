@@ -3,17 +3,17 @@ package net.emaze.dysfunctional.strings.lexcasts;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 
-public class BooleanTryParser implements Function<String, Maybe<Boolean>> {
+public class BooleanTryParser implements Function<String, Optional<Boolean>> {
 
     private static final List<String> ACCEPTED_VALUES = Arrays.asList("true", "false");
 
     @Override
-    public Maybe<Boolean> apply(String parsee) {
+    public Optional<Boolean> apply(String parsee) {
         if (parsee == null || !ACCEPTED_VALUES.contains(parsee.toLowerCase())) {
-            return Maybe.nothing();
+            return Optional.empty();
         }
-        return Maybe.just(Boolean.parseBoolean(parsee));
+        return Optional.of(Boolean.parseBoolean(parsee));
     }
 }

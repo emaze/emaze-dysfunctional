@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional.options;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -9,14 +11,14 @@ import org.junit.Test;
  */
 public class FromJustTest {
 
-    @Test(expected=IllegalStateException.class)
+    @Test(expected=NoSuchElementException.class)
     public void transformingNothingYieldsException() {
-        new FromJust<Object>().apply(Maybe.nothing());
+        new FromJust<>().apply(Optional.empty());
     }
     
     @Test
     public void canFetchValueFromJust() {
-        Maybe<Integer> maybeInt = Maybe.just(1);
+        Optional<Integer> maybeInt = Optional.of(1);
         int got = new FromJust<Integer>().apply(maybeInt);
         Assert.assertEquals(1, got);
     }

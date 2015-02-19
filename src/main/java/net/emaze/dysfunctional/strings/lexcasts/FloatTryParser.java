@@ -1,23 +1,23 @@
 package net.emaze.dysfunctional.strings.lexcasts;
 
 import java.util.function.Function;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 
 /**
  *
  * @author rferranti
  */
-public class FloatTryParser implements Function<String, Maybe<Float>> {
+public class FloatTryParser implements Function<String, Optional<Float>> {
 
     @Override
-    public Maybe<Float> apply(String parsee) {
+    public Optional<Float> apply(String parsee) {
         if (parsee == null) {
-            return Maybe.nothing();
+            return Optional.empty();
         }
         try {
-            return Maybe.just(Float.parseFloat(parsee));
+            return Optional.of(Float.parseFloat(parsee));
         } catch (NumberFormatException ex) {
-            return Maybe.nothing();
+            return Optional.empty();
         }
     }
 }

@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.ranges;
 
 import java.io.Serializable;
 import java.util.Comparator;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import net.emaze.dysfunctional.order.CompareToBuilder;
 
 /**
@@ -14,16 +14,16 @@ import net.emaze.dysfunctional.order.CompareToBuilder;
 public class RangeComparator<T> implements Comparator<Range<T>>, Serializable {
 
     private static final long serialVersionUID = 1l;
-    private final Comparator<Maybe<T>> comparator;
+    private final Comparator<Optional<T>> comparator;
 
-    public RangeComparator(Comparator<Maybe<T>> comparator) {
+    public RangeComparator(Comparator<Optional<T>> comparator) {
         this.comparator = comparator;
     }
 
     @Override
     public int compare(Range<T> lhs, Range<T> rhs) {
         return new CompareToBuilder().append(!lhs.iterator().hasNext(), !rhs.iterator().hasNext()).
-                append(Maybe.just(lhs.begin()), Maybe.just(rhs.begin()), comparator).
+                append(Optional.of(lhs.begin()), Optional.of(rhs.begin()), comparator).
                 append(rhs.end(), lhs.end(), comparator).
                 toComparison();
     }

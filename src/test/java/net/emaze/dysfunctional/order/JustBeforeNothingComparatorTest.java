@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.order;
 
 import java.util.Comparator;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,33 +13,33 @@ public class JustBeforeNothingComparatorTest {
 
     @Test
     public void twoInstancesOfnothingHaveSameOrder() {
-        final Comparator<Maybe<Integer>> comparator = new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>());
-        final Maybe<Integer> former = Maybe.<Integer>nothing();
-        final Maybe<Integer> latter = Maybe.<Integer>nothing();
+        final Comparator<Optional<Integer>> comparator = new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>());
+        final Optional<Integer> former = Optional.<Integer>empty();
+        final Optional<Integer> latter = Optional.<Integer>empty();
         Assert.assertEquals(Order.EQ, Order.of(comparator.compare(former, latter)));
     }
 
     @Test
     public void nothingIsGreaterThanJust() {
-        final Comparator<Maybe<Integer>> comparator = new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>());
-        final Maybe<Integer> former = Maybe.<Integer>nothing();
-        final Maybe<Integer> latter = Maybe.<Integer>just(1);
+        final Comparator<Optional<Integer>> comparator = new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>());
+        final Optional<Integer> former = Optional.<Integer>empty();
+        final Optional<Integer> latter = Optional.<Integer>of(1);
         Assert.assertEquals(Order.GT, Order.of(comparator.compare(former, latter)));
     }
 
     @Test
     public void justIsLesserThanNothing() {
-        final Comparator<Maybe<Integer>> comparator = new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>());
-        final Maybe<Integer> former = Maybe.<Integer>just(1);
-        final Maybe<Integer> latter = Maybe.<Integer>nothing();
+        final Comparator<Optional<Integer>> comparator = new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>());
+        final Optional<Integer> former = Optional.<Integer>of(1);
+        final Optional<Integer> latter = Optional.<Integer>empty();
         Assert.assertEquals(Order.LT, Order.of(comparator.compare(former, latter)));
     }
 
     @Test
     public void nestedComparatorIsTakenIntoAccount() {
-        final Comparator<Maybe<Integer>> comparator = new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>());
-        final Maybe<Integer> former = Maybe.<Integer>just(2);
-        final Maybe<Integer> latter = Maybe.<Integer>just(1);
+        final Comparator<Optional<Integer>> comparator = new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>());
+        final Optional<Integer> former = Optional.<Integer>of(2);
+        final Optional<Integer> latter = Optional.<Integer>of(1);
         Assert.assertEquals(Order.GT, Order.of(comparator.compare(former, latter)));
     }
 

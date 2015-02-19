@@ -1,12 +1,13 @@
 package net.emaze.dysfunctional.options;
 
-import net.emaze.dysfunctional.contracts.dbc;
+import java.util.Optional;
 import java.util.function.Function;
+import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
 /**
- * A mutable container of an optional value.
+ * A mutable container of an optional get.
  *
  * @param <T> the content type
  * @author rferranti
@@ -39,10 +40,10 @@ public class Box<T> {
         return content.hasValue();
     }
 
-    public Maybe<T> unload() {
+    public Optional<T> unload() {
         final Maybe<T> old = content;
         content = Maybe.nothing();
-        return old;
+        return old.optional();
     }
 
     public T getContent() {

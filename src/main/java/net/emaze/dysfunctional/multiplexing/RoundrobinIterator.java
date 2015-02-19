@@ -40,7 +40,7 @@ public class RoundrobinIterator<E> extends ReadOnlyIterator<E> {
         if (!prefetched.hasContent()) {
             throw new NoSuchElementException();
         }
-        return prefetched.unload().value().next();
+        return prefetched.unload().get().next();
     }
 
     private void prefetchedAndMemorizeNonEmpty() {

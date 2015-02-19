@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.options;
 
+import java.util.Optional;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,13 +20,13 @@ public class MaybeOrElseTest {
 
     @Test
     public void callingWithJustYieldsJustValue() {
-        final O got = UNDER_TEST.apply(Maybe.just(O.ONE), O.ANOTHER);
+        final O got = UNDER_TEST.apply(Optional.of(O.ONE), O.ANOTHER);
         Assert.assertEquals(O.ONE, got);
     }
 
     @Test
     public void callingWithNothingYieldsSecondParameter() {
-        final O got = UNDER_TEST.apply(Maybe.<O>nothing(), O.ANOTHER);
+        final O got = UNDER_TEST.apply(Optional.<O>empty(), O.ANOTHER);
         Assert.assertEquals(O.ANOTHER, got);
     }
 }

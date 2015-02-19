@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import junit.framework.Assert;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import net.emaze.dysfunctional.order.ComparableComparator;
 import net.emaze.dysfunctional.order.JustBeforeNothingComparator;
 import net.emaze.dysfunctional.order.Order;
@@ -32,8 +32,8 @@ public class RangeComparatorTest {
         }
 
         @Override
-        public Maybe<Integer> end() {
-            return Maybe.just(upper);
+        public Optional<Integer> end() {
+            return Optional.of(upper);
         }
 
         @Override

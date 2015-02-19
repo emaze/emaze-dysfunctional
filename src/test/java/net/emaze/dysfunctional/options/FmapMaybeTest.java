@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.options;
 
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
@@ -25,7 +26,7 @@ public class FmapMaybeTest {
         final AtomicLong calls = new AtomicLong();
         final Function<O, O> delegate = Spies.monitor(UnaryOperator.identity(), calls);
         final FmapMaybe<O, O> lifted = new FmapMaybe<O, O>(delegate);
-        lifted.apply(Maybe.<O>nothing());
+        lifted.apply(Optional.<O>empty());
         Assert.assertEquals(0l, calls.get());
     }
 
@@ -33,15 +34,15 @@ public class FmapMaybeTest {
     public void callingFmapOnNothingYieldsNothing() {
         final Function<O, O> delegate = UnaryOperator.identity();
         final FmapMaybe<O, O> lifted = new FmapMaybe<O, O>(delegate);
-        final Maybe<O> got = lifted.apply(Maybe.<O>nothing());
-        Assert.assertEquals(Maybe.<O>nothing(), got);
+        final Optional<O> got = lifted.apply(Optional.<O>empty());
+        Assert.assertEquals(Optional.<O>empty(), got);
     }
 
     @Test
     public void callingFmapOnJustSomethingYieldsJustSomething() {
         final Function<O, O> delegate = UnaryOperator.identity();
         final FmapMaybe<O, O> lifted = new FmapMaybe<O, O>(delegate);
-        final Maybe<O> got = lifted.apply(Maybe.just(O.ONE));
-        Assert.assertEquals(Maybe.just(O.ONE), got);
+        final Optional<O> got = lifted.apply(Optional.of(O.ONE));
+        Assert.assertEquals(Optional.of(O.ONE), got);
     }
 }

@@ -23,7 +23,7 @@ import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Yes;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import net.emaze.dysfunctional.testing.O;
 import net.emaze.dysfunctional.tuples.BinaryIdentity;
 import net.emaze.dysfunctional.tuples.Pair;
@@ -53,7 +53,7 @@ public class DispatchingTest {
 
         @Test
         public void canAdaptIteratorToProvider() {
-            final Supplier<Maybe<Integer>> adapted = Dispatching.provider(Iterations.iterator(1));
+            final Supplier<Optional<Integer>> adapted = Dispatching.provider(Iterations.iterator(1));
             Assert.assertNotNull(adapted);
         }
 

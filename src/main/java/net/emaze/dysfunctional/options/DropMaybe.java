@@ -1,10 +1,11 @@
 package net.emaze.dysfunctional.options;
 
+import java.util.Optional;
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
 
 /**
- * Unwraps a Maybe<T> transforming a nothing(T) to null, just(T) to T.
+ * Unwraps a Optional<T> transforming a empty(T) to null, of(T) to T.
  *
  * Note this is not the unwrapping delegate you usually want, look at FromJust.
  * Adjoint of LiftMaybe.
@@ -12,14 +13,14 @@ import java.util.function.Function;
  * @param <T> the result type and maybe type parameter
  * @author rferranti
  */
-public class DropMaybe<T> implements Function<Maybe<T>, T> {
+public class DropMaybe<T> implements Function<Optional<T>, T> {
 
     @Override
-    public T apply(Maybe<T> maybe) {
+    public T apply(Optional<T> maybe) {
         dbc.precondition(maybe != null, "performing DropMaybe on null");
-        if (!maybe.hasValue()) {
+        if (!maybe.isPresent()) {
             return null;
         }
-        return maybe.value();
+        return maybe.get();
     }
 }

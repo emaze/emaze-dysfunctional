@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.convolutions;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import net.emaze.dysfunctional.tuples.Pair;
 import org.junit.Assert;
 import org.junit.Test;
@@ -36,8 +36,8 @@ public class ZipLongestIteratorTest {
         Iterator<Integer> former = new ArrayIterator<Integer>(new Integer[]{1});
         Iterator<Integer> latter = new ArrayIterator<Integer>(new Integer[]{2});
         ZipLongestIterator<Integer, Integer> zipli = new ZipLongestIterator<Integer, Integer>(former, latter);
-        Pair<Maybe<Integer>, Maybe<Integer>> got = zipli.next();
-        Assert.assertEquals(Pair.of(Maybe.just(1), Maybe.just(2)), got);
+        Pair<Optional<Integer>, Optional<Integer>> got = zipli.next();
+        Assert.assertEquals(Pair.of(Optional.of(1), Optional.of(2)), got);
     }
 
     @Test

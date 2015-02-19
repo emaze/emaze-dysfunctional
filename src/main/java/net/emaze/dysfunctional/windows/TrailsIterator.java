@@ -8,7 +8,7 @@ import java.util.Queue;
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
 import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 
 /**
  * [1,2,3,4], 3, id -> (Nothing, Nothing, Just 1), (Nothing, Just 1, Just 2),
@@ -21,17 +21,17 @@ import net.emaze.dysfunctional.options.Maybe;
 public class TrailsIterator<T, W extends Collection<?>> extends ReadOnlyIterator<W> {
 
     private final Iterator<T> iter;
-    private final Queue<Maybe<T>> trails = new LinkedList<Maybe<T>>();
-    private final Function<Queue<Maybe<T>>, W> copy;
+    private final Queue<Optional<T>> trails = new LinkedList<Optional<T>>();
+    private final Function<Queue<Optional<T>>, W> copy;
 
-    public TrailsIterator(Iterator<T> iter, int trailSize, Function<Queue<Maybe<T>>, W> copy) {
+    public TrailsIterator(Iterator<T> iter, int trailSize, Function<Queue<Optional<T>>, W> copy) {
         dbc.precondition(iter != null, "cannot create a TrailsIterator with a null iterator");
         dbc.precondition(trailSize > 0, "cannot create a TrailsIterator with a non positive window size");
         dbc.precondition(copy != null, "cannot create a TrailsIterator with a null copy semantics");
         this.iter = iter;
         this.copy = copy;
         for (int i = 0; i != trailSize; ++i) {
-            trails.add(Maybe.<T>nothing());
+            trails.add(Optional.<T>empty());
         }
     }
 
@@ -45,7 +45,7 @@ public class TrailsIterator<T, W extends Collection<?>> extends ReadOnlyIterator
         if (!iter.hasNext()) {
             throw new NoSuchElementException("iterator is consumed");
         }
-        trails.add(Maybe.just(iter.next()));
+        trails.add(Optional.of(iter.next()));
         trails.remove();
         return copy.apply(trails);
     }

@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.options;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 /**
@@ -8,10 +9,10 @@ import java.util.function.Function;
  * @param <L> the either left type parameter
  * @param <R> the either right type parameter
  */
-public class MaybeRight<L, R> implements Function<Either<L, R>, Maybe<R>> {
+public class MaybeRight<L, R> implements Function<Either<L, R>, Optional<R>> {
 
     @Override
-    public Maybe<R> apply(Either<L, R> either) {
+    public Optional<R> apply(Either<L, R> either) {
         return either.maybe();
     }
 }

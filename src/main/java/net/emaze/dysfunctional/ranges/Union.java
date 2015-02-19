@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.BinaryOperator;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 
 /**
@@ -15,10 +15,10 @@ import net.emaze.dysfunctional.order.SequencingPolicy;
 public class Union<T> implements BinaryOperator<Range<T>> {
 
     private final SequencingPolicy<T> sequencer;
-    private final Comparator<Maybe<T>> comparator;
+    private final Comparator<Optional<T>> comparator;
     private final T emptyValue;
 
-    public Union(SequencingPolicy<T> sequencer, Comparator<Maybe<T>> comparator, T emptyValue) {
+    public Union(SequencingPolicy<T> sequencer, Comparator<Optional<T>> comparator, T emptyValue) {
         this.sequencer = sequencer;
         this.comparator = comparator;
         this.emptyValue = emptyValue;

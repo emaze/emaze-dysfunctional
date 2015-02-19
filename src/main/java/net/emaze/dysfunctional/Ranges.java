@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import net.emaze.dysfunctional.order.JustBeforeNothingComparator;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 import net.emaze.dysfunctional.ranges.DenseRange;
@@ -22,7 +22,7 @@ import net.emaze.dysfunctional.reductions.Reductor;
  */
 public class Ranges<T> {
 
-    private final Comparator<Maybe<T>> comparator;
+    private final Comparator<Optional<T>> comparator;
     private final SequencingPolicy<T> sequencer;
     private final T emptyValue;
 
@@ -34,7 +34,7 @@ public class Ranges<T> {
         this.emptyValue = emptyValue;
     }
 
-    public Range<T> of(Endpoint left, T lower, Maybe<T> upper, Endpoint right) {
+    public Range<T> of(Endpoint left, T lower, Optional<T> upper, Endpoint right) {
         return new DenseRange<T>(sequencer, comparator, left, lower, upper, right);
     }
 
@@ -45,7 +45,7 @@ public class Ranges<T> {
      * @param upper
      * @return [lower, upper)
      */
-    public Range<T> rightHalfOpen(T lower, Maybe<T> upper) {
+    public Range<T> rightHalfOpen(T lower, Optional<T> upper) {
         return new DenseRange<T>(sequencer, comparator, Endpoint.Include, lower, upper, Endpoint.Exclude);
     }
     
@@ -58,7 +58,7 @@ public class Ranges<T> {
      * @return (lower, upper]
      */
     public Range<T> leftHalfOpen(T lower, T upper) {
-        return new DenseRange<T>(sequencer, comparator, Endpoint.Exclude, lower, Maybe.just(upper), Endpoint.Include);
+        return new DenseRange<T>(sequencer, comparator, Endpoint.Exclude, lower, Optional.of(upper), Endpoint.Include);
     }
     
     /**
@@ -69,7 +69,7 @@ public class Ranges<T> {
      * @return (lower, upper)
      */
     public Range<T> open(T lower, T upper) {
-        return new DenseRange<T>(sequencer, comparator, Endpoint.Exclude, lower, Maybe.just(upper), Endpoint.Exclude);
+        return new DenseRange<T>(sequencer, comparator, Endpoint.Exclude, lower, Optional.of(upper), Endpoint.Exclude);
     }
 
     /**
@@ -80,17 +80,17 @@ public class Ranges<T> {
      * @return [ lower, upper ]
      */
     public Range<T> closed(T lower, T upper) {
-        return new DenseRange<T>(sequencer, comparator, Endpoint.Include, lower, Maybe.just(upper), Endpoint.Include);
+        return new DenseRange<T>(sequencer, comparator, Endpoint.Include, lower, Optional.of(upper), Endpoint.Include);
     }
 
     /**
-     * Creates a singleton Range with the passed value. returns [ value, value ]
+     * Creates a singleton Range with the passed get. returns [ get, get ]
      *
      * @param value
      * @return [ lower, upper ]
      */
     public Range<T> degenerate(T value) {
-        return new DenseRange<T>(sequencer, comparator, Endpoint.Include, value, Maybe.just(value), Endpoint.Include);
+        return new DenseRange<T>(sequencer, comparator, Endpoint.Include, value, Optional.of(value), Endpoint.Include);
     }
 
     /**
@@ -101,7 +101,7 @@ public class Ranges<T> {
      * @return [ emptyValue, emptyValue )
      */
     public Range<T> empty() {
-        return new DenseRange<T>(this.sequencer, this.comparator, Endpoint.Include, emptyValue, Maybe.just(emptyValue), Endpoint.Exclude);
+        return new DenseRange<T>(this.sequencer, this.comparator, Endpoint.Include, emptyValue, Optional.of(emptyValue), Endpoint.Exclude);
     }
 
     public Range<T> union(Range<T> lhs, Range<T> rhs) {

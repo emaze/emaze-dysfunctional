@@ -2,9 +2,9 @@ package net.emaze.dysfunctional.order;
 
 import java.util.Comparator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 
-public class JustBeforeNothingComparator<T> implements Comparator<Maybe<T>> {
+public class JustBeforeNothingComparator<T> implements Comparator<Optional<T>> {
 
     private final Comparator<T> inner;
 
@@ -14,17 +14,17 @@ public class JustBeforeNothingComparator<T> implements Comparator<Maybe<T>> {
     }
 
     @Override
-    public int compare(Maybe<T> lhs, Maybe<T> rhs) {
-        if (!lhs.hasValue() && !rhs.hasValue()) {
+    public int compare(Optional<T> lhs, Optional<T> rhs) {
+        if (!lhs.isPresent() && !rhs.isPresent()) {
             return 0;
         }
-        if (!lhs.hasValue()) {
+        if (!lhs.isPresent()) {
             return 1;
         }
-        if (!rhs.hasValue()) {
+        if (!rhs.isPresent()) {
             return -1;
         }
-        return inner.compare(lhs.value(), rhs.value());
+        return inner.compare(lhs.get(), rhs.get());
     }
 
     @Override

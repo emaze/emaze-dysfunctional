@@ -25,7 +25,7 @@ import net.emaze.dysfunctional.filtering.AtIndex;
 import net.emaze.dysfunctional.filtering.FilteringIterator;
 import net.emaze.dysfunctional.filtering.Nth;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import net.emaze.dysfunctional.output.OutputIterator;
 import net.emaze.dysfunctional.tuples.Pair;
 
@@ -342,7 +342,7 @@ public abstract class Consumers {
      * @param iterable the iterable that will be consumed
      * @return just the first element or nothing
      */
-    public static <E> Maybe<E> maybeFirst(Iterable<E> iterable) {
+    public static <E> Optional<E> maybeFirst(Iterable<E> iterable) {
         dbc.precondition(iterable != null, "cannot call maybeFirst with a null iterable");
         return new MaybeFirstElement<E>().apply(iterable.iterator());
     }
@@ -354,7 +354,7 @@ public abstract class Consumers {
      * @param iterator the iterator that will be consumed
      * @return just the first element or nothing
      */
-    public static <E> Maybe<E> maybeFirst(Iterator<E> iterator) {
+    public static <E> Optional<E> maybeFirst(Iterator<E> iterator) {
         return new MaybeFirstElement<E>().apply(iterator);
     }
 
@@ -365,7 +365,7 @@ public abstract class Consumers {
      * @param array the array that will be consumed
      * @return just the first element or nothing
      */
-    public static <E> Maybe<E> maybeFirst(E[] array) {
+    public static <E> Optional<E> maybeFirst(E[] array) {
         return new MaybeFirstElement<E>().apply(new ArrayIterator<>(array));
     }
 
@@ -415,7 +415,7 @@ public abstract class Consumers {
      * element
      * @return just the element or nothing
      */
-    public static <E> Maybe<E> maybeOne(Iterator<E> iterator) {
+    public static <E> Optional<E> maybeOne(Iterator<E> iterator) {
         return new MaybeOneElement<E>().apply(iterator);
     }
 
@@ -428,7 +428,7 @@ public abstract class Consumers {
      * element
      * @return just the element or nothing
      */
-    public static <E> Maybe<E> maybeOne(Iterable<E> iterable) {
+    public static <E> Optional<E> maybeOne(Iterable<E> iterable) {
         dbc.precondition(iterable != null, "cannot call maybeOne with a null iterable");
         return new MaybeOneElement<E>().apply(iterable.iterator());
     }
@@ -442,7 +442,7 @@ public abstract class Consumers {
      * element
      * @return just the element or nothing
      */
-    public static <E> Maybe<E> maybeOne(E[] array) {
+    public static <E> Optional<E> maybeOne(E[] array) {
         return new MaybeOneElement<E>().apply(new ArrayIterator<>(array));
     }
 
@@ -493,7 +493,7 @@ public abstract class Consumers {
      * @param iterator the iterator that will be consumed
      * @return the last element or nothing
      */
-    public static <E> Maybe<E> maybeLast(Iterator<E> iterator) {
+    public static <E> Optional<E> maybeLast(Iterator<E> iterator) {
         return new MaybeLastElement<E>().apply(iterator);
     }
 
@@ -504,7 +504,7 @@ public abstract class Consumers {
      * @param iterable the iterable that will be consumed
      * @return the last element or nothing
      */
-    public static <E> Maybe<E> maybeLast(Iterable<E> iterable) {
+    public static <E> Optional<E> maybeLast(Iterable<E> iterable) {
         dbc.precondition(iterable != null, "cannot call maybeLast with a null iterable");
         return new MaybeLastElement<E>().apply(iterable.iterator());
     }
@@ -516,7 +516,7 @@ public abstract class Consumers {
      * @param array the array that will be consumed
      * @return the last element or nothing
      */
-    public static <E> Maybe<E> maybeLast(E[] array) {
+    public static <E> Optional<E> maybeLast(E[] array) {
         return new MaybeLastElement<E>().apply(new ArrayIterator<>(array));
     }
 
@@ -605,7 +605,7 @@ public abstract class Consumers {
      * @param iterator the iterator that will be consumed
      * @return just the element or nothing
      */
-    public static <E> Maybe<E> maybeNth(long count, Iterator<E> iterator) {
+    public static <E> Optional<E> maybeNth(long count, Iterator<E> iterator) {
         final Iterator<E> filtered = new FilteringIterator<E>(iterator, new Nth<E>(count));
         return new MaybeFirstElement<E>().apply(filtered);
     }
@@ -618,7 +618,7 @@ public abstract class Consumers {
      * @param iterable the iterable that will be consumed
      * @return just the element or nothing
      */
-    public static <E> Maybe<E> maybeNth(long count, Iterable<E> iterable) {
+    public static <E> Optional<E> maybeNth(long count, Iterable<E> iterable) {
         dbc.precondition(iterable != null, "cannot call maybeNth with a null iterable");
         final Iterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), new Nth<E>(count));
         return new MaybeFirstElement<E>().apply(filtered);
@@ -632,7 +632,7 @@ public abstract class Consumers {
      * @param array the array that will be consumed
      * @return just the element or nothing
      */
-    public static <E> Maybe<E> maybeNth(long count, E[] array) {
+    public static <E> Optional<E> maybeNth(long count, E[] array) {
         final Iterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), new Nth<E>(count));
         return new MaybeFirstElement<E>().apply(filtered);
     }
@@ -685,7 +685,7 @@ public abstract class Consumers {
      * @param iterator the iterator that will be consumed
      * @return just the element or nothing
      */
-    public static <E> Maybe<E> maybeAt(long index, Iterator<E> iterator) {
+    public static <E> Optional<E> maybeAt(long index, Iterator<E> iterator) {
         final Iterator<E> filtered = new FilteringIterator<E>(iterator, new AtIndex<E>(index));
         return new MaybeFirstElement<E>().apply(filtered);
     }
@@ -698,7 +698,7 @@ public abstract class Consumers {
      * @param iterable the iterable that will be consumed
      * @return just the element or nothing
      */
-    public static <E> Maybe<E> maybeAt(long index, Iterable<E> iterable) {
+    public static <E> Optional<E> maybeAt(long index, Iterable<E> iterable) {
         dbc.precondition(iterable != null, "cannot call maybeAt with a null iterable");
         final Iterator<E> filtered = new FilteringIterator<E>(iterable.iterator(), new AtIndex<E>(index));
         return new MaybeFirstElement<E>().apply(filtered);
@@ -712,7 +712,7 @@ public abstract class Consumers {
      * @param array the array that will be consumed
      * @return just the element or nothing
      */
-    public static <E> Maybe<E> maybeAt(long index, E[] array) {
+    public static <E> Optional<E> maybeAt(long index, E[] array) {
         final Iterator<E> filtered = new FilteringIterator<E>(new ArrayIterator<E>(array), new AtIndex<E>(index));
         return new MaybeFirstElement<E>().apply(filtered);
     }

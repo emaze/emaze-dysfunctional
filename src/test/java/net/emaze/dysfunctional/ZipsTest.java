@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import net.emaze.dysfunctional.order.ComparableComparator;
 import net.emaze.dysfunctional.order.NextIntegerSequencingPolicy;
 import net.emaze.dysfunctional.ranges.DenseRange;
@@ -16,8 +16,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * if you are going to add a test here, consider that Zips should be just a thin
- * facade, and tests on ZipsTest should be just "smoke tests"
+ * if you are going to add a test here, consider that Zips should be of a thin
+ facade, and tests on ZipsTest should be of "smoke tests"
  *
  * @author rferranti
  */
@@ -27,7 +27,7 @@ public class ZipsTest {
         return Pair.of(f, l);
     }
 
-    public static Pair<Maybe<Integer>, Maybe<Integer>> p(Maybe<Integer> f, Maybe<Integer> l) {
+    public static Pair<Optional<Integer>, Optional<Integer>> p(Optional<Integer> f, Optional<Integer> l) {
         return Pair.of(f, l);
     }
 
@@ -73,12 +73,12 @@ public class ZipsTest {
     public void canZipLongestWithIterators() {
         final List<Integer> former = Arrays.asList(1, 3);
         final List<Integer> latter = Arrays.asList(2, 4, 5);
-        final Iterator<Pair<Maybe<Integer>, Maybe<Integer>>> got = Zips.longest(former.iterator(), latter.iterator());
+        final Iterator<Pair<Optional<Integer>, Optional<Integer>>> got = Zips.longest(former.iterator(), latter.iterator());
 
-        final List<Pair<Maybe<Integer>, Maybe<Integer>>> expected = new ArrayList<Pair<Maybe<Integer>, Maybe<Integer>>>();
-        expected.add(p(Maybe.just(1), Maybe.just(2)));
-        expected.add(p(Maybe.just(3), Maybe.just(4)));
-        expected.add(p(Maybe.<Integer>nothing(), Maybe.just(5)));
+        final List<Pair<Optional<Integer>, Optional<Integer>>> expected = new ArrayList<Pair<Optional<Integer>, Optional<Integer>>>();
+        expected.add(p(Optional.of(1), Optional.of(2)));
+        expected.add(p(Optional.of(3), Optional.of(4)));
+        expected.add(p(Optional.<Integer>empty(), Optional.of(5)));
 
         Assert.assertEquals(expected, Consumers.all(got));
     }
@@ -87,12 +87,12 @@ public class ZipsTest {
     public void canZipLongestWithArrays() {
         final Integer[] former = new Integer[]{1, 3};
         final Integer[] latter = new Integer[]{2, 4, 5};
-        final Iterator<Pair<Maybe<Integer>, Maybe<Integer>>> got = Zips.longest(former, latter);
+        final Iterator<Pair<Optional<Integer>, Optional<Integer>>> got = Zips.longest(former, latter);
 
-        final List<Pair<Maybe<Integer>, Maybe<Integer>>> expected = new ArrayList<Pair<Maybe<Integer>, Maybe<Integer>>>();
-        expected.add(p(Maybe.just(1), Maybe.just(2)));
-        expected.add(p(Maybe.just(3), Maybe.just(4)));
-        expected.add(p(Maybe.<Integer>nothing(), Maybe.just(5)));
+        final List<Pair<Optional<Integer>, Optional<Integer>>> expected = new ArrayList<Pair<Optional<Integer>, Optional<Integer>>>();
+        expected.add(p(Optional.of(1), Optional.of(2)));
+        expected.add(p(Optional.of(3), Optional.of(4)));
+        expected.add(p(Optional.<Integer>empty(), Optional.of(5)));
 
         Assert.assertEquals(expected, Consumers.all(got));
     }
@@ -101,12 +101,12 @@ public class ZipsTest {
     public void canZipLongestWithIterables() {
         final List<Integer> former = Arrays.asList(1, 3);
         final List<Integer> latter = Arrays.asList(2, 4, 5);
-        Iterator<Pair<Maybe<Integer>, Maybe<Integer>>> got = Zips.longest(former, latter);
+        Iterator<Pair<Optional<Integer>, Optional<Integer>>> got = Zips.longest(former, latter);
 
-        final List<Pair<Maybe<Integer>, Maybe<Integer>>> expected = new ArrayList<Pair<Maybe<Integer>, Maybe<Integer>>>();
-        expected.add(p(Maybe.just(1), Maybe.just(2)));
-        expected.add(p(Maybe.just(3), Maybe.just(4)));
-        expected.add(p(Maybe.<Integer>nothing(), Maybe.just(5)));
+        final List<Pair<Optional<Integer>, Optional<Integer>>> expected = new ArrayList<Pair<Optional<Integer>, Optional<Integer>>>();
+        expected.add(p(Optional.of(1), Optional.of(2)));
+        expected.add(p(Optional.of(3), Optional.of(4)));
+        expected.add(p(Optional.<Integer>empty(), Optional.of(5)));
 
         Assert.assertEquals(expected, Consumers.all(got));
     }
@@ -135,7 +135,7 @@ public class ZipsTest {
 
     @Test
     public void canMakeAnIterableCountedWithRange() {
-        final Range<Integer> range = new DenseRange<Integer>(new NextIntegerSequencingPolicy(), new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>()), Endpoint.Include, 1, Maybe.just(10), Endpoint.Include);
+        final Range<Integer> range = new DenseRange<Integer>(new NextIntegerSequencingPolicy(), new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>()), Endpoint.Include, 1, Optional.of(10), Endpoint.Include);
         final Iterable<String> bucket = Iterations.iterable("a", "b");
         final Iterator<Pair<Integer, String>> iterator = Zips.counted(bucket, range);
         final Iterator<Pair<Integer, String>> expected = Iterations.iterator(Pair.of(1, "a"), Pair.of(2, "b"));
@@ -152,7 +152,7 @@ public class ZipsTest {
 
     @Test
     public void canMakeAnIteratorCountedWithRange() {
-        final Range<Integer> range = new DenseRange<Integer>(new NextIntegerSequencingPolicy(), new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>()), Endpoint.Include, 1, Maybe.just(10), Endpoint.Include);
+        final Range<Integer> range = new DenseRange<Integer>(new NextIntegerSequencingPolicy(), new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>()), Endpoint.Include, 1, Optional.of(10), Endpoint.Include);
         final Iterator<String> bucket = Iterations.iterator("a", "b");
         final Iterator<Pair<Integer, String>> iterator = Zips.counted(bucket, range);
         final Iterator<Pair<Integer, String>> expected = Iterations.iterator(Pair.of(1, "a"), Pair.of(2, "b"));
@@ -169,7 +169,7 @@ public class ZipsTest {
 
     @Test
     public void canMakeAnArrayCountedWithRange() {
-        final Range<Integer> range = new DenseRange<Integer>(new NextIntegerSequencingPolicy(), new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>()), Endpoint.Include, 1, Maybe.just(10), Endpoint.Include);
+        final Range<Integer> range = new DenseRange<Integer>(new NextIntegerSequencingPolicy(), new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>()), Endpoint.Include, 1, Optional.of(10), Endpoint.Include);
         final String[] bucket = {"a", "b"};
         final Iterator<Pair<Integer, String>> iterator = Zips.counted(bucket, range);
         final Iterator<Pair<Integer, String>> expected = Iterations.iterator(Pair.of(1, "a"), Pair.of(2, "b"));
@@ -220,7 +220,7 @@ public class ZipsTest {
         }
 
         @Override
-        public Maybe<Object> end() {
+        public Optional<Object> end() {
             return null;
         }
 

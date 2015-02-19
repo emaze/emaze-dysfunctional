@@ -8,7 +8,7 @@ import java.util.List;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.Never;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -326,26 +326,26 @@ public class SearchesTest {
 
         @Test
         public void searchInEmptyIteratorYieldsNothing() {
-            Maybe<Object> got = Searches.searchFirst(emptyIterable.iterator(), new Always<Object>());
-            Assert.assertEquals(Maybe.nothing(), got);
+            Optional<Object> got = Searches.searchFirst(emptyIterable.iterator(), new Always<Object>());
+            Assert.assertEquals(Optional.empty(), got);
         }
 
         @Test
         public void searchInNonEmptyIteratorYieldsJustFirst() {
-            Maybe<Integer> got = Searches.searchFirst(multiValueIterable.iterator(), new Always<Integer>());
-            Assert.assertEquals(Maybe.just(1), got);
+            Optional<Integer> got = Searches.searchFirst(multiValueIterable.iterator(), new Always<Integer>());
+            Assert.assertEquals(Optional.of(1), got);
         }
 
         @Test
         public void searchInNonEmptyIterableYieldsJustFirst() {
-            Maybe<Integer> got = Searches.searchFirst(multiValueIterable, new Always<Integer>());
-            Assert.assertEquals(Maybe.just(1), got);
+            Optional<Integer> got = Searches.searchFirst(multiValueIterable, new Always<Integer>());
+            Assert.assertEquals(Optional.of(1), got);
         }
 
         @Test
         public void searchInNonEmptyArrayYieldsJustFirst() {
-            Maybe<Integer> got = Searches.searchFirst(multiValueArray, new Always<Integer>());
-            Assert.assertEquals(Maybe.just(1), got);
+            Optional<Integer> got = Searches.searchFirst(multiValueArray, new Always<Integer>());
+            Assert.assertEquals(Optional.of(1), got);
         }
     }
 
@@ -391,8 +391,8 @@ public class SearchesTest {
 
         @Test
         public void searchOneInEmptyIteratorYieldsNothing() {
-            Maybe<Object> got = Searches.searchOne(emptyIterable.iterator(), new Always<Object>());
-            Assert.assertEquals(Maybe.nothing(), got);
+            Optional<Object> got = Searches.searchOne(emptyIterable.iterator(), new Always<Object>());
+            Assert.assertEquals(Optional.empty(), got);
         }
 
         @Test(expected = IllegalStateException.class)
@@ -402,20 +402,20 @@ public class SearchesTest {
 
         @Test
         public void searchOneInSingleValueIteratorYieldsJustFirst() {
-            Maybe<Integer> got = Searches.searchOne(singleValueIterable.iterator(), new Always<Integer>());
-            Assert.assertEquals(Maybe.just(1), got);
+            Optional<Integer> got = Searches.searchOne(singleValueIterable.iterator(), new Always<Integer>());
+            Assert.assertEquals(Optional.of(1), got);
         }
 
         @Test
         public void searchOneInSingleValueIterableYieldsJustFirst() {
-            Maybe<Integer> got = Searches.searchOne(singleValueIterable, new Always<Integer>());
-            Assert.assertEquals(Maybe.just(1), got);
+            Optional<Integer> got = Searches.searchOne(singleValueIterable, new Always<Integer>());
+            Assert.assertEquals(Optional.of(1), got);
         }
 
         @Test
         public void searchOneInSingleValueArrayYieldsJustFirst() {
-            Maybe<Integer> got = Searches.searchOne(singleValueArray, new Always<Integer>());
-            Assert.assertEquals(Maybe.just(1), got);
+            Optional<Integer> got = Searches.searchOne(singleValueArray, new Always<Integer>());
+            Assert.assertEquals(Optional.of(1), got);
         }
     }
 
@@ -467,43 +467,43 @@ public class SearchesTest {
         @Test
         public void yieldsLastMatchingFromIterable() {
             final Iterable<Integer> iterable = Iterations.iterable(1, 2);
-            final Maybe<Integer> got = Searches.searchLast(iterable, new Always<Integer>());
-            Assert.assertEquals(Maybe.just(2), got);
+            final Optional<Integer> got = Searches.searchLast(iterable, new Always<Integer>());
+            Assert.assertEquals(Optional.of(2), got);
         }
 
         @Test
         public void yieldsLastMatchingFromIterator() {
             final Iterator<Integer> iterator = Iterations.iterator(1, 2);
-            final Maybe<Integer> got = Searches.searchLast(iterator, new Always<Integer>());
-            Assert.assertEquals(Maybe.just(2), got);
+            final Optional<Integer> got = Searches.searchLast(iterator, new Always<Integer>());
+            Assert.assertEquals(Optional.of(2), got);
         }
 
         @Test
         public void yieldsLastMatchingFromArray() {
             final Integer[] array = new Integer[]{1, 2};
-            final Maybe<Integer> got = Searches.searchLast(array, new Always<Integer>());
-            Assert.assertEquals(Maybe.just(2), got);
+            final Optional<Integer> got = Searches.searchLast(array, new Always<Integer>());
+            Assert.assertEquals(Optional.of(2), got);
         }
 
         @Test
         public void yieldsNothingFromIterableWhenNothingMatches() {
             final Iterable<Integer> iterable = Iterations.iterable(1, 2);
-            final Maybe<Integer> got = Searches.searchLast(iterable, new Never<Integer>());
-            Assert.assertEquals(Maybe.<Integer>nothing(), got);
+            final Optional<Integer> got = Searches.searchLast(iterable, new Never<Integer>());
+            Assert.assertEquals(Optional.<Integer>empty(), got);
         }
 
         @Test
         public void yieldsNothingFromIteratorWhenNothingMatches() {
             final Iterator<Integer> iterator = Iterations.iterator(1, 2);
-            final Maybe<Integer> got = Searches.searchLast(iterator, new Never<Integer>());
-            Assert.assertEquals(Maybe.<Integer>nothing(), got);
+            final Optional<Integer> got = Searches.searchLast(iterator, new Never<Integer>());
+            Assert.assertEquals(Optional.<Integer>empty(), got);
         }
 
         @Test
         public void yieldsNothingFromArrayWhenNothingMatches() {
             final Integer[] array = new Integer[]{1, 2};
-            final Maybe<Integer> got = Searches.searchLast(array, new Never<Integer>());
-            Assert.assertEquals(Maybe.<Integer>nothing(), got);
+            final Optional<Integer> got = Searches.searchLast(array, new Never<Integer>());
+            Assert.assertEquals(Optional.<Integer>empty(), got);
         }
     }
 

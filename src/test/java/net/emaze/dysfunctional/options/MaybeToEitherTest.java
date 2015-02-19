@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.options;
 
+import java.util.Optional;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
 import java.util.function.Function;
 import net.emaze.dysfunctional.testing.O;
@@ -20,15 +21,15 @@ public class MaybeToEitherTest {
 
     @Test
     public void transformingNothingYieldsLeft() {
-        final Function<Maybe<O>, Either<O, O>> maybeToEither = new MaybeToEither<O, O>(new ConstantProvider<O>(O.ANOTHER));
-        final Either<O, O> got = maybeToEither.apply(Maybe.<O>nothing());
+        final Function<Optional<O>, Either<O, O>> maybeToEither = new MaybeToEither<O, O>(new ConstantProvider<O>(O.ANOTHER));
+        final Either<O, O> got = maybeToEither.apply(Optional.<O>empty());
         Assert.assertEquals(Either.left(O.ANOTHER), got);
     }
 
     @Test
     public void transformingJustYieldsRight() {
-        final Function<Maybe<O>, Either<O, O>> maybeToEither = new MaybeToEither<O, O>(new ConstantProvider<O>(O.ANOTHER));
-        final Either<O, O> got = maybeToEither.apply(Maybe.<O>just(O.ONE));
+        final Function<Optional<O>, Either<O, O>> maybeToEither = new MaybeToEither<O, O>(new ConstantProvider<O>(O.ANOTHER));
+        final Either<O, O> got = maybeToEither.apply(Optional.<O>of(O.ONE));
         Assert.assertEquals(Either.right(O.ONE), got);
     }
 }

@@ -1,17 +1,18 @@
 package net.emaze.dysfunctional.options;
 
+import java.util.Optional;
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 
 /**
- * Decorates an Iterator yielding Maybe.just(element) for every element in the
- * contained iterator and Maybe.nothing() beyond the nested iterator bounds
+ * Decorates an Iterator yielding Optional.of(element) for every element in the
+ contained iterator and Optional.empty() beyond the nested iterator bounds
  *
  * @param <E> the iterator element type
  * @author rferranti
  */
-public class MaybeIterator<E> extends ReadOnlyIterator<Maybe<E>> {
+public class MaybeIterator<E> extends ReadOnlyIterator<Optional<E>> {
 
     private final Iterator<E> iterator;
 
@@ -27,16 +28,16 @@ public class MaybeIterator<E> extends ReadOnlyIterator<Maybe<E>> {
 
     /**
      * calling next over the boundary of the contained iterator leads
-     * Maybe.nothing indefinitely "no matter how many times you try, you can't
-     * shoot the dog"
+ Optional.empty indefinitely "no matter how many times you try, you can't
+ shoot the dog"
      *
      * @return
      */
     @Override
-    public Maybe<E> next() {
+    public Optional<E> next() {
         if (iterator.hasNext()) {
-            return Maybe.just(iterator.next());
+            return Optional.of(iterator.next());
         }
-        return Maybe.nothing();
+        return Optional.empty();
     }
 }

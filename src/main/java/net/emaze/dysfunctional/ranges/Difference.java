@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.BinaryOperator;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import net.emaze.dysfunctional.order.Order;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 import net.emaze.dysfunctional.ranges.Range.Endpoint;
@@ -18,10 +18,10 @@ import net.emaze.dysfunctional.ranges.Range.Endpoint;
 public class Difference<T> implements BinaryOperator<Range<T>> {
 
     private final SequencingPolicy<T> sequencer;
-    private final Comparator<Maybe<T>> comparator;
+    private final Comparator<Optional<T>> comparator;
     private final T emptyValue;
 
-    public Difference(SequencingPolicy<T> sequencer, Comparator<Maybe<T>> comparator, T emptyValue) {
+    public Difference(SequencingPolicy<T> sequencer, Comparator<Optional<T>> comparator, T emptyValue) {
         this.sequencer = sequencer;
         this.comparator = comparator;
         this.emptyValue = emptyValue;
@@ -49,11 +49,11 @@ public class Difference<T> implements BinaryOperator<Range<T>> {
             return Collections.singletonList(lhs);
         }
         final List<DenseRange<T>> difference = new ArrayList<DenseRange<T>>();
-        if (Order.of(comparator, Maybe.just(lhs.begin()), Maybe.just(rhs.begin())) == Order.LT) {
-            difference.add(new DenseRange<T>(sequencer, comparator, Endpoint.Include, lhs.begin(), Maybe.just(rhs.begin()), Endpoint.Exclude));
+        if (Order.of(comparator, Optional.of(lhs.begin()), Optional.of(rhs.begin())) == Order.LT) {
+            difference.add(new DenseRange<T>(sequencer, comparator, Endpoint.Include, lhs.begin(), Optional.of(rhs.begin()), Endpoint.Exclude));
         }
         if (Order.of(comparator, lhs.end(), rhs.end()) == Order.GT) {
-            difference.add(new DenseRange<T>(sequencer, comparator, Endpoint.Include, rhs.end().value(), lhs.end(), Endpoint.Exclude));
+            difference.add(new DenseRange<T>(sequencer, comparator, Endpoint.Include, rhs.end().get(), lhs.end(), Endpoint.Exclude));
         }
         return difference;
     }

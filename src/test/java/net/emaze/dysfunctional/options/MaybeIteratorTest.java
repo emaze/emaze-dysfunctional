@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.options;
 
+import java.util.Optional;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import org.junit.Assert;
 import org.junit.Test;
@@ -30,12 +31,12 @@ public class MaybeIteratorTest {
     @Test
     public void canFetchNextFromNonEmptyIterator() {
         MaybeIterator<Integer> maybeIter = new MaybeIterator<Integer>(new ArrayIterator<Integer>(new Integer[]{1}));
-        Assert.assertEquals(Maybe.just(1), maybeIter.next());
+        Assert.assertEquals(Optional.of(1), maybeIter.next());
     }
 
     @Test
     public void canFetchNextFromEmptyIterator() {
         MaybeIterator<Integer> maybeIter = new MaybeIterator<Integer>(new ArrayIterator<Integer>(new Integer[]{}));
-        Assert.assertEquals(Maybe.nothing(), maybeIter.next());
+        Assert.assertEquals(Optional.empty(), maybeIter.next());
     }
 }

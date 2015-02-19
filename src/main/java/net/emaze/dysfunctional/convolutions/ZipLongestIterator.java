@@ -3,19 +3,19 @@ package net.emaze.dysfunctional.convolutions;
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import net.emaze.dysfunctional.options.MaybeIterator;
 import net.emaze.dysfunctional.tuples.Pair;
 
 /**
  * Adapts two iterators yielding their longest convolution (via a
- * Pair<Maybe<E1>,Maybe<E2>>)
+ * Pair<Optional<E1>,Optional<E2>>)
  *
  * @param <E1> the first iterator element type
  * @param <E2> the second iterator element type
  * @author rferranti
  */
-public class ZipLongestIterator<E1, E2> extends ReadOnlyIterator<Pair<Maybe<E1>, Maybe<E2>>> {
+public class ZipLongestIterator<E1, E2> extends ReadOnlyIterator<Pair<Optional<E1>, Optional<E2>>> {
 
     private final MaybeIterator<E1> former;
     private final MaybeIterator<E2> latter;
@@ -33,13 +33,13 @@ public class ZipLongestIterator<E1, E2> extends ReadOnlyIterator<Pair<Maybe<E1>,
     }
 
     /**
-     * iterating over the longest iterator gives a Pair of Maybe.nothing
-     * indefinitely "no matter how many times you try, you can't shoot the dog"
+     * iterating over the longest iterator gives a Pair of Optional.nothing
+ indefinitely "no matter how many times you try, you can't shoot the dog"
      *
      * @return
      */
     @Override
-    public Pair<Maybe<E1>, Maybe<E2>> next() {
+    public Pair<Optional<E1>, Optional<E2>> next() {
         return Pair.of(former.next(), latter.next());
     }
 }

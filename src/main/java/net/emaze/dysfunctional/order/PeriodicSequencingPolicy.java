@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.order;
 
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 
 /**
  * A periodic sequencing policy.
@@ -21,7 +21,7 @@ public class PeriodicSequencingPolicy<T> implements SequencingPolicy<T> {
     }
 
     @Override
-    public Maybe<T> next(T element) {
-        return element.equals(upper) ? Maybe.just(lower) : inner.next(element);
+    public Optional<T> next(T element) {
+        return element.equals(upper) ? Optional.of(lower) : inner.next(element);
     }
 }

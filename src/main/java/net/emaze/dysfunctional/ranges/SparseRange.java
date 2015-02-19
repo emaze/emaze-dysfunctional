@@ -8,7 +8,7 @@ import net.emaze.dysfunctional.dispatching.delegates.IteratorPlucker;
 import net.emaze.dysfunctional.iterations.ConstantIterator;
 import net.emaze.dysfunctional.iterations.TransformingIterator;
 import net.emaze.dysfunctional.multiplexing.ChainIterator;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 import net.emaze.dysfunctional.reductions.Any;
 import net.emaze.dysfunctional.strings.InterposeStrings;
@@ -21,9 +21,9 @@ import net.emaze.dysfunctional.strings.InterposeStrings;
 public class SparseRange<T> implements Range<T> {
 
     private final List<DenseRange<T>> densified;
-    private final Comparator<Maybe<T>> comparator;
+    private final Comparator<Optional<T>> comparator;
 
-    public SparseRange(SequencingPolicy<T> sequencer, Comparator<Maybe<T>> comparator, List<DenseRange<T>> densified) {
+    public SparseRange(SequencingPolicy<T> sequencer, Comparator<Optional<T>> comparator, List<DenseRange<T>> densified) {
         dbc.precondition(sequencer != null, "trying to create a SparseRange<T> with a null SequencingPolicy<T>");
         dbc.precondition(comparator != null, "trying to create a SparseRange<T> with a null Comparator<T>");
         dbc.precondition(densified != null, "trying to create a SparseRange<T> from a null ranges");
@@ -47,7 +47,7 @@ public class SparseRange<T> implements Range<T> {
     }
 
     @Override
-    public Maybe<T> end() {
+    public Optional<T> end() {
         return densified.get(densified.size() - 1).end();
     }
 
