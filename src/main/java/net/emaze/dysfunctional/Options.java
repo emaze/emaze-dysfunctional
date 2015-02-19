@@ -642,7 +642,7 @@ public abstract class Options {
          */
         public static <LT, RT> Iterator<RT> rights(Iterator<Either<LT, RT>> eithers) {
             dbc.precondition(eithers != null, "can not fetch rights from a null iterator");
-            final Iterator<Optional<RT>> maybes = new TransformingIterator<>(eithers, new MaybeRight<LT, RT>());
+            final Iterator<Optional<RT>> maybes = new TransformingIterator<>(eithers, e -> e.right());
             final Iterator<Optional<RT>> justs = new FilteringIterator<Optional<RT>>(maybes, new IsJust<RT>());
             return new TransformingIterator<>(justs, new FromJust<RT>());
         }
@@ -659,7 +659,7 @@ public abstract class Options {
          */
         public static <LT, RT> Iterator<RT> rights(Iterable<Either<LT, RT>> eithers) {
             dbc.precondition(eithers != null, "can not fetch rights from a null iterator");
-            final Iterator<Optional<RT>> maybes = new TransformingIterator<>(eithers.iterator(), new MaybeRight<LT, RT>());
+            final Iterator<Optional<RT>> maybes = new TransformingIterator<>(eithers.iterator(), e -> e.right());
             final Iterator<Optional<RT>> justs = new FilteringIterator<Optional<RT>>(maybes, new IsJust<RT>());
             return new TransformingIterator<>(justs, new FromJust<RT>());
         }
