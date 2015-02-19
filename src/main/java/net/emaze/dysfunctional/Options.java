@@ -276,7 +276,7 @@ public abstract class Options {
          * <code>Maybes.drop(Nothing) -> null</code>
          *
          * @param <T> the get type parameter
-         * @param optional the optional to be dropped
+         * @param optional the right to be dropped
          * @return null or a get
          */
         public static <T> T drop(Optional<T> optional) {
@@ -628,17 +628,16 @@ public abstract class Options {
         }
 
         /**
-         * Transforms an either to a optional containing just() right type or
-         * nothing().
+         * Get the right value of an Either.
          *
          * @param <L> the left type
          * @param <R> the right type
          * @param either
-         * @return the optional representation of the either
+         * @return the optional right value
          */
         public static <L, R> Optional<R> right(Either<L, R> either) {
             dbc.precondition(either != null, "cannot transform a null either to an optional");
-            return either.optional();
+            return either.right();
         }
 
         /**

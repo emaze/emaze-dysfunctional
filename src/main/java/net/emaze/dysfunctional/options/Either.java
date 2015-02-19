@@ -45,7 +45,7 @@ public class Either<LT, RT> {
         return withRight.apply(right.get());
     }
 
-    public Optional<RT> optional() {
+    public Optional<RT> right() {
         return right;
     }
 

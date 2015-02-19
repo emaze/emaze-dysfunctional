@@ -6,8 +6,8 @@ import java.util.function.Supplier;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- * Transforms a optional mapping Optional.nothing to
- Either.left(leftTypeProvider()) and Optional.just to Either.right.
+ * Transforms an optional mapping Optional.nothing to
+ * Either.left(leftTypeProvider()) and Optional.just to Either.right.
  *
  * @author rferranti
  * @param <L> the either left type parameter

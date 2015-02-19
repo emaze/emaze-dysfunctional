@@ -106,7 +106,7 @@ public class EitherTest {
 
         @Test
         public void transformingEitherToMaybeYieldsRightSide() {
-            Assert.assertEquals(Optional.of(1), Either.right(1).optional());
+            Assert.assertEquals(Optional.of(1), Either.right(1).right());
         }
 
         @Test

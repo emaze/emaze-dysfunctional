@@ -13,6 +13,6 @@ public class MaybeLeft<L, R> implements Function<Either<L, R>, Optional<L>> {
 
     @Override
     public Optional<L> apply(Either<L, R> either) {
-        return either.flip().optional();
+        return either.flip().right();
     }
 }
