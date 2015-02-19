@@ -27,7 +27,7 @@ public class Either<LT, RT> {
         this.right = right;
     }
 
-    public <LR, RR> Either<LR, RR> fmap(Function<LT, LR> withLeft, Function<RT, RR> withRight) {
+    public <LR, RR> Either<LR, RR> map(Function<LT, LR> withLeft, Function<RT, RR> withRight) {
         dbc.precondition(withLeft != null, "cannot fmap an either with a null left delegate");
         dbc.precondition(withRight != null, "cannot fmap an either with a null right delegate");
         if (left.isPresent()) {
@@ -45,7 +45,7 @@ public class Either<LT, RT> {
         return withRight.apply(right.get());
     }
 
-    public Optional<RT> maybe() {
+    public Optional<RT> optional() {
         return right;
     }
 

@@ -26,18 +26,18 @@ public class Box<T> {
         return new Box<E>();
     }
 
-    public <R> Box<R> fmap(Function<T, R> delegate) {
+    public <R> Box<R> map(Function<T, R> delegate) {
         dbc.precondition(delegate != null, "cannot perform fmap with a null delegate");
-        final Maybe<R> m = content.fmap(delegate);
-        return m.hasValue() ? Box.of(m.value()) : Box.<R>empty();
+        final Maybe<R> m = content.map(delegate);
+        return m.isPresent() ? Box.of(m.get()) : Box.<R>empty();
     }
 
     public boolean isEmpty() {
-        return !content.hasValue();
+        return !content.isPresent();
     }
 
-    public boolean hasContent() {
-        return content.hasValue();
+    public boolean isPresent() {
+        return content.isPresent();
     }
 
     public Optional<T> unload() {
@@ -47,7 +47,7 @@ public class Box<T> {
     }
 
     public T getContent() {
-        return content.value();
+        return content.get();
     }
 
     public void setContent(T content) {

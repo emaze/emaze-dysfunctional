@@ -52,23 +52,23 @@ public class PairTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void fmapWithNullFirstDelegateYieldsException() {
-        Pair.of(O.ONE, O.ONE).fmap(null, UnaryOperator.identity());
+        Pair.of(O.ONE, O.ONE).map(null, UnaryOperator.identity());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void fmapWithNullSecondDelegateYieldsException() {
-        Pair.of(O.ONE, O.ONE).fmap(UnaryOperator.identity(), null);
+        Pair.of(O.ONE, O.ONE).map(UnaryOperator.identity(), null);
     }
 
     @Test
     public void firstDelegateOfFmapTransformsFirstType() {
-        final Pair<O, O> mapped = Pair.of(O.ONE, O.ONE).fmap(new ConstantDelegate<O, O>(O.ANOTHER), UnaryOperator.identity());
+        final Pair<O, O> mapped = Pair.of(O.ONE, O.ONE).map(new ConstantDelegate<O, O>(O.ANOTHER), UnaryOperator.identity());
         Assert.assertEquals(O.ANOTHER, mapped.first());
     }
 
     @Test
     public void secondDelegateOfFmapTransformsSecondType() {
-        final Pair<O, O> mapped = Pair.of(O.ONE, O.ONE).fmap(UnaryOperator.identity(), new ConstantDelegate<O, O>(O.ANOTHER));
+        final Pair<O, O> mapped = Pair.of(O.ONE, O.ONE).map(UnaryOperator.identity(), new ConstantDelegate<O, O>(O.ANOTHER));
         Assert.assertEquals(O.ANOTHER, mapped.second());
     }
 }

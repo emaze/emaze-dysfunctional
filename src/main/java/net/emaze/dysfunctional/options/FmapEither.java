@@ -4,7 +4,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
 
 /**
- * Performs fmap on an {@literal Either<LT, RT>}
+ * Performs map on an {@literal Either<LT, RT>}
  *
  * @param <RT> the right source type parameter
  * @param <LT> the left source type parameter
@@ -27,6 +27,6 @@ public class FmapEither<LT, RT, LR, RR> implements Function<Either<LT, RT>, Eith
     @Override
     public Either<LR, RR> apply(Either<LT, RT> from) {
         dbc.precondition(from != null, "cannot fmap a null either");
-        return from.fmap(left, right);
+        return from.map(left, right);
     }
 }

@@ -16,38 +16,38 @@ public class MaybeTest {
     @Test
     public void justHasValue() {
         final Maybe<Integer> maybeInt = Maybe.just(1);
-        Assert.assertTrue(maybeInt.hasValue());
+        Assert.assertTrue(maybeInt.isPresent());
     }
 
     @Test(expected = IllegalStateException.class)
     public void fetchingValueFromNothingYieldException() {
-        Maybe.nothing().value();
+        Maybe.nothing().get();
     }
 
     @Test
     public void canFetchValueFromJust() {
-        int got = Maybe.just(1).value();
+        int got = Maybe.just(1).get();
         Assert.assertEquals(1, got);
     }
 
     @Test
     public void fmapWithJustYieldsJustDelegateResult() {
         final Maybe<Integer> expected = Maybe.just(1);
-        final Maybe<Integer> got = expected.fmap(UnaryOperator.identity());
+        final Maybe<Integer> got = expected.map(UnaryOperator.identity());
         Assert.assertEquals(expected, got);
     }
 
     @Test
     public void fmapWithJustNothingYieldsNothing() {
         final Maybe<Integer> source = Maybe.nothing();
-        final Maybe<Integer> got = source.fmap(UnaryOperator.identity());
-        Assert.assertFalse(got.hasValue());
+        final Maybe<Integer> got = source.map(UnaryOperator.identity());
+        Assert.assertFalse(got.isPresent());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void fmapWithNullDelegateYieldsException() {
         final Function<Integer, ?> delegate = null;
-        Maybe.just(1).fmap(delegate);
+        Maybe.just(1).map(delegate);
     }
 
     @Test

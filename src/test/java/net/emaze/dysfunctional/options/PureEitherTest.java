@@ -11,6 +11,6 @@ public class PureEitherTest {
     public void pureYieldsRightEither() {
         final O value = O.ONE;
         final Either<String, O> got = new PureEither<String, O>().apply(value);
-        Assert.assertEquals(Optional.of(O.ONE), got.maybe());
+        Assert.assertEquals(Optional.of(O.ONE), got.optional());
     }
 }

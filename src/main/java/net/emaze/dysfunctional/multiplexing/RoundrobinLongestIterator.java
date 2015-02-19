@@ -34,7 +34,7 @@ public class RoundrobinLongestIterator<E> extends ReadOnlyIterator<Optional<E>> 
     }
 
     private boolean empty() {
-        return !prefetched.hasContent() || (!prefetched.getContent().hasNext() && fetchedCounter % memory.size() == 0);
+        return !prefetched.isPresent() || (!prefetched.getContent().hasNext() && fetchedCounter % memory.size() == 0);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class RoundrobinLongestIterator<E> extends ReadOnlyIterator<Optional<E>> 
     }
 
     private void prefetchAndMemorize() {
-        if (prefetched.hasContent()) {
+        if (prefetched.isPresent()) {
             return;
         }
         if (iterators.hasNext()) {

@@ -5,7 +5,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
 
 /**
- * Transforms an either to a maybe containing just() right type or nothing().
+ * Transforms an either to a optional containing just() right type or nothing().
  *
  * @author rferranti
  * @param <LT> the left type parameter
@@ -16,6 +16,6 @@ public class EitherToMaybe<LT, RT> implements Function<Either<LT, RT>, Optional<
     @Override
     public Optional<RT> apply(Either<LT, RT> either) {
         dbc.precondition(either != null, "cannot transform a null either to a maybe");
-        return either.maybe();
+        return either.optional();
     }
 }

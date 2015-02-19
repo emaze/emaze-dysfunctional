@@ -65,7 +65,7 @@ public class EitherTest {
             final Integer rightValue = 1;
             final Either<Object, Integer> either = new Either<Object, Integer>(Optional.empty(), Optional.of(rightValue));
             final Box<Integer> box = new Box<Integer>();
-            either.fmap(UnaryOperator.identity(), Spies.spy1st(UnaryOperator.identity(), box));
+            either.map(UnaryOperator.identity(), Spies.spy1st(UnaryOperator.identity(), box));
             Assert.assertEquals(rightValue, box.getContent());
         }
 
@@ -74,7 +74,7 @@ public class EitherTest {
             final Integer leftValue = 1;
             final Either<Integer, Object> either = new Either<Integer, Object>(Optional.of(leftValue), Optional.empty());
             final Box<Integer> box = new Box<Integer>();
-            either.fmap(Spies.spy1st(UnaryOperator.identity(), box), UnaryOperator.identity());
+            either.map(Spies.spy1st(UnaryOperator.identity(), box), UnaryOperator.identity());
             Assert.assertEquals(leftValue, box.getContent());
         }
 
@@ -106,7 +106,7 @@ public class EitherTest {
 
         @Test
         public void transformingEitherToMaybeYieldsRightSide() {
-            Assert.assertEquals(Optional.of(1), Either.right(1).maybe());
+            Assert.assertEquals(Optional.of(1), Either.right(1).optional());
         }
 
         @Test
@@ -145,13 +145,13 @@ public class EitherTest {
         @Test(expected = IllegalArgumentException.class)
         public void fmapWithNullLeftDelegateYieldsException() {
             final Either<O, O> either = Either.right(O.ONE);
-            either.fmap(null, UnaryOperator.identity());
+            either.map(null, UnaryOperator.identity());
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void fmapWithNullRightDelegateYieldsException() {
             final Either<O, O> either = Either.right(O.ONE);
-            either.fmap(UnaryOperator.identity(), null);
+            either.map(UnaryOperator.identity(), null);
         }
     }
 }

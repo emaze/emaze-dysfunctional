@@ -4,7 +4,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
 
 /**
- * Performs fmap on a triple.
+ * Performs map on a triple.
  *
  * @author rferranti
  * @param <T1> the triple first type
@@ -32,6 +32,6 @@ public class FmapTriple<T1, T2, T3, R1, R2, R3> implements Function<Triple<T1, T
     @Override
     public Triple<R1, R2, R3> apply(Triple<T1, T2, T3> from) {
         dbc.precondition(from != null, "cannot fmap a null triple");
-        return from.fmap(first, second, third);
+        return from.map(first, second, third);
     }
 }

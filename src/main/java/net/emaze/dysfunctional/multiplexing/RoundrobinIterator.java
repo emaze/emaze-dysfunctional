@@ -31,20 +31,20 @@ public class RoundrobinIterator<E> extends ReadOnlyIterator<E> {
     @Override
     public boolean hasNext() {
         prefetchedAndMemorizeNonEmpty();
-        return prefetched.hasContent();
+        return prefetched.isPresent();
     }
 
     @Override
     public E next() {
         prefetchedAndMemorizeNonEmpty();
-        if (!prefetched.hasContent()) {
+        if (!prefetched.isPresent()) {
             throw new NoSuchElementException();
         }
         return prefetched.unload().get().next();
     }
 
     private void prefetchedAndMemorizeNonEmpty() {
-        if (prefetched.hasContent()) {
+        if (prefetched.isPresent()) {
             return;
         }
         while (iterators.hasNext()) {

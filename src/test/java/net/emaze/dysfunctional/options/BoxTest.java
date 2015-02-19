@@ -63,7 +63,7 @@ public class BoxTest {
     @Test
     public void emptyBoxHasNoContent() {
         Box<O> box = Box.empty();
-        Assert.assertFalse(box.hasContent());
+        Assert.assertFalse(box.isPresent());
     }
 
     @Test
@@ -75,7 +75,7 @@ public class BoxTest {
     @Test
     public void loadedBoxHasContent() {
         Box<O> box = Box.of(O.ONE);
-        Assert.assertTrue(box.hasContent());
+        Assert.assertTrue(box.isPresent());
     }
 
     @Test
@@ -88,20 +88,20 @@ public class BoxTest {
     @Test
     public void fmappingAnEmptyBoxYieldsEmptyBox() {
         final Box<O> box = Box.empty();
-        final Box<Integer> mapped = box.fmap(new ConstantDelegate<>(1));
+        final Box<Integer> mapped = box.map(new ConstantDelegate<>(1));
         Assert.assertEquals(mapped, Box.<Integer>empty());
     }
 
     @Test
     public void fmappingLoadedBoxYieldsEmptyBox() {
         final Box<Integer> box = Box.of(1);
-        final Box<Integer> mapped = box.fmap(UnaryOperator.identity());
+        final Box<Integer> mapped = box.map(UnaryOperator.identity());
         Assert.assertEquals(mapped, box);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void fmappingWithNullDelegateYieldsException() {
-        Box.of(1).fmap(null);
+        Box.of(1).map(null);
     }
 
     public static class Dick {

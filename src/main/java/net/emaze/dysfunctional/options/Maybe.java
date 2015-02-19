@@ -11,9 +11,9 @@ import net.emaze.dysfunctional.iterations.EmptyIterator;
 import net.emaze.dysfunctional.iterations.SingletonIterator;
 
 /**
- * Holds an optional value.
+ * Holds an optional get.
  *
- * @param <E> the value type
+ * @param <E> the get type
  * @author rferranti
  */
 public class Maybe<E> implements Iterable<E> {
@@ -26,16 +26,16 @@ public class Maybe<E> implements Iterable<E> {
         this.hasValue = hasValue;
     }
 
-    public boolean hasValue() {
+    public boolean isPresent() {
         return hasValue;
     }
 
-    public E value() {
+    public E get() {
         dbc.state(hasValue, "fetching value from nothing");
         return element;
     }
 
-    public <T> Maybe<T> fmap(Function<E, T> delegate) {
+    public <T> Maybe<T> map(Function<E, T> delegate) {
         dbc.precondition(delegate != null, "cannot perform fmap with a null delegate");
         if (hasValue) {
             return Maybe.just(delegate.apply(element));

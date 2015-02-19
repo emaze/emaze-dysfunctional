@@ -3,8 +3,8 @@ package net.emaze.dysfunctional.ranges;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.BinaryOperator;
 import java.util.Optional;
+import java.util.function.BinaryOperator;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 
 /**

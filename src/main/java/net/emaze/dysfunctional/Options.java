@@ -466,7 +466,7 @@ public abstract class Options {
          * @return the unwrapped monad
          */
         public static <T> Box<T> join(Box<Box<T>> box) {
-            if (box.hasContent()) {
+            if (box.isPresent()) {
                 return box.getContent();
             }
             return Box.empty();

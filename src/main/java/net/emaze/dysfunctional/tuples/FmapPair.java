@@ -1,10 +1,10 @@
 package net.emaze.dysfunctional.tuples;
 
-import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
+import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- * Performs fmap on a pair.
+ * Performs map on a pair.
  *
  * @author rferranti
  * @param <T1> the source pair first type
@@ -27,6 +27,6 @@ public class FmapPair<T1, T2, R1, R2> implements Function<Pair<T1, T2>, Pair<R1,
     @Override
     public Pair<R1, R2> apply(Pair<T1, T2> from) {
         dbc.precondition(from != null, "cannot fmap a null pair");
-        return from.fmap(first, second);
+        return from.map(first, second);
     }
 }

@@ -4,7 +4,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
 
 /**
- * Performs fmap on a {@literal Box<T>}.
+ * Performs map on a {@literal Box<T>}.
  *
  * @param <R> the resulting box type parameter
  * @param <T> the source box type parameter
@@ -22,6 +22,6 @@ public class FmapBox<T, R> implements Function<Box<T>, Box<R>> {
     @Override
     public Box<R> apply(Box<T> from) {
         dbc.precondition(from != null, "cannot fmap a null box");
-        return from.fmap(delegate);
+        return from.map(delegate);
     }
 }

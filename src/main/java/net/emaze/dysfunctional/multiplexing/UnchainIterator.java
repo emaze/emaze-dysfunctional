@@ -35,7 +35,7 @@ public class UnchainIterator<C extends Collection<T>, T> extends ReadOnlyIterato
 
     @Override
     public boolean hasNext() {
-        if (!prefetched.hasContent()) {
+        if (!prefetched.isPresent()) {
             prefetched.setContent(fetch(iterator, channelsSizesProvider));
         }
         return prefetched.getContent().second().size() == prefetched.getContent().first();
@@ -43,7 +43,7 @@ public class UnchainIterator<C extends Collection<T>, T> extends ReadOnlyIterato
 
     @Override
     public C next() {
-        if (prefetched.hasContent()) {
+        if (prefetched.isPresent()) {
             if (prefetched.getContent().second().size() != prefetched.getContent().first()) {
                 throw new NoSuchElementException("iterator is not squared");
             }
