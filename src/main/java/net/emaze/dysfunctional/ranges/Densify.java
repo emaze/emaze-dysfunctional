@@ -45,7 +45,7 @@ public class Densify<T> implements Function<List<DenseRange<T>>, List<DenseRange
         while (nonEmptyRanges.hasNext()) {
             final DenseRange<T> next = nonEmptyRanges.next();
             if (canBeMerged(current, next)) {
-                final Maybe<T> max = new Max<Maybe<T>>(comparator).perform(current.end(), next.end());
+                final Maybe<T> max = new Max<Maybe<T>>(comparator).apply(current.end(), next.end());
                 current = new DenseRange<T>(sequencer, comparator, Endpoint.Include, current.begin(), max, Endpoint.Exclude);
             } else {
                 sortedNonOverlappingRanges.add(current);

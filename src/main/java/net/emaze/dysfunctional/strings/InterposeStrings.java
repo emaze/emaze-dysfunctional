@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.strings;
 import java.util.Iterator;
 import net.emaze.dysfunctional.consumers.ConsumeIntoOutputIterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import net.emaze.dysfunctional.iterations.TransformingIterator;
 import net.emaze.dysfunctional.multiplexing.InterposingIterator;
 import net.emaze.dysfunctional.output.StringOutputIterator;
@@ -14,10 +14,10 @@ import net.emaze.dysfunctional.output.StringOutputIterator;
  * @param <V> 
  * @author rferranti
  */
-public class InterposeStrings<T, V> implements BinaryDelegate<String, Iterator<T>, Iterator<V>> {
+public class InterposeStrings<T, V> implements BiFunction<Iterator<T>, Iterator<V>, String> {
 
     @Override
-    public String perform(Iterator<T> values, Iterator<V> separators) {
+    public String apply(Iterator<T> values, Iterator<V> separators) {
         dbc.precondition(values != null, "calling interpose with a null values");
         dbc.precondition(separators != null, "calling interpose with a null separators");
         final Iterator<String> input = new InterposingIterator<String>(

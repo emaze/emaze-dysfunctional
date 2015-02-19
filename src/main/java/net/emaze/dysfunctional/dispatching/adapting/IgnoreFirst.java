@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -13,7 +13,7 @@ import java.util.function.Function;
  * @param <R> the adapter result type
  * @author rferranti
  */
-public class IgnoreFirst<T1, T2, R> implements BinaryDelegate<R, T1, T2> {
+public class IgnoreFirst<T1, T2, R> implements BiFunction<T1, T2, R> {
 
     private final Function<T2, R> adapted;
 
@@ -23,7 +23,7 @@ public class IgnoreFirst<T1, T2, R> implements BinaryDelegate<R, T1, T2> {
     }
 
     @Override
-    public R perform(T1 first, T2 second) {
+    public R apply(T1 first, T2 second) {
         return adapted.apply(second);
     }
 }

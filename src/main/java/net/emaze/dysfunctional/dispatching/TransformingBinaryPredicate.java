@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 
@@ -16,9 +16,9 @@ import net.emaze.dysfunctional.dispatching.logic.Predicate;
 public class TransformingBinaryPredicate<R, T1, T2> implements BinaryPredicate<T1, T2> {
 
     private final Predicate<R> predicate;
-    private final BinaryDelegate<R, T1, T2> delegate;
+    private final BiFunction<T1, T2, R> delegate;
 
-    public TransformingBinaryPredicate(Predicate<R> predicate, BinaryDelegate<R, T1, T2> delegate) {
+    public TransformingBinaryPredicate(Predicate<R> predicate, BiFunction<T1, T2, R> delegate) {
         dbc.precondition(predicate != null, "cannot compose delegate with a null predicate");
         dbc.precondition(delegate != null, "cannot compose predicate with a null delegate");
         this.predicate = predicate;
@@ -27,6 +27,6 @@ public class TransformingBinaryPredicate<R, T1, T2> implements BinaryPredicate<T
 
     @Override
     public boolean accept(T1 first, T2 second) {
-        return predicate.accept(delegate.perform(first, second));
+        return predicate.accept(delegate.apply(first, second));
     }
 }

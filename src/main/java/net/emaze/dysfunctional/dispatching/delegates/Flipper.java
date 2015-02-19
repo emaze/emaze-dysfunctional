@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
+import java.util.function.BiFunction;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
@@ -8,16 +9,16 @@ import net.emaze.dysfunctional.contracts.dbc;
  *
  * == No dolphins were harmed during the making of this functor ==
  *
- * @param <R> return type of the given binary delegate
  * @param <T> former formal parameter type of the given delegate
  * @param <U> latter formal parameter type of the given delegate
+ * @param <R> return type of the given binary delegate
  * @author rferranti
  */
-public class Flipper<R, T, U> implements BinaryDelegate<R, T, U> {
+public class Flipper<T, U, R> implements BiFunction<T, U, R> {
 
-    private final BinaryDelegate<R, U, T> delegate;
+    private final BiFunction<U, T, R> delegate;
 
-    public Flipper(BinaryDelegate<R, U, T> delegate) {
+    public Flipper(BiFunction<U, T, R> delegate) {
         dbc.precondition(delegate != null, "cannot flip a null binary delegate");
         this.delegate = delegate;
     }
@@ -33,7 +34,7 @@ public class Flipper<R, T, U> implements BinaryDelegate<R, T, U> {
      * @return
      */
     @Override
-    public R perform(T former, U latter) {
-        return delegate.perform(latter, former);
+    public R apply(T former, U latter) {
+        return delegate.apply(latter, former);
     }
 }

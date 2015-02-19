@@ -8,7 +8,7 @@ import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.dispatching.actions.Slacker;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
 import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
@@ -78,28 +78,28 @@ public class SpiesTest {
             final Box<O> result = new Box<O>();
             final Box<O> param1 = new Box<O>();
             final Box<O> param2 = new Box<O>();
-            final BinaryDelegate<O, O, O> spied = Spies.spy(new FirstParam<O, O>(), result, param1, param2);
+            final BiFunction<O, O, O> spied = Spies.spy(new FirstParam<O, O>(), result, param1, param2);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpyResultOfBinaryDelegate() {
             final Box<O> result = new Box<O>();
-            final BinaryDelegate<O, O, O> spied = Spies.spyRes(new FirstParam<O, O>(), result);
+            final BiFunction<O, O, O> spied = Spies.spyRes(new FirstParam<O, O>(), result);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpyFirstParamOfBinaryDelegate() {
             final Box<O> param1 = new Box<O>();
-            final BinaryDelegate<O, O, O> spied = Spies.spy1st(new FirstParam<O, O>(), param1);
+            final BiFunction<O, O, O> spied = Spies.spy1st(new FirstParam<O, O>(), param1);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpySecondParamOfBinaryDelegate() {
             final Box<O> param2 = new Box<O>();
-            final BinaryDelegate<O, O, O> spied = Spies.spy2nd(new FirstParam<O, O>(), param2);
+            final BiFunction<O, O, O> spied = Spies.spy2nd(new FirstParam<O, O>(), param2);
             Assert.assertNotNull(spied);
         }
 
@@ -359,7 +359,7 @@ public class SpiesTest {
 
         @Test
         public void canMonitorABinaryDelegate() {
-            final BinaryDelegate<O, O, O> monitor = Spies.monitor(new FirstParam<O, O>(), accumulator);
+            final BiFunction<O, O, O> monitor = Spies.monitor(new FirstParam<O, O>(), accumulator);
             Assert.assertNotNull(monitor);
         }
 

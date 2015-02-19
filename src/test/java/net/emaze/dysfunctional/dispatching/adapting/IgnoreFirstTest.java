@@ -24,7 +24,7 @@ public class IgnoreFirstTest {
         final Box<O> param = Box.empty();
         final Function<O, O> spy = Spies.spy1st(new Identity<O>(), param);
         final IgnoreFirst<O, O, O> adapted = new IgnoreFirst<O, O, O>(spy);
-        adapted.perform(O.IGNORED, O.ONE);
+        adapted.apply(O.IGNORED, O.ONE);
         Assert.assertEquals(param.getContent(), O.ONE);
     }
 }

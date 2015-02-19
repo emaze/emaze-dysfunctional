@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.reductions;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -14,10 +14,10 @@ import java.util.function.Function;
  */
 public class Reductor<E, R> implements Function<Iterator<E>, R> {
 
-    private final BinaryDelegate<R, R, E> delegate;
+    private final BiFunction<R, E, R> delegate;
     private final R init;
 
-    public Reductor(BinaryDelegate<R, R, E> delegate, R init) {
+    public Reductor(BiFunction<R, E, R> delegate, R init) {
         dbc.precondition(delegate != null, "cannot create a Reductor with a null delegate");
         this.delegate = delegate;
         this.init = init;
@@ -28,7 +28,7 @@ public class Reductor<E, R> implements Function<Iterator<E>, R> {
         dbc.precondition(iterator != null, "consuming a null iterator");
         R current = init;
         while (iterator.hasNext()) {
-            current = delegate.perform(current, iterator.next());
+            current = delegate.apply(current, iterator.next());
         }
         return current;
     }

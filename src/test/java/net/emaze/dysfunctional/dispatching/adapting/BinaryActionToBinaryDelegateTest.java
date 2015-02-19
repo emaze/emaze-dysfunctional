@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -25,8 +25,8 @@ public class BinaryActionToBinaryDelegateTest {
     public void callingAdapterCallsAdapted() {
         final AtomicLong calls = new AtomicLong();
         final BinaryAction<O, O> adaptee = Spies.monitor(new BinaryNoop<O, O>(), calls);
-        final BinaryDelegate<Void, O, O> del = new BinaryActionToBinaryDelegate<O, O>(adaptee);
-        del.perform(O.ONE, O.ANOTHER);
+        final BiFunction<O, O, Void> del = new BinaryActionToBinaryDelegate<>(adaptee);
+        del.apply(O.ONE, O.ANOTHER);
 
         Assert.assertEquals(1l, calls.get());
     }
@@ -35,8 +35,8 @@ public class BinaryActionToBinaryDelegateTest {
     public void callingAdapterPassesFirstArgument() {
         final Box<O> param1 = Box.empty();
         final BinaryAction<O, O> adaptee = Spies.spy1st(new BinaryNoop<O, O>(), param1);
-        final BinaryDelegate<Void, O, O> del = new BinaryActionToBinaryDelegate<O, O>(adaptee);
-        del.perform(O.ONE, O.ANOTHER);
+        final BiFunction<O, O, Void> del = new BinaryActionToBinaryDelegate<>(adaptee);
+        del.apply(O.ONE, O.ANOTHER);
 
         Assert.assertEquals(O.ONE, param1.getContent());
     }
@@ -45,8 +45,8 @@ public class BinaryActionToBinaryDelegateTest {
     public void callingAdapterPassesSecondArgument() {
         final Box<O> param2 = Box.empty();
         final BinaryAction<O, O> adaptee = Spies.spy2nd(new BinaryNoop<O, O>(), param2);
-        final BinaryDelegate<Void, O, O> del = new BinaryActionToBinaryDelegate<O, O>(adaptee);
-        del.perform(O.ONE, O.ANOTHER);
+        final BiFunction<O, O, Void> del = new BinaryActionToBinaryDelegate<>(adaptee);
+        del.apply(O.ONE, O.ANOTHER);
 
         Assert.assertEquals(O.ANOTHER, param2.getContent());
     }

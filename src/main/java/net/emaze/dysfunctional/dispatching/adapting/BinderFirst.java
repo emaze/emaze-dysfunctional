@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -15,10 +15,10 @@ import java.util.function.Function;
  */
 public class BinderFirst<T, U, R> implements Function<U, R> {
 
-    private final BinaryDelegate<R, T, U> adapted;
+    private final BiFunction<T, U, R> adapted;
     private final T first;
 
-    public BinderFirst(BinaryDelegate<R, T, U> adaptee, T first) {
+    public BinderFirst(BiFunction<T, U, R> adaptee, T first) {
         dbc.precondition(adaptee != null, "cannot bind first parameter of a null binary delegate");
         this.adapted = adaptee;
         this.first = first;
@@ -26,6 +26,6 @@ public class BinderFirst<T, U, R> implements Function<U, R> {
 
     @Override
     public R apply(U second) {
-        return adapted.perform(first, second);
+        return adapted.apply(first, second);
     }
 }

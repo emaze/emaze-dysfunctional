@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,8 +17,8 @@ public class BinderThirdTest {
 
     @Test
     public void thirdParamIsCorrectlyBound() {
-        final BinaryDelegate<String,String, String> delegate = new BinderThird<String, String, String, String>(new ConcatenateThreeStrings(), "bound");
-        final String got = delegate.perform("passed", "passed");
+        final BiFunction<String,String, String> delegate = new BinderThird<String, String, String, String>(new ConcatenateThreeStrings(), "bound");
+        final String got = delegate.apply("passed", "passed");
         Assert.assertEquals("passedpassedbound", got);
     }
 

@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 
 /**
@@ -13,15 +13,15 @@ import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
  */
 public class BinaryDelegateToBinaryPredicate<T1, T2> implements BinaryPredicate<T1, T2> {
 
-    private final BinaryDelegate<Boolean, T1, T2> adapted;
+    private final BiFunction<T1, T2, Boolean> adapted;
 
-    public BinaryDelegateToBinaryPredicate(BinaryDelegate<Boolean, T1, T2> adaptee) {
+    public BinaryDelegateToBinaryPredicate(BiFunction<T1, T2, Boolean> adaptee) {
         dbc.precondition(adaptee != null, "cannot adapt a null binary delegate to binary predicate");
         this.adapted = adaptee;
     }
 
     @Override
     public boolean accept(T1 first, T2 second) {
-        return adapted.perform(first, second);
+        return adapted.apply(first, second);
     }
 }

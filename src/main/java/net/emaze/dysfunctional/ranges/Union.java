@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.ranges;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 
@@ -12,7 +12,7 @@ import net.emaze.dysfunctional.order.SequencingPolicy;
  *
  * @author rferranti
  */
-public class Union<T> implements BinaryDelegate<Range<T>, Range<T>, Range<T>> {
+public class Union<T> implements BiFunction<Range<T>, Range<T>, Range<T>> {
 
     private final SequencingPolicy<T> sequencer;
     private final Comparator<Maybe<T>> comparator;
@@ -25,7 +25,7 @@ public class Union<T> implements BinaryDelegate<Range<T>, Range<T>, Range<T>> {
     }
 
     @Override
-    public Range<T> perform(Range<T> lhs, Range<T> rhs) {
+    public Range<T> apply(Range<T> lhs, Range<T> rhs) {
         final List<DenseRange<T>> ranges = new ArrayList<DenseRange<T>>();
         ranges.addAll(lhs.densified());
         ranges.addAll(rhs.densified());

@@ -78,7 +78,7 @@ public class SparseRange<T> implements Range<T> {
 
     @Override
     public String toString() {
-        final String interposed = new InterposeStrings<DenseRange<T>, String>().perform(densified.iterator(), new ConstantIterator<String>(","));
+        final String interposed = new InterposeStrings<DenseRange<T>, String>().apply(densified.iterator(), new ConstantIterator<String>(","));
         return String.format("[%s]", interposed);
     }
 

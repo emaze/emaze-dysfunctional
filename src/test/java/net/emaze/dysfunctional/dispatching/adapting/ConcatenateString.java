@@ -1,11 +1,11 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 
-public class ConcatenateString implements BinaryDelegate<String, String, String> {
+public class ConcatenateString implements BiFunction<String, String, String> {
 
     @Override
-    public String perform(String former, String latter) {
+    public String apply(String former, String latter) {
         return former + latter;
     }
 }

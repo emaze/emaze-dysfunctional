@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.order.Order;
 import net.emaze.dysfunctional.order.SequencingPolicy;
@@ -15,7 +15,7 @@ import net.emaze.dysfunctional.ranges.Range.Endpoint;
  *
  * @author rferranti
  */
-public class Difference<T> implements BinaryDelegate<Range<T>, Range<T>, Range<T>> {
+public class Difference<T> implements BiFunction<Range<T>, Range<T>, Range<T>> {
 
     private final SequencingPolicy<T> sequencer;
     private final Comparator<Maybe<T>> comparator;
@@ -28,7 +28,7 @@ public class Difference<T> implements BinaryDelegate<Range<T>, Range<T>, Range<T
     }
 
     @Override
-    public Range<T> perform(Range<T> lhs, Range<T> rhs) {
+    public Range<T> apply(Range<T> lhs, Range<T> rhs) {
         List<DenseRange<T>> difference = lhs.densified();
         for (DenseRange<T> r : rhs.densified()) {
             difference = difference(difference, r);

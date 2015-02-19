@@ -19,7 +19,7 @@ public class RangeOpsTest {
         final Difference<Integer> difference = new Difference<Integer>(sequencer, comparator, 1);
         final Range<Integer> lhs = r(0, 10);
         final Range<Integer> rhs = r(11, 20);
-        Assert.assertEquals(r(0, 10), difference.perform(lhs, rhs));
+        Assert.assertEquals(r(0, 10), difference.apply(lhs, rhs));
     }
 
     @Test
@@ -27,7 +27,7 @@ public class RangeOpsTest {
         final Difference<Integer> difference = new Difference<Integer>(sequencer, comparator, 1);
         Range<Integer> lhs = r(0, 10);
         Range<Integer> rhs = r(8, 20);
-        Assert.assertEquals(r(0, 7), difference.perform(lhs, rhs));
+        Assert.assertEquals(r(0, 7), difference.apply(lhs, rhs));
     }
 
     @Test
@@ -35,7 +35,7 @@ public class RangeOpsTest {
         final Difference<Integer> difference = new Difference<Integer>(sequencer, comparator, 1);
         Range<Integer> lhs = r(8, 20);
         Range<Integer> rhs = r(0, 10);
-        Assert.assertEquals(r(11, 20), difference.perform(lhs, rhs));
+        Assert.assertEquals(r(11, 20), difference.apply(lhs, rhs));
     }
 
     @Test
@@ -43,14 +43,14 @@ public class RangeOpsTest {
         final Difference<Integer> difference = new Difference<Integer>(sequencer, comparator, 1);
         Range<Integer> lhs = r(0, 20);
         Range<Integer> rhs = r(4, 10);
-        Assert.assertEquals(r(p(0, 3), p(11, 20)), difference.perform(lhs, rhs));
+        Assert.assertEquals(r(p(0, 3), p(11, 20)), difference.apply(lhs, rhs));
     }
 
     @Test
     public void canPerformDifferenceOnSelf() {
         final Difference<Integer> difference = new Difference<Integer>(sequencer, comparator, 1);
         Range<Integer> x = r(0, 20);
-        Assert.assertEquals(r(Endpoint.Include, 0, 0, Endpoint.Exclude), difference.perform(x, x));
+        Assert.assertEquals(r(Endpoint.Include, 0, 0, Endpoint.Exclude), difference.apply(x, x));
     }
 
     @Test
@@ -58,7 +58,7 @@ public class RangeOpsTest {
         final Difference<Integer> difference = new Difference<Integer>(sequencer, comparator, 1);
         Range<Integer> lhs = r(0, 10);
         Range<Integer> rhs = r(0, 100);
-        Assert.assertFalse(difference.perform(lhs, rhs).iterator().hasNext());
+        Assert.assertFalse(difference.apply(lhs, rhs).iterator().hasNext());
     }
 
     @Test
@@ -66,7 +66,7 @@ public class RangeOpsTest {
         final Intersection<Integer> intersection = new Intersection<Integer>(sequencer, comparator, 1);
         Range<Integer> lhs = r(0, 1);
         Range<Integer> rhs = r(2, 3);
-        Assert.assertFalse(intersection.perform(lhs, rhs).iterator().hasNext());
+        Assert.assertFalse(intersection.apply(lhs, rhs).iterator().hasNext());
     }
 
     @Test
@@ -74,7 +74,7 @@ public class RangeOpsTest {
         final Intersection<Integer> intersection = new Intersection<Integer>(sequencer, comparator, 1);
         Range<Integer> lhs = r(p(0, 1), p(2, 4));
         Range<Integer> rhs = r(p(0, 1), p(5, 7));
-        Assert.assertEquals(r(0, 1), intersection.perform(lhs, rhs));
+        Assert.assertEquals(r(0, 1), intersection.apply(lhs, rhs));
     }
 
     @Test
@@ -82,7 +82,7 @@ public class RangeOpsTest {
         final Intersection<Integer> intersection = new Intersection<Integer>(sequencer, comparator, 1);
         Range<Integer> lhs = r(0, 20);
         Range<Integer> rhs = r(4, 10);
-        Assert.assertEquals(r(4, 10), intersection.perform(lhs, rhs));
+        Assert.assertEquals(r(4, 10), intersection.apply(lhs, rhs));
     }
 
     @Test
@@ -90,6 +90,6 @@ public class RangeOpsTest {
         final SymmetricDifference<Integer> symmDiff = new SymmetricDifference<Integer>(sequencer, comparator, 1);
         Range<Integer> lhs = r(0, 15);
         Range<Integer> rhs = r(10, 20);
-        Assert.assertEquals(r(p(0, 9), p(16, 20)), symmDiff.perform(lhs, rhs));
+        Assert.assertEquals(r(p(0, 9), p(16, 20)), symmDiff.apply(lhs, rhs));
     }
 }

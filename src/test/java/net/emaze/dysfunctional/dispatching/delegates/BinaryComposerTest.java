@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import junit.framework.Assert;
 import net.emaze.dysfunctional.testing.O;
@@ -14,21 +15,21 @@ public class BinaryComposerTest {
             public O apply(O o) {
                 return new O(o.toString() + " is composed");
             }
-        }, new BinaryDelegate<O, O, O>() {
+        }, new BiFunction<O, O, O>() {
             @Override
-            public O perform(O former, O latter) {
+            public O apply(O former, O latter) {
                 return former;
             }
         });
-        final O got = composer.perform(O.ONE, O.IGNORED);
+        final O got = composer.apply(O.ONE, O.IGNORED);
         Assert.assertEquals("ONE is composed", got.toString());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void composingWithNullUnaryDelegateYieldsException() {
-        new BinaryComposer<O, O, O, O>(null, new BinaryDelegate<O, O, O>() {
+        new BinaryComposer<O, O, O, O>(null, new BiFunction<O, O, O>() {
             @Override
-            public O perform(O former, O latter) {
+            public O apply(O former, O latter) {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
         });

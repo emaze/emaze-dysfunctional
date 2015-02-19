@@ -1,15 +1,15 @@
 package net.emaze.dysfunctional.reductions;
 
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 
 /**
  *
  * @author rferranti
  */
-public class Count<E> implements BinaryDelegate<Long, Long, E> {
+public class Count<E> implements BiFunction<Long, E, Long> {
 
     @Override
-    public Long perform(Long former, E latter) {
+    public Long apply(Long former, E latter) {
         return former + 1;
     }
 }

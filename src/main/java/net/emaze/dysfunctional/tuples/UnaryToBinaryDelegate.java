@@ -1,18 +1,18 @@
 package net.emaze.dysfunctional.tuples;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
  * Adapts a unary delegate handling pairs to a binary delegate.
  *
- * @param <R> the result type parameter
  * @param <T1> the former type parameter
  * @param <T2> the latter type parameter
+ * @param <R> the result type parameter
  * @author rferranti
  */
-public class UnaryToBinaryDelegate<R, T1, T2> implements BinaryDelegate<R, T1, T2> {
+public class UnaryToBinaryDelegate<T1, T2, R> implements BiFunction<T1, T2, R> {
 
     private final Function<Pair<T1, T2>, R> delegate;
 
@@ -22,7 +22,7 @@ public class UnaryToBinaryDelegate<R, T1, T2> implements BinaryDelegate<R, T1, T
     }
 
     @Override
-    public R perform(T1 first, T2 second) {
+    public R apply(T1 first, T2 second) {
         return delegate.apply(Pair.of(first, second));
     }
 }

@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.numbers;
 import java.util.Iterator;
 import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.Reductions;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import net.emaze.dysfunctional.numbers.operations.IntegerOperations;
 import net.emaze.dysfunctional.numbers.policies.SumPolicy;
 import net.emaze.dysfunctional.testing.O;
@@ -19,14 +19,14 @@ public class SumTest {
 
     @Test
     public void canSumUsingAPolicy() {
-        BinaryDelegate<O, O, O> sum = new Sum<O, O, O>(new SumPolicy<O, O, O>() {
+        BiFunction<O, O, O> sum = new Sum<O, O, O>(new SumPolicy<O, O, O>() {
 
             @Override
             public O sum(O lhs, O rhs) {
                 return O.YET_ANOTHER;
             }
         });
-        final O got = sum.perform(O.ONE, O.ANOTHER);
+        final O got = sum.apply(O.ONE, O.ANOTHER);
         Assert.assertEquals(O.YET_ANOTHER, got);
     }
 

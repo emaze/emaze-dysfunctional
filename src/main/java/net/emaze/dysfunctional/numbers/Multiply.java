@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.numbers;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import net.emaze.dysfunctional.numbers.policies.MultiplyPolicy;
 
 /**
@@ -12,7 +12,7 @@ import net.emaze.dysfunctional.numbers.policies.MultiplyPolicy;
  * @param <T1> the first parameter type
  * @param <T2> the second parameter type
  */
-public class Multiply<R, T1, T2> implements BinaryDelegate<R, T1, T2> {
+public class Multiply<R, T1, T2> implements BiFunction<T1, T2, R> {
 
     private final MultiplyPolicy<R, T1, T2> policy;
 
@@ -22,7 +22,7 @@ public class Multiply<R, T1, T2> implements BinaryDelegate<R, T1, T2> {
     }
 
     @Override
-    public R perform(T1 accumulator, T2 value) {
+    public R apply(T1 accumulator, T2 value) {
         return policy.multiply(accumulator, value);
     }
 }

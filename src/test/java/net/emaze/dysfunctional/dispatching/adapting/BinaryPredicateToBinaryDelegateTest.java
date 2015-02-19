@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.Spies;
@@ -22,8 +22,8 @@ public class BinaryPredicateToBinaryDelegateTest {
 
     @Test// you probably expect this (expected = ClassCastException.class)
     public void passingWrongTypeToErasureJustForwardsToTheNestedAction() {
-        final BinaryDelegate d = new BinaryPredicateToBinaryDelegate<O, O>(new BinaryAlways<O, O>());
-        d.perform(new Object(), new Object());
+        final BiFunction d = new BinaryPredicateToBinaryDelegate<O, O>(new BinaryAlways<O, O>());
+        d.apply(new Object(), new Object());
     }
 
     @Test
@@ -31,7 +31,7 @@ public class BinaryPredicateToBinaryDelegateTest {
         final Box<O> param1 = Box.empty();
         final BinaryPredicate<O, O> spy = Spies.spy1st(new BinaryAlways<O, O>(), param1);
         final BinaryPredicateToBinaryDelegate<O, O> adapted = new BinaryPredicateToBinaryDelegate<O, O>(spy);
-        adapted.perform(O.ONE, O.ANOTHER);
+        adapted.apply(O.ONE, O.ANOTHER);
         Assert.assertEquals(O.ONE, param1.getContent());
     }
 
@@ -40,14 +40,14 @@ public class BinaryPredicateToBinaryDelegateTest {
         final Box<O> param2 = Box.empty();
         final BinaryPredicate<O, O> spy = Spies.spy2nd(new BinaryAlways<O, O>(), param2);
         final BinaryPredicateToBinaryDelegate<O, O> adapted = new BinaryPredicateToBinaryDelegate<O, O>(spy);
-        adapted.perform(O.ONE, O.ANOTHER);
+        adapted.apply(O.ONE, O.ANOTHER);
         Assert.assertEquals(O.ANOTHER, param2.getContent());
     }
 
     @Test
     public void adapterCorrectlyReturnsResultToAdapted() {
         final BinaryPredicateToBinaryDelegate<O, O> adapted = new BinaryPredicateToBinaryDelegate<O, O>(new BinaryAlways<O, O>());
-        final boolean got = adapted.perform(O.IGNORED, O.IGNORED);
+        final boolean got = adapted.apply(O.IGNORED, O.IGNORED);
         Assert.assertEquals(true, got);
     }
 }

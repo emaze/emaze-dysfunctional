@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
@@ -17,7 +18,7 @@ import net.emaze.dysfunctional.contracts.dbc;
  */
 public class Pluck<T, R> implements Function<T, R> {
 
-    private final BinaryDelegate<PropertyDescriptor[], Class<?>, Class<?>> introspector = new JavaIntrospector();
+    private final BiFunction<Class<?>, Class<?>, PropertyDescriptor[]> introspector = new JavaIntrospector();
     private final Method method;
 
     public Pluck(Class<T> klass, String property) {
@@ -38,7 +39,7 @@ public class Pluck<T, R> implements Function<T, R> {
     }
 
     private Method propertyNameToMethod(Class<?> klass, String property) {
-        for (PropertyDescriptor pd : introspector.perform(klass, Object.class)) {
+        for (PropertyDescriptor pd : introspector.apply(klass, Object.class)) {
             if (property.equals(pd.getName())) {
                 return pd.getReadMethod();
             }

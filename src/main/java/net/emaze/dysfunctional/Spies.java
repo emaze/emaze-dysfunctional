@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
@@ -84,17 +84,17 @@ public abstract class Spies {
     /**
      * Proxies a binary delegate spying for result and parameters.
      *
-     * @param <R> the delegate result type
      * @param <T1> the delegate first parameter type
      * @param <T2> the delegate second parameter type
+     * @param <R> the delegate result type
      * @param delegate the delegate to be spied
      * @param result a box that will be containing spied result
      * @param param1 a box that will be containing the first spied parameter
      * @param param2 a box that will be containing the second spied parameter
      * @return the proxied delegate
      */
-    public static <R, T1, T2> BinaryDelegate<R, T1, T2> spy(BinaryDelegate<R, T1, T2> delegate, Box<R> result, Box<T1> param1, Box<T2> param2) {
-        return new BinaryCapturingDelegate<R, T1, T2>(delegate, result, param1, param2);
+    public static <T1, T2, R> BiFunction<T1, T2, R> spy(BiFunction<T1, T2, R> delegate, Box<R> result, Box<T1> param1, Box<T2> param2) {
+        return new BinaryCapturingDelegate<>(delegate, result, param1, param2);
     }
 
     /**
@@ -265,42 +265,42 @@ public abstract class Spies {
     /**
      * Proxies a binary delegate spying for result.
      *
-     * @param <R> the delegate result type
      * @param <T1> the delegate first parameter type
      * @param <T2> the delegate second parameter type
+     * @param <R> the delegate result type
      * @param delegate the delegate that will be spied
      * @param result a box that will be containing spied result
      * @return the proxied delegate
      */
-    public static <R, T1, T2> BinaryDelegate<R, T1, T2> spyRes(BinaryDelegate<R, T1, T2> delegate, Box<R> result) {
+    public static <T1, T2, R> BiFunction<T1, T2, R> spyRes(BiFunction<T1, T2, R> delegate, Box<R> result) {
         return spy(delegate, result, Box.<T1>empty(), Box.<T2>empty());
     }
 
     /**
      * Proxies a binary delegate spying for first parameter.
      *
-     * @param <R> the delegate result type
      * @param <T1> the delegate first parameter type
      * @param <T2> the delegate second parameter type
+     * @param <R> the delegate result type
      * @param delegate the delegate that will be spied
      * @param param1 a box that will be containing the first spied parameter
      * @return the proxied delegate
      */
-    public static <R, T1, T2> BinaryDelegate<R, T1, T2> spy1st(BinaryDelegate<R, T1, T2> delegate, Box<T1> param1) {
+    public static <T1, T2, R> BiFunction<T1, T2, R> spy1st(BiFunction<T1, T2, R> delegate, Box<T1> param1) {
         return spy(delegate, Box.<R>empty(), param1, Box.<T2>empty());
     }
 
     /**
      * Proxies a binary delegate spying for second parameter.
      *
-     * @param <R> the delegate result type
      * @param <T1> the delegate first parameter type
      * @param <T2> the delegate second parameter type
+     * @param <R> the delegate result type
      * @param delegate the delegate that will be spied
      * @param param2 a box that will be containing the second spied parameter
      * @return the proxied delegate
      */
-    public static <R, T1, T2> BinaryDelegate<R, T1, T2> spy2nd(BinaryDelegate<R, T1, T2> delegate, Box<T2> param2) {
+    public static <T1, T2, R> BiFunction<T1, T2, R> spy2nd(BiFunction<T1, T2, R> delegate, Box<T2> param2) {
         return spy(delegate, Box.<R>empty(), Box.<T1>empty(), param2);
     }
 
@@ -616,15 +616,15 @@ public abstract class Spies {
     /**
      * Monitors calls to a binary delegate.
      *
-     * @param <R> the delegate result type
      * @param <T1> the delegate first parameter type
      * @param <T2> the delegate second parameter type
+     * @param <R> the delegate result type
      * @param delegate the delegate that will be monitored
      * @param calls a value holder accumulating calls
      * @return the proxied delegate
      */
-    public static <R, T1, T2> BinaryDelegate<R, T1, T2> monitor(BinaryDelegate<R, T1, T2> delegate, AtomicLong calls) {
-        return new BinaryMonitoringDelegate<R, T1, T2>(delegate, calls);
+    public static <T1, T2, R> BiFunction<T1, T2, R> monitor(BiFunction<T1, T2, R> delegate, AtomicLong calls) {
+        return new BinaryMonitoringDelegate<>(delegate, calls);
     }
 
     /**

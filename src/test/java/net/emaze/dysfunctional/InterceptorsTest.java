@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional;
 
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
@@ -117,37 +117,37 @@ public class InterceptorsTest {
 
         @Test
         public void canInterceptOne() {
-            final BinaryDelegate<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), INTERCEPTOR);
+            final BiFunction<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptTwo() {
-            final BinaryDelegate<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), INTERCEPTOR, INTERCEPTOR);
+            final BiFunction<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), INTERCEPTOR, INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptThree() {
-            final BinaryDelegate<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
+            final BiFunction<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptMany() {
-            final BinaryDelegate<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
+            final BiFunction<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptIterator() {
-            final BinaryDelegate<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), Iterations.iterator(INTERCEPTOR));
+            final BiFunction<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), Iterations.iterator(INTERCEPTOR));
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptIterable() {
-            final BinaryDelegate<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), Iterations.iterable(INTERCEPTOR));
+            final BiFunction<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), Iterations.iterable(INTERCEPTOR));
             Assert.assertNotNull(intercepted);
         }
 

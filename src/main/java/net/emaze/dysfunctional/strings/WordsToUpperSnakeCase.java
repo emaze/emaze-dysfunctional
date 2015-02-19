@@ -26,6 +26,6 @@ public class WordsToUpperSnakeCase implements Function<String[], String> {
     public String apply(String[] words) {
         dbc.precondition(words != null, "cannot upperSnakeCase a null array of words");
         final Iterator<String> values = new TransformingIterator<String, String>(new ArrayIterator<String>(words), toUpper);
-        return new InterposeStrings<String, String>().perform(values, new SingletonIterator<String>(snakeGlyph));
+        return new InterposeStrings<String, String>().apply(values, new SingletonIterator<String>(snakeGlyph));
     }
 }

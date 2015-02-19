@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.options.Box;
@@ -23,7 +23,7 @@ public class BinaryDelegateToBinaryActionTest {
     @Test
     public void adapterCorrectlyPassesFirstParamToAdapted() {
         final Box<O> param1 = Box.empty();
-        final BinaryDelegate<O, O, O> spy = Spies.spy1st(new FirstParam<O, O>(), param1);
+        final BiFunction<O, O, O> spy = Spies.spy1st(new FirstParam<O, O>(), param1);
         final BinaryAction<O, O> adapted = new BinaryDelegateToBinaryAction<O, O, O>(spy);
         adapted.perform(O.ONE, O.IGNORED);
         Assert.assertEquals(O.ONE, param1.getContent());
@@ -32,7 +32,7 @@ public class BinaryDelegateToBinaryActionTest {
     @Test
     public void adapterCorrectlyPassesSecondParamToAdapted() {
         final Box<O> param2 = Box.empty();
-        final BinaryDelegate<O, O, O> spy = Spies.spy2nd(new FirstParam<O, O>(), param2);
+        final BiFunction<O, O, O> spy = Spies.spy2nd(new FirstParam<O, O>(), param2);
         final BinaryAction<O, O> adapted = new BinaryDelegateToBinaryAction<O, O, O>(spy);
         adapted.perform(O.IGNORED, O.ONE);
         Assert.assertEquals(O.ONE, param2.getContent());

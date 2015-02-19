@@ -106,12 +106,12 @@ public class Ranges<T> {
 
     public Range<T> union(Range<T> lhs, Range<T> rhs) {
         final Union<T> union = new Union<T>(sequencer, comparator, emptyValue);
-        return union.perform(lhs, rhs);
+        return union.apply(lhs, rhs);
     }
 
     public Range<T> union(Range<T> first, Range<T> second, Range<T> third) {
         final Union<T> union = new Union<T>(sequencer, comparator, emptyValue);
-        return union.perform(union.perform(first, second), third);
+        return union.apply(union.apply(first, second), third);
     }
 
     public Range<T> union(Iterator<Range<T>> ranges) {
@@ -139,12 +139,12 @@ public class Ranges<T> {
 
     public Range<T> intersect(Range<T> lhs, Range<T> rhs) {
         final Intersection<T> intersection = new Intersection<T>(sequencer, comparator, emptyValue);
-        return intersection.perform(lhs, rhs);
+        return intersection.apply(lhs, rhs);
     }
 
     public Range<T> intersect(Range<T> first, Range<T> second, Range<T> third) {
         final Intersection<T> intersection = new Intersection<T>(sequencer, comparator, emptyValue);
-        return intersection.perform(intersection.perform(first, second), third);
+        return intersection.apply(intersection.apply(first, second), third);
     }
 
     public Range<T> intersect(Iterator<Range<T>> ranges) {
@@ -172,12 +172,12 @@ public class Ranges<T> {
 
     public Range<T> symmetricDifference(Range<T> lhs, Range<T> rhs) {
         final SymmetricDifference<T> symmetricDifference = new SymmetricDifference<T>(sequencer, comparator, emptyValue);
-        return symmetricDifference.perform(lhs, rhs);
+        return symmetricDifference.apply(lhs, rhs);
     }
 
     public Range<T> symmetricDifference(Range<T> first, Range<T> second, Range<T> third) {
         final SymmetricDifference<T> symmetricDifference = new SymmetricDifference<T>(sequencer, comparator, emptyValue);
-        return symmetricDifference.perform(symmetricDifference.perform(first, second), third);
+        return symmetricDifference.apply(symmetricDifference.apply(first, second), third);
     }
 
     public Range<T> symmetricDifference(Iterator<Range<T>> ranges) {
@@ -205,12 +205,12 @@ public class Ranges<T> {
 
     public Range<T> difference(Range<T> lhs, Range<T> rhs) {
         final Difference<T> difference = new Difference<T>(sequencer, comparator, emptyValue);
-        return difference.perform(lhs, rhs);
+        return difference.apply(lhs, rhs);
     }
 
     public Range<T> difference(Range<T> first, Range<T> second, Range<T> third) {
         final Difference<T> difference = new Difference<T>(sequencer, comparator, emptyValue);
-        return difference.perform(difference.perform(first, second), third);
+        return difference.apply(difference.apply(first, second), third);
     }
 
     public Range<T> difference(Iterator<Range<T>> ranges) {

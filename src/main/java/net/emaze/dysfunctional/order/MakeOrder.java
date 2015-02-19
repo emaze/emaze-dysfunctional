@@ -2,15 +2,15 @@ package net.emaze.dysfunctional.order;
 
 import java.util.Comparator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import net.emaze.dysfunctional.tuples.Pair;
 
 /**
  *
- * @param <T> 
+ * @param <T>
  * @author rferranti
  */
-public class MakeOrder<T> implements BinaryDelegate<Pair<T,T>, T, T> {
+public class MakeOrder<T> implements BiFunction<T, T, Pair<T, T>> {
 
     private final Comparator<T> comparator;
 
@@ -20,7 +20,7 @@ public class MakeOrder<T> implements BinaryDelegate<Pair<T,T>, T, T> {
     }
 
     @Override
-    public Pair<T,T> perform(T lhs, T rhs) {
+    public Pair<T, T> apply(T lhs, T rhs) {
         final Order result = Order.of(comparator.compare(lhs, rhs));
         final T lower = Order.GT == result ? rhs : lhs;
         final T higher = Order.GT == result ? lhs : rhs;

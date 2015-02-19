@@ -39,7 +39,7 @@ public class BinaryCapturingDelegateTest {
         final Box<O> param1 = Box.empty();
         final Box<O> param2 = Box.empty();
         final BinaryCapturingDelegate<O, O, O> capturer = new BinaryCapturingDelegate<O, O, O>(new FirstParam<O, O>(), result, param1, param2);
-        capturer.perform(O.ONE, O.ANOTHER);
+        capturer.apply(O.ONE, O.ANOTHER);
         Assert.assertEquals(O.ONE, result.getContent());
     }
     @Test
@@ -48,7 +48,7 @@ public class BinaryCapturingDelegateTest {
         final Box<O> param1 = Box.empty();
         final Box<O> param2 = Box.empty();
         final BinaryCapturingDelegate<O, O, O> capturer = new BinaryCapturingDelegate<O, O, O>(new FirstParam<O, O>(), result, param1, param2);
-        capturer.perform(O.ONE, O.ANOTHER);
+        capturer.apply(O.ONE, O.ANOTHER);
         Assert.assertEquals(O.ONE, param1.getContent());
     }
     @Test
@@ -57,7 +57,7 @@ public class BinaryCapturingDelegateTest {
         final Box<O> param1 = Box.empty();
         final Box<O> param2 = Box.empty();
         final BinaryCapturingDelegate<O, O, O> capturer = new BinaryCapturingDelegate<O, O, O>(new FirstParam<O, O>(), result, param1, param2);
-        capturer.perform(O.ONE, O.ANOTHER);
+        capturer.apply(O.ONE, O.ANOTHER);
         Assert.assertEquals(O.ANOTHER, param2.getContent());
     }
 }

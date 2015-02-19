@@ -2,14 +2,14 @@ package net.emaze.dysfunctional.order;
 
 import java.util.Comparator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 
 /**
  *
  * @param <T> 
  * @author rferranti
  */
-public class Min<T> implements BinaryDelegate<T, T, T> {
+public class Min<T> implements BiFunction<T, T, T> {
 
     private final Comparator<T> comparator;
 
@@ -19,7 +19,7 @@ public class Min<T> implements BinaryDelegate<T, T, T> {
     }
 
     @Override
-    public T perform(T lhs, T rhs) {
+    public T apply(T lhs, T rhs) {
         if (Order.of(comparator.compare(lhs, rhs)).isLte()) {
             return lhs;
         }

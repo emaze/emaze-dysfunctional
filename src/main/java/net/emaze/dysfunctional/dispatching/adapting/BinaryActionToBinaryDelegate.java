@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 
 /**
  * Adapts a binary action to a binary delegate. Adapter result type is Void and
@@ -12,7 +12,7 @@ import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
  * @param <T2> the adapted action second parameter type
  * @author rferranti
  */
-public class BinaryActionToBinaryDelegate<T1, T2> implements BinaryDelegate<Void, T1, T2> {
+public class BinaryActionToBinaryDelegate<T1, T2> implements BiFunction<T1, T2, Void> {
 
     private final BinaryAction<T1, T2> adapted;
 
@@ -22,7 +22,7 @@ public class BinaryActionToBinaryDelegate<T1, T2> implements BinaryDelegate<Void
     }
 
     @Override
-    public Void perform(T1 first, T2 second) {
+    public Void apply(T1 first, T2 second) {
         adapted.perform(first, second);
         return null;
     }

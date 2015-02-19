@@ -2,7 +2,7 @@ package net.emaze.dysfunctional;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.interceptions.BinaryInterceptor;
@@ -116,34 +116,34 @@ public abstract class Interceptors {
     /**
      * Creates a binary interceptor chain.
      *
-     * @param <R> the delegate result type
      * @param <T1> the delegate first parameter type
      * @param <T2> the delegate second parameter type
+     * @param <R> the delegate result type
      * @param innermost the delegate to be intercepted
      * @param interceptor an interceptor
      * @return the resulting delegate
      */
-    public static <R, T1, T2> BinaryDelegate<R, T1, T2> intercept(BinaryDelegate<R, T1, T2> innermost, BinaryInterceptor<T1, T2> interceptor) {
+    public static <T1, T2, R> BiFunction<T1, T2, R> intercept(BiFunction<T1, T2, R> innermost, BinaryInterceptor<T1, T2> interceptor) {
         dbc.precondition(interceptor != null, "cannot create an interceptor chain with a null interceptor");
-        return new BinaryInterceptorChain<R, T1, T2>(innermost, new SingletonIterator<BinaryInterceptor<T1, T2>>(interceptor));
+        return new BinaryInterceptorChain<>(innermost, new SingletonIterator<BinaryInterceptor<T1, T2>>(interceptor));
     }
 
     /**
      * Creates a binary interceptor chain.
      *
-     * @param <R> the delegate result type
      * @param <T1> the delegate first parameter type
      * @param <T2> the delegate second parameter type
+     * @param <R> the delegate result type
      * @param innermost the delegate to be intercepted
      * @param first the first interceptor
      * @param second the second interceptor
      * @return the resulting delegate
      */
-    public static <R, T1, T2> BinaryDelegate<R, T1, T2> intercept(BinaryDelegate<R, T1, T2> innermost, BinaryInterceptor<T1, T2> first, BinaryInterceptor<T1, T2> second) {
+    public static <T1, T2, R> BiFunction<T1, T2, R> intercept(BiFunction<T1, T2, R> innermost, BinaryInterceptor<T1, T2> first, BinaryInterceptor<T1, T2> second) {
         dbc.precondition(first != null, "cannot create an interceptor chain with a null interceptor");
         dbc.precondition(second != null, "cannot create an interceptor chain with a null interceptor");
         final ArrayIterator<BinaryInterceptor<T1, T2>> interceptors = ArrayIterator.of(first, second);
-        return new BinaryInterceptorChain<R, T1, T2>(innermost, interceptors);
+        return new BinaryInterceptorChain<>(innermost, interceptors);
     }
 
     /**
@@ -158,57 +158,57 @@ public abstract class Interceptors {
      * @param third the third interceptor
      * @return the resulting delegate
      */
-    public static <R, T1, T2> BinaryDelegate<R, T1, T2> intercept(BinaryDelegate<R, T1, T2> innermost, BinaryInterceptor<T1, T2> first, BinaryInterceptor<T1, T2> second, BinaryInterceptor<T1, T2> third) {
+    public static <T1, T2, R> BiFunction<T1, T2, R> intercept(BiFunction<T1, T2, R> innermost, BinaryInterceptor<T1, T2> first, BinaryInterceptor<T1, T2> second, BinaryInterceptor<T1, T2> third) {
         dbc.precondition(first != null, "cannot create an interceptor chain with a null interceptor");
         dbc.precondition(second != null, "cannot create an interceptor chain with a null interceptor");
         dbc.precondition(third != null, "cannot create an interceptor chain with a null interceptor");
         final ArrayIterator<BinaryInterceptor<T1, T2>> interceptors = ArrayIterator.of(first, second, third);
-        return new BinaryInterceptorChain<R, T1, T2>(innermost, interceptors);
+        return new BinaryInterceptorChain<>(innermost, interceptors);
     }
 
     /**
      * Creates a binary interceptor chain.
      *
-     * @param <R> the delegate result type
      * @param <T1> the delegate first parameter type
      * @param <T2> the delegate second parameter type
      * @param <I> the binary interceptor type
+     * @param <R> the delegate result type
      * @param innermost the delegate to be intercepted
      * @param interceptors an iterable of interceptors
      * @return the resulting delegate
      */
-    public static <R, T1, T2, I extends BinaryInterceptor<T1, T2>> BinaryDelegate<R, T1, T2> intercept(BinaryDelegate<R, T1, T2> innermost, Iterable<I> interceptors) {
+    public static <T1, T2, I extends BinaryInterceptor<T1, T2>, R> BiFunction<T1, T2, R> intercept(BiFunction<T1, T2, R> innermost, Iterable<I> interceptors) {
         dbc.precondition(interceptors != null, "cannot create an interceptor chain with a null iterable of interceptors");
-        return new BinaryInterceptorChain<R, T1, T2>(innermost, interceptors.iterator());
+        return new BinaryInterceptorChain<>(innermost, interceptors.iterator());
     }
 
     /**
      * Creates a binary interceptor chain.
      *
-     * @param <R> the delegate result type
      * @param <T1> the delegate first parameter type
      * @param <T2> the delegate second parameter type
      * @param <I> the interceptor type
+     * @param <R> the delegate result type
      * @param innermost the delegate to be intercepted
      * @param interceptors an iterator of interceptors
      * @return the resulting delegate
      */
-    public static <R, T1, T2, I extends BinaryInterceptor<T1, T2>> BinaryDelegate<R, T1, T2> intercept(BinaryDelegate<R, T1, T2> innermost, Iterator<I> interceptors) {
-        return new BinaryInterceptorChain<R, T1, T2>(innermost, interceptors);
+    public static <T1, T2, I extends BinaryInterceptor<T1, T2>, R> BiFunction<T1, T2, R> intercept(BiFunction<T1, T2, R> innermost, Iterator<I> interceptors) {
+        return new BinaryInterceptorChain<>(innermost, interceptors);
     }
 
     /**
      * Creates a binary interceptor chain.
      *
-     * @param <R> the delegate result type
      * @param <T1> the delegate first parameter type
      * @param <T2> the delegate second parameter type
+     * @param <R> the delegate result type
      * @param innermost the delegate to be intercepted
      * @param interceptors an array of interceptors
      * @return the resulting delegate
      */
-    public static <R, T1, T2> BinaryDelegate<R, T1, T2> intercept(BinaryDelegate<R, T1, T2> innermost, BinaryInterceptor<T1, T2>... interceptors) {
-        return new BinaryInterceptorChain<R, T1, T2>(innermost, new ArrayIterator<BinaryInterceptor<T1, T2>>(interceptors));
+    public static <T1, T2, R> BiFunction<T1, T2, R> intercept(BiFunction<T1, T2, R> innermost, BinaryInterceptor<T1, T2>... interceptors) {
+        return new BinaryInterceptorChain<>(innermost, new ArrayIterator<BinaryInterceptor<T1, T2>>(interceptors));
     }
 
     /**

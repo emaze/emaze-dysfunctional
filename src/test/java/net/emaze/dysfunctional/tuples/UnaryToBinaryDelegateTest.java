@@ -20,8 +20,8 @@ public class UnaryToBinaryDelegateTest {
     @Test
     public void canAdapt() {
         final Function<Pair<O, O>, Pair<O, O>> delegate = new Identity<Pair<O, O>>();
-        final UnaryToBinaryDelegate<Pair<O, O>, O, O> adapted = new UnaryToBinaryDelegate<Pair<O, O>, O, O>(delegate);
-        Pair<O, O> got = adapted.perform(O.ONE, O.ONE);
+        final UnaryToBinaryDelegate<O, O, Pair<O, O>> adapted = new UnaryToBinaryDelegate<>(delegate);
+        Pair<O, O> got = adapted.apply(O.ONE, O.ONE);
         Assert.assertEquals(Pair.of(O.ONE, O.ONE), got);
     }
 }

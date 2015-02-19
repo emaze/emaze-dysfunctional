@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.interceptions;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import net.emaze.dysfunctional.tuples.Pair;
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,34 +26,34 @@ public class BinaryInterceptorAdapterTest {
     @Test
     public void beforeAndAfterAreCalled() {
         final BucketFillingBinaryInterceptor<String,String> interceptor = new BucketFillingBinaryInterceptor<String, String>();
-        final BinaryDelegate<String, String, String> nestedDelegate = new FirstParam<String, String>();
-        final BinaryDelegate<String, String, String> delegate = new BinaryInterceptorAdapter<String, String, String>(interceptor, nestedDelegate);
-        delegate.perform("useless_param", "useless_param");
+        final BiFunction<String, String, String> nestedDelegate = new FirstParam<String, String>();
+        final BiFunction<String, String, String> delegate = new BinaryInterceptorAdapter<String, String, String>(interceptor, nestedDelegate);
+        delegate.apply("useless_param", "useless_param");
         Assert.assertTrue(interceptor.getBeforeBucket().size() == 1 && interceptor.getAfterBucket().size() == 1);
     }
 
     @Test
     public void beforeAndAfterAreCalledInCaseOfException() {
         final BucketFillingBinaryInterceptor<String,String> interceptor = new BucketFillingBinaryInterceptor<String, String>();
-        final BinaryDelegate<String, String, String> delegate = new BinaryInterceptorAdapter<String, String, String>(interceptor, new BinaryDelegate<String, String, String>() {
+        final BiFunction<String, String, String> delegate = new BinaryInterceptorAdapter<String, String, String>(interceptor, new BiFunction<String, String, String>() {
 
             @Override
-            public String perform(String former, String latter) {
+            public String apply(String former, String latter) {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
         });
         try {
-            delegate.perform("useless_param", "useless_param");
+            delegate.apply("useless_param", "useless_param");
             Assert.fail("delegate is supposed to throw UnsupportedOperationException");
         } catch (UnsupportedOperationException ex) {
             Assert.assertTrue(interceptor.getBeforeBucket().size() == 1 && interceptor.getAfterBucket().size() == 1);
         }
     }
 
-    public static class FirstParam<T1, T2> implements BinaryDelegate<T1, T1, T2> {
+    public static class FirstParam<T1, T2> implements BiFunction<T1, T2, T1> {
 
         @Override
-        public T1 perform(T1 former, T2 latter) {
+        public T1 apply(T1 former, T2 latter) {
             return former;
         }
     }

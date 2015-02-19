@@ -4,7 +4,7 @@ import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.actions.Action;
 import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
 import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
@@ -40,7 +40,7 @@ public abstract class Tuples {
      * @param delegate the delegate to be adapted
      * @return the adapted delegate
      */
-    public static <T, U, R> Function<Pair<T, U>, R> tupled(BinaryDelegate<R, T, U> delegate) {
+    public static <T, U, R> Function<Pair<T, U>, R> tupled(BiFunction<T, U, R> delegate) {
         return new BinaryToUnaryDelegate<T, U, R>(delegate);
     }
 
@@ -116,14 +116,14 @@ public abstract class Tuples {
         /**
          * Adapts a delegate accepting a pair to a binary delegate.
          *
-         * @param <R> the delegate return type
          * @param <T> the delegate first parameter type
          * @param <U> the delegate second parameter type
+         * @param <R> the delegate return type
          * @param delegate the delegate to be adapted
          * @return the adapted delegate
          */
-        public static <R, T, U> BinaryDelegate<R, T, U> untupled(Function<Pair<T, U>, R> delegate) {
-            return new UnaryToBinaryDelegate<R, T, U>(delegate);
+        public static <T, U, R> BiFunction<T, U, R> untupled(Function<Pair<T, U>, R> delegate) {
+            return new UnaryToBinaryDelegate<>(delegate);
         }
 
         /**

@@ -3,7 +3,7 @@ package net.emaze.dysfunctional;
 import java.util.Comparator;
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.order.ComparableComparator;
@@ -31,7 +31,7 @@ public abstract class Reductions {
      * @param init the initial value for reductions
      * @return the reduced value
      */
-    public static <E, R> R reduce(Iterator<E> iterator, BinaryDelegate<R, R, E> delegate, R init) {
+    public static <E, R> R reduce(Iterator<E> iterator, BiFunction<R, E, R> delegate, R init) {
         return new Reductor<>(delegate, init).apply(iterator);
     }
 
@@ -45,7 +45,7 @@ public abstract class Reductions {
      * @param init the initial value for reductions
      * @return the reduced value
      */
-    public static <E, R> R reduce(Iterable<E> iterable, BinaryDelegate<R, R, E> delegate, R init) {
+    public static <E, R> R reduce(Iterable<E> iterable, BiFunction<R, E, R> delegate, R init) {
         dbc.precondition(iterable != null, "cannot call reduce with a null iterable");
         return new Reductor<>(delegate, init).apply(iterable.iterator());
     }
@@ -60,7 +60,7 @@ public abstract class Reductions {
      * @param init the initial value for reductions
      * @return the reduced value
      */
-    public static <E, R> R reduce(E[] array, BinaryDelegate<R, R, E> delegate, R init) {
+    public static <E, R> R reduce(E[] array, BiFunction<R, E, R> delegate, R init) {
         return new Reductor<>(delegate, init).apply(new ArrayIterator<E>(array));
     }
 

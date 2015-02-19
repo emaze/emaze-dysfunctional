@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -14,15 +14,15 @@ import java.util.function.Function;
  */
 public class BinaryToUnaryDelegate<T1, T2, R> implements Function<Pair<T1, T2>, R> {
 
-    private final BinaryDelegate<R, T1, T2> delegate;
+    private final BiFunction<T1, T2, R> delegate;
 
-    public BinaryToUnaryDelegate(BinaryDelegate<R, T1, T2> delegate) {
+    public BinaryToUnaryDelegate(BiFunction<T1, T2, R> delegate) {
         dbc.precondition(delegate != null, "cannot create a BinaryToUnaryDelegate with a null BinaryDelegate");
         this.delegate = delegate;
     }
 
     @Override
     public R apply(Pair<T1, T2> pair) {
-        return delegate.perform(pair.first(), pair.second());
+        return delegate.apply(pair.first(), pair.second());
     }
 }

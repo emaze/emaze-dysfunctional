@@ -6,7 +6,7 @@ import net.emaze.dysfunctional.dispatching.TransformingPredicate;
 import net.emaze.dysfunctional.dispatching.TransformingProvider;
 import net.emaze.dysfunctional.dispatching.TransformingTernaryPredicate;
 import net.emaze.dysfunctional.dispatching.delegates.BinaryComposer;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 import net.emaze.dysfunctional.dispatching.delegates.Composer;
 import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.EndoDelegatesComposer;
@@ -58,16 +58,16 @@ public abstract class Compositions {
     /**
      * Composes a delegate with a binary delegate.
      *
-     * @param <R> unary return type
      * @param <T1> unary parameter type and binary return type
      * @param <T2> the first binary parameter type
      * @param <T3> the second binary parameter type
+     * @param <R> unary return type
      * @param unary the delegate to be composed
      * @param binary the binary delegate to be composed
      * @return the composed binary delegate
      */
-    public static <R, T1, T2, T3> BinaryDelegate<R, T2, T3> compose(Function<T1, R> unary, BinaryDelegate<T1, T2, T3> binary) {
-        return new BinaryComposer<R, T1, T2, T3>(unary, binary);
+    public static <T1, T2, T3, R> BiFunction<T2, T3, R> compose(Function<T1, R> unary, BiFunction<T2, T3, T1> binary) {
+        return new BinaryComposer<>(unary, binary);
     }
 
     /**
@@ -146,7 +146,7 @@ public abstract class Compositions {
      * @param delegate the delegate to be composed
      * @return the composed predicate
      */
-    public static <R, T1, T2> BinaryPredicate<T1, T2> compose(Predicate<R> predicate, BinaryDelegate<R, T1, T2> delegate) {
+    public static <R, T1, T2> BinaryPredicate<T1, T2> compose(Predicate<R> predicate, BiFunction<T1, T2, R> delegate) {
         return new TransformingBinaryPredicate<R, T1, T2>(predicate, delegate);
     }
 

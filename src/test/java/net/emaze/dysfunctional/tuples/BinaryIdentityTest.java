@@ -12,7 +12,7 @@ public class BinaryIdentityTest {
 
     @Test
     public void identitiesOfNullsAreNulls() {
-        final Pair<O, O> got = new BinaryIdentity<O, O>().perform(null, null);
+        final Pair<O, O> got = new BinaryIdentity<O, O>().apply(null, null);
         Assert.assertEquals(new Pair<O,O>(null, null), got);
     }
 

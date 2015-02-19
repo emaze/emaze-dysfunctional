@@ -10,18 +10,18 @@ public class ConstantMapperTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void usingConstantMapperWithNullMapWillThrow() {
-        new ConstantMapper<O, O>().perform(null, O.ONE);
+        new ConstantMapper<O, O>().apply(null, O.ONE);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void missingMappingYieldsException() {
-        new ConstantMapper<O, O>().perform(Collections.<O, O>emptyMap(), O.ONE);
+        new ConstantMapper<O, O>().apply(Collections.<O, O>emptyMap(), O.ONE);
     }
 
     @Test
     public void presentMappingYieldsValue() {
         final Map<O, O> mapping = Collections.singletonMap(O.ONE, O.ANOTHER);
         final ConstantMapper<O, O> mapper = new ConstantMapper<O, O>();
-        Assert.assertEquals(O.ANOTHER, mapper.perform(mapping, O.ONE));
+        Assert.assertEquals(O.ANOTHER, mapper.apply(mapping, O.ONE));
     }
 }

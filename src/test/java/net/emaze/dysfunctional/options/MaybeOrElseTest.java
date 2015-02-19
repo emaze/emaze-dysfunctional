@@ -14,18 +14,18 @@ public class MaybeOrElseTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void callingWithNullMaybeYieldsException() {
-        UNDER_TEST.perform(null, O.ONE);
+        UNDER_TEST.apply(null, O.ONE);
     }
 
     @Test
     public void callingWithJustYieldsJustValue() {
-        final O got = UNDER_TEST.perform(Maybe.just(O.ONE), O.ANOTHER);
+        final O got = UNDER_TEST.apply(Maybe.just(O.ONE), O.ANOTHER);
         Assert.assertEquals(O.ONE, got);
     }
 
     @Test
     public void callingWithNothingYieldsSecondParameter() {
-        final O got = UNDER_TEST.perform(Maybe.<O>nothing(), O.ANOTHER);
+        final O got = UNDER_TEST.apply(Maybe.<O>nothing(), O.ANOTHER);
         Assert.assertEquals(O.ANOTHER, got);
     }
 }
