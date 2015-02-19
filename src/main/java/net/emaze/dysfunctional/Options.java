@@ -184,7 +184,7 @@ public abstract class Options {
          * @return a Optional
          */
         public static <T> Optional<T> lift(T value) {
-            return new LiftMaybe<T>().apply(value);
+            return Optional.ofNullable(value);
         }
 
         /**
@@ -210,7 +210,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<Optional<T>> lifts(Iterator<T> iterator) {
-            return new TransformingIterator<>(iterator, new LiftMaybe<T>());
+            return new TransformingIterator<>(iterator, Optional::ofNullable);
         }
 
         /**
@@ -225,7 +225,7 @@ public abstract class Options {
          */
         public static <T> Iterator<Optional<T>> lifts(Iterable<T> iterable) {
             dbc.precondition(iterable != null, "cannot perform lifts on a null iterable");
-            return new TransformingIterator<>(iterable.iterator(), new LiftMaybe<T>());
+            return new TransformingIterator<>(iterable.iterator(), Optional::ofNullable);
         }
 
         /**
@@ -240,7 +240,7 @@ public abstract class Options {
          */
         public static <T> Iterator<Optional<T>> lifts(T first, T second) {
             final Iterator<T> iterator = Iterations.iterator(first, second);
-            return new TransformingIterator<>(iterator, new LiftMaybe<T>());
+            return new TransformingIterator<>(iterator, Optional::ofNullable);
         }
 
         /**
@@ -257,7 +257,7 @@ public abstract class Options {
          */
         public static <T> Iterator<Optional<T>> lifts(T first, T second, T third) {
             final Iterator<T> iterator = Iterations.iterator(first, second, third);
-            return new TransformingIterator<>(iterator, new LiftMaybe<T>());
+            return new TransformingIterator<>(iterator, Optional::ofNullable);
         }
 
         /**
