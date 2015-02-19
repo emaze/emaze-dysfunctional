@@ -478,7 +478,7 @@ public abstract class Options {
          * @return the resulting either
          */
         public static <LT, RT> Either<LT, RT> pure(RT value) {
-            return new PureEither<LT, RT>().apply(value);
+            return Either.right(value);
         }
 
         /**
@@ -492,7 +492,7 @@ public abstract class Options {
          * @return the resulting either
          */
         public static <LT, RT> Either<LT, RT> pure(Class<LT> leftClass, RT value) {
-            return new PureEither<LT, RT>().apply(value);
+            return Either.right(value);
         }
 
         /**
@@ -506,7 +506,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <LT, RT> Iterator<Either<LT, RT>> pures(Iterator<RT> values) {
-            return new TransformingIterator<>(values, new PureEither<LT, RT>());
+            return new TransformingIterator<>(values, Either::right);
         }
 
         /**
@@ -521,7 +521,7 @@ public abstract class Options {
          */
         public static <LT, RT> Iterator<Either<LT, RT>> pures(Iterable<RT> values) {
             dbc.precondition(values != null, "cannot perform pures on a null iterable");
-            return new TransformingIterator<>(values.iterator(), new PureEither<LT, RT>());
+            return new TransformingIterator<>(values.iterator(), Either::right);
         }
 
         /**
@@ -535,7 +535,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <LT, RT> Iterator<Either<LT, RT>> pures(RT value) {
-            return new TransformingIterator<>(new SingletonIterator<RT>(value), new PureEither<LT, RT>());
+            return new TransformingIterator<>(new SingletonIterator<RT>(value), Either::right);
         }
 
         /**
@@ -550,7 +550,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <LT, RT> Iterator<Either<LT, RT>> pures(RT first, RT second) {
-            return new TransformingIterator<>(Iterations.iterator(first, second), new PureEither<LT, RT>());
+            return new TransformingIterator<>(Iterations.iterator(first, second), Either::right);
         }
 
         /**
@@ -566,7 +566,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <LT, RT> Iterator<Either<LT, RT>> pures(RT first, RT second, RT third) {
-            return new TransformingIterator<>(Iterations.iterator(first, second, third), new PureEither<LT, RT>());
+            return new TransformingIterator<>(Iterations.iterator(first, second, third), Either::right);
         }
 
         /**
@@ -580,7 +580,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <LT, RT> Iterator<Either<LT, RT>> pures(RT... values) {
-            return new TransformingIterator<>(ArrayIterator.of(values), new PureEither<LT, RT>());
+            return new TransformingIterator<>(ArrayIterator.of(values), Either::right);
         }
 
         /**
