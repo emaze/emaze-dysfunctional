@@ -1,24 +1,14 @@
 package net.emaze.dysfunctional;
 
 import java.util.Iterator;
-import net.emaze.dysfunctional.contracts.dbc;
+import java.util.Optional;
 import java.util.function.Function;
+import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.filtering.FilteringIterator;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.iterations.SingletonIterator;
 import net.emaze.dysfunctional.iterations.TransformingIterator;
-import net.emaze.dysfunctional.options.Box;
-import net.emaze.dysfunctional.options.Either;
-import net.emaze.dysfunctional.options.FmapMaybe;
-import net.emaze.dysfunctional.options.FromJust;
-import net.emaze.dysfunctional.options.IsJust;
-import net.emaze.dysfunctional.options.LiftMaybe;
-import java.util.Optional;
-import net.emaze.dysfunctional.options.MaybeLeft;
-import net.emaze.dysfunctional.options.MaybeRight;
-import net.emaze.dysfunctional.options.PureBox;
-import net.emaze.dysfunctional.options.PureEither;
-import net.emaze.dysfunctional.options.PureMaybe;
+import net.emaze.dysfunctional.options.*;
 
 /**
  *
@@ -32,7 +22,7 @@ public abstract class Options {
     public abstract static class Maybes {
 
         /**
-         * Yields Optional.pure() of a get. (Just get) E.g:
+         * Yields Optional.pure() of a value. (Just get) E.g:
          * <code>Maybes.pure(1) -> Optional.of(1)</code>
          *
          * @param <T> the get type
@@ -40,7 +30,7 @@ public abstract class Options {
          * @return the resulting maybe
          */
         public static <T> Optional<T> pure(T value) {
-            return new PureMaybe<T>().apply(value);
+            return Optional.of(value);
         }
 
         /**
@@ -53,7 +43,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<Optional<T>> pures(Iterator<T> values) {
-            return new TransformingIterator<>(values, new PureMaybe<T>());
+            return new TransformingIterator<>(values, Optional::of);
         }
 
         /**
@@ -67,7 +57,7 @@ public abstract class Options {
          */
         public static <T> Iterator<Optional<T>> pures(Iterable<T> values) {
             dbc.precondition(values != null, "cannot perform pures on a null iterable");
-            return new TransformingIterator<>(values.iterator(), new PureMaybe<T>());
+            return new TransformingIterator<>(values.iterator(), Optional::of);
         }
 
         /**
@@ -79,7 +69,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<Optional<T>> pures(T value) {
-            return new TransformingIterator<>(new SingletonIterator<T>(value), new PureMaybe<T>());
+            return new TransformingIterator<>(new SingletonIterator<T>(value), Optional::of);
         }
 
         /**
@@ -93,7 +83,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<Optional<T>> pures(T first, T second) {
-            return new TransformingIterator<>(Iterations.iterator(first, second), new PureMaybe<T>());
+            return new TransformingIterator<>(Iterations.iterator(first, second), Optional::of);
         }
 
         /**
@@ -108,7 +98,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<Optional<T>> pures(T first, T second, T third) {
-            return new TransformingIterator<>(Iterations.iterator(first, second, third), new PureMaybe<T>());
+            return new TransformingIterator<>(Iterations.iterator(first, second, third), Optional::of);
         }
 
         /**
@@ -121,7 +111,7 @@ public abstract class Options {
          * @return the resulting array
          */
         public static <T> Iterator<Optional<T>> pures(T... values) {
-            return new TransformingIterator<>(Iterations.iterator(values), new PureMaybe<T>());
+            return new TransformingIterator<>(Iterations.iterator(values), Optional::of);
         }
 
         /**
