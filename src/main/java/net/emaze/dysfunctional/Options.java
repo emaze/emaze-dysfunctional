@@ -595,7 +595,7 @@ public abstract class Options {
          */
         public static <LT, RT> Iterator<LT> lefts(Iterator<Either<LT, RT>> eithers) {
             dbc.precondition(eithers != null, "can not fetch lefts from a null iterator");
-            final Iterator<Optional<LT>> maybes = new TransformingIterator<>(eithers, new MaybeLeft<LT, RT>());
+            final Iterator<Optional<LT>> maybes = new TransformingIterator<>(eithers, e -> e.left());
             final Iterator<Optional<LT>> justs = new FilteringIterator<Optional<LT>>(maybes, new IsJust<LT>());
             return new TransformingIterator<>(justs, new FromJust<LT>());
         }
@@ -612,7 +612,7 @@ public abstract class Options {
          */
         public static <LT, RT> Iterator<LT> lefts(Iterable<Either<LT, RT>> eithers) {
             dbc.precondition(eithers != null, "can not fetch lefts from a null iterable");
-            final Iterator<Optional<LT>> maybes = new TransformingIterator<>(eithers.iterator(), new MaybeLeft<LT, RT>());
+            final Iterator<Optional<LT>> maybes = new TransformingIterator<>(eithers.iterator(), e -> e.left());
             final Iterator<Optional<LT>> justs = new FilteringIterator<Optional<LT>>(maybes, new IsJust<LT>());
             return new TransformingIterator<>(justs, new FromJust<LT>());
         }
