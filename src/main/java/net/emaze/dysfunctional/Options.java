@@ -462,6 +462,19 @@ public abstract class Options {
             }
             return Box.empty();
         }
+        
+         /**
+         * Transforms a function to another working on box monadic values.
+         *
+         * @param <T> the delegate parameter type
+         * @param <R> the delegate return type
+         * @param function the function to be lifted
+         * @return the transformed delegate
+         */
+        public static <T, R> Function<Box<T>, Box<R>> lift(Function<T, R> function) {
+            dbc.precondition(function != null, "cannot lift to box with a null function");
+            return box -> box.map(function);
+        }
     }
 
     /**

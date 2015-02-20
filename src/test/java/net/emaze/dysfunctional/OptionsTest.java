@@ -8,6 +8,7 @@ import java.util.function.Function;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.options.Either;
 import java.util.Optional;
+import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -149,16 +150,23 @@ public class OptionsTest {
 
         @Test
         public void canLiftFunctionOnOptional() {
-            final Function<Optional<O>, Optional<String>> lifted = Options.Maybes.lift(o -> o.toString());
+            final Function<Optional<O>, Optional<String>> lifted = Options.Maybes.lift(O::toString);
             final Optional<String> got = lifted.apply(Optional.of(O.ONE));
             Assert.assertEquals(Optional.of("ONE"), got);
         }
 
         @Test
+        public void canLiftFunctionOnBox() {
+            final Function<Box<O>, Box<String>> lifted = Options.Boxes.lift(O::toString);
+            final Box<String> got = lifted.apply(Box.of(O.ONE));
+            Assert.assertEquals(Box.of("ONE"), got);
+        }
+
+        @Test
         public void canLiftFunctionsOnEither() {
-            final Function<Either<O, O>, Either<O, String>> lifted = Options.Eithers.lift(n -> n, n -> n.toString());
+            final Function<Either<O, O>, Either<O, String>> lifted = Options.Eithers.lift(UnaryOperator.identity(), O::toString);
             final Either<O, String> got = lifted.apply(Either.right(O.ONE));
-            Assert.assertEquals(Either.right("ONE"), got);
+            Assert.assertEquals(Either.<O, String>right("ONE"), got);
         }
 
         @Test
