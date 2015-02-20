@@ -4,11 +4,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.options.Either;
-import java.util.Optional;
-import java.util.function.UnaryOperator;
+import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,7 +29,8 @@ import org.junit.runners.Suite;
     OptionsTest.Facade.class,
     OptionsTest.LeftAndRight.class,
     OptionsTest.Joins.class,
-    OptionsTest.Pures.class
+    OptionsTest.Pures.class,
+    OptionsTest.Conversions.class
 })
 public class OptionsTest {
 
@@ -486,6 +488,26 @@ public class OptionsTest {
         public void joiningEmptyInnerBoxYieldsNothing() {
             final Box<Box<O>> source = Box.of(Box.<O>empty());
             Assert.assertEquals(Box.<O>empty(), Options.Boxes.join(source));
+        }
+    }
+
+    public static class Conversions {
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotConvertANullOptionalToMaybe() {
+            Options.Maybes.toMaybe(null);
+        }
+
+        @Test
+        public void canConvertAnEmptyOptionalToAnEmptyMaybe() {
+            final Maybe<O> got = Options.Maybes.toMaybe(Optional.empty());
+            Assert.assertEquals(Maybe.<O>nothing(), got);
+        }
+
+        @Test
+        public void canConvertAFullOptionalToAFullMaybe() {
+            final Maybe<O> got = Options.Maybes.toMaybe(Optional.of(O.ONE));
+            Assert.assertEquals(Maybe.just(O.ONE), got);
         }
     }
 

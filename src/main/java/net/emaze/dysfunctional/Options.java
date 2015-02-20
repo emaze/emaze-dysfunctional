@@ -22,6 +22,18 @@ public abstract class Options {
     public abstract static class Maybes {
 
         /**
+         * Convert an Optional to a Maybe.
+         *
+         * @param <T> the optional value type
+         * @param optional the value to be converted
+         * @return the resulting maybe
+         */
+        public static <T> Maybe<T> toMaybe(Optional<T> optional) {
+            dbc.precondition(optional != null, "cannot convert a null optional to a maybe");
+            return new Maybe<>(optional.orElse(null), optional.isPresent());
+        }
+
+        /**
          * Yields Optional.pure() of a value. (Just get) E.g:
          * <code>Maybes.pure(1) -> Optional.of(1)</code>
          *
@@ -462,8 +474,8 @@ public abstract class Options {
             }
             return Box.empty();
         }
-        
-         /**
+
+        /**
          * Transforms a function to another working on box monadic values.
          *
          * @param <T> the delegate parameter type
