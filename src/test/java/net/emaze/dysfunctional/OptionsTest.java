@@ -171,11 +171,6 @@ public class OptionsTest {
         }
 
         @Test(expected = IllegalArgumentException.class)
-        public void rightForNullEitherWillThrow() {
-            Options.Eithers.right(null);
-        }
-
-        @Test(expected = IllegalArgumentException.class)
         public void rightsForNullIteratorWillThrow() {
             final Iterator<Either<O, O>> iter = null;
             Options.Eithers.rights(iter);
@@ -260,20 +255,6 @@ public class OptionsTest {
         public void rightsForEmptyIterableYieldEmptyIterator() {
             final Iterable<Either<O, O>> iterable = Iterations.iterable();
             Assert.assertFalse(Options.Eithers.rights(iterable).hasNext());
-        }
-
-        @Test
-        public void fetchingRightFromLeftYieldsNothing() {
-            final Either<String, O> left = Either.left("an error");
-            final Optional<O> got = Options.Eithers.right(left);
-            Assert.assertEquals(Optional.<O>empty(), got);
-        }
-
-        @Test
-        public void fetchingRightFromRightYieldsJustValue() {
-            final Either<String, O> right = Either.right(O.ONE);
-            final Optional<O> got = Options.Eithers.right(right);
-            Assert.assertEquals(Optional.of(O.ONE), got);
         }
 
         @Test

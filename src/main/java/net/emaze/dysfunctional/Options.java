@@ -347,16 +347,6 @@ public abstract class Options {
             }
             return Optional.empty();
         }
-
-        /**
-         * @param <T> the maybe type parameter
-         * @param element
-         * @return true if the optional element is empty
-         */
-        public static <T> boolean isEmpty(Optional<T> element) {
-            dbc.precondition(element != null, "testing isEmpty against null");
-            return !element.isPresent();
-        }
     }
 
     /**
@@ -625,19 +615,6 @@ public abstract class Options {
             final Iterator<Optional<LT>> maybes = new TransformingIterator<>(eithers.iterator(), e -> e.left());
             final Iterator<Optional<LT>> justs = new FilteringIterator<>(maybes, Optional::isPresent);
             return new TransformingIterator<>(justs, new FromJust<LT>());
-        }
-
-        /**
-         * Get the right value of an Either.
-         *
-         * @param <L> the left type
-         * @param <R> the right type
-         * @param either
-         * @return the optional right value
-         */
-        public static <L, R> Optional<R> right(Either<L, R> either) {
-            dbc.precondition(either != null, "cannot transform a null either to an optional");
-            return either.right();
         }
 
         /**
