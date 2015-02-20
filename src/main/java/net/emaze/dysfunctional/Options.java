@@ -125,7 +125,7 @@ public abstract class Options {
          */
         public static <T> Iterator<T> justs(Iterator<Optional<T>> maybes) {
             final Iterator<Optional<T>> justs = new FilteringIterator<>(maybes, Optional::isPresent);
-            return new TransformingIterator<>(justs, new FromJust<T>());
+            return new TransformingIterator<>(justs, Optional::get);
         }
 
         /**
@@ -140,7 +140,7 @@ public abstract class Options {
         public static <T> Iterator<T> justs(Iterable<Optional<T>> maybes) {
             dbc.precondition(maybes != null, "cannot perform justs on a null iterable of Maybes");
             final Iterator<Optional<T>> justs = new FilteringIterator<>(maybes.iterator(), Optional::isPresent);
-            return new TransformingIterator<>(justs, new FromJust<T>());
+            return new TransformingIterator<>(justs, Optional::get);
         }
 
         /**
@@ -155,7 +155,7 @@ public abstract class Options {
         public static <T> Iterator<T> justs(Optional<T> first, Optional<T> second) {
             final Iterator<Optional<T>> iterator = Iterations.iterator(first, second);
             final Iterator<Optional<T>> justs = Filtering.filter(iterator, Optional::isPresent);
-            return new TransformingIterator<>(justs, new FromJust<T>());
+            return new TransformingIterator<>(justs, Optional::get);
         }
 
         /**
@@ -172,7 +172,7 @@ public abstract class Options {
         public static <T> Iterator<T> justs(Optional<T> first, Optional<T> second, Optional<T> third) {
             final Iterator<Optional<T>> iterator = Iterations.iterator(first, second, third);
             final Iterator<Optional<T>> justs = Filtering.filter(iterator, Optional::isPresent);
-            return new TransformingIterator<>(justs, new FromJust<T>());
+            return new TransformingIterator<>(justs, Optional::get);
         }
 
         /**
@@ -597,7 +597,7 @@ public abstract class Options {
             dbc.precondition(eithers != null, "can not fetch lefts from a null iterator");
             final Iterator<Optional<LT>> maybes = new TransformingIterator<>(eithers, e -> e.left());
             final Iterator<Optional<LT>> justs = new FilteringIterator<>(maybes, Optional::isPresent);
-            return new TransformingIterator<>(justs, new FromJust<LT>());
+            return new TransformingIterator<>(justs, Optional::get);
         }
 
         /**
@@ -614,7 +614,7 @@ public abstract class Options {
             dbc.precondition(eithers != null, "can not fetch lefts from a null iterable");
             final Iterator<Optional<LT>> maybes = new TransformingIterator<>(eithers.iterator(), e -> e.left());
             final Iterator<Optional<LT>> justs = new FilteringIterator<>(maybes, Optional::isPresent);
-            return new TransformingIterator<>(justs, new FromJust<LT>());
+            return new TransformingIterator<>(justs, Optional::get);
         }
 
         /**
@@ -631,7 +631,7 @@ public abstract class Options {
             dbc.precondition(eithers != null, "can not fetch rights from a null iterator");
             final Iterator<Optional<RT>> maybes = new TransformingIterator<>(eithers, e -> e.right());
             final Iterator<Optional<RT>> justs = new FilteringIterator<>(maybes, Optional::isPresent);
-            return new TransformingIterator<>(justs, new FromJust<RT>());
+            return new TransformingIterator<>(justs, Optional::get);
         }
 
         /**
@@ -648,7 +648,7 @@ public abstract class Options {
             dbc.precondition(eithers != null, "can not fetch rights from a null iterator");
             final Iterator<Optional<RT>> maybes = new TransformingIterator<>(eithers.iterator(), e -> e.right());
             final Iterator<Optional<RT>> justs = new FilteringIterator<>(maybes, Optional::isPresent);
-            return new TransformingIterator<>(justs, new FromJust<RT>());
+            return new TransformingIterator<>(justs, Optional::get);
         }
     }
 }
