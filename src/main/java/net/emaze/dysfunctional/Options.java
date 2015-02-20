@@ -196,7 +196,7 @@ public abstract class Options {
          * @return the transformed delegate
          */
         public static <T, R> Function<Optional<T>, Optional<R>> lift(Function<T, R> delegate) {
-            return new FmapMaybe<>(delegate);
+            return o -> o.map(delegate);
         }
 
         /**

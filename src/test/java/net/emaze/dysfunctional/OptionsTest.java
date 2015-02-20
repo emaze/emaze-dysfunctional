@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
-import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.options.Either;
 import java.util.Optional;
@@ -150,9 +149,9 @@ public class OptionsTest {
 
         @Test
         public void canLiftDelegate() {
-            Function<Integer, Integer> delegate = UnaryOperator.identity();
-            Function<Optional<Integer>, Optional<Integer>> lifted = Options.Maybes.lift(delegate);
-            Assert.assertNotNull(lifted);
+            final Function<Optional<Integer>, Optional<String>> lifted = Options.Maybes.lift(n -> n.toString());
+            final Optional<String> got = lifted.apply(Optional.of(1));
+            Assert.assertEquals(Optional.of("1"), got);
         }
 
         @Test
