@@ -3,7 +3,6 @@ package net.emaze.dysfunctional;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.filtering.FilteringIterator;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
@@ -125,7 +124,7 @@ public abstract class Options {
          * @return the resulting iterator
          */
         public static <T> Iterator<T> justs(Iterator<Optional<T>> maybes) {
-            final Iterator<Optional<T>> justs = new FilteringIterator<Optional<T>>(maybes, new IsJust<T>());
+            final Iterator<Optional<T>> justs = new FilteringIterator<>(maybes, Optional::isPresent);
             return new TransformingIterator<>(justs, new FromJust<T>());
         }
 
@@ -140,7 +139,7 @@ public abstract class Options {
          */
         public static <T> Iterator<T> justs(Iterable<Optional<T>> maybes) {
             dbc.precondition(maybes != null, "cannot perform justs on a null iterable of Maybes");
-            final Iterator<Optional<T>> justs = new FilteringIterator<Optional<T>>(maybes.iterator(), new IsJust<T>());
+            final Iterator<Optional<T>> justs = new FilteringIterator<>(maybes.iterator(), Optional::isPresent);
             return new TransformingIterator<>(justs, new FromJust<T>());
         }
 
@@ -155,7 +154,7 @@ public abstract class Options {
          */
         public static <T> Iterator<T> justs(Optional<T> first, Optional<T> second) {
             final Iterator<Optional<T>> iterator = Iterations.iterator(first, second);
-            final Iterator<Optional<T>> justs = Filtering.filter(iterator, new IsJust<T>());
+            final Iterator<Optional<T>> justs = Filtering.filter(iterator, Optional::isPresent);
             return new TransformingIterator<>(justs, new FromJust<T>());
         }
 
@@ -172,7 +171,7 @@ public abstract class Options {
          */
         public static <T> Iterator<T> justs(Optional<T> first, Optional<T> second, Optional<T> third) {
             final Iterator<Optional<T>> iterator = Iterations.iterator(first, second, third);
-            final Iterator<Optional<T>> justs = Filtering.filter(iterator, new IsJust<T>());
+            final Iterator<Optional<T>> justs = Filtering.filter(iterator, Optional::isPresent);
             return new TransformingIterator<>(justs, new FromJust<T>());
         }
 
@@ -607,7 +606,7 @@ public abstract class Options {
         public static <LT, RT> Iterator<LT> lefts(Iterator<Either<LT, RT>> eithers) {
             dbc.precondition(eithers != null, "can not fetch lefts from a null iterator");
             final Iterator<Optional<LT>> maybes = new TransformingIterator<>(eithers, e -> e.left());
-            final Iterator<Optional<LT>> justs = new FilteringIterator<Optional<LT>>(maybes, new IsJust<LT>());
+            final Iterator<Optional<LT>> justs = new FilteringIterator<>(maybes, Optional::isPresent);
             return new TransformingIterator<>(justs, new FromJust<LT>());
         }
 
@@ -624,7 +623,7 @@ public abstract class Options {
         public static <LT, RT> Iterator<LT> lefts(Iterable<Either<LT, RT>> eithers) {
             dbc.precondition(eithers != null, "can not fetch lefts from a null iterable");
             final Iterator<Optional<LT>> maybes = new TransformingIterator<>(eithers.iterator(), e -> e.left());
-            final Iterator<Optional<LT>> justs = new FilteringIterator<Optional<LT>>(maybes, new IsJust<LT>());
+            final Iterator<Optional<LT>> justs = new FilteringIterator<>(maybes, Optional::isPresent);
             return new TransformingIterator<>(justs, new FromJust<LT>());
         }
 
@@ -654,7 +653,7 @@ public abstract class Options {
         public static <LT, RT> Iterator<RT> rights(Iterator<Either<LT, RT>> eithers) {
             dbc.precondition(eithers != null, "can not fetch rights from a null iterator");
             final Iterator<Optional<RT>> maybes = new TransformingIterator<>(eithers, e -> e.right());
-            final Iterator<Optional<RT>> justs = new FilteringIterator<Optional<RT>>(maybes, new IsJust<RT>());
+            final Iterator<Optional<RT>> justs = new FilteringIterator<>(maybes, Optional::isPresent);
             return new TransformingIterator<>(justs, new FromJust<RT>());
         }
 
@@ -671,7 +670,7 @@ public abstract class Options {
         public static <LT, RT> Iterator<RT> rights(Iterable<Either<LT, RT>> eithers) {
             dbc.precondition(eithers != null, "can not fetch rights from a null iterator");
             final Iterator<Optional<RT>> maybes = new TransformingIterator<>(eithers.iterator(), e -> e.right());
-            final Iterator<Optional<RT>> justs = new FilteringIterator<Optional<RT>>(maybes, new IsJust<RT>());
+            final Iterator<Optional<RT>> justs = new FilteringIterator<>(maybes, Optional::isPresent);
             return new TransformingIterator<>(justs, new FromJust<RT>());
         }
     }
