@@ -3,6 +3,7 @@ package net.emaze.dysfunctional;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.filtering.FilteringIterator;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
@@ -346,6 +347,16 @@ public abstract class Options {
                 return maybe.get();
             }
             return Optional.empty();
+        }
+
+        /**
+         * @param <T> the maybe type parameter
+         * @param element
+         * @return true if the optional element is empty
+         */
+        public static <T> boolean isEmpty(Optional<T> element) {
+            dbc.precondition(element != null, "testing isEmpty against null");
+            return !element.isPresent();
         }
     }
 
