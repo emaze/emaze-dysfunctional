@@ -188,15 +188,16 @@ public abstract class Options {
         }
 
         /**
-         * Transforms a delegate to another working on maybe monadic values.
+         * Transforms a function to another working on maybe monadic values.
          *
          * @param <T> the delegate parameter type
          * @param <R> the delegate return type
-         * @param delegate the delegate to be lifted
+         * @param function the function to be lifted
          * @return the transformed delegate
          */
-        public static <T, R> Function<Optional<T>, Optional<R>> lift(Function<T, R> delegate) {
-            return o -> o.map(delegate);
+        public static <T, R> Function<Optional<T>, Optional<R>> lift(Function<T, R> function) {
+            dbc.precondition(function != null, "cannot lift to optional with a null function");
+            return o -> o.map(function);
         }
 
         /**
@@ -581,6 +582,25 @@ public abstract class Options {
          */
         public static <LT, RT> Iterator<Either<LT, RT>> pures(RT... values) {
             return new TransformingIterator<>(ArrayIterator.of(values), Either::right);
+        }
+
+        /**
+         * Lifts functions working on the components of an
+         * {@literal Either<LT, RT>} into a single function working on either
+         * monadic values.
+         *
+         * @param <LT> the left source type
+         * @param <RT> the right source type
+         * @param <LR> the left result type
+         * @param <RR> the right result type
+         * @param left the function to apply to the left element
+         * @param right the function to apply to the right element
+         * @return the resulting function
+         */
+        public static <LT, RT, LR, RR> Function<Either<LT, RT>, Either<LR, RR>> lift(Function<LT, LR> left, Function<RT, RR> right) {
+            dbc.precondition(left != null, "cannot lift to either with a null left function");
+            dbc.precondition(right != null, "cannot lift to either with a null right function");
+            return e -> e.map(left, right);
         }
 
         /**

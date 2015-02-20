@@ -148,10 +148,17 @@ public class OptionsTest {
         }
 
         @Test
-        public void canLiftDelegate() {
-            final Function<Optional<Integer>, Optional<String>> lifted = Options.Maybes.lift(n -> n.toString());
-            final Optional<String> got = lifted.apply(Optional.of(1));
-            Assert.assertEquals(Optional.of("1"), got);
+        public void canLiftFunctionOnOptional() {
+            final Function<Optional<O>, Optional<String>> lifted = Options.Maybes.lift(o -> o.toString());
+            final Optional<String> got = lifted.apply(Optional.of(O.ONE));
+            Assert.assertEquals(Optional.of("ONE"), got);
+        }
+
+        @Test
+        public void canLiftFunctionsOnEither() {
+            final Function<Either<O, O>, Either<O, String>> lifted = Options.Eithers.lift(n -> n, n -> n.toString());
+            final Either<O, String> got = lifted.apply(Either.right(O.ONE));
+            Assert.assertEquals(Either.right("ONE"), got);
         }
 
         @Test
