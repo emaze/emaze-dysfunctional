@@ -18,16 +18,16 @@ public class PreciseWindowIterator<W extends Collection<T>, T> extends ReadOnlyI
 
     private final Iterator<T> iter;
     private final int windowSize;
-    private final Supplier<W> provider;
+    private final Supplier<W> supplier;
     private final Queue<T> window = new LinkedList<T>();
 
-    public PreciseWindowIterator(Iterator<T> iter, int windowSize, Supplier<W> provider) {
+    public PreciseWindowIterator(Iterator<T> iter, int windowSize, Supplier<W> supplier) {
         dbc.precondition(iter != null, "cannot create a PreciseWindowIterator with a null iterator");
         dbc.precondition(windowSize > 0, "cannot create a PreciseWindowIterator with a non positive window size");
-        dbc.precondition(provider != null, "cannot create a CenteredWindowIterator with an null provider");
+        dbc.precondition(supplier != null, "cannot create a CenteredWindowIterator with an null supplier");
         this.iter = iter;
         this.windowSize = windowSize;
-        this.provider = provider;
+        this.supplier = supplier;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class PreciseWindowIterator<W extends Collection<T>, T> extends ReadOnlyI
         if(!hasNext()) { 
             throw new NoSuchElementException("iterator is consumed");
         }
-        final W collection = provider.get();
+        final W collection = supplier.get();
         collection.addAll(window);
         window.remove();
         return collection;

@@ -5,8 +5,8 @@ import java.util.function.BiFunction;
 import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 
 /**
- * Adapts a binary delegate to a ternary delegate. Adapting is performed by
- * ignoring the first parameter passed to the adapted delegate.
+ * Adapts a binary function to a ternary function. Adapting is performed by
+ * ignoring the first parameter passed to the adapted function.
  *
  * @param <R> the adapter result type
  * @param <T1> the adapter first parameter type
@@ -19,7 +19,7 @@ public class IgnoreFirstOfThree<T1, T2, T3, R> implements TriFunction<T1, T2, T3
     private final BiFunction<T2, T3, R> adapted;
 
     public IgnoreFirstOfThree(BiFunction<T2, T3, R> adaptee) {
-        dbc.precondition(adaptee != null, "cannot ignore first parameter of a null binary delegate");
+        dbc.precondition(adaptee != null, "cannot ignore first parameter of a null binary function");
         this.adapted = adaptee;
     }
 

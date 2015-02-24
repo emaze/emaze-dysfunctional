@@ -27,15 +27,15 @@ public class BinaryInterceptorAdapterTest {
     public void beforeAndAfterAreCalled() {
         final BucketFillingBinaryInterceptor<String,String> interceptor = new BucketFillingBinaryInterceptor<String, String>();
         final BiFunction<String, String, String> nestedDelegate = new FirstParam<String, String>();
-        final BiFunction<String, String, String> delegate = new BinaryInterceptorAdapter<String, String, String>(interceptor, nestedDelegate);
-        delegate.apply("useless_param", "useless_param");
+        final BiFunction<String, String, String> function = new BinaryInterceptorAdapter<String, String, String>(interceptor, nestedDelegate);
+        function.apply("useless_param", "useless_param");
         Assert.assertTrue(interceptor.getBeforeBucket().size() == 1 && interceptor.getAfterBucket().size() == 1);
     }
 
     @Test
     public void beforeAndAfterAreCalledInCaseOfException() {
         final BucketFillingBinaryInterceptor<String,String> interceptor = new BucketFillingBinaryInterceptor<String, String>();
-        final BiFunction<String, String, String> delegate = new BinaryInterceptorAdapter<String, String, String>(interceptor, new BiFunction<String, String, String>() {
+        final BiFunction<String, String, String> function = new BinaryInterceptorAdapter<String, String, String>(interceptor, new BiFunction<String, String, String>() {
 
             @Override
             public String apply(String former, String latter) {
@@ -43,8 +43,8 @@ public class BinaryInterceptorAdapterTest {
             }
         });
         try {
-            delegate.apply("useless_param", "useless_param");
-            Assert.fail("delegate is supposed to throw UnsupportedOperationException");
+            function.apply("useless_param", "useless_param");
+            Assert.fail("function is supposed to throw UnsupportedOperationException");
         } catch (UnsupportedOperationException ex) {
             Assert.assertTrue(interceptor.getBeforeBucket().size() == 1 && interceptor.getAfterBucket().size() == 1);
         }

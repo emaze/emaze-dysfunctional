@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
-import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
+import net.emaze.dysfunctional.contracts.dbc;
 
 public class TripleRotateLeft<T1, T2, T3> implements Function<Triple<T1, T2, T3>, Triple<T2, T3, T1>> {
 

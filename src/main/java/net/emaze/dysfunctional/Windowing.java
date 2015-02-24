@@ -63,11 +63,11 @@ public abstract class Windowing {
      * @param <T> the iterator element type
      * @param windowSize the window size
      * @param iterator the iterable to be adapted
-     * @param provider the provider providing the window collection
+     * @param supplier the supplier providing the window collection
      * @return the window iterator
      */
-    public static <W extends Collection<T>, T> Iterator<W> window(int windowSize, Iterator<T> iterator, Supplier<W> provider) {
-        return new PreciseWindowIterator<W, T>(iterator, windowSize, provider);
+    public static <W extends Collection<T>, T> Iterator<W> window(int windowSize, Iterator<T> iterator, Supplier<W> supplier) {
+        return new PreciseWindowIterator<W, T>(iterator, windowSize, supplier);
     }
 
     /**
@@ -79,12 +79,12 @@ public abstract class Windowing {
      * @param <T> the iterator element type
      * @param windowSize the window size
      * @param iterable the iterable to be adapted
-     * @param provider the provider providing the window collection
+     * @param supplier the supplier providing the window collection
      * @return the window iterator
      */
-    public static <W extends Collection<T>, T> Iterator<W> window(int windowSize, Iterable<T> iterable, Supplier<W> provider) {
+    public static <W extends Collection<T>, T> Iterator<W> window(int windowSize, Iterable<T> iterable, Supplier<W> supplier) {
         dbc.precondition(iterable != null, "cannot create a window iterator from a null iterable");
-        return new PreciseWindowIterator<W, T>(iterable.iterator(), windowSize, provider);
+        return new PreciseWindowIterator<W, T>(iterable.iterator(), windowSize, supplier);
     }
 
     /**
@@ -130,11 +130,11 @@ public abstract class Windowing {
      * @param <T> the iterator element type
      * @param windowSize the window size (must be an odd positive integer)
      * @param iterator the iterator to be adapted
-     * @param provider the provider providing the window collection
+     * @param supplier the supplier providing the window collection
      * @return the window iterator
      */
-    public static <W extends Collection<Optional<T>>, T> Iterator<W> centered(int windowSize, Iterator<T> iterator, Supplier<W> provider) {
-        return new CenteredWindowIterator<W, T>(iterator, windowSize, provider);
+    public static <W extends Collection<Optional<T>>, T> Iterator<W> centered(int windowSize, Iterator<T> iterator, Supplier<W> supplier) {
+        return new CenteredWindowIterator<W, T>(iterator, windowSize, supplier);
     }
 
     /**
@@ -147,12 +147,12 @@ public abstract class Windowing {
      * @param <T> the iterator element type
      * @param windowSize the window size (must be an odd positive integer)
      * @param iterable the iterable to be adapted
-     * @param provider the provider providing the window collection
+     * @param supplier the supplier providing the window collection
      * @return the window iterator
      */
-    public static <W extends Collection<Optional<T>>, T> Iterator<W> centered(int windowSize, Iterable<T> iterable, Supplier<W> provider) {
+    public static <W extends Collection<Optional<T>>, T> Iterator<W> centered(int windowSize, Iterable<T> iterable, Supplier<W> supplier) {
         dbc.precondition(iterable != null, "cannot create a centered window iterator from a null iterable");
-        return new CenteredWindowIterator<W, T>(iterable.iterator(), windowSize, provider);
+        return new CenteredWindowIterator<W, T>(iterable.iterator(), windowSize, supplier);
     }
 
     /**
@@ -176,7 +176,7 @@ public abstract class Windowing {
     /**
      * Adapts an iterator to an iterator showing predecessors of the contained
      * elements. Copy semantics of the internal queue yielded is controlled by
-     * the copy delegate. e.g:
+     * the copy function. e.g:
      * <code>
      * iterator: [1,2,3,4], trailSize: 3 ->
      * [[Nothing, Nothing, Just 1],[Nothing Just 1, Just 2], [Just 1, Just 2, Just 3], [Just 2, Just 3, Just 4]]
@@ -215,7 +215,7 @@ public abstract class Windowing {
     /**
      * Adapts an iterator to an iterator showing predecessors of the contained
      * elements. Copy semantics of the internal queue yielded is controlled by
-     * the copy delegate. e.g:
+     * the copy function. e.g:
      * <code>
      * iterable: [1,2,3,4], trailSize: 3 ->
      * [[Nothing, Nothing, Just 1],[Nothing Just 1, Just 2], [Just 1, Just 2, Just 3], [Just 2, Just 3, Just 4]]

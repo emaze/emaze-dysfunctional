@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
-import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
+import net.emaze.dysfunctional.contracts.dbc;
 
 /**
  * Performs map on a triple.
@@ -21,9 +21,9 @@ public class FmapTriple<T1, T2, T3, R1, R2, R3> implements Function<Triple<T1, T
     private final Function<T3, R3> third;
 
     public FmapTriple(Function<T1, R1> first, Function<T2, R2> second, Function<T3, R3> third) {
-        dbc.precondition(first != null, "cannot create FmapTriple with a null first delegate");
-        dbc.precondition(second != null, "cannot create FmapTriple with a null second delegate");
-        dbc.precondition(third != null, "cannot create FmapTriple with a null third delegate");
+        dbc.precondition(first != null, "cannot create FmapTriple with a null first function");
+        dbc.precondition(second != null, "cannot create FmapTriple with a null second function");
+        dbc.precondition(third != null, "cannot create FmapTriple with a null third function");
         this.first = first;
         this.second = second;
         this.third = third;

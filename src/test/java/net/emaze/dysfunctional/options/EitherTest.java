@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.options;
 import java.util.Optional;
 import java.util.function.Function;
 import net.emaze.dysfunctional.Spies;
-import net.emaze.dysfunctional.dispatching.delegates.ConstantDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantFunction;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -83,7 +83,7 @@ public class EitherTest {
             final Integer rightValue = 1;
             final Either<Object, Integer> either = new Either<Object, Integer>(Optional.empty(), Optional.of(rightValue));
             final Box<Integer> box = new Box<Integer>();
-            either.fold(Function.identity(), Spies.spy1st(new ConstantDelegate<>(null), box));
+            either.fold(Function.identity(), Spies.spy1st(new ConstantFunction<>(null), box));
             Assert.assertEquals(rightValue, box.getContent());
         }
 
@@ -92,7 +92,7 @@ public class EitherTest {
             final Integer leftValue = 1;
             final Either<Integer, Object> either = new Either<Integer, Object>(Optional.of(leftValue), Optional.empty());
             final Box<Integer> box = new Box<Integer>();
-            either.fold(Spies.spy1st(new ConstantDelegate<>(null), box), Function.identity());
+            either.fold(Spies.spy1st(new ConstantFunction<>(null), box), Function.identity());
             Assert.assertEquals(leftValue, box.getContent());
         }
 

@@ -5,12 +5,12 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
- * Binary to unary delegate adapter. Adapting is performed by currying the first
- * parameter of the adapted binary delegate.
+ * Binary to unary function adapter. Adapting is performed by currying the first
+ * parameter of the adapted binary function.
  *
- * @param <T> the adapted delegate former element type
- * @param <U> the adapted delegate latter element type
- * @param <R> the adapted delegate result type
+ * @param <T> the adapted function former element type
+ * @param <U> the adapted function latter element type
+ * @param <R> the adapted function result type
  * @author rferranti
  */
 public class BinderFirst<T, U, R> implements Function<U, R> {
@@ -19,7 +19,7 @@ public class BinderFirst<T, U, R> implements Function<U, R> {
     private final T first;
 
     public BinderFirst(BiFunction<T, U, R> adaptee, T first) {
-        dbc.precondition(adaptee != null, "cannot bind first parameter of a null binary delegate");
+        dbc.precondition(adaptee != null, "cannot bind first parameter of a null binary function");
         this.adapted = adaptee;
         this.first = first;
     }

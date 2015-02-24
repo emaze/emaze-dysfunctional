@@ -17,8 +17,8 @@ public class BinderSecondOfThreeTest {
 
     @Test
     public void secondParamIsCorrectlyBound() {
-        final BiFunction<String,String, String> delegate = new BinderSecondOfThree<String, String, String, String>(new ConcatenateThreeStrings(), "bound");
-        final String got = delegate.apply("passed", "passed");
+        final BiFunction<String,String, String> function = new BinderSecondOfThree<String, String, String, String>(new ConcatenateThreeStrings(), "bound");
+        final String got = function.apply("passed", "passed");
         Assert.assertEquals("passedboundpassed", got);
     }
 

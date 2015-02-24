@@ -18,8 +18,8 @@ public class FmapPair<T1, T2, R1, R2> implements Function<Pair<T1, T2>, Pair<R1,
     private final Function<T2, R2> second;
 
     public FmapPair(Function<T1, R1> first, Function<T2, R2> second) {
-        dbc.precondition(first != null, "cannot create FmapPair with a null first delegate");
-        dbc.precondition(second != null, "cannot create FmapPair with a null second delegate");
+        dbc.precondition(first != null, "cannot create FmapPair with a null first function");
+        dbc.precondition(second != null, "cannot create FmapPair with a null second function");
         this.first = first;
         this.second = second;
     }

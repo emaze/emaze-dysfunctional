@@ -35,16 +35,16 @@ public class Maybe<E> implements Iterable<E> {
         return element;
     }
 
-    public <T> Maybe<T> map(Function<E, T> delegate) {
-        dbc.precondition(delegate != null, "cannot perform fmap with a null delegate");
+    public <T> Maybe<T> map(Function<E, T> function) {
+        dbc.precondition(function != null, "cannot perform fmap with a null function");
         if (hasValue) {
-            return Maybe.just(delegate.apply(element));
+            return Maybe.just(function.apply(element));
         }
         return Maybe.nothing();
     }
 
     public <T> T fold(Supplier<T> ifNothing, Function<E, T> ifJust) {
-        dbc.precondition(ifJust != null, "cannot perform fold with a null delegate");
+        dbc.precondition(ifJust != null, "cannot perform fold with a null function");
         return hasValue ? ifJust.apply(element) : ifNothing.get();
     }
 

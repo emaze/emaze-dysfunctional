@@ -47,13 +47,13 @@ public class TrySleepTest {
 
     @Test(expected = ClassCastException.class)
     public void passingWrongTypeForTimeUnitInErasureYieldsException() {
-        BiConsumer action = sleeper;
-        action.accept(1l, new Object());
+        BiConsumer consumer = sleeper;
+        consumer.accept(1l, new Object());
     }
 
     @Test(expected = ClassCastException.class)
     public void passingWrongTypeForDurationInErasureYieldsException() {
-        BiConsumer action = sleeper;
-        action.accept(new Object(), TimeUnit.MILLISECONDS);
+        BiConsumer consumer = sleeper;
+        consumer.accept(new Object(), TimeUnit.MILLISECONDS);
     }
 }

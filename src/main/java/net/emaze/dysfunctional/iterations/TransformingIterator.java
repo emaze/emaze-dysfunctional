@@ -5,7 +5,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
 
 /**
- * Decorates an iterator adapting (via a delegate) consumed elements
+ * Decorates an iterator adapting (via a function) consumed elements
  *
  * @param <R> the resulting element type
  * @param <T> the source element type

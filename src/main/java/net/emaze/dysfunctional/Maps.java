@@ -20,8 +20,8 @@ public abstract class Maps {
         return new MapBuilder<K, V>(map);
     }
 
-    public static <K, V> MapBuilder<K, V> from(Supplier<Map<K, V>> provider) {
-        return new MapBuilder<K, V>(provider.get());
+    public static <K, V> MapBuilder<K, V> from(Supplier<Map<K, V>> supplier) {
+        return new MapBuilder<K, V>(supplier.get());
     }
 
     public static <K, V> MapBuilder<K, V> builder() {
@@ -42,8 +42,8 @@ public abstract class Maps {
 
     public abstract static class Nested {
 
-        public static <K> NestedMapBuilder<K> from(Supplier<Map<K, Object>> provider) {
-            return new NestedMapBuilder<K>(provider);
+        public static <K> NestedMapBuilder<K> from(Supplier<Map<K, Object>> supplier) {
+            return new NestedMapBuilder<K>(supplier);
         }
 
         public static <K> NestedMapBuilder<K> builder() {
@@ -62,8 +62,8 @@ public abstract class Maps {
             return new NestedMapBuilder<K>(narrowed(new TreeMapFactory<K, Object>(keyComp)));
         }
 
-        private static <K, M extends Map<K, Object>> Supplier<Map<K, Object>> narrowed(Supplier<M> provider) {
-            return Compositions.compose(new Vary<M, Map<K, Object>>(), provider);
+        private static <K, M extends Map<K, Object>> Supplier<Map<K, Object>> narrowed(Supplier<M> supplier) {
+            return Compositions.compose(new Vary<M, Map<K, Object>>(), supplier);
         }
     }
 }

@@ -11,6 +11,6 @@ public class TernaryNoopTest {
 
     @Test
     public void canDoNothingWithNulls() {
-        new TernaryNoop<O, O, O>().perform(null, null, null);
+        new TernaryNoop<O, O, O>().accept(null, null, null);
     }
 }

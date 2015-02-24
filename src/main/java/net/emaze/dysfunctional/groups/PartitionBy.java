@@ -9,7 +9,7 @@ import java.util.function.Predicate;
 import net.emaze.dysfunctional.tuples.Pair;
 
 /**
- * A unary delegate partitioning elements from the passed iterator. Partitioning
+ * A unary function partitioning elements from the passed iterator. Partitioning
  * is done by evaluating the passed predicate.
  *
  * @param <T> the element type
@@ -25,8 +25,8 @@ public class PartitionBy<T, CA extends Collection<T>, CR extends Collection<T>> 
 
     public PartitionBy(Predicate<T> partitioner, Supplier<CA> acceptedCollectionProvider, Supplier<CR> rejectedCollectionProvider) {
         dbc.precondition(partitioner != null, "cannot partition using a null partitioner");
-        dbc.precondition(acceptedCollectionProvider != null, "cannot partition using a null collection provider for accepted values");
-        dbc.precondition(rejectedCollectionProvider != null, "cannot partition using a null collection provider for rejected values");
+        dbc.precondition(acceptedCollectionProvider != null, "cannot partition using a null collection supplier for accepted values");
+        dbc.precondition(rejectedCollectionProvider != null, "cannot partition using a null collection supplier for rejected values");
         this.partitioner = partitioner;
         this.acceptedCollectionProvider = acceptedCollectionProvider;
         this.rejectedCollectionProvider = rejectedCollectionProvider;

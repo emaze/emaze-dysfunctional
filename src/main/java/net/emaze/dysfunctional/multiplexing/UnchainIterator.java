@@ -54,7 +54,7 @@ public class UnchainIterator<C extends Collection<T>, T> extends ReadOnlyIterato
 
     private Pair<Integer, C> fetch(Iterator<T> iter, Supplier<Optional<Integer>> sizeProvider) {
         final Optional<Integer> maybeChannelSize = sizeProvider.get();
-        dbc.state(maybeChannelSize.isPresent(), "unexpected channel size request (provider returned Nothing)");
+        dbc.state(maybeChannelSize.isPresent(), "unexpected channel size request (supplier returned Nothing)");
         final int channelSize = maybeChannelSize.get();
         final C result = channelProvider.get();
         for (int counter = 0; counter != channelSize && iter.hasNext(); ++counter) {

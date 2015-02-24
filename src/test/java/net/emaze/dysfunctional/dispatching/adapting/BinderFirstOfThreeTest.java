@@ -18,8 +18,8 @@ public class BinderFirstOfThreeTest {
 
     @Test
     public void thirdParamIsCorrectlyBound() {
-        final BiFunction<String,String, String> delegate = new BinderFirstOfThree<String, String, String, String>(new ConcatenateThreeStrings(), "bound");
-        final String got = delegate.apply("passed", "passed");
+        final BiFunction<String,String, String> function = new BinderFirstOfThree<String, String, String, String>(new ConcatenateThreeStrings(), "bound");
+        final String got = function.apply("passed", "passed");
         Assert.assertEquals("boundpassedpassed", got);
     }
 

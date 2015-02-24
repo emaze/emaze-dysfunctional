@@ -39,7 +39,7 @@ public class UnchainWithExactChannelSizeIterator<C extends Collection<Optional<T
     public C next() {
         final C out = channelProvider.get();
         final Optional<Integer> maybeChannelSize = channelsSizesProvider.get();
-        dbc.state(maybeChannelSize.isPresent(), "unexpected channel size request (provider returned Nothing)");
+        dbc.state(maybeChannelSize.isPresent(), "unexpected channel size request (supplier returned Nothing)");
         final int channelSize = maybeChannelSize.get();
         for (int i = 0; i != channelSize; ++i) {
             out.add(iterator.next());

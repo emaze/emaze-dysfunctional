@@ -20,7 +20,7 @@ import net.emaze.dysfunctional.consumers.MaybeLastElement;
 import net.emaze.dysfunctional.consumers.MaybeOneElement;
 import net.emaze.dysfunctional.consumers.OneElement;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantSupplier;
 import net.emaze.dysfunctional.filtering.AtIndex;
 import net.emaze.dysfunctional.filtering.FilteringIterator;
 import net.emaze.dysfunctional.filtering.Nth;
@@ -48,7 +48,7 @@ public abstract class Consumers {
      */
     public static <R extends Collection<E>, E> R all(Iterator<E> iterator, R collection) {
         dbc.precondition(collection != null, "cannot call all with a null collection");
-        final Function<Iterator<E>, R> consumer = new ConsumeIntoCollection<>(new ConstantProvider<R>(collection));
+        final Function<Iterator<E>, R> consumer = new ConsumeIntoCollection<>(new ConstantSupplier<R>(collection));
         return consumer.apply(iterator);
     }
 
@@ -64,7 +64,7 @@ public abstract class Consumers {
     public static <R extends Collection<E>, E> R all(Iterable<E> iterable, R collection) {
         dbc.precondition(iterable != null, "cannot call all with a null iterable");
         dbc.precondition(collection != null, "cannot call all with a null collection");
-        final Function<Iterator<E>, R> consumer = new ConsumeIntoCollection<>(new ConstantProvider<R>(collection));
+        final Function<Iterator<E>, R> consumer = new ConsumeIntoCollection<>(new ConstantSupplier<R>(collection));
         return consumer.apply(iterable.iterator());
     }
 
@@ -79,53 +79,53 @@ public abstract class Consumers {
      */
     public static <R extends Collection<E>, E> R all(E[] array, R collection) {
         dbc.precondition(collection != null, "cannot call all with a null collection");
-        final Function<Iterator<E>, R> consumer = new ConsumeIntoCollection<>(new ConstantProvider<R>(collection));
+        final Function<Iterator<E>, R> consumer = new ConsumeIntoCollection<>(new ConstantSupplier<R>(collection));
         return consumer.apply(new ArrayIterator<>(array));
     }
 
     /**
      * Yields all elements of the iterator (in a collection created by the
-     * provider).
+     * supplier).
      *
      * @param <R> the returned collection type
      * @param <E> the collection element type
      * @param iterator the iterator that will be consumed
-     * @param provider the factory used to get the returned collection
+     * @param supplier the factory used to get the returned collection
      * @return a collection filled with iterator values
      */
-    public static <E, R extends Collection<E>> R all(Iterator<E> iterator, Supplier<R> provider) {
-        final Function<Iterator<E>, R> consumer = new ConsumeIntoCollection<>(provider);
+    public static <E, R extends Collection<E>> R all(Iterator<E> iterator, Supplier<R> supplier) {
+        final Function<Iterator<E>, R> consumer = new ConsumeIntoCollection<>(supplier);
         return consumer.apply(iterator);
     }
 
     /**
      * Yields all elements of the iterator (in a collection created by the
-     * provider).
+     * supplier).
      *
      * @param <R> the returned collection type
      * @param <E> the collection element type
      * @param iterable the iterable that will be consumed
-     * @param provider the factory used to get the returned collection
+     * @param supplier the factory used to get the returned collection
      * @return a collection filled with iterator values
      */
-    public static <E, R extends Collection<E>> R all(Iterable<E> iterable, Supplier<R> provider) {
+    public static <E, R extends Collection<E>> R all(Iterable<E> iterable, Supplier<R> supplier) {
         dbc.precondition(iterable != null, "cannot call all with a null iterable");
-        final Function<Iterator<E>, R> consumer = new ConsumeIntoCollection<>(provider);
+        final Function<Iterator<E>, R> consumer = new ConsumeIntoCollection<>(supplier);
         return consumer.apply(iterable.iterator());
     }
 
     /**
      * Yields all elements of the iterator (in a collection created by the
-     * provider).
+     * supplier).
      *
      * @param <R> the returned collection type
      * @param <E> the collection element type
      * @param array the array that will be consumed
-     * @param provider the factory used to get the returned collection
+     * @param supplier the factory used to get the returned collection
      * @return a collection filled with iterator values
      */
-    public static <R extends Collection<E>, E> R all(E[] array, Supplier<R> provider) {
-        final Function<Iterator<E>, R> consumer = new ConsumeIntoCollection<>(provider);
+    public static <R extends Collection<E>, E> R all(E[] array, Supplier<R> supplier) {
+        final Function<Iterator<E>, R> consumer = new ConsumeIntoCollection<>(supplier);
         return consumer.apply(new ArrayIterator<>(array));
     }
 
@@ -178,7 +178,7 @@ public abstract class Consumers {
      */
     public static <M extends Map<K, V>, K, V> M dict(Iterator<Pair<K, V>> iterator, M map) {
         dbc.precondition(map != null, "cannot call dict with a null map");
-        final Function<Iterator<Pair<K, V>>, M> consumer = new ConsumeIntoMap<>(new ConstantProvider<M>(map));
+        final Function<Iterator<Pair<K, V>>, M> consumer = new ConsumeIntoMap<>(new ConstantSupplier<M>(map));
         return consumer.apply(iterator);
     }
 
@@ -195,7 +195,7 @@ public abstract class Consumers {
     public static <M extends Map<K, V>, K, V> M dict(Iterable<Pair<K, V>> iterable, M map) {
         dbc.precondition(iterable != null, "cannot call dict with a null iterable");
         dbc.precondition(map != null, "cannot call dict with a null map");
-        final Function<Iterator<Pair<K, V>>, M> consumer = new ConsumeIntoMap<>(new ConstantProvider<M>(map));
+        final Function<Iterator<Pair<K, V>>, M> consumer = new ConsumeIntoMap<>(new ConstantSupplier<M>(map));
         return consumer.apply(iterable.iterator());
     }
 
@@ -211,53 +211,53 @@ public abstract class Consumers {
      */
     public static <M extends Map<K, V>, K, V> M dict(M map, Pair<K, V>... array) {
         dbc.precondition(map != null, "cannot call dict with a null map");
-        final Function<Iterator<Pair<K, V>>, M> consumer = new ConsumeIntoMap<>(new ConstantProvider<M>(map));
+        final Function<Iterator<Pair<K, V>>, M> consumer = new ConsumeIntoMap<>(new ConstantSupplier<M>(map));
         return consumer.apply(new ArrayIterator<>(array));
     }
 
     /**
-     * Yields all elements of the iterator (in a map created by the provider).
+     * Yields all elements of the iterator (in a map created by the supplier).
      *
      * @param <M> the returned map type
      * @param <K> the map key type
      * @param <V> the map value type
      * @param iterator the iterator that will be consumed
-     * @param provider the factory used to get the returned map
+     * @param supplier the factory used to get the returned map
      * @return a map filled with iterator values
      */
-    public static <M extends Map<K, V>, K, V> M dict(Iterator<Pair<K, V>> iterator, Supplier<M> provider) {
-        final Function<Iterator<Pair<K, V>>, M> consumer = new ConsumeIntoMap<>(provider);
+    public static <M extends Map<K, V>, K, V> M dict(Iterator<Pair<K, V>> iterator, Supplier<M> supplier) {
+        final Function<Iterator<Pair<K, V>>, M> consumer = new ConsumeIntoMap<>(supplier);
         return consumer.apply(iterator);
     }
 
     /**
-     * Yields all elements of the iterator (in a map created by the provider).
+     * Yields all elements of the iterator (in a map created by the supplier).
      *
      * @param <M> the returned map type
      * @param <K> the map key type
      * @param <V> the map value type
      * @param iterable the iterable that will be consumed
-     * @param provider the factory used to get the returned map
+     * @param supplier the factory used to get the returned map
      * @return a map filled with iterator values
      */
-    public static <M extends Map<K, V>, K, V> M dict(Iterable<Pair<K, V>> iterable, Supplier<M> provider) {
+    public static <M extends Map<K, V>, K, V> M dict(Iterable<Pair<K, V>> iterable, Supplier<M> supplier) {
         dbc.precondition(iterable != null, "cannot call dict with a null iterable");
-        final Function<Iterator<Pair<K, V>>, M> consumer = new ConsumeIntoMap<>(provider);
+        final Function<Iterator<Pair<K, V>>, M> consumer = new ConsumeIntoMap<>(supplier);
         return consumer.apply(iterable.iterator());
     }
 
     /**
-     * Yields all elements of the iterator (in a map created by the provider).
+     * Yields all elements of the iterator (in a map created by the supplier).
      *
      * @param <M> the returned map type
      * @param <K> the map key type
      * @param <V> the map value type
-     * @param provider the factory used to get the returned map
+     * @param supplier the factory used to get the returned map
      * @param array the array that will be consumed
      * @return a map filled with iterator values
      */
-    public static <M extends Map<K, V>, K, V> M dict(Supplier<M> provider, Pair<K, V>... array) {
-        final Function<Iterator<Pair<K, V>>, M> consumer = new ConsumeIntoMap<>(provider);
+    public static <M extends Map<K, V>, K, V> M dict(Supplier<M> supplier, Pair<K, V>... array) {
+        final Function<Iterator<Pair<K, V>>, M> consumer = new ConsumeIntoMap<>(supplier);
         return consumer.apply(new ArrayIterator<>(array));
     }
 

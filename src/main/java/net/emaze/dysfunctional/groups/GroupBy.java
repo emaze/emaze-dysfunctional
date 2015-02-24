@@ -8,8 +8,8 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
- * A unary delegate grouping elements from an iterator. Group key is provided by
- * the passed delegate.
+ * A unary function grouping elements from an iterator. Group key is provided by
+ * the passed function.
  *
  * @author rferranti
  * @param <M> the map type

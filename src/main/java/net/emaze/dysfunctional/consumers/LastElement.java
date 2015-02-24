@@ -5,7 +5,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
 
 /**
- * A unary delegate consuming an iterator and yielding last element contained in
+ * A unary function consuming an iterator and yielding last element contained in
  * it.
  *
  * @param <E> the iterator element type

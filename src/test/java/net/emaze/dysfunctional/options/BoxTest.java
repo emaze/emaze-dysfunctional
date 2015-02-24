@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.options;
 
 import java.util.function.Function;
-import net.emaze.dysfunctional.dispatching.delegates.ConstantDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantFunction;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -88,7 +88,7 @@ public class BoxTest {
     @Test
     public void fmappingAnEmptyBoxYieldsEmptyBox() {
         final Box<O> box = Box.empty();
-        final Box<Integer> mapped = box.map(new ConstantDelegate<>(1));
+        final Box<Integer> mapped = box.map(new ConstantFunction<>(1));
         Assert.assertEquals(mapped, Box.<Integer>empty());
     }
 

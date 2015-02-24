@@ -23,11 +23,11 @@ public abstract class Casts {
     }
 
     /**
-     * Creates a delegate performing a widening cast.
+     * Creates a function performing a widening cast.
      *
      * @param <T> the resulting type
      * @param <R> the source type
-     * @return the delegate
+     * @return the function
      */
     public static <T, R extends T> Function<T, R> widener() {
         return new Vary<>();
@@ -46,11 +46,11 @@ public abstract class Casts {
     }
 
     /**
-     * Creates a delegate performing a narrowing cast.
+     * Creates a function performing a narrowing cast.
      *
      * @param <R> the resulting type
      * @param <T> the source type
-     * @return the delegate
+     * @return the function
      */
     public static <T extends R, R> Function<T, R> narrower() {
         return new Vary<>();
@@ -69,11 +69,11 @@ public abstract class Casts {
     }
 
     /**
-     * Creates a delegate performing a reinterpret cast on a value.
+     * Creates a function performing a reinterpret cast on a value.
      *
      * @param <T> the source type
      * @param <R> the resulting type
-     * @return the delegate
+     * @return the function
      */
     public static <R, T> Function<T, R> variator() {
         return new Vary<>();

@@ -4,8 +4,8 @@ import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Consumer;
 
 /**
- * Adapts a runnable as an action. Adapting is performed by ignoring parameter
- * of the adapted action.
+ * Adapts a runnable as an consumer. Adapting is performed by ignoring parameter
+ * of the adapted consumer.
  *
  * @param <T> the adapter parameter type
  * @author rferranti

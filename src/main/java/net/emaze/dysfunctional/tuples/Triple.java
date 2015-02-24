@@ -38,9 +38,9 @@ public class Triple<T1, T2, T3> {
     }
 
     public <R1, R2, R3> Triple<R1, R2, R3> map(Function<T1, R1> withFirst, Function<T2, R2> withSecond, Function<T3, R3> withThird) {
-        dbc.precondition(withFirst != null, "cannot fmap on triple with a null first delegate");
-        dbc.precondition(withSecond != null, "cannot fmap on triple with a null second delegate");
-        dbc.precondition(withThird != null, "cannot fmap on triple with a null second delegate");
+        dbc.precondition(withFirst != null, "cannot fmap on triple with a null first function");
+        dbc.precondition(withSecond != null, "cannot fmap on triple with a null second function");
+        dbc.precondition(withThird != null, "cannot fmap on triple with a null second function");
         return Triple.of(withFirst.apply(f), withSecond.apply(s), withThird.apply(t));
     }
 

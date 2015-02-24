@@ -10,56 +10,56 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
+import net.emaze.dysfunctional.dispatching.actions.TriConsumer;
 import net.emaze.dysfunctional.dispatching.adapting.*;
 import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 
 /**
- * curry, mcurry, rcurry, ignore, ignore1st, ignore2nd, ignore3rd, provider,
- * delegate, runnable, action, proposition, predicate.
+ * curry, mcurry, rcurry, ignore, ignore1st, ignore2nd, ignore3rd, supplier,
+ * function, runnable, consumer, proposition, predicate.
  *
  * @author rferranti
  */
 public abstract class Dispatching {
 
     /**
-     * Partial application of the first parameter to an action.
+     * Partial application of the first parameter to an consumer.
      *
-     * @param <T> the action parameter type
-     * @param action the action to be curried
+     * @param <T> the consumer parameter type
+     * @param consumer the consumer to be curried
      * @param value the value to be curried
      * @return the curried runnable
      */
-    public static <T> Runnable curry(Consumer<T> action, T value) {
-        return new ActionBinder<T>(action, value);
+    public static <T> Runnable curry(Consumer<T> consumer, T value) {
+        return new ConsumerBinder<T>(consumer, value);
     }
 
     /**
-     * Partial application of the first parameter to a binary action.
+     * Partial application of the first parameter to a binary consumer.
      *
-     * @param <T1> the action former parameter type
-     * @param <T2> the action latter parameter type
-     * @param action the binary action to be curried
+     * @param <T1> the consumer former parameter type
+     * @param <T2> the consumer latter parameter type
+     * @param consumer the binary consumer to be curried
      * @param first the value to be curried as first parameter
-     * @return the curried unary action
+     * @return the curried unary consumer
      */
-    public static <T1, T2> Consumer<T2> curry(BiConsumer<T1, T2> action, T1 first) {
-        return new ActionBinderFirst<T1, T2>(action, first);
+    public static <T1, T2> Consumer<T2> curry(BiConsumer<T1, T2> consumer, T1 first) {
+        return new ConsumerBinderFirst<T1, T2>(consumer, first);
     }
 
     /**
-     * Partial application of the first parameter to a ternary action.
+     * Partial application of the first parameter to a ternary consumer.
      *
-     * @param <T1> the action first parameter type
-     * @param <T2> the action second parameter type
-     * @param <T3> the action third parameter type
-     * @param action the ternary action to be curried as first parameter
+     * @param <T1> the consumer first parameter type
+     * @param <T2> the consumer second parameter type
+     * @param <T3> the consumer third parameter type
+     * @param consumer the ternary consumer to be curried as first parameter
      * @param first the value to be curried
-     * @return the curried binary action
+     * @return the curried binary consumer
      */
-    public static <T1, T2, T3> BiConsumer<T2, T3> curry(TernaryAction<T1, T2, T3> action, T1 first) {
-        return new ActionBinderFirstOfThree<T1, T2, T3>(action, first);
+    public static <T1, T2, T3> BiConsumer<T2, T3> curry(TriConsumer<T1, T2, T3> consumer, T1 first) {
+        return new ConsumerBinderFirstOfThree<T1, T2, T3>(consumer, first);
     }
 
     /**
@@ -102,75 +102,75 @@ public abstract class Dispatching {
     }
 
     /**
-     * Partial application of the parameter to a delegate.
+     * Partial application of the parameter to a function.
      *
-     * @param <T> the delegate parameter type
-     * @param <R> the delegate return type
-     * @param delegate the delegate to be curried
+     * @param <T> the function parameter type
+     * @param <R> the function return type
+     * @param function the function to be curried
      * @param value the value to be curried
-     * @return the curried provider
+     * @return the curried supplier
      */
-    public static <T, R> Supplier<R> curry(Function<T, R> delegate, T value) {
-        return new Binder<>(delegate, value);
+    public static <T, R> Supplier<R> curry(Function<T, R> function, T value) {
+        return new Binder<>(function, value);
     }
 
     /**
-     * Partial application of the first parameter to a binary delegate.
+     * Partial application of the first parameter to a binary function.
      *
-     * @param <T1> the delegate first parameter type
-     * @param <T2> the delegate second parameter type
-     * @param <R> the delegate return type
-     * @param delegate the delegate to be curried
+     * @param <T1> the function first parameter type
+     * @param <T2> the function second parameter type
+     * @param <R> the function return type
+     * @param function the function to be curried
      * @param first the value to be curried as first parameter
-     * @return the curried delegate
+     * @return the curried function
      */
-    public static <T1, T2, R> Function<T2, R> curry(BiFunction<T1, T2, R> delegate, T1 first) {
-        return new BinderFirst<>(delegate, first);
+    public static <T1, T2, R> Function<T2, R> curry(BiFunction<T1, T2, R> function, T1 first) {
+        return new BinderFirst<>(function, first);
     }
 
     /**
-     * Partial application of the first parameter to a ternary delegate.
+     * Partial application of the first parameter to a ternary function.
      *
-     * @param <T1> the delegate first parameter type
-     * @param <T2> the delegate second parameter type
-     * @param <T3> the delegate third parameter type
-     * @param <R> the delegate return type
-     * @param delegate the delegate to be curried
+     * @param <T1> the function first parameter type
+     * @param <T2> the function second parameter type
+     * @param <T3> the function third parameter type
+     * @param <R> the function return type
+     * @param function the function to be curried
      * @param first the value to be curried as first parameter
-     * @return the curried binary delegate
+     * @return the curried binary function
      */
-    public static <T1, T2, T3, R> BiFunction<T2, T3, R> curry(TriFunction<T1, T2, T3, R> delegate, T1 first) {
-        return new BinderFirstOfThree<>(delegate, first);
+    public static <T1, T2, T3, R> BiFunction<T2, T3, R> curry(TriFunction<T1, T2, T3, R> function, T1 first) {
+        return new BinderFirstOfThree<>(function, first);
     }
 
     /**
-     * Partial application of the second (middle) parameter to a ternary action.
+     * Partial application of the second (middle) parameter to a ternary consumer.
      *
-     * @param <T1> the action first parameter type
-     * @param <T2> the action second parameter type
-     * @param <T3> the action third parameter type
-     * @param action the action to be curried
+     * @param <T1> the consumer first parameter type
+     * @param <T2> the consumer second parameter type
+     * @param <T3> the consumer third parameter type
+     * @param consumer the consumer to be curried
      * @param second the value to be curried as second parameter
-     * @return the curried binary action
+     * @return the curried binary consumer
      */
-    public static <T1, T2, T3> BiConsumer<T1, T3> mcurry(TernaryAction<T1, T2, T3> action, T2 second) {
-        return new ActionBinderSecondOfThree<T1, T2, T3>(action, second);
+    public static <T1, T2, T3> BiConsumer<T1, T3> mcurry(TriConsumer<T1, T2, T3> consumer, T2 second) {
+        return new ConsumerBinderSecondOfThree<T1, T2, T3>(consumer, second);
     }
 
     /**
      * Partial application of the second (middle) parameter to a ternary
-     * delegate.
+     * function.
      *
-     * @param <T1> the delegate first parameter type
-     * @param <T2> the delegate second parameter type
-     * @param <T3> the delegate third parameter type
-     * @param <R> the delegate return type
-     * @param delegate the delegate to be curried
+     * @param <T1> the function first parameter type
+     * @param <T2> the function second parameter type
+     * @param <T3> the function third parameter type
+     * @param <R> the function return type
+     * @param function the function to be curried
      * @param second the value to be curried as second parameter
-     * @return the curried binary delegate
+     * @return the curried binary function
      */
-    public static <T1, T2, T3, R> BiFunction<T1, T3, R> mcurry(TriFunction<T1, T2, T3, R> delegate, T2 second) {
-        return new BinderSecondOfThree<>(delegate, second);
+    public static <T1, T2, T3, R> BiFunction<T1, T3, R> mcurry(TriFunction<T1, T2, T3, R> function, T2 second) {
+        return new BinderSecondOfThree<>(function, second);
     }
 
     /**
@@ -189,31 +189,31 @@ public abstract class Dispatching {
     }
 
     /**
-     * Partial application of the last (rightmost) parameter to a binary action.
+     * Partial application of the last (rightmost) parameter to a binary consumer.
      *
-     * @param <T1> the action first parameter type
-     * @param <T2> the action second parameter type
-     * @param action the action to be curried
+     * @param <T1> the consumer first parameter type
+     * @param <T2> the consumer second parameter type
+     * @param consumer the consumer to be curried
      * @param second the value to be curried as second parameter
-     * @return the curried action
+     * @return the curried consumer
      */
-    public static <T1, T2> Consumer<T1> rcurry(BiConsumer<T1, T2> action, T2 second) {
-        return new ActionBinderSecond<T1, T2>(action, second);
+    public static <T1, T2> Consumer<T1> rcurry(BiConsumer<T1, T2> consumer, T2 second) {
+        return new ConsumerBinderSecond<T1, T2>(consumer, second);
     }
 
     /**
      * Partial application of the last (rightmost) parameter to a ternary
-     * action.
+     * consumer.
      *
-     * @param <T1> the action first parameter type
-     * @param <T2> the action second parameter type
-     * @param <T3> the action third parameter type
-     * @param action the action to be curried
+     * @param <T1> the consumer first parameter type
+     * @param <T2> the consumer second parameter type
+     * @param <T3> the consumer third parameter type
+     * @param consumer the consumer to be curried
      * @param third the value to be curried as third parameter
-     * @return the curried binary action
+     * @return the curried binary consumer
      */
-    public static <T1, T2, T3> BiConsumer<T1, T2> rcurry(TernaryAction<T1, T2, T3> action, T3 third) {
-        return new ActionBinderThird<T1, T2, T3>(action, third);
+    public static <T1, T2, T3> BiConsumer<T1, T2> rcurry(TriConsumer<T1, T2, T3> consumer, T3 third) {
+        return new ConsumerBinderThird<T1, T2, T3>(consumer, third);
     }
 
     /**
@@ -248,33 +248,33 @@ public abstract class Dispatching {
 
     /**
      * Partial application of the last (rightmost) parameter to a binary
-     * delegate.
+     * function.
      *
-     * @param <T1> the delegate first parameter type
-     * @param <T2> the delegate second parameter type
-     * @param <R> the delegate return type
-     * @param delegate the delegate to be curried
+     * @param <T1> the function first parameter type
+     * @param <T2> the function second parameter type
+     * @param <R> the function return type
+     * @param function the function to be curried
      * @param second the value to be curried as second parameter
-     * @return the curried delegate
+     * @return the curried function
      */
-    public static <T1, T2, R> Function<T1, R> rcurry(BiFunction<T1, T2, R> delegate, T2 second) {
-        return new BinderSecond<>(delegate, second);
+    public static <T1, T2, R> Function<T1, R> rcurry(BiFunction<T1, T2, R> function, T2 second) {
+        return new BinderSecond<>(function, second);
     }
 
     /**
      * Partial application of the last (rightmost) parameter to a ternary
-     * delegate.
+     * function.
      *
-     * @param <T1> the delegate first parameter type
-     * @param <T2> the delegate second parameter type
-     * @param <T3> the delegate third parameter type
-     * @param <R> the delegate return type
-     * @param delegate the delegate to be curried
+     * @param <T1> the function first parameter type
+     * @param <T2> the function second parameter type
+     * @param <T3> the function third parameter type
+     * @param <R> the function return type
+     * @param function the function to be curried
      * @param third the value to be curried as third parameter
-     * @return the curried binary delegate
+     * @return the curried binary function
      */
-    public static <T1, T2, T3, R> BiFunction<T1, T2, R> rcurry(TriFunction<T1, T2, T3, R> delegate, T3 third) {
-        return new BinderThird<>(delegate, third);
+    public static <T1, T2, T3, R> BiFunction<T1, T2, R> rcurry(TriFunction<T1, T2, T3, R> function, T3 third) {
+        return new BinderThird<>(function, third);
     }
 
     /**
@@ -361,372 +361,372 @@ public abstract class Dispatching {
     }
 
     /**
-     * Adapts a runnable to an action by ignoring the parameter.
+     * Adapts a runnable to an consumer by ignoring the parameter.
      *
-     * @param <T> the adapted action parameter type
+     * @param <T> the adapted consumer parameter type
      * @param runnable the runnable to be adapted
-     * @param ignored the adapted action ignored parameter type class
-     * @return the adapted action
+     * @param ignored the adapted consumer ignored parameter type class
+     * @return the adapted consumer
      */
     public static <T> Consumer<T> ignore(Runnable runnable, Class<T> ignored) {
         return new RunnableIgnoreParameter<T>(runnable);
     }
 
     /**
-     * Adapts an action to a binary action by ignoring the first parameter.
+     * Adapts an consumer to a binary consumer by ignoring the first parameter.
      *
-     * @param <T1> the adapted action first parameter type
-     * @param <T2> the adapted action second parameter type
-     * @param action the action to be adapted
-     * @param ignored the adapted action ignored parameter type class
-     * @return the adapted binary action
+     * @param <T1> the adapted consumer first parameter type
+     * @param <T2> the adapted consumer second parameter type
+     * @param consumer the consumer to be adapted
+     * @param ignored the adapted consumer ignored parameter type class
+     * @return the adapted binary consumer
      */
-    public static <T1, T2> BiConsumer<T1, T2> ignore1st(Consumer<T2> action, Class<T1> ignored) {
-        return new ActionIgnoreFirst<T1, T2>(action);
+    public static <T1, T2> BiConsumer<T1, T2> ignore1st(Consumer<T2> consumer, Class<T1> ignored) {
+        return new ConsumerIgnoreFirst<T1, T2>(consumer);
     }
 
     /**
-     * Adapts a binary action to a ternary action by ignoring the first
+     * Adapts a binary consumer to a ternary consumer by ignoring the first
      * parameter.
      *
-     * @param <T1> the adapted action first parameter type
-     * @param <T2> the adapted action second parameter type
-     * @param <T3> the adapted action third parameter type
-     * @param action the action to be adapted
-     * @param ignored the adapted action ignored parameter type class
-     * @return the adapted ternary action
+     * @param <T1> the adapted consumer first parameter type
+     * @param <T2> the adapted consumer second parameter type
+     * @param <T3> the adapted consumer third parameter type
+     * @param consumer the consumer to be adapted
+     * @param ignored the adapted consumer ignored parameter type class
+     * @return the adapted ternary consumer
      */
-    public static <T1, T2, T3> TernaryAction<T1, T2, T3> ignore1st(BiConsumer<T2, T3> action, Class<T1> ignored) {
-        return new ActionIgnoreFirstOfThree<T1, T2, T3>(action);
+    public static <T1, T2, T3> TriConsumer<T1, T2, T3> ignore1st(BiConsumer<T2, T3> consumer, Class<T1> ignored) {
+        return new ConsumerIgnoreFirstOfThree<T1, T2, T3>(consumer);
     }
 
     /**
-     * Adapts an action to a binary action by ignoring the second parameter.
+     * Adapts an consumer to a binary consumer by ignoring the second parameter.
      *
-     * @param <T1> the adapted action first parameter type
-     * @param <T2> the adapted action second parameter type
-     * @param action the action to be adapted
-     * @param ignored the adapted action ignored parameter type class
-     * @return the adapted binary action
+     * @param <T1> the adapted consumer first parameter type
+     * @param <T2> the adapted consumer second parameter type
+     * @param consumer the consumer to be adapted
+     * @param ignored the adapted consumer ignored parameter type class
+     * @return the adapted binary consumer
      */
-    public static <T1, T2> BiConsumer<T1, T2> ignore2nd(Consumer<T1> action, Class<T2> ignored) {
-        return new ActionIgnoreSecond<T1, T2>(action);
+    public static <T1, T2> BiConsumer<T1, T2> ignore2nd(Consumer<T1> consumer, Class<T2> ignored) {
+        return new ConsumerIgnoreSecond<T1, T2>(consumer);
     }
 
     /**
-     * Adapts a binary action to a ternary action by ignoring the second
+     * Adapts a binary consumer to a ternary consumer by ignoring the second
      * parameter.
      *
-     * @param <T1> the adapted action first parameter type
-     * @param <T2> the adapted action second parameter type
-     * @param <T3> the adapted action third parameter type
-     * @param action the action to be adapted
-     * @param ignored the adapted action ignored parameter type class
-     * @return the adapted ternary action
+     * @param <T1> the adapted consumer first parameter type
+     * @param <T2> the adapted consumer second parameter type
+     * @param <T3> the adapted consumer third parameter type
+     * @param consumer the consumer to be adapted
+     * @param ignored the adapted consumer ignored parameter type class
+     * @return the adapted ternary consumer
      */
-    public static <T1, T2, T3> TernaryAction<T1, T2, T3> ignore2nd(BiConsumer<T1, T3> action, Class<T2> ignored) {
-        return new ActionIgnoreSecondOfThree<T1, T2, T3>(action);
+    public static <T1, T2, T3> TriConsumer<T1, T2, T3> ignore2nd(BiConsumer<T1, T3> consumer, Class<T2> ignored) {
+        return new ConsumerIgnoreSecondOfThree<T1, T2, T3>(consumer);
     }
 
     /**
-     * Adapts a binary action to a ternary action by ignoring the third
+     * Adapts a binary consumer to a ternary consumer by ignoring the third
      * parameter.
      *
-     * @param <T1> the adapted action first parameter type
-     * @param <T2> the adapted action second parameter type
-     * @param <T3> the adapted action third parameter type
-     * @param action the action to be adapted
-     * @param ignored the adapted action ignored parameter type class
-     * @return the adapted ternary action
+     * @param <T1> the adapted consumer first parameter type
+     * @param <T2> the adapted consumer second parameter type
+     * @param <T3> the adapted consumer third parameter type
+     * @param consumer the consumer to be adapted
+     * @param ignored the adapted consumer ignored parameter type class
+     * @return the adapted ternary consumer
      */
-    public static <T1, T2, T3> TernaryAction<T1, T2, T3> ignore3rd(BiConsumer<T1, T2> action, Class<T3> ignored) {
-        return new ActionIgnoreThird<T1, T2, T3>(action);
+    public static <T1, T2, T3> TriConsumer<T1, T2, T3> ignore3rd(BiConsumer<T1, T2> consumer, Class<T3> ignored) {
+        return new ConsumerIgnoreThird<T1, T2, T3>(consumer);
     }
 
     /**
-     * Adapts a provider to a delegate by ignoring the passed parameter.
+     * Adapts a supplier to a function by ignoring the passed parameter.
      *
-     * @param <T> the adapted delegate parameter type
-     * @param <R> the adapted delegate result type
-     * @param provider the provider to be adapted
-     * @param ignored the adapted delegate ignored parameter type class
-     * @return the adapted delegate
+     * @param <T> the adapted function parameter type
+     * @param <R> the adapted function result type
+     * @param supplier the supplier to be adapted
+     * @param ignored the adapted function ignored parameter type class
+     * @return the adapted function
      */
-    public static <T, R> Function<T, R> ignore(Supplier<R> provider, Class<T> ignored) {
-        return new IgnoreParameter<>(provider);
+    public static <T, R> Function<T, R> ignore(Supplier<R> supplier, Class<T> ignored) {
+        return new IgnoreParameter<>(supplier);
     }
 
     /**
-     * Adapts a delegate to a binary delegate by ignoring the first parameter.
+     * Adapts a function to a binary function by ignoring the first parameter.
      *
-     * @param <T1> the adapted delegate first parameter type
-     * @param <T2> the adapted delegate second parameter type
-     * @param <R> the adapted delegate result type
-     * @param delegate the delegate to be adapted
-     * @param ignored the adapted delegate ignored parameter type class
-     * @return the adapted delegate
+     * @param <T1> the adapted function first parameter type
+     * @param <T2> the adapted function second parameter type
+     * @param <R> the adapted function result type
+     * @param function the function to be adapted
+     * @param ignored the adapted function ignored parameter type class
+     * @return the adapted function
      */
-    public static <T1, T2, R> BiFunction<T1, T2, R> ignore1st(Function<T2, R> delegate, Class<T1> ignored) {
-        return new IgnoreFirst<>(delegate);
+    public static <T1, T2, R> BiFunction<T1, T2, R> ignore1st(Function<T2, R> function, Class<T1> ignored) {
+        return new IgnoreFirst<>(function);
     }
 
     /**
-     * Adapts a binary delegate to a ternary delegate by ignoring the first
+     * Adapts a binary function to a ternary function by ignoring the first
      * parameter.
      *
-     * @param <T1> the adapted delegate first parameter type
-     * @param <T2> the adapted delegate second parameter type
-     * @param <T3> the adapted delegate third parameter type
-     * @param <R> the adapted delegate result type
-     * @param delegate the delegate to be adapted
-     * @param ignored the adapted delegate ignored parameter type class
-     * @return the adapted delegate
+     * @param <T1> the adapted function first parameter type
+     * @param <T2> the adapted function second parameter type
+     * @param <T3> the adapted function third parameter type
+     * @param <R> the adapted function result type
+     * @param function the function to be adapted
+     * @param ignored the adapted function ignored parameter type class
+     * @return the adapted function
      */
-    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> ignore1st(BiFunction<T2, T3, R> delegate, Class<T1> ignored) {
-        return new IgnoreFirstOfThree<>(delegate);
+    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> ignore1st(BiFunction<T2, T3, R> function, Class<T1> ignored) {
+        return new IgnoreFirstOfThree<>(function);
     }
 
     /**
-     * Adapts a delegate to a binary delegate by ignoring the second parameter.
+     * Adapts a function to a binary function by ignoring the second parameter.
      *
-     * @param <T1> the adapted delegate first parameter type
-     * @param <T2> the adapted delegate second parameter type
-     * @param <R> the adapted delegate result type
-     * @param delegate the delegate to be adapted
-     * @param ignored the adapted delegate ignored parameter type class
-     * @return the adapted delegate
+     * @param <T1> the adapted function first parameter type
+     * @param <T2> the adapted function second parameter type
+     * @param <R> the adapted function result type
+     * @param function the function to be adapted
+     * @param ignored the adapted function ignored parameter type class
+     * @return the adapted function
      */
-    public static <T1, T2, R> BiFunction<T1, T2, R> ignore2nd(Function<T1, R> delegate, Class<T2> ignored) {
-        return new IgnoreSecond<>(delegate);
+    public static <T1, T2, R> BiFunction<T1, T2, R> ignore2nd(Function<T1, R> function, Class<T2> ignored) {
+        return new IgnoreSecond<>(function);
     }
 
     /**
-     * Adapts a binary delegate to a ternary delegate by ignoring the second
+     * Adapts a binary function to a ternary function by ignoring the second
      * parameter.
      *
-     * @param <T1> the adapted delegate first parameter type
-     * @param <T2> the adapted delegate second parameter type
-     * @param <T3> the adapted delegate third parameter type
-     * @param <R> the adapted delegate result type
-     * @param delegate the delegate to be adapted
-     * @param ignored the adapted delegate ignored parameter type class
-     * @return the adapted delegate
+     * @param <T1> the adapted function first parameter type
+     * @param <T2> the adapted function second parameter type
+     * @param <T3> the adapted function third parameter type
+     * @param <R> the adapted function result type
+     * @param function the function to be adapted
+     * @param ignored the adapted function ignored parameter type class
+     * @return the adapted function
      */
-    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> ignore2nd(BiFunction<T1, T3, R> delegate, Class<T2> ignored) {
-        return new IgnoreSecondOfThree<>(delegate);
+    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> ignore2nd(BiFunction<T1, T3, R> function, Class<T2> ignored) {
+        return new IgnoreSecondOfThree<>(function);
     }
 
     /**
-     * Adapts a binary delegate to a ternary delegate by ignoring the third
+     * Adapts a binary function to a ternary function by ignoring the third
      * parameter.
      *
-     * @param <T1> the adapted delegate first parameter type
-     * @param <T2> the adapted delegate second parameter type
-     * @param <T3> the adapted delegate third parameter type
-     * @param <R> the adapted delegate result type
-     * @param delegate the delegate to be adapted
-     * @param ignored the adapted delegate ignored parameter type class
-     * @return the adapted delegate
+     * @param <T1> the adapted function first parameter type
+     * @param <T2> the adapted function second parameter type
+     * @param <T3> the adapted function third parameter type
+     * @param <R> the adapted function result type
+     * @param function the function to be adapted
+     * @param ignored the adapted function ignored parameter type class
+     * @return the adapted function
      */
-    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> ignore3rd(BiFunction<T1, T2, R> delegate, Class<T3> ignored) {
-        return new IgnoreThird<T1, T2, T3, R>(delegate);
+    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> ignore3rd(BiFunction<T1, T2, R> function, Class<T3> ignored) {
+        return new IgnoreThird<T1, T2, T3, R>(function);
     }
 
     /**
-     * Adapts an iterator to a provider.
+     * Adapts an iterator to a supplier.
      *
      * @param adaptee the runnable to be adapted
-     * @return the adapted provider
+     * @return the adapted supplier
      */
-    public static <T> Supplier<Optional<T>> provider(Iterator<T> adaptee) {
-        return new IteratingProvider<T>(adaptee);
+    public static <T> Supplier<Optional<T>> supplier(Iterator<T> adaptee) {
+        return new IteratingSupplier<T>(adaptee);
     }
 
     /**
-     * Adapts a runnable to a provider.
+     * Adapts a runnable to a supplier.
      *
      * @param adaptee the runnable to be adapted
-     * @return the adapted provider
+     * @return the adapted supplier
      */
-    public static Supplier<Void> provider(Runnable adaptee) {
-        return new RunnableToProvider(adaptee);
+    public static Supplier<Void> supplier(Runnable adaptee) {
+        return new RunnableToSupplier(adaptee);
     }
 
     /**
-     * Adapts a proposition to a provider.
+     * Adapts a proposition to a supplier.
      *
      * @param adaptee the proposition to be adapted
-     * @return the adapted provider
+     * @return the adapted supplier
      */
-    public static Supplier<Boolean> provider(BooleanSupplier adaptee) {
-        return new PropositionToProvider(adaptee);
+    public static Supplier<Boolean> supplier(BooleanSupplier adaptee) {
+        return new PropositionToSupplier(adaptee);
     }
 
     /**
-     * Adapts an action to a delegate.
+     * Adapts an consumer to a function.
      *
-     * @param <T> the action parameter type
-     * @param adaptee the action to be adapted
-     * @return the adapted delegate
+     * @param <T> the consumer parameter type
+     * @param adaptee the consumer to be adapted
+     * @return the adapted function
      */
-    public static <T> Function<T, Void> delegate(Consumer<T> adaptee) {
-        return new ActionToDelegate<T>(adaptee);
+    public static <T> Function<T, Void> function(Consumer<T> adaptee) {
+        return new ConsumerToFunction<T>(adaptee);
     }
 
     /**
-     * Adapts a binary action to a binary delegate.
+     * Adapts a binary consumer to a binary function.
      *
-     * @param <T1> the action first parameter type
-     * @param <T2> the action second parameter type
-     * @param adaptee the action to be adapted
-     * @return the adapted delegate
+     * @param <T1> the consumer first parameter type
+     * @param <T2> the consumer second parameter type
+     * @param adaptee the consumer to be adapted
+     * @return the adapted function
      */
-    public static <T1, T2> BiFunction<T1, T2, Void> delegate(BiConsumer<T1, T2> adaptee) {
-        return new BinaryActionToBinaryDelegate<T1, T2>(adaptee);
+    public static <T1, T2> BiFunction<T1, T2, Void> function(BiConsumer<T1, T2> adaptee) {
+        return new BinaryConsumerToFunction<T1, T2>(adaptee);
     }
 
     /**
-     * Adapts a ternary action to a ternary delegate.
+     * Adapts a ternary consumer to a ternary function.
      *
-     * @param <T1> the action first parameter type
-     * @param <T2> the action second parameter type
-     * @param <T3> the action third parameter type
-     * @param adaptee the action to be adapted
-     * @return the adapted delegate
+     * @param <T1> the consumer first parameter type
+     * @param <T2> the consumer second parameter type
+     * @param <T3> the consumer third parameter type
+     * @param adaptee the consumer to be adapted
+     * @return the adapted function
      */
-    public static <T1, T2, T3> TriFunction<T1, T2, T3, Void> delegate(TernaryAction<T1, T2, T3> adaptee) {
-        return new TernaryActionToTernaryDelegate<>(adaptee);
+    public static <T1, T2, T3> TriFunction<T1, T2, T3, Void> function(TriConsumer<T1, T2, T3> adaptee) {
+        return new TernaryConsumerToFunction<>(adaptee);
     }
 
     /**
-     * Adapts a predicate to a delegate.
+     * Adapts a predicate to a function.
      *
      * @param <T> the predicate parameter type
      * @param adaptee the predicate to be adapted
-     * @return the adapted delegate
+     * @return the adapted function
      */
-    public static <T> Function<T, Boolean> delegate(Predicate<T> adaptee) {
-        return new PredicateToDelegate<T>(adaptee);
+    public static <T> Function<T, Boolean> function(Predicate<T> adaptee) {
+        return new PredicateToFunction<T>(adaptee);
     }
 
     /**
-     * Adapts a binary predicate to a binary delegate.
+     * Adapts a binary predicate to a binary function.
      *
      * @param <T1> the predicate first parameter type
      * @param <T2> the predicate second parameter type
      * @param adaptee the predicate to be adapted
-     * @return the adapted delegate
+     * @return the adapted function
      */
-    public static <T1, T2> BiFunction<T1, T2, Boolean> delegate(BiPredicate<T1, T2> adaptee) {
-        return new BinaryPredicateToBinaryDelegate<T1, T2>(adaptee);
+    public static <T1, T2> BiFunction<T1, T2, Boolean> function(BiPredicate<T1, T2> adaptee) {
+        return new BinaryPredicateToFunction<T1, T2>(adaptee);
     }
 
     /**
-     * Adapts a ternary predicate to a ternary delegate.
+     * Adapts a ternary predicate to a ternary function.
      *
      * @param <T1> the predicate first parameter type
      * @param <T2> the predicate second parameter type
      * @param <T3> the predicate third parameter type
      * @param adaptee the predicate to be adapted
-     * @return the adapted delegate
+     * @return the adapted function
      */
-    public static <T1, T2, T3> TriFunction<T1, T2, T3, Boolean> delegate(TriPredicate<T1, T2, T3> adaptee) {
-        return new TernaryPredicateToTernaryDelegate<>(adaptee);
+    public static <T1, T2, T3> TriFunction<T1, T2, T3, Boolean> function(TriPredicate<T1, T2, T3> adaptee) {
+        return new TernaryPredicateToFunction<>(adaptee);
     }
 
     /**
-     * Adapts a provider to a runnable.
+     * Adapts a supplier to a runnable.
      *
-     * @param <T> the provider parameter type
-     * @param provider the provider to be adapted
+     * @param <T> the supplier parameter type
+     * @param supplier the supplier to be adapted
      * @return the adapted runnable
      */
-    public static <T> Runnable runnable(Supplier<T> provider) {
-        return new ProviderToRunnable(provider);
+    public static <T> Runnable runnable(Supplier<T> supplier) {
+        return new SupplierToRunnable(supplier);
     }
 
     /**
-     * Adapts a delegate to an action.
+     * Adapts a function to an consumer.
      *
-     * @param <T> the delegate parameter type
-     * @param <R> the delegate return type
-     * @param delegate the delegate to be adapted
-     * @return the adapted action
+     * @param <T> the function parameter type
+     * @param <R> the function return type
+     * @param function the function to be adapted
+     * @return the adapted consumer
      */
-    public static <T, R> Consumer<T> action(Function<T, R> delegate) {
-        return new DelegateToAction<>(delegate);
+    public static <T, R> Consumer<T> consumer(Function<T, R> function) {
+        return new FunctionToConsumer<>(function);
     }
 
     /**
-     * Adapts a binary delegate to a binary action.
+     * Adapts a binary function to a binary consumer.
      *
-     * @param <T1> the delegate first parameter type
-     * @param <T2> the delegate second parameter type
-     * @param <R> the delegate return type
-     * @param delegate the delegate to be adapted
-     * @return the adapted action
+     * @param <T1> the function first parameter type
+     * @param <T2> the function second parameter type
+     * @param <R> the function return type
+     * @param function the function to be adapted
+     * @return the adapted consumer
      */
-    public static <T1, T2, R> BiConsumer<T1, T2> action(BiFunction<T1, T2, R> delegate) {
-        return new BinaryDelegateToBinaryAction<>(delegate);
+    public static <T1, T2, R> BiConsumer<T1, T2> consumer(BiFunction<T1, T2, R> function) {
+        return new BinaryFunctionToConsumer<>(function);
     }
 
     /**
-     * Adapts a ternary delegate to a ternary action.
+     * Adapts a ternary function to a ternary consumer.
      *
-     * @param <R> the delegate return type
-     * @param <T1> the delegate first parameter type
-     * @param <T2> the delegate second parameter type
-     * @param <T3> the delegate third parameter type
-     * @param delegate the delegate to be adapted
-     * @return the adapted action
+     * @param <R> the function return type
+     * @param <T1> the function first parameter type
+     * @param <T2> the function second parameter type
+     * @param <T3> the function third parameter type
+     * @param function the function to be adapted
+     * @return the adapted consumer
      */
-    public static <T1, T2, T3, R> TernaryAction<T1, T2, T3> action(TriFunction<T1, T2, T3, R> delegate) {
-        return new TernaryDelegateToTernaryAction<T1, T2, T3, R>(delegate);
+    public static <T1, T2, T3, R> TriConsumer<T1, T2, T3> consumer(TriFunction<T1, T2, T3, R> function) {
+        return new TernaryFunctionToConsumer<T1, T2, T3, R>(function);
     }
 
     /**
-     * Adapts a provider to a proposition.
+     * Adapts a supplier to a proposition.
      *
-     * @param provider the provider to be adapted
+     * @param supplier the supplier to be adapted
      * @return the adapted proposition
      */
-    public static BooleanSupplier proposition(Supplier<Boolean> provider) {
-        return new ProviderToProposition(provider);
+    public static BooleanSupplier proposition(Supplier<Boolean> supplier) {
+        return new SupplierToProposition(supplier);
     }
 
     /**
-     * Adapts a delegate to a predicate.
+     * Adapts a function to a predicate.
      *
-     * @param <T> the delegate parameter type
-     * @param delegate the delegate to be adapted
+     * @param <T> the function parameter type
+     * @param function the function to be adapted
      * @return the adapted predicate
      */
-    public static <T> Predicate<T> predicate(Function<T, Boolean> delegate) {
-        return new DelegateToPredicate<T>(delegate);
+    public static <T> Predicate<T> predicate(Function<T, Boolean> function) {
+        return new FunctionToPredicate<T>(function);
     }
 
     /**
-     * Adapts a binary delegate to a binary predicate
+     * Adapts a binary function to a binary predicate
      *
-     * @param <T1> the delegate first parameter type
-     * @param <T2> the delegate second parameter type
-     * @param delegate the delegate to be adapted
+     * @param <T1> the function first parameter type
+     * @param <T2> the function second parameter type
+     * @param function the function to be adapted
      * @return the adapted predicate
      */
-    public static <T1, T2> BiPredicate<T1, T2> predicate(BiFunction<T1, T2, Boolean> delegate) {
-        return new BinaryDelegateToBinaryPredicate<>(delegate);
+    public static <T1, T2> BiPredicate<T1, T2> predicate(BiFunction<T1, T2, Boolean> function) {
+        return new BinaryFunctionToPredicate<>(function);
     }
 
     /**
-     * Adapts a ternary delegate to a ternary predicate.
+     * Adapts a ternary function to a ternary predicate.
      *
-     * @param <T1> the delegate first parameter type
-     * @param <T2> the delegate second parameter type
-     * @param <T3> the delegate third parameter type
-     * @param function the delegate to be adapted
+     * @param <T1> the function first parameter type
+     * @param <T2> the function second parameter type
+     * @param <T3> the function third parameter type
+     * @param function the function to be adapted
      * @return the adapted predicate
      */
     public static <T1, T2, T3> TriPredicate<T1, T2, T3> predicate(TriFunction<T1, T2, T3, Boolean> function) {
-        return new TernaryDelegateToTernaryPredicate<>(function);
+        return new TernaryFunctionToPredicate<>(function);
     }
 }

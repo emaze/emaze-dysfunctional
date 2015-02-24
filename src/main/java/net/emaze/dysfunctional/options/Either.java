@@ -28,8 +28,8 @@ public class Either<LT, RT> {
     }
 
     public <LR, RR> Either<LR, RR> map(Function<LT, LR> withLeft, Function<RT, RR> withRight) {
-        dbc.precondition(withLeft != null, "cannot fmap an either with a null left delegate");
-        dbc.precondition(withRight != null, "cannot fmap an either with a null right delegate");
+        dbc.precondition(withLeft != null, "cannot fmap an either with a null left function");
+        dbc.precondition(withRight != null, "cannot fmap an either with a null right function");
         if (left.isPresent()) {
             return Either.left(withLeft.apply(left.get()));
         }
@@ -37,8 +37,8 @@ public class Either<LT, RT> {
     }
 
     public <T> T fold(Function<LT, T> withLeft, Function<RT, T> withRight) {
-        dbc.precondition(withLeft != null, "cannot fold an either with a null left delegate");
-        dbc.precondition(withRight != null, "cannot fold an either with a null right delegate");
+        dbc.precondition(withLeft != null, "cannot fold an either with a null left function");
+        dbc.precondition(withRight != null, "cannot fold an either with a null right function");
         if (left.isPresent()) {
             return withLeft.apply(left.get());
         }

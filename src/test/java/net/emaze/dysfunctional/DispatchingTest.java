@@ -12,9 +12,9 @@ import java.util.function.Supplier;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.dispatching.actions.Slacker;
-import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
+import net.emaze.dysfunctional.dispatching.actions.TriConsumer;
 import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
-import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantSupplier;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
 import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
@@ -52,85 +52,85 @@ public class DispatchingTest {
 
         @Test
         public void canAdaptIteratorToProvider() {
-            final Supplier<Optional<Integer>> adapted = Dispatching.provider(Iterations.iterator(1));
+            final Supplier<Optional<Integer>> adapted = Dispatching.supplier(Iterations.iterator(1));
             Assert.assertNotNull(adapted);
         }
 
         @Test
         public void canAdaptRunnableToProvider() {
-            final Supplier<Void> adapted = Dispatching.provider(new Slacker());
+            final Supplier<Void> adapted = Dispatching.supplier(new Slacker());
             Assert.assertNotNull(adapted);
         }
 
         @Test
         public void canAdaptPropositionToProvider() {
-            final Supplier<Boolean> adapted = Dispatching.provider(new Yes());
+            final Supplier<Boolean> adapted = Dispatching.supplier(new Yes());
             Assert.assertNotNull(adapted);
         }
 
         @Test
         public void canAdaptProviderToRunnable() {
-            final Runnable adapted = Dispatching.runnable(new ConstantProvider<O>(O.ONE));
+            final Runnable adapted = Dispatching.runnable(new ConstantSupplier<O>(O.ONE));
             Assert.assertNotNull(adapted);
         }
 
         @Test
         public void canAdaptProviderToProposition() {
-            final BooleanSupplier adapted = Dispatching.proposition(new ConstantProvider<Boolean>(Boolean.TRUE));
+            final BooleanSupplier adapted = Dispatching.proposition(new ConstantSupplier<Boolean>(Boolean.TRUE));
             Assert.assertNotNull(adapted);
         }
 
         @Test
         public void canAdaptActionToDelegate() {
-            final Function<O, Void> adapted = Dispatching.delegate(new Noop<O>());
+            final Function<O, Void> adapted = Dispatching.function(new Noop<O>());
             Assert.assertNotNull(adapted);
         }
 
         @Test
         public void canAdaptBinaryActionToBinaryDelegate() {
-            final BiFunction<O, O, Void> adapted = Dispatching.delegate(new BinaryNoop<O, O>());
+            final BiFunction<O, O, Void> adapted = Dispatching.function(new BinaryNoop<O, O>());
             Assert.assertNotNull(adapted);
         }
 
         @Test
         public void canAdaptTernaryActionToTernaryDelegate() {
-            final TriFunction<O, O, O, Void> adapted = Dispatching.delegate(new TernaryNoop<O, O, O>());
+            final TriFunction<O, O, O, Void> adapted = Dispatching.function(new TernaryNoop<O, O, O>());
             Assert.assertNotNull(adapted);
         }
 
         @Test
         public void canAdaptPredicateToDelegate() {
-            final Function<O, Boolean> adapted = Dispatching.delegate(new Always<O>());
+            final Function<O, Boolean> adapted = Dispatching.function(new Always<O>());
             Assert.assertNotNull(adapted);
         }
 
         @Test
         public void canAdaptBinaryPredicateToBinaryDelegate() {
-            final BiFunction<O, O, Boolean> adapted = Dispatching.delegate(new BinaryAlways<O, O>());
+            final BiFunction<O, O, Boolean> adapted = Dispatching.function(new BinaryAlways<O, O>());
             Assert.assertNotNull(adapted);
         }
 
         @Test
         public void canAdaptTernaryPredicateToTernaryDelegate() {
-            final TriFunction<O, O, O, Boolean> adapted = Dispatching.delegate(new TernaryAlways<O, O, O>());
+            final TriFunction<O, O, O, Boolean> adapted = Dispatching.function(new TernaryAlways<O, O, O>());
             Assert.assertNotNull(adapted);
         }
 
         @Test
         public void canAdaptDelegateToAction() {
-            final Consumer<O> adapted = Dispatching.action(Function.identity());
+            final Consumer<O> adapted = Dispatching.consumer(Function.identity());
             Assert.assertNotNull(adapted);
         }
 
         @Test
         public void canAdaptBinaryDelegateToBinaryAction() {
-            final BiConsumer<O, O> adapted = Dispatching.action(new FirstParam<O, O>());
+            final BiConsumer<O, O> adapted = Dispatching.consumer(new FirstParam<O, O>());
             Assert.assertNotNull(adapted);
         }
 
         @Test
         public void canAdaptTernaryDelegateToTernaryAction() {
-            final TernaryAction<O, O, O> adapted = Dispatching.action(new FirstParamOfThree<O, O, O>());
+            final TriConsumer<O, O, O> adapted = Dispatching.consumer(new FirstParamOfThree<O, O, O>());
             Assert.assertNotNull(adapted);
         }
 
@@ -291,7 +291,7 @@ public class DispatchingTest {
 
         @Test
         public void canIgnoreParameterForProvider() {
-            final Function<O, O> ignoring = Dispatching.ignore(new ConstantProvider<O>(O.ONE), O.class);
+            final Function<O, O> ignoring = Dispatching.ignore(new ConstantSupplier<O>(O.ONE), O.class);
             Assert.assertNotNull(ignoring);
         }
 
@@ -333,7 +333,7 @@ public class DispatchingTest {
 
         @Test
         public void canIgnoreFirstForBinaryActions() {
-            final TernaryAction<O, O, O> ignoring = Dispatching.ignore1st(new BinaryNoop<O, O>(), O.class);
+            final TriConsumer<O, O, O> ignoring = Dispatching.ignore1st(new BinaryNoop<O, O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
@@ -345,13 +345,13 @@ public class DispatchingTest {
 
         @Test
         public void canIgnoreSecondForBinaryActions() {
-            final TernaryAction<O, O, O> ignoring = Dispatching.ignore2nd(new BinaryNoop<O, O>(), O.class);
+            final TriConsumer<O, O, O> ignoring = Dispatching.ignore2nd(new BinaryNoop<O, O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
         @Test
         public void canIgnoreThirdForBinaryActions() {
-            final TernaryAction<O, O, O> ignoring = Dispatching.ignore3rd(new BinaryNoop<O, O>(), O.class);
+            final TriConsumer<O, O, O> ignoring = Dispatching.ignore3rd(new BinaryNoop<O, O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 

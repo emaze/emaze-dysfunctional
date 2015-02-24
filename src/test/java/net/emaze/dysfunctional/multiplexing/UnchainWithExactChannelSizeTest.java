@@ -8,7 +8,7 @@ import net.emaze.dysfunctional.Compositions;
 import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
-import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantSupplier;
 import java.util.function.Supplier;
 import java.util.Optional;
 import org.junit.Assert;
@@ -34,7 +34,7 @@ public class UnchainWithExactChannelSizeTest {
         @Test
         public void consumeWithTwoChannelsYieldsTwoChannels() {
             final Iterator<Integer> iter = Iterations.iterator(1, 2);
-            final ConstantProvider<Optional<Integer>> channelSizeIsAlways2 = new ConstantProvider<Optional<Integer>>(Optional.of(2));
+            final ConstantSupplier<Optional<Integer>> channelSizeIsAlways2 = new ConstantSupplier<Optional<Integer>>(Optional.of(2));
             final UnchainWithExactChannelSizeIterator<List<Optional<Integer>>, Integer> demu = new UnchainWithExactChannelSizeIterator<List<Optional<Integer>>, Integer>(channelSizeIsAlways2, iter, MAYBE_INTEGER_LIST_FACTORY);
             Assert.assertEquals(Arrays.asList(Optional.of(1), Optional.of(2)), demu.next());
         }
@@ -42,7 +42,7 @@ public class UnchainWithExactChannelSizeTest {
         @Test
         public void emptyIteratorHasNoNext() {
             final Iterator<Integer> iter = Iterations.iterator();
-            final ConstantProvider<Optional<Integer>> channelSizeIsAlways2 = new ConstantProvider<Optional<Integer>>(Optional.of(2));
+            final ConstantSupplier<Optional<Integer>> channelSizeIsAlways2 = new ConstantSupplier<Optional<Integer>>(Optional.of(2));
             final UnchainWithExactChannelSizeIterator<List<Optional<Integer>>, Integer> demu = new UnchainWithExactChannelSizeIterator<List<Optional<Integer>>, Integer>(channelSizeIsAlways2, iter, MAYBE_INTEGER_LIST_FACTORY);
             Assert.assertFalse(demu.hasNext());
         }
@@ -52,7 +52,7 @@ public class UnchainWithExactChannelSizeTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingIteratorWithNullIteratorYieldsException() {
-            new UnchainWithExactChannelSizeIterator<List<Optional<Integer>>, Integer>(new ConstantProvider<Optional<Integer>>(Optional.of(2)), null, MAYBE_INTEGER_LIST_FACTORY);
+            new UnchainWithExactChannelSizeIterator<List<Optional<Integer>>, Integer>(new ConstantSupplier<Optional<Integer>>(Optional.of(2)), null, MAYBE_INTEGER_LIST_FACTORY);
         }
 
         @Test(expected = IllegalArgumentException.class)
@@ -64,7 +64,7 @@ public class UnchainWithExactChannelSizeTest {
         @Test(expected = IllegalArgumentException.class)
         public void creatingIteratorWithNullProviderYieldsException() {
             Iterator<Integer> iter = Iterations.iterator(1);
-            new UnchainWithExactChannelSizeIterator<List<Optional<Integer>>, Integer>(new ConstantProvider<Optional<Integer>>(Optional.of(2)), iter, null);
+            new UnchainWithExactChannelSizeIterator<List<Optional<Integer>>, Integer>(new ConstantSupplier<Optional<Integer>>(Optional.of(2)), iter, null);
         }
     }
 }

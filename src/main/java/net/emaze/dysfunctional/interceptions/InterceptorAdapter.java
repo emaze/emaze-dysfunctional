@@ -4,10 +4,10 @@ import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
 
 /**
- * Adapts a unary interceptor to a unary delegate.
+ * Adapts a unary interceptor to a unary function.
  *
- * @param <T> the delegate parameter type
- * @param <R> the delegate result type
+ * @param <T> the function parameter type
+ * @param <R> the function result type
  * @author rferranti
  */
 public class InterceptorAdapter<T, R> implements Function<T, R> {
@@ -17,7 +17,7 @@ public class InterceptorAdapter<T, R> implements Function<T, R> {
 
     public InterceptorAdapter(Interceptor<T> interceptor, Function<T, R> inner) {
         dbc.precondition(interceptor != null, "cannot adapt a null interceptor");
-        dbc.precondition(inner != null, "cannot adapt with a null inner delegate");
+        dbc.precondition(inner != null, "cannot adapt with a null inner function");
         this.interceptor = interceptor;
         this.inner = inner;
     }

@@ -5,7 +5,7 @@ import java.util.function.BiFunction;
 import net.emaze.dysfunctional.numbers.policies.DividePolicy;
 
 /**
- * A binary delegate performing a division.
+ * A binary function performing a division.
  *
  * @author rferranti
  * @param <R> the result type

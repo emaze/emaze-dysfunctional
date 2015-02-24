@@ -5,7 +5,7 @@ import java.util.function.BiFunction;
 import net.emaze.dysfunctional.numbers.policies.ModulusPolicy;
 
 /**
- * A binary delegate evaluating modulus of a type.
+ * A binary function evaluating modulus of a type.
  *
  * @author rferranti
  * @param <R> the ModulusPolicy result type

@@ -67,8 +67,8 @@ public class TuplesTest {
 
         @Test
         public void canAdaptAction() {
-            final Consumer<Pair<O, O>> action = new Noop<Pair<O, O>>();
-            Assert.assertNotNull(Tuples.Pairs.untupled(action));
+            final Consumer<Pair<O, O>> consumer = new Noop<Pair<O, O>>();
+            Assert.assertNotNull(Tuples.Pairs.untupled(consumer));
         }
 
         @Test
@@ -79,8 +79,8 @@ public class TuplesTest {
 
         @Test
         public void canAdaptDelegate() {
-            final UnaryOperator<Pair<O, O>> delegate = UnaryOperator.identity();
-            Assert.assertNotNull(Tuples.Pairs.untupled(delegate));
+            final UnaryOperator<Pair<O, O>> function = UnaryOperator.identity();
+            Assert.assertNotNull(Tuples.Pairs.untupled(function));
         }
     }
 
@@ -88,8 +88,8 @@ public class TuplesTest {
 
         @Test
         public void canAdaptAction() {
-            final Consumer<Triple<O, O, O>> action = new Noop<Triple<O, O, O>>();
-            Assert.assertNotNull(Tuples.Triples.untupled(action));
+            final Consumer<Triple<O, O, O>> consumer = new Noop<Triple<O, O, O>>();
+            Assert.assertNotNull(Tuples.Triples.untupled(consumer));
         }
 
         @Test
@@ -100,8 +100,8 @@ public class TuplesTest {
 
         @Test
         public void canAdaptDelegate() {
-            final UnaryOperator<Triple<O, O, O>> delegate = UnaryOperator.identity();
-            Assert.assertNotNull(Tuples.Triples.untupled(delegate));
+            final UnaryOperator<Triple<O, O, O>> function = UnaryOperator.identity();
+            Assert.assertNotNull(Tuples.Triples.untupled(function));
         }
     }
 

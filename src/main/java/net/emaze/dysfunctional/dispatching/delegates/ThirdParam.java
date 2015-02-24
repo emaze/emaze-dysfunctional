@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
 /**
- * A ternary delegate yielding third passed parameter.
+ * A ternary function yielding third passed parameter.
  *
  * @param <T1> the first parameter type
  * @param <T2> the second parameter type

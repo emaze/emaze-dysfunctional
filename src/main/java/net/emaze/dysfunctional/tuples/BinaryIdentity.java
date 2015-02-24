@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.tuples;
 import java.util.function.BiFunction;
 
 /**
- * Returns both formal parameters (in a pair) passed to the delegate.
+ * Returns both formal parameters (in a pair) passed to the function.
  *
  * @param <T1> the first type parameter
  * @param <T2> the second type parameter

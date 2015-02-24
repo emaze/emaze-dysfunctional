@@ -5,7 +5,7 @@ import java.util.function.BiFunction;
 import net.emaze.dysfunctional.numbers.policies.SubtractPolicy;
 
 /**
- * A binary delegate performing a subtraction
+ * A binary function performing a subtraction
  *
  * @author rferranti
  * @param <R> the result type

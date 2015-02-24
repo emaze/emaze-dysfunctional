@@ -27,31 +27,31 @@ public abstract class Groups {
 
     /**
      * Groups elements from an iterator in the key evaluated from the passed
-     * delegate. E.g:
+     * function. E.g:
      * <code>groupBy([1, 2, 3, 1], id) -> { 1: [1,1], 2: [2], 3: [3]}</code>
      *
      * @param <K> the grouped key type
      * @param <V> the grouped value type
      * @param groupies the elements to be grouped
-     * @param grouper the delegate used to group elements
+     * @param grouper the function used to group elements
      * @return a map containing grouped values
      */
     public static <K, V> Map<K, List<V>> groupBy(Iterator<V> groupies, Function<V, K> grouper) {
-        final Supplier<List<V>> provider = Compositions.compose(new Vary<ArrayList<V>, List<V>>(), new ArrayListFactory<V>());
-        return new GroupBy<>(grouper, provider, new HashMapFactory<>()).apply(groupies);
+        final Supplier<List<V>> supplier = Compositions.compose(new Vary<ArrayList<V>, List<V>>(), new ArrayListFactory<V>());
+        return new GroupBy<>(grouper, supplier, new HashMapFactory<>()).apply(groupies);
     }
 
     /**
      * Groups elements from an iterator in the key evaluated from the passed
-     * delegate. E.g:
+     * function. E.g:
      * <code>groupBy([1, 2, 3, 1], id) -> { 1: [1,1], 2: [2], 3: [3]}</code>
      *
      * @param <K> the grouped key type
      * @param <V> the grouped value type
      * @param <C> the collection type used as value of the map
      * @param groupies the elements to be grouped
-     * @param grouper the delegate used to group elements
-     * @param collectionProvider the values collection provider
+     * @param grouper the function used to group elements
+     * @param collectionProvider the values collection supplier
      * @return a map containing grouped values
      */
     public static <K, V, C extends Collection<V>> Map<K, C> groupBy(Iterator<V> groupies, Function<V, K> grouper, Supplier<C> collectionProvider) {
@@ -60,7 +60,7 @@ public abstract class Groups {
 
     /**
      * Groups elements from an iterator in the key evaluated from the passed
-     * delegate. E.g:
+     * function. E.g:
      * <code>groupBy([1, 2, 3, 1], id) -> { 1: [1,1], 2: [2], 3: [3]}</code>
      *
      * @param <K> the grouped key type
@@ -68,9 +68,9 @@ public abstract class Groups {
      * @param <C> the collection type used as value of the map
      * @param <M> the result map type
      * @param groupies the elements to be grouped
-     * @param grouper the delegate used to group elements
-     * @param collectionProvider the values collection provider
-     * @param mapProvider the map collection provider
+     * @param grouper the function used to group elements
+     * @param collectionProvider the values collection supplier
+     * @param mapProvider the map collection supplier
      * @return a map containing grouped values
      */
     public static <K, V, C extends Collection<V>, M extends Map<K, C>> Map<K, C> groupBy(Iterator<V> groupies, Function<V, K> grouper, Supplier<C> collectionProvider, Supplier<M> mapProvider) {
@@ -79,32 +79,32 @@ public abstract class Groups {
 
     /**
      * Groups elements from an iterable in the key evaluated from the passed
-     * delegate. E.g:
+     * function. E.g:
      * <code>groupBy([1, 2, 3, 1], id) -> { 1: [1,1], 2: [2], 3: [3]}</code>
      *
      * @param <K> the grouped key type
      * @param <V> the grouped value type
      * @param groupies the elements to be grouped
-     * @param grouper the delegate used to group elements
+     * @param grouper the function used to group elements
      * @return a map containing grouped values
      */
     public static <K, V> Map<K, List<V>> groupBy(Iterable<V> groupies, Function<V, K> grouper) {
         dbc.precondition(groupies != null, "cannot group a null iterable");
-        final Supplier<List<V>> provider = Compositions.compose(new Vary<ArrayList<V>, List<V>>(), new ArrayListFactory<V>());
-        return new GroupBy<>(grouper, provider, new HashMapFactory<>()).apply(groupies.iterator());
+        final Supplier<List<V>> supplier = Compositions.compose(new Vary<ArrayList<V>, List<V>>(), new ArrayListFactory<V>());
+        return new GroupBy<>(grouper, supplier, new HashMapFactory<>()).apply(groupies.iterator());
     }
 
     /**
      * Groups elements from an iterable in the key evaluated from the passed
-     * delegate. E.g:
+     * function. E.g:
      * <code>groupBy([1, 2, 3, 1], id) -> { 1: [1,1], 2: [2], 3: [3]}</code>
      *
      * @param <K> the grouped key type
      * @param <V> the grouped value type
      * @param <C> the collection type used as value of the map
      * @param groupies the elements to be grouped
-     * @param grouper the delegate used to group elements
-     * @param collectionProvider the values collection provider
+     * @param grouper the function used to group elements
+     * @param collectionProvider the values collection supplier
      * @return a map containing grouped values
      */
     public static <K, V, C extends Collection<V>> Map<K, C> groupBy(Iterable<V> groupies, Function<V, K> grouper, Supplier<C> collectionProvider) {
@@ -114,7 +114,7 @@ public abstract class Groups {
 
     /**
      * Groups elements from an iterable in the key evaluated from the passed
-     * delegate. E.g:
+     * function. E.g:
      * <code>groupBy([1, 2, 3, 1], id) -> { 1: [1,1], 2: [2], 3: [3]}</code>
      *
      * @param <K> the grouped key type
@@ -122,9 +122,9 @@ public abstract class Groups {
      * @param <C> the collection type used as value of the map
      * @param <M> the result map type
      * @param groupies the elements to be grouped
-     * @param grouper the delegate used to group elements
-     * @param collectionProvider the values collection provider
-     * @param mapProvider the map collection provider
+     * @param grouper the function used to group elements
+     * @param collectionProvider the values collection supplier
+     * @param mapProvider the map collection supplier
      * @return a map containing grouped values
      */
     public static <K, V, C extends Collection<V>, M extends Map<K, C>> Map<K, C> groupBy(Iterable<V> groupies, Function<V, K> grouper, Supplier<C> collectionProvider, Supplier<M> mapProvider) {
@@ -134,31 +134,31 @@ public abstract class Groups {
 
     /**
      * Groups elements from an array in the key evaluated from the passed
-     * delegate. E.g:
+     * function. E.g:
      * <code>groupBy([1, 2, 3, 1], id) -> { 1: [1,1], 2: [2], 3: [3]}</code>
      *
      * @param <K> the grouped key type
      * @param <V> the grouped value type
      * @param groupies the elements to be grouped
-     * @param grouper the delegate used to group elements
+     * @param grouper the function used to group elements
      * @return a map containing grouped values
      */
     public static <K, V> Map<K, List<V>> groupBy(V[] groupies, Function<V, K> grouper) {
-        final Supplier<List<V>> provider = Compositions.compose(new Vary<ArrayList<V>, List<V>>(), new ArrayListFactory<V>());
-        return new GroupBy<>(grouper, provider, new HashMapFactory<>()).apply(new ArrayIterator<>(groupies));
+        final Supplier<List<V>> supplier = Compositions.compose(new Vary<ArrayList<V>, List<V>>(), new ArrayListFactory<V>());
+        return new GroupBy<>(grouper, supplier, new HashMapFactory<>()).apply(new ArrayIterator<>(groupies));
     }
 
     /**
      * Groups elements from an array in the key evaluated from the passed
-     * delegate. E.g:
+     * function. E.g:
      * <code>groupBy([1, 2, 3, 1], id) -> { 1: [1,1], 2: [2], 3: [3]}</code>
      *
      * @param <K> the grouped key type
      * @param <V> the grouped value type
      * @param <C> the collection type used as value of the map
      * @param groupies the elements to be grouped
-     * @param grouper the delegate used to group elements
-     * @param collectionProvider the values collection provider
+     * @param grouper the function used to group elements
+     * @param collectionProvider the values collection supplier
      * @return a map containing grouped values
      */
     public static <K, V, C extends Collection<V>> Map<K, C> groupBy(V[] groupies, Function<V, K> grouper, Supplier<C> collectionProvider) {
@@ -167,7 +167,7 @@ public abstract class Groups {
 
     /**
      * Groups elements from an array in the key evaluated from the passed
-     * delegate. E.g:
+     * function. E.g:
      * <code>groupBy([1, 2, 3, 1], id) -> { 1: [1,1], 2: [2], 3: [3]}</code>
      *
      * @param <K> the grouped key type
@@ -175,9 +175,9 @@ public abstract class Groups {
      * @param <C> the collection type used as value of the map
      * @param <M> the result map type
      * @param groupies the elements to be grouped
-     * @param grouper the delegate used to group elements
-     * @param collectionProvider the values collection provider
-     * @param mapProvider the map collection provider
+     * @param grouper the function used to group elements
+     * @param collectionProvider the values collection supplier
+     * @param mapProvider the map collection supplier
      * @return a map containing grouped values
      */
     public static <K, V, C extends Collection<V>, M extends Map<K, C>> Map<K, C> groupBy(V[] groupies, Function<V, K> grouper, Supplier<C> collectionProvider, Supplier<M> mapProvider) {
@@ -196,8 +196,8 @@ public abstract class Groups {
      * @return the two partitioned collections in a pair.
      */
     public static <T> Pair<List<T>, List<T>> partition(Iterator<T> values, Predicate<T> partitioner) {
-        final Supplier<List<T>> provider = Compositions.compose(new Vary<ArrayList<T>, List<T>>(), new ArrayListFactory<T>());
-        return new PartitionBy<>(partitioner, provider, provider).apply(values);
+        final Supplier<List<T>> supplier = Compositions.compose(new Vary<ArrayList<T>, List<T>>(), new ArrayListFactory<T>());
+        return new PartitionBy<>(partitioner, supplier, supplier).apply(values);
     }
 
     /**
@@ -210,7 +210,7 @@ public abstract class Groups {
      * @param <C> the partitioned elements collection type
      * @param values the values to be partitioned
      * @param partitioner the predicate used to partition values
-     * @param collectionsProvider a collection provider used to create both
+     * @param collectionsProvider a collection supplier used to create both
      * elements collection
      * @return the two partitioned collections in a pair.
      */
@@ -229,9 +229,9 @@ public abstract class Groups {
      * @param <T> the element type
      * @param values the values to be partitioned
      * @param partitioner the predicate used to partition values
-     * @param acceptedCollectionProvider a collection provider used to create
+     * @param acceptedCollectionProvider a collection supplier used to create
      * accepted elements collection
-     * @param refusedCollectionProvider a collection provider used to create
+     * @param refusedCollectionProvider a collection supplier used to create
      * refused elements collection
      * @return the two partitioned collections in a pair.
      */
@@ -252,8 +252,8 @@ public abstract class Groups {
      */
     public static <T> Pair<List<T>, List<T>> partition(Iterable<T> values, Predicate<T> partitioner) {
         dbc.precondition(values != null, "cannot partition a null iterable");
-        final Supplier<List<T>> provider = Compositions.compose(new Vary<ArrayList<T>, List<T>>(), new ArrayListFactory<T>());
-        return new PartitionBy<>(partitioner, provider, provider).apply(values.iterator());
+        final Supplier<List<T>> supplier = Compositions.compose(new Vary<ArrayList<T>, List<T>>(), new ArrayListFactory<T>());
+        return new PartitionBy<>(partitioner, supplier, supplier).apply(values.iterator());
     }
 
     /**
@@ -266,7 +266,7 @@ public abstract class Groups {
      * @param <C> the partitioned elements collection type
      * @param values the values to be partitioned
      * @param partitioner the predicate used to partition values
-     * @param collectionsProvider a collection provider used to create both
+     * @param collectionsProvider a collection supplier used to create both
      * elements collection
      * @return the two partitioned collections in a pair.
      */
@@ -286,9 +286,9 @@ public abstract class Groups {
      * @param <CR> the refused elements collection type
      * @param values the values to be partitioned
      * @param partitioner the predicate used to partition values
-     * @param acceptedCollectionProvider a collection provider used to create
+     * @param acceptedCollectionProvider a collection supplier used to create
      * accepted elements collection
-     * @param refusedCollectionProvider a collection provider used to create
+     * @param refusedCollectionProvider a collection supplier used to create
      * refused elements collection
      * @return the two partitioned collections in a pair.
      */
@@ -309,8 +309,8 @@ public abstract class Groups {
      * @return the two partitioned collections in a pair.
      */
     public static <T> Pair<List<T>, List<T>> partition(T[] values, Predicate<T> partitioner) {
-        final Supplier<List<T>> provider = Compositions.compose(new Vary<ArrayList<T>, List<T>>(), new ArrayListFactory<T>());
-        return new PartitionBy<>(partitioner, provider, provider).apply(new ArrayIterator<>(values));
+        final Supplier<List<T>> supplier = Compositions.compose(new Vary<ArrayList<T>, List<T>>(), new ArrayListFactory<T>());
+        return new PartitionBy<>(partitioner, supplier, supplier).apply(new ArrayIterator<>(values));
     }
 
     /**
@@ -323,7 +323,7 @@ public abstract class Groups {
      * @param <C> the partitioned elements collection type
      * @param values the values to be partitioned
      * @param partitioner the predicate used to partition values
-     * @param collectionsProvider a collection provider used to create both
+     * @param collectionsProvider a collection supplier used to create both
      * elements collection
      * @return the two partitioned collections in a pair.
      */
@@ -342,9 +342,9 @@ public abstract class Groups {
      * @param <T> the element type
      * @param values the values to be partitioned
      * @param partitioner the predicate used to partition values
-     * @param acceptedCollectionProvider a collection provider used to create
+     * @param acceptedCollectionProvider a collection supplier used to create
      * accepted elements collection
-     * @param refusedCollectionProvider a collection provider used to create
+     * @param refusedCollectionProvider a collection supplier used to create
      * refused elements collection
      * @return the two partitioned collections in a pair.
      */
@@ -353,15 +353,15 @@ public abstract class Groups {
     }
 
     /**
-     * Indexes elements from the iterable using passed delegate. E.g:
+     * Indexes elements from the iterable using passed function. E.g:
      * <code> indexBy([1,2,3,4], id) -> {1:1, 2:2, 3:3, 4:4}</code>
      *
      * @param <K> the key type
      * @param <V> the value type
      * @param <M> the map type
      * @param groupies elements to be indexed
-     * @param indexer the delegate used to index elements
-     * @param mapProvider a provider used to create the resulting map
+     * @param indexer the function used to index elements
+     * @param mapProvider a supplier used to create the resulting map
      * @return indexed elements in a map
      */
     public static <K, V, M extends Map<K, V>> Map<K, V> indexBy(Iterable<V> groupies, Function<V, K> indexer, Supplier<M> mapProvider) {
@@ -370,13 +370,13 @@ public abstract class Groups {
     }
 
     /**
-     * Indexes elements from the iterable using passed delegate. E.g:
+     * Indexes elements from the iterable using passed function. E.g:
      * <code> indexBy([1,2,3,4], id) -> {1:1, 2:2, 3:3, 4:4}</code>
      *
      * @param <K> the key type
      * @param <V> the value type
      * @param groupies elements to be indexed
-     * @param indexer the delegate used to index elements
+     * @param indexer the function used to index elements
      * @return indexed elements in a map
      */
     public static <K, V> Map<K, V> indexBy(Iterable<V> groupies, Function<V, K> indexer) {
@@ -385,15 +385,15 @@ public abstract class Groups {
     }
 
     /**
-     * Indexes elements from the iterator using passed delegate. E.g:
+     * Indexes elements from the iterator using passed function. E.g:
      * <code> indexBy([1,2,3,4], id) -> {1:1, 2:2, 3:3, 4:4}</code>
      *
      * @param <K> the key type
      * @param <V> the value type
      * @param <M> the map type
      * @param groupies elements to be indexed
-     * @param indexer the delegate used to index elements
-     * @param mapProvider a provider used to create the resulting map
+     * @param indexer the function used to index elements
+     * @param mapProvider a supplier used to create the resulting map
      * @return indexed elements in a map
      */
     public static <K, V, M extends Map<K, V>> Map<K, V> indexBy(Iterator<V> groupies, Function<V, K> indexer, Supplier<M> mapProvider) {
@@ -401,13 +401,13 @@ public abstract class Groups {
     }
 
     /**
-     * Indexes elements from the iterator using passed delegate. E.g:
+     * Indexes elements from the iterator using passed function. E.g:
      * <code> indexBy([1,2,3,4], id) -> {1:1, 2:2, 3:3, 4:4}</code>
      *
      * @param <K> the key type
      * @param <V> the value type
      * @param groupies elements to be indexed
-     * @param indexer the delegate used to index elements
+     * @param indexer the function used to index elements
      * @return indexed elements in a map
      */
     public static <K, V> Map<K, V> indexBy(Iterator<V> groupies, Function<V, K> indexer) {
@@ -415,15 +415,15 @@ public abstract class Groups {
     }
 
     /**
-     * Indexes elements from the array using passed delegate. E.g:
+     * Indexes elements from the array using passed function. E.g:
      * <code> indexBy([1,2,3,4], id) -> {1:1, 2:2, 3:3, 4:4}</code>
      *
      * @param <K> the key type
      * @param <V> the value type
      * @param <M> the map type
      * @param groupies elements to be indexed
-     * @param indexer the delegate used to index elements
-     * @param mapProvider a provider used to create the resulting map
+     * @param indexer the function used to index elements
+     * @param mapProvider a supplier used to create the resulting map
      * @return indexed elements in a map
      */
     public static <K, V, M extends Map<K, V>> Map<K, V> indexBy(V[] groupies, Function<V, K> indexer, Supplier<M> mapProvider) {
@@ -431,13 +431,13 @@ public abstract class Groups {
     }
 
     /**
-     * Indexes elements from the array using passed delegate. E.g:
+     * Indexes elements from the array using passed function. E.g:
      * <code> indexBy([1,2,3,4], id) -> {1:1, 2:2, 3:3, 4:4}</code>
      *
      * @param <K> the key type
      * @param <V> the value type
      * @param groupies elements to be indexed
-     * @param indexer the delegate used to index elements
+     * @param indexer the function used to index elements
      * @return indexed elements in a map
      */
     public static <K, V> Map<K, V> indexBy(V[] groupies, Function<V, K> indexer) {

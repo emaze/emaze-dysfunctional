@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 import java.util.function.BiConsumer;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
-import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
+import net.emaze.dysfunctional.dispatching.actions.TriConsumer;
 import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
 import net.emaze.dysfunctional.PipelinesTest.BinaryTest;
 import net.emaze.dysfunctional.PipelinesTest.FacadeTest;
@@ -70,15 +70,15 @@ public class PipelinesTest {
 
         @Test
         public void canCreatePipelineFromAnIterable() {
-            final Iterable<TernaryAction<O, O, O>> iterable = Iterations.<TernaryAction<O, O, O>>iterable(new TernaryNoop<O, O, O>());
-            final TernaryAction<O, O, O> pipeline = Pipelines.Ternary.pipeline(iterable);
+            final Iterable<TriConsumer<O, O, O>> iterable = Iterations.<TriConsumer<O, O, O>>iterable(new TernaryNoop<O, O, O>());
+            final TriConsumer<O, O, O> pipeline = Pipelines.Ternary.pipeline(iterable);
             Assert.assertNotNull(pipeline);
         }
 
         @Test
         public void canCreatePipelineFromAnIterator() {
-            final Iterator<TernaryAction<O, O, O>> iterator = Iterations.<TernaryAction<O, O, O>>iterator(new TernaryNoop<O, O, O>());
-            final TernaryAction<O, O, O> pipeline = Pipelines.Ternary.pipeline(iterator);
+            final Iterator<TriConsumer<O, O, O>> iterator = Iterations.<TriConsumer<O, O, O>>iterator(new TernaryNoop<O, O, O>());
+            final TriConsumer<O, O, O> pipeline = Pipelines.Ternary.pipeline(iterator);
             Assert.assertNotNull(pipeline);
         }
     }
@@ -144,28 +144,28 @@ public class PipelinesTest {
         @Test
         public void canCreatePipelineFromTernaryAction() {
             final TernaryNoop<O, O, O> noop = new TernaryNoop<O, O, O>();
-            final TernaryAction<O, O, O> pipeline = Pipelines.pipeline(noop);
+            final TriConsumer<O, O, O> pipeline = Pipelines.pipeline(noop);
             Assert.assertNotNull(pipeline);
         }
 
         @Test
         public void canCreatePipelineFromTwoTernaryActions() {
             final TernaryNoop<O, O, O> noop = new TernaryNoop<O, O, O>();
-            final TernaryAction<O, O, O> pipeline = Pipelines.pipeline(noop, noop);
+            final TriConsumer<O, O, O> pipeline = Pipelines.pipeline(noop, noop);
             Assert.assertNotNull(pipeline);
         }
 
         @Test
         public void canCreatePipelineFromThreeTernaryActions() {
             final TernaryNoop<O, O, O> noop = new TernaryNoop<O, O, O>();
-            final TernaryAction<O, O, O> pipeline = Pipelines.pipeline(noop, noop, noop);
+            final TriConsumer<O, O, O> pipeline = Pipelines.pipeline(noop, noop, noop);
             Assert.assertNotNull(pipeline);
         }
 
         @Test
         public void canCreatePipelineFromManyTernaryActions() {
             final TernaryNoop<O, O, O> noop = new TernaryNoop<O, O, O>();
-            final TernaryAction<O, O, O> pipeline = Pipelines.pipeline(noop, noop, noop, noop);
+            final TriConsumer<O, O, O> pipeline = Pipelines.pipeline(noop, noop, noop, noop);
             Assert.assertNotNull(pipeline);
         }
     }

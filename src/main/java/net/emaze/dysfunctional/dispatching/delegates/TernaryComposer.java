@@ -4,7 +4,7 @@ import java.util.function.Function;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- * Composes an unary delegate with a binary delegate.
+ * Composes an unary function with a binary function.
  *
  * @param <T1> the first ternary parameter type
  * @param <T2> the second ternary parameter type
@@ -18,8 +18,8 @@ public class TernaryComposer<T1, T2, T3, T4, R> implements TriFunction<T1, T2, T
     private final TriFunction<T1, T2, T3, T4> ternary;
 
     public TernaryComposer(Function<T4, R> unary, TriFunction<T1, T2, T3, T4> ternary) {
-        dbc.precondition(unary != null, "cannot compose a null unary delegate");
-        dbc.precondition(ternary != null, "cannot compose a null ternary delegate");
+        dbc.precondition(unary != null, "cannot compose a null unary function");
+        dbc.precondition(ternary != null, "cannot compose a null ternary function");
         this.unary = unary;
         this.ternary = ternary;
     }

@@ -22,46 +22,46 @@ import net.emaze.dysfunctional.reductions.Reductor;
 public abstract class Reductions {
 
     /**
-     * Reduces an iterator of elements using the passed delegate.
+     * Reduces an iterator of elements using the passed function.
      *
      * @param <E> the element type parameter
      * @param <R> the result type parameter
      * @param iterator the iterator to be consumed
-     * @param delegate the reduction delegate
+     * @param function the reduction function
      * @param init the initial value for reductions
      * @return the reduced value
      */
-    public static <E, R> R reduce(Iterator<E> iterator, BiFunction<R, E, R> delegate, R init) {
-        return new Reductor<>(delegate, init).apply(iterator);
+    public static <E, R> R reduce(Iterator<E> iterator, BiFunction<R, E, R> function, R init) {
+        return new Reductor<>(function, init).apply(iterator);
     }
 
     /**
-     * Reduces an iterator of elements using the passed delegate.
+     * Reduces an iterator of elements using the passed function.
      *
      * @param <E> the element type parameter
      * @param <R> the result type parameter
      * @param iterable the iterable to be consumed
-     * @param delegate the reduction delegate
+     * @param function the reduction function
      * @param init the initial value for reductions
      * @return the reduced value
      */
-    public static <E, R> R reduce(Iterable<E> iterable, BiFunction<R, E, R> delegate, R init) {
+    public static <E, R> R reduce(Iterable<E> iterable, BiFunction<R, E, R> function, R init) {
         dbc.precondition(iterable != null, "cannot call reduce with a null iterable");
-        return new Reductor<>(delegate, init).apply(iterable.iterator());
+        return new Reductor<>(function, init).apply(iterable.iterator());
     }
 
     /**
-     * Reduces an array of elements using the passed delegate.
+     * Reduces an array of elements using the passed function.
      *
      * @param <E> the element type parameter
      * @param <R> the result type parameter
      * @param array the array to be consumed
-     * @param delegate the reduction delegate
+     * @param function the reduction function
      * @param init the initial value for reductions
      * @return the reduced value
      */
-    public static <E, R> R reduce(E[] array, BiFunction<R, E, R> delegate, R init) {
-        return new Reductor<>(delegate, init).apply(new ArrayIterator<E>(array));
+    public static <E, R> R reduce(E[] array, BiFunction<R, E, R> function, R init) {
+        return new Reductor<>(function, init).apply(new ArrayIterator<E>(array));
     }
 
     /**

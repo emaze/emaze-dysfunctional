@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.tuples;
 import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 
 /**
- * Returns the three formal parameters (in a triple) passed to the delegate.
+ * Returns the three formal parameters (in a triple) passed to the function.
  * @param <T1> the first type parameter
  * @param <T2> the second type parameter
  * @param <T3> the third type parameter

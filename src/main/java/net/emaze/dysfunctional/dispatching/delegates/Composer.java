@@ -16,8 +16,8 @@ public class Composer<T2, T1, R> implements Function<T1, R> {
     private final Function<T2, R> f;
 
     public Composer(Function<T2, R> f, Function<T1, T2> g) {
-        dbc.precondition(f != null, "cannot compose a null delegate");
-        dbc.precondition(g != null, "cannot compose a null delegate");
+        dbc.precondition(f != null, "cannot compose a null function");
+        dbc.precondition(g != null, "cannot compose a null function");
         this.f = f;
         this.g = g;
     }

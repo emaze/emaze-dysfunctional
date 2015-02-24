@@ -5,7 +5,7 @@ import java.util.function.BiFunction;
 import net.emaze.dysfunctional.numbers.policies.MultiplyPolicy;
 
 /**
- * A binary delegate performing a multiplication.
+ * A binary function performing a multiplication.
  *
  * @author rferranti
  * @param <R> the result type

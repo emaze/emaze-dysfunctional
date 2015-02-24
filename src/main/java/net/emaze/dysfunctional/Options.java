@@ -202,10 +202,10 @@ public abstract class Options {
         /**
          * Transforms a function to another working on maybe monadic values.
          *
-         * @param <T> the delegate parameter type
-         * @param <R> the delegate return type
+         * @param <T> the function parameter type
+         * @param <R> the function return type
          * @param function the function to be lifted
-         * @return the transformed delegate
+         * @return the transformed function
          */
         public static <T, R> Function<Optional<T>, Optional<R>> lift(Function<T, R> function) {
             dbc.precondition(function != null, "cannot lift to optional with a null function");
@@ -478,10 +478,10 @@ public abstract class Options {
         /**
          * Transforms a function to another working on box monadic values.
          *
-         * @param <T> the delegate parameter type
-         * @param <R> the delegate return type
+         * @param <T> the function parameter type
+         * @param <R> the function return type
          * @param function the function to be lifted
-         * @return the transformed delegate
+         * @return the transformed function
          */
         public static <T, R> Function<Box<T>, Box<R>> lift(Function<T, R> function) {
             dbc.precondition(function != null, "cannot lift to box with a null function");

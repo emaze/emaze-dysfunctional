@@ -7,7 +7,7 @@ import java.beans.PropertyDescriptor;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- * A binary delegate yielding {@literal PropertyDescriptor}s of a class.
+ * A binary function yielding {@literal PropertyDescriptor}s of a class.
  *
  * @author rferranti
  */

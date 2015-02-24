@@ -16,14 +16,14 @@ import java.util.function.Supplier;
 public class NestedMapBuilder<K> {
 
     private final Deque<K> stack = new LinkedList<K>();
-    private final Supplier<Map<K, Object>> provider;
+    private final Supplier<Map<K, Object>> supplier;
     private final Map<K, Object> buildee;
     public final NestedMapBuilder<K> ___;
 
-    public NestedMapBuilder(Supplier<Map<K, Object>> provider) {
-        dbc.precondition(provider != null, "cannot create a MapTreeBuilder with a null map provider");
-        this.provider = provider;
-        this.buildee = provider.get();
+    public NestedMapBuilder(Supplier<Map<K, Object>> supplier) {
+        dbc.precondition(supplier != null, "cannot create a MapTreeBuilder with a null map supplier");
+        this.supplier = supplier;
+        this.buildee = supplier.get();
         this.___ = this;
     }
 
@@ -39,7 +39,7 @@ public class NestedMapBuilder<K> {
     }
 
     public NestedMapBuilder<K> push(K key) {
-        current().put(key, provider.get());
+        current().put(key, supplier.get());
         stack.addLast(key);
         return this;
     }

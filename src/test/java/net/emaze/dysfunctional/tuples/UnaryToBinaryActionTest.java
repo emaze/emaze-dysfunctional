@@ -16,14 +16,14 @@ public class UnaryToBinaryActionTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingWithNullActionYieldsException() {
-        new UnaryToBinaryAction<O, O>(null);
+        new UnaryToBinaryConsumer<O, O>(null);
     }
 
     @Test
     public void canAdapt() {
         final Box<Pair<O,O>> box = Box.empty();
-        final Consumer<Pair<O, O>> action = Spies.spy(new Noop<Pair<O, O>>(), box);
-        final UnaryToBinaryAction<O, O> adapted = new UnaryToBinaryAction<O, O>(action);
+        final Consumer<Pair<O, O>> consumer = Spies.spy(new Noop<Pair<O, O>>(), box);
+        final UnaryToBinaryConsumer<O, O> adapted = new UnaryToBinaryConsumer<O, O>(consumer);
         adapted.accept(O.ONE, O.ANOTHER);
         Assert.assertEquals(Pair.of(O.ONE, O.ANOTHER), box.getContent());
     }

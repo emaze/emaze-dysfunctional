@@ -5,8 +5,8 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
- * Adapts a provider to a delegate. Adapting is performed by ignoring the
- * parameter passed to the adapted provider.
+ * Adapts a supplier to a function. Adapting is performed by ignoring the
+ * parameter passed to the adapted supplier.
  *
  * @param <T> the adapter parameter type
  * @param <R> the adapter result type
@@ -17,7 +17,7 @@ public class IgnoreParameter<T, R> implements Function<T, R> {
     private final Supplier<R> adapted;
 
     public IgnoreParameter(Supplier<R> adaptee) {
-        dbc.precondition(adaptee != null, "cannot ignore parameter of a null provider");
+        dbc.precondition(adaptee != null, "cannot ignore parameter of a null supplier");
         this.adapted = adaptee;
     }
 

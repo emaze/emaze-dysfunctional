@@ -5,7 +5,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 
 /**
- * Proxies a ternary delegate, monitoring its calls.
+ * Proxies a ternary function, monitoring its calls.
  *
  * @author rferranti
  * @param <T1> the first parameter type

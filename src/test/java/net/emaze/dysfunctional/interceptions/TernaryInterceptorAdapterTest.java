@@ -27,15 +27,15 @@ public class TernaryInterceptorAdapterTest {
     public void beforeAndAfterAreCalled() {
         final BucketFillingTernaryInterceptor<String, String, String> interceptor = new BucketFillingTernaryInterceptor<String, String, String>();
         final TriFunction<String, String, String, String> nestedDelegate = new FirstParam<String, String, String>();
-        final TriFunction<String, String, String, String> delegate = new TernaryInterceptorAdapter<String, String, String, String>(interceptor, nestedDelegate);
-        delegate.apply("useless_param", "useless_param", "useless_param");
+        final TriFunction<String, String, String, String> function = new TernaryInterceptorAdapter<String, String, String, String>(interceptor, nestedDelegate);
+        function.apply("useless_param", "useless_param", "useless_param");
         Assert.assertTrue(interceptor.getBeforeBucket().size() == 1 && interceptor.getAfterBucket().size() == 1);
     }
 
     @Test
     public void beforeAndAfterAreCalledInCaseOfException() {
         final BucketFillingTernaryInterceptor<String, String, String> interceptor = new BucketFillingTernaryInterceptor<String, String, String>();
-        final TriFunction<String, String, String, String> delegate = new TernaryInterceptorAdapter<String, String, String, String>(interceptor, new TriFunction<String, String, String, String>() {
+        final TriFunction<String, String, String, String> function = new TernaryInterceptorAdapter<String, String, String, String>(interceptor, new TriFunction<String, String, String, String>() {
 
             @Override
             public String apply(String first, String second, String third) {
@@ -43,8 +43,8 @@ public class TernaryInterceptorAdapterTest {
             }
         });
         try {
-            delegate.apply("useless_param", "useless_param", "useless_param");
-            Assert.fail("delegate is supposed to throw UnsupportedOperationException");
+            function.apply("useless_param", "useless_param", "useless_param");
+            Assert.fail("function is supposed to throw UnsupportedOperationException");
         } catch (UnsupportedOperationException ex) {
             Assert.assertTrue(interceptor.getBeforeBucket().size() == 1 && interceptor.getAfterBucket().size() == 1);
         }

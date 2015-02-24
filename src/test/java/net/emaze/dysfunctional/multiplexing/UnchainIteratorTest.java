@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.Compositions;
 import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
-import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantSupplier;
 import java.util.function.Supplier;
 import java.util.Optional;
 import org.junit.Assert;
@@ -29,8 +29,8 @@ import org.junit.runners.Suite;
 public class UnchainIteratorTest {
 
     final static Supplier<List<Integer>> LIST_FACTORY = Compositions.compose(new Vary<ArrayList<Integer>, List<Integer>>(), new ArrayListFactory<Integer>());
-    final static Supplier<Optional<Integer>> SIZE_IS_ALWAYS_1 = new ConstantProvider<Optional<Integer>>(Optional.of(1));
-    final static Supplier<Optional<Integer>> SIZE_IS_ALWAYS_2 = new ConstantProvider<Optional<Integer>>(Optional.of(2));
+    final static Supplier<Optional<Integer>> SIZE_IS_ALWAYS_1 = new ConstantSupplier<Optional<Integer>>(Optional.of(1));
+    final static Supplier<Optional<Integer>> SIZE_IS_ALWAYS_2 = new ConstantSupplier<Optional<Integer>>(Optional.of(2));
 
     public static class Functions {
 

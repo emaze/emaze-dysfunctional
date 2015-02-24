@@ -18,18 +18,18 @@ public class CenteredWindowIterator<W extends Collection<Optional<T>>, T> extend
 
     private final Iterator<T> iter;
     private final int windowSize;
-    private final Supplier<W> provider;
+    private final Supplier<W> supplier;
     private final LinkedList<Optional<T>> window = new LinkedList<Optional<T>>();
     private boolean freshIterator = true;
 
-    public CenteredWindowIterator(Iterator<T> iter, int windowSize, Supplier<W> provider) {
+    public CenteredWindowIterator(Iterator<T> iter, int windowSize, Supplier<W> supplier) {
         dbc.precondition(iter != null, "cannot create a CenteredWindowIterator with a null iterator");
         dbc.precondition(windowSize > 2, "cannot create a CenteredWindowIterator with a non positive or 1 window size");
         dbc.precondition(windowSize % 2 == 1, "cannot create a CenteredWindowIterator with an even windowSize");
-        dbc.precondition(provider != null, "cannot create a CenteredWindowIterator with an null provider");
+        dbc.precondition(supplier != null, "cannot create a CenteredWindowIterator with an null supplier");
         this.iter = iter;
         this.windowSize = windowSize;
-        this.provider = provider;
+        this.supplier = supplier;
         for (int i = 0; i != windowSize / 2; ++i) {
             window.add(Optional.<T>empty());
         }
@@ -52,7 +52,7 @@ public class CenteredWindowIterator<W extends Collection<Optional<T>>, T> extend
         }
         freshIterator = false;
         fillWindow();
-        final W collection = provider.get();
+        final W collection = supplier.get();
         collection.addAll(window);
         return collection;
     }

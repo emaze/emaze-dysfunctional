@@ -25,8 +25,8 @@ public class InterceptorAdapterTest {
     @Test
     public void beforeAndAfterAreCalled() {
         List<Integer> bucket = new ArrayList<Integer>();
-        final Function<String, String> delegate = new InterceptorAdapter<String, String>(new BucketFillingInterceptor(bucket), Function.identity());
-        delegate.apply("useless_param");
+        final Function<String, String> function = new InterceptorAdapter<String, String>(new BucketFillingInterceptor(bucket), Function.identity());
+        function.apply("useless_param");
         Assert.assertEquals(2, bucket.size());
 
     }
@@ -34,7 +34,7 @@ public class InterceptorAdapterTest {
     @Test
     public void beforeAndAfterAreCalledInCaseOfException() {
         List<Integer> bucket = new ArrayList<Integer>();
-        Function<String, String> delegate = new InterceptorAdapter<String, String>(new BucketFillingInterceptor(bucket), new Function<String, String>() {
+        Function<String, String> function = new InterceptorAdapter<String, String>(new BucketFillingInterceptor(bucket), new Function<String, String>() {
 
             @Override
             public String apply(String t) {
@@ -42,8 +42,8 @@ public class InterceptorAdapterTest {
             }
         });
         try {
-            delegate.apply("useless_param");
-            Assert.fail("delegate is supposed to throw UnsupportedOperationException");
+            function.apply("useless_param");
+            Assert.fail("function is supposed to throw UnsupportedOperationException");
         } catch (UnsupportedOperationException ex) {
             Assert.assertEquals(2, bucket.size());
         }

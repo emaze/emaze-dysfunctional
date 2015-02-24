@@ -5,7 +5,7 @@ import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- * A unary delegate yielding plucking an iterator from an iterable.
+ * A unary function yielding plucking an iterator from an iterable.
  *
  * @param <I> the iterable type
  * @param <E> the iterable element type

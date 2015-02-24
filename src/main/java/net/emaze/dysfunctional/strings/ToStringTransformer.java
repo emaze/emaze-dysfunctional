@@ -4,7 +4,7 @@ import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
 
 /**
- * A delegate transforming
+ * A function transforming
  * @param <T>
  * @author rferranti
  */

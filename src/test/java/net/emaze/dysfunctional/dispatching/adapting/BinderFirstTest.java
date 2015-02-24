@@ -17,8 +17,8 @@ public class BinderFirstTest {
 
     @Test
     public void firstParamIsCorrectlyBound() {
-        final Function<String, String> delegate = new BinderFirst<String, String, String>(new ConcatenateString(), "bound");
-        final String got = delegate.apply("passed");
+        final Function<String, String> function = new BinderFirst<String, String, String>(new ConcatenateString(), "bound");
+        final String got = function.apply("passed");
         Assert.assertEquals("boundpassed", got);
     }
 

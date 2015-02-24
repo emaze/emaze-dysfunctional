@@ -6,7 +6,7 @@ import net.emaze.dysfunctional.numbers.policies.SumPolicy;
 import net.emaze.dysfunctional.tuples.Pair;
 
 /**
- * A binary delegate accumulating sum and count of passed values on a pair.
+ * A binary function accumulating sum and count of passed values on a pair.
  *
  * @author rferranti
  * @param <T> the value type.

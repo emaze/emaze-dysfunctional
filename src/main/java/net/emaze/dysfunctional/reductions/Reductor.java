@@ -6,7 +6,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
- * A unary delegate reducing the {@literal Iterator<E>} to {@literal R}.
+ * A unary function reducing the {@literal Iterator<E>} to {@literal R}.
  *
  * @param <E> the iterator element type
  * @param <R> the result element type
@@ -14,12 +14,12 @@ import java.util.function.Function;
  */
 public class Reductor<E, R> implements Function<Iterator<E>, R> {
 
-    private final BiFunction<R, E, R> delegate;
+    private final BiFunction<R, E, R> function;
     private final R init;
 
-    public Reductor(BiFunction<R, E, R> delegate, R init) {
-        dbc.precondition(delegate != null, "cannot create a Reductor with a null delegate");
-        this.delegate = delegate;
+    public Reductor(BiFunction<R, E, R> function, R init) {
+        dbc.precondition(function != null, "cannot create a Reductor with a null function");
+        this.function = function;
         this.init = init;
     }
 
@@ -28,7 +28,7 @@ public class Reductor<E, R> implements Function<Iterator<E>, R> {
         dbc.precondition(iterator != null, "consuming a null iterator");
         R current = init;
         while (iterator.hasNext()) {
-            current = delegate.apply(current, iterator.next());
+            current = function.apply(current, iterator.next());
         }
         return current;
     }

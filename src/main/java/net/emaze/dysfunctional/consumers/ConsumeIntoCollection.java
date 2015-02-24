@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 
 /**
  * Consumes every element from the consumable into the collection provided by
- * the provider.
+ * the supplier.
  *
  * @param <E> the collection element type parameter
  * @param <R> the collection type parameter
@@ -16,17 +16,17 @@ import java.util.function.Supplier;
  */
 public class ConsumeIntoCollection<E, R extends Collection<E>> implements Function<Iterator<E>, R> {
 
-    private final Supplier<R> provider;
+    private final Supplier<R> supplier;
 
-    public ConsumeIntoCollection(Supplier<R> provider) {
-        dbc.precondition(provider != null, "collection provider cannot be null");
-        this.provider = provider;
+    public ConsumeIntoCollection(Supplier<R> supplier) {
+        dbc.precondition(supplier != null, "collection supplier cannot be null");
+        this.supplier = supplier;
     }
 
     @Override
     public R apply(Iterator<E> consumable) {
         dbc.precondition(consumable != null, "consuming a null iterator");
-        final R out = provider.get();
+        final R out = supplier.get();
         while (consumable.hasNext()) {
             out.add(consumable.next());
         }

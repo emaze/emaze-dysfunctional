@@ -214,25 +214,25 @@ public class GroupsTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void indexByWithNullIteratorYieldsException() {
-            final Function<O, O> delegate = Function.identity();
+            final Function<O, O> function = Function.identity();
             final Supplier<HashMap<O, O>> mapProvider = new HashMapFactory<O, O>();
             final Iterator<O> nullIterator = null;
-            Groups.indexBy(nullIterator, delegate, mapProvider);
+            Groups.indexBy(nullIterator, function, mapProvider);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void indexByUsingProviderWithNullIterableYieldsException() {
-            final Function<O, O> delegate = Function.identity();
+            final Function<O, O> function = Function.identity();
             final Supplier<HashMap<O, O>> mapProvider = new HashMapFactory<O, O>();
             final Iterable<O> nullIterable = null;
-            Groups.indexBy(nullIterable, delegate, mapProvider);
+            Groups.indexBy(nullIterable, function, mapProvider);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void indexByWithNullIterableYieldsException() {
-            final Function<O, O> delegate = Function.identity();
+            final Function<O, O> function = Function.identity();
             final Iterable<O> nullIterable = null;
-            Groups.indexBy(nullIterable, delegate);
+            Groups.indexBy(nullIterable, function);
         }
 
         @Test(expected = IllegalArgumentException.class)
@@ -245,68 +245,68 @@ public class GroupsTest {
         @Test(expected = IllegalArgumentException.class)
         public void indexByWithNullProvideYieldsException() {
             final Iterator<O> iterator = Iterations.iterator();
-            final Function<O, O> delegate = Function.identity();
+            final Function<O, O> function = Function.identity();
             final Supplier<HashMap<O, O>> nullProvider = null;
-            Groups.indexBy(iterator, delegate, nullProvider);
+            Groups.indexBy(iterator, function, nullProvider);
         }
 
         @Test
         public void everyElementFromIteratorIsIndexed() {
             final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER);
-            final Function<O, O> delegate = Function.identity();
-            final Supplier<LinkedHashMap<O, O>> provider = new LinkedHashMapFactory<O, O>();
-            final Map<O, O> indexed = Groups.indexBy(iterator, delegate, provider);
+            final Function<O, O> function = Function.identity();
+            final Supplier<LinkedHashMap<O, O>> supplier = new LinkedHashMapFactory<O, O>();
+            final Map<O, O> indexed = Groups.indexBy(iterator, function, supplier);
             Assert.assertEquals(Arrays.asList(O.ONE, O.ANOTHER), new ArrayList<O>(indexed.values()));
         }
 
         @Test
         public void canIndexUsingIterable() {
             final Iterable<O> iterable = Iterations.iterable(O.ONE, O.ANOTHER);
-            final Function<O, O> delegate = Function.identity();
-            final Map<O, O> indexed = Groups.indexBy(iterable, delegate);
+            final Function<O, O> function = Function.identity();
+            final Map<O, O> indexed = Groups.indexBy(iterable, function);
             Assert.assertNotNull(indexed);
         }
 
         @Test
         public void canIndexUsingIterator() {
             final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER);
-            final Function<O, O> delegate = Function.identity();
-            final Map<O, O> indexed = Groups.indexBy(iterator, delegate);
+            final Function<O, O> function = Function.identity();
+            final Map<O, O> indexed = Groups.indexBy(iterator, function);
             Assert.assertNotNull(indexed);
         }
 
         @Test
         public void canIndexUsingArray() {
             final O[] array = {O.ONE, O.ANOTHER};
-            final Function<O, O> delegate = Function.identity();
-            final Map<O, O> indexed = Groups.indexBy(array, delegate);
+            final Function<O, O> function = Function.identity();
+            final Map<O, O> indexed = Groups.indexBy(array, function);
             Assert.assertNotNull(indexed);
         }
 
         @Test
         public void canIndexUsingIterableAndProvider() {
             final Iterable<O> iterable = Iterations.iterable(O.ONE, O.ANOTHER);
-            final Function<O, O> delegate = Function.identity();
-            final Supplier<LinkedHashMap<O, O>> provider = new LinkedHashMapFactory<O, O>();
-            final Map<O, O> indexed = Groups.indexBy(iterable, delegate, provider);
+            final Function<O, O> function = Function.identity();
+            final Supplier<LinkedHashMap<O, O>> supplier = new LinkedHashMapFactory<O, O>();
+            final Map<O, O> indexed = Groups.indexBy(iterable, function, supplier);
             Assert.assertNotNull(indexed);
         }
 
         @Test
         public void canIndexUsingIteratorAndProvider() {
             final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER);
-            final Function<O, O> delegate = Function.identity();
-            final Supplier<LinkedHashMap<O, O>> provider = new LinkedHashMapFactory<O, O>();
-            final Map<O, O> indexed = Groups.indexBy(iterator, delegate, provider);
+            final Function<O, O> function = Function.identity();
+            final Supplier<LinkedHashMap<O, O>> supplier = new LinkedHashMapFactory<O, O>();
+            final Map<O, O> indexed = Groups.indexBy(iterator, function, supplier);
             Assert.assertNotNull(indexed);
         }
 
         @Test
         public void canIndexUsingArrayAndProvider() {
             final O[] array = {O.ONE, O.ANOTHER};
-            final Function<O, O> delegate = Function.identity();
-            final Supplier<LinkedHashMap<O, O>> provider = new LinkedHashMapFactory<O, O>();
-            final Map<O, O> indexed = Groups.indexBy(array, delegate, provider);
+            final Function<O, O> function = Function.identity();
+            final Supplier<LinkedHashMap<O, O>> supplier = new LinkedHashMapFactory<O, O>();
+            final Map<O, O> indexed = Groups.indexBy(array, function, supplier);
             Assert.assertNotNull(indexed);
         }
     }

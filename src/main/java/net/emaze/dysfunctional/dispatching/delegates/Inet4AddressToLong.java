@@ -5,7 +5,7 @@ import java.net.Inet4Address;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- * A unary delegate transforming an Inet4Address to a Long.
+ * A unary function transforming an Inet4Address to a Long.
  *
  * See {@link LongToInet4Address}.
  *

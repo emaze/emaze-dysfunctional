@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.options;
 
 import java.util.function.Function;
-import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantSupplier;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -45,8 +45,8 @@ public class MaybeTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void fmapWithNullDelegateYieldsException() {
-        final Function<Integer, ?> delegate = null;
-        Maybe.just(1).map(delegate);
+        final Function<Integer, ?> function = null;
+        Maybe.just(1).map(function);
     }
 
     @Test
@@ -60,14 +60,14 @@ public class MaybeTest {
     public void foldWithNothingYieldsProviderResult() {
         final Maybe<Integer> source = Maybe.nothing();
         final Integer expected = 1;
-        final Integer got = source.fold(new ConstantProvider<Integer>(expected), Function.identity());
+        final Integer got = source.fold(new ConstantSupplier<Integer>(expected), Function.identity());
         Assert.assertEquals(expected, got);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void foldWithNullDelegateYieldsException() {
-        final Function<Integer, ?> delegate = null;
-        Maybe.just(1).fold(null, delegate);
+        final Function<Integer, ?> function = null;
+        Maybe.just(1).fold(null, function);
     }
 
     @Test
@@ -98,7 +98,7 @@ public class MaybeTest {
     @Test
     public void transformingNothingToEitherYieldsLeft() {
         final int marker = 0;
-        final Either<Integer, Object> either = Maybe.nothing().either(new ConstantProvider<Integer>(marker));
+        final Either<Integer, Object> either = Maybe.nothing().either(new ConstantSupplier<Integer>(marker));
         Assert.assertEquals(Either.left(marker), either);
     }
 
@@ -106,7 +106,7 @@ public class MaybeTest {
     public void transformingJustSomethingToEitherYieldsRight() {
         final int left = 0;
         final int right = 1;
-        final Either<Integer, Integer> either = Maybe.just(right).either(new ConstantProvider<Integer>(left));
+        final Either<Integer, Integer> either = Maybe.just(right).either(new ConstantSupplier<Integer>(left));
         Assert.assertEquals(Either.<Integer, Integer>right(right), either);
     }
 

@@ -12,9 +12,9 @@ import java.util.function.Supplier;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.dispatching.actions.Slacker;
-import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
+import net.emaze.dysfunctional.dispatching.actions.TriConsumer;
 import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
-import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantSupplier;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
 import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
@@ -46,7 +46,7 @@ public class SpiesTest {
         @Test
         public void canSpyAProvider() {
             final Box<O> result = new Box<O>();
-            final Supplier<O> spied = Spies.spy(new ConstantProvider<O>(O.ONE), result);
+            final Supplier<O> spied = Spies.spy(new ConstantSupplier<O>(O.ONE), result);
             Assert.assertNotNull(spied);
         }
 
@@ -278,28 +278,28 @@ public class SpiesTest {
             final Box<O> param1 = new Box<O>();
             final Box<O> param2 = new Box<O>();
             final Box<O> param3 = new Box<O>();
-            final TernaryAction<O, O, O> spied = Spies.spy(new TernaryNoop<O, O, O>(), param1, param2, param3);
+            final TriConsumer<O, O, O> spied = Spies.spy(new TernaryNoop<O, O, O>(), param1, param2, param3);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpyFirstParamOfTernaryAction() {
             final Box<O> param1 = new Box<O>();
-            final TernaryAction<O, O, O> spied = Spies.spy1st(new TernaryNoop<O, O, O>(), param1);
+            final TriConsumer<O, O, O> spied = Spies.spy1st(new TernaryNoop<O, O, O>(), param1);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpySecondParamOfTernaryAction() {
             final Box<O> param2 = new Box<O>();
-            final TernaryAction<O, O, O> spied = Spies.spy2nd(new TernaryNoop<O, O, O>(), param2);
+            final TriConsumer<O, O, O> spied = Spies.spy2nd(new TernaryNoop<O, O, O>(), param2);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpyThirdParamOfTernaryAction() {
             final Box<O> param3 = new Box<O>();
-            final TernaryAction<O, O, O> spied = Spies.spy3rd(new TernaryNoop<O, O, O>(), param3);
+            final TriConsumer<O, O, O> spied = Spies.spy3rd(new TernaryNoop<O, O, O>(), param3);
             Assert.assertNotNull(spied);
         }
 
@@ -322,7 +322,7 @@ public class SpiesTest {
 
         @Test
         public void canMonitorAProvider() {
-            final Supplier<O> monitor = Spies.monitor(new ConstantProvider<O>(O.ONE), accumulator);
+            final Supplier<O> monitor = Spies.monitor(new ConstantSupplier<O>(O.ONE), accumulator);
             Assert.assertNotNull(monitor);
         }
 
@@ -370,7 +370,7 @@ public class SpiesTest {
 
         @Test
         public void canMonitorATernaryAction() {
-            final TernaryAction<O, O, O> monitor = Spies.monitor(new TernaryNoop<O, O, O>(), accumulator);
+            final TriConsumer<O, O, O> monitor = Spies.monitor(new TernaryNoop<O, O, O>(), accumulator);
             Assert.assertNotNull(monitor);
         }
 

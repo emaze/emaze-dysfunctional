@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
-import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
+import net.emaze.dysfunctional.contracts.dbc;
 
 public class FlipTriple<T1, T2, T3> implements Function<Triple<T1, T2, T3>, Triple<T3, T2, T1>> {
 

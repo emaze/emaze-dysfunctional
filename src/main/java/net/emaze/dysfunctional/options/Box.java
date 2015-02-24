@@ -26,9 +26,9 @@ public class Box<T> {
         return new Box<E>();
     }
 
-    public <R> Box<R> map(Function<T, R> delegate) {
-        dbc.precondition(delegate != null, "cannot perform fmap with a null delegate");
-        final Maybe<R> m = content.map(delegate);
+    public <R> Box<R> map(Function<T, R> function) {
+        dbc.precondition(function != null, "cannot perform fmap with a null function");
+        final Maybe<R> m = content.map(function);
         return m.isPresent() ? Box.of(m.get()) : Box.<R>empty();
     }
 

@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
-import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
+import net.emaze.dysfunctional.contracts.dbc;
 
 public class FlipPair<T1, T2> implements Function<Pair<T1, T2>, Pair<T2, T1>> {
 
@@ -10,5 +10,4 @@ public class FlipPair<T1, T2> implements Function<Pair<T1, T2>, Pair<T2, T1>> {
         dbc.precondition(source != null, "cannot flip a null pair");
         return Pair.of(source.second(), source.first());
     }
-
 }

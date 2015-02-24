@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
-import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Predicate;
+import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 
 /**

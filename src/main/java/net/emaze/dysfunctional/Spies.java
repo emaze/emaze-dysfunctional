@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
+import net.emaze.dysfunctional.dispatching.actions.TriConsumer;
 import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 import net.emaze.dysfunctional.dispatching.spying.*;
@@ -34,63 +34,63 @@ public abstract class Spies {
     }
 
     /**
-     * Proxies a provider, spying for result.
+     * Proxies a supplier, spying for result.
      *
-     * @param <R> the provider result type
-     * @param provider the provider to be spied
+     * @param <R> the supplier result type
+     * @param supplier the supplier to be spied
      * @param result a box that will be containing spied result
-     * @return the proxied provider
+     * @return the proxied supplier
      */
-    public static <R> Supplier<R> spy(Supplier<R> provider, Box<R> result) {
-        return new CapturingProvider<R>(provider, result);
+    public static <R> Supplier<R> spy(Supplier<R> supplier, Box<R> result) {
+        return new CapturingSupplier<R>(supplier, result);
     }
 
     /**
-     * Proxies a delegate spying for result and parameter.
+     * Proxies a function spying for result and parameter.
      *
-     * @param <T> the delegate parameter type
-     * @param <R> the delegate result type
-     * @param delegate the delegate to be spied
+     * @param <T> the function parameter type
+     * @param <R> the function result type
+     * @param function the function to be spied
      * @param result a box that will be containing spied result
      * @param param a box that will be containing spied param
-     * @return the proxied delegate
+     * @return the proxied function
      */
-    public static <T, R> Function<T, R> spy(Function<T, R> delegate, Box<R> result, Box<T> param) {
-        return new CapturingDelegate<>(delegate, result, param);
+    public static <T, R> Function<T, R> spy(Function<T, R> function, Box<R> result, Box<T> param) {
+        return new CapturingFunction<>(function, result, param);
     }
 
     /**
-     * Proxies a binary delegate spying for result and parameters.
+     * Proxies a binary function spying for result and parameters.
      *
-     * @param <T1> the delegate first parameter type
-     * @param <T2> the delegate second parameter type
-     * @param <R> the delegate result type
-     * @param delegate the delegate to be spied
+     * @param <T1> the function first parameter type
+     * @param <T2> the function second parameter type
+     * @param <R> the function result type
+     * @param function the function to be spied
      * @param result a box that will be containing spied result
      * @param param1 a box that will be containing the first spied parameter
      * @param param2 a box that will be containing the second spied parameter
-     * @return the proxied delegate
+     * @return the proxied function
      */
-    public static <T1, T2, R> BiFunction<T1, T2, R> spy(BiFunction<T1, T2, R> delegate, Box<R> result, Box<T1> param1, Box<T2> param2) {
-        return new BinaryCapturingDelegate<>(delegate, result, param1, param2);
+    public static <T1, T2, R> BiFunction<T1, T2, R> spy(BiFunction<T1, T2, R> function, Box<R> result, Box<T1> param1, Box<T2> param2) {
+        return new BinaryCapturingFunction<>(function, result, param1, param2);
     }
 
     /**
-     * Proxies a ternary delegate spying for result and parameters.
+     * Proxies a ternary function spying for result and parameters.
      *
-     * @param <R> the delegate result type
-     * @param <T1> the delegate first parameter type
-     * @param <T2> the delegate second parameter type
-     * @param <T3> the delegate third parameter type
-     * @param delegate the delegate to be spied
+     * @param <R> the function result type
+     * @param <T1> the function first parameter type
+     * @param <T2> the function second parameter type
+     * @param <T3> the function third parameter type
+     * @param function the function to be spied
      * @param result a box that will be containing spied result
      * @param param1 a box that will be containing the first spied parameter
      * @param param2 a box that will be containing the second spied parameter
      * @param param3 a box that will be containing the third spied parameter
-     * @return the proxied delegate
+     * @return the proxied function
      */
-    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> spy(TriFunction<T1, T2, T3, R> delegate, Box<R> result, Box<T1> param1, Box<T2> param2, Box<T3> param3) {
-        return new TernaryCapturingDelegate<T1, T2, T3, R>(delegate, result, param1, param2, param3);
+    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> spy(TriFunction<T1, T2, T3, R> function, Box<R> result, Box<T1> param1, Box<T2> param2, Box<T3> param3) {
+        return new TernaryCapturingFunction<T1, T2, T3, R>(function, result, param1, param2, param3);
     }
 
     /**
@@ -139,253 +139,253 @@ public abstract class Spies {
     }
 
     /**
-     * Proxies an action spying for parameter.
+     * Proxies an consumer spying for parameter.
      *
-     * @param <T> the action parameter type
-     * @param action the action to be spied
+     * @param <T> the consumer parameter type
+     * @param consumer the consumer to be spied
      * @param param a box that will be containing the spied parameter
-     * @return the proxied action
+     * @return the proxied consumer
      */
-    public static <T> Consumer<T> spy(Consumer<T> action, Box<T> param) {
-        return new CapturingAction<T>(action, param);
+    public static <T> Consumer<T> spy(Consumer<T> consumer, Box<T> param) {
+        return new CapturingConsumer<T>(consumer, param);
     }
 
     /**
-     * Proxies a binary action spying for parameters.
+     * Proxies a binary consumer spying for parameters.
      *
-     * @param <T1> the action first parameter type
-     * @param <T2> the action second parameter type
-     * @param action the action that will be spied
+     * @param <T1> the consumer first parameter type
+     * @param <T2> the consumer second parameter type
+     * @param consumer the consumer that will be spied
      * @param param1 a box that will be containing the first spied parameter
      * @param param2 a box that will be containing the second spied parameter
-     * @return the proxied action
+     * @return the proxied consumer
      */
-    public static <T1, T2> BiConsumer<T1, T2> spy(BiConsumer<T1, T2> action, Box<T1> param1, Box<T2> param2) {
-        return new BinaryCapturingAction<T1, T2>(action, param1, param2);
+    public static <T1, T2> BiConsumer<T1, T2> spy(BiConsumer<T1, T2> consumer, Box<T1> param1, Box<T2> param2) {
+        return new BinaryCapturingConsumer<T1, T2>(consumer, param1, param2);
     }
 
     /**
-     * Proxies a ternary action spying for parameters.
+     * Proxies a ternary consumer spying for parameters.
      *
-     * @param <T1> the action first parameter type
-     * @param <T2> the action second parameter type
-     * @param <T3> the action third parameter type
-     * @param action the action that will be spied
+     * @param <T1> the consumer first parameter type
+     * @param <T2> the consumer second parameter type
+     * @param <T3> the consumer third parameter type
+     * @param consumer the consumer that will be spied
      * @param param1 a box that will be containing the first spied parameter
      * @param param2 a box that will be containing the second spied parameter
      * @param param3 a box that will be containing the third spied parameter
-     * @return the proxied action
+     * @return the proxied consumer
      */
-    public static <T1, T2, T3> TernaryAction<T1, T2, T3> spy(TernaryAction<T1, T2, T3> action, Box<T1> param1, Box<T2> param2, Box<T3> param3) {
-        return new TernaryCapturingAction<T1, T2, T3>(action, param1, param2, param3);
+    public static <T1, T2, T3> TriConsumer<T1, T2, T3> spy(TriConsumer<T1, T2, T3> consumer, Box<T1> param1, Box<T2> param2, Box<T3> param3) {
+        return new TernaryCapturingConsumer<T1, T2, T3>(consumer, param1, param2, param3);
     }
 
     /**
-     * Proxies a ternary delegate spying for result.
+     * Proxies a ternary function spying for result.
      *
-     * @param <R> the delegate result type
-     * @param <T1> the delegate first parameter type
-     * @param <T2> the delegate second parameter type
-     * @param <T3> the delegate third parameter type
-     * @param delegate the delegate that will be spied
+     * @param <R> the function result type
+     * @param <T1> the function first parameter type
+     * @param <T2> the function second parameter type
+     * @param <T3> the function third parameter type
+     * @param function the function that will be spied
      * @param result a box that will be containing spied result
-     * @return the proxied delegate
+     * @return the proxied function
      */
-    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> spyRes(TriFunction<T1, T2, T3, R> delegate, Box<R> result) {
-        return spy(delegate, result, Box.<T1>empty(), Box.<T2>empty(), Box.<T3>empty());
+    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> spyRes(TriFunction<T1, T2, T3, R> function, Box<R> result) {
+        return spy(function, result, Box.<T1>empty(), Box.<T2>empty(), Box.<T3>empty());
     }
 
     /**
-     * Proxies a ternary delegate spying for first parameter.
+     * Proxies a ternary function spying for first parameter.
      *
-     * @param <R> the delegate result type
-     * @param <T1> the delegate first parameter type
-     * @param <T2> the delegate second parameter type
-     * @param <T3> the delegate third parameter type
-     * @param delegate the delegate that will be spied
+     * @param <R> the function result type
+     * @param <T1> the function first parameter type
+     * @param <T2> the function second parameter type
+     * @param <T3> the function third parameter type
+     * @param function the function that will be spied
      * @param param1 a box that will be containing the first spied parameter
-     * @return the proxied delegate
+     * @return the proxied function
      */
-    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> spy1st(TriFunction<T1, T2, T3, R> delegate, Box<T1> param1) {
-        return spy(delegate, Box.<R>empty(), param1, Box.<T2>empty(), Box.<T3>empty());
+    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> spy1st(TriFunction<T1, T2, T3, R> function, Box<T1> param1) {
+        return spy(function, Box.<R>empty(), param1, Box.<T2>empty(), Box.<T3>empty());
     }
 
     /**
-     * Proxies a ternary delegate spying for second parameter
+     * Proxies a ternary function spying for second parameter
      *
-     * @param <R> the delegate result type
-     * @param <T1> the delegate first parameter type
-     * @param <T2> the delegate second parameter type
-     * @param <T3> the delegate third parameter type
-     * @param delegate the delegate that will be spied
+     * @param <R> the function result type
+     * @param <T1> the function first parameter type
+     * @param <T2> the function second parameter type
+     * @param <T3> the function third parameter type
+     * @param function the function that will be spied
      * @param param2 a box that will be containing the second spied parameter
-     * @return the proxied delegate
+     * @return the proxied function
      */
-    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> spy2nd(TriFunction<T1, T2, T3, R> delegate, Box<T2> param2) {
-        return spy(delegate, Box.<R>empty(), Box.<T1>empty(), param2, Box.<T3>empty());
+    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> spy2nd(TriFunction<T1, T2, T3, R> function, Box<T2> param2) {
+        return spy(function, Box.<R>empty(), Box.<T1>empty(), param2, Box.<T3>empty());
     }
 
     /**
-     * Proxies a ternary delegate spying for third parameter.
+     * Proxies a ternary function spying for third parameter.
      *
-     * @param <R> the delegate result type
-     * @param <T1> the delegate first parameter type
-     * @param <T2> the delegate second parameter type
-     * @param <T3> the delegate third parameter type
-     * @param delegate the delegate that will be spied
+     * @param <R> the function result type
+     * @param <T1> the function first parameter type
+     * @param <T2> the function second parameter type
+     * @param <T3> the function third parameter type
+     * @param function the function that will be spied
      * @param param3 a box that will be containing the third spied parameter
-     * @return the proxied delegate
+     * @return the proxied function
      */
-    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> spy3rd(TriFunction<T1, T2, T3, R> delegate, Box<T3> param3) {
-        return spy(delegate, Box.<R>empty(), Box.<T1>empty(), Box.<T2>empty(), param3);
+    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> spy3rd(TriFunction<T1, T2, T3, R> function, Box<T3> param3) {
+        return spy(function, Box.<R>empty(), Box.<T1>empty(), Box.<T2>empty(), param3);
     }
 
     /**
-     * Proxies a binary delegate spying for result.
+     * Proxies a binary function spying for result.
      *
-     * @param <T1> the delegate first parameter type
-     * @param <T2> the delegate second parameter type
-     * @param <R> the delegate result type
-     * @param delegate the delegate that will be spied
+     * @param <T1> the function first parameter type
+     * @param <T2> the function second parameter type
+     * @param <R> the function result type
+     * @param function the function that will be spied
      * @param result a box that will be containing spied result
-     * @return the proxied delegate
+     * @return the proxied function
      */
-    public static <T1, T2, R> BiFunction<T1, T2, R> spyRes(BiFunction<T1, T2, R> delegate, Box<R> result) {
-        return spy(delegate, result, Box.<T1>empty(), Box.<T2>empty());
+    public static <T1, T2, R> BiFunction<T1, T2, R> spyRes(BiFunction<T1, T2, R> function, Box<R> result) {
+        return spy(function, result, Box.<T1>empty(), Box.<T2>empty());
     }
 
     /**
-     * Proxies a binary delegate spying for first parameter.
+     * Proxies a binary function spying for first parameter.
      *
-     * @param <T1> the delegate first parameter type
-     * @param <T2> the delegate second parameter type
-     * @param <R> the delegate result type
-     * @param delegate the delegate that will be spied
+     * @param <T1> the function first parameter type
+     * @param <T2> the function second parameter type
+     * @param <R> the function result type
+     * @param function the function that will be spied
      * @param param1 a box that will be containing the first spied parameter
-     * @return the proxied delegate
+     * @return the proxied function
      */
-    public static <T1, T2, R> BiFunction<T1, T2, R> spy1st(BiFunction<T1, T2, R> delegate, Box<T1> param1) {
-        return spy(delegate, Box.<R>empty(), param1, Box.<T2>empty());
+    public static <T1, T2, R> BiFunction<T1, T2, R> spy1st(BiFunction<T1, T2, R> function, Box<T1> param1) {
+        return spy(function, Box.<R>empty(), param1, Box.<T2>empty());
     }
 
     /**
-     * Proxies a binary delegate spying for second parameter.
+     * Proxies a binary function spying for second parameter.
      *
-     * @param <T1> the delegate first parameter type
-     * @param <T2> the delegate second parameter type
-     * @param <R> the delegate result type
-     * @param delegate the delegate that will be spied
+     * @param <T1> the function first parameter type
+     * @param <T2> the function second parameter type
+     * @param <R> the function result type
+     * @param function the function that will be spied
      * @param param2 a box that will be containing the second spied parameter
-     * @return the proxied delegate
+     * @return the proxied function
      */
-    public static <T1, T2, R> BiFunction<T1, T2, R> spy2nd(BiFunction<T1, T2, R> delegate, Box<T2> param2) {
-        return spy(delegate, Box.<R>empty(), Box.<T1>empty(), param2);
+    public static <T1, T2, R> BiFunction<T1, T2, R> spy2nd(BiFunction<T1, T2, R> function, Box<T2> param2) {
+        return spy(function, Box.<R>empty(), Box.<T1>empty(), param2);
     }
 
     /**
-     * Proxies a delegate spying for result.
+     * Proxies a function spying for result.
      *
-     * @param <R> the delegate result type
-     * @param <T> the delegate parameter type
-     * @param delegate the delegate that will be spied
+     * @param <R> the function result type
+     * @param <T> the function parameter type
+     * @param function the function that will be spied
      * @param result a box that will be containing spied result
-     * @return the proxied delegate
+     * @return the proxied function
      */
-    public static <R, T> Function<T, R> spyRes(Function<T, R> delegate, Box<R> result) {
-        return spy(delegate, result, Box.<T>empty());
+    public static <R, T> Function<T, R> spyRes(Function<T, R> function, Box<R> result) {
+        return spy(function, result, Box.<T>empty());
     }
 
     /**
-     * Proxies a delegate spying for parameter.
+     * Proxies a function spying for parameter.
      *
-     * @param <R> the delegate result type
-     * @param <T> the delegate parameter type
-     * @param delegate the delegate that will be spied
+     * @param <R> the function result type
+     * @param <T> the function parameter type
+     * @param function the function that will be spied
      * @param param a box that will be containing spied parameter
-     * @return the proxied delegate
+     * @return the proxied function
      */
-    public static <R, T> Function<T, R> spy1st(Function<T, R> delegate, Box<T> param) {
-        return spy(delegate, Box.<R>empty(), param);
+    public static <R, T> Function<T, R> spy1st(Function<T, R> function, Box<T> param) {
+        return spy(function, Box.<R>empty(), param);
     }
 
     /**
-     * Proxies a ternary action spying for first parameter.
+     * Proxies a ternary consumer spying for first parameter.
      *
-     * @param <T1> the action first parameter type
-     * @param <T2> the action second parameter type
-     * @param <T3> the action third parameter type
-     * @param action the action that will be spied
+     * @param <T1> the consumer first parameter type
+     * @param <T2> the consumer second parameter type
+     * @param <T3> the consumer third parameter type
+     * @param consumer the consumer that will be spied
      * @param param1 a box that will be containing the first spied parameter
-     * @return the proxied action
+     * @return the proxied consumer
      */
-    public static <T1, T2, T3> TernaryAction<T1, T2, T3> spy1st(TernaryAction<T1, T2, T3> action, Box<T1> param1) {
-        return spy(action, param1, Box.<T2>empty(), Box.<T3>empty());
+    public static <T1, T2, T3> TriConsumer<T1, T2, T3> spy1st(TriConsumer<T1, T2, T3> consumer, Box<T1> param1) {
+        return spy(consumer, param1, Box.<T2>empty(), Box.<T3>empty());
     }
 
     /**
-     * Proxies a ternary action spying for second parameter.
+     * Proxies a ternary consumer spying for second parameter.
      *
-     * @param <T1> the action first parameter type
-     * @param <T2> the action second parameter type
-     * @param <T3> the action third parameter type
-     * @param action the action that will be spied
+     * @param <T1> the consumer first parameter type
+     * @param <T2> the consumer second parameter type
+     * @param <T3> the consumer third parameter type
+     * @param consumer the consumer that will be spied
      * @param param2 a box that will be containing the second spied parameter
-     * @return the proxied action
+     * @return the proxied consumer
      */
-    public static <T1, T2, T3> TernaryAction<T1, T2, T3> spy2nd(TernaryAction<T1, T2, T3> action, Box<T2> param2) {
-        return spy(action, Box.<T1>empty(), param2, Box.<T3>empty());
+    public static <T1, T2, T3> TriConsumer<T1, T2, T3> spy2nd(TriConsumer<T1, T2, T3> consumer, Box<T2> param2) {
+        return spy(consumer, Box.<T1>empty(), param2, Box.<T3>empty());
     }
 
     /**
-     * Proxies a ternary action spying for third parameter.
+     * Proxies a ternary consumer spying for third parameter.
      *
-     * @param <T1> the action first parameter type
-     * @param <T2> the action second parameter type
-     * @param <T3> the action third parameter type
-     * @param action the action that will be spied
+     * @param <T1> the consumer first parameter type
+     * @param <T2> the consumer second parameter type
+     * @param <T3> the consumer third parameter type
+     * @param consumer the consumer that will be spied
      * @param param3 a box that will be containing the third spied parameter
-     * @return the proxied action
+     * @return the proxied consumer
      */
-    public static <T1, T2, T3> TernaryAction<T1, T2, T3> spy3rd(TernaryAction<T1, T2, T3> action, Box<T3> param3) {
-        return spy(action, Box.<T1>empty(), Box.<T2>empty(), param3);
+    public static <T1, T2, T3> TriConsumer<T1, T2, T3> spy3rd(TriConsumer<T1, T2, T3> consumer, Box<T3> param3) {
+        return spy(consumer, Box.<T1>empty(), Box.<T2>empty(), param3);
     }
 
     /**
-     * Proxies a binary action spying for first parameter.
+     * Proxies a binary consumer spying for first parameter.
      *
-     * @param <T1> the action first parameter type
-     * @param <T2> the action second parameter type
-     * @param action the action that will be spied
+     * @param <T1> the consumer first parameter type
+     * @param <T2> the consumer second parameter type
+     * @param consumer the consumer that will be spied
      * @param param1 a box that will be containing the first spied parameter
-     * @return the proxied action
+     * @return the proxied consumer
      */
-    public static <T1, T2> BiConsumer<T1, T2> spy1st(BiConsumer<T1, T2> action, Box<T1> param1) {
-        return spy(action, param1, Box.<T2>empty());
+    public static <T1, T2> BiConsumer<T1, T2> spy1st(BiConsumer<T1, T2> consumer, Box<T1> param1) {
+        return spy(consumer, param1, Box.<T2>empty());
     }
 
     /**
-     * Proxies a binary action spying for second parameter.
+     * Proxies a binary consumer spying for second parameter.
      *
-     * @param <T1> the action first parameter type
-     * @param <T2> the action second parameter type
-     * @param action the action that will be spied
+     * @param <T1> the consumer first parameter type
+     * @param <T2> the consumer second parameter type
+     * @param consumer the consumer that will be spied
      * @param param2 a box that will be containing the second spied parameter
-     * @return the proxied action
+     * @return the proxied consumer
      */
-    public static <T1, T2> BiConsumer<T1, T2> spy2nd(BiConsumer<T1, T2> action, Box<T2> param2) {
-        return spy(action, Box.<T1>empty(), param2);
+    public static <T1, T2> BiConsumer<T1, T2> spy2nd(BiConsumer<T1, T2> consumer, Box<T2> param2) {
+        return spy(consumer, Box.<T1>empty(), param2);
     }
 
     /**
-     * Proxies a binary action spying for first parameter.
+     * Proxies a binary consumer spying for first parameter.
      *
-     * @param <T> the action parameter type
-     * @param action the action that will be spied
+     * @param <T> the consumer parameter type
+     * @param consumer the consumer that will be spied
      * @param param a box that will be containing the spied parameter
-     * @return the proxied action
+     * @return the proxied consumer
      */
-    public static <T> Consumer<T> spy1st(Consumer<T> action, Box<T> param) {
-        return spy(action, param);
+    public static <T> Consumer<T> spy1st(Consumer<T> consumer, Box<T> param) {
+        return spy(consumer, param);
     }
 
     /**
@@ -508,28 +508,28 @@ public abstract class Spies {
     }
 
     /**
-     * Monitors calls to an action.
+     * Monitors calls to an consumer.
      *
-     * @param <T> the action parameter type
-     * @param action the action that will be monitored
+     * @param <T> the consumer parameter type
+     * @param consumer the consumer that will be monitored
      * @param calls a value holder accumulating calls
-     * @return the proxied action
+     * @return the proxied consumer
      */
-    public static <T> Consumer<T> monitor(Consumer<T> action, AtomicLong calls) {
-        return new MonitoringAction<T>(action, calls);
+    public static <T> Consumer<T> monitor(Consumer<T> consumer, AtomicLong calls) {
+        return new MonitoringConsumer<T>(consumer, calls);
     }
 
     /**
-     * Monitors calls to a delegate.
+     * Monitors calls to a function.
      *
-     * @param <T> the delegate parameter type
-     * @param <R> the delegate result type
-     * @param delegate the delegate that will be monitored
+     * @param <T> the function parameter type
+     * @param <R> the function result type
+     * @param function the function that will be monitored
      * @param calls a value holder accumulating calls
-     * @return the proxied delegate
+     * @return the proxied function
      */
-    public static <T, R> Function<T, R> monitor(Function<T, R> delegate, AtomicLong calls) {
-        return new MonitoringDelegate<>(delegate, calls);
+    public static <T, R> Function<T, R> monitor(Function<T, R> function, AtomicLong calls) {
+        return new MonitoringFunction<>(function, calls);
     }
 
     /**
@@ -556,15 +556,15 @@ public abstract class Spies {
     }
 
     /**
-     * Monitors calls to a provider.
+     * Monitors calls to a supplier.
      *
-     * @param <R> the provider result type
-     * @param provider the provider that will be monitored
+     * @param <R> the supplier result type
+     * @param supplier the supplier that will be monitored
      * @param calls a value holder accumulating calls
-     * @return the proxied provider
+     * @return the proxied supplier
      */
-    public static <R> Supplier<R> monitor(Supplier<R> provider, AtomicLong calls) {
-        return new MonitoringProvider<R>(provider, calls);
+    public static <R> Supplier<R> monitor(Supplier<R> supplier, AtomicLong calls) {
+        return new MonitoringSupplier<>(supplier, calls);
     }
 
     /**
@@ -579,30 +579,30 @@ public abstract class Spies {
     }
 
     /**
-     * Monitors calls to a binary action.
+     * Monitors calls to a binary consumer.
      *
-     * @param <T1> the action first parameter type
-     * @param <T2> the action second parameter type
-     * @param action the action that will be monitored
+     * @param <T1> the consumer first parameter type
+     * @param <T2> the consumer second parameter type
+     * @param consumer the consumer that will be monitored
      * @param calls a value holder accumulating calls
-     * @return the proxied action
+     * @return the proxied consumer
      */
-    public static <T1, T2> BiConsumer<T1, T2> monitor(BiConsumer<T1, T2> action, AtomicLong calls) {
-        return new BinaryMonitoringAction<T1, T2>(action, calls);
+    public static <T1, T2> BiConsumer<T1, T2> monitor(BiConsumer<T1, T2> consumer, AtomicLong calls) {
+        return new BinaryMonitoringConsumer<T1, T2>(consumer, calls);
     }
 
     /**
-     * Monitors calls to a binary delegate.
+     * Monitors calls to a binary function.
      *
-     * @param <T1> the delegate first parameter type
-     * @param <T2> the delegate second parameter type
-     * @param <R> the delegate result type
-     * @param delegate the delegate that will be monitored
+     * @param <T1> the function first parameter type
+     * @param <T2> the function second parameter type
+     * @param <R> the function result type
+     * @param function the function that will be monitored
      * @param calls a value holder accumulating calls
-     * @return the proxied delegate
+     * @return the proxied function
      */
-    public static <T1, T2, R> BiFunction<T1, T2, R> monitor(BiFunction<T1, T2, R> delegate, AtomicLong calls) {
-        return new BinaryMonitoringDelegate<>(delegate, calls);
+    public static <T1, T2, R> BiFunction<T1, T2, R> monitor(BiFunction<T1, T2, R> function, AtomicLong calls) {
+        return new BinaryMonitoringFunction<>(function, calls);
     }
 
     /**
@@ -619,32 +619,32 @@ public abstract class Spies {
     }
 
     /**
-     * Monitors calls to a ternary action.
+     * Monitors calls to a ternary consumer.
      *
-     * @param <T1> the action first parameter type
-     * @param <T2> the action second parameter type
-     * @param <T3> the action third parameter type
-     * @param action the action that will be monitored
+     * @param <T1> the consumer first parameter type
+     * @param <T2> the consumer second parameter type
+     * @param <T3> the consumer third parameter type
+     * @param consumer the consumer that will be monitored
      * @param calls a value holder accumulating calls
-     * @return the proxied action
+     * @return the proxied consumer
      */
-    public static <T1, T2, T3> TernaryAction<T1, T2, T3> monitor(TernaryAction<T1, T2, T3> action, AtomicLong calls) {
-        return new TernaryMonitoringAction<T1, T2, T3>(action, calls);
+    public static <T1, T2, T3> TriConsumer<T1, T2, T3> monitor(TriConsumer<T1, T2, T3> consumer, AtomicLong calls) {
+        return new TernaryMonitoringConsumer<T1, T2, T3>(consumer, calls);
     }
 
     /**
-     * Monitors calls to a ternary delegate.
+     * Monitors calls to a ternary function.
      *
-     * @param <R> the delegate result type
-     * @param <T1> the delegate first parameter type
-     * @param <T2> the delegate second parameter type
-     * @param <T3> the delegate third parameter type
-     * @param delegate the delegate that will be monitored
+     * @param <R> the function result type
+     * @param <T1> the function first parameter type
+     * @param <T2> the function second parameter type
+     * @param <T3> the function third parameter type
+     * @param function the function that will be monitored
      * @param calls a value holder accumulating calls
-     * @return the proxied delegate
+     * @return the proxied function
      */
-    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> monitor(TriFunction<T1, T2, T3, R> delegate, AtomicLong calls) {
-        return new TernaryMonitoringDelegate<T1, T2, T3, R>(delegate, calls);
+    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> monitor(TriFunction<T1, T2, T3, R> function, AtomicLong calls) {
+        return new TernaryMonitoringFunction<T1, T2, T3, R>(function, calls);
     }
 
     /**

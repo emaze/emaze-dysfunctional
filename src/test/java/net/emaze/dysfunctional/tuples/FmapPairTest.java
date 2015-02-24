@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
 import java.util.function.Function;
-import net.emaze.dysfunctional.dispatching.delegates.ConstantDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantFunction;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,15 +27,15 @@ public class FmapPairTest {
 
     @Test
     public void firstDelegateTransformsFirstType() {
-        final Function<O, O> delegate = new ConstantDelegate<O, O>(O.ANOTHER);
-        final Pair<O, O> got = new FmapPair<O, O, O, O>(delegate, ID).apply(Pair.of(O.ONE, O.ONE));
+        final Function<O, O> function = new ConstantFunction<O, O>(O.ANOTHER);
+        final Pair<O, O> got = new FmapPair<O, O, O, O>(function, ID).apply(Pair.of(O.ONE, O.ONE));
         Assert.assertEquals(O.ANOTHER, got.first());
     }
 
     @Test
     public void secondDelegateTransformsSecondType() {
-        final Function<O, O> delegate = new ConstantDelegate<O, O>(O.ANOTHER);
-        final Pair<O, O> got = new FmapPair<O, O, O, O>(ID, delegate).apply(Pair.of(O.ONE, O.ONE));
+        final Function<O, O> function = new ConstantFunction<O, O>(O.ANOTHER);
+        final Pair<O, O> got = new FmapPair<O, O, O, O>(ID, function).apply(Pair.of(O.ONE, O.ONE));
         Assert.assertEquals(O.ANOTHER, got.second());
     }
 }

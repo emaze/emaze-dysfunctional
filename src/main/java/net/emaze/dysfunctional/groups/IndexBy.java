@@ -7,8 +7,8 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
- * A unary delegate indexing elements from an iterator. Indexing key is provided
- * by the passed delegate.
+ * A unary function indexing elements from an iterator. Indexing key is provided
+ * by the passed function.
  *
  * @param <M> the output Map type parameter
  * @param <K> the key type parameter

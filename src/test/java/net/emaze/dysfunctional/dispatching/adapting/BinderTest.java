@@ -19,8 +19,8 @@ public class BinderTest {
 
     @Test
     public void paramIsCorrectlyBound() {
-        final Supplier<String> provider = new Binder<String, String>(Function.identity(), "bound");
-        final String got = provider.get();
+        final Supplier<String> supplier = new Binder<String, String>(Function.identity(), "bound");
+        final String got = supplier.get();
         Assert.assertEquals("bound", got);
     }
 

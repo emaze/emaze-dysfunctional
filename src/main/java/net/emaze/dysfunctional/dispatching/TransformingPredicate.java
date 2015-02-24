@@ -5,26 +5,26 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
- * Composes a predicate with a delegate (predicate ° delegate).
+ * Composes a predicate with a function (predicate ° function).
  *
- * @param <R> the delegate result type
- * @param <T> the delegate parameter type
+ * @param <R> the function result type
+ * @param <T> the function parameter type
  * @author rferranti
  */
 public class TransformingPredicate<R, T> implements Predicate<T> {
 
     private final Predicate<R> predicate;
-    private final Function<T, R> delegate;
+    private final Function<T, R> function;
 
-    public TransformingPredicate(Predicate<R> predicate, Function<T, R> delegate) {
-        dbc.precondition(predicate != null, "cannot compose delegate with a null predicate");
-        dbc.precondition(delegate != null, "cannot compose predicate with a null delegate");
+    public TransformingPredicate(Predicate<R> predicate, Function<T, R> function) {
+        dbc.precondition(predicate != null, "cannot compose function with a null predicate");
+        dbc.precondition(function != null, "cannot compose predicate with a null function");
         this.predicate = predicate;
-        this.delegate = delegate;
+        this.function = function;
     }
 
     @Override
     public boolean test(T element) {
-        return predicate.test(delegate.apply(element));
+        return predicate.test(function.apply(element));
     }
 }
