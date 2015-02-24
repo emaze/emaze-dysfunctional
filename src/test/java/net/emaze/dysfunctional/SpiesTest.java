@@ -18,7 +18,7 @@ import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
-import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
@@ -109,35 +109,35 @@ public class SpiesTest {
             final Box<O> param1 = new Box<O>();
             final Box<O> param2 = new Box<O>();
             final Box<O> param3 = new Box<O>();
-            final TernaryDelegate<O, O, O, O> spied = Spies.spy(new FirstParamOfThree<O, O, O>(), result, param1, param2, param3);
+            final TriFunction<O, O, O, O> spied = Spies.spy(new FirstParamOfThree<O, O, O>(), result, param1, param2, param3);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpyResultOfTernaryDelegate() {
             final Box<O> result = new Box<O>();
-            final TernaryDelegate<O, O, O, O> spied = Spies.spyRes(new FirstParamOfThree<O, O, O>(), result);
+            final TriFunction<O, O, O, O> spied = Spies.spyRes(new FirstParamOfThree<O, O, O>(), result);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpyFirstParamOfTernaryDelegate() {
             final Box<O> param1 = new Box<O>();
-            final TernaryDelegate<O, O, O, O> spied = Spies.spy1st(new FirstParamOfThree<O, O, O>(), param1);
+            final TriFunction<O, O, O, O> spied = Spies.spy1st(new FirstParamOfThree<O, O, O>(), param1);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpySecondParamOfTernaryDelegate() {
             final Box<O> param2 = new Box<O>();
-            final TernaryDelegate<O, O, O, O> spied = Spies.spy2nd(new FirstParamOfThree<O, O, O>(), param2);
+            final TriFunction<O, O, O, O> spied = Spies.spy2nd(new FirstParamOfThree<O, O, O>(), param2);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpyThirdParamOfTernaryDelegate() {
             final Box<O> param3 = new Box<O>();
-            final TernaryDelegate<O, O, O, O> spied = Spies.spy3rd(new FirstParamOfThree<O, O, O>(), param3);
+            final TriFunction<O, O, O, O> spied = Spies.spy3rd(new FirstParamOfThree<O, O, O>(), param3);
             Assert.assertNotNull(spied);
         }
 
@@ -377,7 +377,7 @@ public class SpiesTest {
 
         @Test
         public void canMonitorATernaryDelegate() {
-            final TernaryDelegate<O, O, O, O> monitor = Spies.monitor(new FirstParamOfThree<O, O, O>(), accumulator);
+            final TriFunction<O, O, O, O> monitor = Spies.monitor(new FirstParamOfThree<O, O, O>(), accumulator);
             Assert.assertNotNull(monitor);
         }
 

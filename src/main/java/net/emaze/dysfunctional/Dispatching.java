@@ -1,6 +1,7 @@
 package net.emaze.dysfunctional;
 
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
@@ -11,9 +12,8 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.adapting.*;
-import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
-import java.util.Optional;
 
 /**
  * curry, mcurry, rcurry, ignore, ignore1st, ignore2nd, ignore3rd, provider,
@@ -139,7 +139,7 @@ public abstract class Dispatching {
      * @param first the value to be curried as first parameter
      * @return the curried binary delegate
      */
-    public static <T1, T2, T3, R> BiFunction<T2, T3, R> curry(TernaryDelegate<R, T1, T2, T3> delegate, T1 first) {
+    public static <T1, T2, T3, R> BiFunction<T2, T3, R> curry(TriFunction<T1, T2, T3, R> delegate, T1 first) {
         return new BinderFirstOfThree<>(delegate, first);
     }
 
@@ -169,7 +169,7 @@ public abstract class Dispatching {
      * @param second the value to be curried as second parameter
      * @return the curried binary delegate
      */
-    public static <T1, T2, T3, R> BiFunction<T1, T3, R> mcurry(TernaryDelegate<R, T1, T2, T3> delegate, T2 second) {
+    public static <T1, T2, T3, R> BiFunction<T1, T3, R> mcurry(TriFunction<T1, T2, T3, R> delegate, T2 second) {
         return new BinderSecondOfThree<>(delegate, second);
     }
 
@@ -273,7 +273,7 @@ public abstract class Dispatching {
      * @param third the value to be curried as third parameter
      * @return the curried binary delegate
      */
-    public static <T1, T2, T3, R> BiFunction<T1, T2, R> rcurry(TernaryDelegate<R, T1, T2, T3> delegate, T3 third) {
+    public static <T1, T2, T3, R> BiFunction<T1, T2, R> rcurry(TriFunction<T1, T2, T3, R> delegate, T3 third) {
         return new BinderThird<>(delegate, third);
     }
 
@@ -482,7 +482,7 @@ public abstract class Dispatching {
      * @param ignored the adapted delegate ignored parameter type class
      * @return the adapted delegate
      */
-    public static <T1, T2, T3, R> TernaryDelegate<R, T1, T2, T3> ignore1st(BiFunction<T2, T3, R> delegate, Class<T1> ignored) {
+    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> ignore1st(BiFunction<T2, T3, R> delegate, Class<T1> ignored) {
         return new IgnoreFirstOfThree<>(delegate);
     }
 
@@ -512,7 +512,7 @@ public abstract class Dispatching {
      * @param ignored the adapted delegate ignored parameter type class
      * @return the adapted delegate
      */
-    public static <T1, T2, T3, R> TernaryDelegate<R, T1, T2, T3> ignore2nd(BiFunction<T1, T3, R> delegate, Class<T2> ignored) {
+    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> ignore2nd(BiFunction<T1, T3, R> delegate, Class<T2> ignored) {
         return new IgnoreSecondOfThree<>(delegate);
     }
 
@@ -528,8 +528,8 @@ public abstract class Dispatching {
      * @param ignored the adapted delegate ignored parameter type class
      * @return the adapted delegate
      */
-    public static <T1, T2, T3, R> TernaryDelegate<R, T1, T2, T3> ignore3rd(BiFunction<T1, T2, R> delegate, Class<T3> ignored) {
-        return new IgnoreThird<R, T1, T2, T3>(delegate);
+    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> ignore3rd(BiFunction<T1, T2, R> delegate, Class<T3> ignored) {
+        return new IgnoreThird<T1, T2, T3, R>(delegate);
     }
 
     /**
@@ -594,8 +594,8 @@ public abstract class Dispatching {
      * @param adaptee the action to be adapted
      * @return the adapted delegate
      */
-    public static <T1, T2, T3> TernaryDelegate<Void, T1, T2, T3> delegate(TernaryAction<T1, T2, T3> adaptee) {
-        return new TernaryActionToTernaryDelegate<T1, T2, T3>(adaptee);
+    public static <T1, T2, T3> TriFunction<T1, T2, T3, Void> delegate(TernaryAction<T1, T2, T3> adaptee) {
+        return new TernaryActionToTernaryDelegate<>(adaptee);
     }
 
     /**
@@ -630,8 +630,8 @@ public abstract class Dispatching {
      * @param adaptee the predicate to be adapted
      * @return the adapted delegate
      */
-    public static <T1, T2, T3> TernaryDelegate<Boolean, T1, T2, T3> delegate(TernaryPredicate<T1, T2, T3> adaptee) {
-        return new TernaryPredicateToTernaryDelegate<T1, T2, T3>(adaptee);
+    public static <T1, T2, T3> TriFunction<T1, T2, T3, Boolean> delegate(TernaryPredicate<T1, T2, T3> adaptee) {
+        return new TernaryPredicateToTernaryDelegate<>(adaptee);
     }
 
     /**
@@ -680,8 +680,8 @@ public abstract class Dispatching {
      * @param delegate the delegate to be adapted
      * @return the adapted action
      */
-    public static <R, T1, T2, T3> TernaryAction<T1, T2, T3> action(TernaryDelegate<R, T1, T2, T3> delegate) {
-        return new TernaryDelegateToTernaryAction<R, T1, T2, T3>(delegate);
+    public static <T1, T2, T3, R> TernaryAction<T1, T2, T3> action(TriFunction<T1, T2, T3, R> delegate) {
+        return new TernaryDelegateToTernaryAction<T1, T2, T3, R>(delegate);
     }
 
     /**
@@ -723,10 +723,10 @@ public abstract class Dispatching {
      * @param <T1> the delegate first parameter type
      * @param <T2> the delegate second parameter type
      * @param <T3> the delegate third parameter type
-     * @param delegate the delegate to be adapted
+     * @param function the delegate to be adapted
      * @return the adapted predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> predicate(TernaryDelegate<Boolean, T1, T2, T3> delegate) {
-        return new TernaryDelegateToTernaryPredicate<T1, T2, T3>(delegate);
+    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> predicate(TriFunction<T1, T2, T3, Boolean> function) {
+        return new TernaryDelegateToTernaryPredicate<>(function);
     }
 }

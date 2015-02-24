@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
-import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 
 /**
  * Adapts a ternary action to a ternary delegate. Adapter result type is Void
@@ -13,7 +13,7 @@ import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
  * @param <T3> the adapted action third parameter type
  * @author rferranti
  */
-public class TernaryActionToTernaryDelegate<T1, T2, T3> implements TernaryDelegate<Void, T1, T2, T3> {
+public class TernaryActionToTernaryDelegate<T1, T2, T3> implements TriFunction<T1, T2, T3, Void> {
 
     private final TernaryAction<T1, T2, T3> adapted;
 
@@ -23,7 +23,7 @@ public class TernaryActionToTernaryDelegate<T1, T2, T3> implements TernaryDelega
     }
 
     @Override
-    public Void perform(T1 first, T2 second, T3 third) {
+    public Void apply(T1 first, T2 second, T3 third) {
         adapted.perform(first, second, third);
         return null;
     }

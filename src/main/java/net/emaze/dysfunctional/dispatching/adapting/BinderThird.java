@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.BiFunction;
-import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 
 /**
  * Ternary to binary delegate adapter. Adapting is performed by currying the
@@ -16,10 +16,10 @@ import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
  */
 public class BinderThird<T1, T2, T3, R> implements BiFunction<T1, T2, R> {
 
-    private final TernaryDelegate<R, T1, T2, T3> adapted;
+    private final TriFunction<T1, T2, T3, R> adapted;
     private final T3 third;
 
-    public BinderThird(TernaryDelegate<R, T1, T2, T3> adaptee, T3 third) {
+    public BinderThird(TriFunction<T1, T2, T3, R> adaptee, T3 third) {
         dbc.precondition(adaptee != null, "cannot bind third parameter of a null ternary delegate");
         this.adapted = adaptee;
         this.third = third;
@@ -27,6 +27,6 @@ public class BinderThird<T1, T2, T3, R> implements BiFunction<T1, T2, R> {
 
     @Override
     public R apply(T1 first, T2 second) {
-        return adapted.perform(first, second, third);
+        return adapted.apply(first, second, third);
     }
 }

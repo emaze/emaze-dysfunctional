@@ -10,7 +10,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
-import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 import net.emaze.dysfunctional.dispatching.spying.*;
 import net.emaze.dysfunctional.options.Box;
@@ -89,8 +89,8 @@ public abstract class Spies {
      * @param param3 a box that will be containing the third spied parameter
      * @return the proxied delegate
      */
-    public static <R, T1, T2, T3> TernaryDelegate<R, T1, T2, T3> spy(TernaryDelegate<R, T1, T2, T3> delegate, Box<R> result, Box<T1> param1, Box<T2> param2, Box<T3> param3) {
-        return new TernaryCapturingDelegate<R, T1, T2, T3>(delegate, result, param1, param2, param3);
+    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> spy(TriFunction<T1, T2, T3, R> delegate, Box<R> result, Box<T1> param1, Box<T2> param2, Box<T3> param3) {
+        return new TernaryCapturingDelegate<T1, T2, T3, R>(delegate, result, param1, param2, param3);
     }
 
     /**
@@ -191,7 +191,7 @@ public abstract class Spies {
      * @param result a box that will be containing spied result
      * @return the proxied delegate
      */
-    public static <R, T1, T2, T3> TernaryDelegate<R, T1, T2, T3> spyRes(TernaryDelegate<R, T1, T2, T3> delegate, Box<R> result) {
+    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> spyRes(TriFunction<T1, T2, T3, R> delegate, Box<R> result) {
         return spy(delegate, result, Box.<T1>empty(), Box.<T2>empty(), Box.<T3>empty());
     }
 
@@ -206,7 +206,7 @@ public abstract class Spies {
      * @param param1 a box that will be containing the first spied parameter
      * @return the proxied delegate
      */
-    public static <R, T1, T2, T3> TernaryDelegate<R, T1, T2, T3> spy1st(TernaryDelegate<R, T1, T2, T3> delegate, Box<T1> param1) {
+    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> spy1st(TriFunction<T1, T2, T3, R> delegate, Box<T1> param1) {
         return spy(delegate, Box.<R>empty(), param1, Box.<T2>empty(), Box.<T3>empty());
     }
 
@@ -221,7 +221,7 @@ public abstract class Spies {
      * @param param2 a box that will be containing the second spied parameter
      * @return the proxied delegate
      */
-    public static <R, T1, T2, T3> TernaryDelegate<R, T1, T2, T3> spy2nd(TernaryDelegate<R, T1, T2, T3> delegate, Box<T2> param2) {
+    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> spy2nd(TriFunction<T1, T2, T3, R> delegate, Box<T2> param2) {
         return spy(delegate, Box.<R>empty(), Box.<T1>empty(), param2, Box.<T3>empty());
     }
 
@@ -236,7 +236,7 @@ public abstract class Spies {
      * @param param3 a box that will be containing the third spied parameter
      * @return the proxied delegate
      */
-    public static <R, T1, T2, T3> TernaryDelegate<R, T1, T2, T3> spy3rd(TernaryDelegate<R, T1, T2, T3> delegate, Box<T3> param3) {
+    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> spy3rd(TriFunction<T1, T2, T3, R> delegate, Box<T3> param3) {
         return spy(delegate, Box.<R>empty(), Box.<T1>empty(), Box.<T2>empty(), param3);
     }
 
@@ -643,8 +643,8 @@ public abstract class Spies {
      * @param calls a value holder accumulating calls
      * @return the proxied delegate
      */
-    public static <R, T1, T2, T3> TernaryDelegate<R, T1, T2, T3> monitor(TernaryDelegate<R, T1, T2, T3> delegate, AtomicLong calls) {
-        return new TernaryMonitoringDelegate<R, T1, T2, T3>(delegate, calls);
+    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> monitor(TriFunction<T1, T2, T3, R> delegate, AtomicLong calls) {
+        return new TernaryMonitoringDelegate<T1, T2, T3, R>(delegate, calls);
     }
 
     /**

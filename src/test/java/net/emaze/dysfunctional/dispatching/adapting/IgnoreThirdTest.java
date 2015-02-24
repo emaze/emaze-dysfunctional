@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import java.util.function.BiFunction;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
-import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
@@ -26,8 +26,8 @@ public class IgnoreThirdTest {
         final Box<O> param1 = Box.empty();
         final Box<O> param2 = Box.empty();
         final BiFunction<O, O, O> spy = Spies.spy(new FirstParam<O, O>(), result, param1, param2);
-        final TernaryDelegate<O, O, O, O> adapted = new IgnoreThird<O, O, O, O>(spy);
-        adapted.perform(O.ONE, O.ANOTHER, O.IGNORED);
+        final TriFunction<O, O, O, O> adapted = new IgnoreThird<O, O, O, O>(spy);
+        adapted.apply(O.ONE, O.ANOTHER, O.IGNORED);
         Assert.assertTrue(param1.getContent().equals(O.ONE) && param2.getContent().equals(O.ANOTHER));
     }
 }

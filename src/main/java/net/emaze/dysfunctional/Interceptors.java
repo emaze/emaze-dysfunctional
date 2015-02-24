@@ -4,7 +4,7 @@ import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 import net.emaze.dysfunctional.interceptions.BinaryInterceptor;
 import net.emaze.dysfunctional.interceptions.BinaryInterceptorChain;
 import net.emaze.dysfunctional.interceptions.Interceptor;
@@ -222,9 +222,9 @@ public abstract class Interceptors {
      * @param interceptor an interceptor
      * @return the resulting delegate
      */
-    public static <R, T1, T2, T3> TernaryDelegate<R, T1, T2, T3> intercept(TernaryDelegate<R, T1, T2, T3> innermost, TernaryInterceptor<T1, T2, T3> interceptor) {
+    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> intercept(TriFunction<T1, T2, T3, R> innermost, TernaryInterceptor<T1, T2, T3> interceptor) {
         dbc.precondition(interceptor != null, "cannot create an interceptor chain with a null interceptor");
-        return new TernaryInterceptorChain<R, T1, T2, T3>(innermost, new SingletonIterator<TernaryInterceptor<T1, T2, T3>>(interceptor));
+        return new TernaryInterceptorChain<T1, T2, T3, R>(innermost, new SingletonIterator<TernaryInterceptor<T1, T2, T3>>(interceptor));
     }
 
     /**
@@ -239,11 +239,11 @@ public abstract class Interceptors {
      * @param second the second interceptor
      * @return the resulting delegate
      */
-    public static <R, T1, T2, T3> TernaryDelegate<R, T1, T2, T3> intercept(TernaryDelegate<R, T1, T2, T3> innermost, TernaryInterceptor<T1, T2, T3> first, TernaryInterceptor<T1, T2, T3> second) {
+    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> intercept(TriFunction<T1, T2, T3, R> innermost, TernaryInterceptor<T1, T2, T3> first, TernaryInterceptor<T1, T2, T3> second) {
         dbc.precondition(first != null, "cannot create an interceptor chain with a null interceptor");
         dbc.precondition(second != null, "cannot create an interceptor chain with a null interceptor");
         final ArrayIterator<TernaryInterceptor<T1, T2, T3>> interceptors = ArrayIterator.of(first, second);
-        return new TernaryInterceptorChain<R, T1, T2, T3>(innermost, interceptors);
+        return new TernaryInterceptorChain<T1, T2, T3, R>(innermost, interceptors);
     }
 
     /**
@@ -259,12 +259,12 @@ public abstract class Interceptors {
      * @param third the third interceptor
      * @return the resulting delegate
      */
-    public static <R, T1, T2, T3> TernaryDelegate<R, T1, T2, T3> intercept(TernaryDelegate<R, T1, T2, T3> innermost, TernaryInterceptor<T1, T2, T3> first, TernaryInterceptor<T1, T2, T3> second, TernaryInterceptor<T1, T2, T3> third) {
+    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> intercept(TriFunction<T1, T2, T3, R> innermost, TernaryInterceptor<T1, T2, T3> first, TernaryInterceptor<T1, T2, T3> second, TernaryInterceptor<T1, T2, T3> third) {
         dbc.precondition(first != null, "cannot create an interceptor chain with a null interceptor");
         dbc.precondition(second != null, "cannot create an interceptor chain with a null interceptor");
         dbc.precondition(third != null, "cannot create an interceptor chain with a null interceptor");
         final ArrayIterator<TernaryInterceptor<T1, T2, T3>> interceptors = ArrayIterator.of(first, second, third);
-        return new TernaryInterceptorChain<R, T1, T2, T3>(innermost, interceptors);
+        return new TernaryInterceptorChain<T1, T2, T3, R>(innermost, interceptors);
     }
 
     /**
@@ -279,9 +279,9 @@ public abstract class Interceptors {
      * @param interceptors an iterable of interceptors
      * @return the resulting delegate
      */
-    public static <R, T1, T2, T3, I extends TernaryInterceptor<T1, T2, T3>> TernaryDelegate<R, T1, T2, T3> intercept(TernaryDelegate<R, T1, T2, T3> innermost, Iterable<I> interceptors) {
+    public static <R, T1, T2, T3, I extends TernaryInterceptor<T1, T2, T3>> TriFunction<T1, T2, T3, R> intercept(TriFunction<T1, T2, T3, R> innermost, Iterable<I> interceptors) {
         dbc.precondition(interceptors != null, "cannot create an interceptor chain with a null iterable of interceptors");
-        return new TernaryInterceptorChain<R, T1, T2, T3>(innermost, interceptors.iterator());
+        return new TernaryInterceptorChain<T1, T2, T3, R>(innermost, interceptors.iterator());
     }
 
     /**
@@ -296,8 +296,8 @@ public abstract class Interceptors {
      * @param interceptors an iterator of interceptors
      * @return the resulting delegate
      */
-    public static <R, T1, T2, T3, I extends TernaryInterceptor<T1, T2, T3>> TernaryDelegate<R, T1, T2, T3> intercept(TernaryDelegate<R, T1, T2, T3> innermost, Iterator<I> interceptors) {
-        return new TernaryInterceptorChain<R, T1, T2, T3>(innermost, interceptors);
+    public static <R, T1, T2, T3, I extends TernaryInterceptor<T1, T2, T3>> TriFunction<T1, T2, T3, R> intercept(TriFunction<T1, T2, T3, R> innermost, Iterator<I> interceptors) {
+        return new TernaryInterceptorChain<T1, T2, T3, R>(innermost, interceptors);
     }
 
     /**
@@ -311,7 +311,7 @@ public abstract class Interceptors {
      * @param interceptors an array of interceptors
      * @return the resulting delegate
      */
-    public static <R, T1, T2, T3> TernaryDelegate<R, T1, T2, T3> intercept(TernaryDelegate<R, T1, T2, T3> innermost, TernaryInterceptor<T1, T2, T3>... interceptors) {
-        return new TernaryInterceptorChain<R, T1, T2, T3>(innermost, new ArrayIterator<TernaryInterceptor<T1, T2, T3>>(interceptors));
+    public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> intercept(TriFunction<T1, T2, T3, R> innermost, TernaryInterceptor<T1, T2, T3>... interceptors) {
+        return new TernaryInterceptorChain<T1, T2, T3, R>(innermost, new ArrayIterator<TernaryInterceptor<T1, T2, T3>>(interceptors));
     }
 }

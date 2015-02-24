@@ -15,7 +15,7 @@ import net.emaze.dysfunctional.dispatching.delegates.BinaryComposer;
 import net.emaze.dysfunctional.dispatching.delegates.Composer;
 import net.emaze.dysfunctional.dispatching.delegates.EndoDelegatesComposer;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryComposer;
-import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 
 /**
@@ -83,7 +83,7 @@ public abstract class Compositions {
      * @param ternary the ternary delegate to be composed
      * @return the composed ternary delegate
      */
-    public static <T1, T2, T3, T4, R> TernaryDelegate<R, T2, T3, T4> compose(Function<T1, R> unary, TernaryDelegate<T1, T2, T3, T4> ternary) {
+    public static <T1, T2, T3, T4, R> TriFunction<T1, T2, T3, R> compose(Function<T4, R> unary, TriFunction<T1, T2, T3, T4> ternary) {
         return new TernaryComposer<>(unary, ternary);
     }
 
@@ -162,8 +162,8 @@ public abstract class Compositions {
      * @param delegate the delegate to be composed
      * @return the composed predicate
      */
-    public static <R, T1, T2, T3> TernaryPredicate<T1, T2, T3> compose(Predicate<R> predicate, TernaryDelegate<R, T1, T2, T3> delegate) {
-        return new TransformingTernaryPredicate<R, T1, T2, T3>(predicate, delegate);
+    public static <T1, T2, T3, R> TernaryPredicate<T1, T2, T3> compose(Predicate<R> predicate, TriFunction<T1, T2, T3, R> delegate) {
+        return new TransformingTernaryPredicate<T1, T2, T3, R>(predicate, delegate);
     }
 
     /**

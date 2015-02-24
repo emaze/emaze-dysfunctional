@@ -15,21 +15,21 @@ public class TernaryComposerTest {
             public O apply(O o) {
                 return new O(o.toString() + " is composed");
             }
-        }, new TernaryDelegate<O, O, O, O>() {
+        }, new TriFunction<O, O, O, O>() {
             @Override
-            public O perform(O first, O second, O third) {
+            public O apply(O first, O second, O third) {
                 return first;
             }
         });
-        final O got = composer.perform(O.ONE, O.IGNORED, O.IGNORED);
+        final O got = composer.apply(O.ONE, O.IGNORED, O.IGNORED);
         Assert.assertEquals("ONE is composed", got.toString());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void composingWithNullUnaryDelegateYieldsException() {
-        new TernaryComposer<O, O, O, O, O>(null, new TernaryDelegate<O, O, O, O>() {
+        new TernaryComposer<O, O, O, O, O>(null, new TriFunction<O, O, O, O>() {
             @Override
-            public O perform(O first, O second, O third) {
+            public O apply(O first, O second, O third) {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
         });

@@ -2,20 +2,21 @@ package net.emaze.dysfunctional.dispatching.delegates;
 
 /**
  * A ternary functor.
- * @param <R> the result Type
+ *
  * @param <T1> the first element Type
  * @param <T2> the second element Type
  * @param <T3> the third element Type
- * @author rferranti
+ * @param <R> the result Type
  */
-public interface TernaryDelegate<R, T1, T2, T3> {
+public interface TriFunction<T1, T2, T3, R> {
 
     /**
-     * Executes the delegate for the given elements yielding a result of type R
+     * Executes the function for the given elements yielding a result of type R
+     *
      * @param first the first element
      * @param second the second element
      * @param third the third element
      * @return the result
      */
-    R perform(T1 first, T2 second, T3 third);
+    R apply(T1 first, T2 second, T3 third);
 }

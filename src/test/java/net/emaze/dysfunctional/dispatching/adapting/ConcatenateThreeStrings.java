@@ -1,11 +1,11 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
-import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 
-public class ConcatenateThreeStrings implements TernaryDelegate<String, String, String, String> {
+public class ConcatenateThreeStrings implements TriFunction<String, String, String, String> {
 
     @Override
-    public String perform(String first, String second, String third) {
+    public String apply(String first, String second, String third) {
         return first + second + third;
     }
 }

@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.spying;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 import net.emaze.dysfunctional.options.Box;
 
 /**
@@ -13,15 +13,15 @@ import net.emaze.dysfunctional.options.Box;
  * @param <T2> the second parameter type
  * @param <T3> the third parameter type
  */
-public class TernaryCapturingDelegate<R, T1, T2, T3> implements TernaryDelegate<R, T1, T2, T3> {
+public class TernaryCapturingDelegate<T1, T2, T3, R> implements TriFunction<T1, T2, T3, R> {
 
-    private final TernaryDelegate<R, T1, T2, T3> nested;
+    private final TriFunction<T1, T2, T3, R> nested;
     private final Box<R> result;
     private final Box<T1> param1;
     private final Box<T2> param2;
     private final Box<T3> param3;
 
-    public TernaryCapturingDelegate(TernaryDelegate<R, T1, T2, T3> nested, Box<R> result, Box<T1> param1, Box<T2> param2, Box<T3> param3) {
+    public TernaryCapturingDelegate(TriFunction<T1, T2, T3, R> nested, Box<R> result, Box<T1> param1, Box<T2> param2, Box<T3> param3) {
         dbc.precondition(nested != null, "cannot capture from a null delegate");
         dbc.precondition(result != null, "cannot capture with a null result box");
         dbc.precondition(param1 != null, "cannot capture with a null param1 box");
@@ -35,11 +35,11 @@ public class TernaryCapturingDelegate<R, T1, T2, T3> implements TernaryDelegate<
     }
 
     @Override
-    public R perform(T1 first, T2 second, T3 third) {
+    public R apply(T1 first, T2 second, T3 third) {
         param1.setContent(first);
         param2.setContent(second);
         param3.setContent(third);
-        final R got = nested.perform(first, second, third);
+        final R got = nested.apply(first, second, third);
         result.setContent(got);
         return got;
     }

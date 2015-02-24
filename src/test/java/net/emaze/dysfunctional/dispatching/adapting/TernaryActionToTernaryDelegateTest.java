@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
-import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -25,8 +25,8 @@ public class TernaryActionToTernaryDelegateTest {
     public void callingAdapterCallsAdapted() {
         final AtomicLong calls = new AtomicLong();
         final TernaryAction<O, O, O> monitor = Spies.monitor(new TernaryNoop<O, O, O>(), calls);
-        final TernaryDelegate<Void, O, O, O> delegate = new TernaryActionToTernaryDelegate<O, O, O>(monitor);
-        delegate.perform(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+        final TriFunction<O, O, O, Void> delegate = new TernaryActionToTernaryDelegate<>(monitor);
+        delegate.apply(O.ONE, O.ANOTHER, O.YET_ANOTHER);
         Assert.assertEquals(1l, calls.get());
     }
 
@@ -34,8 +34,8 @@ public class TernaryActionToTernaryDelegateTest {
     public void firstParamIsForwardedToAdaptedAction() {
         final Box<O> param1 = Box.empty();
         final TernaryAction<O, O, O> monitor = Spies.spy1st(new TernaryNoop<O, O, O>(), param1);
-        final TernaryDelegate<Void, O, O, O> delegate = new TernaryActionToTernaryDelegate<O, O, O>(monitor);
-        delegate.perform(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+        final TriFunction<O, O, O, Void> delegate = new TernaryActionToTernaryDelegate<>(monitor);
+        delegate.apply(O.ONE, O.ANOTHER, O.YET_ANOTHER);
         Assert.assertEquals(O.ONE, param1.getContent());
     }
 
@@ -43,8 +43,8 @@ public class TernaryActionToTernaryDelegateTest {
     public void secondParamIsForwardedToAdaptedAction() {
         final Box<O> param2 = Box.empty();
         final TernaryAction<O, O, O> monitor = Spies.spy2nd(new TernaryNoop<O, O, O>(), param2);
-        final TernaryDelegate<Void, O, O, O> delegate = new TernaryActionToTernaryDelegate<O, O, O>(monitor);
-        delegate.perform(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+        final TriFunction<O, O, O, Void> delegate = new TernaryActionToTernaryDelegate<>(monitor);
+        delegate.apply(O.ONE, O.ANOTHER, O.YET_ANOTHER);
         Assert.assertEquals(O.ANOTHER, param2.getContent());
     }
 
@@ -52,8 +52,8 @@ public class TernaryActionToTernaryDelegateTest {
     public void thirdParamIsForwardedToAdaptedAction() {
         final Box<O> param3 = Box.empty();
         final TernaryAction<O, O, O> monitor = Spies.spy3rd(new TernaryNoop<O, O, O>(), param3);
-        final TernaryDelegate<Void, O, O, O> delegate = new TernaryActionToTernaryDelegate<O, O, O>(monitor);
-        delegate.perform(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+        final TriFunction<O, O, O, Void> delegate = new TernaryActionToTernaryDelegate<>(monitor);
+        delegate.apply(O.ONE, O.ANOTHER, O.YET_ANOTHER);
         Assert.assertEquals(O.YET_ANOTHER, param3.getContent());
     }
 }

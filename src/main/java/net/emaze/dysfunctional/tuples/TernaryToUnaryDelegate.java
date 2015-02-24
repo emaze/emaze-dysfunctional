@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.tuples;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.Function;
-import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 
 /**
  * Adapts a ternary delegate handling triples to a delegate handling triples.
@@ -14,15 +14,15 @@ import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
  */
 public class TernaryToUnaryDelegate<T1, T2, T3, R> implements Function<Triple<T1, T2, T3>, R> {
 
-    private final TernaryDelegate<R, T1, T2, T3> delegate;
+    private final TriFunction<T1, T2, T3, R> delegate;
 
-    public TernaryToUnaryDelegate(TernaryDelegate<R, T1, T2, T3> delegate) {
+    public TernaryToUnaryDelegate(TriFunction<T1, T2, T3, R> delegate) {
         dbc.precondition(delegate != null, "cannot create a TernaryToUnaryDelegate with a null TernaryDelegate");
         this.delegate = delegate;
     }
 
     @Override
     public R apply(Triple<T1, T2, T3> triple) {
-        return delegate.perform(triple.first(), triple.second(), triple.third());
+        return delegate.apply(triple.first(), triple.second(), triple.third());
     }
 }

@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.spying;
 
 import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
-import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -44,8 +44,8 @@ public class TernaryCapturingDelegateTest {
         final Box<O> param1 = Box.empty();
         final Box<O> param2 = Box.empty();
         final Box<O> param3 = Box.empty();
-        final TernaryDelegate<O, O, O, O> delelgate = new TernaryCapturingDelegate<O, O, O, O>(new FirstParamOfThree<O, O, O>(), result, param1, param2, param3);
-        delelgate.perform(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+        final TriFunction<O, O, O, O> delelgate = new TernaryCapturingDelegate<O, O, O, O>(new FirstParamOfThree<O, O, O>(), result, param1, param2, param3);
+        delelgate.apply(O.ONE, O.ANOTHER, O.YET_ANOTHER);
         Assert.assertEquals(O.ONE, result.getContent());
     }
 
@@ -55,8 +55,8 @@ public class TernaryCapturingDelegateTest {
         final Box<O> param1 = Box.empty();
         final Box<O> param2 = Box.empty();
         final Box<O> param3 = Box.empty();
-        final TernaryDelegate<O, O, O, O> delelgate = new TernaryCapturingDelegate<O, O, O, O>(new FirstParamOfThree<O, O, O>(), result, param1, param2, param3);
-        delelgate.perform(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+        final TriFunction<O, O, O, O> delelgate = new TernaryCapturingDelegate<O, O, O, O>(new FirstParamOfThree<O, O, O>(), result, param1, param2, param3);
+        delelgate.apply(O.ONE, O.ANOTHER, O.YET_ANOTHER);
         Assert.assertEquals(O.ONE, param1.getContent());
     }
 
@@ -66,8 +66,8 @@ public class TernaryCapturingDelegateTest {
         final Box<O> param1 = Box.empty();
         final Box<O> param2 = Box.empty();
         final Box<O> param3 = Box.empty();
-        final TernaryDelegate<O, O, O, O> delelgate = new TernaryCapturingDelegate<O, O, O, O>(new FirstParamOfThree<O, O, O>(), result, param1, param2, param3);
-        delelgate.perform(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+        final TriFunction<O, O, O, O> delelgate = new TernaryCapturingDelegate<O, O, O, O>(new FirstParamOfThree<O, O, O>(), result, param1, param2, param3);
+        delelgate.apply(O.ONE, O.ANOTHER, O.YET_ANOTHER);
         Assert.assertEquals(O.ANOTHER, param2.getContent());
     }
 
@@ -77,8 +77,8 @@ public class TernaryCapturingDelegateTest {
         final Box<O> param1 = Box.empty();
         final Box<O> param2 = Box.empty();
         final Box<O> param3 = Box.empty();
-        final TernaryDelegate<O, O, O, O> delelgate = new TernaryCapturingDelegate<O, O, O, O>(new FirstParamOfThree<O, O, O>(), result, param1, param2, param3);
-        delelgate.perform(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+        final TriFunction<O, O, O, O> delelgate = new TernaryCapturingDelegate<O, O, O, O>(new FirstParamOfThree<O, O, O>(), result, param1, param2, param3);
+        delelgate.apply(O.ONE, O.ANOTHER, O.YET_ANOTHER);
         Assert.assertEquals(O.YET_ANOTHER, param3.getContent());
     }
 }

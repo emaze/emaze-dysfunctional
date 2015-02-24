@@ -12,7 +12,7 @@ public class FirstParamOfThreeTest {
 
     @Test
     public void canCaptureFirstParam() {
-        final O got = new FirstParamOfThree<O, O, O>().perform(O.ONE, O.IGNORED, O.IGNORED);
+        final O got = new FirstParamOfThree<O, O, O>().apply(O.ONE, O.IGNORED, O.IGNORED);
         Assert.assertEquals(O.ONE, got);
     }
 }

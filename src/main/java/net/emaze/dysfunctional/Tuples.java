@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
-import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 import net.emaze.dysfunctional.tuples.*;
 
@@ -62,11 +62,11 @@ public abstract class Tuples {
      * @param <U> the delegate second parameter type
      * @param <V> the delegate third parameter type
      * @param <R> the delegate return type
-     * @param delegate the delegate to be adapted
+     * @param function the delegate to be adapted
      * @return the adapted delegate
      */
-    public static <T, U, V, R> Function<Triple<T, U, V>, R> tupled(TernaryDelegate<R, T, U, V> delegate) {
-        return new TernaryToUnaryDelegate<>(delegate);
+    public static <T, U, V, R> Function<Triple<T, U, V>, R> tupled(TriFunction<T, U, V, R> function) {
+        return new TernaryToUnaryDelegate<>(function);
     }
 
     /**
@@ -146,15 +146,15 @@ public abstract class Tuples {
         /**
          * Adapts a delegate accepting a triple to a ternary delegate.
          *
-         * @param <R> the delegate return type
          * @param <T> the delegate first parameter type
          * @param <U> the delegate second parameter type
          * @param <V> the delegate third parameter type
-         * @param delegate the delegate to be adapted
+         * @param <R> the delegate return type
+         * @param function the delegate to be adapted
          * @return the adapted delegate
          */
-        public static <R, T, U, V> TernaryDelegate<R, T, U, V> untupled(Function<Triple<T, U, V>, R> delegate) {
-            return new UnaryToTernaryDelegate<R, T, U, V>(delegate);
+        public static <T, U, V, R> TriFunction<T, U, V, R> untupled(Function<Triple<T, U, V>, R> function) {
+            return new UnaryToTernaryDelegate<>(function);
         }
 
         /**

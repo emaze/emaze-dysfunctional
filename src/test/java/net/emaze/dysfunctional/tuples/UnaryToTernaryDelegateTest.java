@@ -20,8 +20,8 @@ public class UnaryToTernaryDelegateTest {
     @Test
     public void canAdapt() {
         final Function<Triple<O, O, O>, Triple<O, O, O>> delegate = UnaryOperator.identity();
-        final UnaryToTernaryDelegate<Triple<O, O, O>, O, O, O> adapted = new UnaryToTernaryDelegate<Triple<O, O, O>, O, O, O>(delegate);
-        Triple<O, O, O> got = adapted.perform(O.ONE, O.ONE, O.ONE);
+        final UnaryToTernaryDelegate<O, O, O, Triple<O, O, O>> adapted = new UnaryToTernaryDelegate<>(delegate);
+        Triple<O, O, O> got = adapted.apply(O.ONE, O.ONE, O.ONE);
         Assert.assertEquals(Triple.of(O.ONE, O.ONE, O.ONE), got);
     }
 }

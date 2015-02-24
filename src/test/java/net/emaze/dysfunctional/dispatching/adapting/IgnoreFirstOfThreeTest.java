@@ -25,7 +25,7 @@ public class IgnoreFirstOfThreeTest {
         final Box<O> param2 = Box.empty();
         final BiFunction<O, O, O> spy = Spies.spy(new FirstParam<O, O>(), Box.<O>empty(), param1, param2);
         final IgnoreFirstOfThree<O, O, O, O> adapted = new IgnoreFirstOfThree<O, O, O, O>(spy);
-        adapted.perform(O.IGNORED, O.ONE, O.ANOTHER);
+        adapted.apply(O.IGNORED, O.ONE, O.ANOTHER);
         Assert.assertTrue(param1.getContent().equals(O.ONE) && param2.getContent().equals(O.ANOTHER));
     }
 }

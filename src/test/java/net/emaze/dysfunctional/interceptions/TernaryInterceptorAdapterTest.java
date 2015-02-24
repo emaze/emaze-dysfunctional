@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.interceptions;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 import net.emaze.dysfunctional.tuples.Triple;
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,34 +26,34 @@ public class TernaryInterceptorAdapterTest {
     @Test
     public void beforeAndAfterAreCalled() {
         final BucketFillingTernaryInterceptor<String, String, String> interceptor = new BucketFillingTernaryInterceptor<String, String, String>();
-        final TernaryDelegate<String, String, String, String> nestedDelegate = new FirstParam<String, String, String>();
-        final TernaryDelegate<String, String, String, String> delegate = new TernaryInterceptorAdapter<String, String, String, String>(interceptor, nestedDelegate);
-        delegate.perform("useless_param", "useless_param", "useless_param");
+        final TriFunction<String, String, String, String> nestedDelegate = new FirstParam<String, String, String>();
+        final TriFunction<String, String, String, String> delegate = new TernaryInterceptorAdapter<String, String, String, String>(interceptor, nestedDelegate);
+        delegate.apply("useless_param", "useless_param", "useless_param");
         Assert.assertTrue(interceptor.getBeforeBucket().size() == 1 && interceptor.getAfterBucket().size() == 1);
     }
 
     @Test
     public void beforeAndAfterAreCalledInCaseOfException() {
         final BucketFillingTernaryInterceptor<String, String, String> interceptor = new BucketFillingTernaryInterceptor<String, String, String>();
-        final TernaryDelegate<String, String, String, String> delegate = new TernaryInterceptorAdapter<String, String, String, String>(interceptor, new TernaryDelegate<String, String, String, String>() {
+        final TriFunction<String, String, String, String> delegate = new TernaryInterceptorAdapter<String, String, String, String>(interceptor, new TriFunction<String, String, String, String>() {
 
             @Override
-            public String perform(String first, String second, String third) {
+            public String apply(String first, String second, String third) {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
         });
         try {
-            delegate.perform("useless_param", "useless_param", "useless_param");
+            delegate.apply("useless_param", "useless_param", "useless_param");
             Assert.fail("delegate is supposed to throw UnsupportedOperationException");
         } catch (UnsupportedOperationException ex) {
             Assert.assertTrue(interceptor.getBeforeBucket().size() == 1 && interceptor.getAfterBucket().size() == 1);
         }
     }
 
-    public static class FirstParam<T1, T2, T3> implements TernaryDelegate<T1, T1, T2, T3> {
+    public static class FirstParam<T1, T2, T3> implements TriFunction<T1, T2, T3, T1> {
 
         @Override
-        public T1 perform(T1 first, T2 second, T3 third) {
+        public T1 apply(T1 first, T2 second, T3 third) {
             return first;
         }
     }

@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional;
 
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
@@ -17,13 +18,12 @@ import net.emaze.dysfunctional.dispatching.actions.TernaryNoop;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
-import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Yes;
-import java.util.Optional;
 import net.emaze.dysfunctional.testing.O;
 import net.emaze.dysfunctional.tuples.BinaryIdentity;
 import net.emaze.dysfunctional.tuples.Pair;
@@ -95,7 +95,7 @@ public class DispatchingTest {
 
         @Test
         public void canAdaptTernaryActionToTernaryDelegate() {
-            final TernaryDelegate<Void, O, O, O> adapted = Dispatching.delegate(new TernaryNoop<O, O, O>());
+            final TriFunction<O, O, O, Void> adapted = Dispatching.delegate(new TernaryNoop<O, O, O>());
             Assert.assertNotNull(adapted);
         }
 
@@ -113,7 +113,7 @@ public class DispatchingTest {
 
         @Test
         public void canAdaptTernaryPredicateToTernaryDelegate() {
-            final TernaryDelegate<Boolean, O, O, O> adapted = Dispatching.delegate(new TernaryAlways<O, O, O>());
+            final TriFunction<O, O, O, Boolean> adapted = Dispatching.delegate(new TernaryAlways<O, O, O>());
             Assert.assertNotNull(adapted);
         }
 
@@ -154,12 +154,7 @@ public class DispatchingTest {
 
         @Test
         public void canAdaptTernaryDelegateToBinaryPredicate() {
-            final TernaryPredicate<O, O, O> adapted = Dispatching.predicate(new TernaryDelegate<Boolean, O, O, O>() {
-                @Override
-                public Boolean perform(O f, O s, O t) {
-                    return true;
-                }
-            });
+            final TernaryPredicate<O, O, O> adapted = Dispatching.predicate((a, b, c) -> true);
             Assert.assertNotNull(adapted);
         }
     }
@@ -369,7 +364,7 @@ public class DispatchingTest {
 
         @Test
         public void canIgnoreFirstForBinaryDelegates() {
-            final TernaryDelegate<O, O, O, O> ignoring = Dispatching.ignore1st(new FirstParam<O, O>(), O.class);
+            final TriFunction<O, O, O, O> ignoring = Dispatching.ignore1st(new FirstParam<O, O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
@@ -381,13 +376,13 @@ public class DispatchingTest {
 
         @Test
         public void canIgnoreSecondForBinaryDelegates() {
-            final TernaryDelegate<O, O, O, O> ignoring = Dispatching.ignore2nd(new FirstParam<O, O>(), O.class);
+            final TriFunction<O, O, O, O> ignoring = Dispatching.ignore2nd(new FirstParam<O, O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
         @Test
         public void canIgnoreThirdForBinaryDelegates() {
-            final TernaryDelegate<O, O, O, O> ignoring = Dispatching.ignore3rd(new FirstParam<O, O>(), O.class);
+            final TriFunction<O, O, O, O> ignoring = Dispatching.ignore3rd(new FirstParam<O, O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
     }

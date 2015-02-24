@@ -12,7 +12,7 @@ public class TernaryIdentityTest {
 
     @Test
     public void identitiesOfNullsAreNulls() {
-        final Triple<O, O, O> got = new TernaryIdentity<O, O, O>().perform(null, null, null);
+        final Triple<O, O, O> got = new TernaryIdentity<O, O, O>().apply(null, null, null);
         Assert.assertEquals(new Triple<O, O, O>(null, null, null), got);
     }
 }
