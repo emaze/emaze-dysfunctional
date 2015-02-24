@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.UnaryOperator;
+import java.util.function.Function;
 import net.emaze.dysfunctional.strings.ToStringTransformer;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,7 +17,7 @@ public class TransformingIteratorTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingTransformingIteratorWithNullIteratorYieldsException() {
-        new TransformingIterator<Object, Object>(null, UnaryOperator.identity());
+        new TransformingIterator<Object, Object>(null, Function.identity());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -29,7 +29,7 @@ public class TransformingIteratorTest {
     public void removingFromTransformingIteratorRemovesFromNestedIterator() {
         List<Integer> bucket = new ArrayList<Integer>();
         bucket.add(1);
-        TransformingIterator<Integer, Integer> t = new TransformingIterator<Integer, Integer>(bucket.iterator(), UnaryOperator.identity());
+        TransformingIterator<Integer, Integer> t = new TransformingIterator<Integer, Integer>(bucket.iterator(), Function.identity());
         t.next();
         t.remove();
         Assert.assertEquals(0, bucket.size());
@@ -37,14 +37,14 @@ public class TransformingIteratorTest {
 
     @Test
     public void transIterHasNoNextWhenInnerIteratorHasNoNext() {
-        TransformingIterator<Object, Object> t = new TransformingIterator<Object, Object>(Collections.emptyList().iterator(), UnaryOperator.identity());
+        TransformingIterator<Object, Object> t = new TransformingIterator<Object, Object>(Collections.emptyList().iterator(), Function.identity());
         Assert.assertFalse(t.hasNext());
     }
 
     @Test
     public void transIterHasNextWhenInnerIteratorHasNext() {
         List<Integer> bucket = Arrays.asList(1);
-        TransformingIterator<Integer, Integer> t = new TransformingIterator<Integer, Integer>(bucket.iterator(), UnaryOperator.identity());
+        TransformingIterator<Integer, Integer> t = new TransformingIterator<Integer, Integer>(bucket.iterator(), Function.identity());
         Assert.assertTrue(t.hasNext());
     }
     

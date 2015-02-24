@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.tuples;
 
-import java.util.function.UnaryOperator;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantDelegate;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -52,23 +52,23 @@ public class PairTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void fmapWithNullFirstDelegateYieldsException() {
-        Pair.of(O.ONE, O.ONE).map(null, UnaryOperator.identity());
+        Pair.of(O.ONE, O.ONE).map(null, Function.identity());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void fmapWithNullSecondDelegateYieldsException() {
-        Pair.of(O.ONE, O.ONE).map(UnaryOperator.identity(), null);
+        Pair.of(O.ONE, O.ONE).map(Function.identity(), null);
     }
 
     @Test
     public void firstDelegateOfFmapTransformsFirstType() {
-        final Pair<O, O> mapped = Pair.of(O.ONE, O.ONE).map(new ConstantDelegate<O, O>(O.ANOTHER), UnaryOperator.identity());
+        final Pair<O, O> mapped = Pair.of(O.ONE, O.ONE).map(new ConstantDelegate<O, O>(O.ANOTHER), Function.identity());
         Assert.assertEquals(O.ANOTHER, mapped.first());
     }
 
     @Test
     public void secondDelegateOfFmapTransformsSecondType() {
-        final Pair<O, O> mapped = Pair.of(O.ONE, O.ONE).map(UnaryOperator.identity(), new ConstantDelegate<O, O>(O.ANOTHER));
+        final Pair<O, O> mapped = Pair.of(O.ONE, O.ONE).map(Function.identity(), new ConstantDelegate<O, O>(O.ANOTHER));
         Assert.assertEquals(O.ANOTHER, mapped.second());
     }
 }

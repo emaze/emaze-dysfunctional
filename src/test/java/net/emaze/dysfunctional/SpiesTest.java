@@ -9,7 +9,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.dispatching.actions.Slacker;
@@ -55,21 +54,21 @@ public class SpiesTest {
         public void canSpyADelegate() {
             final Box<O> result = new Box<O>();
             final Box<O> param = new Box<O>();
-            final Function<O, O> spied = Spies.spy(UnaryOperator.identity(), result, param);
+            final Function<O, O> spied = Spies.spy(Function.identity(), result, param);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpyResultOfDelegate() {
             final Box<O> result = new Box<O>();
-            final Function<O, O> spied = Spies.spyRes(UnaryOperator.identity(), result);
+            final Function<O, O> spied = Spies.spyRes(Function.identity(), result);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpyFirstOfDelegate() {
             final Box<O> param = new Box<O>();
-            final Function<O, O> spied = Spies.spy1st(UnaryOperator.identity(), param);
+            final Function<O, O> spied = Spies.spy1st(Function.identity(), param);
             Assert.assertNotNull(spied);
         }
 
@@ -341,7 +340,7 @@ public class SpiesTest {
 
         @Test
         public void canMonitorADelegate() {
-            final Function<O, O> monitor = Spies.monitor(UnaryOperator.identity(), accumulator);
+            final Function<O, O> monitor = Spies.monitor(Function.identity(), accumulator);
             Assert.assertNotNull(monitor);
         }
 

@@ -3,7 +3,6 @@ package net.emaze.dysfunctional.interceptions;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
-import java.util.function.UnaryOperator;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,7 +14,7 @@ public class InterceptorAdapterTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingAdapterWithNullAdapteeYieldsException() {
-        new InterceptorAdapter<Object, Object>(null, UnaryOperator.identity());
+        new InterceptorAdapter<Object, Object>(null, Function.identity());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -26,7 +25,7 @@ public class InterceptorAdapterTest {
     @Test
     public void beforeAndAfterAreCalled() {
         List<Integer> bucket = new ArrayList<Integer>();
-        Function<String, String> delegate = new InterceptorAdapter<String, String>(new BucketFillingInterceptor(bucket), UnaryOperator.identity());
+        final Function<String, String> delegate = new InterceptorAdapter<String, String>(new BucketFillingInterceptor(bucket), Function.identity());
         delegate.apply("useless_param");
         Assert.assertEquals(2, bucket.size());
 
@@ -45,7 +44,7 @@ public class InterceptorAdapterTest {
         try {
             delegate.apply("useless_param");
             Assert.fail("delegate is supposed to throw UnsupportedOperationException");
-        }catch(UnsupportedOperationException ex){
+        } catch (UnsupportedOperationException ex) {
             Assert.assertEquals(2, bucket.size());
         }
     }

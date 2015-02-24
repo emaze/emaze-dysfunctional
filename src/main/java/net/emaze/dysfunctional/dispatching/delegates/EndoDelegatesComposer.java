@@ -16,7 +16,7 @@ public class EndoDelegatesComposer<T> implements Function<Iterator<Function<T, T
     @Override
     public UnaryOperator<T> apply(Iterator<Function<T, T>> endoDelegates) {
         dbc.precondition(endoDelegates != null, "cannot compose a null iterator of endoDelegates");
-        Function<T, T> current = UnaryOperator.identity();
+        Function<T, T> current = Function.identity();
         while (endoDelegates.hasNext()) {
             current = new Composer<T, T, T>(current, endoDelegates.next());
         }

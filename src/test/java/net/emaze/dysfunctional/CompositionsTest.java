@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
 import net.emaze.dysfunctional.dispatching.logic.Always;
@@ -17,27 +16,25 @@ public class CompositionsTest {
 
     @Test
     public void canComposeTwoDelegates() {
-        final Function<O, O> composed = Compositions.compose(UnaryOperator.identity(), UnaryOperator.identity());
+        final Function<O, O> composed = Compositions.compose(Function.identity(), Function.identity());
         Assert.assertNotNull(composed);
     }
 
     @Test
     public void canComposeThreeDelegates() {
-        final UnaryOperator<O> i = UnaryOperator.identity();
-        final Function<O, O> composed = Compositions.compose(i, i, i);
+        final Function<O, O> composed = Compositions.compose(Function.identity(), Function.identity(), Function.identity());
         Assert.assertNotNull(composed);
     }
 
     @Test
     public void canComposePredicatesAndDelegates() {
-        final Predicate<O> composed = Compositions.compose(new Always<O>(), UnaryOperator.identity());
+        final Predicate<O> composed = Compositions.compose(new Always<O>(), Function.identity());
         Assert.assertNotNull(composed);
     }
 
     @Test
     public void canComposePredicateAndTwoDelegates() {
-        final UnaryOperator<O> i = UnaryOperator.identity();
-        final Predicate<O> composed = Compositions.compose(new Always<O>(), i, i);
+        final Predicate<O> composed = Compositions.compose(new Always<O>(), Function.identity(), Function.identity());
         Assert.assertNotNull(composed);
     }
 
@@ -55,7 +52,7 @@ public class CompositionsTest {
 
     @Test
     public void canComposeEndoDelegates() {
-        final Iterator<Function<O, O>> delegates = Iterations.<Function<O, O>>iterator(UnaryOperator.identity(), UnaryOperator.identity());
+        final Iterator<Function<O, O>> delegates = Iterations.<Function<O, O>>iterator(Function.identity(), Function.identity());
         final Function<O, O> composed = Compositions.compose(delegates);
         Assert.assertNotNull(composed);
     }

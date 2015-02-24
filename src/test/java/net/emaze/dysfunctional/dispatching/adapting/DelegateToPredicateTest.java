@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
+import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,7 +19,7 @@ public class DelegateToPredicateTest {
 
     @Test
     public void adapterCorrectlyPassesParamToAdapted() {
-        final Predicate<Boolean> adapted = new DelegateToPredicate<Boolean>(UnaryOperator.identity());
+        final Predicate<Boolean> adapted = new DelegateToPredicate<Boolean>(Function.identity());
         final boolean got = adapted.test(true);
         Assert.assertEquals(true, got);
     }

@@ -2,7 +2,6 @@ package net.emaze.dysfunctional.dispatching.delegates;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -38,6 +37,6 @@ public class BinaryComposerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void composingWithNullBinaryDelegateYieldsException() {
-        new BinaryComposer<O, O, O, O>(UnaryOperator.identity(), null);
+        new BinaryComposer<O, O, O, O>(Function.identity(), null);
     }
 }

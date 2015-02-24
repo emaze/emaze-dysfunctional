@@ -9,7 +9,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.dispatching.actions.BinaryNoop;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import net.emaze.dysfunctional.dispatching.actions.Slacker;
@@ -119,7 +118,7 @@ public class DispatchingTest {
 
         @Test
         public void canAdaptDelegateToAction() {
-            final Consumer<O> adapted = Dispatching.action(UnaryOperator.identity());
+            final Consumer<O> adapted = Dispatching.action(Function.identity());
             Assert.assertNotNull(adapted);
         }
 
@@ -163,7 +162,7 @@ public class DispatchingTest {
 
         @Test
         public void canCurryDelegate() {
-            final Supplier<O> adapted = Dispatching.curry(UnaryOperator.identity(), O.ONE);
+            final Supplier<O> adapted = Dispatching.curry(Function.identity(), O.ONE);
             Assert.assertNotNull(adapted);
         }
 
@@ -358,7 +357,7 @@ public class DispatchingTest {
 
         @Test
         public void canIgnoreFirstForDelegates() {
-            final BiFunction<O, O, O> ignoring = Dispatching.ignore1st(UnaryOperator.identity(), O.class);
+            final BiFunction<O, O, O> ignoring = Dispatching.ignore1st(Function.identity(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
@@ -370,7 +369,7 @@ public class DispatchingTest {
 
         @Test
         public void canIgnoreSecondForDelegates() {
-            final BiFunction<O, O, O> ignoring = Dispatching.ignore2nd(UnaryOperator.identity(), O.class);
+            final BiFunction<O, O, O> ignoring = Dispatching.ignore2nd(Function.identity(), O.class);
             Assert.assertNotNull(ignoring);
         }
 

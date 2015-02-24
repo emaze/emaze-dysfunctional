@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,7 +19,7 @@ public class BinderTest {
 
     @Test
     public void paramIsCorrectlyBound() {
-        final Supplier<String> provider = new Binder<String, String>(UnaryOperator.identity(), "bound");
+        final Supplier<String> provider = new Binder<String, String>(Function.identity(), "bound");
         final String got = provider.get();
         Assert.assertEquals("bound", got);
     }

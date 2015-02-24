@@ -1,7 +1,6 @@
 package net.emaze.dysfunctional.tuples;
 
 import java.util.function.Function;
-import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantDelegate;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -9,7 +8,7 @@ import org.junit.Test;
 
 public class FmapTripleTest {
 
-    private static final Function<O, O> ID = UnaryOperator.identity();
+    private static final Function<O, O> ID = Function.identity();
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingWithNullFirstDelegateYieldsException() {

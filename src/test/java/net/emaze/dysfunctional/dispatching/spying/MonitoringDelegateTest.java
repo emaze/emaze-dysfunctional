@@ -2,7 +2,6 @@ package net.emaze.dysfunctional.dispatching.spying;
 
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Function;
-import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,13 +19,13 @@ public class MonitoringDelegateTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingMonitorWithNullAtomicLongYieldsException() {
-        new MonitoringDelegate<O, O>(UnaryOperator.identity(), null);
+        new MonitoringDelegate<O, O>(Function.identity(), null);
     }
 
     @Test
     public void callingIncrementsTheAtomicLong() {
         final AtomicLong state = new AtomicLong();
-        final Function<O, O> spy = new MonitoringDelegate<O, O>(UnaryOperator.identity(), state);
+        final Function<O, O> spy = new MonitoringDelegate<O, O>(Function.identity(), state);
         spy.apply(O.ONE);
         Assert.assertEquals(1l, state.get());
     }

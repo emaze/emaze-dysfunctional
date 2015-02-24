@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.options.Either;
 import net.emaze.dysfunctional.options.Maybe;
@@ -166,7 +165,7 @@ public class OptionsTest {
 
         @Test
         public void canLiftFunctionsOnEither() {
-            final Function<Either<O, O>, Either<O, String>> lifted = Options.Eithers.lift(UnaryOperator.identity(), O::toString);
+            final Function<Either<O, O>, Either<O, String>> lifted = Options.Eithers.lift(Function.identity(), O::toString);
             final Either<O, String> got = lifted.apply(Either.right(O.ONE));
             Assert.assertEquals(Either.<O, String>right("ONE"), got);
         }

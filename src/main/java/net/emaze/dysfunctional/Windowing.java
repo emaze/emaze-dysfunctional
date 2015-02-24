@@ -170,7 +170,7 @@ public abstract class Windowing {
      * @return
      */
     public static <T> Iterator<Queue<Optional<T>>> trails(int trailSize, Iterator<T> iterator) {
-        return new TrailsIterator<>(iterator, trailSize, UnaryOperator.identity());
+        return new TrailsIterator<>(iterator, trailSize, Function.identity());
     }
 
     /**
@@ -209,7 +209,7 @@ public abstract class Windowing {
      */
     public static <T> Iterator<Queue<Optional<T>>> trails(int trailSize, Iterable<T> iterable) {
         dbc.precondition(iterable != null, "cannot create a trails iterator from a null iterable");
-        return new TrailsIterator<>(iterable.iterator(), trailSize, UnaryOperator.identity());
+        return new TrailsIterator<>(iterable.iterator(), trailSize, Function.identity());
     }
 
     /**

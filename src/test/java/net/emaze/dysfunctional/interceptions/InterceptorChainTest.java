@@ -25,7 +25,7 @@ public class InterceptorChainTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingChainWithNullChaingYieldsException() {
-        final Function<O, O> firstParam = UnaryOperator.identity();
+        final Function<O, O> firstParam = Function.identity();
         new InterceptorChain<O, O>(firstParam, null);
     }
 

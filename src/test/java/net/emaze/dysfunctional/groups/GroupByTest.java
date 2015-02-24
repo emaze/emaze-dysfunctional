@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.Compositions;
 import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.casts.Vary;
@@ -25,7 +24,7 @@ public class GroupByTest {
 
     private final Supplier<HashMap<O, List<O>>> MAP_FACTORY = new HashMapFactory<O, List<O>>();
     private final Supplier<List<O>> LIST_FACTORY = Compositions.compose(new Vary<ArrayList<O>, List<O>>(), new ArrayListFactory<O>());
-    private final Function<O, O> GROUPER = UnaryOperator.identity();
+    private final Function<O, O> GROUPER = Function.identity();
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingWithNullGrouperYieldsException() {

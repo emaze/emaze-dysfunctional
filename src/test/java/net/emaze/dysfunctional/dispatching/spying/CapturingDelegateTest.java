@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.dispatching.spying;
 
-import java.util.function.UnaryOperator;
+import java.util.function.Function;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -19,19 +19,19 @@ public class CapturingDelegateTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingWitNullResultBoxYieldsException() {
-        new CapturingDelegate<O, O>(UnaryOperator.identity(), null, Box.<O>empty());
+        new CapturingDelegate<O, O>(Function.identity(), null, Box.<O>empty());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingWitNullParamBoxYieldsException() {
-        new CapturingDelegate<O, O>(UnaryOperator.identity(), Box.<O>empty(), null);
+        new CapturingDelegate<O, O>(Function.identity(), Box.<O>empty(), null);
     }
 
     @Test
     public void parameterIsCaptured() {
         final Box<O> result = Box.empty();
         final Box<O> param = Box.empty();
-        final CapturingDelegate<O, O> capturer = new CapturingDelegate<O, O>(UnaryOperator.identity(), result, param);
+        final CapturingDelegate<O, O> capturer = new CapturingDelegate<O, O>(Function.identity(), result, param);
         capturer.apply(O.ONE);
         Assert.assertEquals(O.ONE, param.getContent());
     }
@@ -40,7 +40,7 @@ public class CapturingDelegateTest {
     public void resultIsCaptured() {
         final Box<O> result = Box.empty();
         final Box<O> param = Box.empty();
-        final CapturingDelegate<O, O> capturer = new CapturingDelegate<O, O>(UnaryOperator.identity(), result, param);
+        final CapturingDelegate<O, O> capturer = new CapturingDelegate<O, O>(Function.identity(), result, param);
         capturer.apply(O.ONE);
         Assert.assertEquals(O.ONE, result.getContent());
     }
