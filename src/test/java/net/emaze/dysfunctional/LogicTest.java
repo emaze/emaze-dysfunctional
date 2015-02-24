@@ -11,7 +11,7 @@ import net.emaze.dysfunctional.dispatching.logic.Never;
 import java.util.function.Predicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.TernaryNever;
-import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -143,49 +143,49 @@ public class LogicTest {
 
         @Test
         public void canComposeIteratorOfTernaryPredicatesWithAnd() {
-            final Iterable<TernaryPredicate<O, O, O>> preds = Iterations.iterable(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>());
-            Assert.assertFalse(Logic.Ternary.and(preds.iterator()).accept(O.IGNORED, O.IGNORED, O.IGNORED));
+            final Iterable<TriPredicate<O, O, O>> preds = Iterations.iterable(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>());
+            Assert.assertFalse(Logic.Ternary.and(preds.iterator()).test(O.IGNORED, O.IGNORED, O.IGNORED));
         }
 
         @Test
         public void canComposeIterableOfTernaryPredicatesWithAnd() {
-            final Iterable<TernaryPredicate<O, O, O>> preds = Iterations.iterable(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>());
-            Assert.assertFalse(Logic.Ternary.and(preds).accept(O.IGNORED, O.IGNORED, O.IGNORED));
+            final Iterable<TriPredicate<O, O, O>> preds = Iterations.iterable(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>());
+            Assert.assertFalse(Logic.Ternary.and(preds).test(O.IGNORED, O.IGNORED, O.IGNORED));
         }
 
         @Test
         public void canComposeIteratorOfTernaryPredicatesWithOr() {
-            final Iterable<TernaryPredicate<O, O, O>> preds = Iterations.iterable(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>());
-            Assert.assertTrue(Logic.Ternary.or(preds.iterator()).accept(O.IGNORED, O.IGNORED, O.IGNORED));
+            final Iterable<TriPredicate<O, O, O>> preds = Iterations.iterable(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>());
+            Assert.assertTrue(Logic.Ternary.or(preds.iterator()).test(O.IGNORED, O.IGNORED, O.IGNORED));
         }
 
         @Test
         public void canComposeIterableOfTernaryPredicatesWithOr() {
-            final Iterable<TernaryPredicate<O, O, O>> preds = Iterations.iterable(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>());
-            Assert.assertTrue(Logic.Ternary.or(preds).accept(O.IGNORED, O.IGNORED, O.IGNORED));
+            final Iterable<TriPredicate<O, O, O>> preds = Iterations.iterable(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>());
+            Assert.assertTrue(Logic.Ternary.or(preds).test(O.IGNORED, O.IGNORED, O.IGNORED));
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingNullIteratorOfTernaryPredicatesWithAndYieldsException() {
-            final Iterator<TernaryPredicate<O, O, O>> preds = null;
+            final Iterator<TriPredicate<O, O, O>> preds = null;
             Logic.Ternary.and(preds);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingNullIterableOfTernaryPredicatesWithAndYieldsException() {
-            final Iterable<TernaryPredicate<O, O, O>> preds = null;
+            final Iterable<TriPredicate<O, O, O>> preds = null;
             Logic.Ternary.and(preds);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingNullIteratorOfTernaryPredicatesWithOrYieldsException() {
-            final Iterator<TernaryPredicate<O, O, O>> preds = null;
+            final Iterator<TriPredicate<O, O, O>> preds = null;
             Logic.Ternary.or(preds);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingNullIterableOfTernaryPredicatesWithOrYieldsException() {
-            final Iterable<TernaryPredicate<O, O, O>> preds = null;
+            final Iterable<TriPredicate<O, O, O>> preds = null;
             Logic.Ternary.or(preds);
         }
     }
@@ -226,18 +226,18 @@ public class LogicTest {
 
         @Test
         public void canComposeTwoTernaryPredicates() {
-            Assert.assertFalse(Logic.and(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>()).accept(O.IGNORED, O.IGNORED, O.IGNORED));
+            Assert.assertFalse(Logic.and(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>()).test(O.IGNORED, O.IGNORED, O.IGNORED));
         }
 
         @Test
         public void canComposeThreeTernaryPredicates() {
-            Assert.assertFalse(Logic.and(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>(), new TernaryNever<O, O, O>()).accept(O.IGNORED, O.IGNORED, O.IGNORED));
+            Assert.assertFalse(Logic.and(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>(), new TernaryNever<O, O, O>()).test(O.IGNORED, O.IGNORED, O.IGNORED));
         }
 
         @Test
         public void canComposeManyTernaryPredicates() {
             final TernaryNever<O, O, O> never = new TernaryNever<O, O, O>();
-            Assert.assertFalse(Logic.and(new TernaryAlways<O, O, O>(), never, never, never).accept(O.IGNORED, O.IGNORED, O.IGNORED));
+            Assert.assertFalse(Logic.and(new TernaryAlways<O, O, O>(), never, never, never).test(O.IGNORED, O.IGNORED, O.IGNORED));
         }
     }
 
@@ -277,18 +277,18 @@ public class LogicTest {
 
         @Test
         public void canComposeTwoTernaryPredicates() {
-            Assert.assertTrue(Logic.or(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>()).accept(O.IGNORED, O.IGNORED, O.IGNORED));
+            Assert.assertTrue(Logic.or(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>()).test(O.IGNORED, O.IGNORED, O.IGNORED));
         }
 
         @Test
         public void canComposeThreeTernaryPredicates() {
-            Assert.assertTrue(Logic.or(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>(), new TernaryNever<O, O, O>()).accept(O.IGNORED, O.IGNORED, O.IGNORED));
+            Assert.assertTrue(Logic.or(new TernaryAlways<O, O, O>(), new TernaryNever<O, O, O>(), new TernaryNever<O, O, O>()).test(O.IGNORED, O.IGNORED, O.IGNORED));
         }
 
         @Test
         public void canComposeManyTernaryPredicates() {
             final TernaryNever<O, O, O> never = new TernaryNever<O, O, O>();
-            Assert.assertTrue(Logic.or(new TernaryAlways<O, O, O>(), never, never, never).accept(O.IGNORED, O.IGNORED, O.IGNORED));
+            Assert.assertTrue(Logic.or(new TernaryAlways<O, O, O>(), never, never, never).test(O.IGNORED, O.IGNORED, O.IGNORED));
         }
     }
 
@@ -356,31 +356,31 @@ public class LogicTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void composingTwoTernaryPredicatesYieldsExceptionWhenFormerIsNull() {
-            final TernaryPredicate<O, O, O> pred = null;
+            final TriPredicate<O, O, O> pred = null;
             Logic.and(pred, new TernaryAlways<O, O, O>());
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingTwoTernaryPredicatesYieldsExceptionWhenLatterIsNull() {
-            final TernaryPredicate<O, O, O> pred = null;
+            final TriPredicate<O, O, O> pred = null;
             Logic.and(new TernaryAlways<O, O, O>(), pred);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingThreeTernaryPredicatesYieldsExceptionWhenFirstIsNull() {
-            final TernaryPredicate<O, O, O> pred = null;
+            final TriPredicate<O, O, O> pred = null;
             Logic.and(pred, new TernaryAlways<O, O, O>(), new TernaryAlways<O, O, O>());
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingThreeTernaryPredicatesYieldsExceptionWhenSecondIsNull() {
-            final TernaryPredicate<O, O, O> pred = null;
+            final TriPredicate<O, O, O> pred = null;
             Logic.and(new TernaryAlways<O, O, O>(), pred, new TernaryAlways<O, O, O>());
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingThreeTernaryPredicatesYieldsExceptionWhenThirdIsNull() {
-            final TernaryPredicate<O, O, O> pred = null;
+            final TriPredicate<O, O, O> pred = null;
             Logic.and(new TernaryAlways<O, O, O>(), new TernaryAlways<O, O, O>(), pred);
         }
 
@@ -398,7 +398,7 @@ public class LogicTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void composingManyTernaryPredicatesYieldsExceptionWhenArrayIsNull() {
-            final TernaryPredicate<O, O, O>[] pred = null;
+            final TriPredicate<O, O, O>[] pred = null;
             Logic.and(pred);
         }
     }
@@ -467,31 +467,31 @@ public class LogicTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void composingTwoTernaryPredicatesYieldsExceptionWhenFormerIsNull() {
-            final TernaryPredicate<O, O, O> pred = null;
+            final TriPredicate<O, O, O> pred = null;
             Logic.or(pred, new TernaryAlways<O, O, O>());
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingTwoTernaryPredicatesYieldsExceptionWhenLatterIsNull() {
-            final TernaryPredicate<O, O, O> pred = null;
+            final TriPredicate<O, O, O> pred = null;
             Logic.or(new TernaryAlways<O, O, O>(), pred);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingThreeTernaryPredicatesYieldsExceptionWhenFirstIsNull() {
-            final TernaryPredicate<O, O, O> pred = null;
+            final TriPredicate<O, O, O> pred = null;
             Logic.or(pred, new TernaryAlways<O, O, O>(), new TernaryAlways<O, O, O>());
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingThreeTernaryPredicatesYieldsExceptionWhenSecondIsNull() {
-            final TernaryPredicate<O, O, O> pred = null;
+            final TriPredicate<O, O, O> pred = null;
             Logic.or(new TernaryAlways<O, O, O>(), pred, new TernaryAlways<O, O, O>());
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void composingThreeTernaryPredicatesYieldsExceptionWhenThirdIsNull() {
-            final TernaryPredicate<O, O, O> pred = null;
+            final TriPredicate<O, O, O> pred = null;
             Logic.or(new TernaryAlways<O, O, O>(), new TernaryAlways<O, O, O>(), pred);
         }
 
@@ -509,7 +509,7 @@ public class LogicTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void composingManyTernaryPredicatesYieldsExceptionWhenArrayIsNull() {
-            final TernaryPredicate<O, O, O>[] pred = null;
+            final TriPredicate<O, O, O>[] pred = null;
             Logic.or(pred);
         }
     }
@@ -530,8 +530,8 @@ public class LogicTest {
 
         @Test
         public void canNegateTernaryPredicate() {
-            final TernaryPredicate<O, O, O> negated = Logic.not(new TernaryAlways<O, O, O>());
-            Assert.assertFalse(negated.accept(null, null, null));
+            final TriPredicate<O, O, O> negated = Logic.not(new TernaryAlways<O, O, O>());
+            Assert.assertFalse(negated.test(null, null, null));
         }
 
         @Test(expected = IllegalArgumentException.class)
@@ -548,7 +548,7 @@ public class LogicTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void negatingTernaryNullPredicateYieldsException() {
-            final TernaryPredicate<O, O, O> pred = null;
+            final TriPredicate<O, O, O> pred = null;
             Logic.not(pred);
         }
     }

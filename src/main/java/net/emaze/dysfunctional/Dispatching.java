@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.adapting.*;
 import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
-import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 
 /**
  * curry, mcurry, rcurry, ignore, ignore1st, ignore2nd, ignore3rd, provider,
@@ -97,7 +97,7 @@ public abstract class Dispatching {
      * @param first the value to be curried as first parameter
      * @return the curried binary predicate
      */
-    public static <T1, T2, T3> BiPredicate<T2, T3> curry(TernaryPredicate<T1, T2, T3> predicate, T1 first) {
+    public static <T1, T2, T3> BiPredicate<T2, T3> curry(TriPredicate<T1, T2, T3> predicate, T1 first) {
         return new PredicateBinderFirstOfThree<T1, T2, T3>(predicate, first);
     }
 
@@ -184,7 +184,7 @@ public abstract class Dispatching {
      * @param second the value to be curried as second parameter
      * @return the curried binary predicate
      */
-    public static <T1, T2, T3> BiPredicate<T1, T3> mcurry(TernaryPredicate<T1, T2, T3> predicate, T2 second) {
+    public static <T1, T2, T3> BiPredicate<T1, T3> mcurry(TriPredicate<T1, T2, T3> predicate, T2 second) {
         return new PredicateBinderSecondOfThree<T1, T2, T3>(predicate, second);
     }
 
@@ -242,7 +242,7 @@ public abstract class Dispatching {
      * @param third the value to be curried as third parameter
      * @return the curried binary predicate
      */
-    public static <T1, T2, T3> BiPredicate<T1, T2> rcurry(TernaryPredicate<T1, T2, T3> predicate, T3 third) {
+    public static <T1, T2, T3> BiPredicate<T1, T2> rcurry(TriPredicate<T1, T2, T3> predicate, T3 third) {
         return new PredicateBinderThird<T1, T2, T3>(predicate, third);
     }
 
@@ -313,7 +313,7 @@ public abstract class Dispatching {
      * @param ignored the adapted predicate ignored parameter type class
      * @return the adapted ternary predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> ignore1st(BiPredicate<T2, T3> predicate, Class<T1> ignored) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> ignore1st(BiPredicate<T2, T3> predicate, Class<T1> ignored) {
         return new PredicateIgnoreFirstOfThree<T1, T2, T3>(predicate);
     }
 
@@ -341,7 +341,7 @@ public abstract class Dispatching {
      * @param ignored the adapted predicate ignored parameter type class
      * @return the adapted ternary predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> ignore2nd(BiPredicate<T1, T3> predicate, Class<T2> ignored) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> ignore2nd(BiPredicate<T1, T3> predicate, Class<T2> ignored) {
         return new PredicateIgnoreSecondOfThree<T1, T2, T3>(predicate);
     }
 
@@ -356,7 +356,7 @@ public abstract class Dispatching {
      * @param ignored the adapted predicate ignored parameter type class
      * @return the adapted ternary predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> ignore3rd(BiPredicate<T1, T2> predicate, Class<T3> ignored) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> ignore3rd(BiPredicate<T1, T2> predicate, Class<T3> ignored) {
         return new PredicateIgnoreThird<T1, T2, T3>(predicate);
     }
 
@@ -630,7 +630,7 @@ public abstract class Dispatching {
      * @param adaptee the predicate to be adapted
      * @return the adapted delegate
      */
-    public static <T1, T2, T3> TriFunction<T1, T2, T3, Boolean> delegate(TernaryPredicate<T1, T2, T3> adaptee) {
+    public static <T1, T2, T3> TriFunction<T1, T2, T3, Boolean> delegate(TriPredicate<T1, T2, T3> adaptee) {
         return new TernaryPredicateToTernaryDelegate<>(adaptee);
     }
 
@@ -726,7 +726,7 @@ public abstract class Dispatching {
      * @param function the delegate to be adapted
      * @return the adapted predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> predicate(TriFunction<T1, T2, T3, Boolean> function) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> predicate(TriFunction<T1, T2, T3, Boolean> function) {
         return new TernaryDelegateToTernaryPredicate<>(function);
     }
 }

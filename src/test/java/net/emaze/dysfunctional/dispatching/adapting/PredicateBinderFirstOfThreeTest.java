@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
-import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
@@ -22,7 +22,7 @@ public class PredicateBinderFirstOfThreeTest {
     @Test
     public void canBindFirstParameter() {
         final Box<O> param1 = Box.empty();
-        final TernaryPredicate<O, O, O> spy = Spies.spy1st(new TernaryAlways<O, O, O>(), param1);
+        final TriPredicate<O, O, O> spy = Spies.spy1st(new TernaryAlways<O, O, O>(), param1);
         final PredicateBinderFirstOfThree<O, O, O> adapted = new PredicateBinderFirstOfThree<O, O, O>(spy, O.ONE);
         adapted.test(O.ANOTHER, O.ANOTHER);
         Assert.assertEquals(O.ONE, param1.getContent());

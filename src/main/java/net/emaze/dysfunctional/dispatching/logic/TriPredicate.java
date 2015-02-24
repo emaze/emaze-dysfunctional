@@ -8,7 +8,7 @@ package net.emaze.dysfunctional.dispatching.logic;
  * @param <T3> the third element Type
  * @author rferranti
  */
-public interface TernaryPredicate<T1, T2, T3> {
+public interface TriPredicate<T1, T2, T3> {
 
-    boolean accept(T1 first, T2 second, T3 third);
+    boolean test(T1 first, T2 second, T3 third);
 }

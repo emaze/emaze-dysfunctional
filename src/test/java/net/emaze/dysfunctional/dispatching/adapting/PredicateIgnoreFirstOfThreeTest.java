@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
 import java.util.function.BiPredicate;
-import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
@@ -24,8 +24,8 @@ public class PredicateIgnoreFirstOfThreeTest {
     public void firstParamIsCorrectlyForwarded() {
         final Box<O> param1 = Box.empty();
         final BiPredicate<O, O> mock = Spies.spy1st(new BinaryAlways<O, O>(), param1);
-        final TernaryPredicate<O, O, O> adapted = new PredicateIgnoreFirstOfThree<O, O, O>(mock);
-        adapted.accept(O.IGNORED, O.ONE, O.ANOTHER);
+        final TriPredicate<O, O, O> adapted = new PredicateIgnoreFirstOfThree<O, O, O>(mock);
+        adapted.test(O.IGNORED, O.ONE, O.ANOTHER);
         Assert.assertEquals(O.ONE, param1.getContent());
     }
 
@@ -33,8 +33,8 @@ public class PredicateIgnoreFirstOfThreeTest {
     public void secondParamIsCorrectlyForwarded() {
         final Box<O> param2 = Box.empty();
         final BiPredicate<O, O> mock = Spies.spy2nd(new BinaryAlways<O, O>(), param2);
-        final TernaryPredicate<O, O, O> adapted = new PredicateIgnoreFirstOfThree<O, O, O>(mock);
-        adapted.accept(O.IGNORED, O.ONE, O.ANOTHER);
+        final TriPredicate<O, O, O> adapted = new PredicateIgnoreFirstOfThree<O, O, O>(mock);
+        adapted.test(O.IGNORED, O.ONE, O.ANOTHER);
         Assert.assertEquals(O.ANOTHER, param2.getContent());
     }
 }

@@ -8,7 +8,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
-import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 import net.emaze.dysfunctional.tuples.*;
 
 /**
@@ -78,7 +78,7 @@ public abstract class Tuples {
      * @param predicate the predicate to be adapted
      * @return the adapted predicate
      */
-    public static <T, U, V> Predicate<Triple<T, U, V>> tupled(TernaryPredicate<T, U, V> predicate) {
+    public static <T, U, V> Predicate<Triple<T, U, V>> tupled(TriPredicate<T, U, V> predicate) {
         return new TernaryToUnaryPredicate<T, U, V>(predicate);
     }
 
@@ -166,7 +166,7 @@ public abstract class Tuples {
          * @param predicate the predicate to be adapted
          * @return the adapted predicate
          */
-        public static <T, U, V> TernaryPredicate<T, U, V> untupled(Predicate<Triple<T, U, V>> predicate) {
+        public static <T, U, V> TriPredicate<T, U, V> untupled(Predicate<Triple<T, U, V>> predicate) {
             return new UnaryToTernaryPredicate<T, U, V>(predicate);
         }
 

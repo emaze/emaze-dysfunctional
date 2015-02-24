@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.BiPredicate;
-import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 
 /**
  * Binary to ternary predicate adapter. Adapting is performed by ignoring the
@@ -13,7 +13,7 @@ import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
  * @param <T3> the adapted predicate third parameter type
  * @author rferranti
  */
-public class PredicateIgnoreSecondOfThree<T1, T2, T3> implements TernaryPredicate<T1, T2, T3> {
+public class PredicateIgnoreSecondOfThree<T1, T2, T3> implements TriPredicate<T1, T2, T3> {
 
     private final BiPredicate<T1, T3> adapted;
 
@@ -23,7 +23,7 @@ public class PredicateIgnoreSecondOfThree<T1, T2, T3> implements TernaryPredicat
     }
 
     @Override
-    public boolean accept(T1 first, T2 second, T3 third) {
+    public boolean test(T1 first, T2 second, T3 third) {
         return adapted.test(first, third);
     }
 }

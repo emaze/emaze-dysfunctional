@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.dispatching.composing;
 import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.TernaryNever;
-import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,21 +16,21 @@ public class FirstMatchingTernaryPredicateTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingWithNullIteratorYieldsException() {
-        final Iterable<TernaryPredicate<O, O, O>> pred = null;
+        final Iterable<TriPredicate<O, O, O>> pred = null;
         new FirstMatchingTernaryPredicate<O, O, O>(pred);
     }
 
     @Test
     public void usingAlwaysReturnsTrue() {
-        final TernaryPredicate<O, O, O> always = new TernaryAlways<O, O, O>();
+        final TriPredicate<O, O, O> always = new TernaryAlways<O, O, O>();
         final FirstMatchingTernaryPredicate<O, O, O> pred = new FirstMatchingTernaryPredicate<O, O, O>(Iterations.iterable(always));
-        Assert.assertTrue(pred.accept(O.IGNORED, O.IGNORED, O.IGNORED));
+        Assert.assertTrue(pred.test(O.IGNORED, O.IGNORED, O.IGNORED));
     }
 
     @Test
     public void usingNeverReturnsFalse() {
-        final TernaryPredicate<O, O, O> never = new TernaryNever<O, O, O>();
+        final TriPredicate<O, O, O> never = new TernaryNever<O, O, O>();
         final FirstMatchingTernaryPredicate<O, O, O> pred = new FirstMatchingTernaryPredicate<O, O, O>(Iterations.iterable(never));
-        Assert.assertFalse(pred.accept(O.IGNORED, O.IGNORED, O.IGNORED));
+        Assert.assertFalse(pred.test(O.IGNORED, O.IGNORED, O.IGNORED));
     }
 }

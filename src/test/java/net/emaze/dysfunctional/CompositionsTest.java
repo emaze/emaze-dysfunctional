@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
 import net.emaze.dysfunctional.dispatching.logic.Always;
-import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -46,7 +46,7 @@ public class CompositionsTest {
 
     @Test
     public void canComposePredicateAndTernaryDelegates() {
-        final TernaryPredicate<O, O, O> composed = Compositions.compose(new Always<O>(), new FirstParamOfThree<O, O, O>());
+        final TriPredicate<O, O, O> composed = Compositions.compose(new Always<O>(), new FirstParamOfThree<O, O, O>());
         Assert.assertNotNull(composed);
     }
 

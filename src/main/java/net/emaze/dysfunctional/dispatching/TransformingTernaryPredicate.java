@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.dispatching;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 import java.util.function.Predicate;
-import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 
 /**
  * Composes a predicate with a ternary delegate (predicate ° delegate).
@@ -14,7 +14,7 @@ import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
  * @param <T3> the delegate third parameter type
  * @author rferranti
  */
-public class TransformingTernaryPredicate<T1, T2, T3, R> implements TernaryPredicate<T1, T2, T3> {
+public class TransformingTernaryPredicate<T1, T2, T3, R> implements TriPredicate<T1, T2, T3> {
 
     private final Predicate<R> predicate;
     private final TriFunction<T1, T2, T3, R> delegate;
@@ -27,7 +27,7 @@ public class TransformingTernaryPredicate<T1, T2, T3, R> implements TernaryPredi
     }
 
     @Override
-    public boolean accept(T1 first, T2 second, T3 third) {
+    public boolean test(T1 first, T2 second, T3 third) {
         return predicate.test(delegate.apply(first, second, third));
     }
 }

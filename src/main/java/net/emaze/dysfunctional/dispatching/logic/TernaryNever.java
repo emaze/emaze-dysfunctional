@@ -8,7 +8,7 @@ package net.emaze.dysfunctional.dispatching.logic;
  * @param <E3> the third type parameter
  * @author rferranti
  */
-public class TernaryNever<E1, E2, E3> implements TernaryPredicate<E1, E2, E3> {
+public class TernaryNever<E1, E2, E3> implements TriPredicate<E1, E2, E3> {
 
     /**
      * Yields false.
@@ -19,7 +19,7 @@ public class TernaryNever<E1, E2, E3> implements TernaryPredicate<E1, E2, E3> {
      * @return false
      */
     @Override
-    public boolean accept(E1 first, E2 second, E3 third) {
+    public boolean test(E1 first, E2 second, E3 third) {
         return false;
     }
 }

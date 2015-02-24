@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import net.emaze.dysfunctional.dispatching.actions.TernaryAction;
 import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
-import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 import net.emaze.dysfunctional.dispatching.spying.*;
 import net.emaze.dysfunctional.options.Box;
 
@@ -134,7 +134,7 @@ public abstract class Spies {
      * @param param3 a box that will be containing the third spied parameter
      * @return the proxied predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> spy(TernaryPredicate<T1, T2, T3> predicate, Box<Boolean> result, Box<T1> param1, Box<T2> param2, Box<T3> param3) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> spy(TriPredicate<T1, T2, T3> predicate, Box<Boolean> result, Box<T1> param1, Box<T2> param2, Box<T3> param3) {
         return new TernaryCapturingPredicate<T1, T2, T3>(predicate, result, param1, param2, param3);
     }
 
@@ -398,7 +398,7 @@ public abstract class Spies {
      * @param result a box that will be containing spied result
      * @return the proxied predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> spyRes(TernaryPredicate<T1, T2, T3> predicate, Box<Boolean> result) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> spyRes(TriPredicate<T1, T2, T3> predicate, Box<Boolean> result) {
         return spy(predicate, result, Box.<T1>empty(), Box.<T2>empty(), Box.<T3>empty());
     }
 
@@ -412,7 +412,7 @@ public abstract class Spies {
      * @param param1 a box that will be containing the first spied parameter
      * @return the proxied predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> spy1st(TernaryPredicate<T1, T2, T3> predicate, Box<T1> param1) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> spy1st(TriPredicate<T1, T2, T3> predicate, Box<T1> param1) {
         return spy(predicate, Box.<Boolean>empty(), param1, Box.<T2>empty(), Box.<T3>empty());
     }
 
@@ -426,7 +426,7 @@ public abstract class Spies {
      * @param param2 a box that will be containing the second spied parameter
      * @return the proxied predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> spy2nd(TernaryPredicate<T1, T2, T3> predicate, Box<T2> param2) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> spy2nd(TriPredicate<T1, T2, T3> predicate, Box<T2> param2) {
         return spy(predicate, Box.<Boolean>empty(), Box.<T1>empty(), param2, Box.<T3>empty());
     }
 
@@ -440,7 +440,7 @@ public abstract class Spies {
      * @param param3 a box that will be containing the third spied parameter
      * @return the proxied predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> spy3rd(TernaryPredicate<T1, T2, T3> predicate, Box<T3> param3) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> spy3rd(TriPredicate<T1, T2, T3> predicate, Box<T3> param3) {
         return spy(predicate, Box.<Boolean>empty(), Box.<T1>empty(), Box.<T2>empty(), param3);
     }
 
@@ -657,7 +657,7 @@ public abstract class Spies {
      * @param calls a value holder accumulating calls
      * @return the proxied predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> monitor(TernaryPredicate<T1, T2, T3> predicate, AtomicLong calls) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> monitor(TriPredicate<T1, T2, T3> predicate, AtomicLong calls) {
         return new TernaryMonitoringPredicate<T1, T2, T3>(predicate, calls);
     }
 }

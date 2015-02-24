@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
-import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
@@ -29,7 +29,7 @@ public class TernaryPredicateToTernaryDelegateTest {
     @Test
     public void adapterCorrectlyPassesFirstParamToAdapted() {
         final Box<O> param1 = Box.empty();
-        final TernaryPredicate<O, O, O> spy = Spies.spy1st(new TernaryAlways<O, O, O>(), param1);
+        final TriPredicate<O, O, O> spy = Spies.spy1st(new TernaryAlways<O, O, O>(), param1);
         final TernaryPredicateToTernaryDelegate<O, O, O> adapted = new TernaryPredicateToTernaryDelegate<O, O, O>(spy);
         adapted.apply(O.ONE, O.ANOTHER, O.YET_ANOTHER);
         Assert.assertEquals(O.ONE, param1.getContent());
@@ -38,7 +38,7 @@ public class TernaryPredicateToTernaryDelegateTest {
     @Test
     public void adapterCorrectlyPassesSecondParamToAdapted() {
         final Box<O> param2 = Box.empty();
-        final TernaryPredicate<O, O, O> spy = Spies.spy2nd(new TernaryAlways<O, O, O>(), param2);
+        final TriPredicate<O, O, O> spy = Spies.spy2nd(new TernaryAlways<O, O, O>(), param2);
         final TernaryPredicateToTernaryDelegate<O, O, O> adapted = new TernaryPredicateToTernaryDelegate<O, O, O>(spy);
         adapted.apply(O.ONE, O.ANOTHER, O.YET_ANOTHER);
         Assert.assertEquals(O.ANOTHER, param2.getContent());
@@ -47,7 +47,7 @@ public class TernaryPredicateToTernaryDelegateTest {
     @Test
     public void adapterCorrectlyPassesThirdParamToAdapted() {
         final Box<O> param3 = Box.empty();
-        final TernaryPredicate<O, O, O> spy = Spies.spy3rd(new TernaryAlways<O, O, O>(), param3);
+        final TriPredicate<O, O, O> spy = Spies.spy3rd(new TernaryAlways<O, O, O>(), param3);
         final TernaryPredicateToTernaryDelegate<O, O, O> adapted = new TernaryPredicateToTernaryDelegate<O, O, O>(spy);
         adapted.apply(O.ONE, O.ANOTHER, O.YET_ANOTHER);
         Assert.assertEquals(O.YET_ANOTHER, param3.getContent());

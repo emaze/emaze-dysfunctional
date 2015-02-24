@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import java.util.function.BiPredicate;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
-import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 import net.emaze.dysfunctional.Spies;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
@@ -23,7 +23,7 @@ public class PredicateBinderThirdTest {
     @Test
     public void canBindThirdParameter() {
         final Box<O> param3 = Box.empty();
-        final TernaryPredicate<O, O, O> spy = Spies.spy3rd(new TernaryAlways<O, O, O>(), param3);
+        final TriPredicate<O, O, O> spy = Spies.spy3rd(new TernaryAlways<O, O, O>(), param3);
         final BiPredicate<O, O> adapted = new PredicateBinderThird<O, O, O>(spy, O.ONE);
         adapted.test(O.ANOTHER, O.ANOTHER);
         Assert.assertEquals(O.ONE, param3.getContent());

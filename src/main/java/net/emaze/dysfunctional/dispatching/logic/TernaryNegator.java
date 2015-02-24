@@ -10,11 +10,11 @@ import net.emaze.dysfunctional.contracts.dbc;
  * @param <T3> the third element type parameter
  * @author rferranti
  */
-public class TernaryNegator<T1, T2, T3> implements TernaryPredicate<T1, T2, T3> {
+public class TernaryNegator<T1, T2, T3> implements TriPredicate<T1, T2, T3> {
 
-    private final TernaryPredicate<T1, T2, T3> predicate;
+    private final TriPredicate<T1, T2, T3> predicate;
 
-    public TernaryNegator(TernaryPredicate<T1, T2, T3> predicate) {
+    public TernaryNegator(TriPredicate<T1, T2, T3> predicate) {
         dbc.precondition(predicate != null, "cannot negate a null Ternary predicate");
         this.predicate = predicate;
     }
@@ -28,7 +28,7 @@ public class TernaryNegator<T1, T2, T3> implements TernaryPredicate<T1, T2, T3> 
      * @return true if the inner predicate returns false, false otherwise
      */
     @Override
-    public boolean accept(T1 first, T2 second, T3 third) {
-        return !predicate.accept(first, second, third);
+    public boolean test(T1 first, T2 second, T3 third) {
+        return !predicate.test(first, second, third);
     }
 }

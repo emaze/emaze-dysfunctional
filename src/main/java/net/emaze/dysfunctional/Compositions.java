@@ -16,7 +16,7 @@ import net.emaze.dysfunctional.dispatching.delegates.Composer;
 import net.emaze.dysfunctional.dispatching.delegates.EndoDelegatesComposer;
 import net.emaze.dysfunctional.dispatching.delegates.TernaryComposer;
 import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
-import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 
 /**
  * compose
@@ -162,7 +162,7 @@ public abstract class Compositions {
      * @param delegate the delegate to be composed
      * @return the composed predicate
      */
-    public static <T1, T2, T3, R> TernaryPredicate<T1, T2, T3> compose(Predicate<R> predicate, TriFunction<T1, T2, T3, R> delegate) {
+    public static <T1, T2, T3, R> TriPredicate<T1, T2, T3> compose(Predicate<R> predicate, TriFunction<T1, T2, T3, R> delegate) {
         return new TransformingTernaryPredicate<T1, T2, T3, R>(predicate, delegate);
     }
 

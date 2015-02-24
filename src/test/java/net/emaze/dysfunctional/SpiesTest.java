@@ -21,7 +21,7 @@ import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
-import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Yes;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
@@ -205,35 +205,35 @@ public class SpiesTest {
             final Box<O> param1 = new Box<O>();
             final Box<O> param2 = new Box<O>();
             final Box<O> param3 = new Box<O>();
-            final TernaryPredicate<O, O, O> spied = Spies.spy(new TernaryAlways<O, O, O>(), result, param1, param2, param3);
+            final TriPredicate<O, O, O> spied = Spies.spy(new TernaryAlways<O, O, O>(), result, param1, param2, param3);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpyResultOfTernaryPredicate() {
             final Box<Boolean> result = new Box<Boolean>();
-            final TernaryPredicate<O, O, O> spied = Spies.spyRes(new TernaryAlways<O, O, O>(), result);
+            final TriPredicate<O, O, O> spied = Spies.spyRes(new TernaryAlways<O, O, O>(), result);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpyFirstParamOfTernaryPredicate() {
             final Box<O> param1 = new Box<O>();
-            final TernaryPredicate<O, O, O> spied = Spies.spy1st(new TernaryAlways<O, O, O>(), param1);
+            final TriPredicate<O, O, O> spied = Spies.spy1st(new TernaryAlways<O, O, O>(), param1);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpySecondParamOfTernaryPredicate() {
             final Box<O> param2 = new Box<O>();
-            final TernaryPredicate<O, O, O> spied = Spies.spy2nd(new TernaryAlways<O, O, O>(), param2);
+            final TriPredicate<O, O, O> spied = Spies.spy2nd(new TernaryAlways<O, O, O>(), param2);
             Assert.assertNotNull(spied);
         }
 
         @Test
         public void canSpyThirdParamOfTernaryPredicate() {
             final Box<O> param3 = new Box<O>();
-            final TernaryPredicate<O, O, O> spied = Spies.spy3rd(new TernaryAlways<O, O, O>(), param3);
+            final TriPredicate<O, O, O> spied = Spies.spy3rd(new TernaryAlways<O, O, O>(), param3);
             Assert.assertNotNull(spied);
         }
 
@@ -382,7 +382,7 @@ public class SpiesTest {
 
         @Test
         public void canMonitorATernaryPredicate() {
-            final TernaryPredicate<O, O, O> monitor = Spies.monitor(new TernaryAlways<O, O, O>(), accumulator);
+            final TriPredicate<O, O, O> monitor = Spies.monitor(new TernaryAlways<O, O, O>(), accumulator);
             Assert.assertNotNull(monitor);
         }
     }

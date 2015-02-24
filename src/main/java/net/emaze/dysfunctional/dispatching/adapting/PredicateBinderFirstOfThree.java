@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.adapting;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import java.util.function.BiPredicate;
-import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 
 /**
  * Ternary to binary predicate adapter. Adapting is performed by currying the
@@ -15,10 +15,10 @@ import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
  */
 public class PredicateBinderFirstOfThree<T1, T2, T3> implements BiPredicate<T2, T3> {
 
-    private final TernaryPredicate<T1, T2, T3> adapted;
+    private final TriPredicate<T1, T2, T3> adapted;
     private final T1 first;
 
-    public PredicateBinderFirstOfThree(TernaryPredicate<T1, T2, T3> adaptee, T1 first) {
+    public PredicateBinderFirstOfThree(TriPredicate<T1, T2, T3> adaptee, T1 first) {
         dbc.precondition(adaptee != null, "cannot bind first parameter of a null ternary predicate");
         this.adapted = adaptee;
         this.first = first;
@@ -26,6 +26,6 @@ public class PredicateBinderFirstOfThree<T1, T2, T3> implements BiPredicate<T2, 
 
     @Override
     public boolean test(T2 second, T3 third) {
-        return adapted.accept(first, second, third);
+        return adapted.test(first, second, third);
     }
 }

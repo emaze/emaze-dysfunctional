@@ -21,7 +21,7 @@ import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
-import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 import net.emaze.dysfunctional.dispatching.logic.Yes;
 import net.emaze.dysfunctional.testing.O;
 import net.emaze.dysfunctional.tuples.BinaryIdentity;
@@ -153,7 +153,7 @@ public class DispatchingTest {
 
         @Test
         public void canAdaptTernaryDelegateToBinaryPredicate() {
-            final TernaryPredicate<O, O, O> adapted = Dispatching.predicate((a, b, c) -> true);
+            final TriPredicate<O, O, O> adapted = Dispatching.predicate((a, b, c) -> true);
             Assert.assertNotNull(adapted);
         }
     }
@@ -303,7 +303,7 @@ public class DispatchingTest {
 
         @Test
         public void canIgnoreFirstForBinaryPredicates() {
-            final TernaryPredicate<O, O, O> ignoring = Dispatching.ignore1st(new BinaryAlways<O, O>(), O.class);
+            final TriPredicate<O, O, O> ignoring = Dispatching.ignore1st(new BinaryAlways<O, O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
@@ -315,13 +315,13 @@ public class DispatchingTest {
 
         @Test
         public void canIgnoreSecondForBinaryPredicates() {
-            final TernaryPredicate<O, O, O> ignoring = Dispatching.ignore2nd(new BinaryAlways<O, O>(), O.class);
+            final TriPredicate<O, O, O> ignoring = Dispatching.ignore2nd(new BinaryAlways<O, O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 
         @Test
         public void canIgnoreThirdForBinaryPredicates() {
-            final TernaryPredicate<O, O, O> ignoring = Dispatching.ignore3rd(new BinaryAlways<O, O>(), O.class);
+            final TriPredicate<O, O, O> ignoring = Dispatching.ignore3rd(new BinaryAlways<O, O>(), O.class);
             Assert.assertNotNull(ignoring);
         }
 

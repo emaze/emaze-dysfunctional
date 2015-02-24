@@ -179,7 +179,7 @@ public abstract class Logic {
          * @param predicates the predicates to be composed
          * @return the composite predicate
          */
-        public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> and(Iterable<TernaryPredicate<T1, T2, T3>> predicates) {
+        public static <T1, T2, T3> TriPredicate<T1, T2, T3> and(Iterable<TriPredicate<T1, T2, T3>> predicates) {
             return new AllMatchingTernaryPredicate<T1, T2, T3>(predicates);
         }
 
@@ -192,7 +192,7 @@ public abstract class Logic {
          * @param predicates the predicates to be composed
          * @return the composite predicate
          */
-        public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> and(Iterator<TernaryPredicate<T1, T2, T3>> predicates) {
+        public static <T1, T2, T3> TriPredicate<T1, T2, T3> and(Iterator<TriPredicate<T1, T2, T3>> predicates) {
             return new AllMatchingTernaryPredicate<T1, T2, T3>(Consumers.all(predicates));
         }
 
@@ -205,7 +205,7 @@ public abstract class Logic {
          * @param predicates the predicates to be composed
          * @return the composite predicate
          */
-        public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> or(Iterable<TernaryPredicate<T1, T2, T3>> predicates) {
+        public static <T1, T2, T3> TriPredicate<T1, T2, T3> or(Iterable<TriPredicate<T1, T2, T3>> predicates) {
             return new FirstMatchingTernaryPredicate<T1, T2, T3>(predicates);
         }
 
@@ -218,7 +218,7 @@ public abstract class Logic {
          * @param predicates the predicates to be composed
          * @return the composite predicate
          */
-        public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> or(Iterator<TernaryPredicate<T1, T2, T3>> predicates) {
+        public static <T1, T2, T3> TriPredicate<T1, T2, T3> or(Iterator<TriPredicate<T1, T2, T3>> predicates) {
             return new FirstMatchingTernaryPredicate<T1, T2, T3>(Consumers.all(predicates));
         }
 
@@ -230,7 +230,7 @@ public abstract class Logic {
          * @param <T3> the third element type parameter
          * @return the predicate
          */
-        public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> always() {
+        public static <T1, T2, T3> TriPredicate<T1, T2, T3> always() {
             return new TernaryAlways<T1, T2, T3>();
         }
 
@@ -242,7 +242,7 @@ public abstract class Logic {
          * @param <T3> the third element type parameter
          * @return the predicate
          */
-        public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> never() {
+        public static <T1, T2, T3> TriPredicate<T1, T2, T3> never() {
             return new TernaryNever<T1, T2, T3>();
         }
     }
@@ -344,7 +344,7 @@ public abstract class Logic {
      * @param second
      * @return the composite predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> and(TernaryPredicate<T1, T2, T3> first, TernaryPredicate<T1, T2, T3> second) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> and(TriPredicate<T1, T2, T3> first, TriPredicate<T1, T2, T3> second) {
         dbc.precondition(first != null, "first predicate is null");
         dbc.precondition(second != null, "second predicate is null");
         return Logic.Ternary.and(Iterations.iterable(first, second));
@@ -361,7 +361,7 @@ public abstract class Logic {
      * @param third
      * @return the composite predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> and(TernaryPredicate<T1, T2, T3> first, TernaryPredicate<T1, T2, T3> second, TernaryPredicate<T1, T2, T3> third) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> and(TriPredicate<T1, T2, T3> first, TriPredicate<T1, T2, T3> second, TriPredicate<T1, T2, T3> third) {
         dbc.precondition(first != null, "first predicate is null");
         dbc.precondition(second != null, "second predicate is null");
         dbc.precondition(third != null, "third predicate is null");
@@ -377,7 +377,7 @@ public abstract class Logic {
      * @param predicates
      * @return the composite predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> and(TernaryPredicate<T1, T2, T3>... predicates) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> and(TriPredicate<T1, T2, T3>... predicates) {
         dbc.precondition(predicates != null, "predicates is null");
         return Logic.Ternary.and(Iterations.iterable(predicates));
     }
@@ -479,7 +479,7 @@ public abstract class Logic {
      * @param second
      * @return the composite predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> or(TernaryPredicate<T1, T2, T3> first, TernaryPredicate<T1, T2, T3> second) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> or(TriPredicate<T1, T2, T3> first, TriPredicate<T1, T2, T3> second) {
         dbc.precondition(first != null, "first predicate is null");
         dbc.precondition(second != null, "second predicate is null");
         return Logic.Ternary.or(Iterations.iterable(first, second));
@@ -496,7 +496,7 @@ public abstract class Logic {
      * @param third
      * @return the composite predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> or(TernaryPredicate<T1, T2, T3> first, TernaryPredicate<T1, T2, T3> second, TernaryPredicate<T1, T2, T3> third) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> or(TriPredicate<T1, T2, T3> first, TriPredicate<T1, T2, T3> second, TriPredicate<T1, T2, T3> third) {
         dbc.precondition(first != null, "first predicate is null");
         dbc.precondition(second != null, "second predicate is null");
         dbc.precondition(third != null, "third predicate is null");
@@ -512,7 +512,7 @@ public abstract class Logic {
      * @param predicates
      * @return the composite predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> or(TernaryPredicate<T1, T2, T3>... predicates) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> or(TriPredicate<T1, T2, T3>... predicates) {
         dbc.precondition(predicates != null, "predicates is null");
         return Logic.Ternary.or(Iterations.iterable(predicates));
     }
@@ -551,7 +551,7 @@ public abstract class Logic {
      * @param predicate the predicate to be negated
      * @return the negated predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> not(TernaryPredicate<T1, T2, T3> predicate) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> not(TriPredicate<T1, T2, T3> predicate) {
         dbc.precondition(predicate != null, "cannot negate a null predicate");
         return new TernaryNegator<T1, T2, T3>(predicate);
     }

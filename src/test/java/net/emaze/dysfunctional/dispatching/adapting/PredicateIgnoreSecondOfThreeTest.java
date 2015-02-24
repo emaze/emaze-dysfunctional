@@ -24,7 +24,7 @@ public class PredicateIgnoreSecondOfThreeTest {
         final Box<O> param1 = Box.empty();
         final BiPredicate<O, O> spy = Spies.spy1st(new BinaryAlways<O, O>(), param1);
         final PredicateIgnoreSecondOfThree<O, O, O> adapted = new PredicateIgnoreSecondOfThree<O, O, O>(spy);
-        adapted.accept(O.ONE, O.IGNORED, O.ANOTHER);
+        adapted.test(O.ONE, O.IGNORED, O.ANOTHER);
         Assert.assertEquals(O.ONE, param1.getContent());
     }
 
@@ -33,7 +33,7 @@ public class PredicateIgnoreSecondOfThreeTest {
         final Box<O> param2 = Box.empty();
         final BiPredicate<O, O> spy = Spies.spy2nd(new BinaryAlways<O, O>(), param2);
         final PredicateIgnoreSecondOfThree<O, O, O> adapted = new PredicateIgnoreSecondOfThree<O, O, O>(spy);
-        adapted.accept(O.ONE, O.IGNORED, O.ANOTHER);
+        adapted.test(O.ONE, O.IGNORED, O.ANOTHER);
         Assert.assertEquals(O.ANOTHER, param2.getContent());
     }
 }
