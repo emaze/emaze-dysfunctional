@@ -88,4 +88,25 @@ public class TripleTest {
         final Triple<O, O, O> mapped = Triple.of(O.ONE, O.ONE, O.ONE).map(Function.identity(), Function.identity(), new ConstantFunction<O, O>(O.ANOTHER));
         Assert.assertEquals(O.ANOTHER, mapped.third());
     }
+
+    @Test
+    public void flippingInvertsValues() {
+        final Triple<String, O, Integer> source = Triple.of("ONE", O.ONE, 1);
+        final Triple<Integer, O, String> got = source.flip();
+        Assert.assertEquals(Triple.of(1, O.ONE, "ONE"), got);
+    }
+
+    @Test
+    public void rotatingTripleToLeftYieldsCorrectValues() {
+        final Triple<String, Integer, O> source = Triple.of("ONE", 1, O.ONE);
+        final Triple<Integer, O, String> got = source.rotateLeft();
+        Assert.assertEquals(Triple.of(1, O.ONE, "ONE"), got);
+    }
+
+    @Test
+    public void rotatingTripleToRightYieldsCorrectValues() {
+        final Triple<String, Integer, O> source = Triple.of("ONE", 1, O.ONE);
+        final Triple<O, String, Integer> got = source.rotateRight();
+        Assert.assertEquals(Triple.of(O.ONE, "ONE", 1), got);
+    }
 }

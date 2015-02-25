@@ -71,4 +71,11 @@ public class PairTest {
         final Pair<O, O> mapped = Pair.of(O.ONE, O.ONE).map(Function.identity(), new ConstantFunction<O, O>(O.ANOTHER));
         Assert.assertEquals(O.ANOTHER, mapped.second());
     }
+
+    @Test
+    public void flippingInvertsValues() {
+        final Pair<String, O> source = Pair.of("ONE", O.ONE);
+        final Pair<O, String> got = source.flip();
+        Assert.assertEquals(Pair.of(O.ONE, "ONE"), got);
+    }
 }

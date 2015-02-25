@@ -30,6 +30,10 @@ public class Pair<T1, T2> {
         return second;
     }
 
+    public Pair<T2, T1> flip() {
+        return Pair.of(second, first);
+    }
+
     public <R1, R2> Pair<R1, R2> map(Function<T1, R1> withFirst, Function<T2, R2> withSecond) {
         dbc.precondition(withFirst != null, "cannot fmap on pair with a null first function");
         dbc.precondition(withSecond != null, "cannot fmap on pair with a null second function");

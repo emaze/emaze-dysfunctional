@@ -37,6 +37,18 @@ public class Triple<T1, T2, T3> {
         return t;
     }
 
+    public Triple<T3, T2, T1> flip() {
+        return Triple.of(t, s, f);
+    }
+
+    public Triple<T2, T3, T1> rotateLeft() {
+        return Triple.of(s, t, f);
+    }
+
+    public Triple<T3, T1, T2> rotateRight() {
+        return Triple.of(t, f, s);
+    }
+
     public <R1, R2, R3> Triple<R1, R2, R3> map(Function<T1, R1> withFirst, Function<T2, R2> withSecond, Function<T3, R3> withThird) {
         dbc.precondition(withFirst != null, "cannot fmap on triple with a null first function");
         dbc.precondition(withSecond != null, "cannot fmap on triple with a null second function");
