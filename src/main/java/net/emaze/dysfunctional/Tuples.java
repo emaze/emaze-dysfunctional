@@ -6,6 +6,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.actions.TriConsumer;
 import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
@@ -28,7 +29,8 @@ public abstract class Tuples {
      * @return the adapted function
      */
     public static <T, U, R> Function<Pair<T, U>, R> tupled(BiFunction<T, U, R> function) {
-        return new BinaryToUnaryFunction<T, U, R>(function);
+        dbc.precondition(function != null, "cannot apply a pair to a null function");
+        return pair -> function.apply(pair.first(), pair.second());
     }
 
     /**
@@ -40,7 +42,8 @@ public abstract class Tuples {
      * @return the adapted predicate
      */
     public static <T, U> Predicate<Pair<T, U>> tupled(BiPredicate<T, U> predicate) {
-        return new BinaryToUnaryPredicate<T, U>(predicate);
+        dbc.precondition(predicate != null, "cannot apply a pair to a null predicate");
+        return pair -> predicate.test(pair.first(), pair.second());
     }
 
     /**
@@ -52,7 +55,8 @@ public abstract class Tuples {
      * @return the adapted consumer
      */
     public static <T, U> Consumer<Pair<T, U>> tupled(BiConsumer<T, U> consumer) {
-        return new BinaryToUnaryConsumer<T, U>(consumer);
+        dbc.precondition(consumer != null, "cannot apply a pair to a null consumer");
+        return pair -> consumer.accept(pair.first(), pair.second());
     }
 
     /**
@@ -66,7 +70,8 @@ public abstract class Tuples {
      * @return the adapted function
      */
     public static <T, U, V, R> Function<Triple<T, U, V>, R> tupled(TriFunction<T, U, V, R> function) {
-        return new TernaryToUnaryFunction<>(function);
+        dbc.precondition(function != null, "cannot apply a triple to a null function");
+        return triple -> function.apply(triple.first(), triple.second(), triple.third());
     }
 
     /**
@@ -79,7 +84,8 @@ public abstract class Tuples {
      * @return the adapted predicate
      */
     public static <T, U, V> Predicate<Triple<T, U, V>> tupled(TriPredicate<T, U, V> predicate) {
-        return new TernaryToUnaryPredicate<T, U, V>(predicate);
+        dbc.precondition(predicate != null, "cannot apply a triple to a null predicate");
+        return triple -> predicate.test(triple.first(), triple.second(), triple.third());
     }
 
     /**
@@ -92,7 +98,8 @@ public abstract class Tuples {
      * @return the adatped consumer
      */
     public static <T, U, V> Consumer<Triple<T, U, V>> tupled(TriConsumer<T, U, V> consumer) {
-        return new TernaryToUnaryConsumer<T, U, V>(consumer);
+        dbc.precondition(consumer != null, "cannot apply a triple to a null consumer");
+        return triple -> consumer.accept(triple.first(), triple.second(), triple.third());
     }
 
     /**
@@ -110,7 +117,8 @@ public abstract class Tuples {
          * @return the adapted function
          */
         public static <T, U, R> BiFunction<T, U, R> untupled(Function<Pair<T, U>, R> function) {
-            return new UnaryToBinaryFunction<>(function);
+            dbc.precondition(function != null, "cannot untuple a null function");
+            return (first, second) -> function.apply(Pair.of(first, second));
         }
 
         /**
@@ -122,7 +130,8 @@ public abstract class Tuples {
          * @return the adapted predicate
          */
         public static <T, U> BiPredicate<T, U> untupled(Predicate<Pair<T, U>> predicate) {
-            return new UnaryToBinaryPredicate<T, U>(predicate);
+            dbc.precondition(predicate != null, "cannot untuple a null predicate");
+            return (first, second) -> predicate.test(Pair.of(first, second));
         }
 
         /**
@@ -134,7 +143,8 @@ public abstract class Tuples {
          * @return the adapted consumer
          */
         public static <T, U> BiConsumer<T, U> untupled(Consumer<Pair<T, U>> consumer) {
-            return new UnaryToBinaryConsumer<T, U>(consumer);
+            dbc.precondition(consumer != null, "cannot untuple a null consumer");
+            return (first, second) -> consumer.accept(Pair.of(first, second));
         }
     }
 
@@ -154,7 +164,8 @@ public abstract class Tuples {
          * @return the adapted function
          */
         public static <T, U, V, R> TriFunction<T, U, V, R> untupled(Function<Triple<T, U, V>, R> function) {
-            return new UnaryToTernaryFunction<>(function);
+            dbc.precondition(function != null, "cannot untuple a null function");
+            return (first, second, third) -> function.apply(Triple.of(first, second, third));
         }
 
         /**
@@ -167,7 +178,8 @@ public abstract class Tuples {
          * @return the adapted predicate
          */
         public static <T, U, V> TriPredicate<T, U, V> untupled(Predicate<Triple<T, U, V>> predicate) {
-            return new UnaryToTernaryPredicate<T, U, V>(predicate);
+            dbc.precondition(predicate != null, "cannot untuple a null predicate");
+            return (first, second, third) -> predicate.test(Triple.of(first, second, third));
         }
 
         /**
@@ -180,7 +192,8 @@ public abstract class Tuples {
          * @return the adatped consumer
          */
         public static <T, U, V> TriConsumer<T, U, V> untupled(Consumer<Triple<T, U, V>> consumer) {
-            return new UnaryToTernaryConsumer<T, U, V>(consumer);
+            dbc.precondition(consumer != null, "cannot untuple a null consumer");
+            return (first, second, third) -> consumer.accept(Triple.of(first, second, third));
         }
     }
 }
