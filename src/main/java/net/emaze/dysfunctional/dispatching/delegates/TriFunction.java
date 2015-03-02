@@ -8,6 +8,7 @@ package net.emaze.dysfunctional.dispatching.delegates;
  * @param <T3> the third element Type
  * @param <R> the result Type
  */
+@FunctionalInterface
 public interface TriFunction<T1, T2, T3, R> {
 
     /**

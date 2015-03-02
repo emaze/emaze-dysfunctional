@@ -8,6 +8,7 @@ package net.emaze.dysfunctional.dispatching.actions;
  * @param <T3> the third parameter type
  * @author rferranti
  */
+@FunctionalInterface
 public interface TriConsumer<T1, T2, T3> {
 
     /**

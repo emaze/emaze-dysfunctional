@@ -8,6 +8,7 @@ package net.emaze.dysfunctional.dispatching.logic;
  * @param <T3> the third element Type
  * @author rferranti
  */
+@FunctionalInterface
 public interface TriPredicate<T1, T2, T3> {
 
     boolean test(T1 first, T2 second, T3 third);
