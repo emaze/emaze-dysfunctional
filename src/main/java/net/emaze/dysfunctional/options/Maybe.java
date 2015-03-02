@@ -11,7 +11,7 @@ import net.emaze.dysfunctional.iterations.EmptyIterator;
 import net.emaze.dysfunctional.iterations.SingletonIterator;
 
 /**
- * Holds an optional get.
+ * Holds an optional value. Unlike Optional, the value can be null.
  *
  * @param <E> the get type
  * @author rferranti
