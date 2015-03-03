@@ -14,11 +14,11 @@ import net.emaze.dysfunctional.contracts.dbc;
 public class UnaryOperatorsComposer<T> implements Function<Iterator<Function<T, T>>, UnaryOperator<T>> {
 
     @Override
-    public UnaryOperator<T> apply(Iterator<Function<T, T>> endoDelegates) {
-        dbc.precondition(endoDelegates != null, "cannot compose a null iterator of endoDelegates");
+    public UnaryOperator<T> apply(Iterator<Function<T, T>> functions) {
+        dbc.precondition(functions != null, "cannot compose a null iterator of functions");
         Function<T, T> current = Function.identity();
-        while (endoDelegates.hasNext()) {
-            current = new Composer<T, T, T>(current, endoDelegates.next());
+        while (functions.hasNext()) {
+            current = current.compose(functions.next());
         }
         return current::apply;
     }
