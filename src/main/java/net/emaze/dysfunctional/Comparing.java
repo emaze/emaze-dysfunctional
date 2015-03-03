@@ -1,10 +1,9 @@
 package net.emaze.dysfunctional;
 
 import java.util.Comparator;
+import java.util.function.BinaryOperator;
 import net.emaze.dysfunctional.order.ComparableComparator;
 import net.emaze.dysfunctional.order.MakeOrder;
-import net.emaze.dysfunctional.order.Max;
-import net.emaze.dysfunctional.order.Min;
 import net.emaze.dysfunctional.tuples.Pair;
 
 /**
@@ -24,7 +23,7 @@ public abstract class Comparing {
      * @return the greater element
      */
     public static <T> T max(T lhs, T rhs, Comparator<T> comparator) {
-        return new Max<T>(comparator).apply(lhs, rhs);
+        return BinaryOperator.maxBy(comparator).apply(lhs, rhs);
     }
 
     /**
@@ -36,7 +35,7 @@ public abstract class Comparing {
      * @return the greater element
      */
     public static <T extends Comparable<T>> T max(T lhs, T rhs) {
-        return new Max<T>(new ComparableComparator<T>()).apply(lhs, rhs);
+        return BinaryOperator.maxBy(new ComparableComparator<T>()).apply(lhs, rhs);
     }
 
     /**
@@ -49,7 +48,7 @@ public abstract class Comparing {
      * @return the lesser element
      */
     public static <T> T min(T lhs, T rhs, Comparator<T> comparator) {
-        return new Min<T>(comparator).apply(lhs, rhs);
+        return BinaryOperator.minBy(comparator).apply(lhs, rhs);
     }
 
     /**
@@ -61,7 +60,7 @@ public abstract class Comparing {
      * @return the lesser element
      */
     public static <T extends Comparable<T>> T min(T lhs, T rhs) {
-        return new Min<T>(new ComparableComparator<T>()).apply(lhs, rhs);
+        return BinaryOperator.minBy(new ComparableComparator<T>()).apply(lhs, rhs);
     }
 
     /**

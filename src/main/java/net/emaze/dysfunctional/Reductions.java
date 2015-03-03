@@ -3,12 +3,11 @@ package net.emaze.dysfunctional;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
 import java.util.function.Predicate;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.order.ComparableComparator;
-import net.emaze.dysfunctional.order.Max;
-import net.emaze.dysfunctional.order.Min;
 import net.emaze.dysfunctional.reductions.Any;
 import net.emaze.dysfunctional.reductions.Count;
 import net.emaze.dysfunctional.reductions.Every;
@@ -212,7 +211,7 @@ public abstract class Reductions {
      * @return the max element contained in the iterator
      */
     public static <E, C extends Comparator<E>> E maximum(Iterator<E> iterator, C comparator, E init) {
-        return Reductions.reduce(iterator, new Max<E>(comparator), init);
+        return Reductions.reduce(iterator, BinaryOperator.maxBy(comparator), init);
     }
 
     /**
@@ -224,7 +223,7 @@ public abstract class Reductions {
      * @return the max element contained in the iterator
      */
     public static <E extends Comparable<E>> E maximum(Iterator<E> iterator, E init) {
-        return Reductions.reduce(iterator, new Max<E>(new ComparableComparator<E>()), init);
+        return Reductions.reduce(iterator, BinaryOperator.maxBy(new ComparableComparator<E>()), init);
     }
 
     /**
@@ -238,7 +237,7 @@ public abstract class Reductions {
      * @return the min element contained in the iterator
      */
     public static <E, C extends Comparator<E>> E minimum(Iterator<E> iterator, C comparator, E init) {
-        return Reductions.reduce(iterator, new Min<E>(comparator), init);
+        return Reductions.reduce(iterator, BinaryOperator.minBy(comparator), init);
     }
 
     /**
@@ -250,6 +249,6 @@ public abstract class Reductions {
      * @return the min element contained in the iterator
      */
     public static <E extends Comparable<E>> E minimum(Iterator<E> iterator, E init) {
-        return Reductions.reduce(iterator, new Min<E>(new ComparableComparator<E>()), init);
+        return Reductions.reduce(iterator, BinaryOperator.minBy(new ComparableComparator<E>()), init);
     }
 }

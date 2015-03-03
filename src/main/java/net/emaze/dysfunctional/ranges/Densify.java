@@ -11,7 +11,7 @@ import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.dispatching.logic.Negator;
 import net.emaze.dysfunctional.filtering.FilteringIterator;
 import java.util.Optional;
-import net.emaze.dysfunctional.order.Max;
+import java.util.function.BinaryOperator;
 import net.emaze.dysfunctional.order.Order;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 import net.emaze.dysfunctional.ranges.Range.Endpoint;
@@ -45,7 +45,7 @@ public class Densify<T> implements UnaryOperator<List<DenseRange<T>>> {
         while (nonEmptyRanges.hasNext()) {
             final DenseRange<T> next = nonEmptyRanges.next();
             if (canBeMerged(current, next)) {
-                final Optional<T> max = new Max<Optional<T>>(comparator).apply(current.end(), next.end());
+                final Optional<T> max = BinaryOperator.maxBy(comparator).apply(current.end(), next.end());
                 current = new DenseRange<T>(sequencer, comparator, Endpoint.Include, current.begin(), max, Endpoint.Exclude);
             } else {
                 sortedNonOverlappingRanges.add(current);
