@@ -553,6 +553,6 @@ public abstract class Logic {
      */
     public static <T1, T2, T3> TriPredicate<T1, T2, T3> not(TriPredicate<T1, T2, T3> predicate) {
         dbc.precondition(predicate != null, "cannot negate a null predicate");
-        return new TernaryNegator<T1, T2, T3>(predicate);
+        return predicate.negate();
     }
 }
