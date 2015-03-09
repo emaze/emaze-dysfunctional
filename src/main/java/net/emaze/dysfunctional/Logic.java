@@ -539,7 +539,7 @@ public abstract class Logic {
      */
     public static <T1, T2> BiPredicate<T1, T2> not(BiPredicate<T1, T2> predicate) {
         dbc.precondition(predicate != null, "cannot negate a null predicate");
-        return new BinaryNegator<T1, T2>(predicate);
+        return predicate.negate();
     }
 
     /**
