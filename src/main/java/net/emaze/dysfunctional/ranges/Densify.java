@@ -5,13 +5,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.function.UnaryOperator;
-import net.emaze.dysfunctional.dispatching.logic.Negator;
-import net.emaze.dysfunctional.filtering.FilteringIterator;
-import java.util.Optional;
 import java.util.function.BinaryOperator;
+import java.util.function.UnaryOperator;
+import net.emaze.dysfunctional.filtering.FilteringIterator;
 import net.emaze.dysfunctional.order.Order;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 import net.emaze.dysfunctional.ranges.Range.Endpoint;
@@ -37,7 +36,7 @@ public class Densify<T> implements UnaryOperator<List<DenseRange<T>>> {
     public List<DenseRange<T>> apply(List<DenseRange<T>> ranges) {
         final SortedSet<DenseRange<T>> sortedRanges = new TreeSet<DenseRange<T>>(ranges);
         final List<DenseRange<T>> sortedNonOverlappingRanges = new ArrayList<DenseRange<T>>();
-        final Iterator<DenseRange<T>> nonEmptyRanges = new FilteringIterator<DenseRange<T>>(sortedRanges.iterator(), new Negator<DenseRange<T>>(new RangeIsEmpty<DenseRange<T>, T>()));
+        final Iterator<DenseRange<T>> nonEmptyRanges = new FilteringIterator<>(sortedRanges.iterator(), new RangeIsEmpty<DenseRange<T>, T>().negate());
         if (!nonEmptyRanges.hasNext()) {
             return Collections.emptyList();
         }

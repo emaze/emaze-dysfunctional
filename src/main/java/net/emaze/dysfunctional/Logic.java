@@ -526,7 +526,7 @@ public abstract class Logic {
      */
     public static <T> Predicate<T> not(Predicate<T> predicate) {
         dbc.precondition(predicate != null, "cannot negate a null predicate");
-        return new Negator<T>(predicate);
+        return predicate.negate();
     }
 
     /**
