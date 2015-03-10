@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.dispatching;
+package net.emaze.dysfunctional.dispatching.delegates;
 
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;

@@ -1,5 +1,6 @@
 package net.emaze.dysfunctional.dispatching;
 
+import net.emaze.dysfunctional.dispatching.delegates.Tapper;
 import junit.framework.Assert;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
 import java.util.function.Function;

@@ -8,7 +8,7 @@ import java.util.function.Function;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.consumers.ConsumeIntoCollection;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.Tapper;
+import net.emaze.dysfunctional.dispatching.delegates.Tapper;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.iterations.TransformingIterator;
 
