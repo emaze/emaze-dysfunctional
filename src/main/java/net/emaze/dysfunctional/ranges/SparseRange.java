@@ -3,12 +3,11 @@ package net.emaze.dysfunctional.ranges;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.IteratorPlucker;
 import net.emaze.dysfunctional.iterations.ConstantIterator;
 import net.emaze.dysfunctional.iterations.TransformingIterator;
 import net.emaze.dysfunctional.multiplexing.ChainIterator;
-import java.util.Optional;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 import net.emaze.dysfunctional.reductions.Any;
 import net.emaze.dysfunctional.strings.InterposeStrings;
@@ -59,7 +58,7 @@ public class SparseRange<T> implements Range<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new ChainIterator<>(new TransformingIterator<>(densified.iterator(), new IteratorPlucker<>()));
+        return new ChainIterator<>(new TransformingIterator<>(densified.iterator(), Iterable::iterator));
     }
 
     @Override

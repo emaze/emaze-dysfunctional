@@ -9,7 +9,6 @@ import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantSupplier;
-import net.emaze.dysfunctional.dispatching.delegates.IteratorPlucker;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.iterations.TransformingIterator;
 import net.emaze.dysfunctional.multiplexing.BatchingIterator;
@@ -41,7 +40,7 @@ public abstract class Multiplexing {
      * @return the flattened iterator
      */
     public static <I extends Iterable<E>, E> Iterator<E> flatten(Iterator<I> iterables) {
-        return new ChainIterator<>(new TransformingIterator<>(iterables, new IteratorPlucker<>()));
+        return new ChainIterator<>(new TransformingIterator<>(iterables, Iterable::iterator));
     }
 
     /**
@@ -58,7 +57,7 @@ public abstract class Multiplexing {
     public static <I extends Iterable<E>, E> Iterator<E> flatten(Iterable<I> iterables) {
         dbc.precondition(iterables != null, "cannot flatten a null iterable");
         final Iterator<I> iterator = iterables.iterator();
-        return new ChainIterator<>(new TransformingIterator<>(iterator, new IteratorPlucker<>()));
+        return new ChainIterator<>(new TransformingIterator<>(iterator, Iterable::iterator));
     }
 
     /**
@@ -75,7 +74,7 @@ public abstract class Multiplexing {
      */
     public static <E, I extends Iterable<E>> Iterator<E> flatten(I first, I second) {
         final Iterator<I> iterator = ArrayIterator.of(first, second);
-        return new ChainIterator<>(new TransformingIterator<>(iterator, new IteratorPlucker<>()));
+        return new ChainIterator<>(new TransformingIterator<>(iterator, Iterable::iterator));
     }
 
     /**
@@ -93,7 +92,7 @@ public abstract class Multiplexing {
      */
     public static <E, I extends Iterable<E>> Iterator<E> flatten(I first, I second, I third) {
         final Iterator<I> iterator = ArrayIterator.of(first, second, third);
-        return new ChainIterator<>(new TransformingIterator<>(iterator, new IteratorPlucker<>()));
+        return new ChainIterator<>(new TransformingIterator<>(iterator, Iterable::iterator));
     }
 
     /**
