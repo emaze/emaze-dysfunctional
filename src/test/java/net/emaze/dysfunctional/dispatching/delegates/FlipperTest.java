@@ -1,7 +1,6 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
 import java.util.function.BiFunction;
-import net.emaze.dysfunctional.dispatching.adapting.ConcatenateString;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,8 +17,7 @@ public class FlipperTest {
 
     @Test
     public void decoratingWithFlipperFlipsParams() {
-        final ConcatenateString concat = new ConcatenateString();
-        final BiFunction<String, String, String> flipped = new Flipper<String, String, String>(concat);
+        final BiFunction<String, String, String> flipped = new Flipper<>((t, u) -> t + u);
         Assert.assertEquals("latterformer", flipped.apply("former", "latter"));
     }
 }

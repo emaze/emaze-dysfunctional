@@ -10,6 +10,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.actions.TriConsumer;
 import net.emaze.dysfunctional.dispatching.adapting.*;
 import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
@@ -32,7 +33,8 @@ public abstract class Dispatching {
      * @return the curried runnable
      */
     public static <T> Runnable curry(Consumer<T> consumer, T value) {
-        return new ConsumerBinder<T>(consumer, value);
+        dbc.precondition(consumer != null, "cannot bind parameter of a null consumer");
+        return () -> consumer.accept(value);
     }
 
     /**
@@ -45,7 +47,8 @@ public abstract class Dispatching {
      * @return the curried unary consumer
      */
     public static <T1, T2> Consumer<T2> curry(BiConsumer<T1, T2> consumer, T1 first) {
-        return new ConsumerBinderFirst<T1, T2>(consumer, first);
+        dbc.precondition(consumer != null, "cannot bind parameter of a null consumer");
+        return second -> consumer.accept(first, second);
     }
 
     /**
@@ -59,7 +62,8 @@ public abstract class Dispatching {
      * @return the curried binary consumer
      */
     public static <T1, T2, T3> BiConsumer<T2, T3> curry(TriConsumer<T1, T2, T3> consumer, T1 first) {
-        return new ConsumerBinderFirstOfThree<T1, T2, T3>(consumer, first);
+        dbc.precondition(consumer != null, "cannot bind parameter of a null consumer");
+        return (second, third) -> consumer.accept(first, second, third);
     }
 
     /**
@@ -71,7 +75,8 @@ public abstract class Dispatching {
      * @return the curried proposition
      */
     public static <T> BooleanSupplier curry(Predicate<T> predicate, T value) {
-        return new PredicateBinder<T>(predicate, value);
+        dbc.precondition(predicate != null, "cannot bind parameter of a null predicate");
+        return () -> predicate.test(value);
     }
 
     /**
@@ -84,7 +89,8 @@ public abstract class Dispatching {
      * @return the curried predicate
      */
     public static <T1, T2> Predicate<T2> curry(BiPredicate<T1, T2> predicate, T1 first) {
-        return new PredicateBinderFirst<T1, T2>(predicate, first);
+        dbc.precondition(predicate != null, "cannot bind parameter of a null predicate");
+        return second -> predicate.test(first, second);
     }
 
     /**
@@ -98,7 +104,8 @@ public abstract class Dispatching {
      * @return the curried binary predicate
      */
     public static <T1, T2, T3> BiPredicate<T2, T3> curry(TriPredicate<T1, T2, T3> predicate, T1 first) {
-        return new PredicateBinderFirstOfThree<T1, T2, T3>(predicate, first);
+        dbc.precondition(predicate != null, "cannot bind parameter of a null predicate");
+        return (second, third) -> predicate.test(first, second, third);
     }
 
     /**
@@ -111,7 +118,8 @@ public abstract class Dispatching {
      * @return the curried supplier
      */
     public static <T, R> Supplier<R> curry(Function<T, R> function, T value) {
-        return new Binder<>(function, value);
+        dbc.precondition(function != null, "cannot bind parameter of a null function");
+        return () -> function.apply(value);
     }
 
     /**
@@ -125,7 +133,8 @@ public abstract class Dispatching {
      * @return the curried function
      */
     public static <T1, T2, R> Function<T2, R> curry(BiFunction<T1, T2, R> function, T1 first) {
-        return new BinderFirst<>(function, first);
+        dbc.precondition(function != null, "cannot bind parameter of a null function");
+        return second -> function.apply(first, second);
     }
 
     /**
@@ -140,11 +149,13 @@ public abstract class Dispatching {
      * @return the curried binary function
      */
     public static <T1, T2, T3, R> BiFunction<T2, T3, R> curry(TriFunction<T1, T2, T3, R> function, T1 first) {
-        return new BinderFirstOfThree<>(function, first);
+        dbc.precondition(function != null, "cannot bind parameter of a null function");
+        return (second, third) -> function.apply(first, second, third);
     }
 
     /**
-     * Partial application of the second (middle) parameter to a ternary consumer.
+     * Partial application of the second (middle) parameter to a ternary
+     * consumer.
      *
      * @param <T1> the consumer first parameter type
      * @param <T2> the consumer second parameter type
@@ -154,7 +165,8 @@ public abstract class Dispatching {
      * @return the curried binary consumer
      */
     public static <T1, T2, T3> BiConsumer<T1, T3> mcurry(TriConsumer<T1, T2, T3> consumer, T2 second) {
-        return new ConsumerBinderSecondOfThree<T1, T2, T3>(consumer, second);
+        dbc.precondition(consumer != null, "cannot bind parameter of a null consumer");
+        return (first, third) -> consumer.accept(first, second, third);
     }
 
     /**
@@ -170,7 +182,8 @@ public abstract class Dispatching {
      * @return the curried binary function
      */
     public static <T1, T2, T3, R> BiFunction<T1, T3, R> mcurry(TriFunction<T1, T2, T3, R> function, T2 second) {
-        return new BinderSecondOfThree<>(function, second);
+        dbc.precondition(function != null, "cannot bind parameter of a null function");
+        return (first, third) -> function.apply(first, second, third);
     }
 
     /**
@@ -185,11 +198,13 @@ public abstract class Dispatching {
      * @return the curried binary predicate
      */
     public static <T1, T2, T3> BiPredicate<T1, T3> mcurry(TriPredicate<T1, T2, T3> predicate, T2 second) {
-        return new PredicateBinderSecondOfThree<T1, T2, T3>(predicate, second);
+        dbc.precondition(predicate != null, "cannot bind parameter of a null predicate");
+        return (first, third) -> predicate.test(first, second, third);
     }
 
     /**
-     * Partial application of the last (rightmost) parameter to a binary consumer.
+     * Partial application of the last (rightmost) parameter to a binary
+     * consumer.
      *
      * @param <T1> the consumer first parameter type
      * @param <T2> the consumer second parameter type
@@ -198,7 +213,8 @@ public abstract class Dispatching {
      * @return the curried consumer
      */
     public static <T1, T2> Consumer<T1> rcurry(BiConsumer<T1, T2> consumer, T2 second) {
-        return new ConsumerBinderSecond<T1, T2>(consumer, second);
+        dbc.precondition(consumer != null, "cannot bind parameter of a null consumer");
+        return first -> consumer.accept(first, second);
     }
 
     /**
@@ -213,7 +229,8 @@ public abstract class Dispatching {
      * @return the curried binary consumer
      */
     public static <T1, T2, T3> BiConsumer<T1, T2> rcurry(TriConsumer<T1, T2, T3> consumer, T3 third) {
-        return new ConsumerBinderThird<T1, T2, T3>(consumer, third);
+        dbc.precondition(consumer != null, "cannot bind parameter of a null consumer");
+        return (first, second) -> consumer.accept(first, second, third);
     }
 
     /**
@@ -228,7 +245,8 @@ public abstract class Dispatching {
      *
      */
     public static <T1, T2> Predicate<T1> rcurry(BiPredicate<T1, T2> predicate, T2 second) {
-        return new PredicateBinderSecond<T1, T2>(predicate, second);
+        dbc.precondition(predicate != null, "cannot bind parameter of a null predicate");
+        return first -> predicate.test(first, second);
     }
 
     /**
@@ -243,7 +261,8 @@ public abstract class Dispatching {
      * @return the curried binary predicate
      */
     public static <T1, T2, T3> BiPredicate<T1, T2> rcurry(TriPredicate<T1, T2, T3> predicate, T3 third) {
-        return new PredicateBinderThird<T1, T2, T3>(predicate, third);
+        dbc.precondition(predicate != null, "cannot bind parameter of a null predicate");
+        return (first, second) -> predicate.test(first, second, third);
     }
 
     /**
@@ -258,7 +277,8 @@ public abstract class Dispatching {
      * @return the curried function
      */
     public static <T1, T2, R> Function<T1, R> rcurry(BiFunction<T1, T2, R> function, T2 second) {
-        return new BinderSecond<>(function, second);
+        dbc.precondition(function != null, "cannot bind parameter of a null function");
+        return first -> function.apply(first, second);
     }
 
     /**
@@ -274,7 +294,8 @@ public abstract class Dispatching {
      * @return the curried binary function
      */
     public static <T1, T2, T3, R> BiFunction<T1, T2, R> rcurry(TriFunction<T1, T2, T3, R> function, T3 third) {
-        return new BinderThird<>(function, third);
+        dbc.precondition(function != null, "cannot bind parameter of a null function");
+        return (first, second) -> function.apply(first, second, third);
     }
 
     /**
@@ -286,7 +307,8 @@ public abstract class Dispatching {
      * @return the adapted predicate
      */
     public static <T> Predicate<T> ignore(BooleanSupplier proposition, Class<T> ignored) {
-        return new PropositionIgnoreParameter<T>(proposition);
+        dbc.precondition(proposition != null, "cannot ignore parameter of a null proposition");
+        return t -> proposition.getAsBoolean();
     }
 
     /**
@@ -299,7 +321,8 @@ public abstract class Dispatching {
      * @return the adapted binary predicate
      */
     public static <T1, T2> BiPredicate<T1, T2> ignore1st(Predicate<T2> predicate, Class<T1> ignored) {
-        return new PredicateIgnoreFirst<T1, T2>(predicate);
+        dbc.precondition(predicate != null, "cannot ignore parameter of a null predicate");
+        return (first, second) -> predicate.test(second);
     }
 
     /**
@@ -314,7 +337,8 @@ public abstract class Dispatching {
      * @return the adapted ternary predicate
      */
     public static <T1, T2, T3> TriPredicate<T1, T2, T3> ignore1st(BiPredicate<T2, T3> predicate, Class<T1> ignored) {
-        return new PredicateIgnoreFirstOfThree<T1, T2, T3>(predicate);
+        dbc.precondition(predicate != null, "cannot ignore parameter of a null predicate");
+        return (first, second, third) -> predicate.test(second, third);
     }
 
     /**
@@ -327,7 +351,8 @@ public abstract class Dispatching {
      * @return the adapted binary predicate
      */
     public static <T1, T2> BiPredicate<T1, T2> ignore2nd(Predicate<T1> predicate, Class<T2> ignored) {
-        return new PredicateIgnoreSecond<T1, T2>(predicate);
+        dbc.precondition(predicate != null, "cannot ignore parameter of a null predicate");
+        return (first, second) -> predicate.test(first);
     }
 
     /**
@@ -342,7 +367,8 @@ public abstract class Dispatching {
      * @return the adapted ternary predicate
      */
     public static <T1, T2, T3> TriPredicate<T1, T2, T3> ignore2nd(BiPredicate<T1, T3> predicate, Class<T2> ignored) {
-        return new PredicateIgnoreSecondOfThree<T1, T2, T3>(predicate);
+        dbc.precondition(predicate != null, "cannot ignore parameter of a null predicate");
+        return (first, second, third) -> predicate.test(first, third);
     }
 
     /**
@@ -357,7 +383,8 @@ public abstract class Dispatching {
      * @return the adapted ternary predicate
      */
     public static <T1, T2, T3> TriPredicate<T1, T2, T3> ignore3rd(BiPredicate<T1, T2> predicate, Class<T3> ignored) {
-        return new PredicateIgnoreThird<T1, T2, T3>(predicate);
+        dbc.precondition(predicate != null, "cannot ignore parameter of a null predicate");
+        return (first, second, third) -> predicate.test(first, second);
     }
 
     /**
@@ -369,7 +396,8 @@ public abstract class Dispatching {
      * @return the adapted consumer
      */
     public static <T> Consumer<T> ignore(Runnable runnable, Class<T> ignored) {
-        return new RunnableIgnoreParameter<T>(runnable);
+        dbc.precondition(runnable != null, "cannot ignore parameter of a null runnable");
+        return first -> runnable.run();
     }
 
     /**
@@ -382,7 +410,8 @@ public abstract class Dispatching {
      * @return the adapted binary consumer
      */
     public static <T1, T2> BiConsumer<T1, T2> ignore1st(Consumer<T2> consumer, Class<T1> ignored) {
-        return new ConsumerIgnoreFirst<T1, T2>(consumer);
+        dbc.precondition(consumer != null, "cannot ignore parameter of a null consumer");
+        return (first, second) -> consumer.accept(second);
     }
 
     /**
@@ -397,7 +426,8 @@ public abstract class Dispatching {
      * @return the adapted ternary consumer
      */
     public static <T1, T2, T3> TriConsumer<T1, T2, T3> ignore1st(BiConsumer<T2, T3> consumer, Class<T1> ignored) {
-        return new ConsumerIgnoreFirstOfThree<T1, T2, T3>(consumer);
+        dbc.precondition(consumer != null, "cannot ignore parameter of a null consumer");
+        return (first, second, third) -> consumer.accept(second, third);
     }
 
     /**
@@ -410,7 +440,8 @@ public abstract class Dispatching {
      * @return the adapted binary consumer
      */
     public static <T1, T2> BiConsumer<T1, T2> ignore2nd(Consumer<T1> consumer, Class<T2> ignored) {
-        return new ConsumerIgnoreSecond<T1, T2>(consumer);
+        dbc.precondition(consumer != null, "cannot ignore parameter of a null consumer");
+        return (first, second) -> consumer.accept(first);
     }
 
     /**
@@ -425,7 +456,8 @@ public abstract class Dispatching {
      * @return the adapted ternary consumer
      */
     public static <T1, T2, T3> TriConsumer<T1, T2, T3> ignore2nd(BiConsumer<T1, T3> consumer, Class<T2> ignored) {
-        return new ConsumerIgnoreSecondOfThree<T1, T2, T3>(consumer);
+        dbc.precondition(consumer != null, "cannot ignore parameter of a null consumer");
+        return (first, second, third) -> consumer.accept(first, third);
     }
 
     /**
@@ -440,7 +472,8 @@ public abstract class Dispatching {
      * @return the adapted ternary consumer
      */
     public static <T1, T2, T3> TriConsumer<T1, T2, T3> ignore3rd(BiConsumer<T1, T2> consumer, Class<T3> ignored) {
-        return new ConsumerIgnoreThird<T1, T2, T3>(consumer);
+        dbc.precondition(consumer != null, "cannot ignore parameter of a null consumer");
+        return (first, second, third) -> consumer.accept(first, second);
     }
 
     /**
@@ -453,7 +486,8 @@ public abstract class Dispatching {
      * @return the adapted function
      */
     public static <T, R> Function<T, R> ignore(Supplier<R> supplier, Class<T> ignored) {
-        return new IgnoreParameter<>(supplier);
+        dbc.precondition(supplier != null, "cannot ignore parameter of a null supplier");
+        return first -> supplier.get();
     }
 
     /**
@@ -467,7 +501,8 @@ public abstract class Dispatching {
      * @return the adapted function
      */
     public static <T1, T2, R> BiFunction<T1, T2, R> ignore1st(Function<T2, R> function, Class<T1> ignored) {
-        return new IgnoreFirst<>(function);
+        dbc.precondition(function != null, "cannot ignore parameter of a null function");
+        return (first, second) -> function.apply(second);
     }
 
     /**
@@ -483,7 +518,8 @@ public abstract class Dispatching {
      * @return the adapted function
      */
     public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> ignore1st(BiFunction<T2, T3, R> function, Class<T1> ignored) {
-        return new IgnoreFirstOfThree<>(function);
+        dbc.precondition(function != null, "cannot ignore parameter of a null function");
+        return (first, second, third) -> function.apply(second, third);
     }
 
     /**
@@ -497,7 +533,8 @@ public abstract class Dispatching {
      * @return the adapted function
      */
     public static <T1, T2, R> BiFunction<T1, T2, R> ignore2nd(Function<T1, R> function, Class<T2> ignored) {
-        return new IgnoreSecond<>(function);
+        dbc.precondition(function != null, "cannot ignore parameter of a null function");
+        return (first, second) -> function.apply(first);
     }
 
     /**
@@ -513,7 +550,8 @@ public abstract class Dispatching {
      * @return the adapted function
      */
     public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> ignore2nd(BiFunction<T1, T3, R> function, Class<T2> ignored) {
-        return new IgnoreSecondOfThree<>(function);
+        dbc.precondition(function != null, "cannot ignore parameter of a null function");
+        return (first, second, third) -> function.apply(first, third);
     }
 
     /**
@@ -529,7 +567,8 @@ public abstract class Dispatching {
      * @return the adapted function
      */
     public static <T1, T2, T3, R> TriFunction<T1, T2, T3, R> ignore3rd(BiFunction<T1, T2, R> function, Class<T3> ignored) {
-        return new IgnoreThird<T1, T2, T3, R>(function);
+        dbc.precondition(function != null, "cannot ignore parameter of a null function");
+        return (first, second, third) -> function.apply(first, second);
     }
 
     /**
@@ -549,7 +588,11 @@ public abstract class Dispatching {
      * @return the adapted supplier
      */
     public static Supplier<Void> supplier(Runnable adaptee) {
-        return new RunnableToSupplier(adaptee);
+        dbc.precondition(adaptee != null, "cannot adapt a null runnable");
+        return () -> {
+            adaptee.run();
+            return null;
+        };
     }
 
     /**
@@ -559,7 +602,8 @@ public abstract class Dispatching {
      * @return the adapted supplier
      */
     public static Supplier<Boolean> supplier(BooleanSupplier adaptee) {
-        return new PropositionToSupplier(adaptee);
+        dbc.precondition(adaptee != null, "cannot adapt a null boolean supplier");
+        return () -> adaptee.getAsBoolean();
     }
 
     /**
@@ -570,7 +614,11 @@ public abstract class Dispatching {
      * @return the adapted function
      */
     public static <T> Function<T, Void> function(Consumer<T> adaptee) {
-        return new ConsumerToFunction<T>(adaptee);
+        dbc.precondition(adaptee != null, "cannot adapt a null consumer");
+        return first -> {
+            adaptee.accept(first);
+            return null;
+        };
     }
 
     /**
@@ -582,7 +630,11 @@ public abstract class Dispatching {
      * @return the adapted function
      */
     public static <T1, T2> BiFunction<T1, T2, Void> function(BiConsumer<T1, T2> adaptee) {
-        return new BinaryConsumerToFunction<T1, T2>(adaptee);
+        dbc.precondition(adaptee != null, "cannot adapt a null consumer");
+        return (first, second) -> {
+            adaptee.accept(first, second);
+            return null;
+        };
     }
 
     /**
@@ -595,7 +647,11 @@ public abstract class Dispatching {
      * @return the adapted function
      */
     public static <T1, T2, T3> TriFunction<T1, T2, T3, Void> function(TriConsumer<T1, T2, T3> adaptee) {
-        return new TernaryConsumerToFunction<>(adaptee);
+        dbc.precondition(adaptee != null, "cannot adapt a null consumer");
+        return (first, second, third) -> {
+            adaptee.accept(first, second, third);
+            return null;
+        };
     }
 
     /**
@@ -606,7 +662,8 @@ public abstract class Dispatching {
      * @return the adapted function
      */
     public static <T> Function<T, Boolean> function(Predicate<T> adaptee) {
-        return new PredicateToFunction<T>(adaptee);
+        dbc.precondition(adaptee != null, "cannot adapt a null predicate");
+        return adaptee::test;
     }
 
     /**
@@ -618,7 +675,8 @@ public abstract class Dispatching {
      * @return the adapted function
      */
     public static <T1, T2> BiFunction<T1, T2, Boolean> function(BiPredicate<T1, T2> adaptee) {
-        return new BinaryPredicateToFunction<T1, T2>(adaptee);
+        dbc.precondition(adaptee != null, "cannot adapt a null predicate");
+        return adaptee::test;
     }
 
     /**
@@ -631,7 +689,8 @@ public abstract class Dispatching {
      * @return the adapted function
      */
     public static <T1, T2, T3> TriFunction<T1, T2, T3, Boolean> function(TriPredicate<T1, T2, T3> adaptee) {
-        return new TernaryPredicateToFunction<>(adaptee);
+        dbc.precondition(adaptee != null, "cannot adapt a null predicate");
+        return adaptee::test;
     }
 
     /**
@@ -642,7 +701,8 @@ public abstract class Dispatching {
      * @return the adapted runnable
      */
     public static <T> Runnable runnable(Supplier<T> supplier) {
-        return new SupplierToRunnable(supplier);
+        dbc.precondition(supplier != null, "cannot adapt a null supplier");
+        return supplier::get;
     }
 
     /**
@@ -654,7 +714,8 @@ public abstract class Dispatching {
      * @return the adapted consumer
      */
     public static <T, R> Consumer<T> consumer(Function<T, R> function) {
-        return new FunctionToConsumer<>(function);
+        dbc.precondition(function != null, "cannot adapt a null function");
+        return function::apply;
     }
 
     /**
@@ -667,7 +728,8 @@ public abstract class Dispatching {
      * @return the adapted consumer
      */
     public static <T1, T2, R> BiConsumer<T1, T2> consumer(BiFunction<T1, T2, R> function) {
-        return new BinaryFunctionToConsumer<>(function);
+        dbc.precondition(function != null, "cannot adapt a null function");
+        return function::apply;
     }
 
     /**
@@ -681,7 +743,8 @@ public abstract class Dispatching {
      * @return the adapted consumer
      */
     public static <T1, T2, T3, R> TriConsumer<T1, T2, T3> consumer(TriFunction<T1, T2, T3, R> function) {
-        return new TernaryFunctionToConsumer<T1, T2, T3, R>(function);
+        dbc.precondition(function != null, "cannot adapt a null function");
+        return function::apply;
     }
 
     /**
@@ -691,7 +754,8 @@ public abstract class Dispatching {
      * @return the adapted proposition
      */
     public static BooleanSupplier proposition(Supplier<Boolean> supplier) {
-        return new SupplierToProposition(supplier);
+        dbc.precondition(supplier != null, "cannot adapt a null supplier");
+        return supplier::get;
     }
 
     /**
@@ -702,7 +766,8 @@ public abstract class Dispatching {
      * @return the adapted predicate
      */
     public static <T> Predicate<T> predicate(Function<T, Boolean> function) {
-        return new FunctionToPredicate<T>(function);
+        dbc.precondition(function != null, "cannot adapt a null function");
+        return function::apply;
     }
 
     /**
@@ -714,7 +779,8 @@ public abstract class Dispatching {
      * @return the adapted predicate
      */
     public static <T1, T2> BiPredicate<T1, T2> predicate(BiFunction<T1, T2, Boolean> function) {
-        return new BinaryFunctionToPredicate<>(function);
+        dbc.precondition(function != null, "cannot adapt a null function");
+        return function::apply;
     }
 
     /**
@@ -727,6 +793,7 @@ public abstract class Dispatching {
      * @return the adapted predicate
      */
     public static <T1, T2, T3> TriPredicate<T1, T2, T3> predicate(TriFunction<T1, T2, T3, Boolean> function) {
-        return new TernaryFunctionToPredicate<>(function);
+        dbc.precondition(function != null, "cannot adapt a null function");
+        return function::apply;
     }
 }
