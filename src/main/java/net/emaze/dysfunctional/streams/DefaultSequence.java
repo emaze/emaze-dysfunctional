@@ -1,25 +1,39 @@
 package net.emaze.dysfunctional.streams;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 import net.emaze.dysfunctional.consumers.FirstElement;
 import net.emaze.dysfunctional.consumers.LastElement;
 import net.emaze.dysfunctional.consumers.MaybeLastElement;
 import net.emaze.dysfunctional.consumers.MaybeOneElement;
 import net.emaze.dysfunctional.consumers.OneElement;
 import net.emaze.dysfunctional.filtering.AtIndex;
+import net.emaze.dysfunctional.filtering.AtMostMemoryIterator;
+import net.emaze.dysfunctional.filtering.DropWhile;
+import net.emaze.dysfunctional.filtering.MemoryIterator;
 import net.emaze.dysfunctional.filtering.Nth;
+import net.emaze.dysfunctional.filtering.TakeUpToIterator;
+import net.emaze.dysfunctional.filtering.TakeWhileIterator;
+import net.emaze.dysfunctional.filtering.UntilCount;
 
 public class DefaultSequence<T> extends BaseSequence<T> {
 
     public DefaultSequence(Stream<T> stream) {
         super(stream);
+    }
+
+    public static <T> Sequence<T> fromIterator(Iterator<T> iterator) {
+        final Iterable<T> iterable = () -> iterator;
+        return new DefaultSequence<>(StreamSupport.stream(iterable.spliterator(), false));
     }
 
     @Override
@@ -98,5 +112,44 @@ public class DefaultSequence<T> extends BaseSequence<T> {
     @Override
     public Optional<T> maybeAt(long index) {
         return filter(new AtIndex<>(index)).findFirst();
+    }
+
+    @Override
+    public Sequence<T> take(int howMany) {
+        final Iterator<T> iterator = new TakeUpToIterator<>(stream.iterator(), howMany);
+        return fromIterator(iterator);
+    }
+
+    @Override
+    public Sequence<T> takeLast(int howMany) {
+        final Iterator<T> iterator = new MemoryIterator<>(stream.iterator(), howMany);
+        return fromIterator(iterator);
+    }
+
+    @Override
+    public Sequence<T> takeAtMostLast(int howMany) {
+        final Iterator<T> iterator = new AtMostMemoryIterator<>(stream.iterator(), howMany);
+        return fromIterator(iterator);
+    }
+
+    @Override
+    public Sequence<T> takeWhile(Predicate<T> predicate) {
+        final Iterator<T> iterator = new TakeWhileIterator<>(stream.iterator(), predicate);
+        return fromIterator(iterator);
+    }
+
+    @Override
+    public Sequence<T> drop(long howMany) {
+        return filter(new DropWhile<>(new UntilCount<>(howMany)));
+    }
+
+    @Override
+    public Sequence<T> dropWhile(Predicate<T> predicate) {
+        return filter(new DropWhile<>(predicate));
+    }
+
+    @Override
+    public Sequence<T> slice(long from, long howMany) {
+        return drop(from).take((int) howMany);
     }
 }
