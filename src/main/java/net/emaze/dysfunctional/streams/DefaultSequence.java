@@ -16,6 +16,7 @@ import net.emaze.dysfunctional.consumers.LastElement;
 import net.emaze.dysfunctional.consumers.MaybeLastElement;
 import net.emaze.dysfunctional.consumers.MaybeOneElement;
 import net.emaze.dysfunctional.consumers.OneElement;
+import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.filtering.AtIndex;
 import net.emaze.dysfunctional.filtering.AtMostMemoryIterator;
 import net.emaze.dysfunctional.filtering.DropWhile;
@@ -32,6 +33,7 @@ public class DefaultSequence<T> extends BaseSequence<T> {
     }
 
     public static <T> Sequence<T> fromIterator(Iterator<T> iterator) {
+        dbc.precondition(iterator != null, "cannot create a sequence from a null iterator");
         final Iterable<T> iterable = () -> iterator;
         return new DefaultSequence<>(StreamSupport.stream(iterable.spliterator(), false));
     }
