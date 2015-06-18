@@ -2,10 +2,15 @@ package net.emaze.dysfunctional;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.stream.Stream;
 import net.emaze.dysfunctional.streams.DefaultSequence;
 import net.emaze.dysfunctional.streams.Sequence;
 
 public abstract class Sequences {
+
+    public static <T> Sequence<T> empty() {
+        return new DefaultSequence<>(Stream.empty());
+    }
 
     @SafeVarargs
     public static <T> Sequence<T> of(T... array) {

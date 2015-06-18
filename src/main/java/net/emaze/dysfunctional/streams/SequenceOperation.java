@@ -2,6 +2,7 @@ package net.emaze.dysfunctional.streams;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 public interface SequenceOperation<T> {
 
@@ -20,4 +21,6 @@ public interface SequenceOperation<T> {
     Sequence<T> dropWhile(Predicate<T> predicate);
 
     Sequence<T> slice(long from, long howMany);
+
+    Sequence<T> chain(Stream<T> other);
 }

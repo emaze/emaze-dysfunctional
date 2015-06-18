@@ -154,4 +154,9 @@ public class DefaultSequence<T> extends BaseSequence<T> {
     public Sequence<T> slice(long from, long howMany) {
         return drop(from).take((int) howMany);
     }
+
+    @Override
+    public Sequence<T> chain(Stream<T> other) {
+        return lift(Stream.concat(stream, other));
+    }
 }
