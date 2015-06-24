@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.streams;
+package net.emaze.dysfunctional.sequences;
 
 import java.util.Comparator;
 import java.util.HashSet;

@@ -2,7 +2,7 @@ package net.emaze.dysfunctional;
 
 import java.util.Iterator;
 import java.util.stream.Stream;
-import net.emaze.dysfunctional.streams.Sequence;
+import net.emaze.dysfunctional.sequences.Sequence;
 
 public abstract class Sequences {
 
