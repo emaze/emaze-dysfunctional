@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.dispatching.logic.Always;
 import net.emaze.dysfunctional.dispatching.logic.Never;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.iterations.ConstantIterator;
 import org.junit.Assert;
 import org.junit.Test;
@@ -105,7 +105,7 @@ public class FilteringIteratorTest {
         private int calls = 0;
 
         @Override
-        public boolean accept(T elem) {
+        public boolean test(T elem) {
             calls++;
             return true;
         }

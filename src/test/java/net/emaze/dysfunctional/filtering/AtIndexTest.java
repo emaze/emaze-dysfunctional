@@ -17,16 +17,16 @@ public class AtIndexTest {
     @Test
     public void atIndexIsZeroBased() {
         AtIndex<Void> nth = new AtIndex<Void>(0);
-        Assert.assertTrue(nth.accept(null));
+        Assert.assertTrue(nth.test(null));
     }
     
     @Test
     public void atReturnsTrueOnlyAtIndex() {
         AtIndex<Void> at = new AtIndex<Void>(1);
         List<Boolean> got = new ArrayList<Boolean>();
-        got.add(at.accept(null));
-        got.add(at.accept(null));
-        got.add(at.accept(null));
+        got.add(at.test(null));
+        got.add(at.test(null));
+        got.add(at.test(null));
         Assert.assertEquals(Arrays.asList(false, true, false), got);
     }
 

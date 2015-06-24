@@ -5,13 +5,13 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Queue;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import net.emaze.dysfunctional.windows.CenteredWindowIterator;
 import net.emaze.dysfunctional.windows.PreciseWindowIterator;
 import net.emaze.dysfunctional.windows.TrailsIterator;
@@ -34,7 +34,7 @@ public abstract class Windowing {
      * @return the window iterator
      */
     public static <T> Iterator<List<T>> window(int windowSize, Iterator<T> iterator) {
-        final Provider<List<T>> factory = Compositions.compose(new Vary<List<T>, ArrayList<T>>(), new ArrayListFactory<T>());
+        final Supplier<List<T>> factory = Compositions.compose(new Vary<ArrayList<T>, List<T>>(), new ArrayListFactory<T>());
         return new PreciseWindowIterator<List<T>, T>(iterator, windowSize, factory);
     }
 
@@ -50,7 +50,7 @@ public abstract class Windowing {
      */
     public static <T> Iterator<List<T>> window(int windowSize, Iterable<T> iterable) {
         dbc.precondition(iterable != null, "cannot create a window iterator from a null iterable");
-        final Provider<List<T>> factory = Compositions.compose(new Vary<List<T>, ArrayList<T>>(), new ArrayListFactory<T>());
+        final Supplier<List<T>> factory = Compositions.compose(new Vary<ArrayList<T>, List<T>>(), new ArrayListFactory<T>());
         return new PreciseWindowIterator<List<T>, T>(iterable.iterator(), windowSize, factory);
     }
 
@@ -63,11 +63,11 @@ public abstract class Windowing {
      * @param <T> the iterator element type
      * @param windowSize the window size
      * @param iterator the iterable to be adapted
-     * @param provider the provider providing the window collection
+     * @param supplier the supplier providing the window collection
      * @return the window iterator
      */
-    public static <W extends Collection<T>, T> Iterator<W> window(int windowSize, Iterator<T> iterator, Provider<W> provider) {
-        return new PreciseWindowIterator<W, T>(iterator, windowSize, provider);
+    public static <W extends Collection<T>, T> Iterator<W> window(int windowSize, Iterator<T> iterator, Supplier<W> supplier) {
+        return new PreciseWindowIterator<W, T>(iterator, windowSize, supplier);
     }
 
     /**
@@ -79,12 +79,12 @@ public abstract class Windowing {
      * @param <T> the iterator element type
      * @param windowSize the window size
      * @param iterable the iterable to be adapted
-     * @param provider the provider providing the window collection
+     * @param supplier the supplier providing the window collection
      * @return the window iterator
      */
-    public static <W extends Collection<T>, T> Iterator<W> window(int windowSize, Iterable<T> iterable, Provider<W> provider) {
+    public static <W extends Collection<T>, T> Iterator<W> window(int windowSize, Iterable<T> iterable, Supplier<W> supplier) {
         dbc.precondition(iterable != null, "cannot create a window iterator from a null iterable");
-        return new PreciseWindowIterator<W, T>(iterable.iterator(), windowSize, provider);
+        return new PreciseWindowIterator<W, T>(iterable.iterator(), windowSize, supplier);
     }
 
     /**
@@ -98,9 +98,9 @@ public abstract class Windowing {
      * @param iterator the iterator to be adapted
      * @return the window iterator
      */
-    public static <T> Iterator<List<Maybe<T>>> centered(int windowSize, Iterator<T> iterator) {
-        final Provider<List<Maybe<T>>> factory = Compositions.compose(new Vary<List<Maybe<T>>, ArrayList<Maybe<T>>>(), new ArrayListFactory<Maybe<T>>());
-        return new CenteredWindowIterator<List<Maybe<T>>, T>(iterator, windowSize, factory);
+    public static <T> Iterator<List<Optional<T>>> centered(int windowSize, Iterator<T> iterator) {
+        final Supplier<List<Optional<T>>> factory = Compositions.compose(new Vary<ArrayList<Optional<T>>, List<Optional<T>>>(), new ArrayListFactory<Optional<T>>());
+        return new CenteredWindowIterator<List<Optional<T>>, T>(iterator, windowSize, factory);
     }
 
     /**
@@ -114,10 +114,10 @@ public abstract class Windowing {
      * @param iterable the iterable to be adapted
      * @return the window iterator
      */
-    public static <T> Iterator<List<Maybe<T>>> centered(int windowSize, Iterable<T> iterable) {
+    public static <T> Iterator<List<Optional<T>>> centered(int windowSize, Iterable<T> iterable) {
         dbc.precondition(iterable != null, "cannot create a centered window iterator from a null iterable");
-        final Provider<List<Maybe<T>>> factory = Compositions.compose(new Vary<List<Maybe<T>>, ArrayList<Maybe<T>>>(), new ArrayListFactory<Maybe<T>>());
-        return new CenteredWindowIterator<List<Maybe<T>>, T>(iterable.iterator(), windowSize, factory);
+        final Supplier<List<Optional<T>>> factory = Compositions.compose(new Vary<ArrayList<Optional<T>>, List<Optional<T>>>(), new ArrayListFactory<Optional<T>>());
+        return new CenteredWindowIterator<List<Optional<T>>, T>(iterable.iterator(), windowSize, factory);
     }
 
     /**
@@ -130,11 +130,11 @@ public abstract class Windowing {
      * @param <T> the iterator element type
      * @param windowSize the window size (must be an odd positive integer)
      * @param iterator the iterator to be adapted
-     * @param provider the provider providing the window collection
+     * @param supplier the supplier providing the window collection
      * @return the window iterator
      */
-    public static <W extends Collection<Maybe<T>>, T> Iterator<W> centered(int windowSize, Iterator<T> iterator, Provider<W> provider) {
-        return new CenteredWindowIterator<W, T>(iterator, windowSize, provider);
+    public static <W extends Collection<Optional<T>>, T> Iterator<W> centered(int windowSize, Iterator<T> iterator, Supplier<W> supplier) {
+        return new CenteredWindowIterator<W, T>(iterator, windowSize, supplier);
     }
 
     /**
@@ -147,12 +147,12 @@ public abstract class Windowing {
      * @param <T> the iterator element type
      * @param windowSize the window size (must be an odd positive integer)
      * @param iterable the iterable to be adapted
-     * @param provider the provider providing the window collection
+     * @param supplier the supplier providing the window collection
      * @return the window iterator
      */
-    public static <W extends Collection<Maybe<T>>, T> Iterator<W> centered(int windowSize, Iterable<T> iterable, Provider<W> provider) {
+    public static <W extends Collection<Optional<T>>, T> Iterator<W> centered(int windowSize, Iterable<T> iterable, Supplier<W> supplier) {
         dbc.precondition(iterable != null, "cannot create a centered window iterator from a null iterable");
-        return new CenteredWindowIterator<W, T>(iterable.iterator(), windowSize, provider);
+        return new CenteredWindowIterator<W, T>(iterable.iterator(), windowSize, supplier);
     }
 
     /**
@@ -169,28 +169,28 @@ public abstract class Windowing {
      * @param iterator the iterator to be adapted
      * @return
      */
-    public static <T> Iterator<Queue<Maybe<T>>> trails(int trailSize, Iterator<T> iterator) {
-        return new TrailsIterator<Queue<Maybe<T>>, T>(iterator, trailSize, new Identity<Queue<Maybe<T>>>());
+    public static <T> Iterator<Queue<Optional<T>>> trails(int trailSize, Iterator<T> iterator) {
+        return new TrailsIterator<>(iterator, trailSize, Function.identity());
     }
 
     /**
      * Adapts an iterator to an iterator showing predecessors of the contained
      * elements. Copy semantics of the internal queue yielded is controlled by
-     * the copy delegate. e.g:
+     * the copy function. e.g:
      * <code>
      * iterator: [1,2,3,4], trailSize: 3 ->
      * [[Nothing, Nothing, Just 1],[Nothing Just 1, Just 2], [Just 1, Just 2, Just 3], [Just 2, Just 3, Just 4]]
      * </code>
      *
-     * @param <W> the window type
      * @param <T> the adapted iterator element type
+     * @param <W> the window type
      * @param trailSize the trail size
      * @param iterator the iterator to be adapted
      * @param copy copy semantics for the internal queue
      * @return the adapted iterator
      */
-    public static <W extends Collection<?>, T> Iterator<W> trails(int trailSize, Iterator<T> iterator, Delegate<W, Queue<Maybe<T>>> copy) {
-        return new TrailsIterator<W, T>(iterator, trailSize, copy);
+    public static <T, W extends Collection<?>> Iterator<W> trails(int trailSize, Iterator<T> iterator, Function<Queue<Optional<T>>, W> copy) {
+        return new TrailsIterator<>(iterator, trailSize, copy);
     }
 
     /**
@@ -207,29 +207,29 @@ public abstract class Windowing {
      * @param iterable the iterable to be adapted
      * @return the adapted iterator
      */
-    public static <T> Iterator<Queue<Maybe<T>>> trails(int trailSize, Iterable<T> iterable) {
+    public static <T> Iterator<Queue<Optional<T>>> trails(int trailSize, Iterable<T> iterable) {
         dbc.precondition(iterable != null, "cannot create a trails iterator from a null iterable");
-        return new TrailsIterator<Queue<Maybe<T>>, T>(iterable.iterator(), trailSize, new Identity<Queue<Maybe<T>>>());
+        return new TrailsIterator<>(iterable.iterator(), trailSize, Function.identity());
     }
 
     /**
      * Adapts an iterator to an iterator showing predecessors of the contained
      * elements. Copy semantics of the internal queue yielded is controlled by
-     * the copy delegate. e.g:
+     * the copy function. e.g:
      * <code>
      * iterable: [1,2,3,4], trailSize: 3 ->
      * [[Nothing, Nothing, Just 1],[Nothing Just 1, Just 2], [Just 1, Just 2, Just 3], [Just 2, Just 3, Just 4]]
      * </code>
      *
-     * @param <W> the window type
      * @param <T> the adapted iterator element type
+     * @param <W> the window type
      * @param trailSize the trail size
      * @param iterable the iterable to be adapted
      * @param copy copy semantics for the internal queue
      * @return the adapted iterator
      */
-    public static <W extends Collection<?>, T> Iterator<W> trails(int trailSize, Iterable<T> iterable, Delegate<W, Queue<Maybe<T>>> copy) {
+    public static <T, W extends Collection<?>> Iterator<W> trails(int trailSize, Iterable<T> iterable, Function<Queue<Optional<T>>, W> copy) {
         dbc.precondition(iterable != null, "cannot create a trails iterator from a null iterable");
-        return new TrailsIterator<W, T>(iterable.iterator(), trailSize, copy);
+        return new TrailsIterator<>(iterable.iterator(), trailSize, copy);
     }
 }

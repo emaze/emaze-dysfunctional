@@ -23,7 +23,7 @@ public abstract class Strings {
      * @return the resulting string
      */
     public static String concat(String... array) {
-        return new ConcatStrings().perform(new ArrayIterator<String>(array));
+        return new ConcatStrings().apply(new ArrayIterator<String>(array));
     }
 
     /**
@@ -34,7 +34,7 @@ public abstract class Strings {
      */
     public static String concat(Iterable<String> iterable) {
         dbc.precondition(iterable != null, "cannot concat a null iterable");
-        return new ConcatStrings().perform(iterable.iterator());
+        return new ConcatStrings().apply(iterable.iterator());
     }
 
     /**
@@ -44,7 +44,7 @@ public abstract class Strings {
      * @return the resulting string
      */
     public static String concat(Iterator<String> iterator) {
-        return new ConcatStrings().perform(iterator);
+        return new ConcatStrings().apply(iterator);
     }
 
     /**
@@ -55,7 +55,7 @@ public abstract class Strings {
      * @return the resulting string
      */
     public static <T> String join(T[] array) {
-        return new JoinStrings<T>().perform(new ArrayIterator<T>(array));
+        return new JoinStrings<T>().apply(new ArrayIterator<T>(array));
     }
 
     /**
@@ -67,7 +67,7 @@ public abstract class Strings {
      */
     public static <T> String join(Iterable<T> iterable) {
         dbc.precondition(iterable != null, "cannot join a null iterable");
-        return new JoinStrings<T>().perform(iterable.iterator());
+        return new JoinStrings<T>().apply(iterable.iterator());
     }
 
     /**
@@ -78,7 +78,7 @@ public abstract class Strings {
      * @return the resulting string
      */
     public static <T> String join(Iterator<T> iterator) {
-        return new JoinStrings<T>().perform(iterator);
+        return new JoinStrings<T>().apply(iterator);
     }
 
     /**
@@ -92,7 +92,7 @@ public abstract class Strings {
      * @return the resulting string
      */
     public static <T, V> String interpose(T[] values, Iterator<V> separators) {
-        return new InterposeStrings<T, V>().perform(new ArrayIterator<T>(values), separators);
+        return new InterposeStrings<T, V>().apply(new ArrayIterator<>(values), separators);
     }
 
     /**
@@ -107,7 +107,7 @@ public abstract class Strings {
      */
     public static <T, V> String interpose(Iterable<T> values, Iterator<V> separators) {
         dbc.precondition(values != null, "calling interpose with a null iterable");
-        return new InterposeStrings<T, V>().perform(values.iterator(), separators);
+        return new InterposeStrings<T, V>().apply(values.iterator(), separators);
     }
 
     /**
@@ -121,7 +121,7 @@ public abstract class Strings {
      * @return the resulting string
      */
     public static <T, V> String interpose(Iterator<T> values, Iterator<V> separators) {
-        return new InterposeStrings<T, V>().perform(values, separators);
+        return new InterposeStrings<T, V>().apply(values, separators);
     }
 
     /**
@@ -135,7 +135,7 @@ public abstract class Strings {
      * @return the resulting string
      */
     public static <T, V> String interpose(T[] values, V separator) {
-        return new InterposeStrings<T, V>().perform(new ArrayIterator<T>(values), new ConstantIterator<V>(separator));
+        return new InterposeStrings<T, V>().apply(new ArrayIterator<>(values), new ConstantIterator<>(separator));
     }
 
     /**
@@ -150,7 +150,7 @@ public abstract class Strings {
      */
     public static <T, V> String interpose(Iterable<T> values, V separator) {
         dbc.precondition(values != null, "cannot interpose from a null iterable");
-        return new InterposeStrings<T, V>().perform(values.iterator(), new ConstantIterator<V>(separator));
+        return new InterposeStrings<T, V>().apply(values.iterator(), new ConstantIterator<>(separator));
     }
 
     /**
@@ -164,7 +164,7 @@ public abstract class Strings {
      * @return the resulting string
      */
     public static <T, V> String interpose(Iterator<T> values, V separator) {
-        return new InterposeStrings<T, V>().perform(values, new ConstantIterator<V>(separator));
+        return new InterposeStrings<T, V>().apply(values, new ConstantIterator<>(separator));
     }
 
     /**

@@ -2,9 +2,9 @@ package net.emaze.dysfunctional.consumers;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
-import net.emaze.dysfunctional.options.Maybe;
-import net.emaze.dysfunctional.options.MaybeIterator;
+import java.util.function.Function;
+import java.util.Optional;
+import net.emaze.dysfunctional.options.OptionalIterator;
 
 /**
  * Searches for zero or one element, throws if more than one element is found.
@@ -12,12 +12,12 @@ import net.emaze.dysfunctional.options.MaybeIterator;
  * @param <E> the iterator element type
  * @author rferranti
  */
-public class MaybeOneElement<E> implements Delegate<Maybe<E>, Iterator<E>> {
+public class MaybeOneElement<E> implements Function<Iterator<E>, Optional<E>> {
 
     @Override
-    public Maybe<E> perform(Iterator<E> consumable) {
+    public Optional<E> apply(Iterator<E> consumable) {
         dbc.precondition(consumable != null, "consuming a null iterator");
-        final Maybe<E> maybeFound = new MaybeIterator<E>(consumable).next();
+        final Optional<E> maybeFound = new OptionalIterator<E>(consumable).next();
         dbc.state(!consumable.hasNext(), "found more than one element consuming the iterator");
         return maybeFound;
     }

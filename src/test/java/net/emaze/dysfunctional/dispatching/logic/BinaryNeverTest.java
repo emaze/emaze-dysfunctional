@@ -12,6 +12,6 @@ public class BinaryNeverTest {
 
     @Test
     public void neverYieldsFalseWithNulls() {
-        Assert.assertFalse(new BinaryNever<Object, Object>().accept(null, null));
+        Assert.assertFalse(new BinaryNever<Object, Object>().test(null, null));
     }
 }

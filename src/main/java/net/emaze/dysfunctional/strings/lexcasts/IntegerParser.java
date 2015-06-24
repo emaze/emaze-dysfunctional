@@ -1,13 +1,13 @@
 package net.emaze.dysfunctional.strings.lexcasts;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 
 /**
  *
  * @author rferranti
  */
-public class IntegerParser implements Delegate<Integer, String> {
+public class IntegerParser implements Function<String, Integer> {
 
     private final int radix;
 
@@ -18,7 +18,7 @@ public class IntegerParser implements Delegate<Integer, String> {
     }
 
     @Override
-    public Integer perform(String parsee) {
+    public Integer apply(String parsee) {
         dbc.precondition(parsee != null, "cannot parse a null string");
         return Integer.parseInt(parsee, radix);
     }

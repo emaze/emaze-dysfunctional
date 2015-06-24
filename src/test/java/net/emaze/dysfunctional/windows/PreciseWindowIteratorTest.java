@@ -11,7 +11,7 @@ import net.emaze.dysfunctional.Compositions;
 import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.collections.LinkedListFactory;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -23,7 +23,7 @@ import org.junit.Test;
  */
 public class PreciseWindowIteratorTest {
 
-    private static Provider<List<O>> LIST_FACTORY = Compositions.compose(new Vary<List<O>, ArrayList<O>>(), new ArrayListFactory<O>());
+    private static Supplier<List<O>> LIST_FACTORY = Compositions.compose(new Vary<ArrayList<O>, List<O>>(), new ArrayListFactory<O>());
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingPreciseWindowIteratorWithNullIteratorYieldsException() {

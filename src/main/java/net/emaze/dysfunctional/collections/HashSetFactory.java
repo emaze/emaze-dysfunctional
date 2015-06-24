@@ -1,17 +1,17 @@
 package net.emaze.dysfunctional.collections;
 
 import java.util.HashSet;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 
 /**
  * Creates an empty HashSet.
  * @param <E> the HashSet element type parameter
  * @author rferranti
  */
-public class HashSetFactory<E> implements Provider<HashSet<E>> {
+public class HashSetFactory<E> implements Supplier<HashSet<E>> {
 
     @Override
-    public HashSet<E> provide() {
+    public HashSet<E> get() {
         return new HashSet<E>();
     }
 }

@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.strings.predicates;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 
 public class StringEqualsIgnoreCase implements Predicate<String> {
 
@@ -13,7 +13,7 @@ public class StringEqualsIgnoreCase implements Predicate<String> {
     }
 
     @Override
-    public boolean accept(String rhs) {
+    public boolean test(String rhs) {
         dbc.precondition(rhs != null, "cannot check equalsIgnoreCase vs a null rhs");
         return lhs.equalsIgnoreCase(rhs);
     }

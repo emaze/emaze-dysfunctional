@@ -210,7 +210,7 @@
         <q>Applications</q>
         <p>
             <span class="function">transform</span>
-            <span class="description">Transforms a stream of elements with a delegate</span>
+            <span class="description">Transforms a stream of elements with a function</span>
             <code>Applications.transform(Iterations.iterator(1,2), new ToStringTransformer&lt;Integer&gt;());<span class="result">&rarr; Iterator&lt;String&gt; ["1", "2"]</span></code>
         </p>
         <p>
@@ -220,12 +220,12 @@
         </p>
         <p>
             <span class="function">tap</span>
-            <span class="description">Returns an iterator which binds an action to each call to next()</span>
+            <span class="description">Returns an iterator which binds an consumer to each call to next()</span>
             <code>Applications.tap(Iterations.iterator(1,2), new Noop&lt;Integer&gt;() );<span class="result">&rarr; Iterator&lt;Integer&gt; yielding [1, 2] and invoking Noop() on each element lazily</span></code>
         </p>
         <p>
             <span class="function">each</span>
-            <span class="description">Eagerly invokes specified action on all elements</span>
+            <span class="description">Eagerly invokes specified consumer on all elements</span>
             <code>
 Applications.each(Iterations.iterator(1,2) new Action&lt;Integer&gt;(){
     public void perform(Integer value) {
@@ -253,14 +253,14 @@ Applications.each(Iterations.iterator(1,2) new Action&lt;Integer&gt;(){
             <code>Dispatching.ignore(new ConstantProvider&lt;String&gt;("a"), Long.class);<span class="result">&rarr; Delegate&lt;String, Long&gt;</span></code>
         </p>
         <p>
-            <span class="function">delegate</span>
-            <span class="function">action</span>
+            <span class="function">function</span>
+            <span class="function">consumer</span>
             <span class="function">predicate</span>
-            <span class="function">provider</span>
+            <span class="function">supplier</span>
             <span class="function">runnable</span>
             <span class="function">proposition</span>
             <span class="description">Adapt function objects</span>
-            <code>Dispatching.delegate(new Always&lt;String&gt;());<span class="result">&rarr; Delegate&lt;Boolean, String&gt;</span></code>
+            <code>Dispatching.function(new Always&lt;String&gt;());<span class="result">&rarr; Delegate&lt;Boolean, String&gt;</span></code>
         </p>
     </div>
 
@@ -639,7 +639,7 @@ calls.get(); <span class="result">&rarr; 2l</span></code>
             <span class="function">narrower</span>
             <span class="description">TODO: explain</span>
             <code>final Provider&lt;ArrayList&lt;Long&gt;&gt; = new ArrayListFactory&lt;Long&gt;();
-Dispatching.compose(new Narrow&lt;List&lt;Long&gt;, ArrayList&lt;Long&gt;&gt;(), provider);<span class="result">&rarr; Provider&lt;List&lt;Long&gt;&gt;</span></code>
+Dispatching.compose(new Narrow&lt;List&lt;Long&gt;, ArrayList&lt;Long&gt;&gt;(), supplier);<span class="result">&rarr; Provider&lt;List&lt;Long&gt;&gt;</span></code>
         </p>
         <p>
             <span class="function">widen</span>

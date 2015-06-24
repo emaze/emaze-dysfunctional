@@ -9,7 +9,7 @@ package net.emaze.dysfunctional.dispatching.actions;
  * @param <T3> the third type parameter
  * @author rferranti
  */
-public class TernaryNoop<T1, T2, T3> implements TernaryAction<T1, T2, T3> {
+public class TernaryNoop<T1, T2, T3> implements TriConsumer<T1, T2, T3> {
 
     /**
      * Does nothing ignoring parameters.
@@ -19,6 +19,6 @@ public class TernaryNoop<T1, T2, T3> implements TernaryAction<T1, T2, T3> {
      * @param third the third parameter
      */
     @Override
-    public void perform(T1 first, T2 second, T3 third) {
+    public void accept(T1 first, T2 second, T3 third) {
     }
 }

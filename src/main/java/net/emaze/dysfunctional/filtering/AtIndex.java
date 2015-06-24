@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.filtering;
 
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 
 /**
  * A stateful predicate yielding true when called the {@code nth - 1} time.
@@ -24,7 +24,7 @@ public class AtIndex<E> implements Predicate<E> {
      * @return
      */
     @Override
-    public boolean accept(E element) {
+    public boolean test(E element) {
         return target == current++;
     }
 }

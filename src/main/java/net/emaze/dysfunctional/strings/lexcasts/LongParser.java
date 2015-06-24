@@ -1,13 +1,13 @@
 package net.emaze.dysfunctional.strings.lexcasts;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 
 /**
  *
  * @author rferranti
  */
-public class LongParser implements Delegate<Long, String> {
+public class LongParser implements Function<String, Long> {
 
     private final int radix;
 
@@ -18,7 +18,7 @@ public class LongParser implements Delegate<Long, String> {
     }
 
     @Override
-    public Long perform(String parsee) {
+    public Long apply(String parsee) {
         dbc.precondition(parsee != null, "cannot parse a null string");
         return Long.parseLong(parsee, radix);
     }

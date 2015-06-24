@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Queue;
 import net.emaze.dysfunctional.consumers.FirstElement;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.HasNext;
 import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 import net.emaze.dysfunctional.iterations.TransformingIterator;
 import net.emaze.dysfunctional.reductions.Every;
@@ -57,10 +56,10 @@ public class RoundrobinShortestIterator<E> extends ReadOnlyIterator<E> {
     }
 
     private void prefetchValues() {
-        if (!new Every<Iterator<E>>(new HasNext<Iterator<E>>()).accept(memory.iterator())) {
+        if (!new Every<>(Iterator<E>::hasNext).test(memory.iterator())) {
             return;
         }
-        final Iterator<E> values = new TransformingIterator<E, Iterator<E>>(memory.iterator(), new FirstElement<E>());
+        final Iterator<E> values = new TransformingIterator<>(memory.iterator(), new FirstElement<>());
         while (values.hasNext()) {
             prefetchedValues.add(values.next());
         }

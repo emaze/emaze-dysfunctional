@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.filtering;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 
 
 /**
@@ -29,7 +29,7 @@ public class FilteringIterator<E> implements Iterator<E> {
     public boolean hasNext() {
         while (!currentHasValue && iterator.hasNext()) {
             final E val = iterator.next();
-            currentHasValue = filter.accept(val);
+            currentHasValue = filter.test(val);
             current = val;
         }
         return currentHasValue;

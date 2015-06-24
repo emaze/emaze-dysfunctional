@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import java.util.function.Function;
+import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -25,7 +25,7 @@ public class InterceptorChainTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingChainWithNullChaingYieldsException() {
-        final Delegate<O, O> firstParam = new Identity<O>();
+        final Function<O, O> firstParam = Function.identity();
         new InterceptorChain<O, O>(firstParam, null);
     }
 
@@ -37,7 +37,7 @@ public class InterceptorChainTest {
                 new BucketFillingInterceptor(2, bucket),
                 new BucketFillingInterceptor(1, bucket));
         final InterceptorChain<O, O> ic = new InterceptorChain<O, O>(new BucketFillingDelegate(4, bucket), chain);
-        ic.perform(O.IGNORED);
+        ic.apply(O.IGNORED);
         Assert.assertEquals(Arrays.asList(1, 2, 3, 4, 3, 2, 1), bucket);
     }
 
@@ -50,13 +50,13 @@ public class InterceptorChainTest {
                 new BucketFillingInterceptor(1, bucket));
         final InterceptorChain<O, O> ic = new InterceptorChain<O, O>(new BucketFillingDelegate(4, bucket), chain);
         try {
-            ic.perform(O.IGNORED);
+            ic.apply(O.IGNORED);
         } catch (Exception ex) {
         }
         Assert.assertEquals(Arrays.asList(1, 1), bucket);
     }
 
-    public static class BucketFillingDelegate implements Delegate<O, O> {
+    public static class BucketFillingDelegate implements Function<O, O> {
 
         private final int id;
         private final List<Integer> bucket;
@@ -67,7 +67,7 @@ public class InterceptorChainTest {
         }
 
         @Override
-        public O perform(O value) {
+        public O apply(O value) {
             bucket.add(id);
             return value;
         }

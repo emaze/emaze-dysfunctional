@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.composing;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 
 /**
  * A composite ternary predicate yielding true when every predicate match (no
@@ -12,19 +12,19 @@ import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
  * @param <E3> the predicates third parameter type
  * @author rferranti
  */
-public class AllMatchingTernaryPredicate<E1, E2, E3> implements TernaryPredicate<E1, E2, E3> {
+public class AllMatchingTernaryPredicate<E1, E2, E3> implements TriPredicate<E1, E2, E3> {
 
-    private final Iterable<TernaryPredicate<E1, E2, E3>> predicates;
+    private final Iterable<TriPredicate<E1, E2, E3>> predicates;
 
-    public AllMatchingTernaryPredicate(Iterable<TernaryPredicate<E1, E2, E3>> predicates) {
+    public AllMatchingTernaryPredicate(Iterable<TriPredicate<E1, E2, E3>> predicates) {
         dbc.precondition(predicates != null, "cannot evaluate and(...) of a null iterable of ternary predicates");
         this.predicates = predicates;
     }
 
     @Override
-    public boolean accept(E1 first, E2 second, E3 third) {
-        for (TernaryPredicate<E1, E2, E3> predicate : predicates) {
-            if (!predicate.accept(first, second, third)) {
+    public boolean test(E1 first, E2 second, E3 third) {
+        for (TriPredicate<E1, E2, E3> predicate : predicates) {
+            if (!predicate.test(first, second, third)) {
                 return false;
             }
         }

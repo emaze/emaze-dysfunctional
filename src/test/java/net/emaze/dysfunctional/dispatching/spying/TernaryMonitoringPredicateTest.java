@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.dispatching.spying;
 
 import java.util.concurrent.atomic.AtomicLong;
 import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
-import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,8 +26,8 @@ public class TernaryMonitoringPredicateTest {
     @Test
     public void callingIncrementsTheAtomicLong() {
         final AtomicLong state = new AtomicLong();
-        final TernaryPredicate<O, O, O> spy = new TernaryMonitoringPredicate<O, O, O>(new TernaryAlways<O, O, O>(), state);
-        spy.accept(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+        final TriPredicate<O, O, O> spy = new TernaryMonitoringPredicate<O, O, O>(new TernaryAlways<O, O, O>(), state);
+        spy.test(O.ONE, O.ANOTHER, O.YET_ANOTHER);
         Assert.assertEquals(1l, state.get());
     }
 }

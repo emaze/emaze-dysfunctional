@@ -1,12 +1,13 @@
 package net.emaze.dysfunctional.options;
 
+import java.util.Optional;
+import java.util.function.Function;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
 /**
- * A mutable container of an optional value.
+ * A mutable container of an optional get.
  *
  * @param <T> the content type
  * @author rferranti
@@ -25,28 +26,28 @@ public class Box<T> {
         return new Box<E>();
     }
 
-    public <R> Box<R> fmap(Delegate<R, T> delegate) {
-        dbc.precondition(delegate != null, "cannot perform fmap with a null delegate");
-        final Maybe<R> m = content.fmap(delegate);
-        return m.hasValue() ? Box.of(m.value()) : Box.<R>empty();
+    public <R> Box<R> map(Function<T, R> function) {
+        dbc.precondition(function != null, "cannot perform fmap with a null function");
+        final Maybe<R> m = content.map(function);
+        return m.isPresent() ? Box.of(m.get()) : Box.<R>empty();
     }
 
     public boolean isEmpty() {
-        return !content.hasValue();
+        return !content.isPresent();
     }
 
-    public boolean hasContent() {
-        return content.hasValue();
+    public boolean isPresent() {
+        return content.isPresent();
     }
 
-    public Maybe<T> unload() {
+    public Optional<T> unload() {
         final Maybe<T> old = content;
         content = Maybe.nothing();
-        return old;
+        return old.optional();
     }
 
     public T getContent() {
-        return content.value();
+        return content.get();
     }
 
     public void setContent(T content) {

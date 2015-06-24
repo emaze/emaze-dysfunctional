@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.collections;
 
 import java.util.LinkedHashSet;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 
 /**
  * Creates an empty LinkedHashSet.
@@ -9,10 +9,10 @@ import net.emaze.dysfunctional.dispatching.delegates.Provider;
  * @param <E> the LinkedHashSet element type parameter
  * @author rferranti
  */
-public class LinkedHashSetFactory<E> implements Provider<LinkedHashSet<E>> {
+public class LinkedHashSetFactory<E> implements Supplier<LinkedHashSet<E>> {
 
     @Override
-    public LinkedHashSet<E> provide() {
+    public LinkedHashSet<E> get() {
         return new LinkedHashSet<E>();
     }
 }

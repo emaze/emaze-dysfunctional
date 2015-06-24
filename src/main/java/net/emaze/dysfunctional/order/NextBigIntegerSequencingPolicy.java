@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.order;
 
 import java.math.BigInteger;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 
 /**
  * A sequencing policy for BigIntegers.
@@ -12,9 +12,9 @@ import net.emaze.dysfunctional.options.Maybe;
 public class NextBigIntegerSequencingPolicy implements SequencingPolicy<BigInteger> {
 
     @Override
-    public Maybe<BigInteger> next(BigInteger element) {
+    public Optional<BigInteger> next(BigInteger element) {
         dbc.precondition(element != null, "cannot get next of null from a NextBigIntegerSequencingPolicy");
-        return Maybe.just(element.add(BigInteger.ONE));
+        return Optional.of(element.add(BigInteger.ONE));
     }
 
     @Override

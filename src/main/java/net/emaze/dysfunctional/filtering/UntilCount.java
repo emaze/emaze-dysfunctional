@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.filtering;
 
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 
 /**
  * A stateful predicate yielding true until counter hit the limit, false after
@@ -19,7 +19,7 @@ public class UntilCount<T> implements Predicate<T> {
     }
 
     @Override
-    public boolean accept(T element) {
+    public boolean test(T element) {
         return limit > count++;
     }
 }

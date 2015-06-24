@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import java.util.Optional;
+import java.util.function.Function;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.options.Either;
 import net.emaze.dysfunctional.options.Maybe;
@@ -28,7 +28,8 @@ import org.junit.runners.Suite;
     OptionsTest.Facade.class,
     OptionsTest.LeftAndRight.class,
     OptionsTest.Joins.class,
-    OptionsTest.Pures.class
+    OptionsTest.Pures.class,
+    OptionsTest.Conversions.class
 })
 public class OptionsTest {
 
@@ -36,28 +37,28 @@ public class OptionsTest {
 
         @Test
         public void canLiftAnIterator() {
-            final Iterator<Maybe<O>> lifts = Options.Maybes.lifts(Iterations.iterator(O.ONE));
-            Assert.assertEquals(O.ONE, lifts.next().value());
+            final Iterator<Optional<O>> lifts = Options.Maybes.lifts(Iterations.iterator(O.ONE));
+            Assert.assertEquals(O.ONE, lifts.next().get());
         }
 
         @Test
         public void canLiftAnIterable() {
             final Iterable<O> iter = Collections.singletonList(O.ONE);
-            final Iterator<Maybe<O>> lifts = Options.Maybes.lifts(iter);
-            Assert.assertEquals(O.ONE, lifts.next().value());
+            final Iterator<Optional<O>> lifts = Options.Maybes.lifts(iter);
+            Assert.assertEquals(O.ONE, lifts.next().get());
         }
 
         @Test
         public void canLiftTwoValues() {
-            final Iterator<Maybe<O>> lifts = Options.Maybes.lifts(O.ONE, O.ANOTHER);
-            final Iterable<Maybe<O>> expected = Iterations.iterable(Maybe.just(O.ONE), Maybe.just(O.ANOTHER));
+            final Iterator<Optional<O>> lifts = Options.Maybes.lifts(O.ONE, O.ANOTHER);
+            final Iterable<Optional<O>> expected = Iterations.iterable(Optional.of(O.ONE), Optional.of(O.ANOTHER));
             Assert.assertEquals(Consumers.all(expected), Consumers.all(lifts));
         }
 
         @Test
         public void canLiftThreeValues() {
-            final Iterator<Maybe<O>> lifts = Options.Maybes.lifts(O.ONE, O.ANOTHER, O.YET_ANOTHER);
-            final Iterable<Maybe<O>> expected = Iterations.iterable(Maybe.just(O.ONE), Maybe.just(O.ANOTHER), Maybe.just(O.YET_ANOTHER));
+            final Iterator<Optional<O>> lifts = Options.Maybes.lifts(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+            final Iterable<Optional<O>> expected = Iterations.iterable(Optional.of(O.ONE), Optional.of(O.ANOTHER), Optional.of(O.YET_ANOTHER));
             Assert.assertEquals(Consumers.all(expected), Consumers.all(lifts));
         }
 
@@ -72,34 +73,34 @@ public class OptionsTest {
 
         @Test
         public void canDropAnIterator() {
-            final Iterator<O> drops = Options.Maybes.drops(Iterations.iterator(Maybe.just(O.ONE)));
+            final Iterator<O> drops = Options.Maybes.drops(Iterations.iterator(Optional.of(O.ONE)));
             Assert.assertEquals(O.ONE, drops.next());
         }
 
         @Test
         public void canDropAnIterable() {
-            final Iterable<Maybe<O>> drops = Collections.singletonList(Maybe.just(O.ONE));
+            final Iterable<Optional<O>> drops = Collections.singletonList(Optional.of(O.ONE));
             final Iterator<O> lifts = Options.Maybes.drops(drops);
             Assert.assertEquals(O.ONE, lifts.next());
         }
 
         @Test
         public void canDropTwoValues() {
-            final Iterator<O> drops = Options.Maybes.drops(Maybe.just(O.ONE), Maybe.just(O.ANOTHER));
+            final Iterator<O> drops = Options.Maybes.drops(Optional.of(O.ONE), Optional.of(O.ANOTHER));
             final List<O> expected = Arrays.asList(O.ONE, O.ANOTHER);
             Assert.assertEquals(expected, Consumers.all(drops));
         }
 
         @Test
         public void canDropThreeValues() {
-            final Iterator<O> drops = Options.Maybes.drops(Maybe.just(O.ONE), Maybe.just(O.ANOTHER), Maybe.just(O.YET_ANOTHER));
+            final Iterator<O> drops = Options.Maybes.drops(Optional.of(O.ONE), Optional.of(O.ANOTHER), Optional.of(O.YET_ANOTHER));
             final List<O> expected = Arrays.asList(O.ONE, O.ANOTHER, O.YET_ANOTHER);
             Assert.assertEquals(expected, Consumers.all(drops));
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void droppingNullIterableYieldsException() {
-            final Iterable<Maybe<O>> iterable = null;
+            final Iterable<Optional<O>> iterable = null;
             Options.Maybes.drops(iterable);
         }
     }
@@ -108,33 +109,33 @@ public class OptionsTest {
 
         @Test
         public void canFetchJustsFromIterable() {
-            final Iterable<Maybe<O>> iterable = Collections.singletonList(Maybe.just(O.ONE));
+            final Iterable<Optional<O>> iterable = Collections.singletonList(Optional.of(O.ONE));
             final Iterator<O> got = Options.Maybes.justs(iterable);
             Assert.assertEquals(O.ONE, got.next());
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void fetchingJustsFromNullIterableYieldsException() {
-            final Iterable<Maybe<O>> iterable = null;
+            final Iterable<Optional<O>> iterable = null;
             Options.Maybes.justs(iterable);
         }
 
         @Test
         public void canFetchJustsFromIterator() {
-            final Iterator<Maybe<O>> iterator = Iterations.iterator(Maybe.just(O.ONE));
+            final Iterator<Optional<O>> iterator = Iterations.iterator(Optional.of(O.ONE));
             final Iterator<O> got = Options.Maybes.justs(iterator);
             Assert.assertEquals(O.ONE, got.next());
         }
 
         @Test
         public void canFetchJustsFromTwoMaybes() {
-            final Iterator<O> got = Options.Maybes.justs(Maybe.just(O.ONE), Maybe.just(O.ONE));
+            final Iterator<O> got = Options.Maybes.justs(Optional.of(O.ONE), Optional.of(O.ONE));
             Assert.assertEquals(O.ONE, got.next());
         }
 
         @Test
         public void canFetchJustsFromThreeMaybes() {
-            final Iterator<O> got = Options.Maybes.justs(Maybe.just(O.ONE), Maybe.just(O.ONE), Maybe.just(O.ONE));
+            final Iterator<O> got = Options.Maybes.justs(Optional.of(O.ONE), Optional.of(O.ONE), Optional.of(O.ONE));
             Assert.assertEquals(O.ONE, got.next());
         }
     }
@@ -144,20 +145,34 @@ public class OptionsTest {
         @Test
         public void canLift() {
             Object anObject = null;
-            final Maybe<Object> lifted = Options.Maybes.lift(anObject);
-            Assert.assertFalse(lifted.hasValue());
+            final Optional<Object> lifted = Options.Maybes.lift(anObject);
+            Assert.assertFalse(lifted.isPresent());
         }
 
         @Test
-        public void canLiftDelegate() {
-            Delegate<Integer, Integer> delegate = new Identity<Integer>();
-            Delegate<Maybe<Integer>, Maybe<Integer>> lifted = Options.Maybes.lift(delegate);
-            Assert.assertNotNull(lifted);
+        public void canLiftFunctionOnOptional() {
+            final Function<Optional<O>, Optional<String>> lifted = Options.Maybes.lift(O::toString);
+            final Optional<String> got = lifted.apply(Optional.of(O.ONE));
+            Assert.assertEquals(Optional.of("ONE"), got);
+        }
+
+        @Test
+        public void canLiftFunctionOnBox() {
+            final Function<Box<O>, Box<String>> lifted = Options.Boxes.lift(O::toString);
+            final Box<String> got = lifted.apply(Box.of(O.ONE));
+            Assert.assertEquals(Box.of("ONE"), got);
+        }
+
+        @Test
+        public void canLiftFunctionsOnEither() {
+            final Function<Either<O, O>, Either<O, String>> lifted = Options.Eithers.lift(Function.identity(), O::toString);
+            final Either<O, String> got = lifted.apply(Either.right(O.ONE));
+            Assert.assertEquals(Either.<O, String>right("ONE"), got);
         }
 
         @Test
         public void canDrop() {
-            Object dropped = Options.Maybes.drop(Maybe.nothing());
+            Object dropped = Options.Maybes.drop(Optional.empty());
             Assert.assertNull(dropped);
         }
     }
@@ -272,18 +287,14 @@ public class OptionsTest {
             Assert.assertEquals(Arrays.asList(true), Consumers.all(Options.Eithers.rights(iterable)));
         }
 
-        @Test
-        public void justNullIsValidLeftValue() {
-            final Either<Integer, Boolean> leftHasValue = Either.left(null);
-            final Iterator<Either<Integer, Boolean>> iterator = Iterations.iterator(leftHasValue);
-            Assert.assertEquals(Arrays.asList((Integer) null), Consumers.all(Options.Eithers.lefts(iterator)));
+        @Test(expected = IllegalArgumentException.class)
+        public void creatingEitherWithNullLeftValueYieldsException() {
+            Either.left(null);
         }
 
-        @Test
-        public void justNullIsValidRightValue() {
-            final Either<Integer, Boolean> rightHasValue = Either.right(null);
-            final Iterator<Either<Integer, Boolean>> iterator = Iterations.iterator(rightHasValue);
-            Assert.assertEquals(Arrays.asList((Boolean) null), Consumers.all(Options.Eithers.rights(iterator)));
+        @Test(expected = IllegalArgumentException.class)
+        public void creatingEitherWithNullRightValueYieldsException() {
+            Either.right(null);
         }
     }
 
@@ -298,44 +309,44 @@ public class OptionsTest {
         @Test
         public void canEvaluateMaybePuresOfAnIterator() {
             final Iterator<O> iterator = Iterations.iterator(O.ONE);
-            final Iterator<Maybe<O>> pures = Options.Maybes.pures(iterator);
+            final Iterator<Optional<O>> pures = Options.Maybes.pures(iterator);
             Assert.assertNotNull(pures);
         }
 
         @Test
         public void canEvaluateMaybePuresOfAnIterable() {
             final Iterable<O> iterator = Iterations.iterable(O.ONE);
-            final Iterator<Maybe<O>> pures = Options.Maybes.pures(iterator);
+            final Iterator<Optional<O>> pures = Options.Maybes.pures(iterator);
             Assert.assertNotNull(pures);
         }
 
         @Test
         public void canEvaluateMaybePureOfAnElement() {
-            final Maybe<O> pure = Options.Maybes.pure(O.ONE);
+            final Optional<O> pure = Options.Maybes.pure(O.ONE);
             Assert.assertNotNull(pure);
         }
 
         @Test
         public void canEvaluateMaybePuresOfAnElement() {
-            final Iterator<Maybe<O>> pures = Options.Maybes.pures(O.ONE);
+            final Iterator<Optional<O>> pures = Options.Maybes.pures(O.ONE);
             Assert.assertNotNull(pures);
         }
 
         @Test
         public void canEvaluateMaybePuresOfTwoElements() {
-            final Iterator<Maybe<O>> pures = Options.Maybes.pures(O.ONE, O.ANOTHER);
+            final Iterator<Optional<O>> pures = Options.Maybes.pures(O.ONE, O.ANOTHER);
             Assert.assertNotNull(pures);
         }
 
         @Test
         public void canEvaluateMaybePuresOfThreeElements() {
-            final Iterator<Maybe<O>> pures = Options.Maybes.pures(O.ONE, O.ANOTHER, O.YET_ANOTHER);
+            final Iterator<Optional<O>> pures = Options.Maybes.pures(O.ONE, O.ANOTHER, O.YET_ANOTHER);
             Assert.assertNotNull(pures);
         }
 
         @Test
         public void canEvaluateMaybePuresOfManyElements() {
-            final Iterator<Maybe<Integer>> pures = Options.Maybes.pures(1, 2, 3, 4);
+            final Iterator<Optional<Integer>> pures = Options.Maybes.pures(1, 2, 3, 4);
             Assert.assertNotNull(pures);
         }
 
@@ -444,20 +455,20 @@ public class OptionsTest {
 
         @Test
         public void joiningEmptyMaybeYieldsNothing() {
-            final Maybe<Maybe<O>> source = Maybe.nothing();
-            Assert.assertEquals(Maybe.<O>nothing(), Options.Maybes.join(source));
+            final Optional<Optional<O>> source = Optional.empty();
+            Assert.assertEquals(Optional.<O>empty(), Options.Maybes.join(source));
         }
 
         @Test
         public void joiningNonEmptyInnerMaybeYieldsJustContent() {
-            final Maybe<Maybe<O>> source = Maybe.just(Maybe.just(O.ONE));
-            Assert.assertEquals(Maybe.just(O.ONE), Options.Maybes.join(source));
+            final Optional<Optional<O>> source = Optional.of(Optional.of(O.ONE));
+            Assert.assertEquals(Optional.of(O.ONE), Options.Maybes.join(source));
         }
 
         @Test
         public void joiningEmptyInnerMaybeYieldsNothing() {
-            final Maybe<Maybe<O>> source = Maybe.just(Maybe.<O>nothing());
-            Assert.assertEquals(Maybe.<O>nothing(), Options.Maybes.join(source));
+            final Optional<Optional<O>> source = Optional.of(Optional.<O>empty());
+            Assert.assertEquals(Optional.<O>empty(), Options.Maybes.join(source));
         }
 
         @Test
@@ -476,6 +487,26 @@ public class OptionsTest {
         public void joiningEmptyInnerBoxYieldsNothing() {
             final Box<Box<O>> source = Box.of(Box.<O>empty());
             Assert.assertEquals(Box.<O>empty(), Options.Boxes.join(source));
+        }
+    }
+
+    public static class Conversions {
+
+        @Test(expected = IllegalArgumentException.class)
+        public void cannotConvertANullOptionalToMaybe() {
+            Options.Maybes.toMaybe(null);
+        }
+
+        @Test
+        public void canConvertAnEmptyOptionalToAnEmptyMaybe() {
+            final Maybe<O> got = Options.Maybes.toMaybe(Optional.empty());
+            Assert.assertEquals(Maybe.<O>nothing(), got);
+        }
+
+        @Test
+        public void canConvertAFullOptionalToAFullMaybe() {
+            final Maybe<O> got = Options.Maybes.toMaybe(Optional.of(O.ONE));
+            Assert.assertEquals(Maybe.just(O.ONE), got);
         }
     }
 

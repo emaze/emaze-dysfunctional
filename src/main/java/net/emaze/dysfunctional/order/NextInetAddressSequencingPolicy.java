@@ -3,10 +3,10 @@ package net.emaze.dysfunctional.order;
 import java.io.Serializable;
 import java.net.Inet4Address;
 import java.util.Comparator;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.Inet4AddressToLong;
 import net.emaze.dysfunctional.dispatching.delegates.LongToInet4Address;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 
 /**
  * A sequencing policy for Inet4Address.
@@ -16,22 +16,22 @@ import net.emaze.dysfunctional.options.Maybe;
 public class NextInetAddressSequencingPolicy implements SequencingPolicy<Inet4Address>, Comparator<Inet4Address>, Serializable {
 
     private static final long serialVersionUID = 1l;
-    private static final Delegate<Inet4Address, Long> LONG_TO_ADDRESS = new LongToInet4Address();
-    private static final Delegate<Long, Inet4Address> ADDRESS_TO_LONG = new Inet4AddressToLong();
+    private static final Function<Long, Inet4Address> LONG_TO_ADDRESS = new LongToInet4Address();
+    private static final Function<Inet4Address, Long> ADDRESS_TO_LONG = new Inet4AddressToLong();
 
     @Override
-    public Maybe<Inet4Address> next(Inet4Address element) {
-        final long longElement = ADDRESS_TO_LONG.perform(element);
+    public Optional<Inet4Address> next(Inet4Address element) {
+        final long longElement = ADDRESS_TO_LONG.apply(element);
         if (0xffffffff == longElement) {
-            return Maybe.nothing();
+            return Optional.empty();
         }
-        return Maybe.just(LONG_TO_ADDRESS.perform(longElement + 1));
+        return Optional.of(LONG_TO_ADDRESS.apply(longElement + 1));
     }
 
     @Override
     public int compare(Inet4Address lhs, Inet4Address rhs) {
-        final Long former = ADDRESS_TO_LONG.perform(lhs);
-        final Long latter = ADDRESS_TO_LONG.perform(rhs);
+        final Long former = ADDRESS_TO_LONG.apply(lhs);
+        final Long latter = ADDRESS_TO_LONG.apply(rhs);
         return former.compareTo(latter);
     }
 

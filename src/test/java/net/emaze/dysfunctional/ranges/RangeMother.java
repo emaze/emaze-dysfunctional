@@ -5,9 +5,9 @@ import java.util.Comparator;
 import java.util.Iterator;
 import net.emaze.dysfunctional.Consumers;
 import net.emaze.dysfunctional.Applications;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.Iterations;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import net.emaze.dysfunctional.order.ComparableComparator;
 import net.emaze.dysfunctional.order.NextIntegerSequencingPolicy;
 import net.emaze.dysfunctional.order.SequencingPolicy;
@@ -22,14 +22,14 @@ public class RangeMother {
 
     public static final Integer emptyValue = 0;
     public static final SequencingPolicy<Integer> sequencer = new NextIntegerSequencingPolicy();
-    public static final Comparator<Maybe<Integer>> comparator = new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>());
+    public static final Comparator<Optional<Integer>> comparator = new JustBeforeNothingComparator<Integer>(new ComparableComparator<Integer>());
 
     public static DenseRange<Integer> r(int lower, int upper) {
-        return new DenseRange<Integer>(sequencer, comparator, Endpoint.Include, lower, Maybe.just(upper), Endpoint.Include);
+        return new DenseRange<Integer>(sequencer, comparator, Endpoint.Include, lower, Optional.of(upper), Endpoint.Include);
     }
 
     public static DenseRange<Integer> r(Endpoint left, int lower, int upper, Endpoint right) {
-        return new DenseRange<Integer>(sequencer, comparator, left, lower, Maybe.just(upper), right);
+        return new DenseRange<Integer>(sequencer, comparator, left, lower, Optional.of(upper), right);
     }
 
     public static Pair<Integer, Integer> p(int lower, int upper) {
@@ -49,12 +49,7 @@ public class RangeMother {
     }
 
     private static SparseRange<Integer> sparse(Iterator<Pair<Integer, Integer>> pairs) {
-        final Iterator<DenseRange<Integer>> ranges = Applications.transform(pairs, new Delegate<DenseRange<Integer>, Pair<Integer, Integer>>() {
-            @Override
-            public DenseRange<Integer> perform(Pair<Integer, Integer> pair) {
-                return new DenseRange<Integer>(sequencer, comparator, Endpoint.Include, pair.first(), Maybe.just(pair.second()), Endpoint.Include);
-            }
-        });
+        final Iterator<DenseRange<Integer>> ranges = Applications.transform(pairs, pair -> new DenseRange<Integer>(sequencer, comparator, Endpoint.Include, pair.first(), Optional.of(pair.second()), Endpoint.Include));
         return new SparseRange<Integer>(sequencer, comparator, Consumers.all(ranges));
     }
 }

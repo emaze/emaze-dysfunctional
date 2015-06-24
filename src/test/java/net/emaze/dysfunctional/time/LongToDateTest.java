@@ -12,13 +12,13 @@ public class LongToDateTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void convertingNullLongYieldsException() {
-        new LongToDate().perform(null);
+        new LongToDate().apply(null);
     }
 
     @Test
     public void canConvertNow() {
         final Date now = new Date();
-        final Date got = new LongToDate().perform(now.getTime());
+        final Date got = new LongToDate().apply(now.getTime());
         Assert.assertEquals(now, got);
     }
 }

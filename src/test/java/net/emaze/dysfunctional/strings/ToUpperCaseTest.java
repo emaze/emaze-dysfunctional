@@ -11,11 +11,11 @@ public class ToUpperCaseTest {
 
     @Test(expected=IllegalArgumentException.class)
     public void uppercasingNullYieldsException() {
-        new ToUpperCase().perform(null);
+        new ToUpperCase().apply(null);
     }
 
     @Test
     public void canUpperCaseString(){
-        Assert.assertEquals("A", new ToUpperCase().perform("a"));
+        Assert.assertEquals("A", new ToUpperCase().apply("a"));
     }
 }

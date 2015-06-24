@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 import net.emaze.dysfunctional.options.Box;
 
@@ -19,10 +19,10 @@ public class BatchingIterator<C extends Collection<T>, T> extends ReadOnlyIterat
 
     private final Iterator<T> iterator;
     private final int batchSize;
-    private final Provider<C> channelProvider;
+    private final Supplier<C> channelProvider;
     private final Box<C> prefetched = Box.empty();
 
-    public BatchingIterator(int batchSize, Iterator<T> iterator, Provider<C> channelProvider) {
+    public BatchingIterator(int batchSize, Iterator<T> iterator, Supplier<C> channelProvider) {
         dbc.precondition(batchSize > 0, "max channel size must be > 0");
         dbc.precondition(iterator != null, "iterator cannot be null");
         dbc.precondition(channelProvider != null, "channelProvider cannot be null");
@@ -47,11 +47,11 @@ public class BatchingIterator<C extends Collection<T>, T> extends ReadOnlyIterat
         if (prefetched.getContent().size() == 0) {
             throw new NoSuchElementException();
         }
-        return prefetched.unload().value();
+        return prefetched.unload().get();
     }
 
     private C prefetch(Iterator<T> iter, int size) {
-        final C result = channelProvider.provide();
+        final C result = channelProvider.get();
         for (int counter = 0; counter != size && iter.hasNext(); ++counter) {
             result.add(iter.next());
         }

@@ -1,11 +1,10 @@
 package net.emaze.dysfunctional;
 
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParam;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
-import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 import net.emaze.dysfunctional.interceptions.BinaryInterceptor;
 import net.emaze.dysfunctional.interceptions.Interceptor;
 import net.emaze.dysfunctional.interceptions.TernaryInterceptor;
@@ -34,80 +33,80 @@ public class InterceptorsTest {
 
         @Test
         public void canInterceptOne() {
-            final Delegate<O, O> intercepted = Interceptors.intercept(new Identity<O>(), INTERCEPTOR);
+            final Function<O, O> intercepted = Interceptors.intercept(Function.identity(), INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptTwo() {
-            Delegate<O, O> intercepted = Interceptors.intercept(new Identity<O>(), INTERCEPTOR, INTERCEPTOR);
+            Function<O, O> intercepted = Interceptors.intercept(Function.identity(), INTERCEPTOR, INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptThree() {
-            Delegate<O, O> intercepted = Interceptors.intercept(new Identity<O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
+            Function<O, O> intercepted = Interceptors.intercept(Function.identity(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptMany() {
-            Delegate<O, O> intercepted = Interceptors.intercept(new Identity<O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
+            Function<O, O> intercepted = Interceptors.intercept(Function.identity(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptIterator() {
-            Delegate<O, O> intercepted = Interceptors.intercept(new Identity<O>(), Iterations.iterator(INTERCEPTOR));
+            Function<O, O> intercepted = Interceptors.intercept(Function.identity(), Iterations.iterator(INTERCEPTOR));
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptIterable() {
-            Delegate<O, O> intercepted = Interceptors.intercept(new Identity<O>(), Iterations.iterable(INTERCEPTOR));
+            Function<O, O> intercepted = Interceptors.intercept(Function.identity(), Iterations.iterable(INTERCEPTOR));
             Assert.assertNotNull(intercepted);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void interceptingNullIterableYieldsException() {
             final Iterable<NullInterceptor<O>> iterable = null;
-            Interceptors.intercept(new Identity<O>(), iterable);
+            Interceptors.intercept(Function.identity(), iterable);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void interceptingWithNullInterceptorYieldsException() {
             final Interceptor<O> nullInterceptor = null;
-            Interceptors.intercept(new Identity<O>(), nullInterceptor);
+            Interceptors.intercept(Function.identity(), nullInterceptor);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void interceptingWithFormerNullInterceptorYieldsException() {
             final Interceptor<O> nullInterceptor = null;
-            Interceptors.intercept(new Identity<O>(), nullInterceptor, INTERCEPTOR);
+            Interceptors.intercept(Function.identity(), nullInterceptor, INTERCEPTOR);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void interceptingWithLatterNullInterceptorYieldsException() {
             final Interceptor<O> nullInterceptor = null;
-            Interceptors.intercept(new Identity<O>(), INTERCEPTOR, nullInterceptor);
+            Interceptors.intercept(Function.identity(), INTERCEPTOR, nullInterceptor);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void interceptingWithFirstNullInterceptorYieldsException() {
             final Interceptor<O> nullInterceptor = null;
-            Interceptors.intercept(new Identity<O>(), nullInterceptor, INTERCEPTOR, INTERCEPTOR);
+            Interceptors.intercept(Function.identity(), nullInterceptor, INTERCEPTOR, INTERCEPTOR);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void interceptingWithSecondNullInterceptorYieldsException() {
             final Interceptor<O> nullInterceptor = null;
-            Interceptors.intercept(new Identity<O>(), INTERCEPTOR, nullInterceptor, INTERCEPTOR);
+            Interceptors.intercept(Function.identity(), INTERCEPTOR, nullInterceptor, INTERCEPTOR);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void interceptingWithThirdNullInterceptorYieldsException() {
             final Interceptor<O> nullInterceptor = null;
-            Interceptors.intercept(new Identity<O>(), INTERCEPTOR, INTERCEPTOR, nullInterceptor);
+            Interceptors.intercept(Function.identity(), INTERCEPTOR, INTERCEPTOR, nullInterceptor);
         }
     }
 
@@ -117,37 +116,37 @@ public class InterceptorsTest {
 
         @Test
         public void canInterceptOne() {
-            final BinaryDelegate<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), INTERCEPTOR);
+            final BiFunction<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptTwo() {
-            final BinaryDelegate<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), INTERCEPTOR, INTERCEPTOR);
+            final BiFunction<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), INTERCEPTOR, INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptThree() {
-            final BinaryDelegate<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
+            final BiFunction<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptMany() {
-            final BinaryDelegate<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
+            final BiFunction<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptIterator() {
-            final BinaryDelegate<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), Iterations.iterator(INTERCEPTOR));
+            final BiFunction<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), Iterations.iterator(INTERCEPTOR));
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptIterable() {
-            final BinaryDelegate<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), Iterations.iterable(INTERCEPTOR));
+            final BiFunction<O, O, O> intercepted = Interceptors.intercept(new FirstParam<O, O>(), Iterations.iterable(INTERCEPTOR));
             Assert.assertNotNull(intercepted);
         }
 
@@ -200,37 +199,37 @@ public class InterceptorsTest {
 
         @Test
         public void canInterceptOne() {
-            final TernaryDelegate<O, O, O, O> intercepted = Interceptors.intercept(new FirstParamOfThree<O, O, O>(), INTERCEPTOR);
+            final TriFunction<O, O, O, O> intercepted = Interceptors.intercept(new FirstParamOfThree<O, O, O>(), INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptTwo() {
-            final TernaryDelegate<O, O, O, O> intercepted = Interceptors.intercept(new FirstParamOfThree<O, O, O>(), INTERCEPTOR, INTERCEPTOR);
+            final TriFunction<O, O, O, O> intercepted = Interceptors.intercept(new FirstParamOfThree<O, O, O>(), INTERCEPTOR, INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptThree() {
-            final TernaryDelegate<O, O, O, O> intercepted = Interceptors.intercept(new FirstParamOfThree<O, O, O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
+            final TriFunction<O, O, O, O> intercepted = Interceptors.intercept(new FirstParamOfThree<O, O, O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptMany() {
-            final TernaryDelegate<O, O, O, O> intercepted = Interceptors.intercept(new FirstParamOfThree<O, O, O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
+            final TriFunction<O, O, O, O> intercepted = Interceptors.intercept(new FirstParamOfThree<O, O, O>(), INTERCEPTOR, INTERCEPTOR, INTERCEPTOR, INTERCEPTOR);
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptIterator() {
-            final TernaryDelegate<O, O, O, O> intercepted = Interceptors.intercept(new FirstParamOfThree<O, O, O>(), Iterations.iterator(INTERCEPTOR));
+            final TriFunction<O, O, O, O> intercepted = Interceptors.intercept(new FirstParamOfThree<O, O, O>(), Iterations.iterator(INTERCEPTOR));
             Assert.assertNotNull(intercepted);
         }
 
         @Test
         public void canInterceptIterable() {
-            final TernaryDelegate<O, O, O, O> intercepted = Interceptors.intercept(new FirstParamOfThree<O, O, O>(), Iterations.iterable(INTERCEPTOR));
+            final TriFunction<O, O, O, O> intercepted = Interceptors.intercept(new FirstParamOfThree<O, O, O>(), Iterations.iterable(INTERCEPTOR));
             Assert.assertNotNull(intercepted);
         }
 

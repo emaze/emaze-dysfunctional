@@ -13,6 +13,6 @@ public class TernaryNeverTest {
 
     @Test
     public void neverYieldsFalseWithNulls() {
-        Assert.assertFalse(new TernaryNever<O, O, O>().accept(null, null, null));
+        Assert.assertFalse(new TernaryNever<O, O, O>().test(null, null, null));
     }
 }

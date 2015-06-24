@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.spying;
 
 import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
+import java.util.function.BiPredicate;
 import net.emaze.dysfunctional.options.Box;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -38,8 +38,8 @@ public class BinaryCapturingPredicateTest {
         final Box<Boolean> result = Box.empty();
         final Box<O> param1 = Box.empty();
         final Box<O> param2 = Box.empty();
-        final BinaryPredicate<O, O> pred = new BinaryCapturingPredicate<O, O>(new BinaryAlways<O, O>(), result, param1, param2);
-        pred.accept(O.ONE, O.ANOTHER);
+        final BiPredicate<O, O> pred = new BinaryCapturingPredicate<O, O>(new BinaryAlways<O, O>(), result, param1, param2);
+        pred.test(O.ONE, O.ANOTHER);
         Assert.assertEquals(true, result.getContent());
     }
     @Test
@@ -47,8 +47,8 @@ public class BinaryCapturingPredicateTest {
         final Box<Boolean> result = Box.empty();
         final Box<O> param1 = Box.empty();
         final Box<O> param2 = Box.empty();
-        final BinaryPredicate<O, O> pred = new BinaryCapturingPredicate<O, O>(new BinaryAlways<O, O>(), result, param1, param2);
-        pred.accept(O.ONE, O.ANOTHER);
+        final BiPredicate<O, O> pred = new BinaryCapturingPredicate<O, O>(new BinaryAlways<O, O>(), result, param1, param2);
+        pred.test(O.ONE, O.ANOTHER);
         Assert.assertEquals(O.ONE, param1.getContent());
     }
 
@@ -57,8 +57,8 @@ public class BinaryCapturingPredicateTest {
         final Box<Boolean> result = Box.empty();
         final Box<O> param1 = Box.empty();
         final Box<O> param2 = Box.empty();
-        final BinaryPredicate<O, O> pred = new BinaryCapturingPredicate<O, O>(new BinaryAlways<O, O>(), result, param1, param2);
-        pred.accept(O.ONE, O.ANOTHER);
+        final BiPredicate<O, O> pred = new BinaryCapturingPredicate<O, O>(new BinaryAlways<O, O>(), result, param1, param2);
+        pred.test(O.ONE, O.ANOTHER);
         Assert.assertEquals(O.ANOTHER, param2.getContent());
     }
 }

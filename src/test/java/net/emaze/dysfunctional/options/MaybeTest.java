@@ -1,8 +1,7 @@
 package net.emaze.dysfunctional.options;
 
-import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import java.util.function.Function;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantSupplier;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,44 +15,44 @@ public class MaybeTest {
     @Test
     public void justHasValue() {
         final Maybe<Integer> maybeInt = Maybe.just(1);
-        Assert.assertTrue(maybeInt.hasValue());
+        Assert.assertTrue(maybeInt.isPresent());
     }
 
     @Test(expected = IllegalStateException.class)
     public void fetchingValueFromNothingYieldException() {
-        Maybe.nothing().value();
+        Maybe.nothing().get();
     }
 
     @Test
     public void canFetchValueFromJust() {
-        int got = Maybe.just(1).value();
+        int got = Maybe.just(1).get();
         Assert.assertEquals(1, got);
     }
 
     @Test
     public void fmapWithJustYieldsJustDelegateResult() {
         final Maybe<Integer> expected = Maybe.just(1);
-        final Maybe<Integer> got = expected.fmap(new Identity<Integer>());
+        final Maybe<Integer> got = expected.map(Function.identity());
         Assert.assertEquals(expected, got);
     }
 
     @Test
     public void fmapWithJustNothingYieldsNothing() {
         final Maybe<Integer> source = Maybe.nothing();
-        final Maybe<Integer> got = source.fmap(new Identity<Integer>());
-        Assert.assertFalse(got.hasValue());
+        final Maybe<Integer> got = source.map(Function.identity());
+        Assert.assertFalse(got.isPresent());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void fmapWithNullDelegateYieldsException() {
-        final Delegate<?, Integer> delegate = null;
-        Maybe.just(1).fmap(delegate);
+        final Function<Integer, ?> function = null;
+        Maybe.just(1).map(function);
     }
 
     @Test
     public void foldWithJustYieldsDelegateResult() {
         final Integer expected = 1;
-        final Integer got = Maybe.just(expected).fold(null, new Identity<Integer>());
+        final Integer got = Maybe.just(expected).fold(null, Function.identity());
         Assert.assertEquals(expected, got);
     }
 
@@ -61,14 +60,14 @@ public class MaybeTest {
     public void foldWithNothingYieldsProviderResult() {
         final Maybe<Integer> source = Maybe.nothing();
         final Integer expected = 1;
-        final Integer got = source.fold(new ConstantProvider<Integer>(expected), new Identity<Integer>());
+        final Integer got = source.fold(new ConstantSupplier<Integer>(expected), Function.identity());
         Assert.assertEquals(expected, got);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void foldWithNullDelegateYieldsException() {
-        final Delegate<?, Integer> delegate = null;
-        Maybe.just(1).fold(null, delegate);
+        final Function<Integer, ?> function = null;
+        Maybe.just(1).fold(null, function);
     }
 
     @Test
@@ -99,18 +98,16 @@ public class MaybeTest {
     @Test
     public void transformingNothingToEitherYieldsLeft() {
         final int marker = 0;
-        final Either<Integer, Object> either = Maybe.nothing().either(new ConstantProvider<Integer>(marker));
-        final Maybe<Integer> perform = new MaybeLeft<Integer, Object>().perform(either);
-        Assert.assertEquals(marker, perform.value().intValue());
+        final Either<Integer, Object> either = Maybe.nothing().either(new ConstantSupplier<Integer>(marker));
+        Assert.assertEquals(Either.left(marker), either);
     }
 
     @Test
     public void transformingJustSomethingToEitherYieldsRight() {
         final int left = 0;
         final int right = 1;
-        final Either<Integer, Integer> either = Maybe.just(right).either(new ConstantProvider<Integer>(left));
-        final Maybe<Integer> perform = new MaybeRight<Integer, Integer>().perform(either);
-        Assert.assertEquals(right, perform.value().intValue());
+        final Either<Integer, Integer> either = Maybe.just(right).either(new ConstantSupplier<Integer>(left));
+        Assert.assertEquals(Either.<Integer, Integer>right(right), either);
     }
 
     @Test

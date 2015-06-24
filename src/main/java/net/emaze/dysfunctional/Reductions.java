@@ -2,13 +2,12 @@ package net.emaze.dysfunctional;
 
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
 import net.emaze.dysfunctional.iterations.ArrayIterator;
 import net.emaze.dysfunctional.order.ComparableComparator;
-import net.emaze.dysfunctional.order.Max;
-import net.emaze.dysfunctional.order.Min;
 import net.emaze.dysfunctional.reductions.Any;
 import net.emaze.dysfunctional.reductions.Count;
 import net.emaze.dysfunctional.reductions.Every;
@@ -22,46 +21,46 @@ import net.emaze.dysfunctional.reductions.Reductor;
 public abstract class Reductions {
 
     /**
-     * Reduces an iterator of elements using the passed delegate.
+     * Reduces an iterator of elements using the passed function.
      *
-     * @param <R> the result type parameter
      * @param <E> the element type parameter
+     * @param <R> the result type parameter
      * @param iterator the iterator to be consumed
-     * @param delegate the reduction delegate
+     * @param function the reduction function
      * @param init the initial value for reductions
      * @return the reduced value
      */
-    public static <R, E> R reduce(Iterator<E> iterator, BinaryDelegate<R, R, E> delegate, R init) {
-        return new Reductor<R, E>(delegate, init).perform(iterator);
+    public static <E, R> R reduce(Iterator<E> iterator, BiFunction<R, E, R> function, R init) {
+        return new Reductor<>(function, init).apply(iterator);
     }
 
     /**
-     * Reduces an iterator of elements using the passed delegate.
+     * Reduces an iterator of elements using the passed function.
      *
-     * @param <R> the result type parameter
      * @param <E> the element type parameter
+     * @param <R> the result type parameter
      * @param iterable the iterable to be consumed
-     * @param delegate the reduction delegate
+     * @param function the reduction function
      * @param init the initial value for reductions
      * @return the reduced value
      */
-    public static <R, E> R reduce(Iterable<E> iterable, BinaryDelegate<R, R, E> delegate, R init) {
+    public static <E, R> R reduce(Iterable<E> iterable, BiFunction<R, E, R> function, R init) {
         dbc.precondition(iterable != null, "cannot call reduce with a null iterable");
-        return new Reductor<R, E>(delegate, init).perform(iterable.iterator());
+        return new Reductor<>(function, init).apply(iterable.iterator());
     }
 
     /**
-     * Reduces an array of elements using the passed delegate.
+     * Reduces an array of elements using the passed function.
      *
-     * @param <R> the result type parameter
      * @param <E> the element type parameter
+     * @param <R> the result type parameter
      * @param array the array to be consumed
-     * @param delegate the reduction delegate
+     * @param function the reduction function
      * @param init the initial value for reductions
      * @return the reduced value
      */
-    public static <R, E> R reduce(E[] array, BinaryDelegate<R, R, E> delegate, R init) {
-        return new Reductor<R, E>(delegate, init).perform(new ArrayIterator<E>(array));
+    public static <E, R> R reduce(E[] array, BiFunction<R, E, R> function, R init) {
+        return new Reductor<>(function, init).apply(new ArrayIterator<E>(array));
     }
 
     /**
@@ -77,7 +76,7 @@ public abstract class Reductions {
      */
     public static <E> boolean any(Iterable<E> iterable, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot call any with a null iterable");
-        return new Any<E>(predicate).accept(iterable.iterator());
+        return new Any<E>(predicate).test(iterable.iterator());
     }
 
     /**
@@ -92,7 +91,7 @@ public abstract class Reductions {
      * first positive match)
      */
     public static <E> boolean any(Iterator<E> iterator, Predicate<E> predicate) {
-        return new Any<E>(predicate).accept(iterator);
+        return new Any<E>(predicate).test(iterator);
     }
 
     /**
@@ -107,7 +106,7 @@ public abstract class Reductions {
      * first positive match)
      */
     public static <E> boolean any(E[] array, Predicate<E> predicate) {
-        return new Any<E>(predicate).accept(new ArrayIterator<E>(array));
+        return new Any<E>(predicate).test(new ArrayIterator<E>(array));
     }
 
     /**
@@ -122,7 +121,7 @@ public abstract class Reductions {
      */
     public static <E> boolean every(Iterable<E> iterable, Predicate<E> predicate) {
         dbc.precondition(iterable != null, "cannot call every with a null iterable");
-        return new Every<E>(predicate).accept(iterable.iterator());
+        return new Every<E>(predicate).test(iterable.iterator());
     }
 
     /**
@@ -136,7 +135,7 @@ public abstract class Reductions {
      * @return true if EVERY predicate application yields true
      */
     public static <E> boolean every(Iterator<E> iterator, Predicate<E> predicate) {
-        return new Every<E>(predicate).accept(iterator);
+        return new Every<E>(predicate).test(iterator);
     }
 
     /**
@@ -150,7 +149,7 @@ public abstract class Reductions {
      * @return true if EVERY predicate application yields true
      */
     public static <E> boolean every(E[] array, Predicate<E> predicate) {
-        return new Every<E>(predicate).accept(new ArrayIterator<E>(array));
+        return new Every<E>(predicate).test(new ArrayIterator<E>(array));
     }
 
     /**
@@ -212,7 +211,7 @@ public abstract class Reductions {
      * @return the max element contained in the iterator
      */
     public static <E, C extends Comparator<E>> E maximum(Iterator<E> iterator, C comparator, E init) {
-        return Reductions.reduce(iterator, new Max<E>(comparator), init);
+        return Reductions.reduce(iterator, BinaryOperator.maxBy(comparator), init);
     }
 
     /**
@@ -224,7 +223,7 @@ public abstract class Reductions {
      * @return the max element contained in the iterator
      */
     public static <E extends Comparable<E>> E maximum(Iterator<E> iterator, E init) {
-        return Reductions.reduce(iterator, new Max<E>(new ComparableComparator<E>()), init);
+        return Reductions.reduce(iterator, BinaryOperator.maxBy(new ComparableComparator<E>()), init);
     }
 
     /**
@@ -238,7 +237,7 @@ public abstract class Reductions {
      * @return the min element contained in the iterator
      */
     public static <E, C extends Comparator<E>> E minimum(Iterator<E> iterator, C comparator, E init) {
-        return Reductions.reduce(iterator, new Min<E>(comparator), init);
+        return Reductions.reduce(iterator, BinaryOperator.minBy(comparator), init);
     }
 
     /**
@@ -250,6 +249,6 @@ public abstract class Reductions {
      * @return the min element contained in the iterator
      */
     public static <E extends Comparable<E>> E minimum(Iterator<E> iterator, E init) {
-        return Reductions.reduce(iterator, new Min<E>(new ComparableComparator<E>()), init);
+        return Reductions.reduce(iterator, BinaryOperator.minBy(new ComparableComparator<E>()), init);
     }
 }

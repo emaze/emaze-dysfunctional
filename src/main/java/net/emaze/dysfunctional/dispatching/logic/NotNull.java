@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional.dispatching.logic;
 
+import java.util.function.Predicate;
+
 /**
  * A Predicate matching nonnull elements.
  *
@@ -15,7 +17,7 @@ public class NotNull<T> implements Predicate<T> {
      * @return true if the element is not null.
      */
     @Override
-    public boolean accept(T element) {
+    public boolean test(T element) {
         return element != null;
     }
 }

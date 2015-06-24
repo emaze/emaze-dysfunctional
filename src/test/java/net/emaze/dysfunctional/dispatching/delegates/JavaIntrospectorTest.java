@@ -14,13 +14,13 @@ public class JavaIntrospectorTest {
 
     @Test
     public void canIntrospectBean() {
-        final PropertyDescriptor[] properties = new JavaIntrospector().perform(SimpleBean.class, Object.class);
+        final PropertyDescriptor[] properties = new JavaIntrospector().apply(SimpleBean.class, Object.class);
         Assert.assertEquals(1, properties.length);
     }
     
     @Test(expected=IllegalStateException.class)
     public void introspectingWithWrongBaseClassYieldsException() {
-        new JavaIntrospector().perform(SimpleBean.class, UnrelatedBean.class);
+        new JavaIntrospector().apply(SimpleBean.class, UnrelatedBean.class);
     }
 
     public static class SimpleBean {

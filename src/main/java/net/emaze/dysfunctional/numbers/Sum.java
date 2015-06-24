@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.numbers;
 
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.numbers.policies.SumPolicy;
-import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import java.util.function.BiFunction;
 
 /**
  * Sums two values.
@@ -10,7 +10,7 @@ import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
  * @param <T1> the first parameter type
  * @param <T2> the second parameter type
  */
-public class Sum<R, T1, T2> implements BinaryDelegate<R, T1, T2> {
+public class Sum<R, T1, T2> implements BiFunction<T1, T2, R> {
 
     private final SumPolicy<R, T1, T2> policy;
 
@@ -20,7 +20,7 @@ public class Sum<R, T1, T2> implements BinaryDelegate<R, T1, T2> {
     }
 
     @Override
-    public R perform(T1 accumulator, T2 value) {
+    public R apply(T1 accumulator, T2 value) {
         return policy.sum(accumulator, value);
     }
 }

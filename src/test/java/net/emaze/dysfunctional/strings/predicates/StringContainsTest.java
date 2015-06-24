@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.strings.predicates;
 
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,23 +17,23 @@ public class StringContainsTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testingWithNullHaystackYieldsException() {
-        new StringContains("a").accept(null);
+        new StringContains("a").test(null);
     }
     
     @Test(expected = ClassCastException.class)
     public void passingNonStringToErasureYieldsException() {
         Predicate p = new StringContains("a");
-        p.accept(new Object());
+        p.test(new Object());
     }
 
 
     @Test
     public void testingContainedNeedleYieldsTrue() {
-        Assert.assertTrue(new StringContains("a").accept("a"));
+        Assert.assertTrue(new StringContains("a").test("a"));
     }
 
     @Test
     public void testingNotContainedNeedleYieldsFalse() {
-        Assert.assertFalse(new StringContains("a").accept("A"));
+        Assert.assertFalse(new StringContains("a").test("A"));
     }
 }

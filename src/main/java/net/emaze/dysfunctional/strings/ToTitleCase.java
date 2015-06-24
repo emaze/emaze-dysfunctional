@@ -1,16 +1,16 @@
 package net.emaze.dysfunctional.strings;
 
+import java.util.function.UnaryOperator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 
 /**
  *
  * @author rferranti
  */
-public class ToTitleCase implements Delegate<String, String> {
+public class ToTitleCase implements UnaryOperator<String> {
 
     @Override
-    public String perform(String word) {
+    public String apply(String word) {
         dbc.precondition(word != null, "cannot titleCase a null string");
         dbc.precondition(!word.isEmpty(), "cannot titleCase an empty string");
         return Character.toUpperCase(word.charAt(0)) + word.substring(1).toLowerCase();

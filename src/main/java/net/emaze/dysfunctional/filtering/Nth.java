@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.filtering;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 
 /**
  * A stateful predicate yielding true when called the nth time.
@@ -20,7 +20,7 @@ public class Nth<E> implements Predicate<E> {
     }
 
     @Override
-    public boolean accept(E element) {
+    public boolean test(E element) {
         return target == ++current;
     }
 }

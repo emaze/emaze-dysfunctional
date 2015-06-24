@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
-import net.emaze.dysfunctional.dispatching.delegates.ConstantDelegate;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import java.util.function.Function;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantFunction;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -58,34 +58,55 @@ public class TripleTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void fmapWithNullFirstDelegateYieldsException() {
-        Triple.of(O.ONE, O.ONE, O.ONE).fmap(null, new Identity<O>(), new Identity<O>());
+        Triple.of(O.ONE, O.ONE, O.ONE).map(null, Function.identity(), Function.identity());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void fmapWithNullSecondDelegateYieldsException() {
-        Triple.of(O.ONE, O.ONE, O.ONE).fmap(new Identity<O>(), null, new Identity<O>());
+        Triple.of(O.ONE, O.ONE, O.ONE).map(Function.identity(), null, Function.identity());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void fmapWithNullThirdDelegateYieldsException() {
-        Triple.of(O.ONE, O.ONE, O.ONE).fmap(new Identity<O>(), new Identity<O>(), null);
+        Triple.of(O.ONE, O.ONE, O.ONE).map(Function.identity(), Function.identity(), null);
     }
 
     @Test
     public void firstDelegateOfFmapTransformsFirstType() {
-        final Triple<O, O, O> mapped = Triple.of(O.ONE, O.ONE, O.ONE).fmap(new ConstantDelegate<O, O>(O.ANOTHER), new Identity<O>(), new Identity<O>());
+        final Triple<O, O, O> mapped = Triple.of(O.ONE, O.ONE, O.ONE).map(new ConstantFunction<O, O>(O.ANOTHER), Function.identity(), Function.identity());
         Assert.assertEquals(O.ANOTHER, mapped.first());
     }
 
     @Test
     public void secondDelegateOfFmapTransformsSecondType() {
-        final Triple<O, O, O> mapped = Triple.of(O.ONE, O.ONE, O.ONE).fmap(new Identity<O>(), new ConstantDelegate<O, O>(O.ANOTHER), new Identity<O>());
+        final Triple<O, O, O> mapped = Triple.of(O.ONE, O.ONE, O.ONE).map(Function.identity(), new ConstantFunction<O, O>(O.ANOTHER), Function.identity());
         Assert.assertEquals(O.ANOTHER, mapped.second());
     }
 
     @Test
     public void thirdDelegateOfFmapTransformsThirdType() {
-        final Triple<O, O, O> mapped = Triple.of(O.ONE, O.ONE, O.ONE).fmap(new Identity<O>(), new Identity<O>(), new ConstantDelegate<O, O>(O.ANOTHER));
+        final Triple<O, O, O> mapped = Triple.of(O.ONE, O.ONE, O.ONE).map(Function.identity(), Function.identity(), new ConstantFunction<O, O>(O.ANOTHER));
         Assert.assertEquals(O.ANOTHER, mapped.third());
+    }
+
+    @Test
+    public void flippingInvertsValues() {
+        final Triple<String, O, Integer> source = Triple.of("ONE", O.ONE, 1);
+        final Triple<Integer, O, String> got = source.flip();
+        Assert.assertEquals(Triple.of(1, O.ONE, "ONE"), got);
+    }
+
+    @Test
+    public void rotatingTripleToLeftYieldsCorrectValues() {
+        final Triple<String, Integer, O> source = Triple.of("ONE", 1, O.ONE);
+        final Triple<Integer, O, String> got = source.rotateLeft();
+        Assert.assertEquals(Triple.of(1, O.ONE, "ONE"), got);
+    }
+
+    @Test
+    public void rotatingTripleToRightYieldsCorrectValues() {
+        final Triple<String, Integer, O> source = Triple.of("ONE", 1, O.ONE);
+        final Triple<O, String, Integer> got = source.rotateRight();
+        Assert.assertEquals(Triple.of(O.ONE, "ONE", 1), got);
     }
 }

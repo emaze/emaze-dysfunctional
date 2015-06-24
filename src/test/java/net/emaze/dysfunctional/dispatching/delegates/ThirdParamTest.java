@@ -12,7 +12,7 @@ public class ThirdParamTest {
 
     @Test
     public void canCaptureThirdParam() {
-        final O got = new ThirdParam<O, O, O>().perform(O.IGNORED, O.IGNORED, O.ONE);
+        final O got = new ThirdParam<O, O, O>().apply(O.IGNORED, O.IGNORED, O.ONE);
         Assert.assertEquals(O.ONE, got);
     }
 

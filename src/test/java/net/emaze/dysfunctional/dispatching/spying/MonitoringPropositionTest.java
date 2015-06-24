@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.spying;
 
 import java.util.concurrent.atomic.AtomicLong;
-import net.emaze.dysfunctional.dispatching.logic.Proposition;
+import java.util.function.BooleanSupplier;
 import net.emaze.dysfunctional.dispatching.logic.Yes;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,8 +24,8 @@ public class MonitoringPropositionTest {
     @Test
     public void callingIncrementsTheAtomicLong() {
         final AtomicLong state = new AtomicLong();
-        final Proposition spy = new MonitoringProposition(new Yes(), state);
-        spy.state();
+        final BooleanSupplier spy = new MonitoringProposition(new Yes(), state);
+        spy.getAsBoolean();
         Assert.assertEquals(1l, state.get());
     }
 }

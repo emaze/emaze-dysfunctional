@@ -3,7 +3,7 @@ package net.emaze.dysfunctional.filtering;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.iterations.ReadOnlyIterator;
 
 /**
@@ -34,7 +34,7 @@ public class TakeWhileIterator<E> extends ReadOnlyIterator<E> {
             return false;
         }
         final E element = iterator.next();
-        if (filter.accept(element)) {
+        if (filter.test(element)) {
             prefetched = element;
             hasPrefetched = true;
             return true;
@@ -49,7 +49,7 @@ public class TakeWhileIterator<E> extends ReadOnlyIterator<E> {
             return prefetched;
         }
         final E element = iterator.next();
-        if (filter.accept(element)) {
+        if (filter.test(element)) {
             return element;
         }
         throw new NoSuchElementException();

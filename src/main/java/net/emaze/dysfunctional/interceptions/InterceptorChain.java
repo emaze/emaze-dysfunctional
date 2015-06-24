@@ -2,33 +2,33 @@ package net.emaze.dysfunctional.interceptions;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 
 /**
- * Composes a delegate with an iterator of interceptors.
+ * Composes a function with an iterator of interceptors.
  *
- * (delegate ° interceptor1 ° interceptor2)
+ * (function ° interceptor1 ° interceptor2)
  *
- * @param <R> the delegate result type
- * @param <T> the delegate parameter type
+ * @param <T> the function parameter type
+ * @param <R> the function result type
  * @author rferranti
  */
-public class InterceptorChain<R, T> implements Delegate<R, T> {
+public class InterceptorChain<T, R> implements Function<T, R> {
 
-    private final Delegate<R, T> composed;
+    private final Function<T, R> composed;
 
-    public <I extends Interceptor<T>> InterceptorChain(Delegate<R, T> innermost, Iterator<I> chain) {
-        dbc.precondition(innermost != null, "innermost delegate cannot be null");
+    public <I extends Interceptor<T>> InterceptorChain(Function<T, R> innermost, Iterator<I> chain) {
+        dbc.precondition(innermost != null, "innermost function cannot be null");
         dbc.precondition(chain != null, "chain cannot be null");
-        Delegate<R, T> current = innermost;
+        Function<T, R> current = innermost;
         while (chain.hasNext()) {
-            current = new InterceptorAdapter<R, T>(chain.next(), current);
+            current = new InterceptorAdapter<>(chain.next(), current);
         }
         this.composed = current;
     }
 
     @Override
-    public R perform(T param) {
-        return composed.perform(param);
+    public R apply(T param) {
+        return composed.apply(param);
     }
 }

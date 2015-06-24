@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.collections;
 
 import java.util.Collection;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 
 /**
  * A predicate accepting elements contained in the collection.
@@ -20,7 +20,7 @@ public class IsContainedIn<T> implements Predicate<T> {
     }
 
     @Override
-    public boolean accept(T element) {
+    public boolean test(T element) {
         return collection.contains(element);
     }
 }

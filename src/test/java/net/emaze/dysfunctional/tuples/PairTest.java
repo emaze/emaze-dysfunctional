@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
-import net.emaze.dysfunctional.dispatching.delegates.ConstantDelegate;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import java.util.function.Function;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantFunction;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -52,23 +52,30 @@ public class PairTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void fmapWithNullFirstDelegateYieldsException() {
-        Pair.of(O.ONE, O.ONE).fmap(null, new Identity<O>());
+        Pair.of(O.ONE, O.ONE).map(null, Function.identity());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void fmapWithNullSecondDelegateYieldsException() {
-        Pair.of(O.ONE, O.ONE).fmap(new Identity<O>(), null);
+        Pair.of(O.ONE, O.ONE).map(Function.identity(), null);
     }
 
     @Test
     public void firstDelegateOfFmapTransformsFirstType() {
-        final Pair<O, O> mapped = Pair.of(O.ONE, O.ONE).fmap(new ConstantDelegate<O, O>(O.ANOTHER), new Identity<O>());
+        final Pair<O, O> mapped = Pair.of(O.ONE, O.ONE).map(new ConstantFunction<O, O>(O.ANOTHER), Function.identity());
         Assert.assertEquals(O.ANOTHER, mapped.first());
     }
 
     @Test
     public void secondDelegateOfFmapTransformsSecondType() {
-        final Pair<O, O> mapped = Pair.of(O.ONE, O.ONE).fmap(new Identity<O>(), new ConstantDelegate<O, O>(O.ANOTHER));
+        final Pair<O, O> mapped = Pair.of(O.ONE, O.ONE).map(Function.identity(), new ConstantFunction<O, O>(O.ANOTHER));
         Assert.assertEquals(O.ANOTHER, mapped.second());
+    }
+
+    @Test
+    public void flippingInvertsValues() {
+        final Pair<String, O> source = Pair.of("ONE", O.ONE);
+        final Pair<O, String> got = source.flip();
+        Assert.assertEquals(Pair.of(O.ONE, "ONE"), got);
     }
 }

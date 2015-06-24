@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.order;
 
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 
 /**
  * Responsibility: defines a strategy to get the next of an element.
@@ -10,5 +10,5 @@ import net.emaze.dysfunctional.options.Maybe;
  */
 public interface SequencingPolicy<T> {
 
-    Maybe<T> next(T element);
+    Optional<T> next(T element);
 }

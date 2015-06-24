@@ -10,7 +10,7 @@ public class BinaryNoopTest {
 
     @Test
     public void canDoNothingWithNulls() {
-        new BinaryNoop<Object,Object>().perform(null,null);
+        new BinaryNoop<Object,Object>().accept(null,null);
     }
 
 }

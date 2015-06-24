@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.order;
 
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,7 +14,7 @@ public class NextLongSequencingPolicyTest {
 
     @Test
     public void canEvaluateNext() {
-        Assert.assertEquals(Maybe.just(new Long(1l)), policy.next(0l));
+        Assert.assertEquals(Optional.of(new Long(1l)), policy.next(0l));
     }
 
     @Test(expected = IllegalArgumentException.class)

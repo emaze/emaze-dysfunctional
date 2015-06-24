@@ -12,7 +12,7 @@ public class FirstParamTest {
 
     @Test
     public void canCaptureFirstParam() {
-        final O got = new FirstParam<O, O>().perform(O.ONE, O.IGNORED);
+        final O got = new FirstParam<O, O>().apply(O.ONE, O.IGNORED);
         Assert.assertEquals(O.ONE, got);
     }
 

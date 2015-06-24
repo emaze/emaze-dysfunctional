@@ -14,19 +14,19 @@ public class LastElementTest {
 
     @Test(expected=IllegalArgumentException.class)
     public void consumingNullIteratorYieldsException() {
-        new LastElement<Object>().perform(null);
+        new LastElement<Object>().apply(null);
     }
 
     @Test
     public void yieldsLastElement(){
         List<Integer> consumable = Arrays.asList(1,2,3);
         LastElement<Integer> consumer = new LastElement<Integer>();
-        Integer got = consumer.perform(consumable.iterator());
+        Integer got = consumer.apply(consumable.iterator());
         Assert.assertEquals(consumable.get(consumable.size() -1 ), got);
     }
     @Test(expected=IllegalArgumentException.class)
     public void consumingEmptyIteratorYieldsException(){
-        new LastElement<Object>().perform(Collections.emptyList().iterator());
+        new LastElement<Object>().apply(Collections.emptyList().iterator());
     }
 
 }

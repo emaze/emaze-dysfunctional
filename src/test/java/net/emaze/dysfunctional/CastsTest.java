@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional;
 
 import junit.framework.Assert;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import org.junit.Test;
 
 /**
@@ -40,23 +40,23 @@ public class CastsTest {
     @Test
     public void canGetWidener() {
         final A a = new B();
-        final Delegate<B, A> widener = Casts.widener();
-        Assert.assertNotNull(widener.perform(a));
+        final Function<A, B> widener = Casts.widener();
+        Assert.assertNotNull(widener.apply(a));
     }
 
     @Test
     public void canGetNarrower() {
         final B b = new B();
-        final Delegate<A, B> narrower = Casts.narrower();
-        final A got = narrower.perform(b);
+        final Function<B, A> narrower = Casts.narrower();
+        final A got = narrower.apply(b);
         Assert.assertNotNull(got);
     }
 
     @Test
     public void canGetVariator() {
         final B b = new B();
-        final Delegate<A, B> variator = Casts.variator();
-        final A got = variator.perform(b);
+        final Function<B, A> variator = Casts.variator();
+        final A got = variator.apply(b);
         Assert.assertNotNull(got);
     }
 

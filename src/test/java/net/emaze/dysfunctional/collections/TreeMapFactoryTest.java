@@ -16,7 +16,7 @@ public class TreeMapFactoryTest {
     @Test
     public void callingCreatesATreeMap() {
         final TreeMapFactory<Integer, Integer> factory = new TreeMapFactory<Integer, Integer>(new ComparableComparator<Integer>());
-        final TreeMap<Integer, Integer> got = factory.provide();
+        final TreeMap<Integer, Integer> got = factory.get();
         Assert.assertNotNull(got);
     }
 }

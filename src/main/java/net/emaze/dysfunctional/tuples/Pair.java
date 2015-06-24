@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.tuples;
 
+import java.util.function.Function;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.equality.EqualsBuilder;
 import net.emaze.dysfunctional.hashing.HashCodeBuilder;
 
@@ -30,10 +30,14 @@ public class Pair<T1, T2> {
         return second;
     }
 
-    public <R1, R2> Pair<R1, R2> fmap(Delegate<R1, T1> withFirst, Delegate<R2, T2> withSecond) {
-        dbc.precondition(withFirst != null, "cannot fmap on pair with a null first delegate");
-        dbc.precondition(withSecond != null, "cannot fmap on pair with a null second delegate");
-        return Pair.of(withFirst.perform(first), withSecond.perform(second));
+    public Pair<T2, T1> flip() {
+        return Pair.of(second, first);
+    }
+
+    public <R1, R2> Pair<R1, R2> map(Function<T1, R1> withFirst, Function<T2, R2> withSecond) {
+        dbc.precondition(withFirst != null, "cannot fmap on pair with a null first function");
+        dbc.precondition(withSecond != null, "cannot fmap on pair with a null second function");
+        return Pair.of(withFirst.apply(first), withSecond.apply(second));
     }
 
     @Override

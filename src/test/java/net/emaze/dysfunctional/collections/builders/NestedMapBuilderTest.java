@@ -8,13 +8,13 @@ import net.emaze.dysfunctional.Casts;
 import net.emaze.dysfunctional.Compositions;
 import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.LinkedHashMapFactory;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class NestedMapBuilderTest {
 
-    private final Provider<Map<String, Object>> factory = Compositions.compose(new Vary<Map<String, Object>, LinkedHashMap<String, Object>>(), new LinkedHashMapFactory<String, Object>());
+    private final Supplier<Map<String, Object>> factory = Compositions.compose(new Vary<LinkedHashMap<String, Object>, Map<String, Object>>(), new LinkedHashMapFactory<String, Object>());
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingWithNullProviderYieldsException() {

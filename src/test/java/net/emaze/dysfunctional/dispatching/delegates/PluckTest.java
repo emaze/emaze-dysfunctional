@@ -23,22 +23,22 @@ public class PluckTest {
     @Test
     public void canPluckStringFromBean() {
         DumbBean db = new DumbBean();
-        final Pluck<String, DumbBean> p = new Pluck<String, DumbBean>(DumbBean.class, "something");
-        String got = p.perform(db);
+        final Pluck<DumbBean, String> p = new Pluck<>(DumbBean.class, "something");
+        String got = p.apply(db);
         Assert.assertEquals(db.getSomething(), got);
     }
 
     @Test
     public void canPluckIntFromBean() {
         DumbBean db = new DumbBean();
-        final Pluck<Integer, DumbBean> p = new Pluck<Integer, DumbBean>(DumbBean.class, "one");
-        int got = p.perform(db);
+        final Pluck<DumbBean, Integer> p = new Pluck<>(DumbBean.class, "one");
+        int got = p.apply(db);
         Assert.assertEquals(db.getOne(), got);
     }
 
     @Test(expected = IllegalStateException.class)
     public void pluckingNonExistentPropertyYieldsException() {
-        final Pluck<Integer, DumbBean> p = new Pluck<Integer, DumbBean>(DumbBean.class, "nonExistentProperty");
-        p.perform(new DumbBean());
+        final Pluck<DumbBean, Integer> p = new Pluck<>(DumbBean.class, "nonExistentProperty");
+        p.apply(new DumbBean());
     }
 }

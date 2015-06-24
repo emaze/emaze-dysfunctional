@@ -1,17 +1,17 @@
 package net.emaze.dysfunctional.collections;
 
 import java.util.ArrayList;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import java.util.function.Supplier;
 
 /**
  * Creates an empty ArrayList.
  * @param <E> the ArrayList element type parameter
  * @author rferranti
  */
-public class ArrayListFactory<E> implements Provider<ArrayList<E>> {
+public class ArrayListFactory<E> implements Supplier<ArrayList<E>> {
 
     @Override
-    public ArrayList<E> provide() {
+    public ArrayList<E> get() {
         return new ArrayList<E>();
     }
 }

@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional.dispatching.logic;
 
+import java.util.function.BiPredicate;
+
 /**
  * A binary predicate always returning true.
  *
@@ -7,7 +9,7 @@ package net.emaze.dysfunctional.dispatching.logic;
  * @param <E2> the second type parameter
  * @author rferranti
  */
-public class BinaryAlways<E1, E2> implements BinaryPredicate<E1, E2> {
+public class BinaryAlways<E1, E2> implements BiPredicate<E1, E2> {
 
     /**
      * Yields true.
@@ -17,7 +19,7 @@ public class BinaryAlways<E1, E2> implements BinaryPredicate<E1, E2> {
      * @return true. always.
      */
     @Override
-    public boolean accept(E1 former, E2 latter) {
+    public boolean test(E1 former, E2 latter) {
         return true;
     }
 }

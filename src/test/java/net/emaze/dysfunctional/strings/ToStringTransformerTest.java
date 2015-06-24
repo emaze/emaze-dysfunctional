@@ -12,12 +12,12 @@ public class ToStringTransformerTest {
 
     @Test(expected=IllegalArgumentException.class)
     public void transformingNullYieldsException() {
-        new ToStringTransformer<Object>().perform(null);
+        new ToStringTransformer<Object>().apply(null);
     }
     @Test
     public void canTransformAnObject() {
         final ToStringTransformer<Object> tr = new ToStringTransformer<Object>();
-        final String got = tr.perform(new Object(){
+        final String got = tr.apply(new Object(){
 
             @Override
             public String toString() {

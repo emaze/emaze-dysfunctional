@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.spying;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
+import java.util.function.BiPredicate;
 import net.emaze.dysfunctional.options.Box;
 
 /**
@@ -11,14 +11,14 @@ import net.emaze.dysfunctional.options.Box;
  * @param <T1> the first parameter type
  * @param <T2> the second parameter type
  */
-public class BinaryCapturingPredicate<T1, T2> implements BinaryPredicate<T1, T2> {
+public class BinaryCapturingPredicate<T1, T2> implements BiPredicate<T1, T2> {
 
-    private final BinaryPredicate<T1, T2> nested;
+    private final BiPredicate<T1, T2> nested;
     private final Box<Boolean> result;
     private final Box<T1> param1;
     private final Box<T2> param2;
 
-    public BinaryCapturingPredicate(BinaryPredicate<T1, T2> nested, Box<Boolean> result, Box<T1> param1, Box<T2> param2) {
+    public BinaryCapturingPredicate(BiPredicate<T1, T2> nested, Box<Boolean> result, Box<T1> param1, Box<T2> param2) {
         dbc.precondition(nested != null, "cannot capture from a null predicate");
         dbc.precondition(result != null, "cannot capture with a null result box");
         dbc.precondition(param1 != null, "cannot capture with a null param1 box");
@@ -30,10 +30,10 @@ public class BinaryCapturingPredicate<T1, T2> implements BinaryPredicate<T1, T2>
     }
 
     @Override
-    public boolean accept(T1 former, T2 latter) {
+    public boolean test(T1 former, T2 latter) {
         param1.setContent(former);
         param2.setContent(latter);
-        final boolean got = nested.accept(former, latter);
+        final boolean got = nested.test(former, latter);
         result.setContent(got);
         return got;
     }

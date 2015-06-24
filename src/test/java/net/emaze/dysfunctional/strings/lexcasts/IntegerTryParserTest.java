@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.strings.lexcasts;
 
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.function.Function;
+import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,25 +23,25 @@ public class IntegerTryParserTest {
     
     @Test(expected = ClassCastException.class)
     public void passingNonStringToErasureYieldsException() {
-        Delegate d = new IntegerTryParser(10);
-        d.perform(new Object());
+        Function d = new IntegerTryParser(10);
+        d.apply(new Object());
     }        
 
     @Test
     public void parsingNullStringYieldsNothing() {
-        final Maybe<Integer> got = new IntegerTryParser(10).perform(null);
-        Assert.assertFalse(got.hasValue());
+        final Optional<Integer> got = new IntegerTryParser(10).apply(null);
+        Assert.assertFalse(got.isPresent());
     }
 
     @Test
     public void parsingInvalidStringYieldsNothing() {
-        final Maybe<Integer> got = new IntegerTryParser(10).perform("A");
-        Assert.assertFalse(got.hasValue());
+        final Optional<Integer> got = new IntegerTryParser(10).apply("A");
+        Assert.assertFalse(got.isPresent());
     }
 
     @Test
     public void parsingValidStringYieldsJustValue() {
-        final Maybe<Integer> got = new IntegerTryParser(10).perform("1");
-        Assert.assertEquals(Maybe.just(1), got);
+        final Optional<Integer> got = new IntegerTryParser(10).apply("1");
+        Assert.assertEquals(Optional.of(1), got);
     }
 }

@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.ranges;
 
 import java.util.List;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 
 /**
  *
@@ -21,7 +21,7 @@ public interface Range<T> extends Iterable<T>, Comparable<Range<T>> {
 
     T begin();
 
-    Maybe<T> end();
+    Optional<T> end();
 
     List<DenseRange<T>> densified();
 }

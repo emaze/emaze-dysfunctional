@@ -1,5 +1,7 @@
 package net.emaze.dysfunctional.dispatching.actions;
 
+import java.util.function.BiConsumer;
+
 /**
  * A null binary functor with no return value effectively doing nothing. Much
  * better than {@literal Noop<T>}.
@@ -8,7 +10,7 @@ package net.emaze.dysfunctional.dispatching.actions;
  * @param <T2> the latter type parameter
  * @author rferranti
  */
-public class BinaryNoop<T1, T2> implements BinaryAction<T1, T2> {
+public class BinaryNoop<T1, T2> implements BiConsumer<T1, T2> {
 
     /**
      * Does nothing, ignoring parameters.
@@ -17,6 +19,6 @@ public class BinaryNoop<T1, T2> implements BinaryAction<T1, T2> {
      * @param latter the second parameter
      */
     @Override
-    public void perform(T1 former, T2 latter) {
+    public void accept(T1 former, T2 latter) {
     }
 }

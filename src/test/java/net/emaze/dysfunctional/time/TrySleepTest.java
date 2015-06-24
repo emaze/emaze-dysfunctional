@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.time;
 
 import java.util.concurrent.TimeUnit;
-import net.emaze.dysfunctional.dispatching.actions.BinaryAction;
+import java.util.function.BiConsumer;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,7 +19,7 @@ public class TrySleepTest {
 
             @Override
             public void run() {
-                sleeper.perform(10l, TimeUnit.SECONDS);
+                sleeper.accept(10l, TimeUnit.SECONDS);
             }
         });
         thread.start();
@@ -35,7 +35,7 @@ public class TrySleepTest {
 
             @Override
             public void run() {
-                sleeper.perform(expectedMillis, TimeUnit.MILLISECONDS);
+                sleeper.accept(expectedMillis, TimeUnit.MILLISECONDS);
             }
         });
         final long start = System.currentTimeMillis();
@@ -47,13 +47,13 @@ public class TrySleepTest {
 
     @Test(expected = ClassCastException.class)
     public void passingWrongTypeForTimeUnitInErasureYieldsException() {
-        BinaryAction action = sleeper;
-        action.perform(1l, new Object());
+        BiConsumer consumer = sleeper;
+        consumer.accept(1l, new Object());
     }
 
     @Test(expected = ClassCastException.class)
     public void passingWrongTypeForDurationInErasureYieldsException() {
-        BinaryAction action = sleeper;
-        action.perform(new Object(), TimeUnit.MILLISECONDS);
+        BiConsumer consumer = sleeper;
+        consumer.accept(new Object(), TimeUnit.MILLISECONDS);
     }
 }

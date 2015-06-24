@@ -2,7 +2,7 @@ package net.emaze.dysfunctional.reductions;
 
 import java.util.Iterator;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 
 /**
  * A unary predicate yielding true if every iterator element matches the nested
@@ -21,10 +21,10 @@ public class Every<T> implements Predicate<Iterator<T>> {
     }
 
     @Override
-    public boolean accept(Iterator<T> iterator) {
+    public boolean test(Iterator<T> iterator) {
         dbc.precondition(iterator != null, "cannot call Every with a null iterator");
         while (iterator.hasNext()) {
-            if (!predicate.accept(iterator.next())) {
+            if (!predicate.test(iterator.next())) {
                 return false;
             }
         }

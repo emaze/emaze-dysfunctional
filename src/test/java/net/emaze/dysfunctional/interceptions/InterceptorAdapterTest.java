@@ -2,8 +2,7 @@ package net.emaze.dysfunctional.interceptions;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import java.util.function.Function;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,7 +14,7 @@ public class InterceptorAdapterTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingAdapterWithNullAdapteeYieldsException() {
-        new InterceptorAdapter<Object, Object>(null, new Identity<Object>());
+        new InterceptorAdapter<Object, Object>(null, Function.identity());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -26,8 +25,8 @@ public class InterceptorAdapterTest {
     @Test
     public void beforeAndAfterAreCalled() {
         List<Integer> bucket = new ArrayList<Integer>();
-        Delegate<String, String> delegate = new InterceptorAdapter<String, String>(new BucketFillingInterceptor(bucket), new Identity<String>());
-        delegate.perform("useless_param");
+        final Function<String, String> function = new InterceptorAdapter<String, String>(new BucketFillingInterceptor(bucket), Function.identity());
+        function.apply("useless_param");
         Assert.assertEquals(2, bucket.size());
 
     }
@@ -35,17 +34,17 @@ public class InterceptorAdapterTest {
     @Test
     public void beforeAndAfterAreCalledInCaseOfException() {
         List<Integer> bucket = new ArrayList<Integer>();
-        Delegate<String, String> delegate = new InterceptorAdapter<String, String>(new BucketFillingInterceptor(bucket), new Delegate<String, String>() {
+        Function<String, String> function = new InterceptorAdapter<String, String>(new BucketFillingInterceptor(bucket), new Function<String, String>() {
 
             @Override
-            public String perform(String t) {
+            public String apply(String t) {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
         });
         try {
-            delegate.perform("useless_param");
-            Assert.fail("delegate is supposed to throw UnsupportedOperationException");
-        }catch(UnsupportedOperationException ex){
+            function.apply("useless_param");
+            Assert.fail("function is supposed to throw UnsupportedOperationException");
+        } catch (UnsupportedOperationException ex) {
             Assert.assertEquals(2, bucket.size());
         }
     }

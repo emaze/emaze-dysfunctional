@@ -2,19 +2,19 @@ package net.emaze.dysfunctional.dispatching.spying;
 
 import java.util.concurrent.atomic.AtomicLong;
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.Proposition;
+import java.util.function.BooleanSupplier;
 
 /**
  * Proxies a proposition monitoring its calls.
  *
  * @author rferranti
  */
-public class MonitoringProposition implements Proposition {
+public class MonitoringProposition implements BooleanSupplier {
 
-    private final Proposition nested;
+    private final BooleanSupplier nested;
     private final AtomicLong calls;
 
-    public MonitoringProposition(Proposition nested, AtomicLong calls) {
+    public MonitoringProposition(BooleanSupplier nested, AtomicLong calls) {
         dbc.precondition(nested != null, "cannot monitor a null proposition");
         dbc.precondition(calls != null, "cannot monitor with a null AtomicLong");
         this.nested = nested;
@@ -22,8 +22,8 @@ public class MonitoringProposition implements Proposition {
     }
 
     @Override
-    public boolean state() {
+    public boolean getAsBoolean() {
         calls.incrementAndGet();
-        return nested.state();
+        return nested.getAsBoolean();
     }
 }

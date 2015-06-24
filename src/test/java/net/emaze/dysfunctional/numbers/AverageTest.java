@@ -19,7 +19,7 @@ public class AverageTest {
     @Test
     public void canSumUsingAPolicy() {
         final Average<Integer> average = new Average<Integer>(new IntegerOperations());
-        final Pair<Integer, Long> sumAndCount = average.perform(Pair.of(0, 0l), 6);
+        final Pair<Integer, Long> sumAndCount = average.apply(Pair.of(0, 0l), 6);
         Assert.assertEquals(Pair.of(6, 1L), sumAndCount);
     }
 

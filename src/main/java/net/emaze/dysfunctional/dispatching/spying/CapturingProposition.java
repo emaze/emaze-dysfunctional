@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.spying;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.Proposition;
+import java.util.function.BooleanSupplier;
 import net.emaze.dysfunctional.options.Box;
 
 /**
@@ -9,12 +9,12 @@ import net.emaze.dysfunctional.options.Box;
  *
  * @author rferranti
  */
-public class CapturingProposition implements Proposition {
+public class CapturingProposition implements BooleanSupplier {
 
-    private final Proposition nested;
+    private final BooleanSupplier nested;
     private final Box<Boolean> result;
 
-    public CapturingProposition(Proposition nested, Box<Boolean> result) {
+    public CapturingProposition(BooleanSupplier nested, Box<Boolean> result) {
         dbc.precondition(nested != null, "cannot capture from a null proposition");
         dbc.precondition(result != null, "cann capture with a null result box");
         this.nested = nested;
@@ -22,8 +22,8 @@ public class CapturingProposition implements Proposition {
     }
 
     @Override
-    public boolean state() {
-        final boolean stated = nested.state();
+    public boolean getAsBoolean() {
+        final boolean stated = nested.getAsBoolean();
         result.setContent(stated);
         return stated;
     }

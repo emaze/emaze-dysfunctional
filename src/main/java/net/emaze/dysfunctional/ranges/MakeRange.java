@@ -2,8 +2,8 @@ package net.emaze.dysfunctional.ranges;
 
 import java.util.Comparator;
 import java.util.List;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.function.Function;
+import java.util.Optional;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 import net.emaze.dysfunctional.ranges.Range.Endpoint;
 
@@ -11,20 +11,20 @@ import net.emaze.dysfunctional.ranges.Range.Endpoint;
  *
  * @author rferranti
  */
-public class MakeRange<T> implements Delegate<Range<T>, List<DenseRange<T>>> {
+public class MakeRange<T> implements Function<List<DenseRange<T>>, Range<T>> {
 
     private final SequencingPolicy<T> sequencer;
-    private final Comparator<Maybe<T>> comparator;
+    private final Comparator<Optional<T>> comparator;
     private final DenseRange<T> empty;
 
-    public MakeRange(SequencingPolicy<T> sequencer, Comparator<Maybe<T>> comparator, T emptyValue) {
+    public MakeRange(SequencingPolicy<T> sequencer, Comparator<Optional<T>> comparator, T emptyValue) {
         this.sequencer = sequencer;
         this.comparator = comparator;
-        this.empty = new DenseRange<T>(sequencer, comparator, Endpoint.Include, emptyValue, Maybe.just(emptyValue), Endpoint.Exclude);
+        this.empty = new DenseRange<T>(sequencer, comparator, Endpoint.Include, emptyValue, Optional.of(emptyValue), Endpoint.Exclude);
     }
 
     @Override
-    public Range<T> perform(List<DenseRange<T>> wannaBeRange) {
+    public Range<T> apply(List<DenseRange<T>> wannaBeRange) {
         if (wannaBeRange.isEmpty()) {
             return empty;
         }

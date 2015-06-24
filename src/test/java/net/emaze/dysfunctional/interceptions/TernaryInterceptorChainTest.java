@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import net.emaze.dysfunctional.dispatching.delegates.FirstParamOfThree;
-import net.emaze.dysfunctional.dispatching.delegates.TernaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.TriFunction;
 import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
@@ -25,7 +25,7 @@ public class TernaryInterceptorChainTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingChainWithNullChaingYieldsException() {
-        final TernaryDelegate<O, O, O, O> firstParam = new FirstParamOfThree<O, O, O>();
+        final TriFunction<O, O, O, O> firstParam = new FirstParamOfThree<O, O, O>();
         new TernaryInterceptorChain<O, O, O, O>(firstParam, null);
     }
 
@@ -37,7 +37,7 @@ public class TernaryInterceptorChainTest {
                 new BucketFillingInterceptor(2, bucket),
                 new BucketFillingInterceptor(1, bucket));
         final TernaryInterceptorChain<O, O, O, O> ic = new TernaryInterceptorChain<O, O, O, O>(new BucketFillingDelegate(4, bucket), chain);
-        ic.perform(O.IGNORED, O.IGNORED, O.IGNORED);
+        ic.apply(O.IGNORED, O.IGNORED, O.IGNORED);
         Assert.assertEquals(Arrays.asList(1, 2, 3, 4, 3, 2, 1), bucket);
     }
 
@@ -50,13 +50,13 @@ public class TernaryInterceptorChainTest {
                 new BucketFillingInterceptor(1, bucket));
         final TernaryInterceptorChain<O, O, O, O> ic = new TernaryInterceptorChain<O, O, O, O>(new BucketFillingDelegate(4, bucket), chain);
         try {
-            ic.perform(O.IGNORED, O.IGNORED, O.IGNORED);
+            ic.apply(O.IGNORED, O.IGNORED, O.IGNORED);
         } catch (Exception ex) {
         }
         Assert.assertEquals(Arrays.asList(1, 1), bucket);
     }
 
-    public static class BucketFillingDelegate implements TernaryDelegate<O, O, O, O> {
+    public static class BucketFillingDelegate implements TriFunction<O, O, O, O> {
 
         private final int id;
         private final List<Integer> bucket;
@@ -67,7 +67,7 @@ public class TernaryInterceptorChainTest {
         }
 
         @Override
-        public O perform(O first, O second, O third) {
+        public O apply(O first, O second, O third) {
             bucket.add(id);
             return null;
         }

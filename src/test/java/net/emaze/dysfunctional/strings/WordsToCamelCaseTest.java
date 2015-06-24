@@ -13,17 +13,17 @@ public class WordsToCamelCaseTest {
     
     @Test
     public void camelForEmptyArrayIsEmptyString() {
-        Assert.assertEquals("", toCamel.perform(new String[0]));
+        Assert.assertEquals("", toCamel.apply(new String[0]));
     }
     
     @Test(expected=IllegalArgumentException.class)
     public void camelForNullArrayYieldsException() {
-        toCamel.perform(null);
+        toCamel.apply(null);
     }
     
     @Test
     public void canCamelCaseMultipleWords() {
         String[] source = {"Blah", "BlaH" };
-        Assert.assertEquals("blahBlah", toCamel.perform(source));
+        Assert.assertEquals("blahBlah", toCamel.apply(source));
     }
 }

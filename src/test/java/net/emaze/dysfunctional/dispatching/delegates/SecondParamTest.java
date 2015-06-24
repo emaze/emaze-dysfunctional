@@ -12,7 +12,7 @@ public class SecondParamTest {
 
     @Test
     public void canCaptureSecondParam() {
-        final O got = new SecondParam<O, O>().perform(O.IGNORED, O.ONE);
+        final O got = new SecondParam<O, O>().apply(O.IGNORED, O.ONE);
         Assert.assertEquals(O.ONE, got);
     }
 

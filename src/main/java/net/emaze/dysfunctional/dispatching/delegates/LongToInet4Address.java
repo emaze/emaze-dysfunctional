@@ -1,20 +1,21 @@
 package net.emaze.dysfunctional.dispatching.delegates;
 
+import java.util.function.Function;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import net.emaze.dysfunctional.contracts.dbc;
 
 /**
- * A unary delegate transforming a Long to an Inet4Address.
+ * A unary function transforming a Long to an Inet4Address.
  *
  * See {@link Inet4AddressToLong}.
  *
  * @author rferranti
  */
-public class LongToInet4Address implements Delegate<Inet4Address, Long> {
+public class LongToInet4Address implements Function<Long, Inet4Address> {
 
     @Override
-    public Inet4Address perform(Long address) {
+    public Inet4Address apply(Long address) {
         dbc.precondition(address != null, "cannot transform a null Long to an Inet4Address");
         final byte[] octets = new byte[4];
         for (int i = 0; i != octets.length; ++i) {

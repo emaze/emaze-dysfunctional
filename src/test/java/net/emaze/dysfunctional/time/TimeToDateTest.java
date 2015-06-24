@@ -11,16 +11,16 @@ public class TimeToDateTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldNotPassANullArgument() {
-        instance.perform(null);
+        instance.apply(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldNotPassAPairWithNullFirst() {
-        instance.perform(Pair.of((Long) null, TimeUnit.DAYS));
+        instance.apply(Pair.of((Long) null, TimeUnit.DAYS));
     }
 
     @Test
     public void canConvertTimeToDate() {
-        Assert.assertNotNull(instance.perform(Pair.of((long) 1, TimeUnit.DAYS)));
+        Assert.assertNotNull(instance.apply(Pair.of((long) 1, TimeUnit.DAYS)));
     }
 }

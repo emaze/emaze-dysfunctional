@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.collections.HashMapFactory;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.function.Supplier;
+import java.util.Optional;
 import net.emaze.dysfunctional.output.OutputIterator;
 import net.emaze.dysfunctional.output.StringOutputIterator;
 import net.emaze.dysfunctional.testing.O;
@@ -131,7 +131,7 @@ public class ConsumersTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallAllWithNullCollectionProvider() {
-            final Provider<List<Integer>> collectionProvider = null;
+            final Supplier<List<Integer>> collectionProvider = null;
             Consumers.all(Arrays.asList(1, 2), collectionProvider);
         }
 
@@ -247,7 +247,7 @@ public class ConsumersTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotCallDictWithNullCollectionProvider() {
-            final Provider<Map<O, O>> collectionProvider = null;
+            final Supplier<Map<O, O>> collectionProvider = null;
             Iterable<Pair<O, O>> iterable = Iterations.iterable(Pair.of(O.ONE, O.ONE));
             Consumers.dict(iterable, collectionProvider);
         }
@@ -335,13 +335,13 @@ public class ConsumersTest {
 
         @Test
         public void maybeOneInSingleValueArrayWNoPredicateYieldsJustFirst() {
-            Maybe<Integer> got = Consumers.maybeOne(SINGLE_ELEMENT_ARRAY);
-            Assert.assertEquals(Maybe.just(1), got);
+            Optional<Integer> got = Consumers.maybeOne(SINGLE_ELEMENT_ARRAY);
+            Assert.assertEquals(Optional.of(1), got);
         }
 
         @Test
         public void maybeOneWithEmptyIteratorYieldsNothing() {
-            Assert.assertEquals(Maybe.nothing(), Consumers.maybeOne(Iterations.iterator()));
+            Assert.assertEquals(Optional.empty(), Consumers.maybeOne(Iterations.iterator()));
         }
 
         @Test(expected = IllegalStateException.class)
@@ -351,12 +351,12 @@ public class ConsumersTest {
 
         @Test
         public void maybeOneWithSingleValueIteratorYieldsJustValue() {
-            Assert.assertEquals(Maybe.just(1), Consumers.maybeOne(Iterations.iterator(1)));
+            Assert.assertEquals(Optional.of(1), Consumers.maybeOne(Iterations.iterator(1)));
         }
 
         @Test
         public void maybeOneWithSingleValueIterableYieldsJustValue() {
-            Assert.assertEquals(Maybe.just(1), Consumers.maybeOne(Iterations.iterable(1)));
+            Assert.assertEquals(Optional.of(1), Consumers.maybeOne(Iterations.iterable(1)));
         }
 
         @Test(expected = IllegalArgumentException.class)
@@ -402,22 +402,22 @@ public class ConsumersTest {
 
         @Test
         public void maybeFirstWithEmptyIteratorYieldsNothing() {
-            Assert.assertEquals(Maybe.nothing(), Consumers.maybeFirst(Iterations.iterator()));
+            Assert.assertEquals(Optional.empty(), Consumers.maybeFirst(Iterations.iterator()));
         }
 
         @Test
         public void maybeFirstWithNonEmptyIteratorYieldsJustTheFirst() {
-            Assert.assertEquals(Maybe.just(1), Consumers.maybeFirst(Iterations.iterator(1, 2)));
+            Assert.assertEquals(Optional.of(1), Consumers.maybeFirst(Iterations.iterator(1, 2)));
         }
 
         @Test
         public void maybeFirstWithNonEmptyIterableYieldsJustTheFirst() {
-            Assert.assertEquals(Maybe.just(1), Consumers.maybeFirst(Iterations.iterable(1, 2)));
+            Assert.assertEquals(Optional.of(1), Consumers.maybeFirst(Iterations.iterable(1, 2)));
         }
 
         @Test
         public void maybeFirstWithNonEmptyArrayYieldsJustTheFirst() {
-            Assert.assertEquals(Maybe.just(1), Consumers.maybeFirst(new Integer[]{1, 2}));
+            Assert.assertEquals(Optional.of(1), Consumers.maybeFirst(new Integer[]{1, 2}));
         }
 
         @Test(expected = IllegalArgumentException.class)
@@ -458,27 +458,27 @@ public class ConsumersTest {
 
         @Test
         public void maybeLastWithEmptyIteratorYieldsNothing() {
-            Assert.assertEquals(Maybe.nothing(), Consumers.maybeLast(Iterations.iterator()));
+            Assert.assertEquals(Optional.empty(), Consumers.maybeLast(Iterations.iterator()));
         }
 
         @Test
         public void maybeLastWithMultipleValuesIteratorYieldsTheLastElement() {
-            Assert.assertEquals(Maybe.just(2), Consumers.maybeLast(Iterations.iterator(1, 2)));
+            Assert.assertEquals(Optional.of(2), Consumers.maybeLast(Iterations.iterator(1, 2)));
         }
 
         @Test
         public void maybeLastWithSingleValueIteratorYieldsJustLastValue() {
-            Assert.assertEquals(Maybe.just(1), Consumers.maybeLast(Iterations.iterator(1)));
+            Assert.assertEquals(Optional.of(1), Consumers.maybeLast(Iterations.iterator(1)));
         }
 
         @Test
         public void maybeLastWithSingleValueIterableYieldsJustLastValue() {
-            Assert.assertEquals(Maybe.just(1), Consumers.maybeLast(Iterations.iterable(1)));
+            Assert.assertEquals(Optional.of(1), Consumers.maybeLast(Iterations.iterable(1)));
         }
 
         @Test
         public void maybeLastWithSingleValueArrayYieldsJustLastValue() {
-            Assert.assertEquals(Maybe.just(1), Consumers.maybeLast(new Integer[]{1}));
+            Assert.assertEquals(Optional.of(1), Consumers.maybeLast(new Integer[]{1}));
         }
 
         @Test(expected = IllegalArgumentException.class)
@@ -541,19 +541,19 @@ public class ConsumersTest {
         @Test
         public void canFetchNthFromAnIterable() {
             final Iterable<O> iterable = Iterations.iterable(O.ONE, O.ANOTHER);
-            Assert.assertEquals(Maybe.just(O.ONE), Consumers.maybeNth(1, iterable));
+            Assert.assertEquals(Optional.of(O.ONE), Consumers.maybeNth(1, iterable));
         }
 
         @Test
         public void canFetchNthFromAnIterator() {
             final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER);
-            Assert.assertEquals(Maybe.just(O.ONE), Consumers.maybeNth(1, iterator));
+            Assert.assertEquals(Optional.of(O.ONE), Consumers.maybeNth(1, iterator));
         }
 
         @Test
         public void canFetchNthFromAnArray() {
             final O[] array = {O.ONE, O.ANOTHER};
-            Assert.assertEquals(Maybe.just(O.ONE), Consumers.maybeNth(1, array));
+            Assert.assertEquals(Optional.of(O.ONE), Consumers.maybeNth(1, array));
         }
 
         @Test(expected = IllegalArgumentException.class)
@@ -592,19 +592,19 @@ public class ConsumersTest {
         @Test
         public void canFetchAtFromIterator() {
             final Iterator<O> iterator = Iterations.iterator(O.ONE);
-            Assert.assertEquals(Maybe.just(O.ONE), Consumers.maybeAt(0, iterator));
+            Assert.assertEquals(Optional.of(O.ONE), Consumers.maybeAt(0, iterator));
         }
 
         @Test
         public void canFetchAtFromIterable() {
             final Iterable<O> iterable = Iterations.iterable(O.ONE);
-            Assert.assertEquals(Maybe.just(O.ONE), Consumers.maybeAt(0, iterable));
+            Assert.assertEquals(Optional.of(O.ONE), Consumers.maybeAt(0, iterable));
         }
 
         @Test
         public void canFetchAtFromArray() {
             final O[] array = {O.ONE};
-            Assert.assertEquals(Maybe.just(O.ONE), Consumers.maybeAt(0, array));
+            Assert.assertEquals(Optional.of(O.ONE), Consumers.maybeAt(0, array));
         }
 
         @Test(expected = IllegalArgumentException.class)

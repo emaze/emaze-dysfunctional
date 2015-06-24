@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.strings.predicates;
 
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,22 +17,22 @@ public class StringEqualsIgnoreCaseTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testingWithNullHaystackYieldsException() {
-        new StringEqualsIgnoreCase("a").accept(null);
+        new StringEqualsIgnoreCase("a").test(null);
     }
 
     @Test(expected = ClassCastException.class)
     public void passingNonStringToErasureYieldsException() {
         Predicate p = new StringEqualsIgnoreCase("a");
-        p.accept(new Object());
+        p.test(new Object());
     }    
     
     @Test
     public void testingEqualsYieldsTrue() {
-        Assert.assertTrue(new StringEqualsIgnoreCase("a").accept("A"));
+        Assert.assertTrue(new StringEqualsIgnoreCase("a").test("A"));
     }
 
     @Test
     public void testingNotEqualsYieldsFalse() {
-        Assert.assertFalse(new StringEqualsIgnoreCase("a").accept("b"));
+        Assert.assertFalse(new StringEqualsIgnoreCase("a").test("b"));
     }
 }

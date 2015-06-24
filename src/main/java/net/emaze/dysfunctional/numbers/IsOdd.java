@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.numbers;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.numbers.policies.ModulusPolicy;
 
 /**
@@ -23,7 +23,7 @@ public class IsOdd<R, T> implements Predicate<T> {
     }
 
     @Override
-    public boolean accept(T value) {
+    public boolean test(T value) {
         return !policy.modulus(value, 2).equals(zero);
     }
 }

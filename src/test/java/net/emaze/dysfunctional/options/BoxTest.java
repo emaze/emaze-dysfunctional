@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.options;
 
-import net.emaze.dysfunctional.dispatching.delegates.ConstantDelegate;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
+import java.util.function.Function;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantFunction;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -63,7 +63,7 @@ public class BoxTest {
     @Test
     public void emptyBoxHasNoContent() {
         Box<O> box = Box.empty();
-        Assert.assertFalse(box.hasContent());
+        Assert.assertFalse(box.isPresent());
     }
 
     @Test
@@ -75,7 +75,7 @@ public class BoxTest {
     @Test
     public void loadedBoxHasContent() {
         Box<O> box = Box.of(O.ONE);
-        Assert.assertTrue(box.hasContent());
+        Assert.assertTrue(box.isPresent());
     }
 
     @Test
@@ -88,20 +88,20 @@ public class BoxTest {
     @Test
     public void fmappingAnEmptyBoxYieldsEmptyBox() {
         final Box<O> box = Box.empty();
-        final Box<Integer> mapped = box.fmap(new ConstantDelegate<Integer, O>(1));
+        final Box<Integer> mapped = box.map(new ConstantFunction<>(1));
         Assert.assertEquals(mapped, Box.<Integer>empty());
     }
 
     @Test
     public void fmappingLoadedBoxYieldsEmptyBox() {
         final Box<Integer> box = Box.of(1);
-        final Box<Integer> mapped = box.fmap(new Identity<Integer>());
+        final Box<Integer> mapped = box.map(Function.identity());
         Assert.assertEquals(mapped, box);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void fmappingWithNullDelegateYieldsException() {
-        Box.of(1).fmap(null);
+        Box.of(1).map(null);
     }
 
     public static class Dick {

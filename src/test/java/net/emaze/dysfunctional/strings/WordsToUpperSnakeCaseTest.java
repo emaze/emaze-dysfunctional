@@ -11,7 +11,7 @@ public class WordsToUpperSnakeCaseTest {
     
     @Test(expected = IllegalArgumentException.class)
     public void transformingNullArrayOfWordsYieldsException() {
-        new WordsToUpperSnakeCase("-").perform(null);
+        new WordsToUpperSnakeCase("-").apply(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -21,13 +21,13 @@ public class WordsToUpperSnakeCaseTest {
 
     @Test
     public void validArrayOfWordsYieldsSnakedString() {
-        final String got = new WordsToUpperSnakeCase("-").perform(new String[]{"SomE", "wOrd"});
+        final String got = new WordsToUpperSnakeCase("-").apply(new String[]{"SomE", "wOrd"});
         Assert.assertEquals("SOME-WORD", got);
     }
 
     @Test
     public void validArrayWithSingleWordsYieldsLowerCasedWord() {
-        final String got = new WordsToUpperSnakeCase("-").perform(new String[]{"SomE"});
+        final String got = new WordsToUpperSnakeCase("-").apply(new String[]{"SomE"});
         Assert.assertEquals("SOME", got);
     }
 }

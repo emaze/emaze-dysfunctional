@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,34 +18,34 @@ public class ConsumeIntoCollectionTest {
     @Test
     public void consumingEmptyIteratorYieldsEmptyList() {
         List<Integer> consumable = Collections.emptyList();
-        final ConsumeIntoCollection<ArrayList<Integer>, Integer> cons = new ConsumeIntoCollection<ArrayList<Integer>, Integer>(new ArrayListFactory<Integer>());
-        ArrayList<Integer> got = cons.perform(consumable.iterator());
+        final ConsumeIntoCollection<Integer, ArrayList<Integer>> cons = new ConsumeIntoCollection<>(new ArrayListFactory<Integer>());
+        ArrayList<Integer> got = cons.apply(consumable.iterator());
         Assert.assertEquals(consumable, got);
     }
 
     @Test
     public void consumingListYieldsSameValuesAsInList() {
         List<Integer> consumable = Arrays.asList(1, 2, 3);
-        final ConsumeIntoCollection<ArrayList<Integer>, Integer> cons = new ConsumeIntoCollection<ArrayList<Integer>, Integer>(new ArrayListFactory<Integer>());
-        ArrayList<Integer> got = cons.perform(consumable.iterator());
+        final ConsumeIntoCollection<Integer, ArrayList<Integer>> cons = new ConsumeIntoCollection<>(new ArrayListFactory<Integer>());
+        ArrayList<Integer> got = cons.apply(consumable.iterator());
         Assert.assertEquals(consumable, got);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void consumingNullIteratorYieldException() {
-        final ConsumeIntoCollection<ArrayList<Integer>, Integer> cons = new ConsumeIntoCollection<ArrayList<Integer>, Integer>(new ArrayListFactory<Integer>());
-        cons.perform(null);
+        final ConsumeIntoCollection<Integer, ArrayList<Integer>> cons = new ConsumeIntoCollection<>(new ArrayListFactory<Integer>());
+        cons.apply(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void creatingConsumerWithNullFactorYieldsException() {
-        new ConsumeIntoCollection<ArrayList<Integer>, Integer>(null);
+        new ConsumeIntoCollection<>(null);
 
     }
 
     @Test(expected = ClassCastException.class)
     public void consumingFromErasureWithWrongTypeYieldsException() {
-        final Delegate cons = new ConsumeIntoCollection<ArrayList<Integer>, Integer>(new ArrayListFactory<Integer>());
-        cons.perform(new Object());
+        final Function cons = new ConsumeIntoCollection<>(new ArrayListFactory<Integer>());
+        cons.apply(new Object());
     }
 }

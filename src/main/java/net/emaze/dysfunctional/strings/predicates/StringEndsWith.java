@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.strings.predicates;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 
 public class StringEndsWith implements Predicate<String> {
 
@@ -13,7 +13,7 @@ public class StringEndsWith implements Predicate<String> {
     }
 
     @Override
-    public boolean accept(String haystack) {
+    public boolean test(String haystack) {
         dbc.precondition(haystack != null, "cannot check 'ends with' with a null haystack");
         return haystack.endsWith(needle);
     }

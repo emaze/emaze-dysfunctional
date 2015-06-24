@@ -1,8 +1,9 @@
 package net.emaze.dysfunctional.dispatching;
 
+import net.emaze.dysfunctional.dispatching.delegates.Tapper;
 import junit.framework.Assert;
 import net.emaze.dysfunctional.dispatching.actions.Noop;
-import net.emaze.dysfunctional.dispatching.delegates.Delegate;
+import java.util.function.Function;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Test;
 
@@ -15,7 +16,7 @@ public class TapperTest {
 
     @Test
     public void tappingAnActionYieldsPossiblyMutatedOriginalValue() {
-        final Delegate<O, O> tapper = new Tapper<O>(new Noop<O>());
-        Assert.assertSame(O.ONE, tapper.perform(O.ONE));
+        final Function<O, O> tapper = new Tapper<O>(new Noop<O>());
+        Assert.assertSame(O.ONE, tapper.apply(O.ONE));
     }
 }

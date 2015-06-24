@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import net.emaze.dysfunctional.Consumers;
 import net.emaze.dysfunctional.Iterations;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -49,8 +49,8 @@ public class RoundrobinLongestIteratorTest {
             Iterator<Integer> evens = Arrays.asList(2, 4).iterator();
             Iterator<Iterator<Integer>> oddsAndEvens = Arrays.asList(odds, evens).iterator();
             RoundrobinLongestIterator<Integer> iter = new RoundrobinLongestIterator<Integer>(oddsAndEvens);
-            List<Maybe<Integer>> got = Consumers.all(iter);
-            List<Maybe<Integer>> expected = Arrays.asList(Maybe.just(1), Maybe.just(2), Maybe.just(3), Maybe.just(4));
+            List<Optional<Integer>> got = Consumers.all(iter);
+            List<Optional<Integer>> expected = Arrays.asList(Optional.of(1), Optional.of(2), Optional.of(3), Optional.of(4));
             Assert.assertEquals(expected, got);
         }
 
@@ -60,8 +60,8 @@ public class RoundrobinLongestIteratorTest {
             Iterator<Integer> evens = Arrays.asList(2, 4).iterator();
             Iterator<Iterator<Integer>> oddsAndEvens = Arrays.asList(odds, evens).iterator();
             RoundrobinLongestIterator<Integer> iter = new RoundrobinLongestIterator<Integer>(oddsAndEvens);
-            List<Maybe<Integer>> got = Consumers.all(iter);
-            List<Maybe<Integer>> expected = Arrays.asList(Maybe.just(1), Maybe.just(2), Maybe.just(3), Maybe.just(4), Maybe.just(5), Maybe.<Integer>nothing());
+            List<Optional<Integer>> got = Consumers.all(iter);
+            List<Optional<Integer>> expected = Arrays.asList(Optional.of(1), Optional.of(2), Optional.of(3), Optional.of(4), Optional.of(5), Optional.<Integer>empty());
             Assert.assertEquals(expected, got);
         }
 

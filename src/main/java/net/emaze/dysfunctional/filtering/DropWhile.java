@@ -1,6 +1,6 @@
 package net.emaze.dysfunctional.filtering;
 
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
+import java.util.function.Predicate;
 
 /**
  * A stateful predicate yielding false until the first time the predicate
@@ -19,10 +19,10 @@ public class DropWhile<T> implements Predicate<T> {
     }
 
     @Override
-    public boolean accept(T element) {
+    public boolean test(T element) {
         if (takeElement == false) {
             // first time and until predicate is true
-            takeElement = !dropWhile.accept(element);
+            takeElement = !dropWhile.test(element);
         }
         return takeElement;
     }

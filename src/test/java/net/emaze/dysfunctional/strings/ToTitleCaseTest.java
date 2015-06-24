@@ -11,21 +11,21 @@ public class ToTitleCaseTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void titleCasingEmptyWordYieldsException() {
-        new ToTitleCase().perform("");
+        new ToTitleCase().apply("");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void titleCasingNullWordYieldsException() {
-        new ToTitleCase().perform(null);
+        new ToTitleCase().apply(null);
     }
 
     @Test
     public void canTitleCaseWordWithOneLetter() {
-        Assert.assertEquals("A", new ToTitleCase().perform("a"));
+        Assert.assertEquals("A", new ToTitleCase().apply("a"));
     }
 
     @Test
     public void nonInitialCharactersAreLowerCase() {
-        Assert.assertEquals("Ab", new ToTitleCase().perform("AB"));
+        Assert.assertEquals("Ab", new ToTitleCase().apply("AB"));
     }
 }

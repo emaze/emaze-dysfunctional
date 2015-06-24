@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.order;
 
 import java.math.BigInteger;
-import net.emaze.dysfunctional.options.Maybe;
+import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ public class NextBigIntegerSequencingPolicyTest {
 
     @Test
     public void canEvaluateNext() {
-        Assert.assertEquals(Maybe.just(BigInteger.ONE), policy.next(BigInteger.ZERO));
+        Assert.assertEquals(Optional.of(BigInteger.ONE), policy.next(BigInteger.ZERO));
     }
 
     @Test(expected = IllegalArgumentException.class)

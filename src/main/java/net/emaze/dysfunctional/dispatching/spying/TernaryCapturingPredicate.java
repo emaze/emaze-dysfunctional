@@ -1,7 +1,7 @@
 package net.emaze.dysfunctional.dispatching.spying;
 
 import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.TriPredicate;
 import net.emaze.dysfunctional.options.Box;
 
 /**
@@ -12,15 +12,15 @@ import net.emaze.dysfunctional.options.Box;
  * @param <T2> the second parameter type
  * @param <T3> the third parameter type
  */
-public class TernaryCapturingPredicate<T1, T2, T3> implements TernaryPredicate<T1, T2, T3> {
+public class TernaryCapturingPredicate<T1, T2, T3> implements TriPredicate<T1, T2, T3> {
 
-    private final TernaryPredicate<T1, T2, T3> nested;
+    private final TriPredicate<T1, T2, T3> nested;
     private final Box<Boolean> result;
     private final Box<T1> param1;
     private final Box<T2> param2;
     private final Box<T3> param3;
 
-    public TernaryCapturingPredicate(TernaryPredicate<T1, T2, T3> nested, Box<Boolean> result, Box<T1> param1, Box<T2> param2, Box<T3> param3) {
+    public TernaryCapturingPredicate(TriPredicate<T1, T2, T3> nested, Box<Boolean> result, Box<T1> param1, Box<T2> param2, Box<T3> param3) {
         dbc.precondition(nested != null, "cannot capture from a null predicate");
         dbc.precondition(result != null, "cannot capture with a null result box");
         dbc.precondition(param1 != null, "cannot capture with a null param1 box");
@@ -34,11 +34,11 @@ public class TernaryCapturingPredicate<T1, T2, T3> implements TernaryPredicate<T
     }
 
     @Override
-    public boolean accept(T1 first, T2 second, T3 third) {
+    public boolean test(T1 first, T2 second, T3 third) {
         param1.setContent(first);
         param2.setContent(second);
         param3.setContent(third);
-        final boolean got = nested.accept(first, second, third);
+        final boolean got = nested.test(first, second, third);
         result.setContent(got);
         return got;
     }

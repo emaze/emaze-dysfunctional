@@ -3,12 +3,11 @@ package net.emaze.dysfunctional;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Queue;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
-import net.emaze.dysfunctional.dispatching.delegates.Identity;
-import net.emaze.dysfunctional.dispatching.delegates.Provider;
-import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,8 +18,8 @@ import org.junit.Test;
  */
 public class WindowingTest {
 
-    private final Provider<List<O>> LIST_FACTORY = Compositions.compose(new Vary<List<O>, ArrayList<O>>(), new ArrayListFactory<O>());
-    private final Provider<List<Maybe<O>>> LIST_MAYBE_FACTORY = Compositions.compose(new Vary<List<Maybe<O>>, ArrayList<Maybe<O>>>(), new ArrayListFactory<Maybe<O>>());
+    private final Supplier<List<O>> LIST_FACTORY = Compositions.compose(new Vary<ArrayList<O>, List<O>>(), new ArrayListFactory<O>());
+    private final Supplier<List<Optional<O>>> LIST_MAYBE_FACTORY = Compositions.compose(new Vary<ArrayList<Optional<O>>, List<Optional<O>>>(), new ArrayListFactory<Optional<O>>());
 
     @Test
     public void canCreateWindowFromIterator() {
@@ -55,7 +54,7 @@ public class WindowingTest {
     @Test
     public void canCreateTrailsFromIteratorUsingDelegate() {
         final Iterator<O> iterator = Iterations.iterator(O.ONE, O.ANOTHER, O.YET_ANOTHER);
-        Windowing.trails(3, iterator, new Identity<Queue<Maybe<O>>>());
+        Windowing.trails(3, iterator, Function.identity());
     }
 
     @Test
@@ -91,7 +90,7 @@ public class WindowingTest {
     @Test
     public void canCreateTrailsFromIterableUsingDelegate() {
         final Iterable<O> iterable = Iterations.iterable(O.ONE, O.ANOTHER, O.YET_ANOTHER);
-        Windowing.trails(3, iterable, new Identity<Queue<Maybe<O>>>());
+        Windowing.trails(3, iterable, Function.identity());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -127,7 +126,7 @@ public class WindowingTest {
     @Test(expected = IllegalArgumentException.class)
     public void creatingTrailsUsingDelegateWithNullIterableYieldsException() {
         final Iterable<O> iterable = null;
-        Windowing.trails(3, iterable, new Identity<Queue<Maybe<O>>>());
+        Windowing.trails(3, iterable, Function.identity());
     }
 
     @Test

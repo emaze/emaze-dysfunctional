@@ -1,6 +1,8 @@
 package net.emaze.dysfunctional;
 
 import java.util.Iterator;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 import net.emaze.dysfunctional.contracts.dbc;
 import net.emaze.dysfunctional.dispatching.composing.AllMatchingBinaryPredicate;
 import net.emaze.dysfunctional.dispatching.composing.AllMatchingPredicate;
@@ -8,18 +10,7 @@ import net.emaze.dysfunctional.dispatching.composing.AllMatchingTernaryPredicate
 import net.emaze.dysfunctional.dispatching.composing.FirstMatchingBinaryPredicate;
 import net.emaze.dysfunctional.dispatching.composing.FirstMatchingPredicate;
 import net.emaze.dysfunctional.dispatching.composing.FirstMatchingTernaryPredicate;
-import net.emaze.dysfunctional.dispatching.logic.Always;
-import net.emaze.dysfunctional.dispatching.logic.BinaryAlways;
-import net.emaze.dysfunctional.dispatching.logic.BinaryNegator;
-import net.emaze.dysfunctional.dispatching.logic.BinaryNever;
-import net.emaze.dysfunctional.dispatching.logic.BinaryPredicate;
-import net.emaze.dysfunctional.dispatching.logic.Negator;
-import net.emaze.dysfunctional.dispatching.logic.Never;
-import net.emaze.dysfunctional.dispatching.logic.Predicate;
-import net.emaze.dysfunctional.dispatching.logic.TernaryAlways;
-import net.emaze.dysfunctional.dispatching.logic.TernaryNegator;
-import net.emaze.dysfunctional.dispatching.logic.TernaryNever;
-import net.emaze.dysfunctional.dispatching.logic.TernaryPredicate;
+import net.emaze.dysfunctional.dispatching.logic.*;
 
 /**
  * and, or, not, always, never.
@@ -111,7 +102,7 @@ public abstract class Logic {
          * @param predicates the predicates to be composed
          * @return the composite predicate
          */
-        public static <T1, T2> BinaryPredicate<T1, T2> and(Iterable<BinaryPredicate<T1, T2>> predicates) {
+        public static <T1, T2> BiPredicate<T1, T2> and(Iterable<BiPredicate<T1, T2>> predicates) {
             return new AllMatchingBinaryPredicate<T1, T2>(predicates);
         }
 
@@ -123,7 +114,7 @@ public abstract class Logic {
          * @param predicates the predicates to be composed
          * @return the composite predicate
          */
-        public static <T1, T2> BinaryPredicate<T1, T2> and(Iterator<BinaryPredicate<T1, T2>> predicates) {
+        public static <T1, T2> BiPredicate<T1, T2> and(Iterator<BiPredicate<T1, T2>> predicates) {
             return new AllMatchingBinaryPredicate<T1, T2>(Consumers.all(predicates));
         }
 
@@ -135,7 +126,7 @@ public abstract class Logic {
          * @param predicates the predicates to be composed
          * @return the composite predicate
          */
-        public static <T1, T2> BinaryPredicate<T1, T2> or(Iterable<BinaryPredicate<T1, T2>> predicates) {
+        public static <T1, T2> BiPredicate<T1, T2> or(Iterable<BiPredicate<T1, T2>> predicates) {
             return new FirstMatchingBinaryPredicate<T1, T2>(predicates);
         }
 
@@ -147,7 +138,7 @@ public abstract class Logic {
          * @param predicates the predicates to be composed
          * @return the composite predicate
          */
-        public static <T1, T2> BinaryPredicate<T1, T2> or(Iterator<BinaryPredicate<T1, T2>> predicates) {
+        public static <T1, T2> BiPredicate<T1, T2> or(Iterator<BiPredicate<T1, T2>> predicates) {
             return new FirstMatchingBinaryPredicate<T1, T2>(Consumers.all(predicates));
         }
 
@@ -158,7 +149,7 @@ public abstract class Logic {
          * @param <T2> the second element type parameter
          * @return the predicate
          */
-        public static <T1, T2> BinaryPredicate<T1, T2> always() {
+        public static <T1, T2> BiPredicate<T1, T2> always() {
             return new BinaryAlways<T1, T2>();
         }
 
@@ -169,7 +160,7 @@ public abstract class Logic {
          * @param <T2> the second element type parameter
          * @return the predicate
          */
-        public static <T1, T2> BinaryPredicate<T1, T2> never() {
+        public static <T1, T2> BiPredicate<T1, T2> never() {
             return new BinaryNever<T1, T2>();
         }
     }
@@ -188,7 +179,7 @@ public abstract class Logic {
          * @param predicates the predicates to be composed
          * @return the composite predicate
          */
-        public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> and(Iterable<TernaryPredicate<T1, T2, T3>> predicates) {
+        public static <T1, T2, T3> TriPredicate<T1, T2, T3> and(Iterable<TriPredicate<T1, T2, T3>> predicates) {
             return new AllMatchingTernaryPredicate<T1, T2, T3>(predicates);
         }
 
@@ -201,7 +192,7 @@ public abstract class Logic {
          * @param predicates the predicates to be composed
          * @return the composite predicate
          */
-        public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> and(Iterator<TernaryPredicate<T1, T2, T3>> predicates) {
+        public static <T1, T2, T3> TriPredicate<T1, T2, T3> and(Iterator<TriPredicate<T1, T2, T3>> predicates) {
             return new AllMatchingTernaryPredicate<T1, T2, T3>(Consumers.all(predicates));
         }
 
@@ -214,7 +205,7 @@ public abstract class Logic {
          * @param predicates the predicates to be composed
          * @return the composite predicate
          */
-        public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> or(Iterable<TernaryPredicate<T1, T2, T3>> predicates) {
+        public static <T1, T2, T3> TriPredicate<T1, T2, T3> or(Iterable<TriPredicate<T1, T2, T3>> predicates) {
             return new FirstMatchingTernaryPredicate<T1, T2, T3>(predicates);
         }
 
@@ -227,7 +218,7 @@ public abstract class Logic {
          * @param predicates the predicates to be composed
          * @return the composite predicate
          */
-        public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> or(Iterator<TernaryPredicate<T1, T2, T3>> predicates) {
+        public static <T1, T2, T3> TriPredicate<T1, T2, T3> or(Iterator<TriPredicate<T1, T2, T3>> predicates) {
             return new FirstMatchingTernaryPredicate<T1, T2, T3>(Consumers.all(predicates));
         }
 
@@ -239,7 +230,7 @@ public abstract class Logic {
          * @param <T3> the third element type parameter
          * @return the predicate
          */
-        public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> always() {
+        public static <T1, T2, T3> TriPredicate<T1, T2, T3> always() {
             return new TernaryAlways<T1, T2, T3>();
         }
 
@@ -251,7 +242,7 @@ public abstract class Logic {
          * @param <T3> the third element type parameter
          * @return the predicate
          */
-        public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> never() {
+        public static <T1, T2, T3> TriPredicate<T1, T2, T3> never() {
             return new TernaryNever<T1, T2, T3>();
         }
     }
@@ -307,7 +298,7 @@ public abstract class Logic {
      * @param second
      * @return the composite predicate
      */
-    public static <T1, T2> BinaryPredicate<T1, T2> and(BinaryPredicate<T1, T2> first, BinaryPredicate<T1, T2> second) {
+    public static <T1, T2> BiPredicate<T1, T2> and(BiPredicate<T1, T2> first, BiPredicate<T1, T2> second) {
         dbc.precondition(first != null, "first predicate is null");
         dbc.precondition(second != null, "second predicate is null");
         return Logic.Binary.and(Iterations.iterable(first, second));
@@ -323,7 +314,7 @@ public abstract class Logic {
      * @param third
      * @return the composite predicate
      */
-    public static <T1, T2> BinaryPredicate<T1, T2> and(BinaryPredicate<T1, T2> first, BinaryPredicate<T1, T2> second, BinaryPredicate<T1, T2> third) {
+    public static <T1, T2> BiPredicate<T1, T2> and(BiPredicate<T1, T2> first, BiPredicate<T1, T2> second, BiPredicate<T1, T2> third) {
         dbc.precondition(first != null, "first predicate is null");
         dbc.precondition(second != null, "second predicate is null");
         dbc.precondition(third != null, "third predicate is null");
@@ -338,7 +329,7 @@ public abstract class Logic {
      * @param predicates
      * @return the composite predicate
      */
-    public static <T1, T2> BinaryPredicate<T1, T2> and(BinaryPredicate<T1, T2>... predicates) {
+    public static <T1, T2> BiPredicate<T1, T2> and(BiPredicate<T1, T2>... predicates) {
         dbc.precondition(predicates != null, "predicates is null");
         return Logic.Binary.and(Iterations.iterable(predicates));
     }
@@ -353,7 +344,7 @@ public abstract class Logic {
      * @param second
      * @return the composite predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> and(TernaryPredicate<T1, T2, T3> first, TernaryPredicate<T1, T2, T3> second) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> and(TriPredicate<T1, T2, T3> first, TriPredicate<T1, T2, T3> second) {
         dbc.precondition(first != null, "first predicate is null");
         dbc.precondition(second != null, "second predicate is null");
         return Logic.Ternary.and(Iterations.iterable(first, second));
@@ -370,7 +361,7 @@ public abstract class Logic {
      * @param third
      * @return the composite predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> and(TernaryPredicate<T1, T2, T3> first, TernaryPredicate<T1, T2, T3> second, TernaryPredicate<T1, T2, T3> third) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> and(TriPredicate<T1, T2, T3> first, TriPredicate<T1, T2, T3> second, TriPredicate<T1, T2, T3> third) {
         dbc.precondition(first != null, "first predicate is null");
         dbc.precondition(second != null, "second predicate is null");
         dbc.precondition(third != null, "third predicate is null");
@@ -386,7 +377,7 @@ public abstract class Logic {
      * @param predicates
      * @return the composite predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> and(TernaryPredicate<T1, T2, T3>... predicates) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> and(TriPredicate<T1, T2, T3>... predicates) {
         dbc.precondition(predicates != null, "predicates is null");
         return Logic.Ternary.and(Iterations.iterable(predicates));
     }
@@ -442,7 +433,7 @@ public abstract class Logic {
      * @param second
      * @return the composite predicate
      */
-    public static <T1, T2> BinaryPredicate<T1, T2> or(BinaryPredicate<T1, T2> first, BinaryPredicate<T1, T2> second) {
+    public static <T1, T2> BiPredicate<T1, T2> or(BiPredicate<T1, T2> first, BiPredicate<T1, T2> second) {
         dbc.precondition(first != null, "first predicate is null");
         dbc.precondition(second != null, "second predicate is null");
         return Logic.Binary.or(Iterations.iterable(first, second));
@@ -458,7 +449,7 @@ public abstract class Logic {
      * @param third
      * @return the composite predicate
      */
-    public static <T1, T2> BinaryPredicate<T1, T2> or(BinaryPredicate<T1, T2> first, BinaryPredicate<T1, T2> second, BinaryPredicate<T1, T2> third) {
+    public static <T1, T2> BiPredicate<T1, T2> or(BiPredicate<T1, T2> first, BiPredicate<T1, T2> second, BiPredicate<T1, T2> third) {
         dbc.precondition(first != null, "first predicate is null");
         dbc.precondition(second != null, "second predicate is null");
         dbc.precondition(third != null, "third predicate is null");
@@ -473,7 +464,7 @@ public abstract class Logic {
      * @param predicates
      * @return the composite predicate
      */
-    public static <T1, T2> BinaryPredicate<T1, T2> or(BinaryPredicate<T1, T2>... predicates) {
+    public static <T1, T2> BiPredicate<T1, T2> or(BiPredicate<T1, T2>... predicates) {
         dbc.precondition(predicates != null, "predicates is null");
         return Logic.Binary.or(Iterations.iterable(predicates));
     }
@@ -488,7 +479,7 @@ public abstract class Logic {
      * @param second
      * @return the composite predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> or(TernaryPredicate<T1, T2, T3> first, TernaryPredicate<T1, T2, T3> second) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> or(TriPredicate<T1, T2, T3> first, TriPredicate<T1, T2, T3> second) {
         dbc.precondition(first != null, "first predicate is null");
         dbc.precondition(second != null, "second predicate is null");
         return Logic.Ternary.or(Iterations.iterable(first, second));
@@ -505,7 +496,7 @@ public abstract class Logic {
      * @param third
      * @return the composite predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> or(TernaryPredicate<T1, T2, T3> first, TernaryPredicate<T1, T2, T3> second, TernaryPredicate<T1, T2, T3> third) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> or(TriPredicate<T1, T2, T3> first, TriPredicate<T1, T2, T3> second, TriPredicate<T1, T2, T3> third) {
         dbc.precondition(first != null, "first predicate is null");
         dbc.precondition(second != null, "second predicate is null");
         dbc.precondition(third != null, "third predicate is null");
@@ -521,7 +512,7 @@ public abstract class Logic {
      * @param predicates
      * @return the composite predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> or(TernaryPredicate<T1, T2, T3>... predicates) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> or(TriPredicate<T1, T2, T3>... predicates) {
         dbc.precondition(predicates != null, "predicates is null");
         return Logic.Ternary.or(Iterations.iterable(predicates));
     }
@@ -535,7 +526,7 @@ public abstract class Logic {
      */
     public static <T> Predicate<T> not(Predicate<T> predicate) {
         dbc.precondition(predicate != null, "cannot negate a null predicate");
-        return new Negator<T>(predicate);
+        return predicate.negate();
     }
 
     /**
@@ -546,9 +537,9 @@ public abstract class Logic {
      * @param predicate the predicate to be negated
      * @return the negated predicate
      */
-    public static <T1, T2> BinaryPredicate<T1, T2> not(BinaryPredicate<T1, T2> predicate) {
+    public static <T1, T2> BiPredicate<T1, T2> not(BiPredicate<T1, T2> predicate) {
         dbc.precondition(predicate != null, "cannot negate a null predicate");
-        return new BinaryNegator<T1, T2>(predicate);
+        return predicate.negate();
     }
 
     /**
@@ -560,8 +551,8 @@ public abstract class Logic {
      * @param predicate the predicate to be negated
      * @return the negated predicate
      */
-    public static <T1, T2, T3> TernaryPredicate<T1, T2, T3> not(TernaryPredicate<T1, T2, T3> predicate) {
+    public static <T1, T2, T3> TriPredicate<T1, T2, T3> not(TriPredicate<T1, T2, T3> predicate) {
         dbc.precondition(predicate != null, "cannot negate a null predicate");
-        return new TernaryNegator<T1, T2, T3>(predicate);
+        return predicate.negate();
     }
 }

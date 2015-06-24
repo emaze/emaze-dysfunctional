@@ -16,7 +16,7 @@ public class NthTest {
     @Test
     public void nthIsNotZeroBased() {
         Nth<Void> nth = new Nth<Void>(1);
-        Assert.assertTrue(nth.accept(null));
+        Assert.assertTrue(nth.test(null));
     }
 
     @Test(expected=IllegalArgumentException.class)
@@ -28,9 +28,9 @@ public class NthTest {
     public void nthReturnsTrueOnlyAtTheNthCall() {
         Nth<Void> nth = new Nth<Void>(2);
         List<Boolean> got = new ArrayList<Boolean>();
-        got.add(nth.accept(null));
-        got.add(nth.accept(null));
-        got.add(nth.accept(null));
+        got.add(nth.test(null));
+        got.add(nth.test(null));
+        got.add(nth.test(null));
         Assert.assertEquals(Arrays.asList(false, true, false), got);
     }
 }

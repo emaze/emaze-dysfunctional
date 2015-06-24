@@ -67,7 +67,7 @@ public class RangeTest {
 
         @Test
         public void canPerformUnion() {
-            Assert.assertEquals(r(0, 20), new Union<Integer>(sequencer, comparator, emptyValue).perform(r(0, 10), r(11, 20)));
+            Assert.assertEquals(r(0, 20), new Union<Integer>(sequencer, comparator, emptyValue).apply(r(0, 10), r(11, 20)));
         }
 
         @Test
