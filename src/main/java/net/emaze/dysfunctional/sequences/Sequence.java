@@ -49,11 +49,13 @@ public interface Sequence<T> extends Stream<T> {
         return collect(Collectors.toSet());
     }
 
-    default <K, V> Map<K, V> toMap(Function<T, K> keyMapper, Function<T, V> valueMapper) {
+    default <K, U> Map<K, U> toMap(
+            Function<? super T, ? extends K> keyMapper,
+            Function<? super T, ? extends U> valueMapper) {
         return collect(Collectors.toMap(keyMapper, valueMapper));
     }
 
-    default <K> Sequence<T> distinctBy(Function<T, K> key) {
+    default <K> Sequence<T> distinctBy(Function<? super T, ? extends K> key) {
         final Set<K> seen = new HashSet<>();
         return filter(t -> seen.add(key.apply(t)));
     }
