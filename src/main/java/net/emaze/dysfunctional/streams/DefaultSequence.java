@@ -1,162 +1,221 @@
 package net.emaze.dysfunctional.streams;
 
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import java.util.Spliterator;
+import java.util.function.*;
+import java.util.stream.Collector;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
-import net.emaze.dysfunctional.consumers.FirstElement;
-import net.emaze.dysfunctional.consumers.LastElement;
-import net.emaze.dysfunctional.consumers.MaybeLastElement;
-import net.emaze.dysfunctional.consumers.MaybeOneElement;
-import net.emaze.dysfunctional.consumers.OneElement;
-import net.emaze.dysfunctional.contracts.dbc;
-import net.emaze.dysfunctional.filtering.AtIndex;
-import net.emaze.dysfunctional.filtering.AtMostMemoryIterator;
-import net.emaze.dysfunctional.filtering.DropWhile;
-import net.emaze.dysfunctional.filtering.MemoryIterator;
-import net.emaze.dysfunctional.filtering.Nth;
-import net.emaze.dysfunctional.filtering.TakeUpToIterator;
-import net.emaze.dysfunctional.filtering.TakeWhileIterator;
-import net.emaze.dysfunctional.filtering.UntilCount;
 
-public class DefaultSequence<T> extends BaseSequence<T> {
+class DefaultSequence<T> implements Sequence<T> {
 
-    public DefaultSequence(Stream<T> stream) {
-        super(stream);
-    }
+    private final Stream<T> stream;
 
-    public static <T> Sequence<T> fromIterator(Iterator<T> iterator) {
-        dbc.precondition(iterator != null, "cannot create a sequence from a null iterator");
-        final Iterable<T> iterable = () -> iterator;
-        return new DefaultSequence<>(StreamSupport.stream(iterable.spliterator(), false));
+    DefaultSequence(Stream<T> stream) {
+        this.stream = stream;
     }
 
     @Override
-    protected <T> Sequence<T> lift(Stream<T> stream) {
-        return new DefaultSequence<>(stream);
+    public Sequence<T> filter(Predicate<? super T> predicate) {
+        return Sequence.from(stream.filter(predicate));
     }
 
     @Override
-    public List<T> toList() {
-        return stream.collect(Collectors.toList());
+    public <R> Sequence<R> map(Function<? super T, ? extends R> mapper) {
+        return Sequence.from(stream.map(mapper));
     }
 
     @Override
-    public Set<T> toSet() {
-        return stream.collect(Collectors.toSet());
+    public IntStream mapToInt(ToIntFunction<? super T> mapper) {
+        return stream.mapToInt(mapper);
     }
 
     @Override
-    public <K, V> Map<K, V> toMap(Function<T, K> keyMapper, Function<T, V> valueMapper) {
-        return stream.collect(Collectors.toMap(keyMapper, valueMapper));
+    public LongStream mapToLong(ToLongFunction<? super T> mapper) {
+        return stream.mapToLong(mapper);
     }
 
     @Override
-    public <K> Sequence<T> distinctBy(Function<T, K> key) {
-        final Set<K> seen = new HashSet<>();
-        return filter(t -> seen.add(key.apply(t)));
+    public DoubleStream mapToDouble(ToDoubleFunction<? super T> mapper) {
+        return stream.mapToDouble(mapper);
     }
 
     @Override
-    public T first() {
-        return new FirstElement<T>().apply(stream.iterator());
+    public <R> Sequence<R> flatMap(Function<? super T, ? extends Stream<? extends R>> mapper) {
+        return Sequence.from(stream.flatMap(mapper));
     }
 
     @Override
-    public Optional<T> maybeFirst() {
+    public IntStream flatMapToInt(Function<? super T, ? extends IntStream> mapper) {
+        return stream.flatMapToInt(mapper);
+    }
+
+    @Override
+    public LongStream flatMapToLong(Function<? super T, ? extends LongStream> mapper) {
+        return stream.flatMapToLong(mapper);
+    }
+
+    @Override
+    public DoubleStream flatMapToDouble(Function<? super T, ? extends DoubleStream> mapper) {
+        return stream.flatMapToDouble(mapper);
+    }
+
+    @Override
+    public Sequence<T> distinct() {
+        return Sequence.from(stream.distinct());
+    }
+
+    @Override
+    public Sequence<T> sorted() {
+        return Sequence.from(stream.sorted());
+    }
+
+    @Override
+    public Sequence<T> sorted(Comparator<? super T> comparator) {
+        return Sequence.from(stream.sorted(comparator));
+    }
+
+    @Override
+    public Sequence<T> peek(Consumer<? super T> action) {
+        return Sequence.from(stream.peek(action));
+    }
+
+    @Override
+    public Sequence<T> limit(long maxSize) {
+        return Sequence.from(stream.limit(maxSize));
+    }
+
+    @Override
+    public Sequence<T> skip(long n) {
+        return Sequence.from(stream.skip(n));
+    }
+
+    @Override
+    public void forEach(Consumer<? super T> action) {
+        stream.forEach(action);
+    }
+
+    @Override
+    public void forEachOrdered(Consumer<? super T> action) {
+        stream.forEachOrdered(action);
+    }
+
+    @Override
+    public Object[] toArray() {
+        return stream.toArray();
+    }
+
+    @Override
+    public <A> A[] toArray(IntFunction<A[]> generator) {
+        return stream.toArray(generator);
+    }
+
+    @Override
+    public T reduce(T identity, BinaryOperator<T> accumulator) {
+        return stream.reduce(identity, accumulator);
+    }
+
+    @Override
+    public Optional<T> reduce(BinaryOperator<T> accumulator) {
+        return stream.reduce(accumulator);
+    }
+
+    @Override
+    public <U> U reduce(U identity, BiFunction<U, ? super T, U> accumulator, BinaryOperator<U> combiner) {
+        return stream.reduce(identity, accumulator, combiner);
+    }
+
+    @Override
+    public <R> R collect(Supplier<R> supplier, BiConsumer<R, ? super T> accumulator, BiConsumer<R, R> combiner) {
+        return stream.collect(supplier, accumulator, combiner);
+    }
+
+    @Override
+    public <R, A> R collect(Collector<? super T, A, R> collector) {
+        return stream.collect(collector);
+    }
+
+    @Override
+    public Optional<T> min(Comparator<? super T> comparator) {
+        return stream.min(comparator);
+    }
+
+    @Override
+    public Optional<T> max(Comparator<? super T> comparator) {
+        return stream.max(comparator);
+    }
+
+    @Override
+    public long count() {
+        return stream.count();
+    }
+
+    @Override
+    public boolean anyMatch(Predicate<? super T> predicate) {
+        return stream.anyMatch(predicate);
+    }
+
+    @Override
+    public boolean allMatch(Predicate<? super T> predicate) {
+        return stream.allMatch(predicate);
+    }
+
+    @Override
+    public boolean noneMatch(Predicate<? super T> predicate) {
+        return stream.noneMatch(predicate);
+    }
+
+    @Override
+    public Optional<T> findFirst() {
         return stream.findFirst();
     }
 
     @Override
-    public T one() {
-        return new OneElement<T>().apply(stream.iterator());
+    public Optional<T> findAny() {
+        return stream.findAny();
     }
 
     @Override
-    public Optional<T> maybeOne() {
-        return new MaybeOneElement<T>().apply(stream.iterator());
+    public Iterator<T> iterator() {
+        return stream.iterator();
     }
 
     @Override
-    public T last() {
-        return new LastElement<T>().apply(stream.iterator());
+    public Spliterator<T> spliterator() {
+        return stream.spliterator();
     }
 
     @Override
-    public Optional<T> maybeLast() {
-        return new MaybeLastElement<T>().apply(stream.iterator());
+    public boolean isParallel() {
+        return false;
     }
 
     @Override
-    public T nth(long count) {
-        final Sequence<T> filtered = filter(new Nth<>(count));
-        return new FirstElement<T>().apply(filtered.iterator());
+    public Sequence<T> onClose(Runnable closeHandler) {
+        return Sequence.from(stream.onClose(closeHandler));
     }
 
     @Override
-    public Optional<T> maybeNth(long count) {
-        return filter(new Nth<>(count)).findFirst();
+    public void close() {
+        stream.close();
     }
 
     @Override
-    public T at(long index) {
-        final Sequence<T> filtered = filter(new AtIndex<>(index));
-        return new FirstElement<T>().apply(filtered.iterator());
+    public Sequence<T> sequential() {
+        return Sequence.from(stream.sequential());
     }
 
     @Override
-    public Optional<T> maybeAt(long index) {
-        return filter(new AtIndex<>(index)).findFirst();
+    public Sequence<T> parallel() {
+        return Sequence.from(stream.parallel());
     }
 
     @Override
-    public Sequence<T> take(int howMany) {
-        final Iterator<T> iterator = new TakeUpToIterator<>(stream.iterator(), howMany);
-        return fromIterator(iterator);
-    }
-
-    @Override
-    public Sequence<T> takeLast(int howMany) {
-        final Iterator<T> iterator = new MemoryIterator<>(stream.iterator(), howMany);
-        return fromIterator(iterator);
-    }
-
-    @Override
-    public Sequence<T> takeAtMostLast(int howMany) {
-        final Iterator<T> iterator = new AtMostMemoryIterator<>(stream.iterator(), howMany);
-        return fromIterator(iterator);
-    }
-
-    @Override
-    public Sequence<T> takeWhile(Predicate<T> predicate) {
-        final Iterator<T> iterator = new TakeWhileIterator<>(stream.iterator(), predicate);
-        return fromIterator(iterator);
-    }
-
-    @Override
-    public Sequence<T> drop(long howMany) {
-        return filter(new DropWhile<>(new UntilCount<>(howMany)));
-    }
-
-    @Override
-    public Sequence<T> dropWhile(Predicate<T> predicate) {
-        return filter(new DropWhile<>(predicate));
-    }
-
-    @Override
-    public Sequence<T> slice(long from, long howMany) {
-        return drop(from).take((int) howMany);
-    }
-
-    @Override
-    public Sequence<T> chain(Stream<T> other) {
-        return lift(Stream.concat(stream, other));
+    public Sequence<T> unordered() {
+        return Sequence.from(stream.unordered());
     }
 }

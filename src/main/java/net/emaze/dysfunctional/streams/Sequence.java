@@ -1,13 +1,140 @@
 package net.emaze.dysfunctional.streams;
 
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.function.*;
 import java.util.stream.*;
+import net.emaze.dysfunctional.consumers.FirstElement;
+import net.emaze.dysfunctional.consumers.LastElement;
+import net.emaze.dysfunctional.consumers.MaybeLastElement;
+import net.emaze.dysfunctional.consumers.MaybeOneElement;
+import net.emaze.dysfunctional.consumers.OneElement;
+import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.filtering.AtIndex;
+import net.emaze.dysfunctional.filtering.AtMostMemoryIterator;
+import net.emaze.dysfunctional.filtering.DropWhile;
+import net.emaze.dysfunctional.filtering.MemoryIterator;
+import net.emaze.dysfunctional.filtering.Nth;
+import net.emaze.dysfunctional.filtering.TakeUpToIterator;
+import net.emaze.dysfunctional.filtering.TakeWhileIterator;
+import net.emaze.dysfunctional.filtering.UntilCount;
 
-public interface Sequence<T> extends Stream<T>, SequenceConsumer<T>, SequenceOperation<T> {
+public interface Sequence<T> extends Stream<T> {
+
+    static <T> Sequence<T> from(Iterator<T> iterator) {
+        dbc.precondition(iterator != null, "Cannot create a sequence from a null iterator");
+        final Spliterator<T> splitIterator = Spliterators.spliteratorUnknownSize(iterator, Spliterator.ORDERED);
+        return new DefaultSequence<>(StreamSupport.stream(splitIterator, false));
+    }
+
+    static <T> Sequence<T> from(Stream<T> stream) {
+        dbc.precondition(stream != null, "Cannot create a sequence from a null stream");
+        return stream instanceof Sequence
+                ? (Sequence<T>) stream
+                : new DefaultSequence<>(stream);
+    }
+
+    default List<T> toList() {
+        return collect(Collectors.toList());
+    }
+
+    default Set<T> toSet() {
+        return collect(Collectors.toSet());
+    }
+
+    default <K, V> Map<K, V> toMap(Function<T, K> keyMapper, Function<T, V> valueMapper) {
+        return collect(Collectors.toMap(keyMapper, valueMapper));
+    }
+
+    default <K> Sequence<T> distinctBy(Function<T, K> key) {
+        final Set<K> seen = new HashSet<>();
+        return filter(t -> seen.add(key.apply(t)));
+    }
+
+    default T first() {
+        return new FirstElement<T>().apply(iterator());
+    }
+
+    default Optional<T> maybeFirst() {
+        return findFirst();
+    }
+
+    default T one() {
+        return new OneElement<T>().apply(iterator());
+    }
+
+    default Optional<T> maybeOne() {
+        return new MaybeOneElement<T>().apply(iterator());
+    }
+
+    default T last() {
+        return new LastElement<T>().apply(iterator());
+    }
+
+    default Optional<T> maybeLast() {
+        return new MaybeLastElement<T>().apply(iterator());
+    }
+
+    default T nth(long count) {
+        final Sequence<T> filtered = filter(new Nth<>(count));
+        return new FirstElement<T>().apply(filtered.iterator());
+    }
+
+    default Optional<T> maybeNth(long count) {
+        return filter(new Nth<>(count)).findFirst();
+    }
+
+    default T at(long index) {
+        final Sequence<T> filtered = filter(new AtIndex<>(index));
+        return new FirstElement<T>().apply(filtered.iterator());
+    }
+
+    default Optional<T> maybeAt(long index) {
+        return filter(new AtIndex<>(index)).findFirst();
+    }
+
+    default Sequence<T> take(int howMany) {
+        final Iterator<T> iterator = new TakeUpToIterator<>(iterator(), howMany);
+        return Sequence.from(iterator);
+    }
+
+    default Sequence<T> takeLast(int howMany) {
+        final Iterator<T> iterator = new MemoryIterator<>(iterator(), howMany);
+        return Sequence.from(iterator);
+    }
+
+    default Sequence<T> takeAtMostLast(int howMany) {
+        final Iterator<T> iterator = new AtMostMemoryIterator<>(iterator(), howMany);
+        return Sequence.from(iterator);
+    }
+
+    default Sequence<T> takeWhile(Predicate<T> predicate) {
+        final Iterator<T> iterator = new TakeWhileIterator<>(iterator(), predicate);
+        return Sequence.from(iterator);
+    }
+
+    default Sequence<T> drop(long howMany) {
+        return filter(new DropWhile<>(new UntilCount<>(howMany)));
+    }
+
+    default Sequence<T> dropWhile(Predicate<T> predicate) {
+        return filter(new DropWhile<>(predicate));
+    }
+
+    default Sequence<T> slice(long from, long howMany) {
+        return drop(from).take((int) howMany);
+    }
+
+    default Sequence<T> chain(Stream<T> other) {
+        return from(Stream.concat(this, other));
+    }
 
     @Override
     boolean allMatch(Predicate<? super T> predicate);
