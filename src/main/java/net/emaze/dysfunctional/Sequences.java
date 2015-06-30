@@ -22,4 +22,8 @@ public abstract class Sequences {
     public static <T> Sequence<T> of(Iterable<T> iterable) {
         return Sequence.from(iterable.iterator());
     }
+
+    public static <T> Sequence<T> of(Stream<T> stream) {
+        return Sequence.from(stream);
+    }
 }
