@@ -52,12 +52,15 @@ public interface Sequence<T> extends Stream<T> {
     default <K, U> Map<K, U> toMap(
             Function<? super T, ? extends K> keyMapper,
             Function<? super T, ? extends U> valueMapper) {
+        dbc.precondition(keyMapper != null, "Cannot use a null key mapper function");
+        dbc.precondition(valueMapper != null, "Cannot use a null value mapper function");
         return collect(Collectors.toMap(keyMapper, valueMapper));
     }
 
-    default <K> Sequence<T> distinctBy(Function<? super T, ? extends K> key) {
+    default <K> Sequence<T> distinctBy(Function<? super T, ? extends K> propertyMapper) {
+        dbc.precondition(propertyMapper != null, "Cannot use a null property mapper function");
         final Set<K> seen = new HashSet<>();
-        return filter(t -> seen.add(key.apply(t)));
+        return filter(t -> seen.add(propertyMapper.apply(t)));
     }
 
     default T first() {
