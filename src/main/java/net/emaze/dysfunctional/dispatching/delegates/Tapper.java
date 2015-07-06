@@ -7,14 +7,13 @@ import net.emaze.dysfunctional.contracts.dbc;
 /**
  * Applies an consumer to an element and returns the (possibly modified) element.
  *
- * @author rferranti
  * @param <T> the parameter type
  */
 public class Tapper<T> implements UnaryOperator<T> {
 
-    private final Consumer<T> consumer;
+    private final Consumer<? super T> consumer;
 
-    public Tapper(Consumer<T> consumer) {
+    public Tapper(Consumer<? super T> consumer) {
         dbc.precondition(consumer != null, "cannot create a Tapper with a null consumer");
         this.consumer = consumer;
     }

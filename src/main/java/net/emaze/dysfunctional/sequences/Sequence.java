@@ -17,6 +17,7 @@ import net.emaze.dysfunctional.consumers.MaybeLastElement;
 import net.emaze.dysfunctional.consumers.MaybeOneElement;
 import net.emaze.dysfunctional.consumers.OneElement;
 import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.delegates.Tapper;
 import net.emaze.dysfunctional.filtering.AtIndex;
 import net.emaze.dysfunctional.filtering.AtMostMemoryIterator;
 import net.emaze.dysfunctional.filtering.DropWhile;
@@ -139,6 +140,10 @@ public interface Sequence<T> extends Stream<T> {
 
     default Sequence<T> chain(Stream<T> other) {
         return from(Stream.concat(this, other));
+    }
+
+    default Sequence<T> tap(Consumer<? super T> consumer) {
+        return map(new Tapper<>(consumer));
     }
 
     @Override
