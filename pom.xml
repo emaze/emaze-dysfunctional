@@ -4,7 +4,7 @@
     <groupId>net.emaze</groupId>
     <artifactId>emaze-dysfunctional</artifactId>
     <packaging>jar</packaging>
-    <version>8.0.0-SNAPSHOT</version>
+    <version>8.0.0</version>
     <name>emaze-dysfunctional</name>
     <description>A functional library for java</description>
     <url>http://www.dysfunctional-lib.net</url>
