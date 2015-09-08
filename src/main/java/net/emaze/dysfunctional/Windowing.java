@@ -167,7 +167,7 @@ public abstract class Windowing {
      * @param <T> the adapted iterator element type
      * @param trailSize the trail size
      * @param iterator the iterator to be adapted
-     * @return
+     * @return TODO
      */
     public static <T> Iterator<Queue<Optional<T>>> trails(int trailSize, Iterator<T> iterator) {
         return new TrailsIterator<>(iterator, trailSize, Function.identity());

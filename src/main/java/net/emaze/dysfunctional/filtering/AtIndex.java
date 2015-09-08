@@ -21,7 +21,7 @@ public class AtIndex<E> implements Predicate<E> {
      * yields true at index target (0-based).
      *
      * @param element the ignored parameter
-     * @return
+     * @return true at index target
      */
     @Override
     public boolean test(E element) {

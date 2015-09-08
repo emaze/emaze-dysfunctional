@@ -9,7 +9,7 @@ public interface OutputIterator<T> {
     
     /**
      *
-     * @return
+     * @return true if iterator has next, false if not
      */
     boolean hasNext();
     

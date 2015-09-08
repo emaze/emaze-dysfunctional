@@ -94,10 +94,6 @@ public class Ranges<T> {
     }
 
     /**
-     * returns [ emptyValue, emptyValue )
-     *
-     * @param emptyValue
-     * @param emptyValue
      * @return [ emptyValue, emptyValue )
      */
     public Range<T> empty() {

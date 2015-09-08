@@ -31,7 +31,7 @@ public class OptionalIterator<E> extends ReadOnlyIterator<Optional<E>> {
      * Optional.empty indefinitely "no matter how many times you try, you can't
      * shoot the dog"
      *
-     * @return
+     * @return Optional yielding next element if present, Optional.empty() otherwise
      */
     @Override
     public Optional<E> next() {

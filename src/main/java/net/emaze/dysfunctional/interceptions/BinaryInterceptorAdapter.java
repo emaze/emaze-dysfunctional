@@ -28,7 +28,7 @@ public class BinaryInterceptorAdapter<T1, T2, R> implements BiFunction<T1, T2, R
      *
      * @param first
      * @param second
-     * @return
+     * @return the result of the inner function
      */
     @Override
     public R apply(T1 first, T2 second) {

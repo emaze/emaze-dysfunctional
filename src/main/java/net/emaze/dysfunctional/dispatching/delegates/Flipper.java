@@ -31,7 +31,7 @@ public class Flipper<T, U, R> implements BiFunction<T, U, R> {
      * function
      * @param latter the latter formal parameter used as former in the nested
      * function
-     * @return
+     * @return the result of the function
      */
     @Override
     public R apply(T former, U latter) {
