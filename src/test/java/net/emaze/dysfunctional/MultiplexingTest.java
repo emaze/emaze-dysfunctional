@@ -14,21 +14,20 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
- *
  * @author dangelocola, rferranti
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    MultiplexingTest.Chain.class,
-    MultiplexingTest.Flatten.class,
-    MultiplexingTest.RoundRobinShortest.class,
-    MultiplexingTest.RoundRobinLongest.class,
-    MultiplexingTest.Unchain.class,
-    MultiplexingTest.UnchainWithExactChannelSize.class,
-    MultiplexingTest.Roundrobin.class,
-    MultiplexingTest.Cycle.class,
-    MultiplexingTest.Batch.class,
-    MultiplexingTest.Facade.class
+        MultiplexingTest.Chain.class,
+        MultiplexingTest.Flatten.class,
+        MultiplexingTest.RoundRobinShortest.class,
+        MultiplexingTest.RoundRobinLongest.class,
+        MultiplexingTest.UnchainShortest.class,
+        MultiplexingTest.UnchainLongest.class,
+        MultiplexingTest.Roundrobin.class,
+        MultiplexingTest.Cycle.class,
+        MultiplexingTest.Unchain.class,
+        MultiplexingTest.Facade.class
 })
 public class MultiplexingTest {
 
@@ -174,118 +173,118 @@ public class MultiplexingTest {
         }
     }
 
-    public static class Unchain {
+    public static class UnchainShortest {
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotUnchainANullIterable() {
             final Iterable<Iterator<O>> iterable = null;
-            Multiplexing.unchain(1, iterable);
+            Multiplexing.unchainShortest(1, iterable);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotUnchainNullIterableUsingProvider() {
             final Supplier<ArrayList<O>> supplier = new ArrayListFactory<O>();
             final Iterable<O> iterable = null;
-            Multiplexing.unchain(1, iterable, supplier);
+            Multiplexing.unchainShortest(1, iterable, supplier);
         }
 
         @Test
         public void canUnchainFromIterable() {
-            Iterator<List<O>> demux = Multiplexing.unchain(1, AN_ITERABLE);
+            Iterator<List<O>> demux = Multiplexing.unchainShortest(1, AN_ITERABLE);
             Assert.assertNotNull(demux);
         }
 
         @Test
         public void canUnchainFromIterator() {
-            Iterator<List<O>> demux = Multiplexing.unchain(1, AN_ITERABLE.iterator());
+            Iterator<List<O>> demux = Multiplexing.unchainShortest(1, AN_ITERABLE.iterator());
             Assert.assertNotNull(demux);
         }
 
         @Test
         public void canUnchainFromIteratorUsingProvider() {
             Supplier<ArrayList<O>> supplier = new ArrayListFactory<O>();
-            Iterator<ArrayList<O>> demux = Multiplexing.unchain(1, AN_ITERABLE.iterator(), supplier);
+            Iterator<ArrayList<O>> demux = Multiplexing.unchainShortest(1, AN_ITERABLE.iterator(), supplier);
             Assert.assertNotNull(demux);
         }
 
         @Test
         public void canUnchainFromIterableUsingProvider() {
             Supplier<ArrayList<O>> supplier = new ArrayListFactory<O>();
-            Iterator<ArrayList<O>> demux = Multiplexing.unchain(1, AN_ITERABLE, supplier);
+            Iterator<ArrayList<O>> demux = Multiplexing.unchainShortest(1, AN_ITERABLE, supplier);
             Assert.assertNotNull(demux);
         }
 
         @Test
         public void canUnchainFromArrayUsingProvider() {
             Supplier<ArrayList<O>> supplier = new ArrayListFactory<O>();
-            Iterator<ArrayList<O>> demux = Multiplexing.unchain(1, supplier, O.ONE, O.ANOTHER);
+            Iterator<ArrayList<O>> demux = Multiplexing.unchainShortest(1, supplier, O.ONE, O.ANOTHER);
             Assert.assertNotNull(demux);
         }
 
         @Test
         public void canUnchainTwoValues() {
-            Iterator<List<O>> demux = Multiplexing.unchain(1, O.IGNORED, O.IGNORED);
+            Iterator<List<O>> demux = Multiplexing.unchainShortest(1, O.IGNORED, O.IGNORED);
             Assert.assertNotNull(demux);
         }
 
         @Test
         public void canUnchainThreeValues() {
-            Iterator<List<O>> demux = Multiplexing.unchain(1, O.IGNORED, O.IGNORED, O.IGNORED);
+            Iterator<List<O>> demux = Multiplexing.unchainShortest(1, O.IGNORED, O.IGNORED, O.IGNORED);
             Assert.assertNotNull(demux);
         }
     }
 
-    public static class UnchainWithExactChannelSize {
+    public static class UnchainLongest {
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotUnchainANullIterable() {
             final Iterable<O> iterable = null;
-            Multiplexing.unchainWithExactChannelSize(1, iterable);
+            Multiplexing.unchainLongest(1, iterable);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void cannotUnchainANullIterableWithProvider() {
             Supplier<ArrayList<Optional<O>>> supplier = new ArrayListFactory<Optional<O>>();
             final Iterable<O> iterable = null;
-            Multiplexing.unchainWithExactChannelSize(1, iterable, supplier);
+            Multiplexing.unchainLongest(1, iterable, supplier);
         }
 
         @Test
         public void canUnchainFromIterable() {
-            Iterator<List<Optional<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, AN_ITERABLE);
+            Iterator<List<Optional<O>>> demuxl = Multiplexing.unchainLongest(1, AN_ITERABLE);
             Assert.assertNotNull(demuxl);
         }
 
         @Test
         public void canUnchainFromIterator() {
-            Iterator<List<Optional<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, AN_ITERABLE.iterator());
+            Iterator<List<Optional<O>>> demuxl = Multiplexing.unchainLongest(1, AN_ITERABLE.iterator());
             Assert.assertNotNull(demuxl);
         }
 
         @Test
         public void canUnchainFromArray() {
-            Iterator<List<Optional<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, O.IGNORED);
+            Iterator<List<Optional<O>>> demuxl = Multiplexing.unchainLongest(1, O.IGNORED);
             Assert.assertNotNull(demuxl);
         }
 
         @Test
         public void canUnchainFromIterableWithProvider() {
             Supplier<ArrayList<Optional<O>>> supplier = new ArrayListFactory<Optional<O>>();
-            Iterator<ArrayList<Optional<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, AN_ITERABLE, supplier);
+            Iterator<ArrayList<Optional<O>>> demuxl = Multiplexing.unchainLongest(1, AN_ITERABLE, supplier);
             Assert.assertNotNull(demuxl);
         }
 
         @Test
         public void canUnchainFromIteratorWithProvider() {
             Supplier<ArrayList<Optional<O>>> supplier = new ArrayListFactory<Optional<O>>();
-            Iterator<ArrayList<Optional<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, AN_ITERABLE.iterator(), supplier);
+            Iterator<ArrayList<Optional<O>>> demuxl = Multiplexing.unchainLongest(1, AN_ITERABLE.iterator(), supplier);
             Assert.assertNotNull(demuxl);
         }
 
         @Test
         public void canUnchainFromArrayWithProvider() {
             Supplier<ArrayList<Optional<O>>> supplier = new ArrayListFactory<Optional<O>>();
-            Iterator<ArrayList<Optional<O>>> demuxl = Multiplexing.unchainWithExactChannelSize(1, supplier, O.IGNORED);
+            Iterator<ArrayList<Optional<O>>> demuxl = Multiplexing.unchainLongest(1, supplier, O.IGNORED);
             Assert.assertNotNull(demuxl);
         }
     }
@@ -360,60 +359,60 @@ public class MultiplexingTest {
         }
     }
 
-    public static class Batch {
+    public static class Unchain {
 
         @Test
-        public void canBatchAnIterator() {
+        public void canUnchainAnIterator() {
             final Iterator<O> source = Iterations.iterator(O.ONE);
-            final Iterator<List<O>> got = Multiplexing.batch(1, source);
+            final Iterator<List<O>> got = Multiplexing.unchain(1, source);
             Assert.assertEquals(Arrays.asList(Arrays.asList(O.ONE)), Consumers.all(got));
         }
 
         @Test
-        public void canBatchAnIterable() {
+        public void canUnchainAnIterable() {
             final Iterable<O> source = Iterations.iterable(O.ONE);
-            final Iterator<List<O>> got = Multiplexing.batch(1, source);
+            final Iterator<List<O>> got = Multiplexing.unchain(1, source);
             Assert.assertEquals(Arrays.asList(Arrays.asList(O.ONE)), Consumers.all(got));
         }
 
         @Test
-        public void canBatchAnArray() {
+        public void canUnchainAnArray() {
             final O[] source = new O[]{O.ONE};
-            final Iterator<List<O>> got = Multiplexing.batch(1, source);
+            final Iterator<List<O>> got = Multiplexing.unchain(1, source);
             Assert.assertEquals(Arrays.asList(Arrays.asList(O.ONE)), Consumers.all(got));
         }
 
         @Test
-        public void canBatchAnIteratorWithChannelProvider() {
+        public void canUnchainAnIteratorWithChannelProvider() {
             final Iterator<O> source = Iterations.iterator(O.ONE);
-            final Iterator<ArrayList<O>> got = Multiplexing.batch(1, source, new ArrayListFactory<O>());
+            final Iterator<ArrayList<O>> got = Multiplexing.unchain(1, source, new ArrayListFactory<O>());
             Assert.assertEquals(Arrays.asList(Arrays.asList(O.ONE)), Consumers.all(got));
         }
 
         @Test
-        public void canBatchAnIterableWithChannelProvider() {
+        public void canUnchainAnIterableWithChannelProvider() {
             final Iterable<O> source = Iterations.iterable(O.ONE);
-            final Iterator<ArrayList<O>> got = Multiplexing.batch(1, source, new ArrayListFactory<O>());
+            final Iterator<ArrayList<O>> got = Multiplexing.unchain(1, source, new ArrayListFactory<O>());
             Assert.assertEquals(Arrays.asList(Arrays.asList(O.ONE)), Consumers.all(got));
         }
 
         @Test
-        public void canBatchAnArrayWithChannelProvider() {
+        public void canUnchainAnArrayWithChannelProvider() {
             final O[] source = new O[]{O.ONE};
-            final Iterator<ArrayList<O>> got = Multiplexing.batch(1, source, new ArrayListFactory<O>());
+            final Iterator<ArrayList<O>> got = Multiplexing.unchain(1, source, new ArrayListFactory<O>());
             Assert.assertEquals(Arrays.asList(Arrays.asList(O.ONE)), Consumers.all(got));
         }
 
         @Test(expected = IllegalArgumentException.class)
-        public void callingBatchWithNullIterableYieldsException() {
+        public void callingUnchainWithNullIterableYieldsException() {
             final Iterable<O> iterable = null;
-            Multiplexing.batch(1, iterable);
+            Multiplexing.unchain(1, iterable);
         }
 
         @Test(expected = IllegalArgumentException.class)
-        public void callingBatchWithProviderWithNullIterableYieldsException() {
+        public void callingUnchainWithProviderWithNullIterableYieldsException() {
             final Iterable<O> iterable = null;
-            Multiplexing.batch(1, iterable, new ArrayListFactory<O>());
+            Multiplexing.unchain(1, iterable, new ArrayListFactory<O>());
         }
     }
 

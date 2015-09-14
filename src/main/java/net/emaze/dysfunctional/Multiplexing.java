@@ -157,7 +157,7 @@ public abstract class Multiplexing {
     /**
      * Demultiplexes elements from the source iterator into an iterator of channels.
      * <code>
-     * batch(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
+     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
      * </code>
      *
      * @param <C> the channel collection type
@@ -167,14 +167,14 @@ public abstract class Multiplexing {
      * @param channelProvider a supplier used to create channels
      * @return an iterator of channels
      */
-    public static <C extends Collection<E>, E> Iterator<C> batch(int batchSize, Iterator<E> iterator, Supplier<C> channelProvider) {
+    public static <C extends Collection<E>, E> Iterator<C> unchain(int batchSize, Iterator<E> iterator, Supplier<C> channelProvider) {
         return new BatchingIterator<C, E>(batchSize, iterator, channelProvider);
     }
 
     /**
      * Demultiplexes elements from the source iterator into an iterator of channels.
      * <code>
-     * batch(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
+     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
      * </code>
      *
      * @param <E> the element type
@@ -182,7 +182,7 @@ public abstract class Multiplexing {
      * @param iterator the source iterator
      * @return an iterator of channels
      */
-    public static <E> Iterator<List<E>> batch(int batchSize, Iterator<E> iterator) {
+    public static <E> Iterator<List<E>> unchain(int batchSize, Iterator<E> iterator) {
         final Supplier<List<E>> channelFactory = Compositions.compose(new Vary<ArrayList<E>, List<E>>(), new ArrayListFactory<E>());
         return new BatchingIterator<List<E>, E>(batchSize, iterator, channelFactory);
     }
@@ -190,7 +190,7 @@ public abstract class Multiplexing {
     /**
      * Demultiplexes elements from the source iterable into an iterator of channels.
      * <code>
-     * batch(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
+     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
      * </code>
      *
      * @param <C> the channel collection type
@@ -200,15 +200,15 @@ public abstract class Multiplexing {
      * @param channelProvider the supplier used to create channels
      * @return an iterator of channels
      */
-    public static <C extends Collection<E>, E> Iterator<C> batch(int batchSize, Iterable<E> iterable, Supplier<C> channelProvider) {
-        dbc.precondition(iterable != null, "cannot batch a null iterable");
+    public static <C extends Collection<E>, E> Iterator<C> unchain(int batchSize, Iterable<E> iterable, Supplier<C> channelProvider) {
+        dbc.precondition(iterable != null, "cannot unchain a null iterable");
         return new BatchingIterator<C, E>(batchSize, iterable.iterator(), channelProvider);
     }
 
     /**
      * Demultiplexes elements from the source iterable into an iterator of channels.
      * <code>
-     * batch(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
+     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
      * </code>
      *
      * @param <E> the element type
@@ -216,8 +216,8 @@ public abstract class Multiplexing {
      * @param iterable the source iterable
      * @return an iterator of channels
      */
-    public static <E> Iterator<List<E>> batch(int batchSize, Iterable<E> iterable) {
-        dbc.precondition(iterable != null, "cannot batch a null iterable");
+    public static <E> Iterator<List<E>> unchain(int batchSize, Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot unchain a null iterable");
         final Supplier<List<E>> channelFactory = Compositions.compose(new Vary<ArrayList<E>, List<E>>(), new ArrayListFactory<E>());
         return new BatchingIterator<List<E>, E>(batchSize, iterable.iterator(), channelFactory);
     }
@@ -225,7 +225,7 @@ public abstract class Multiplexing {
     /**
      * Demultiplexes elements from the source array into an iterator of channels.
      * <code>
-     * batch(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
+     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
      * </code>
      *
      * @param <C> the channel collection type
@@ -235,14 +235,14 @@ public abstract class Multiplexing {
      * @param channelProvider the supplier used to create channels
      * @return an iterator of channels
      */
-    public static <C extends Collection<E>, E> Iterator<C> batch(int batchSize, E[] array, Supplier<C> channelProvider) {
+    public static <C extends Collection<E>, E> Iterator<C> unchain(int batchSize, E[] array, Supplier<C> channelProvider) {
         return new BatchingIterator<C, E>(batchSize, new ArrayIterator<E>(array), channelProvider);
     }
 
     /**
      * Demultiplexes elements from the source array into an iterator of channels.
      * <code>
-     * batch(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
+     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
      * </code>
      *
      * @param <E> the element type
@@ -250,7 +250,7 @@ public abstract class Multiplexing {
      * @param array the source array
      * @return an iterator of channels
      */
-    public static <E> Iterator<List<E>> batch(int batchSize, E[] array) {
+    public static <E> Iterator<List<E>> unchain(int batchSize, E[] array) {
         final Supplier<List<E>> channelFactory = Compositions.compose(new Vary<ArrayList<E>, List<E>>(), new ArrayListFactory<E>());
         return new BatchingIterator<List<E>, E>(batchSize, new ArrayIterator<E>(array), channelFactory);
     }
@@ -515,7 +515,7 @@ public abstract class Multiplexing {
      * Demultiplexes elements from the source iterable into an iterator of channels.
      * All returned channels will have the specified size, any remaining elements will be discarded.
      * <code>
-     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
+     * unchainShortest(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
      * </code>
      *
      * @param <C> the channel collection type
@@ -525,7 +525,7 @@ public abstract class Multiplexing {
      * @param channelProvider a supplier used to create channels
      * @return an iterator of channels
      */
-    public static <C extends Collection<E>, E> Iterator<C> unchain(int channelSize, Iterator<E> iterator, Supplier<C> channelProvider) {
+    public static <C extends Collection<E>, E> Iterator<C> unchainShortest(int channelSize, Iterator<E> iterator, Supplier<C> channelProvider) {
         final ConstantSupplier<Optional<Integer>> channelsSizesProvider = new ConstantSupplier<Optional<Integer>>(Optional.of(channelSize));
         return new UnchainIterator<C, E>(channelsSizesProvider, iterator, channelProvider);
     }
@@ -534,7 +534,7 @@ public abstract class Multiplexing {
      * Demultiplexes elements from the source iterable into an iterator of channels.
      * All returned channels will have the specified size, any remaining elements will be discarded.
      * <code>
-     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
+     * unchainShortest(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
      * </code>
      *
      * @param <E> the element type
@@ -542,7 +542,7 @@ public abstract class Multiplexing {
      * @param iterator the source iterator
      * @return an iterator of channels
      */
-    public static <E> Iterator<List<E>> unchain(int channelSize, Iterator<E> iterator) {
+    public static <E> Iterator<List<E>> unchainShortest(int channelSize, Iterator<E> iterator) {
         final ConstantSupplier<Optional<Integer>> channelsSizesProvider = new ConstantSupplier<Optional<Integer>>(Optional.of(channelSize));
         final Supplier<List<E>> channelFactory = Compositions.compose(new Vary<ArrayList<E>, List<E>>(), new ArrayListFactory<E>());
         return new UnchainIterator<List<E>, E>(channelsSizesProvider, iterator, channelFactory);
@@ -552,7 +552,7 @@ public abstract class Multiplexing {
      * Demultiplexes elements from the source iterable into an iterator of channels.
      * All returned channels will have the specified size, any remaining elements will be discarded.
      * <code>
-     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
+     * unchainShortest(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
      * </code>
      *
      * @param <C> the channel collection type
@@ -562,8 +562,8 @@ public abstract class Multiplexing {
      * @param channelProvider the supplier used to create channels
      * @return an iterator of channels
      */
-    public static <C extends Collection<E>, E> Iterator<C> unchain(int channelSize, Iterable<E> iterable, Supplier<C> channelProvider) {
-        dbc.precondition(iterable != null, "cannot unchain a null iterable");
+    public static <C extends Collection<E>, E> Iterator<C> unchainShortest(int channelSize, Iterable<E> iterable, Supplier<C> channelProvider) {
+        dbc.precondition(iterable != null, "cannot unchainShortest a null iterable");
         final ConstantSupplier<Optional<Integer>> channelsSizesProvider = new ConstantSupplier<Optional<Integer>>(Optional.of(channelSize));
         final Iterator<E> iterator = iterable.iterator();
         return new UnchainIterator<C, E>(channelsSizesProvider, iterator, channelProvider);
@@ -573,7 +573,7 @@ public abstract class Multiplexing {
      * Demultiplexes elements from the source iterable into an iterator of channels.
      * All returned channels will have the specified size, any remaining elements will be discarded.
      * <code>
-     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
+     * unchainShortest(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
      * </code>
      *
      * @param <E> the element type
@@ -581,8 +581,8 @@ public abstract class Multiplexing {
      * @param iterable the source iterable
      * @return an iterator of channels
      */
-    public static <E> Iterator<List<E>> unchain(int channelSize, Iterable<E> iterable) {
-        dbc.precondition(iterable != null, "cannot unchain a null iterable");
+    public static <E> Iterator<List<E>> unchainShortest(int channelSize, Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot unchainShortest a null iterable");
         final ConstantSupplier<Optional<Integer>> channelsSizesProvider = new ConstantSupplier<Optional<Integer>>(Optional.of(channelSize));
         final Supplier<List<E>> channelFactory = Compositions.compose(new Vary<ArrayList<E>, List<E>>(), new ArrayListFactory<E>());
         final Iterator<E> iterator = iterable.iterator();
@@ -593,7 +593,7 @@ public abstract class Multiplexing {
      * Demultiplexes elements from the source iterable into an iterator of channels.
      * All returned channels will have the specified size, any remaining elements will be discarded.
      * <code>
-     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
+     * unchainShortest(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
      * </code>
      *
      * @param <C> the channel collection type
@@ -603,7 +603,7 @@ public abstract class Multiplexing {
      * @param channelProvider the supplier used to create channels
      * @return an iterator of channels
      */
-    public static <C extends Collection<E>, E> Iterator<C> unchain(int channelSize, Supplier<C> channelProvider, E... array) {
+    public static <C extends Collection<E>, E> Iterator<C> unchainShortest(int channelSize, Supplier<C> channelProvider, E... array) {
         final ConstantSupplier<Optional<Integer>> channelsSizesProvider = new ConstantSupplier<Optional<Integer>>(Optional.of(channelSize));
         final ArrayIterator<E> iterator = new ArrayIterator<E>(array);
         return new UnchainIterator<C, E>(channelsSizesProvider, iterator, channelProvider);
@@ -613,7 +613,7 @@ public abstract class Multiplexing {
      * Demultiplexes elements from the source iterable into an iterator of channels.
      * All returned channels will have the specified size, any remaining elements will be discarded.
      * <code>
-     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
+     * unchainShortest(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
      * </code>
      *
      * @param <E> the element type
@@ -621,7 +621,7 @@ public abstract class Multiplexing {
      * @param array the source array
      * @return an iterator of channels
      */
-    public static <E> Iterator<List<E>> unchain(int channelSize, E... array) {
+    public static <E> Iterator<List<E>> unchainShortest(int channelSize, E... array) {
         final ConstantSupplier<Optional<Integer>> channelsSizesProvider = new ConstantSupplier<Optional<Integer>>(Optional.of(channelSize));
         final Supplier<List<E>> channelFactory = Compositions.compose(new Vary<ArrayList<E>, List<E>>(), new ArrayListFactory<E>());
         final ArrayIterator<E> iterator = new ArrayIterator<E>(array);
@@ -632,7 +632,7 @@ public abstract class Multiplexing {
      * Demultiplexes elements from the source array into an iterator of channels.
      * All returned channels will have the specified size, eventually the last channel could have the last elements empty.
      * <code>
-     * unchainWithExactChannelSize(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
+     * unchainLongest(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
      * </code>
      *
      * @param <C> the channel collection type
@@ -642,7 +642,7 @@ public abstract class Multiplexing {
      * @param channelProvider the supplier used to create channels
      * @return an iterator of channels
      */
-    public static <C extends Collection<Optional<E>>, E> Iterator<C> unchainWithExactChannelSize(int channelSize, Iterator<E> iterator, Supplier<C> channelProvider) {
+    public static <C extends Collection<Optional<E>>, E> Iterator<C> unchainLongest(int channelSize, Iterator<E> iterator, Supplier<C> channelProvider) {
         final ConstantSupplier<Optional<Integer>> channelsSizesProvider = new ConstantSupplier<Optional<Integer>>(Optional.of(channelSize));
         return new UnchainWithExactChannelSizeIterator<C, E>(channelsSizesProvider, iterator, channelProvider);
     }
@@ -651,7 +651,7 @@ public abstract class Multiplexing {
      * Demultiplexes elements from the source array into an iterator of channels.
      * All returned channels will have the specified size, eventually the last channel could have the last elements empty.
      * <code>
-     * unchainWithExactChannelSize(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
+     * unchainLongest(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
      * </code>
      *
      * @param <E> the element type
@@ -659,7 +659,7 @@ public abstract class Multiplexing {
      * @param iterator the source iterator
      * @return an iterator of channels
      */
-    public static <E> Iterator<List<Optional<E>>> unchainWithExactChannelSize(int channelSize, Iterator<E> iterator) {
+    public static <E> Iterator<List<Optional<E>>> unchainLongest(int channelSize, Iterator<E> iterator) {
         final ConstantSupplier<Optional<Integer>> channelsSizesProvider = new ConstantSupplier<Optional<Integer>>(Optional.of(channelSize));
         final Supplier<List<Optional<E>>> channelFactory = Compositions.compose(new Vary<ArrayList<Optional<E>>, List<Optional<E>>>(), new ArrayListFactory<Optional<E>>());
         return new UnchainWithExactChannelSizeIterator<List<Optional<E>>, E>(channelsSizesProvider, iterator, channelFactory);
@@ -669,7 +669,7 @@ public abstract class Multiplexing {
      * Demultiplexes elements from the source array into an iterator of channels.
      * All returned channels will have the specified size, eventually the last channel could have the last elements empty.
      * <code>
-     * unchainWithExactChannelSize(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
+     * unchainLongest(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
      * </code>
      *
      * @param <C> the channel collection type
@@ -679,8 +679,8 @@ public abstract class Multiplexing {
      * @param channelProvider the supplier used to create channels
      * @return an iterator of channels
      */
-    public static <C extends Collection<Optional<E>>, E> Iterator<C> unchainWithExactChannelSize(int channelSize, Iterable<E> iterable, Supplier<C> channelProvider) {
-        dbc.precondition(iterable != null, "cannot unchainWithExactChannelSize a null iterable");
+    public static <C extends Collection<Optional<E>>, E> Iterator<C> unchainLongest(int channelSize, Iterable<E> iterable, Supplier<C> channelProvider) {
+        dbc.precondition(iterable != null, "cannot unchainLongest a null iterable");
         final ConstantSupplier<Optional<Integer>> channelsSizesProvider = new ConstantSupplier<Optional<Integer>>(Optional.of(channelSize));
         return new UnchainWithExactChannelSizeIterator<C, E>(channelsSizesProvider, iterable.iterator(), channelProvider);
     }
@@ -689,7 +689,7 @@ public abstract class Multiplexing {
      * Demultiplexes elements from the source array into an iterator of channels.
      * All returned channels will have the specified size, eventually the last channel could have the last elements empty.
      * <code>
-     * unchainWithExactChannelSize(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
+     * unchainLongest(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
      * </code>
      *
      * @param <E> the element type
@@ -697,8 +697,8 @@ public abstract class Multiplexing {
      * @param iterable the source iterable
      * @return an iterator of channels
      */
-    public static <E> Iterator<List<Optional<E>>> unchainWithExactChannelSize(int channelSize, Iterable<E> iterable) {
-        dbc.precondition(iterable != null, "cannot unchainWithExactChannelSize a null iterable");
+    public static <E> Iterator<List<Optional<E>>> unchainLongest(int channelSize, Iterable<E> iterable) {
+        dbc.precondition(iterable != null, "cannot unchainLongest a null iterable");
         final ConstantSupplier<Optional<Integer>> channelsSizesProvider = new ConstantSupplier<Optional<Integer>>(Optional.of(channelSize));
         final Supplier<List<Optional<E>>> channelFactory = Compositions.compose(new Vary<ArrayList<Optional<E>>, List<Optional<E>>>(), new ArrayListFactory<Optional<E>>());
         return new UnchainWithExactChannelSizeIterator<List<Optional<E>>, E>(channelsSizesProvider, iterable.iterator(), channelFactory);
@@ -708,7 +708,7 @@ public abstract class Multiplexing {
      * Demultiplexes elements from the source array into an iterator of channels.
      * All returned channels will have the specified size, eventually the last channel could have the last elements empty.
      * <code>
-     * unchainWithExactChannelSize(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
+     * unchainLongest(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
      * </code>
      *
      * @param <C> the channel collection type
@@ -718,7 +718,7 @@ public abstract class Multiplexing {
      * @param array the source array
      * @return an iterator of channels
      */
-    public static <C extends Collection<Optional<E>>, E> Iterator<C> unchainWithExactChannelSize(int channelSize, Supplier<C> channelProvider, E... array) {
+    public static <C extends Collection<Optional<E>>, E> Iterator<C> unchainLongest(int channelSize, Supplier<C> channelProvider, E... array) {
         final ConstantSupplier<Optional<Integer>> channelsSizesProvider = new ConstantSupplier<Optional<Integer>>(Optional.of(channelSize));
         return new UnchainWithExactChannelSizeIterator<C, E>(channelsSizesProvider, new ArrayIterator<E>(array), channelProvider);
     }
@@ -727,7 +727,7 @@ public abstract class Multiplexing {
      * Demultiplexes elements from the source array into an iterator of channels.
      * All returned channels will have the specified size, eventually the last channel could have the last elements empty.
      * <code>
-     * unchainWithExactChannelSize(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
+     * unchainLongest(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
      * </code>
      *
      * @param <E> the element type
@@ -735,7 +735,7 @@ public abstract class Multiplexing {
      * @param array the source array
      * @return an iterator of channels
      */
-    public static <E> Iterator<List<Optional<E>>> unchainWithExactChannelSize(int channelSize, E... array) {
+    public static <E> Iterator<List<Optional<E>>> unchainLongest(int channelSize, E... array) {
         final ConstantSupplier<Optional<Integer>> channelsSizesProvider = new ConstantSupplier<Optional<Integer>>(Optional.of(channelSize));
         final Supplier<List<Optional<E>>> channelFactory = Compositions.compose(new Vary<ArrayList<Optional<E>>, List<Optional<E>>>(), new ArrayListFactory<Optional<E>>());
         return new UnchainWithExactChannelSizeIterator<List<Optional<E>>, E>(channelsSizesProvider, new ArrayIterator<E>(array), channelFactory);
