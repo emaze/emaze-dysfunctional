@@ -22,10 +22,10 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    UnchainWithExactChannelSizeTest.Degenerations.class,
-    UnchainWithExactChannelSizeTest.Functions.class
+    UnchainLongestIteratorTest.Degenerations.class,
+    UnchainLongestIteratorTest.Functions.class
 })
-public class UnchainWithExactChannelSizeTest {
+public class UnchainLongestIteratorTest {
 
     final static Supplier<List<Optional<Integer>>> MAYBE_INTEGER_LIST_FACTORY = Compositions.compose(new Vary<ArrayList<Optional<Integer>>, List<Optional<Integer>>>(), new ArrayListFactory<Optional<Integer>>());
 
@@ -35,7 +35,7 @@ public class UnchainWithExactChannelSizeTest {
         public void consumeWithTwoChannelsYieldsTwoChannels() {
             final Iterator<Integer> iter = Iterations.iterator(1, 2);
             final ConstantSupplier<Optional<Integer>> channelSizeIsAlways2 = new ConstantSupplier<Optional<Integer>>(Optional.of(2));
-            final UnchainWithExactChannelSizeIterator<List<Optional<Integer>>, Integer> demu = new UnchainWithExactChannelSizeIterator<List<Optional<Integer>>, Integer>(channelSizeIsAlways2, iter, MAYBE_INTEGER_LIST_FACTORY);
+            final UnchainLongestIterator<List<Optional<Integer>>, Integer> demu = new UnchainLongestIterator<List<Optional<Integer>>, Integer>(channelSizeIsAlways2, iter, MAYBE_INTEGER_LIST_FACTORY);
             Assert.assertEquals(Arrays.asList(Optional.of(1), Optional.of(2)), demu.next());
         }
 
@@ -43,7 +43,7 @@ public class UnchainWithExactChannelSizeTest {
         public void emptyIteratorHasNoNext() {
             final Iterator<Integer> iter = Iterations.iterator();
             final ConstantSupplier<Optional<Integer>> channelSizeIsAlways2 = new ConstantSupplier<Optional<Integer>>(Optional.of(2));
-            final UnchainWithExactChannelSizeIterator<List<Optional<Integer>>, Integer> demu = new UnchainWithExactChannelSizeIterator<List<Optional<Integer>>, Integer>(channelSizeIsAlways2, iter, MAYBE_INTEGER_LIST_FACTORY);
+            final UnchainLongestIterator<List<Optional<Integer>>, Integer> demu = new UnchainLongestIterator<List<Optional<Integer>>, Integer>(channelSizeIsAlways2, iter, MAYBE_INTEGER_LIST_FACTORY);
             Assert.assertFalse(demu.hasNext());
         }
     }
@@ -52,19 +52,19 @@ public class UnchainWithExactChannelSizeTest {
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingIteratorWithNullIteratorYieldsException() {
-            new UnchainWithExactChannelSizeIterator<List<Optional<Integer>>, Integer>(new ConstantSupplier<Optional<Integer>>(Optional.of(2)), null, MAYBE_INTEGER_LIST_FACTORY);
+            new UnchainLongestIterator<List<Optional<Integer>>, Integer>(new ConstantSupplier<Optional<Integer>>(Optional.of(2)), null, MAYBE_INTEGER_LIST_FACTORY);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingIteratorWithNullChannelsSizesProviderYieldsException() {
             Iterator<Integer> iter = Iterations.iterator(1);
-            new UnchainWithExactChannelSizeIterator<List<Optional<Integer>>, Integer>(null, iter, MAYBE_INTEGER_LIST_FACTORY);
+            new UnchainLongestIterator<List<Optional<Integer>>, Integer>(null, iter, MAYBE_INTEGER_LIST_FACTORY);
         }
 
         @Test(expected = IllegalArgumentException.class)
         public void creatingIteratorWithNullProviderYieldsException() {
             Iterator<Integer> iter = Iterations.iterator(1);
-            new UnchainWithExactChannelSizeIterator<List<Optional<Integer>>, Integer>(new ConstantSupplier<Optional<Integer>>(Optional.of(2)), iter, null);
+            new UnchainLongestIterator<List<Optional<Integer>>, Integer>(new ConstantSupplier<Optional<Integer>>(Optional.of(2)), iter, null);
         }
     }
 }

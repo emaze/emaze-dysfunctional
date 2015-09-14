@@ -2,99 +2,58 @@ package net.emaze.dysfunctional.multiplexing;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.NoSuchElementException;
-import net.emaze.dysfunctional.Compositions;
-import net.emaze.dysfunctional.casts.Vary;
+import net.emaze.dysfunctional.Consumers;
+import net.emaze.dysfunctional.Iterations;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
-import net.emaze.dysfunctional.dispatching.delegates.ConstantSupplier;
-import java.util.function.Supplier;
-import java.util.Optional;
+import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 /**
  *
  * @author rferranti
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-    UnchainIteratorTest.Functions.class,
-    UnchainIteratorTest.Degenerations.class
-})
 public class UnchainIteratorTest {
 
-    final static Supplier<List<Integer>> LIST_FACTORY = Compositions.compose(new Vary<ArrayList<Integer>, List<Integer>>(), new ArrayListFactory<Integer>());
-    final static Supplier<Optional<Integer>> SIZE_IS_ALWAYS_1 = new ConstantSupplier<Optional<Integer>>(Optional.of(1));
-    final static Supplier<Optional<Integer>> SIZE_IS_ALWAYS_2 = new ConstantSupplier<Optional<Integer>>(Optional.of(2));
-
-    public static class Functions {
-
-        @Test
-        public void canVerifyIfAnIteratorHasNext() {
-            List<Integer> backingList = Arrays.asList(1);
-            Iterator<List<Integer>> iter = new UnchainIterator<List<Integer>, Integer>(SIZE_IS_ALWAYS_1, backingList.iterator(), LIST_FACTORY);
-            Assert.assertTrue(iter.hasNext());
-        }
-
-        @Test
-        public void callingHasNextDoesNotConsumeIterator() {
-            List<Integer> backingList = Arrays.asList(1);
-            Iterator<List<Integer>> iter = new UnchainIterator<List<Integer>, Integer>(SIZE_IS_ALWAYS_1, backingList.iterator(), LIST_FACTORY);
-            iter.hasNext();
-            Assert.assertTrue(iter.hasNext());
-        }
-
-        @Test
-        public void callingHasNextOnTooShortIteratorYieldsFalse() {
-            List<Integer> backingList = Arrays.asList(1);
-            Iterator<List<Integer>> iter = new UnchainIterator<List<Integer>, Integer>(SIZE_IS_ALWAYS_2, backingList.iterator(), LIST_FACTORY);
-            Assert.assertFalse(iter.hasNext());
-        }
-
-        @Test
-        public void canConsumeAnElementCallingHasNextBefore() {
-            List<Integer> backingList = Arrays.asList(1, 2);
-            Iterator<List<Integer>> iter = new UnchainIterator<List<Integer>, Integer>(SIZE_IS_ALWAYS_2, backingList.iterator(), LIST_FACTORY);
-            iter.hasNext();
-            Assert.assertEquals(backingList, iter.next());
-        }
-
-        @Test
-        public void canConsumeElementsWithoutCallingHasNext() {
-            List<Integer> backingList = Arrays.asList(1, 2);
-            Iterator<List<Integer>> iter = new UnchainIterator<List<Integer>, Integer>(SIZE_IS_ALWAYS_2, backingList.iterator(), LIST_FACTORY);
-            Assert.assertEquals(backingList, iter.next());
-        }
+    @Test
+    public void callingHasNextDoesNotConsume() {
+        final Iterator<ArrayList<O>> iter = new UnchainIterator<ArrayList<O>, O>(1, Iterations.iterator(O.ONE), new ArrayListFactory<O>());
+        iter.hasNext();
+        Assert.assertTrue(iter.hasNext());
     }
 
-    public static class Degenerations {
+    @Test
+    public void consumesUpToBatchSize() {
+        final Iterator<ArrayList<O>> iter = new UnchainIterator<ArrayList<O>, O>(2, Iterations.iterator(O.ONE, O.ANOTHER, O.YET_ANOTHER), new ArrayListFactory<O>());
+        Assert.assertEquals(Arrays.asList(Arrays.asList(O.ONE, O.ANOTHER), Arrays.asList(O.YET_ANOTHER)), Consumers.all(iter));
+    }
 
-        @Test(expected = IllegalArgumentException.class)
-        public void creatingWithNullIteratorYieldsException() {
-            new UnchainIterator<List<Integer>, Integer>(SIZE_IS_ALWAYS_1, null, LIST_FACTORY);
-        }
+    @Test
+    public void canConsumeWithoutCallingHasNext() {
+        final Iterator<ArrayList<O>> iter = new UnchainIterator<ArrayList<O>, O>(1, Iterations.iterator(O.ONE, O.ANOTHER), new ArrayListFactory<O>());
+        Assert.assertEquals(Arrays.asList(Arrays.asList(O.ONE), Arrays.asList(O.ANOTHER)), Arrays.asList(iter.next(), iter.next()));
+    }
 
-        @Test(expected = IllegalArgumentException.class)
-        public void creatingWithNullChannelProviderYieldsException() {
-            new UnchainIterator<List<Integer>, Integer>(null, Collections.<Integer>emptyList().iterator(), LIST_FACTORY);
-        }
+    @Test(expected = NoSuchElementException.class)
+    public void consumingAfterBoundariesYieldsException() {
+        final Iterator<ArrayList<O>> iter = new UnchainIterator<ArrayList<O>, O>(1, Iterations.<O>iterator(), new ArrayListFactory<O>());
+        iter.next();
+    }
 
-        @Test(expected = IllegalArgumentException.class)
-        public void creatingWithNullListFactoryYieldsException() {
-            new UnchainIterator<List<Integer>, Integer>(SIZE_IS_ALWAYS_2, Collections.<Integer>emptyList().iterator(), null);
-        }
+    @Test(expected = IllegalArgumentException.class)
+    public void creatingWithNonPositiveBatchSizeYieldsException() {
+        new UnchainIterator<ArrayList<O>, O>(0, Iterations.iterator(O.ONE), new ArrayListFactory<O>());
+    }
 
-        @Test(expected = NoSuchElementException.class)
-        public void consumingNonSquaredIteratoryYieldsException() {
-            Iterator<List<Integer>> iter = new UnchainIterator<List<Integer>, Integer>(SIZE_IS_ALWAYS_2, Arrays.asList(1, 2, 2).iterator(), LIST_FACTORY);
-            iter.next();
-            iter.hasNext();
-            iter.next();
-        }
+    @Test(expected = IllegalArgumentException.class)
+    public void creatingWithNullIteratorYieldsException() {
+        new UnchainIterator<ArrayList<O>, O>(1, null, new ArrayListFactory<O>());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void creatingWithNullChannelProviderYieldsException() {
+        new UnchainIterator<ArrayList<O>, O>(1, Iterations.iterator(O.ONE), null);
     }
 }

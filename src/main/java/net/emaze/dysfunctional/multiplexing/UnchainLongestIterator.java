@@ -15,16 +15,16 @@ import net.emaze.dysfunctional.options.OptionalIterator;
  * @param <T>
  * @author rferranti
  */
-public class UnchainWithExactChannelSizeIterator<C extends Collection<Optional<T>>, T> extends ReadOnlyIterator<C> {
+public class UnchainLongestIterator<C extends Collection<Optional<T>>, T> extends ReadOnlyIterator<C> {
 
     private final Iterator<Optional<T>> iterator;
     private final Supplier<Optional<Integer>> channelsSizesProvider;
     private final Supplier<C> channelProvider;
 
-    public UnchainWithExactChannelSizeIterator(Supplier<Optional<Integer>> channelsSizesProvider, Iterator<T> iterator, Supplier<C> channelProvider) {
-        dbc.precondition(channelsSizesProvider != null, "cannot build a UnchainWithExactChannelSizeIterator with channelsSizesProvider < 1");
-        dbc.precondition(iterator != null, "cannot build a UnchainWithExactChannelSizeIterator with a null iterator");
-        dbc.precondition(channelProvider != null, "cannot build a UnchainWithExactChannelSizeIterator with a null channelProvider");
+    public UnchainLongestIterator(Supplier<Optional<Integer>> channelsSizesProvider, Iterator<T> iterator, Supplier<C> channelProvider) {
+        dbc.precondition(channelsSizesProvider != null, "cannot build a UnchainLongestIterator with channelsSizesProvider < 1");
+        dbc.precondition(iterator != null, "cannot build a UnchainLongestIterator with a null iterator");
+        dbc.precondition(channelProvider != null, "cannot build a UnchainLongestIterator with a null channelProvider");
         this.iterator = new OptionalIterator<T>(iterator);
         this.channelsSizesProvider = channelsSizesProvider;
         this.channelProvider = channelProvider;
