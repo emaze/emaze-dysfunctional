@@ -399,7 +399,7 @@ public class MultiplexingTest {
         @Test
         public void canUnchainAnArrayWithChannelProvider() {
             final O[] source = new O[]{O.ONE};
-            final Iterator<ArrayList<O>> got = Multiplexing.unchain(1, source, new ArrayListFactory<O>());
+            final Iterator<ArrayList<O>> got = Multiplexing.unchain(1, new ArrayListFactory<O>(), source);
             Assert.assertEquals(Arrays.asList(Arrays.asList(O.ONE)), Consumers.all(got));
         }
 
