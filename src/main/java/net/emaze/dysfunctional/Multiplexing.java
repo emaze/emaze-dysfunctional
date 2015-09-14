@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+
 import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.ArrayListFactory;
 import net.emaze.dysfunctional.contracts.dbc;
@@ -35,8 +36,8 @@ public abstract class Multiplexing {
      * flatten([1,2], [3,4]) -> [1,2,3,4]
      * </code>
      *
-     * @param <E> the iterable element type
-     * @param <I> the iterable type
+     * @param <E>       the iterable element type
+     * @param <I>       the iterable type
      * @param iterables the iterator of iterables to be flattened
      * @return the flattened iterator
      */
@@ -45,13 +46,13 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Flattens an iterable of iterables of E to an iterator of E.E.g:
+     * Flattens an iterable of iterables of E to an iterator of E. E.g:
      * <code>
      * flatten([1,2], [3,4]) -> [1,2,3,4]
      * </code>
      *
-     * @param <E> the iterable element type
-     * @param <I> the iterable type
+     * @param <E>       the iterable element type
+     * @param <I>       the iterable type
      * @param iterables the iterable of iterables to be flattened
      * @return the flattened iterator
      */
@@ -67,9 +68,9 @@ public abstract class Multiplexing {
      * flatten([1,2], [3,4]) -> [1,2,3,4]
      * </code>
      *
-     * @param <E> the iterable element type
-     * @param <I> the iterable type
-     * @param first the first iterable to be flattened
+     * @param <E>    the iterable element type
+     * @param <I>    the iterable type
+     * @param first  the first iterable to be flattened
      * @param second the second iterable to be flattened
      * @return the flattened iterator
      */
@@ -84,11 +85,11 @@ public abstract class Multiplexing {
      * flatten([1,2], [3,4], [5,6]) -> [1,2,3,4,5,6]
      * </code>
      *
-     * @param <E> the iterable element type
-     * @param <I> the iterable type
-     * @param first the first iterable to be flattened
+     * @param <E>    the iterable element type
+     * @param <I>    the iterable type
+     * @param first  the first iterable to be flattened
      * @param second the second iterable to be flattened
-     * @param third the third iterable to be flattened
+     * @param third  the third iterable to be flattened
      * @return the flattened iterator
      */
     public static <E, I extends Iterable<E>> Iterator<E> flatten(I first, I second, I third) {
@@ -102,8 +103,8 @@ public abstract class Multiplexing {
      * chain([1,2], [3,4]) -> [1,2,3,4]
      * </code>
      *
-     * @param <E> the iterator element type
-     * @param <I> the iterator type
+     * @param <E>       the iterator element type
+     * @param <I>       the iterator type
      * @param iterators the source iterators
      * @return the flattened iterator
      */
@@ -117,8 +118,8 @@ public abstract class Multiplexing {
      * chain([1,2], [3,4]) -> [1,2,3,4]
      * </code>
      *
-     * @param <E> the iterator element type
-     * @param <I> the iterator type
+     * @param <E>      the iterator element type
+     * @param <I>      the iterator type
      * @param iterable the source iterable
      * @return the flattened iterator
      */
@@ -133,9 +134,9 @@ public abstract class Multiplexing {
      * chain([1,2], [3,4]) -> [1,2,3,4]
      * </code>
      *
-     * @param <E> the iterator element type
-     * @param <I> the iterator type
-     * @param first the first iterator to be flattened
+     * @param <E>    the iterator element type
+     * @param <I>    the iterator type
+     * @param first  the first iterator to be flattened
      * @param second the second iterator to be flattened
      * @return the flattened iterator
      */
@@ -149,11 +150,11 @@ public abstract class Multiplexing {
      * chain([1,2], [3,4], [5,6]) -> [1,2,3,4,5,6]
      * </code>
      *
-     * @param <E> the iterator element type
-     * @param <I> the iterator type
-     * @param first the first iterator to be flattened
+     * @param <E>    the iterator element type
+     * @param <I>    the iterator type
+     * @param first  the first iterator to be flattened
      * @param second the second iterator to be flattened
-     * @param third the third iterator to be flattened
+     * @param third  the third iterator to be flattened
      * @return the flattened iterator
      */
     public static <E, I extends Iterator<E>> Iterator<E> chain(I first, I second, I third) {
@@ -161,14 +162,15 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source iterator into an iterator of
-     * channels.
+     * Demultiplexes elements from the source iterator into an iterator of channels.
+     * <code>
+     * batch(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
+     * </code>
      *
-     *
-     * @param <C> the channel collection type
-     * @param <E> the element type
-     * @param batchSize maximum size of the channel
-     * @param iterator the source iterator
+     * @param <C>             the channel collection type
+     * @param <E>             the element type
+     * @param batchSize       maximum size of the channel
+     * @param iterator        the source iterator
      * @param channelProvider a provider used to create channels
      * @return an iterator of channels
      */
@@ -177,12 +179,14 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source iterator into an iterator of
-     * channels.
+     * Demultiplexes elements from the source iterator into an iterator of channels.
+     * <code>
+     * batch(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
+     * </code>
      *
-     * @param <E> the element type
+     * @param <E>       the element type
      * @param batchSize maximum size of the channel
-     * @param iterator the source iterator
+     * @param iterator  the source iterator
      * @return an iterator of channels
      */
     public static <E> Iterator<List<E>> batch(int batchSize, Iterator<E> iterator) {
@@ -191,13 +195,15 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source iterable into an iterator of
-     * channels.
+     * Demultiplexes elements from the source iterable into an iterator of channels.
+     * <code>
+     * batch(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
+     * </code>
      *
-     * @param <C> the channel collection type
-     * @param <E> the element type
-     * @param batchSize maximum size of the channel
-     * @param iterable the source iterable
+     * @param <C>             the channel collection type
+     * @param <E>             the element type
+     * @param batchSize       maximum size of the channel
+     * @param iterable        the source iterable
      * @param channelProvider the provider used to create channels
      * @return an iterator of channels
      */
@@ -207,12 +213,14 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source iterable into an iterator of
-     * channels.
+     * Demultiplexes elements from the source iterable into an iterator of channels.
+     * <code>
+     * batch(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
+     * </code>
      *
-     * @param <E> the element type
+     * @param <E>       the element type
      * @param batchSize maximum size of the channel
-     * @param iterable the source iterable
+     * @param iterable  the source iterable
      * @return an iterator of channels
      */
     public static <E> Iterator<List<E>> batch(int batchSize, Iterable<E> iterable) {
@@ -222,13 +230,15 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source array into an iterator of
-     * channels.
+     * Demultiplexes elements from the source array into an iterator of channels.
+     * <code>
+     * batch(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
+     * </code>
      *
-     * @param <C> the channel collection type
-     * @param <E> the element type
-     * @param batchSize maximum size of the channel
-     * @param array the source array
+     * @param <C>             the channel collection type
+     * @param <E>             the element type
+     * @param batchSize       maximum size of the channel
+     * @param array           the source array
      * @param channelProvider the provider used to create channels
      * @return an iterator of channels
      */
@@ -237,12 +247,14 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source array into an iterator of
-     * channels.
+     * Demultiplexes elements from the source array into an iterator of channels.
+     * <code>
+     * batch(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
+     * </code>
      *
-     * @param <E> the element type
+     * @param <E>       the element type
      * @param batchSize maximum size of the channel
-     * @param array the source array
+     * @param array     the source array
      * @return an iterator of channels
      */
     public static <E> Iterator<List<E>> batch(int batchSize, E[] array) {
@@ -257,8 +269,8 @@ public abstract class Multiplexing {
      * roundRobin([1,2], [3], [4,5]) -> [1,3,4,2,5]
      * </code>
      *
-     * @param <E> the element type
-     * @param <I> the iterator type
+     * @param <E>       the element type
+     * @param <I>       the iterator type
      * @param iterators the source iterator
      * @return an iterator yielding multiplexed elements
      */
@@ -273,8 +285,8 @@ public abstract class Multiplexing {
      * roundRobin([1,2], [3], [4,5]) -> [1,3,4,2,5]
      * </code>
      *
-     * @param <E> the element type
-     * @param <I> the iterator type
+     * @param <E>      the element type
+     * @param <I>      the iterator type
      * @param iterable the source iterable
      * @return an iterator yielding multiplexed elements
      */
@@ -290,8 +302,8 @@ public abstract class Multiplexing {
      * roundRobin([1,2], [3]) -> [1,3,2]
      * </code>
      *
-     * @param <E> the element type
-     * @param first the first source iterator
+     * @param <E>    the element type
+     * @param first  the first source iterator
      * @param second the second source iterator
      * @return an iterator yielding multiplexed elements
      */
@@ -306,10 +318,10 @@ public abstract class Multiplexing {
      * roundRobin([1,2], [3], [4,5,6]) -> [1,3,4,2,5,6]
      * </code>
      *
-     * @param <E> the element type
-     * @param first the first source iterator
+     * @param <E>    the element type
+     * @param first  the first source iterator
      * @param second the second source iterator
-     * @param third the third source iterator
+     * @param third  the third source iterator
      * @return an iterator yielding multiplexed elements
      */
     public static <E> Iterator<E> roundrobin(Iterator<E> first, Iterator<E> second, Iterator<E> third) {
@@ -324,8 +336,8 @@ public abstract class Multiplexing {
      * roundrobinShortest([1,2,3], [4,5]) -> [1,4,2,5]
      * </code>
      *
-     * @param <E> the element type
-     * @param <I> the iterator type
+     * @param <E>       the element type
+     * @param <I>       the iterator type
      * @param iterators the iterator of iterators to be multiplexed
      * @return an iterator containing multiplexed elements
      */
@@ -341,8 +353,8 @@ public abstract class Multiplexing {
      * roundrobinShortest([1,2,3], [4,5]) -> [1,4,2,5]
      * </code>
      *
-     * @param <E> the element type
-     * @param <I> the source iterator type
+     * @param <E>      the element type
+     * @param <I>      the source iterator type
      * @param iterable the source iterable
      * @return an iterator containing multiplexed elements
      */
@@ -360,8 +372,8 @@ public abstract class Multiplexing {
      * roundrobinShortest([1,2], [3]) -> [1,3]
      * </code>
      *
-     * @param <E> the element type
-     * @param first the first source iterator
+     * @param <E>    the element type
+     * @param first  the first source iterator
      * @param second the second source iterator
      * @return an iterator containing multiplexed elements
      */
@@ -378,10 +390,10 @@ public abstract class Multiplexing {
      * roundrobinShortest([1,2], [3], [4]) -> [1, 3, 4]
      * </code>
      *
-     * @param <E> the element type
-     * @param first the first source iterator
+     * @param <E>    the element type
+     * @param first  the first source iterator
      * @param second the second source iterator
-     * @param third the third source iterator
+     * @param third  the third source iterator
      * @return an iterator containing multiplexed elements
      */
     public static <E> Iterator<E> roundrobinShortest(Iterator<E> first, Iterator<E> second, Iterator<E> third) {
@@ -396,8 +408,8 @@ public abstract class Multiplexing {
      * roundrobinLongest([1,2], [4]) -> [just 1, just 4, just 2, nothing]
      * </code>
      *
-     * @param <E> the element type
-     * @param <I> the iterator type
+     * @param <E>       the element type
+     * @param <I>       the iterator type
      * @param iterators the source iterator
      * @return an iterator containing multiplexed elements
      */
@@ -412,8 +424,8 @@ public abstract class Multiplexing {
      * roundrobinLongest([1,2], [4]) -> [just 1, just 4, just 2, nothing]
      * </code>
      *
-     * @param <E> the element type
-     * @param <I> the iterator type
+     * @param <E>      the element type
+     * @param <I>      the iterator type
      * @param iterable the source iterable
      * @return an iterator containing multiplexed elements
      */
@@ -430,8 +442,8 @@ public abstract class Multiplexing {
      * roundrobinLongest([1,2], [4]) -> [just 1, just 4, just 2, nothing]
      * </code>
      *
-     * @param <E> the element type
-     * @param first the first source iterator
+     * @param <E>    the element type
+     * @param first  the first source iterator
      * @param second the second source iterator
      * @return an iterator containing multiplexed elements
      */
@@ -447,10 +459,10 @@ public abstract class Multiplexing {
      * roundrobinLongest([1,2], [4], [5]) -> [just 1, just 4, just 5, just 2, nothing, nothing]
      * </code>
      *
-     * @param <E> the element type
-     * @param first the first source iterator
+     * @param <E>    the element type
+     * @param first  the first source iterator
      * @param second the second source iterator
-     * @param third the third source iterator
+     * @param third  the third source iterator
      * @return an iterator containing multiplexed elements
      */
     public static <E> Iterator<Maybe<E>> roundrobinLongest(Iterator<E> first, Iterator<E> second, Iterator<E> third) {
@@ -459,10 +471,9 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Creates an infinite iterator that issues elements from the parameter
-     * cyclicly.
+     * Creates an infinite iterator that issues elements from the parameter cyclicly.
      *
-     * @param <E> the element type
+     * @param <E>      the element type
      * @param iterator the iterator to cycle
      * @return an iterator that cyclicly returns the elements from the argument
      */
@@ -471,10 +482,9 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Creates an infinite iterator that issues elements from the parameter
-     * cyclicly.
+     * Creates an infinite iterator that issues elements from the parameter cyclicly.
      *
-     * @param <E> the element type
+     * @param <E>      the element type
      * @param iterable the iterable to cycle
      * @return an iterator that cyclicly returns the elements from the argument
      */
@@ -484,11 +494,10 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Creates an infinite iterator that issues elements from the parameter
-     * cyclicly.
+     * Creates an infinite iterator that issues elements from the parameter cyclicly.
      *
-     * @param <E> the element type
-     * @param first the first element to consider while cycling
+     * @param <E>    the element type
+     * @param first  the first element to consider while cycling
      * @param second the second element to consider while cycling
      * @return an iterator that cyclicly returns the elements from the arguments
      */
@@ -497,13 +506,12 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Creates an infinite iterator that issues elements from the parameter
-     * cyclicly.
+     * Creates an infinite iterator that issues elements from the parameter cyclicly.
      *
-     * @param <E> the element type
-     * @param first the first element to consider while cycling
+     * @param <E>    the element type
+     * @param first  the first element to consider while cycling
      * @param second the second element to consider while cycling
-     * @param third the third element to consider while cycling
+     * @param third  the third element to consider while cycling
      * @return an iterator that cyclicly returns the elements from the arguments
      */
     public static <E> Iterator<E> cycle(E first, E second, E third) {
@@ -511,14 +519,16 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source iterator into an iterator of
-     * channels.
+     * Demultiplexes elements from the source iterable into an iterator of channels.
+     * All returned channels will have the specified size, any remaining elements will be discarded.
+     * <code>
+     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
+     * </code>
      *
-     *
-     * @param <C> the channel collection type
-     * @param <E> the element type
-     * @param channelSize size of the channel
-     * @param iterator the source iterator
+     * @param <C>             the channel collection type
+     * @param <E>             the element type
+     * @param channelSize     size of the channel
+     * @param iterator        the source iterator
      * @param channelProvider a provider used to create channels
      * @return an iterator of channels
      */
@@ -528,12 +538,15 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source iterator into an iterator of
-     * channels.
+     * Demultiplexes elements from the source iterable into an iterator of channels.
+     * All returned channels will have the specified size, any remaining elements will be discarded.
+     * <code>
+     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
+     * </code>
      *
-     * @param <E> the element type
+     * @param <E>         the element type
      * @param channelSize size of the channel
-     * @param iterator the source iterator
+     * @param iterator    the source iterator
      * @return an iterator of channels
      */
     public static <E> Iterator<List<E>> unchain(int channelSize, Iterator<E> iterator) {
@@ -543,13 +556,16 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source iterable into an iterator of
-     * channels.
+     * Demultiplexes elements from the source iterable into an iterator of channels.
+     * All returned channels will have the specified size, any remaining elements will be discarded.
+     * <code>
+     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
+     * </code>
      *
-     * @param <C> the channel collection type
-     * @param <E> the element type
-     * @param channelSize size of the channel
-     * @param iterable the source iterable
+     * @param <C>             the channel collection type
+     * @param <E>             the element type
+     * @param channelSize     size of the channel
+     * @param iterable        the source iterable
      * @param channelProvider the provider used to create channels
      * @return an iterator of channels
      */
@@ -561,12 +577,15 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source iterable into an iterator of
-     * channels.
+     * Demultiplexes elements from the source iterable into an iterator of channels.
+     * All returned channels will have the specified size, any remaining elements will be discarded.
+     * <code>
+     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
+     * </code>
      *
-     * @param <E> the element type
+     * @param <E>         the element type
      * @param channelSize size of the channel
-     * @param iterable the source iterable
+     * @param iterable    the source iterable
      * @return an iterator of channels
      */
     public static <E> Iterator<List<E>> unchain(int channelSize, Iterable<E> iterable) {
@@ -578,13 +597,16 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source array into an iterator of
-     * channels.
+     * Demultiplexes elements from the source iterable into an iterator of channels.
+     * All returned channels will have the specified size, any remaining elements will be discarded.
+     * <code>
+     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
+     * </code>
      *
-     * @param <C> the channel collection type
-     * @param <E> the element type
-     * @param channelSize size of the channel
-     * @param array the source array
+     * @param <C>             the channel collection type
+     * @param <E>             the element type
+     * @param channelSize     size of the channel
+     * @param array           the source array
      * @param channelProvider the provider used to create channels
      * @return an iterator of channels
      */
@@ -595,12 +617,15 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source array into an iterator of
-     * channels.
+     * Demultiplexes elements from the source iterable into an iterator of channels.
+     * All returned channels will have the specified size, any remaining elements will be discarded.
+     * <code>
+     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
+     * </code>
      *
-     * @param <E> the element type
+     * @param <E>         the element type
      * @param channelSize size of the channel
-     * @param array the source array
+     * @param array       the source array
      * @return an iterator of channels
      */
     public static <E> Iterator<List<E>> unchain(int channelSize, E... array) {
@@ -611,13 +636,16 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source array into an iterator of
-     * channels.
+     * Demultiplexes elements from the source array into an iterator of channels.
+     * All returned channels will have the specified size, eventually the last channel could have the last elements empty.
+     * <code>
+     * unchainWithExactChannelSize(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
+     * </code>
      *
-     * @param <C> the channel collection type
-     * @param <E> the element type
-     * @param channelSize size of the channel
-     * @param iterator the source iterator
+     * @param <C>             the channel collection type
+     * @param <E>             the element type
+     * @param channelSize     size of the channel
+     * @param iterator        the source iterator
      * @param channelProvider the provider used to create channels
      * @return an iterator of channels
      */
@@ -627,12 +655,15 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source array into an iterator of
-     * channels.
+     * Demultiplexes elements from the source array into an iterator of channels.
+     * All returned channels will have the specified size, eventually the last channel could have the last elements empty.
+     * <code>
+     * unchainWithExactChannelSize(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
+     * </code>
      *
-     * @param <E> the element type
+     * @param <E>         the element type
      * @param channelSize size of the channel
-     * @param iterator the source iterator
+     * @param iterator    the source iterator
      * @return an iterator of channels
      */
     public static <E> Iterator<List<Maybe<E>>> unchainWithExactChannelSize(int channelSize, Iterator<E> iterator) {
@@ -642,13 +673,16 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source array into an iterator of
-     * channels.
+     * Demultiplexes elements from the source array into an iterator of channels.
+     * All returned channels will have the specified size, eventually the last channel could have the last elements empty.
+     * <code>
+     * unchainWithExactChannelSize(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
+     * </code>
      *
-     * @param <C> the channel collection type
-     * @param <E> the element type
-     * @param channelSize size of the channel
-     * @param iterable the source iterable
+     * @param <C>             the channel collection type
+     * @param <E>             the element type
+     * @param channelSize     size of the channel
+     * @param iterable        the source iterable
      * @param channelProvider the provider used to create channels
      * @return an iterator of channels
      */
@@ -659,12 +693,15 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source array into an iterator of
-     * channels.
+     * Demultiplexes elements from the source array into an iterator of channels.
+     * All returned channels will have the specified size, eventually the last channel could have the last elements empty.
+     * <code>
+     * unchainWithExactChannelSize(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
+     * </code>
      *
-     * @param <E> the element type
+     * @param <E>         the element type
      * @param channelSize size of the channel
-     * @param iterable the source iterable
+     * @param iterable    the source iterable
      * @return an iterator of channels
      */
     public static <E> Iterator<List<Maybe<E>>> unchainWithExactChannelSize(int channelSize, Iterable<E> iterable) {
@@ -675,14 +712,17 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source array into an iterator of
-     * channels.
+     * Demultiplexes elements from the source array into an iterator of channels.
+     * All returned channels will have the specified size, eventually the last channel could have the last elements empty.
+     * <code>
+     * unchainWithExactChannelSize(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
+     * </code>
      *
-     * @param <C> the channel collection type
-     * @param <E> the element type
-     * @param channelSize size of the channel
+     * @param <C>             the channel collection type
+     * @param <E>             the element type
+     * @param channelSize     size of the channel
      * @param channelProvider the provider used to create channels
-     * @param array the source array
+     * @param array           the source array
      * @return an iterator of channels
      */
     public static <C extends Collection<Maybe<E>>, E> Iterator<C> unchainWithExactChannelSize(int channelSize, Provider<C> channelProvider, E... array) {
@@ -691,12 +731,15 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source array into an iterator of
-     * channels.
+     * Demultiplexes elements from the source array into an iterator of channels.
+     * All returned channels will have the specified size, eventually the last channel could have the last elements empty.
+     * <code>
+     * unchainWithExactChannelSize(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
+     * </code>
      *
-     * @param <E> the element type
+     * @param <E>         the element type
      * @param channelSize size of the channel
-     * @param array the source array
+     * @param array       the source array
      * @return an iterator of channels
      */
     public static <E> Iterator<List<Maybe<E>>> unchainWithExactChannelSize(int channelSize, E... array) {
