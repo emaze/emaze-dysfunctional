@@ -21,11 +21,6 @@ import net.emaze.dysfunctional.multiplexing.UnchainIterator;
 import net.emaze.dysfunctional.multiplexing.UnchainWithExactChannelSizeIterator;
 import java.util.Optional;
 
-/**
- * flatten, chain, mux, muxLongest, demux, demuxLongest, roundrobin.
- *
- * @author rferranti
- */
 public abstract class Multiplexing {
 
     /**
@@ -44,7 +39,7 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Flattens an iterable of iterables of E to an iterator of E.E.g:
+     * Flattens an iterable of iterables of E to an iterator of E. E.g:
      * <code>
      * flatten([1,2], [3,4]) -> [1,2,3,4]
      * </code>
@@ -160,9 +155,10 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source iterator into an iterator of
-     * channels.
-     *
+     * Demultiplexes elements from the source iterator into an iterator of channels.
+     * <code>
+     * batch(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
+     * </code>
      *
      * @param <C> the channel collection type
      * @param <E> the element type
@@ -176,8 +172,10 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source iterator into an iterator of
-     * channels.
+     * Demultiplexes elements from the source iterator into an iterator of channels.
+     * <code>
+     * batch(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
+     * </code>
      *
      * @param <E> the element type
      * @param batchSize maximum size of the channel
@@ -190,8 +188,10 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source iterable into an iterator of
-     * channels.
+     * Demultiplexes elements from the source iterable into an iterator of channels.
+     * <code>
+     * batch(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
+     * </code>
      *
      * @param <C> the channel collection type
      * @param <E> the element type
@@ -206,8 +206,10 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source iterable into an iterator of
-     * channels.
+     * Demultiplexes elements from the source iterable into an iterator of channels.
+     * <code>
+     * batch(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
+     * </code>
      *
      * @param <E> the element type
      * @param batchSize maximum size of the channel
@@ -221,8 +223,10 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source array into an iterator of
-     * channels.
+     * Demultiplexes elements from the source array into an iterator of channels.
+     * <code>
+     * batch(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
+     * </code>
      *
      * @param <C> the channel collection type
      * @param <E> the element type
@@ -236,8 +240,10 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source array into an iterator of
-     * channels.
+     * Demultiplexes elements from the source array into an iterator of channels.
+     * <code>
+     * batch(2, [1,2,3,4,5]) -> [[1,2],[3,4],[5]]
+     * </code>
      *
      * @param <E> the element type
      * @param batchSize maximum size of the channel
@@ -393,7 +399,7 @@ public abstract class Multiplexing {
      * iteration stops when every source iterator is empty.E.g:
      * <code>
      * roundrobinLongest([1,2], [4]) -> [of 1, of 4, of 2, empty]
- </code>
+     * </code>
      *
      * @param <E> the element type
      * @param <I> the iterator type
@@ -409,7 +415,7 @@ public abstract class Multiplexing {
      * iteration stops when every source iterator is empty.E.g:
      * <code>
      * roundrobinLongest([1,2], [4]) -> [of 1, of 4, of 2, empty]
- </code>
+     * </code>
      *
      * @param <E> the element type
      * @param <I> the iterator type
@@ -427,7 +433,7 @@ public abstract class Multiplexing {
      * when every source iterator is empty.E.g:
      * <code>
      * roundrobinLongest([1,2], [4]) -> [of 1, of 4, of 2, empty]
- </code>
+     * </code>
      *
      * @param <E> the element type
      * @param first the first source iterator
@@ -444,7 +450,7 @@ public abstract class Multiplexing {
      * when every source iterator is empty. E.g:
      * <code>
      * roundrobinLongest([1,2], [4], [5]) -> [of 1, of 4, of 5, of 2, empty, empty]
- </code>
+     * </code>
      *
      * @param <E> the element type
      * @param first the first source iterator
@@ -458,8 +464,7 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Creates an infinite iterator that issues elements from the parameter
-     * cyclicly.
+     * Creates an infinite iterator that issues elements from the parameter cyclicly.
      *
      * @param <E> the element type
      * @param iterator the iterator to cycle
@@ -470,8 +475,7 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Creates an infinite iterator that issues elements from the parameter
-     * cyclicly.
+     * Creates an infinite iterator that issues elements from the parameter cyclicly.
      *
      * @param <E> the element type
      * @param iterable the iterable to cycle
@@ -483,8 +487,7 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Creates an infinite iterator that issues elements from the parameter
-     * cyclicly.
+     * Creates an infinite iterator that issues elements from the parameter cyclicly.
      *
      * @param <E> the element type
      * @param first the first element to consider while cycling
@@ -496,8 +499,7 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Creates an infinite iterator that issues elements from the parameter
-     * cyclicly.
+     * Creates an infinite iterator that issues elements from the parameter cyclicly.
      *
      * @param <E> the element type
      * @param first the first element to consider while cycling
@@ -510,9 +512,11 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source iterator into an iterator of
-     * channels.
-     *
+     * Demultiplexes elements from the source iterable into an iterator of channels.
+     * All returned channels will have the specified size, any remaining elements will be discarded.
+     * <code>
+     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
+     * </code>
      *
      * @param <C> the channel collection type
      * @param <E> the element type
@@ -527,8 +531,11 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source iterator into an iterator of
-     * channels.
+     * Demultiplexes elements from the source iterable into an iterator of channels.
+     * All returned channels will have the specified size, any remaining elements will be discarded.
+     * <code>
+     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
+     * </code>
      *
      * @param <E> the element type
      * @param channelSize size of the channel
@@ -542,8 +549,11 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source iterable into an iterator of
-     * channels.
+     * Demultiplexes elements from the source iterable into an iterator of channels.
+     * All returned channels will have the specified size, any remaining elements will be discarded.
+     * <code>
+     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
+     * </code>
      *
      * @param <C> the channel collection type
      * @param <E> the element type
@@ -560,8 +570,11 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source iterable into an iterator of
-     * channels.
+     * Demultiplexes elements from the source iterable into an iterator of channels.
+     * All returned channels will have the specified size, any remaining elements will be discarded.
+     * <code>
+     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
+     * </code>
      *
      * @param <E> the element type
      * @param channelSize size of the channel
@@ -577,8 +590,11 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source array into an iterator of
-     * channels.
+     * Demultiplexes elements from the source iterable into an iterator of channels.
+     * All returned channels will have the specified size, any remaining elements will be discarded.
+     * <code>
+     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
+     * </code>
      *
      * @param <C> the channel collection type
      * @param <E> the element type
@@ -594,8 +610,11 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source array into an iterator of
-     * channels.
+     * Demultiplexes elements from the source iterable into an iterator of channels.
+     * All returned channels will have the specified size, any remaining elements will be discarded.
+     * <code>
+     * unchain(2, [1,2,3,4,5]) -> [[1,2],[3,4]]
+     * </code>
      *
      * @param <E> the element type
      * @param channelSize size of the channel
@@ -610,8 +629,11 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source array into an iterator of
-     * channels.
+     * Demultiplexes elements from the source array into an iterator of channels.
+     * All returned channels will have the specified size, eventually the last channel could have the last elements empty.
+     * <code>
+     * unchainWithExactChannelSize(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
+     * </code>
      *
      * @param <C> the channel collection type
      * @param <E> the element type
@@ -626,8 +648,11 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source array into an iterator of
-     * channels.
+     * Demultiplexes elements from the source array into an iterator of channels.
+     * All returned channels will have the specified size, eventually the last channel could have the last elements empty.
+     * <code>
+     * unchainWithExactChannelSize(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
+     * </code>
      *
      * @param <E> the element type
      * @param channelSize size of the channel
@@ -641,8 +666,11 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source array into an iterator of
-     * channels.
+     * Demultiplexes elements from the source array into an iterator of channels.
+     * All returned channels will have the specified size, eventually the last channel could have the last elements empty.
+     * <code>
+     * unchainWithExactChannelSize(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
+     * </code>
      *
      * @param <C> the channel collection type
      * @param <E> the element type
@@ -658,8 +686,11 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source array into an iterator of
-     * channels.
+     * Demultiplexes elements from the source array into an iterator of channels.
+     * All returned channels will have the specified size, eventually the last channel could have the last elements empty.
+     * <code>
+     * unchainWithExactChannelSize(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
+     * </code>
      *
      * @param <E> the element type
      * @param channelSize size of the channel
@@ -674,8 +705,11 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source array into an iterator of
-     * channels.
+     * Demultiplexes elements from the source array into an iterator of channels.
+     * All returned channels will have the specified size, eventually the last channel could have the last elements empty.
+     * <code>
+     * unchainWithExactChannelSize(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
+     * </code>
      *
      * @param <C> the channel collection type
      * @param <E> the element type
@@ -690,8 +724,11 @@ public abstract class Multiplexing {
     }
 
     /**
-     * Demultiplexes elements from the source array into an iterator of
-     * channels.
+     * Demultiplexes elements from the source array into an iterator of channels.
+     * All returned channels will have the specified size, eventually the last channel could have the last elements empty.
+     * <code>
+     * unchainWithExactChannelSize(2, [1,2,3,4,5]) -> [[just 1, just 2],[just 3, just 4],[just 5, nothing]]
+     * </code>
      *
      * @param <E> the element type
      * @param channelSize size of the channel
