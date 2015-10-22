@@ -1,4 +1,4 @@
-package net.emaze.dysfunctional.sequences;
+package net.emaze.dysfunctional;
 
 import java.util.*;
 import java.util.function.Supplier;
