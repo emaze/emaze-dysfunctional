@@ -1,7 +1,6 @@
 package net.emaze.dysfunctional.sequences;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 
@@ -39,6 +38,19 @@ public abstract class Collecting {
         return (Collector<T, ?, R>) Collector.of(supplier, R::addAll, (left, right) -> {
             left.addAll(right);
             return left;
+        });
+    }
+
+    /**
+     * Returns a {@code Collector} that accumulates in reverse order the items into a new {@code Deque}.
+     *
+     * @param <T> the type of the input elements
+     * @return the resulting {@code Collector}
+     */
+    public static <T> Collector<T, ?, Deque<T>> reverse() {
+        return Collector.of(LinkedList::new, Deque::addFirst, (left, right) -> {
+            right.addAll(left);
+            return right;
         });
     }
 }

@@ -14,7 +14,11 @@ Introduced `Collecting` façade to support additional collectors.
 
 * `Collecting.flat` can be used to flat a `Stream` of `Iterable`s, as an example:
 ```
-Stream.of(Arrays.asList(1, 2, 3), Arrays.asList(4, 5)).collect(Collecting.flat()); // yields Arrays.asList(1, 2, 3, 4, 5)
+Stream.of(Arrays.asList(1, 2, 3), Arrays.asList(4, 5)).collect(Collecting.flat()); // yields [1, 2, 3, 4, 5]
+```
+* `Collecting.reverse` useful to invert the order of a finite stream.
+```
+Stream.of(1, 2, 3).collect(Collecting.reverse()); // yields [3, 2, 1]
 ```
 
 #### Refactors
