@@ -21,6 +21,12 @@ Stream.of(Arrays.asList(1, 2, 3), Arrays.asList(4, 5)).collect(Collecting.flat()
 Stream.of(1, 2, 3).collect(Collecting.reverse()); // yields [3, 2, 1]
 ```
 
+Introduced `Strategies` façade with the following methods (:warning: still to test!) :
+* `Function<T, R> firstMatch(Clause<T, R>... clauses)` to apply the first clause matching a condition
+* `Function<T, Optional<R>>` maybeFirstMatch(Clause<T, R>... clauses)` to apply optionally the first clause matching a condition
+* `Function<T, List<R>>` allMatches(Clause<T, R>... clauses)` to apply all clauses matching a condition
+* also for binary functions
+
 #### Refactors
 
 Some better names:
