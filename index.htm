@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Dysfunctional overview</title>
+    
+    <meta name="description" content="overview">
+    <meta name="author" content="Roberto Ferranti" />
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+    <link href="impress.css" rel="stylesheet" />
+</head>
+<body>
+
+    
+    
+<div id="impress" class="impress-not-supported">
+
+    <div class="fallback-message">
+        <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+        <p>For the best experience please use the latest <b>Chrome</b> or <b>Safari</b> browser. Firefox 10 (to be released soon) will also handle it.</p>
+    </div>
+
+    <div id="overview" class="step" data-x="0" data-y="0" data-scale="6" fixed-pos="1">
+        <!-- maybe scale should be >6 -->
+    </div>
+
+    <div id="title" class="step" data-x="0" data-y="-300" data-scale="4" fixed-pos="1">
+        <span class="try">Emaze</span>
+        <h1>Dysfunctional</h1>
+    </div>
+
+    <!-- intro -->
+    <div class="step" data-x="-1200" data-y="-1500" data-rotate="-45" fixed-pos="1">
+        <q>Emaze Dysfunctional</q>
+        <p>
+        An extensive library for Java, providing <b>functional</b> programming features 
+        and promoting <b>lazy evaluation</b> wherever possible.
+        </p>
+    </div>
+
+
+    <div class="step" data-x="1200" data-y="-1500" data-rotate="45" fixed-pos="1">
+        <q>Functional /ˈfəŋ(k)-shnəl, -shə-nəl/</q>
+        <p>A style of programming that emphasizes the evaluation of expressions rather than the execution of commands.</p>
+    </div>
+
+    <div class="step" data-x="0" data-y="1000" data-rotate="180" fixed-pos="1">
+        <q>Lazy evaluation/ˈleɪzi ɪˌvæljʊˈeɪʃn/﻿</q>
+        <p>An evaluation strategy which delays the evaluation of an expression until the value of this is actually required (non-strict evaluation) and which also avoids repeated evaluations.</p>
+    </div>
+
+<!-- actions -->
+    <div class="step slide" data-x="0" data-y="-1500"  data-scale="1">
+        <q>Delegates</q>
+        <p>
+            <span class="function">Provider&lt;R&gt;</span>
+            <span class="description">A nullary function object returning a value</span>
+            <code>new Provider&lt;List&lt;Integer&gt;&gt;(){ public List&lt;Integer&gt; provide(){ return new ArrayList&lt;Integer&gt;(); }};</code>
+        </p>
+        <p>
+            <span class="function">Delegate&lt;R, T&gt;</span>
+            <span class="description">A unary function object returning a value</span>
+            <code>new Delegate&lt;Integer, String&gt;(){
+    public Integer perform(String v){ return v.lenght(); }
+};</code>
+        </p>
+        <p>
+            <span class="function">BinaryDelegate&lt;R, T1, T2&gt;</span>
+            <span class="description">A binary function object returning a value</span>
+            <code>new BinaryDelegate&lt;Integer, Integer, Integer&gt;(){
+    public Integer perform(Integer lhs, Integer rhs){ return lhs + rhs; }
+};</code>        
+        <p>
+            <span class="function">TernaryDelegate&lt;R, T1, T2, T3&gt;</span>
+            <span class="description">A ternary function object returning a value</span>
+            <code>new TernaryDelegate&lt;Integer, Integer, Integer, Integer&gt;(){
+    public Integer perform(Integer x, Integer y, Integer z){ return Math.sqrt(x*x + y*y + z*z); }
+};</code>        
+        </p>
+    </div>
+    <div class="step slide" data-x="1200" data-y="1000" data-scale="1" data-rotate="135">
+        <q>Predicates</q>
+        <p>
+            <span class="function">Proposition</span>
+            <span class="description">A nullary function object returning a boolean</span>
+            <code>new Proposition(){ public boolean state(){ return true; }};</code>
+        </p>
+        <p>
+            <span class="function">Predicate&lt;T&gt;</span>
+            <span class="description">A unary function object returning a boolean</span>
+            <code>new Predicate&lt;String&gt;(){
+    public boolean accept(String v){ return !v.isEmpty(); }
+};</code>
+        </p>
+        <p>
+            <span class="function">BinaryPredicate&lt;T1, T2&gt;</span>
+            <span class="description">A binary function object returning a boolean</span>
+            <code>new BinaryPredicate&lt;String, String&gt;(){
+    public boolean accept(String lhs, String, rhs){ return lhs.equals(rhs); }
+};</code>
+        </p>
+        <p>
+            <span class="function">TernaryPredicate&lt;T1, T2, T3&gt;</span>
+            <span class="description">A ternary function object returning a boolean</span>
+            <code>new TernaryPredicate&lt;String, String, Integer&gt;(){
+    public boolean accept(String a, String b, Integer c){ return a.equals(b) && c == 3; }
+};</code>
+        </p>
+    </div>
+    
+    <div class="step slide" data-x="-1200" data-y="1000" data-scale="1" data-rotate="-135">
+        <q>Actions</q>
+        <p>
+            <span class="function">Runnable</span>
+            <span class="description">A nullary function object with no return value</span>
+            <code>new java.lang.Runnable(){ public void run(){ /* does something*/}; }</code>
+        </p>
+        <p>
+            <span class="function">Action&lt;T&gt;</span>
+            <span class="description">A unary function object with no return value</span>
+            <code>new Action&lt;MyBean&gt;(){
+    public void perform(MyBean bean){ bean.setId(1); }
+}</code>
+        </p>
+        <p>
+            <span class="function">BinaryAction&lt;T1, T2&gt;</span>
+            <span class="description">A binary function object with no return value</span>
+            <code>new BinaryAction&lt;MyBean, Integer&gt;(){
+    public void perform(MyBean bean, Integer size){ bean.setSize(size); }
+}</code>
+        </p>
+        <p>
+            <span class="function">TernaryAction&lt;T1, T2, T3&gt;</span>
+            <span class="description">A ternary function object with no return value</span>
+            <code>new TernaryAction&lt;MyBean, Integer, Integer&gt;(){
+    public void perform(MyBean bean, Integer size1, Integer size2){ bean.setSize(size1+size2); }
+}</code>
+        </p>
+    </div>
+
+    <div class="step slide" data-x="-2000" data-y="2400" data-scale="1">
+        <q>Logic</q>
+        <p>
+            <span class="function">and</span>
+            <span class="description">Composes predicates in logic AND</span>
+            <code>Logic.and(new Always&lt;T&gt;(), new Always&lt;T&gt;()) <span class="result">&rarr; Predicate&lt;T&gt; yielding true</span></code>
+        </p>
+        <p>
+            <span class="function">or</span>
+            <span class="description">Composes predicates in logic OR</span>
+            <code>Logic.or(new Always&lt;T&gt;(), new Never&lt;T&gt;()) <span class="result">&rarr; Predicate&lt;T&gt; yielding true</span></code>
+        </p>
+        <p>
+            <span class="function">not</span>
+            <span class="description">Returns a negated predicate</span>
+            <code>Logic.not(new Always&lt;T&gt;()) <span class="result">&rarr; Predicate&lt;T&gt; yielding false</span></code>
+        </p>
+
+    </div>
+
+<!-- facades left -->
+    <div class="step slide" data-x="-3000" data-y="2400" data-scale="1">
+        <q>Iterations</q>
+        <p>
+            <span class="function">iterator</span>
+            <span class="description">Returns an iterator on the given elements</span>
+            <code>Iterations.iterator(1, 2, 3); <span class="result">&rarr; Iterator&lt;Integer&gt; yielding [1, 2, 3]</span></code>
+        </p>
+        <p>
+            <span class="function">iterable</span>
+            <span class="description">Returns an iterable holding the given elements</span>
+            <code>Iterations.iterable(1, 2, 3); <span class="result">&rarr; Iterable&lt;Integer&gt; yielding [1, 2, 3]</span></code>
+        </p>
+        <p>
+            <span class="function">oneTime</span>
+            <span class="description">Returns a throwaway iterable wrapping the given iterator</span>
+            <code>for(Integer anInt: Iterations.oneTime(Iterations.iterator(1,2,3))) ...</code>
+        </p>
+    </div>
+    <div class="step slide" data-x="-3000" data-y="-2400" data-scale="1">
+        <q>Filtering</q>
+        <p>
+            <span class="function">filter</span>
+            <span class="description">Keeps elements accepted by predicate, filters out others</span>
+            <code>Filtering.filter(Iterations.iterator(1,2,3), new IsOdd&lt;Integer&gt;(new IntegerOperations())); <span class="result">&rarr; Iterator&lt;Integer&gt; yielding [1, 3]</span></code>
+        </p>
+        <p>
+            <span class="function">takeWhile</span>
+            <span class="function">dropWhile</span>
+            <span class="description">Takes or drops until predicate yields true</span>
+            <code>Filtering.takeWhile(Iterations.iterator(2,3), new IsEven&lt;Integer&gt;(new IntegerOperations()));<span class="result">&rarr; Iterator&lt;Integer&gt; yielding [2]</span></code>
+        </p>
+        <p>
+            <span class="function">take</span>
+            <span class="function">drop</span>
+            <span class="function">takeLast</span>
+            <span class="function">atMostLast</span>
+            <span class="description">Positional filtering on iterators</span>
+            <code>Filtering.drop(2, Iterations.iterator(1,2,3,4));<span class="result">&rarr; Iterator&lt;Integer&gt; yielding [3, 4]</span></code>
+        </p>
+        <p>
+            <span class="function">slice</span>
+            <span class="description">More positional filtering on iterators</span>
+            <code>Filtering.slice(0, 3, Iterations.iterator(1,2,3,4)); <span class="result">&rarr; Iterator&lt;Integer&gt; yielding [1, 2, 3]</span></code>
+        </p>
+    </div>
+
+    <div class="step slide" data-x="-1000" data-y="-2400" data-scale="1">
+        <q>Applications</q>
+        <p>
+            <span class="function">transform</span>
+            <span class="description">Transforms a stream of elements with a function</span>
+            <code>Applications.transform(Iterations.iterator(1,2), new ToStringTransformer&lt;Integer&gt;());<span class="result">&rarr; Iterator&lt;String&gt; ["1", "2"]</span></code>
+        </p>
+        <p>
+            <span class="function">map</span>
+            <span class="description">Transforms, and consumes resulting elements in a collection</span>
+            <code>Applications.map(Iterations.iterator(1,2), new ToStringTransformer&lt;Integer&gt;());<span class="result">&rarr; List&lt;String&gt; ["1", "2"]</span></code>
+        </p>
+        <p>
+            <span class="function">tap</span>
+            <span class="description">Returns an iterator which binds an consumer to each call to next()</span>
+            <code>Applications.tap(Iterations.iterator(1,2), new Noop&lt;Integer&gt;() );<span class="result">&rarr; Iterator&lt;Integer&gt; yielding [1, 2] and invoking Noop() on each element lazily</span></code>
+        </p>
+        <p>
+            <span class="function">each</span>
+            <span class="description">Eagerly invokes specified consumer on all elements</span>
+            <code>
+Applications.each(Iterations.iterator(1,2) new Action&lt;Integer&gt;(){
+    public void perform(Integer value) {
+        System.out.println(value);
+    }
+});<span class="result">&rarr; void. System.out gets "1\n2\n"</span></code>
+        </p>
+    </div>
+
+    <div class="step slide" data-x="-2000" data-y="-2400" data-scale="1">
+        <q>Dispatching</q>
+        <p>
+            <span class="function">curry</span>
+            <span class="function">mcurry</span>
+            <span class="function">rcurry</span>
+            <span class="description">Currying of function objects</span>
+            <code>Dispatching.curry(new BinaryNoop&lt;String, Long&gt;(), "bound parameter");<span class="result">&rarr; Action&lt;Long&gt;</span></code>
+        </p>
+        <p>
+            <span class="function">ignore</span>
+            <span class="function">ignore1st</span>
+            <span class="function">ignore2nd</span>
+            <span class="function">ignore3rd</span>
+            <span class="description">Increase arity of function objects (ignoring args)</span>
+            <code>Dispatching.ignore(new ConstantProvider&lt;String&gt;("a"), Long.class);<span class="result">&rarr; Delegate&lt;String, Long&gt;</span></code>
+        </p>
+        <p>
+            <span class="function">function</span>
+            <span class="function">consumer</span>
+            <span class="function">predicate</span>
+            <span class="function">supplier</span>
+            <span class="function">runnable</span>
+            <span class="function">proposition</span>
+            <span class="description">Adapt function objects</span>
+            <code>Dispatching.function(new Always&lt;String&gt;());<span class="result">&rarr; Delegate&lt;Boolean, String&gt;</span></code>
+        </p>
+    </div>
+
+    <div class="step slide" data-x="1000" data-y="2400" data-scale="1">
+        <q>Compositions</q>
+        <p>
+            <span class="function">compose</span>
+            <span class="description">Function objects composition</span>
+            <code>Compositions.compose(new StringContains("1"), new ToStringTransformer&lt;Integer&gt;());
+<span class="result">&rarr; Predicate&lt;Integer&gt;</span>
+Compositions.compose(new PrintAction(System.out), new ToStringTransformer&lt;Object&gt;());
+<span class="result">&rarr; Action&lt;Object&gt; that prints</span></code>
+        </p>
+    </div>
+
+    <div class="step slide" data-x="-3500" data-y="800" data-scale="1">
+        <q>Consumers</q>
+        <p>
+            <span class="function">all</span>
+            <span class="description">Consumes all elements of an iterator into a Collection</span>
+            <code>Consumers.all(Iterations.iterator(1, 2, 3));<span class="result">&rarr; List&lt;Integer&gt; [1, 2, 3]</span></code>
+        </p>
+        <p>
+            <span class="function">dict</span>
+            <span class="description">Consumes a sequence of Pair in a Map</span>
+            <code>Consumers.dict(Pair.of("Cupcake", 7), Pair.of("Pineapple",9));<span class="result">&rarr; Map&lt;String, Integer&gt; {"Cupcake": 7, "Pineapple": 9}</span></code>
+        </p>
+        <p>
+            <span class="function">pipe</span>
+            <span class="description">Pipes an iterator in an OutputIterator</span>
+            <code>Consumers.pipe(in.iterator(), new StringOutputIterator());</code>
+        </p>
+    </div>
+
+ <div class="step slide" data-x="2000" data-y="-2400" data-scale="1">
+        <q>Options</q>
+        <p>
+            <span class="function">Maybe</span>
+            <span class="function">Box</span>
+            <span class="function">Either</span>
+            <span class="function">.pure(s)</span>
+            <span class="description">Monadically wrap value</span>
+            <code>Maybe.pure(1);<span class="result">&rarr; Maybe.just(1);</span>
+Maybe.pure(null);<span class="result">&rarr; Maybe.just(null);</span>
+Maybe.pures(Iterations.iterator(1,2,3));<span class="result">&rarr; Iterator&lt;Maybe&lt;Integer&gt;&gt; yielding [Maybe.just(1), Maybe.just(2), Maybe.just(3))]</span></code>
+        </p>
+        <p>
+            <span class="function">Maybe.justs</span>
+            <span class="description">Filters out nothings</span>
+            <code>Maybe.justs(Iterations.iterator(Maybe.just(1), Maybe.nothing()));<span class="result">&rarr; Iterator&lt;Integer&gt; yielding [1];</span></code>
+        </p>
+        <p>
+            <span class="function">Maybe.lift(s)</span>
+            <span class="function">Maybe.drop(s)</span>
+            <span class="description">Enter or exit monad</span>
+            <code>Maybe.lifts(Iterations.iterator(1, 2, null));
+<span class="result">&rarr; Iterator&lt;Maybe&lt;Integer&gt;&gt; yielding [Maybe.just(1), Maybe.just(2), Maybe.nothing()]</span>
+Maybe.drops(Iterations.iterator(Maybe.just(1), Maybe.just(2), Maybe.nothing()));<span class="result">&rarr; Iterator&lt;Integer&gt; yielding [1, 2];</span></code>
+        </p>
+        <p>
+            <span class="function">Either.lefts</span>
+            <span class="function">Either.rights</span>
+            <span class="description">Exit Either taking lefts or rights</span>
+            <code>Either.rights(Iterations.iterator(Either.&lt;Integer, String&gt;left(1), Either.&lt;Integer, String&gt;right("ok"));<span class="result">&rarr; Iterator&lt;String&gt; yielding ["ok"];</span></code>
+        </p>
+
+    </div>
+
+    <div class="step slide" data-x="3000" data-y="1600" data-scale="1">
+        <q>Tuples</q>
+        <p>
+            <span class="function">Pair&lt;F, S&gt;</span>
+            <span class="description">Tuple with two elements</span>
+            <code>Pair.of("Wyoming", 2)<span class="result">&rarr; Pair&lt;String, Integer&gt; with first() yielding "Wyoming" and second() yielding 2</span></code>
+        </p>
+        <p>
+            <span class="function">Triple&lt;F, S, T&gt;</span>
+            <span class="description">Tuple with three elements</span>
+            <code>Triple.of("Uno", Arrays.&lt;Boolean&gt;asList(), 100000)<span class="result">&rarr; Triple&lt;String, List&lt;Boolean&gt;, Integer&gt;</span></code>
+        </p>
+        <p>
+            <span class="function">tupled</span>
+            <span class="description">Adapts a N-ary function object to a unary function object on tuples</span>
+            <code>Tuples.tupled(new BinaryNoop&lt;O, O&gt;()); <span class="result">&rarr; Action&lt;Pair&lt;O, O&gt;&gt;</span></code>
+        </p>
+        <p>
+            <span class="function">untupled</span>
+            <span class="description">Adapts an unary function object on tuples to a N-ary function object</span>
+            <code>Action&lt;Pair&lt;O, O&gt;&gt; anAction ... ; Tuples.untupled(anAction); <span class="result">&rarr; BinaryAction&lt;O, O&gt;</code>
+        </p>
+
+    </div>
+
+    <div class="step slide" data-x="-2500" data-y="800" data-scale="1">
+        <q>Consumers (more)</q>
+        <p>
+            <span class="function">first</span>
+            <span class="function">last</span>
+            <span class="function">one</span>
+            <span class="description">Returns the first or last element of an iterator</span>
+            <code>Consumers.first(Iterations.iterator(1, 2)); <span class="result">&rarr; 1</span>
+Consumers.one(Iterations.iterator(1, 2)); <span class="result">&rarr; throws IllegalStateException, only one element expected</span></code>
+        </p>
+        <p>
+            <span class="function">maybeFirst</span>
+            <span class="function">maybeLast</span>
+            <span class="function">maybeOne</span>
+            <span class="description">Returns Maybe the first or last element, or nothing</span>
+            <code>Consumers.maybeFirst(Iterations.iterator(1, 2)); <span class="result">&rarr; Maybe.just(1)</span>
+Consumers.maybeFirst(Collections.emptyList().iterator()); <span class="result">&rarr; Maybe.nothing()</span></code>
+        </p>
+        <p>
+            <span class="function">nth</span>
+            <span class="function">at</span>
+            <span class="function">maybeNth</span>
+            <span class="function">maybeAt</span>
+            <span class="description">Returns Maybe the nth element (1 or 0-based), or nothing</span>
+            <code>Consumers.nth(3, Iterations.iterator("a","b","c")); <span class="result">&rarr; "c"</span>
+Consumers.at(2, Iterations.iterator("a","b","c")); <span class="result">&rarr; "c"</span></code>
+        </p>
+    </div>
+
+    <div class="step slide" data-x="3000" data-y="-800" data-scale="1">
+        <q>Reductions</q>
+        <p>
+            <span class="function">reduce</span>
+            <span class="description">Reduces a sequence to a single value</span>
+            <code>Reductions.reduce(Iterations.iterator(1,2,3), new Sum&lt;Integer&gt;(new IntegerOperations())); <span class="result">&rarr; 6</span></code>
+        </p>
+        <p>
+            <span class="function">any</span>
+            <span class="description">True if any element matches given Predicate</span>
+            <code>Reductions.any(Iterations.iterator(2,4,6), new IsOdd&lt;Integer&gt;(new IntegerOperations()) ); <span class="result">&rarr; false</span></code>
+        </p>
+        <p>
+            <span class="function">every</span>
+            <span class="description">True if every element matches given Predicate</span>
+            <code>Reductions.every(Iterations.iterator(2,4,6), new IsEven&lt;Integer&gt;(new IntegerOperations()) ); <span class="result">&rarr; true</span></code>
+        </p>
+        <p>
+            <span class="function">count, counti</span>
+            <span class="description">Counts elements</span>
+            <code>Reductions.count(Iterations.iterator("a","b","c")); <span class="result">&rarr; 3l</span></code>
+        </p>
+        <p>
+            <span class="function">minimum, maximum</span>
+            <span class="description">Find minimum, maximum</span>
+            <code>Reductions.minimum(Iterations.iterator(2,4,6)); <span class="result">&rarr; 2</span></code>
+        </p>
+
+    </div>
+
+    <div class="step slide" data-x="-3000" data-y="1600" data-scale="1">
+        <q>Groups</q>
+        <p>
+            <span class="function">groupBy</span>
+            <span class="description">Groups elements by the key obtained applying the given Delegate</span>
+            <code>Groups.groupBy(Iterations.iterator("Tree","Sun","Tea"), new FirstChar()); <span class="result">&rarr; Map&lt;String, List&lt;String&gt;&gt; {"T":["Tree","Tea"], "S":["Sun"]}</span></code>
+        </p>
+        <p>
+            <span class="function">indexBy</span>
+            <span class="description">Builds an index of elements using the key obtained applying the given Delegate</span>
+            <code>Groups.indexBy(Iterations.iterator("Tree","Sun","Tea"), new FirstChar()); <span class="result">&rarr; Map&lt;String, String&gt; {"T":["Tea"], "S":["Sun"]} // last element overwrites</span></code>
+        </p>
+        <p>
+            <span class="function">partition</span>
+            <span class="description">Partitions elements in a Pair of Lists, based on given Predicate</span>
+            <code>Groups.partition(Iterations.iterator("Tree","Sun","Tea"), new StringContains("T")); <span class="result">&rarr; Pair&lt;List&lt;String&gt;, List&lt;String&gt;&gt; (["Tree","Tea"], ["Sun"])</span></code>
+        </p>
+    </div>
+
+    <div class="step slide" data-x="2000" data-y="2400" data-scale="1">
+        <q>Zips</q>
+        <p>
+            <span class="function">shortest</span>
+            <span class="description">Zips together two iterators, stopping when either is consumed</span>
+            <code>Zips.shortest(Iterations.iterator(1, 2), Iterations.iterator("a", "b"));<span class="result">&rarr; Iterator&lt;Pair&lt;Integer, String&gt;&gt; [(1, "a"), (2, "b")]</span></code>
+        </p>
+        <p>
+            <span class="function">longest</span>
+            <span class="description">Zips together two iterators, stopping when both are consumed</span>
+            <code>Zips.longest(Iterations.iterator(1, 2), Iterations.iterator("a"));<span class="result">&rarr; Iterator&lt;Pair&lt;Maybe&lt;Integer&gt;, Maybe&lt;String&gt;&gt;&gt; [(just 1, just "a"), (just 2, nothing)]</span></code>
+        </p>
+        <p>
+            <span class="function">counted</span>
+            <span class="description">Zips together an iterator and the element index</span>
+            <code>Zips.counted(Iterations.iterator("a", "b"));<span class="result">&rarr; Iterator&lt;Pair&lt;Integer, String&gt;&gt; [(0, "a"), (1, "b")]</span></code>
+        </p>
+    </div>
+
+    <div class="step slide" data-x="3000" data-y="-2400" data-scale="1">
+        <q>Pagination</q>
+        <p>
+            <span class="function">page</span>
+            <span class="description">Returns a Pair of next offset and page</span>
+            <code>Pagination.page(2, 2, Iterations.iterator("A", "B", "C", "D", "E"));<span class="result">&rarr; Pair.of(4, ["C", "D"])</span></code>
+        </p>
+        <p>
+            <span class="function">LongPages.page</span>
+            <span class="description">Returns a Pair of next offset and page</span>
+            <code>Pagination.LongPages.page(2, 2, Iterations.iterator("A", "B", "C", "D", "E"));<span class="result">&rarr; Pair.of(4l, ["C", "D"])</span></code>
+        </p>
+
+    </div>
+ 
+    <div class="step slide" data-x="3000" data-y="2400" data-scale="1">
+        <q>Windowing</q>
+        <p>
+            <span class="function">window</span>
+            <span class="description">Open up a window on an iterator</span>
+            <code>Windowing.window(2, Iterations.iterator(1,2,3)); <span class="result">&rarr; Iterator&lt;List&lt;Integer&gt;&gt; yielding [[1,2], [2,3]]</span></code>
+        </p>
+        <p>
+            <span class="function">centered</span>
+            <span class="description">Open up a fixed-size window of Maybes on an iterator</span>
+            <code>Windowing.centered(3, Iterations.iterator(1,2)); <span class="result">&rarr; Iterator&lt;List&lt;Maybe&lt;Integer&gt;&gt;&gt; yielding [[nothing, just 1, just 2], [just 1, just 2, nothing]]</span></code>
+        </p>
+        <p>
+            <span class="function">trails</span>
+            <span class="description">Yields element and its predecessors in a fixed-size window</span>
+            <code>Windowing.trails(3, Iterations.iterator(1,2)); <span class="result">&rarr; Iterator&lt;List&lt;Maybe&lt;Integer&gt;&gt;&gt; yielding [[nothing, nothing, just 1], [nothing, just 1, just 2]]</span></code>
+        </p>
+    </div>
+
+<!-- facades right -->
+    <div class="step slide" data-x="1000" data-y="-2400" data-scale="1">
+        <q>Multiplexing</q>
+        <p>
+            <span class="function">flatten</span>
+            <span class="function">chain</span>
+            <span class="description">Iterates in sequence on multiple streams</span>
+            <code>Multiplexing.chain(Iterations.iterator(1,2), Iterations.iterator(3,4)); 
+<span class="result">&rarr; Iterator&lt;Integer&gt; yielding [1, 2, 3, 4]</span>
+Multiplexing.flatten(Iterations.iterable(1,2), Iterations.iterable(3,4)); 
+<span class="result">&rarr; Iterator&lt;Integer&gt; yielding [1, 2, 3, 4]</span></code>
+        </p>
+        <p>
+            <span class="function">batch</span>
+            <span class="description">Iterates on batches in Collections</span>
+            <code>Multiplexing.batch(2, Iterations.iterator(1,2,3,4,5)); 
+<span class="result">&rarr; Iterator&lt;List&lt;Integer&gt;&gt; yielding [[1, 2], [3, 4], [5]]</span></code>
+        </p>
+        <p>
+            <span class="function">cycle</span>
+            <span class="description">Creates a circular iterator from a finite one.</span>
+            <code>Multiplexing.cycle(Iterations.iterator(1,2))
+<span class="result">&rarr; Iterator&lt;Integer&gt; yielding [1, 2, 1, 2, ...]</span></code>
+        </p>
+   </div>
+
+   <div  class="step slide" data-x="1000" data-y="-2400" data-scale="1">
+        <q>Multiplexing (more)</q>
+        <p>
+            <span class="function">roundrobin</span>
+            <span class="function">roundrobinShortest</span>
+            <span class="function">roundrobinLongest</span>
+            <span class="description">Multiplexes multiple streams</span>
+            <code>Multiplexing.roundrobin(Iterations.iterator(1,2,3), Iterations.iterator(9,8));
+            <span class="result">&rarr; Iterator&lt;Integer&gt; yielding [1, 9, 2, 8, 3]</span>
+Multiplexing.roundrobinShortest(Iterations.iterator(1,2,3), Iterations.iterator(9,8));
+            <span class="result">&rarr; Iterator&lt;Integer&gt; yielding [1, 9, 2, 8]</span>
+Multiplexing.roundrobinLongest(Iterations.iterator(1,2), Iterations.iterator(9));
+            <span class="result">&rarr; Iterator&lt;Maybe&lt;Integer&gt;&gt; yielding [Maybe.just(1), Maybe.just(9), Maybe.just(2), Maybe.nothing()]</span>
+</code>
+        </p>
+        <p>
+            <span class="function">unchain</span>
+            <span class="function">unchainWithExactChannelSize</span>
+            <span class="description">Demultiplexes multiple streams (by channel size)</span>
+            <code>Multiplexing.unchain(2, Iterations.iterator(1,2,3,4,5));
+            <span class="result">&rarr; Iterator&lt;List&lt;Integer&gt;&gt; yielding [[1, 2], [3, 4]]</span>
+Multiplexing.unchainWithExactChannelSize(2, Iterations.iterator(1,2,3,4,5));
+            <span class="result">&rarr; Iterator&lt;List&lt;Maybe&lt;Integer&gt;&gt;&gt; yielding [[Just 1, Just 2], [Just 3, Just 4], [Just 5, Nothing]]</span>
+</code>
+        </p>
+    </div>
+
+    <div class="step slide" data-x="3000" data-y="-1600" data-scale="1">
+        <q>Interceptors</q>
+        <p>
+            <span class="function">intercept</span>
+            <span class="description">Binds an Interceptor to a Delegate</span>
+            <code>Interceptors.intercept(new ToStringTransformer&lt;Integer&gt;(), new TimingInterceptor&lt;Integer&gt;())<span class="result">&rarr; an intercepting Delegate&lt;String, Integer&gt;</span></code>
+        </p>
+        <q>Pipelines</q>
+        <p>
+            <span class="function">pipeline</span>
+            <span class="description">Builds a pipelining Action</span>
+            <code>Pipelines.pipeline(new Noop&lt;O&gt;(), new Noop&lt;O&gt;()); <span class="result">&rarr; Action&lt;O&gt; doing nothing, twice</span></code>
+        </p>
+
+    </div>
+
+    <div class="step slide" data-x="3500" data-y="0" data-scale="1">
+        <q>Spies</q>
+        <p>
+            <span class="function">spy</span>
+            <span class="function">spy{1st,2nd,3rd}</span>
+            <span class="function">spyRes</span>
+            <span class="description">Spies on function objects, saving inputs and output in a box</span>
+            <code>final Box&lt;String&gt; param = new Box&lt;String&gt;();
+final Action&lt;String&gt; spied = Spies.spy(new Noop&lt;String&gt;(), param);
+spied.perform("hello, world!");
+param.getContent(); <span class="result">&rarr; "hello, world!"</span></code>
+        </p>
+        <p>
+            <span class="function">monitor</span>
+            <span class="description">Spies on function objects, exposing calls count</span>
+            <code>AtomicLong calls = new AtomicLong();
+final Action&lt;String&gt; spied = Spies.monitor(new Noop&lt;String&gt;(), calls);
+spied.perform("something");
+spied.perform("something else");
+calls.get(); <span class="result">&rarr; 2l</span></code>
+        </p>
+
+    </div>
+    <div class="step slide" data-x="3000" data-y="800" data-scale="1">
+        <q>Strings</q>
+        <p>
+            <span class="function">join</span>
+            <span class="description">Join multiple strings together</span>
+            <code>Strings.join(Iterations.iterator(1, 2, 3));<span class="result">&rarr; "123"</span></code>
+        </p>
+        <p>
+            <span class="function">interpose</span>
+            <span class="description">Join multiple strings together, interposing a separator</span>
+            <code>Strings.interpose(Iterations.iterator(1, 2, 3), "-"); <span class="result">&rarr; "1-2-3"</span></code>
+        </p>
+
+    </div>
+
+    <div class="step slide" data-x="-1000" data-y="2400" data-scale="1">
+        <q>Maps</q>
+        <p>
+            <span class="function">builder</span>
+            <span class="description">Builder for maps</span>
+            <code>Maps.&lt;String, Integer&gt;builder().add("a", 1).add("b", 2).toMap()<span class="result">&rarr; HashMap&lt;String, Integer&gt; {"b": 2, "a": 1}</span></code>
+        </p>
+        <p>
+            <span class="function">linked</span>
+            <span class="description">Builder for LinkedHashMap</span>
+            <code>Maps.&lt;String, Integer&gt;ordered().add("x", 1).add("a", 2).toMap()<span class="result">&rarr; LinkedHashMap&lt;String, Integer&gt; {"x": 1, "a": 2}</span></code>
+        </p>
+        <p>
+            <span class="function">tree</span>
+            <span class="description">Builder for TreeMap</span>
+            <code>Maps.&lt;String, Integer&gt;sorted().add("x", 1).add("a", 2).toMap()<span class="result">&rarr; TreeMap&lt;String, Integer&gt; {"a": 2, "x": 1}</span></code>
+        </p>
+        <p>
+            <span class="function">from</span>
+            <span class="description">Builder for the given Map</span>
+            <code>Maps.&lt;String, Integer&gt;from(new HashMap&lt;String, Integer&gt;()).add("a", 1).toMap()<span class="result">&rarr; HashMap&lt;String, Integer&gt; {"a": 1}</code>
+        </p>
+
+    </div>
+
+
+    <div class="step slide" data-x="-3000" data-y="-1600" data-scale="1">
+        <q>Boxing</q>
+        <p>
+            <span class="function">box</span>
+            <span class="description">Boxes an array of primitives</span>
+            <code>Boxing.box(new int[]{1,2});<span class="result">&rarr; Integer[]{1,2}</span></code>
+        </p>
+        <p>
+            <span class="function">unbox</span>
+            <span class="description">Unboxes an array of boxed primitives</span>
+            <code>Boxing.unbox(new Integer[]{1,2});<span class="result">&rarr; int[]{1,2}</span></code>
+        </p>
+    </div>
+<!--
+    <div class="step slide" data-x="-3000" data-y="-800" data-scale="1">
+        <q>Casts</q>
+        <p>
+            <span class="function">narrow</span>
+            <span class="function">narrower</span>
+            <span class="description">TODO: explain</span>
+            <code>final Provider&lt;ArrayList&lt;Long&gt;&gt; = new ArrayListFactory&lt;Long&gt;();
+Dispatching.compose(new Narrow&lt;List&lt;Long&gt;, ArrayList&lt;Long&gt;&gt;(), supplier);<span class="result">&rarr; Provider&lt;List&lt;Long&gt;&gt;</span></code>
+        </p>
+        <p>
+            <span class="function">widen</span>
+            <span class="function">widener</span>
+            <span class="description">TODO: explain</span>
+            <code>final Map&lt;String, Object> map = Collections.&lt;String, Object&gt;singletonMap("a", 1);
+final Integer value = Casts.widen(map.get("a"));<span class="result">&rarr; 1</span></code>
+        </p>
+        <p>
+            <span class="function">vary</span>
+            <span class="function">variator</span>
+            <span class="description">TODO: explain</span>
+            <code>TODO<span class="result">&rarr; TODO</span></code>
+        </p>
+    </div>
+-->
+    <div class="step slide" data-x="-3500" data-y="0" data-scale="1">
+        <q>Comparing</q>
+        <p>
+            <span class="function">min</span>
+            <span class="description">Minimum of two objects, either Comparable or using a Comparator</span>
+            <code>Comparing.min(1, 2);<span class="result">&rarr; 1</span>
+Comparing.min(1, 2, new ComparableComparator&lt;Integer&gt;());<span class="result">&rarr; 1</span></code>
+        </p>
+        <p>
+            <span class="function">max</span>
+            <span class="description">Maximum of two objects, either Comparable or using a Comparator</span>
+            <code>Comparing.max(1, 2);<span class="result">&rarr; 2</span>
+Comparing.max(1, 2, new ComparableComparator&lt;Integer&gt;());<span class="result">&rarr; 2</span></code>
+        </p>
+        <p>
+            <span class="function">ordered</span>
+            <span class="description">Ordered pair from two objects, using a Comparator</span>
+            <code>Comparing.ordered(2, 1);<span class="result">&rarr; Pair&lt;Integer, Integer&gt; (1, 2)</span>
+Comparing.ordered(2, 1, new ComparableComparator&lt;Integer&gt;());<span class="result">&rarr; Pair&lt;Integer, Integer&gt; (1, 2)</span></code>
+        </p>
+
+    </div>
+    <div class="step slide" data-x="-3500" data-y="0" data-scale="1">
+        <q>Searches</q>
+        <p>
+            <span class="function">search</span>
+            <span class="function">find</span>
+            <span class="description">TODO: explain</span>
+            <code>TODO</span>&rarr; TODO</span></code>
+        </p>
+        <p>
+            <span class="function">searchFirst</span>
+            <span class="function">findFirst</span>
+            <span class="description">TODO: explain</span>
+            <code>TODO</span>&rarr; TODO</span></code>
+        </p>
+        <p>
+            <span class="function">searchOne</span>
+            <span class="function">findOne</span>
+            <span class="description">TODO: explain</span>
+            <code>TODO</span>&rarr; TODO</span></code>
+        </p>
+        <p>
+            <span class="function">searchLast</span>
+            <span class="function">findLast</span>
+            <span class="description">TODO: explain</span>
+            <code>TODO</span>&rarr; TODO</span></code>
+        </p>
+    </div>
+
+</div>
+
+<div class="hint">
+    <p>Use a spacebar or arrow keys to navigate</p>
+</div>
+       <script type="text/javascript">
+            var divs = document.getElementsByTagName("div");
+            var steps = [];
+            var index = 0;
+            var radius = 3300;
+            for (var i=0; i < divs.length; i++) {
+                var div = divs[i];
+                if (div.getAttribute('class').indexOf('step') >= 0 && !div.hasAttribute('fixed-pos')) {
+                    steps.push(div);
+                }
+            }
+            steps.map(function(step) {
+                var base_angle = 2*Math.PI / steps.length * index++;
+                var angle = Math.PI/2 - base_angle;
+                step.setAttribute('data-x', Math.round(Math.cos(angle) * radius));
+                step.setAttribute('data-y', - Math.round(Math.sin(angle) * radius));
+                step.setAttribute('data-rotate', - angle * 360 /(2*Math.PI));
+            });
+    </script>
+<script src="impress.js"></script>
+</body>
+</html>
