@@ -3,6 +3,8 @@ package net.emaze.dysfunctional;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
+import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.testing.O;
 import org.junit.Assert;
 import org.junit.Test;
@@ -75,9 +77,17 @@ public class IterationsTest {
             final List<O> expected = Arrays.asList(O.ONE, O.ANOTHER, O.YET_ANOTHER, O.YET_ANOTHER);
             Assert.assertEquals(expected, Consumers.all(iterator));
         }
+
+        @Test
+        public void canCreateIteratorFromProvider() {
+            final Iterator<O> iterator = Iterations.iterator(new ConstantProvider<Maybe<O>>(Maybe.<O>nothing()));
+            final List<O> expected = Arrays.asList();
+            Assert.assertEquals(expected, Consumers.all(iterator));
+        }
     }
 
     public static class IterableTest {
+
         @Test
         public void canCreateEmptyIterable() {
             final Iterable<O> iterable = Iterations.iterable();
@@ -111,6 +121,6 @@ public class IterationsTest {
             final Iterable<O> iterable = Iterations.iterable(O.ONE, O.ANOTHER, O.YET_ANOTHER, O.YET_ANOTHER);
             final List<O> expected = Arrays.asList(O.ONE, O.ANOTHER, O.YET_ANOTHER, O.YET_ANOTHER);
             Assert.assertEquals(expected, Consumers.all(iterable));
-        }        
+        }
     }
 }

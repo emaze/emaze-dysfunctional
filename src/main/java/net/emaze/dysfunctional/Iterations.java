@@ -1,22 +1,20 @@
 package net.emaze.dysfunctional;
 
 import java.util.Iterator;
-import net.emaze.dysfunctional.iterations.ArrayIterable;
-import net.emaze.dysfunctional.iterations.ArrayIterator;
-import net.emaze.dysfunctional.iterations.EmptyIterable;
-import net.emaze.dysfunctional.iterations.EmptyIterator;
-import net.emaze.dysfunctional.iterations.OneTimeIterable;
-import net.emaze.dysfunctional.iterations.SingletonIterable;
-import net.emaze.dysfunctional.iterations.SingletonIterator;
+import net.emaze.dysfunctional.dispatching.delegates.Provider;
+import net.emaze.dysfunctional.iterations.*;
+import net.emaze.dysfunctional.options.Maybe;
 
 /**
  * Iterators and Iterables shortcuts.
+ *
  * @author rferranti
  */
 public abstract class Iterations {
 
     /**
      * Creates an iterable usable only ONE TIME from an iterator.
+     *
      * @param <T> the iterator element type parameter
      * @param iterator the iterator to be yielded by the iterable
      * @return an iterable consumable only once
@@ -27,6 +25,7 @@ public abstract class Iterations {
 
     /**
      * Creates an empty iterator
+     *
      * @param <T> the element parameter type
      * @return an empty iterator.
      */
@@ -36,6 +35,7 @@ public abstract class Iterations {
 
     /**
      * Creates an iterator from the passed value.
+     *
      * @param <T> the element parameter type
      * @param value the value to be yielded by the iterator
      * @return an iterator.
@@ -46,6 +46,7 @@ public abstract class Iterations {
 
     /**
      * Creates an iterator from the passed values.
+     *
      * @param <T> the elements parameter type
      * @param first the first element
      * @param second the second element
@@ -57,6 +58,7 @@ public abstract class Iterations {
 
     /**
      * Creates an iterator from the passed values.
+     *
      * @param <T> the elements parameter type
      * @param first the first element
      * @param second the second element
@@ -78,7 +80,20 @@ public abstract class Iterations {
     }
 
     /**
+     * Adapts a provider of {@code Maybe<T>} to a iterator of {@code T}.
+     * The iterator ends when the provider returns nothing.
+     *
+     * @param <T> the provider element parameter type
+     * @param provider the provider of values to be yielded by the iterator
+     * @return an iterator
+     */
+    public static <T> Iterator<T> iterator(Provider<Maybe<T>> provider) {
+        return new ProviderToIterator<T>(provider);
+    }
+
+    /**
      * Creates an empty iterable.
+     *
      * @param <T> the element parameter type
      * @return an iterable always yielding an empty iterator.
      */
@@ -88,6 +103,7 @@ public abstract class Iterations {
 
     /**
      * Creates an iterable from the passed value.
+     *
      * @param <T> the element parameter type
      * @param value the value to be yielded by the iterator
      * @return an iterable.
@@ -98,6 +114,7 @@ public abstract class Iterations {
 
     /**
      * Creates an iterable from the passed values.
+     *
      * @param <T> the elements parameter type
      * @param first the first element
      * @param second the second element
@@ -109,6 +126,7 @@ public abstract class Iterations {
 
     /**
      * Creates an iterable from the passed values.
+     *
      * @param <T> the elements parameter type
      * @param first the first element
      * @param second the second element
@@ -121,6 +139,7 @@ public abstract class Iterations {
 
     /**
      * Creates an iterable from the passed array.
+     *
      * @param <T> the array element parameter type
      * @param values the values to be yielded by the iterator
      * @return an iterable.
