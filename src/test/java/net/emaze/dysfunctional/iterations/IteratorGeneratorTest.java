@@ -15,12 +15,13 @@ import org.junit.Test;
 public class IteratorGeneratorTest {
 
     @Test
-    public void generatingItemFromSeed() {
+    public void seedIsTheFirstItem() {
         final Box<O> seed = Box.<O>empty();
         final Delegate<Maybe<O>, O> generator = Spies.spy1st(new Sequence<O>(Arrays.asList(Maybe.<O>nothing())), seed);
         final IteratorGenerator<O> iterator = new IteratorGenerator<O>(O.ONE, generator);
         iterator.hasNext();
-        Assert.assertEquals(O.ONE, seed.getContent());
+        Assert.assertEquals(true, iterator.hasNext());
+        Assert.assertEquals(O.ONE, iterator.next());
     }
 
     @Test
@@ -28,15 +29,16 @@ public class IteratorGeneratorTest {
         final Box<O> previous = Box.<O>empty();
         final Delegate<Maybe<O>, O> generator = Spies.spy1st(new Sequence<O>(Arrays.asList(Maybe.just(O.ANOTHER), Maybe.<O>nothing())), previous);
         final IteratorGenerator<O> iterator = new IteratorGenerator<O>(O.ONE, generator);
-        iterator.next();
-        iterator.hasNext();
-        Assert.assertEquals(O.ANOTHER, previous.getContent());
+        iterator.next(); // consuming seed
+        iterator.hasNext(); // fetching next
+        Assert.assertEquals(O.ONE, previous.getContent());
     }
 
     @Test
     public void generatingNothingEndsIterator() {
         final Delegate<Maybe<O>, O> generator = new Sequence<O>(Arrays.asList(Maybe.<O>nothing()));
         final IteratorGenerator<O> iterator = new IteratorGenerator<O>(null, generator);
+        iterator.next(); // consuming seed
         Assert.assertEquals(false, iterator.hasNext());
     }
 
@@ -44,50 +46,53 @@ public class IteratorGeneratorTest {
     public void gettingUnavailableNextItemYieldsException() {
         final Delegate<Maybe<O>, O> generator = new Sequence<O>(Arrays.asList(Maybe.<O>nothing()));
         final IteratorGenerator<O> iterator = new IteratorGenerator<O>(null, generator);
-        iterator.next();
+        iterator.next(); // consuming seed
+        iterator.next(); // consuming not available item
     }
 
     @Test
     public void gettingNextItemWithoutHasNextInvocation() {
         final Delegate<Maybe<O>, O> generator = new Sequence<O>(Arrays.asList(
-                Maybe.just(O.ONE),
                 Maybe.just(O.ANOTHER),
+                Maybe.just(O.YET_ANOTHER),
                 Maybe.<O>nothing()));
-        final IteratorGenerator<O> iterator = new IteratorGenerator<O>(null, generator);
-        Assert.assertEquals(O.ONE, iterator.next());
+        final IteratorGenerator<O> iterator = new IteratorGenerator<O>(O.ONE, generator);
+        iterator.next(); // consuming seed
+        Assert.assertEquals(O.ANOTHER, iterator.next());
     }
 
     @Test
     public void gettingNextItemAfterHasNextInvocation() {
         final Delegate<Maybe<O>, O> generator = new Sequence<O>(Arrays.asList(
-                Maybe.just(O.ONE),
                 Maybe.just(O.ANOTHER),
+                Maybe.just(O.YET_ANOTHER),
                 Maybe.<O>nothing()));
-        final IteratorGenerator<O> iterator = new IteratorGenerator<O>(null, generator);
+        final IteratorGenerator<O> iterator = new IteratorGenerator<O>(O.ONE, generator);
+        iterator.next(); // consuming seed
         iterator.hasNext();
-        Assert.assertEquals(O.ONE, iterator.next());
+        Assert.assertEquals(O.ANOTHER, iterator.next());
     }
 
     @Test
     public void gettingNextItemAfterNextInvocation() {
         final Delegate<Maybe<O>, O> generator = new Sequence<O>(Arrays.asList(
-                Maybe.just(O.ONE),
                 Maybe.just(O.ANOTHER),
+                Maybe.just(O.YET_ANOTHER),
                 Maybe.<O>nothing()));
-        final IteratorGenerator<O> iterator = new IteratorGenerator<O>(null, generator);
-        iterator.next();
-        Assert.assertEquals(O.ANOTHER, iterator.next());
+        final IteratorGenerator<O> iterator = new IteratorGenerator<O>(O.ONE, generator);
+        iterator.next(); // consuming seed
+        iterator.next(); // consuming one
+        Assert.assertEquals(O.YET_ANOTHER, iterator.next());
     }
 
     @Test
     public void endsAfterGettingLastItem() {
         final Delegate<Maybe<O>, O> generator = new Sequence<O>(Arrays.asList(
-                Maybe.just(O.ONE),
                 Maybe.just(O.ANOTHER),
                 Maybe.<O>nothing()));
-        final IteratorGenerator<O> iterator = new IteratorGenerator<O>(null, generator);
-        iterator.next();
-        iterator.next();
+        final IteratorGenerator<O> iterator = new IteratorGenerator<O>(O.ONE, generator);
+        iterator.next(); // consuming one
+        iterator.next(); // consuming another
         Assert.assertEquals(false, iterator.hasNext());
     }
 
@@ -95,7 +100,8 @@ public class IteratorGeneratorTest {
     public void checkingNextItemAfterCompletionHasNoEffect() {
         final AtomicLong invocations = new AtomicLong();
         final Delegate<Maybe<O>, O> generator = Spies.monitor(new Sequence<O>(Arrays.asList(Maybe.<O>nothing())), invocations);
-        final IteratorGenerator<O> iterator = new IteratorGenerator<O>(null, generator);
+        final IteratorGenerator<O> iterator = new IteratorGenerator<O>(O.ONE, generator);
+        iterator.next(); // consuming seed to complete
         iterator.hasNext();
         iterator.hasNext();
         Assert.assertEquals(1, invocations.get());

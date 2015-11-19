@@ -89,7 +89,7 @@ public class IterationsTest {
         @Test
         public void canCreateIteratorFromGenerator() {
             final Iterator<O> iterator = Iterations.iterator(O.ONE, new ConstantDelegate<Maybe<O>, O>(Maybe.<O>nothing()));
-            final List<O> expected = Arrays.asList();
+            final List<O> expected = Arrays.asList(O.ONE);
             Assert.assertEquals(expected, Consumers.all(iterator));
         }
     }
