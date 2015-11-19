@@ -105,7 +105,6 @@ public class IteratorGeneratorTest {
 
         private final Iterator<Maybe<T>> items;
 
-        @SafeVarargs
         public Sequence(Iterable<Maybe<T>> items) {
             this.items = items.iterator();
         }
