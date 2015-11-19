@@ -3,6 +3,7 @@ package net.emaze.dysfunctional;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import net.emaze.dysfunctional.dispatching.delegates.ConstantDelegate;
 import net.emaze.dysfunctional.dispatching.delegates.ConstantProvider;
 import net.emaze.dysfunctional.options.Maybe;
 import net.emaze.dysfunctional.testing.O;
@@ -81,6 +82,13 @@ public class IterationsTest {
         @Test
         public void canCreateIteratorFromProvider() {
             final Iterator<O> iterator = Iterations.iterator(new ConstantProvider<Maybe<O>>(Maybe.<O>nothing()));
+            final List<O> expected = Arrays.asList();
+            Assert.assertEquals(expected, Consumers.all(iterator));
+        }
+
+        @Test
+        public void canCreateIteratorFromGenerator() {
+            final Iterator<O> iterator = Iterations.iterator(O.ONE, new ConstantDelegate<Maybe<O>, O>(Maybe.<O>nothing()));
             final List<O> expected = Arrays.asList();
             Assert.assertEquals(expected, Consumers.all(iterator));
         }
