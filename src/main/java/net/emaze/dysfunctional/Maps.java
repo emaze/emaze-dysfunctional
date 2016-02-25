@@ -4,8 +4,12 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.HashMapFactory;
 import net.emaze.dysfunctional.collections.LinkedHashMapFactory;
@@ -38,6 +42,26 @@ public abstract class Maps {
 
     public static <K, V> MapBuilder<K, V> tree(Comparator<K> keyComp) {
         return new MapBuilder<K, V>(new TreeMap<K, V>(keyComp));
+    }
+
+    public static <K, V, W> Map<W, V> mapKeys(Map<K, V> input, Function<K, W> keysMapper) {
+        return input.entrySet().stream().collect(Collectors.toMap(entry -> keysMapper.apply(entry.getKey()), Entry::getValue));
+    }
+
+    public static <K, V, W> Map<W, V> mapKeys(Map<K, V> input, Function<K, W> keysMapper, BinaryOperator<V> valueMerger) {
+        return input.entrySet().stream().collect(Collectors.toMap(entry -> keysMapper.apply(entry.getKey()), Entry::getValue, valueMerger));
+    }
+
+    public static <K, V, W> Map<K, W> mapValues(Map<K, V> input, Function<V, W> valuesMapper) {
+        return input.entrySet().stream().collect(Collectors.toMap(Entry::getKey, entry -> valuesMapper.apply(entry.getValue())));
+    }
+
+    public static <K, V, KK, VV> Map<KK, VV> mapKeysAndValues(Map<K, V> input, Function<K, KK> keysMapper, Function<V, VV> valuesMapper) {
+        return input.entrySet().stream().collect(Collectors.toMap(entry -> keysMapper.apply(entry.getKey()), entry -> valuesMapper.apply(entry.getValue())));
+    }
+
+    public static <K, V, KK, VV> Map<KK, VV> mapKeysAndValues(Map<K, V> input, Function<K, KK> keysMapper, Function<V, VV> valuesMapper, BinaryOperator<VV> valueMerger) {
+        return input.entrySet().stream().collect(Collectors.toMap(entry -> keysMapper.apply(entry.getKey()), entry -> valuesMapper.apply(entry.getValue()), valueMerger));
     }
 
     public abstract static class Nested {
