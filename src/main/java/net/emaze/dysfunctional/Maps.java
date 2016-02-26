@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 import net.emaze.dysfunctional.casts.Vary;
 import net.emaze.dysfunctional.collections.HashMapFactory;
@@ -11,6 +12,9 @@ import net.emaze.dysfunctional.collections.LinkedHashMapFactory;
 import net.emaze.dysfunctional.collections.TreeMapFactory;
 import net.emaze.dysfunctional.collections.builders.MapBuilder;
 import net.emaze.dysfunctional.collections.builders.NestedMapBuilder;
+import net.emaze.dysfunctional.contracts.dbc;
+import net.emaze.dysfunctional.dispatching.delegates.BinaryDelegate;
+import net.emaze.dysfunctional.dispatching.delegates.Delegate;
 import net.emaze.dysfunctional.dispatching.delegates.Provider;
 import net.emaze.dysfunctional.order.ComparableComparator;
 
@@ -38,6 +42,72 @@ public abstract class Maps {
 
     public static <K, V> MapBuilder<K, V> tree(Comparator<K> keyComp) {
         return new MapBuilder<K, V>(new TreeMap<K, V>(keyComp));
+    }
+
+    public static <K, V, W> Map<W, V> mapKeys(Map<K, V> input, Delegate<W, K> keysMapper) {
+        dbc.precondition(input != null, "input map cannot be null");
+        dbc.precondition(keysMapper != null, "keysMapper cannot be null");
+        final Map<W, V> result = Maps.<W, V>builder().toMap();
+        for (Entry<K, V> entry : input.entrySet()) {
+            result.put(keysMapper.perform(entry.getKey()), entry.getValue());
+        }
+        return result;
+    }
+
+    public static <K, V, W> Map<W, V> mapKeys(Map<K, V> input, Delegate<W, K> keysMapper, BinaryDelegate<V, V, V> valueMerger) {
+        dbc.precondition(input != null, "input map cannot be null");
+        dbc.precondition(keysMapper != null, "keysMapper cannot be null");
+        dbc.precondition(valueMerger != null, "valueMerger cannot be null");
+        final Map<W, V> result = Maps.<W, V>builder().toMap();
+        for (Entry<K, V> entry : input.entrySet()) {
+            final W newKey = keysMapper.perform(entry.getKey());
+            V newValue = entry.getValue();
+            if (result.containsKey(newKey)) {
+                final V previousValue = result.get(newKey);
+                newValue = valueMerger.perform(previousValue, newValue);
+            }
+            result.put(newKey, newValue);
+        }
+        return result;
+    }
+
+    public static <K, V, W> Map<K, W> mapValues(Map<K, V> input, Delegate<W, V> valuesMapper) {
+        dbc.precondition(input != null, "input map cannot be null");
+        dbc.precondition(valuesMapper != null, "valuesMapper cannot be null");
+        final Map<K, W> result = Maps.<K, W>builder().toMap();
+        for (Entry<K, V> entry : input.entrySet()) {
+            result.put(entry.getKey(), valuesMapper.perform(entry.getValue()));
+        }
+        return result;
+    }
+
+    public static <K, V, KK, VV> Map<KK, VV> mapKeysAndValues(Map<K, V> input, Delegate<KK, K> keysMapper, Delegate<VV, V> valuesMapper) {
+        dbc.precondition(input != null, "input map cannot be null");
+        dbc.precondition(keysMapper != null, "keysMapper cannot be null");
+        dbc.precondition(valuesMapper != null, "valuesMapper cannot be null");
+        final Map<KK, VV> result = Maps.<KK, VV>builder().toMap();
+        for (Entry<K, V> entry : input.entrySet()) {
+            result.put(keysMapper.perform(entry.getKey()), valuesMapper.perform(entry.getValue()));
+        }
+        return result;
+    }
+
+    public static <K, V, KK, VV> Map<KK, VV> mapKeysAndValues(Map<K, V> input, Delegate<KK, K> keysMapper, Delegate<VV, V> valuesMapper, BinaryDelegate<VV, VV, VV> valueMerger) {
+        dbc.precondition(input != null, "input map cannot be null");
+        dbc.precondition(keysMapper != null, "keysMapper cannot be null");
+        dbc.precondition(valuesMapper != null, "valuesMapper cannot be null");
+        dbc.precondition(valueMerger != null, "valueMerger cannot be null");
+        final Map<KK, VV> result = Maps.<KK, VV>builder().toMap();
+        for (Entry<K, V> entry : input.entrySet()) {
+            final KK newKey = keysMapper.perform(entry.getKey());
+            VV newValue = valuesMapper.perform(entry.getValue());
+            if (result.containsKey(newKey)) {
+                final VV previousValue = result.get(newKey);
+                newValue = valueMerger.perform(previousValue, newValue);
+            }
+            result.put(newKey, newValue);
+        }
+        return result;
     }
 
     public abstract static class Nested {
