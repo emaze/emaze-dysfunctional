@@ -133,7 +133,7 @@ public class MapsTest {
         @Test
         public void canMapKeysMergingValues() {
             final Map<String, String> input = Maps.<String, String>builder().add("a", "b").add("c", "d").toMap();
-            Map<String, String> got = Maps.mapKeys(input, key -> "sameKey", (first, second) -> second);
+            final Map<String, String> got = Maps.mapKeys(input, key -> "sameKey", (first, second) -> second);
             final Map<String, String> expected = Collections.singletonMap("sameKey", "d");
             Assert.assertEquals(expected, got);
         }
