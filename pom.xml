@@ -4,7 +4,7 @@
     <groupId>net.emaze</groupId>
     <artifactId>emaze-dysfunctional</artifactId>
     <packaging>jar</packaging>
-    <version>8.1.0</version>
+    <version>8.1.1-SNAPSHOT</version>
     <name>emaze-dysfunctional</name>
     <description>A functional library for java</description>
     <url>http://www.dysfunctional-lib.net</url>
@@ -72,7 +72,7 @@
         <connection>scm:git:https://bitbucket.org/emaze/emaze-dysfunctional</connection>
         <developerConnection>scm:git:file://${basedir}</developerConnection>
         <url>https://bitbucket.org/emaze/emaze-dysfunctional</url>
-        <tag>8.1.0</tag>
+        <tag>HEAD</tag>
     </scm>
     <developers>
         <developer>
