@@ -27,6 +27,13 @@ Introduced `Strategies` façade with the following methods (:warning: still to t
 * `Function<T, List<R>> allMatches(Clause<T, R>... clauses)` to apply all clauses matching a condition
 * also for binary functions
 
+Added methods to `Maps` class to transform all keys and/or all values of the passed map, given a mapper function:
+* `Map<W, V> mapKeys(Map<K, V> input, Function<K, W> keysMapper)` to transform all keys of the passed map applying the passed mapper function
+* `Map<W, V> mapKeys(Map<K, V> input, Function<K, W> keysMapper, BinaryOperator<V> valueMerger)` to transform all keys of the passed map applying the passed mapper function. If the key is already present into the map, the passed value merger is applied to the value
+* `Map<K, W> mapValues(Map<K, V> input, Function<V, W> valuesMapper)` to transform all values of the passed map applying the passed mapper function
+* `Map<KK, VV> mapKeysAndValues(Map<K, V> input, Function<K, KK> keysMapper, Function<V, VV> valuesMapper)` to transform all keys and all values of the passed map applying the passed mapper functions
+* `Map<KK, VV> mapKeysAndValues(Map<K, V> input, Function<K, KK> keysMapper, Function<V, VV> valuesMapper, BinaryOperator<VV> valueMerger)` to transform all keys and all values of the passed map applying the passed mapper functions. If the key is already present into the map, the passed value merger is applied to the value
+
 #### Refactors
 
 Some better names:
