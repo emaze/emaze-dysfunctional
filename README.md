@@ -1,14 +1,8 @@
-## Build and deploy
+# Changes
 
-```
-mvn clean package org.apache.maven.plugins:maven-deploy-plugin:2.7:deploy -DaltDeploymentRepository=mvn-intranet::default::http://mvn.intranet/nexus/content/repositories/releases
-```
+## 8.1.0
 
-## Changes
-
-### 8.1.0-SNAPSHOT
-
-#### Additions
+### Additions
 
 Introduced `Collecting` façade to support additional collectors.
 
@@ -34,7 +28,7 @@ Added methods to `Maps` class to transform all keys and/or all values of the pas
 * `Map<KK, VV> mapKeysAndValues(Map<K, V> input, Function<K, KK> keysMapper, Function<V, VV> valuesMapper)` to transform all keys and all values of the passed map applying the passed mapper functions
 * `Map<KK, VV> mapKeysAndValues(Map<K, V> input, Function<K, KK> keysMapper, Function<V, VV> valuesMapper, BinaryOperator<VV> valueMerger)` to transform all keys and all values of the passed map applying the passed mapper functions. If the key is already present into the map, the passed value merger is applied to the value
 
-#### Refactors
+### Refactors
 
 Some better names:
 * renamed `Multiplexing.batch` in `unchain` (`BatchingIterator` -> `UnchainIterator`)
@@ -43,9 +37,9 @@ Some better names:
 
 `Multiplexing.flatten` and `chain` accepts varargs.
 
-### 8.0
+## 8.0
 
-#### Additions
+### Additions
 
 Introduced the `Sequences` façade, in order to simplify the usage of sequential streams.
 A `Sequence` has the following additional methods:
@@ -64,7 +58,7 @@ Added the following new methods:
 * `Triple<T2, T3, T1> Triple::rotateLeft()`
 * `Triple<T3, T1, T2> Triple::rotateRight()`
 
-#### Refactors
+### Refactors
 
 Replaced functional interfaces with built-in ones in package `java.util.function`:
 * `Delegate` -> `Function`
@@ -126,3 +120,9 @@ Removed useless functors:
 * `HasNext` -> use `Iterator::hasNext`
 * `IteratorPlucker` -> use `Iterable::iterator`
 * `ClassPlucker` -> use `Object::getClass`
+
+# Build and deploy
+
+```
+mvn clean package org.apache.maven.plugins:maven-deploy-plugin:2.7:deploy -DaltDeploymentRepository=mvn-intranet::default::http://mvn.intranet/nexus/content/repositories/releases
+```
