@@ -120,9 +120,3 @@ Removed useless functors:
 * `HasNext` -> use `Iterator::hasNext`
 * `IteratorPlucker` -> use `Iterable::iterator`
 * `ClassPlucker` -> use `Object::getClass`
-
-# Build and deploy
-
-```
-mvn clean package org.apache.maven.plugins:maven-deploy-plugin:2.7:deploy -DaltDeploymentRepository=mvn-intranet::default::http://mvn.intranet/nexus/content/repositories/releases
-```
