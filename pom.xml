@@ -120,9 +120,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>    
     <scm>
-        <connection>scm:git:https://bitbucket.org/emaze/emaze-dysfunctional</connection>
+        <connection>scm:git:https://github.com/emaze/emaze-dysfunctional</connection>
         <developerConnection>scm:git:file://${basedir}</developerConnection>
-        <url>https://bitbucket.org/emaze/emaze-dysfunctional</url>
+        <url>https://github.com/emaze/emaze-dysfunctional</url>
         <tag>HEAD</tag>
     </scm>
     <developers>
