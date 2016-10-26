@@ -1,9 +1,6 @@
 package net.emaze.dysfunctional.ranges;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.BinaryOperator;
 import net.emaze.dysfunctional.order.SequencingPolicy;
 
@@ -26,10 +23,9 @@ public class Union<T> implements BinaryOperator<Range<T>> {
 
     @Override
     public Range<T> apply(Range<T> lhs, Range<T> rhs) {
-        final List<DenseRange<T>> ranges = new ArrayList<DenseRange<T>>();
+        final List<DenseRange<T>> ranges = new ArrayList<>();
         ranges.addAll(lhs.densified());
         ranges.addAll(rhs.densified());
-        final Densify<T> densifier = new Densify<T>(sequencer, comparator);
-        return new MakeRange<T>(sequencer, comparator, emptyValue).apply(densifier.apply(ranges));
+        return new MakeRange<>(sequencer, comparator, emptyValue).apply(ranges);
     }
 }
