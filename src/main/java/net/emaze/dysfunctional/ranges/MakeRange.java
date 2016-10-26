@@ -31,7 +31,7 @@ public class MakeRange<T> implements Function<List<DenseRange<T>>, Range<T>> {
         if (wannaBeRange.size() == 1) {
             return wannaBeRange.get(0);
         }
-        final List<DenseRange<T>> densified = new Densify(sequencer, comparator).apply(wannaBeRange);
+        final List<DenseRange<T>> densified = new Densify<>(sequencer, comparator).apply(wannaBeRange);
         if (densified.size() == 1) {
             return densified.get(0);
         }
