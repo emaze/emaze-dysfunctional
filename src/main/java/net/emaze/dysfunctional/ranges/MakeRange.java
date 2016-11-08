@@ -8,7 +8,6 @@ import net.emaze.dysfunctional.order.SequencingPolicy;
 import net.emaze.dysfunctional.ranges.Range.Endpoint;
 
 /**
- *
  * @author rferranti
  */
 public class MakeRange<T> implements Delegate<Range<T>, List<DenseRange<T>>> {
@@ -31,7 +30,7 @@ public class MakeRange<T> implements Delegate<Range<T>, List<DenseRange<T>>> {
         if (wannaBeRange.size() == 1) {
             return wannaBeRange.get(0);
         }
-        final List<DenseRange<T>> densified = new Densify(sequencer, comparator).perform(wannaBeRange);
+        final List<DenseRange<T>> densified = new Densify<T>(sequencer, comparator).perform(wannaBeRange);
         if (densified.size() == 1) {
             return densified.get(0);
         }

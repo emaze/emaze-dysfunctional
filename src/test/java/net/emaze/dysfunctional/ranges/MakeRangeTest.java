@@ -10,8 +10,10 @@ public class MakeRangeTest {
 
     @Test
     public void densifiesRangesOnCreation() {
-        Assert.assertEquals(
-            r(Endpoint.Include, 0, 10, Endpoint.Exclude), 
-            new MakeRange(RangeMother.sequencer, RangeMother.comparator, 0).perform(Arrays.asList(r(Endpoint.Include, 0, 5, Endpoint.Exclude), r(Endpoint.Include, 5, 10, Endpoint.Exclude))));
+        final MakeRange<Integer> maker = new MakeRange<Integer>(RangeMother.sequencer, RangeMother.comparator, 0);
+        final Range<Integer> got = maker.perform(Arrays.asList(
+                r(Endpoint.Include, 0, 5, Endpoint.Exclude),
+                r(Endpoint.Include, 5, 10, Endpoint.Exclude)));
+        Assert.assertEquals(r(Endpoint.Include, 0, 10, Endpoint.Exclude), got);
     }
 }
