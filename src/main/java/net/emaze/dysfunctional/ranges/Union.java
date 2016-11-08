@@ -29,7 +29,6 @@ public class Union<T> implements BinaryDelegate<Range<T>, Range<T>, Range<T>> {
         final List<DenseRange<T>> ranges = new ArrayList<DenseRange<T>>();
         ranges.addAll(lhs.densified());
         ranges.addAll(rhs.densified());
-        final Densify<T> densifier = new Densify<T>(sequencer, comparator);
-        return new MakeRange<T>(sequencer, comparator, emptyValue).perform(densifier.perform(ranges));
+        return new MakeRange<T>(sequencer, comparator, emptyValue).perform(ranges);
     }
 }
