@@ -319,6 +319,15 @@ public class RangesTest {
             Assert.assertEquals(Arrays.asList(0, 2), Consumers.all(got));
         }
 
+        @Test
+        public void symmetricDifferenceOfSameIntervalLeadToAnEmptyRange() {
+            final Ranges<Integer> ranges = new Ranges<Integer>(new ComparableComparator<Integer>(), new NextIntegerSequencingPolicy(), 0);
+            final Range<Integer> lhs = ranges.closed(0, 1);
+            final Range<Integer> rhs = ranges.closed(0, 1);
+            final Range<Integer> got = ranges.symmetricDifference(lhs, rhs);
+            Assert.assertEquals(ranges.empty(), got);
+        }
+
         @Test(expected = IllegalArgumentException.class)
         public void evaluatingSymmetricDifferenceOfAnEmptyIteratorYieldsException() {
             final Ranges<Integer> ranges = new Ranges<Integer>(new ComparableComparator<Integer>(), new NextIntegerSequencingPolicy(), 0);
