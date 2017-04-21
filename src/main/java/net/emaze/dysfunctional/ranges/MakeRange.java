@@ -34,6 +34,9 @@ public class MakeRange<T> implements Delegate<Range<T>, List<DenseRange<T>>> {
         if (densified.size() == 1) {
             return densified.get(0);
         }
+        if (densified.isEmpty()) {
+            return empty;
+        }
         return new SparseRange<T>(sequencer, comparator, densified);
     }
 }
