@@ -13,7 +13,7 @@
             <url>http://www.opensource.org/licenses/BSD-3-Clause</url>
             <distribution>repo</distribution>
         </license>
-    </licenses>    
+    </licenses>
     <build>
         <plugins>
             <plugin>
@@ -54,20 +54,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.6</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
     <dependencies>
@@ -80,7 +66,36 @@
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>    
+    </properties>
+    <profiles>
+        <profile>
+            <id>sign-artifacts</id>
+            <activation>
+                <property>
+                    <name>signGpg</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
     <scm>
         <connection>scm:git:https://github.com/emaze/emaze-dysfunctional</connection>
         <developerConnection>scm:git:file://${basedir}</developerConnection>
@@ -117,7 +132,7 @@
             <id>epellizon</id>
             <name>Enrico Pellizon</name>
             <email>enrico.pelizzon+dys@gmail.com</email>
-        </developer>        
+        </developer>
         <developer>
             <id>sleghissa</id>
             <name>Simon Leghissa</name>
